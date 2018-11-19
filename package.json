@@ -2,10 +2,12 @@
   "name": "commonsku-components",
   "version": "1.0.0",
   "description": "Common React components used by commonsku",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "transpile": "babel src -d dist --copy-files",
+    "prepublishOnly": "npm run transpile"
   },
   "keywords": [
     "commonsku",
@@ -13,6 +15,10 @@
   ],
   "author": "commonsku",
   "license": "ISC",
+  "peerDependencies": {
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
+  },
   "dependencies": {
     "foundation-sites": "^6.5.1",
     "lodash": "^4.14.1",
@@ -28,6 +34,7 @@
   },
   "devDependencies": {
     "autosuggest-highlight": "^3.1.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
