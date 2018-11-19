@@ -4,8 +4,6 @@ import './styles.css';
 export {default as TextInput} from './TextInput';
 export {default as TextArea} from './TextArea';
 export {default as Select} from './Select';
-export {default as DateInput} from './DateInput';
-export {default as AutosuggestTagsInput} from './AutosuggestTagsInput';
 export {default as Form} from './Form';
 
 export {default as LabelledAddress} from './LabelledAddress';
@@ -16,5 +14,3 @@ export {default as LabelledControl} from './LabelledControl';
 export {default as LabelledInput} from './LabelledInput';
 export {default as LabelledRadio} from './LabelledRadio';
 export {default as LabelledSelect} from './LabelledSelect';
-
-export {default as MentionTextarea} from './MentionTextarea';

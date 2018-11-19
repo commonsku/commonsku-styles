@@ -1,11 +1,12 @@
 import _ from 'lodash'
-import React, { Component, PropTypes, } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import TextInput from './TextInput'
 import Textarea from './TextArea'
 import Select from './Select'
-import DateInput from './DateInput'
-import AutosuggestTagsInput from './AutosuggestTagsInput'
+//import DateInput from './DateInput'
+//import AutosuggestTagsInput from './AutosuggestTagsInput'
 
 let uniqueId = 0;
 const ID_PREFIX = '___FORM_LABEL___';
@@ -194,7 +195,7 @@ const FormRadio = (props) => {
       props.onFieldBlur(...args);
     }}/>
 };
-const FormDateInput = (props) =>  <BaseField {...props} Control={DateInput}/>;
+//const FormDateInput = (props) =>  <BaseField {...props} Control={DateInput}/>;
 
 const Checkbox = ({
   value,
@@ -214,7 +215,7 @@ const FormCheckbox = (props) => {
       props.onFieldBlur(...args);
     }}/>
 };
-const FormAutosuggestTags = (props) => <BaseField {...props} Control={AutosuggestTagsInput}/>;
+//const FormAutosuggestTags = (props) => <BaseField {...props} Control={AutosuggestTagsInput}/>;
 
 class Form extends Component {
 
@@ -492,8 +493,8 @@ Form.TextInput = FormTextInput;
 Form.Textarea = FormTextarea;
 Form.Select = FormSelect;
 Form.Radio = FormRadio;
-Form.DateInput = FormDateInput;
+//Form.DateInput = FormDateInput;
 Form.Checkbox = FormCheckbox;
-Form.AutosuggestTags = FormAutosuggestTags;
+//Form.AutosuggestTags = FormAutosuggestTags;
 
 export default Form;

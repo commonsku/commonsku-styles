@@ -31,5 +31,4 @@ export default class TextInput extends Component {
 
 TextInput.defaultProps = {
   selectOnFocus: false,
-  disableDrag: true,
 };
