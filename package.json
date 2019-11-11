@@ -1,5 +1,5 @@
 {
-  "name": "commonsku-components",
+  "name": "skui",
   "version": "1.0.0",
   "description": "Common React components used by commonsku",
   "main": "dist/index.js",
@@ -24,7 +24,7 @@
     "lodash": "^4.14.1",
     "moment": "^2.15.1",
     "prop-types": "^15.6.2",
-    "react": "^16.6.1",
+    "react": "^16.9.0",
     "react-addons-css-transition-group": "^0.14.7",
     "react-autosize-textarea": "^0.3.1",
     "react-color": "^2.13.8",
@@ -51,5 +51,16 @@
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/commonsku/skui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/commonsku/skui/issues"
+  },
+  "homepage": "https://github.com/commonsku/skui#readme"
 }
