@@ -20,7 +20,7 @@ export default class TextInput extends Component {
   render() {
     const {
       selectOnFocus,
-      ...props,
+      ...props
     } = this.props;
 
     return (
@@ -31,4 +31,5 @@ export default class TextInput extends Component {
 
 TextInput.defaultProps = {
   selectOnFocus: false,
+  //disableDrag: true,
 };

@@ -6,7 +6,7 @@ let unique_id = 0;
 const id_prefix = 'LabelledTextArea';
 
 export default class LabelledTextArea extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     ++unique_id;
     this.setState({label_id: id_prefix + unique_id});
   }
@@ -16,7 +16,7 @@ export default class LabelledTextArea extends React.Component {
       onChange = _.identity,
       onBlur = _.identity,
       value,
-      ...props,
+      ...props
     } = this.props;
 
     return (

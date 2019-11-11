@@ -4,18 +4,19 @@ import PropTypes from 'prop-types'
 
 import TextInput from './TextInput'
 import Textarea from './TextArea'
+import MentionTextarea from './MentionTextarea'
 import Select from './Select'
-//import DateInput from './DateInput'
-//import AutosuggestTagsInput from './AutosuggestTagsInput'
+import DateInput from './DateInput'
+import AutosuggestTagsInput from './AutosuggestTagsInput'
 
 let uniqueId = 0;
 const ID_PREFIX = '___FORM_LABEL___';
 
 const _validate = (value, props, validate) => {
   let error = null;
-  if (props.required && _.isEmpty(value)) {
+  if ((props.required && _.isEmpty(value)) || (props.options && !props.options.filter(o => o.key === value).length)) {
     error = {
-      message: props.label + ' is required',
+      message: (props.label || props.placeholder) + ' is required',
     };
   }
   return _.isFunction(validate) ? validate(value, props, error) : error;
@@ -43,7 +44,10 @@ class BaseField extends Component {
       onFieldChange,
       onChange,
     } = this.props;
-    const value = this.getValue(e);
+    let value = this.getValue(e);
+    if(this.props.tags) {
+      value = _.uniq(value)
+    }
 
     onFieldChange(value, this.props);
     onChange(value);
@@ -77,6 +81,7 @@ class BaseField extends Component {
     };
     const {
       label,
+      helpText,
       labelClassName = params == 'radio' ? "small-12 medium-10 columns" : "small-12 medium-4 columns",
       renderLabel,
       labelStyle = { fontSize: 'initial' }
@@ -88,6 +93,7 @@ class BaseField extends Component {
 
     return <div className={labelClassName} style={params == 'radio' ? noPaddingLeft : null}>
       <label style={labelStyle} htmlFor={ID_PREFIX + this.id}>{label}</label>
+      { helpText ? <div className="help-text">{helpText}</div> : null }
     </div>
   }
 
@@ -104,16 +110,18 @@ class BaseField extends Component {
       children,
       controlClassName = params == 'radio' ? 'small-12 medium-2 columns' : 'small-12 medium-8 columns',
       containerStyle,
-      ...props,
+      prefix,
+      ...props
     } = this.props;
 
     const controlProps = _.omit(props, [
-      'validate', 'className', 'field', 'label']);
+      'validate', 'className', 'field', 'label', 'displayRadio', 'containerClassName', 'getValue', 'setValue']);
 
     return <div className={
       displayLabel ? controlClassName : this.getContainerClassName()
     } style={displayLabel ? {} : containerStyle}>
       {error ? <div className="field-error">{error.message}</div> : null}
+      {prefix}
       <Control {...controlProps} 
         id={ID_PREFIX + this.id}
         placeholder={placeholder}
@@ -138,7 +146,7 @@ class BaseField extends Component {
   }
 
   render() {
-    const { containerStyle, displayLabel, displayRadio, } = this.props;
+    const { containerStyle, displayLabel, displayRadio, rightHelpText } = this.props;
     return !displayLabel ? this.renderControl() :
       displayRadio ? 
       <div className={this.getContainerClassName()} style={containerStyle}>
@@ -146,9 +154,16 @@ class BaseField extends Component {
         {this.renderLabel('radio')}
       </div>
       :
-      <div className={this.getContainerClassName()} style={containerStyle}>
-        {this.renderLabel()}
-        {this.renderControl()}
+      <div className="row">
+        <div className={rightHelpText ? 'field small-12 medium-9 columns' : this.getContainerClassName()} style={containerStyle}>
+          {this.renderLabel()}
+          {this.renderControl()}
+        </div>
+        {rightHelpText ?
+          <div className="small-12 medium-3 columns">
+            <p style={{ backgroundColor: '#FFF3D9', padding: '10px', borderRadius: '10px' }}>{rightHelpText}</p>
+          </div>
+        : null}
       </div>
   }
 }
@@ -176,12 +191,13 @@ export const createFormSelect = Control => (props) => {
     props.onFieldBlur(...args);
   }}/>;
 };
+const FormMentionTextarea = (props) => <BaseField {...props} Control={MentionTextarea}/>;
 const FormSelect = createFormSelect(Select);
 const Radio = ({
   value,
   ...props,
 }) => {
-  return <input {...props} type="radio" checked={props.checked == 1 ? 'checked' : null}/>;
+  return <input {...props} type="radio" checked={props.checked}/>;
 };
 const FormRadio = (props) => {
   const {
@@ -195,7 +211,7 @@ const FormRadio = (props) => {
       props.onFieldBlur(...args);
     }}/>
 };
-//const FormDateInput = (props) =>  <BaseField {...props} Control={DateInput}/>;
+const FormDateInput = (props) =>  <BaseField {...props} Control={DateInput}/>;
 
 const Checkbox = ({
   value,
@@ -215,7 +231,7 @@ const FormCheckbox = (props) => {
       props.onFieldBlur(...args);
     }}/>
 };
-//const FormAutosuggestTags = (props) => <BaseField {...props} Control={AutosuggestTagsInput}/>;
+const FormAutosuggestTags = (props) => <BaseField {...props} Control={AutosuggestTagsInput}/>;
 
 class Form extends Component {
 
@@ -236,7 +252,15 @@ class Form extends Component {
     ]);
   }
 
-  componentWillReceiveProps(props) {
+  componentDidMount() {
+    const { initialValidate } = this.props
+
+    if(initialValidate) {
+      this.validate()
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(props) {
     const values = this.getInitialValues(props);
     const errors = this._errors;
     let update = false;
@@ -405,7 +429,7 @@ class Form extends Component {
       FormContainer,
       onFieldChange,
       onFieldBlur,
-      ...props,
+      ...props
     } = this.props;
 
     return <FormContainer {...props} 
@@ -428,7 +452,7 @@ class Form extends Component {
   cleanFieldError(field) {
     const errors = {
       ...this.state.errors,
-      ...this._errors,
+      ...this._errors
     };
     const error = errors[field];
     if (error) {
@@ -455,7 +479,7 @@ class Form extends Component {
       this.setState({
         errors: {
           ...errors,
-          ...this._errors,
+          ...this._errors
         },
       });
     }
@@ -491,10 +515,11 @@ Form.defaultProps = {
 Form.BaseField = BaseField;
 Form.TextInput = FormTextInput;
 Form.Textarea = FormTextarea;
+Form.MentionTextarea = FormMentionTextarea;
 Form.Select = FormSelect;
 Form.Radio = FormRadio;
-//Form.DateInput = FormDateInput;
+Form.DateInput = FormDateInput;
 Form.Checkbox = FormCheckbox;
-//Form.AutosuggestTags = FormAutosuggestTags;
+Form.AutosuggestTags = FormAutosuggestTags;
 
 export default Form;

@@ -26,7 +26,7 @@ const Contact = ({ contact_email, contact_phones }) => (
 )
 
 class LabelledContact extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     ++unique_id;
     this.setState({label_id: id_prefix + unique_id});
   }
@@ -41,16 +41,33 @@ class LabelledContact extends React.Component {
       this.props.onAddContact();
     };
 
-    return (
-      <div className={this.props.className}>
-        <label htmlFor={this.state.label_id}>
-          {this.props.label}
-        </label>
-        <Select key={this.state.label_id + 'contactselect'} style={select_contact_style} id={this.state.label_id} value={contact_id} options={this.props.contacts} change={this.props.onChangeContact} disabled={this.props.disabled} />
-        {canAddContact ? <a className="button hollow" style={add_style} onClick={handleAddContact}>+</a> : null}
-        {this.props.contact ? <Contact key={this.state.label_id + 'contactdisplay'} {...this.props.contact} /> : null}
-      </div>
-    )
+    if(this.props.side) {
+      return (
+        <div className={this.props.className}>
+          <div className="small-12 medium-4 columns">
+            <label htmlFor={this.state.label_id} style={{ fontSize: 'initial' }}>
+              {this.props.label}
+            </label>
+          </div>
+          <div className="small-12 medium-8 columns">
+            <Select key={this.state.label_id + 'contactselect'} style={select_contact_style} id={this.state.label_id} value={contact_id} options={this.props.contacts} change={this.props.onChangeContact} disabled={this.props.disabled} />
+            {canAddContact ? <a className="button hollow" style={add_style} onClick={handleAddContact}>+</a> : null}
+            {this.props.contact ? <Contact key={this.state.label_id + 'contactdisplay'} {...this.props.contact} /> : null}
+          </div>
+        </div>
+      )
+    }else{
+      return (
+        <div className={this.props.className}>
+          <label htmlFor={this.state.label_id}>
+            {this.props.label}
+          </label>
+          <Select key={this.state.label_id + 'contactselect'} style={select_contact_style} id={this.state.label_id} value={contact_id} options={this.props.contacts} change={this.props.onChangeContact} disabled={this.props.disabled} />
+          {canAddContact ? <a className="button hollow" style={add_style} onClick={handleAddContact}>+</a> : null}
+          {this.props.contact ? <Contact key={this.state.label_id + 'contactdisplay'} {...this.props.contact} /> : null}
+        </div>
+      )
+    }
   }
 }
 

@@ -27,7 +27,7 @@ class LabelledColorPicker extends Component {
     window.removeEventListener('click', this.handleClickElsewhere, false);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({ backgroundColor: nextProps.value || DEFAULT_COLOR });
   }
 

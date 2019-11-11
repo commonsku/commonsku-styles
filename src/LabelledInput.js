@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
-//import DateInput from './DateInput'
+import DateInput from './DateInput'
 
 let unique_id = 0;
 const id_prefix = 'LabelledInput';
@@ -14,7 +14,7 @@ export default class LabelledInput extends React.Component {
       this[method] = this[method].bind(this);
     });
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     ++unique_id;
     this.setState({label_id: id_prefix + unique_id});
   }
@@ -63,9 +63,9 @@ export default class LabelledInput extends React.Component {
         onBlur={this.onBlur} 
       />
 
-    /* if (type === 'date') {
+    if (type === 'date') {
       input = <DateInput {...props} onChange={onChange} onBlur={onBlur}/>;
-    } */
+    }
 
     const input_group_class = `input-group side-input ${className}`;
 

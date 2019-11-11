@@ -18,7 +18,7 @@ export default class TextArea extends Component {
       children,
       onChange = _.identity,
       onFieldChange = _.identity,
-      ...props,
+      ...props
     } = this.props;
     
     return <AutosizeTextArea {...props} 

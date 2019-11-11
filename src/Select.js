@@ -15,7 +15,7 @@ class Select extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
    this.setState({ value: nextProps.value, error: nextProps.error });
   }
 
@@ -26,6 +26,7 @@ class Select extends Component {
   render() {
     const { 
       id, style, value, defaultValue, options, disabled, error, gallery, className,
+      multi = false,
       change = _.identity,
       onChange = _.identity, 
       clearable = clearable ? clearable : false,
@@ -53,7 +54,7 @@ class Select extends Component {
 
     let select_attributes = { 
       id, wrapperStyle: style, clearable, searchable, className,
-      menuStyle, menuContainerStyle, placeholder 
+      menuStyle, menuContainerStyle, placeholder, multi
     };
     if (this.state.value) {
       select_attributes.value = this.state.value;
@@ -91,7 +92,11 @@ class Select extends Component {
           options={options.map(o => ({ value: o.key, label: o.value }))}
           onChange={(e) => {
             onChange(e ? e : stand_in);
-            return change(e ? e.value : stand_in.value);
+            if (multi) {
+              return change(e ? e.map(v => v.value) : [stand_in.value]);
+            } else {
+              return change(e ? e.value : stand_in.value);
+            }
           }}
           isOptionUnique={isOptionUnique}
           isValidNewOption={isValidNewOption}
@@ -114,7 +119,11 @@ class Select extends Component {
           filterOptions={filterOptions}
           onChange={(e) => {
             onChange(e ? e : stand_in);
-            return change(e ? e.value : stand_in.value);
+            if (multi) {
+              return change(e ? e.map(v => v.value) : [stand_in.value]);
+            } else {
+              return change(e ? e.value : stand_in.value);
+            }
           }}
         />
       );
@@ -126,7 +135,11 @@ class Select extends Component {
           options={options.map(o => ({ value: o.key, label: o.value }))}
           onChange={(e) => {
             onChange(e ? e : stand_in);
-            return change(e ? e.value : stand_in.value);
+            if (multi) {
+              return change(e ? e.map(v => v.value) : [stand_in.value]);
+            } else {
+              return change(e ? e.value : stand_in.value);
+            }
           }}
         />
       );
