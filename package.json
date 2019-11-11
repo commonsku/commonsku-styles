@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
-    "prepublishOnly": "npm run transpile"
+    "prepublishOnly": "npm run transpile",
+    "packTest": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
   },
   "keywords": [
     "commonsku",
