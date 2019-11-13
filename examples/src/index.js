@@ -1,6 +1,7 @@
 import React from 'react';
 import { render} from 'react-dom';
 import { DateInput, TextArea, TextInput, Select } from '../../src';
+import '../../scss/main.scss';
 
 const App = () => {
     return (
