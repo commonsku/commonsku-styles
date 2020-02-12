@@ -57,7 +57,7 @@
         "stylelint-webpack-plugin": "^0.10.5",
         "webpack": "4.10.2",
         "webpack-cli": "^3.1.2",
-        "webpack-dev-server": "^3.1.10",
+        "webpack-dev-server": "^3.1.11",
         "webpack-md5-hash": "^0.0.6"
     },
     "directories": {
