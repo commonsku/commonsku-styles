@@ -1,16 +1,11 @@
 import React from 'react';
 import { render} from 'react-dom';
-import { DateInput, TextArea, TextInput, Select } from '../../src';
+import { Component } from '../../src';
 import '../../scss/main.scss';
 
 const App = () => {
     return (
-        <div>
-            <div>DateInput: <DateInput /></div>
-            <div>TextArea: <TextArea /></div>
-            <div>TextInput: <TextInput /></div>
-            <div>Select: <Select options={[{ key: '', value: '' }]} /></div>
-        </div>
+        <Component fade={true} margin={2} foo={true}>Hello World!</Component>
     )
 }
 

@@ -1,5 +1,4 @@
 @charset 'utf-8';
-@import 'settings';
 
 html {
   height: 100%;
@@ -12,97 +11,27 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: inherit;
-  font-family: $body-font-family;
-  font-weight: $global-weight-normal;
-  line-height: $global-lineheight;
-  color: $body-font-color;
-  background: $body-background;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* sass doesn't support nested extend, 
- * so use this global placeholder to hack it
- * https://github.com/sass/sass/issues/1442
- * */
-%foundation-input {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  height: 2.4375rem;
-  padding: 0.5rem;
-  border: 1px solid #CCD5DA;
-  margin: 0 0 1rem;
-  font-family: inherit;
-  font-size: 1rem;
-  color: #2A383F;
-  background-color: #fefefe;
-  box-shadow: inset 0 1px 2px rgba(42, 56, 63, 0.1);
-  border-radius: 3px;
-  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
-  -webkit-appearance: none;
-  -moz-appearance: none; 
+.fade {
+  opacity: 0.5;
 }
 
-.resku {
-  $callout-warning-color: #FFF3D9;
-  @import '~motion-ui/motion-ui.scss';
-  @import '~foundation-sites/scss/foundation';
-
-  @include foundation-global-styles;
-  @include foundation-grid;
-  @include foundation-typography;
-  @include foundation-button;
-  @include foundation-forms;
-  @include foundation-visibility-classes;
-  @include foundation-float-classes;
-  @include foundation-accordion;
-  @include foundation-accordion-menu;
-  @include foundation-badge;
-  @include foundation-breadcrumbs;
-  @include foundation-button-group;
-  @include foundation-callout;
-  @include foundation-close-button;
-  @include foundation-drilldown-menu;
-  @include foundation-dropdown;
-  @include foundation-dropdown-menu;
-  @include foundation-flex-video;
-  @include foundation-label;
-  @include foundation-media-object;
-  @include foundation-menu;
-  @include foundation-off-canvas;
-  @include foundation-orbit;
-  @include foundation-pagination;
-  @include foundation-progress-bar;
-  @include foundation-slider;
-  @include foundation-sticky;
-  @include foundation-reveal;
-  @include foundation-switch;
-  @include foundation-table;
-  @include foundation-tabs;
-  @include foundation-thumbnail;
-  @include foundation-title-bar;
-  @include foundation-tooltip;
-  @include foundation-top-bar;
-
-  @include motion-ui-transitions;
-  @include motion-ui-animations;
-
-  @import '~react-select/dist/react-select';
-  @import '~react-datepicker/dist/react-datepicker.css';
-
-  box-sizing: border-box;
-  * {
-    box-sizing: inherit;
-  }
-  .react-datepicker__day--sun, .react-datepicker__day--sat {
-    color: red;
-  }
-  .react-datepicker__day--outside-month {
-    color: gray;
-  }
-  .react-datepicker-wrapper, .react-datepicker__input-container {
-    display: block;
-  }
+.margin-1 {
+  margin: 1px;
 }
+.margin-2 {
+  margin: 2px;
+}
+.margin-3 {
+  margin: 3px;
+}
+.margin-4 {
+  margin: 4px;
+}
+.margin-5 {
+  margin: 5px;
+}
+
