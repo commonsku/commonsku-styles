@@ -1,7 +1,7 @@
 {
     "name": "skui",
     "version": "1.0.0",
-    "description": "Common React components used by commonsku",
+    "description": "Common React components by commonsku",
     "main": "dist/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,14 +17,15 @@
     "author": "commonsku",
     "license": "ISC",
     "peerDependencies": {
-        "react": "^16.6.1",
-        "react-dom": "^16.6.1"
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0"
     },
     "dependencies": {
-        "lodash": "^4.14.1",
+        "lodash": "^4.17.15",
         "prop-types": "^15.6.2",
-        "react": "^16.9.0",
-        "react-dom": "^16.6.1"
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "styled-components": "^5.0.1"
     },
     "devDependencies": {
         "autosuggest-highlight": "^3.1.1",
@@ -48,16 +49,14 @@
         "html-webpack-plugin": "^3.2.0",
         "mini-css-extract-plugin": "^0.4.0",
         "motion-ui": "~1.1.0",
-        "node-sass": "^4.9.0",
         "postcss-loader": "^2.1.5",
-        "sass-loader": "^7.0.3",
         "style-loader": "^0.23.1",
         "stylelint": "^9.3.0",
         "stylelint-config-recommended": "^2.1.0",
         "stylelint-webpack-plugin": "^0.10.5",
-        "webpack": "4.10.2",
+        "webpack": "^4.41.6",
         "webpack-cli": "^3.1.2",
-        "webpack-dev-server": "^3.1.10",
+        "webpack-dev-server": "^3.10.3",
         "webpack-md5-hash": "^0.0.6"
     },
     "directories": {

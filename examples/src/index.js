@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { render} from 'react-dom';
-import { Component } from '../../src';
-import '../../scss/main.scss';
+
+import { Component, StyledComponent } from '../../src';
 
 const App = () => {
     return (
-        <Component fade={true} margin={2} foo={true}>Hello World!</Component>
+        <Fragment>
+            <StyledComponent />
+            <Component fade={true} margin={2} foo={true}>Hello World!</Component> {/* foo is not accepted in compoent so nothing happens */}
+        </Fragment>
     )
 }
 

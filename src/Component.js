@@ -20,8 +20,6 @@ export default function Component(props) {
         }
         return obj;
       }, {})
-    
-    console.log(classes)
 
     return (
       <div className={renderClasses(classes)}>
