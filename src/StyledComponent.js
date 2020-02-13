@@ -13,12 +13,10 @@ const Title = styled.h1`
   background: papayawhip;
   `;
 
-const StyledComponent = () => {
+export default function StyledComponent() {
   return (
     <Wrapper>
       <Title>Hello World, this is my first styled component!</Title>
     </Wrapper>
   )
 }
-
-export default StyledComponent
