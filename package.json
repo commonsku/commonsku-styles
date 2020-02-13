@@ -1,73 +1,73 @@
 {
-    "name": "skui",
-    "version": "1.0.0",
-    "description": "Common React components by commonsku",
-    "main": "dist/index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "NODE_ENV=development webpack-dev-server --mode development --hot",
-        "transpile": "babel src -d dist --copy-files",
-        "prepublishOnly": "npm run transpile",
-        "packTest": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
-    },
-    "keywords": [
-        "commonsku",
-        "React"
-    ],
-    "author": "commonsku",
-    "license": "ISC",
-    "peerDependencies": {
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0"
-    },
-    "dependencies": {
-        "lodash": "^4.17.15",
-        "prop-types": "^15.6.2",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0",
-        "styled-components": "^5.0.1"
-    },
-    "devDependencies": {
-        "autosuggest-highlight": "^3.1.1",
-        "babel-cli": "^6.26.0",
-        "babel-core": "^6.26.3",
-        "babel-loader": "^7.1.5",
-        "babel-plugin-syntax-dynamic-import": "^6.18.0",
-        "babel-plugin-transform-class-properties": "^6.24.1",
-        "babel-plugin-transform-object-rest-spread": "^6.26.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-es2015": "^6.24.1",
-        "babel-preset-react": "^6.24.1",
-        "babel-preset-react-hmre": "^1.1.1",
-        "babel-register": "^6.26.0",
-        "clean-webpack-plugin": "^0.1.19",
-        "css-loader": "^1.0.1",
-        "eslint": "^5.0.0",
-        "eslint-config-prettier": "^2.9.0",
-        "eslint-plugin-prettier": "^2.6.1",
-        "extract-text-webpack-plugin": "^4.0.0-beta.0",
-        "html-webpack-plugin": "^3.2.0",
-        "mini-css-extract-plugin": "^0.4.0",
-        "motion-ui": "~1.1.0",
-        "postcss-loader": "^2.1.5",
-        "style-loader": "^0.23.1",
-        "stylelint": "^9.3.0",
-        "stylelint-config-recommended": "^2.1.0",
-        "stylelint-webpack-plugin": "^0.10.5",
-        "webpack": "^4.41.6",
-        "webpack-cli": "^3.1.2",
-        "webpack-dev-server": "^3.10.3",
-        "webpack-md5-hash": "^0.0.6"
-    },
-    "directories": {
-        "example": "examples"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/commonsku/skui.git"
-    },
-    "bugs": {
-        "url": "https://github.com/commonsku/skui/issues"
-    },
-    "homepage": "https://github.com/commonsku/skui#readme"
+  "name": "@commonsku/styles",
+  "version": "1.0.0",
+  "description": "Common React components by commonsku",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=development webpack-dev-server --mode development --hot",
+    "transpile": "babel src -d dist --copy-files",
+    "prepublishOnly": "npm run transpile",
+    "packTest": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
+  },
+  "keywords": [
+    "commonsku",
+    "React"
+  ],
+  "author": "commonsku",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "prop-types": "^15.6.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "autosuggest-highlight": "^3.1.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-register": "^6.26.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "motion-ui": "~1.1.0",
+    "postcss-loader": "^2.1.5",
+    "style-loader": "^0.23.1",
+    "stylelint": "^9.3.0",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-md5-hash": "^0.0.6"
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/commonsku/skui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/commonsku/skui/issues"
+  },
+  "homepage": "https://github.com/commonsku/skui#readme"
 }
