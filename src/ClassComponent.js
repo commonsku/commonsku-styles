@@ -1,7 +1,9 @@
+/* Proposed way to pass classes into component, edit when necessary */
+
 import React from 'react'
 import { renderClasses } from './utils'
 
-export default function Component(props) {
+export default function ClassComponent(props) {
     const allowed_classes = ['fade', 'margin']
     const classes = Object.keys(props)
       .filter(key => allowed_classes.includes(key))
