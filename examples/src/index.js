@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { render} from 'react-dom';
 
 import { Component, StyledComponent } from '../../src';
-import '../../scss/main.scss';
 
 const App = () => {
     return (
