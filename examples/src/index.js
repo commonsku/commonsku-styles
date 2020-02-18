@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react';
 import { render} from 'react-dom';
 
-import { ClassComponent, StyledComponent } from '../../src';
+import { Button, Toggle, ToggleLink } from '../../src';
 
 const App = () => {
     return (
-        <Fragment>
-            <StyledComponent />
-            <ClassComponent fade={true} margin={2} foo={true}>Hello World!</Component> {/* foo is not accepted in compoent so nothing happens */}
-        </Fragment>
+        <div>
+        <Button>Test</Button>
+        <Toggle>
+            <ToggleLink selected>Test</ToggleLink>
+            <ToggleLink>Test</ToggleLink>
+        </Toggle>
+        </div>
     )
 }
 
