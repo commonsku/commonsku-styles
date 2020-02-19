@@ -25,8 +25,10 @@
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-flexbox-grid": "^2.1.2",
     "react-select": "^2.4.4",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "transpile": "^2.7.2"
   },
   "devDependencies": {
     "autosuggest-highlight": "^3.1.1",

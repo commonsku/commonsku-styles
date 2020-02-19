@@ -19,4 +19,14 @@ function Progress (props) {
          </ProgressWrapper>
 }
 
-export default Progress;
+function LabeledProgress (props) {
+  return <div>
+           <strong>
+             <span style={{color:"#00a259"}}>${props.value}</span>
+           </strong> / ${props.max}
+           <br/>
+	   <Progress value={props.value} max={props.max}/>
+	 </div>
+}
+
+export {Progress, LabeledProgress};

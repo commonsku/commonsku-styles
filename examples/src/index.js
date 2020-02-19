@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { render} from 'react-dom';
 
-import { Button, Toggle, ToggleLink } from '../../src';
+import { Button, Toggle, ToggleLink, Select } from '../../src';
 
 const App = () => {
     return (
@@ -11,6 +11,7 @@ const App = () => {
                 <ToggleLink selected>Test</ToggleLink>
                 <ToggleLink>Test</ToggleLink>
             </Toggle>
+	    <Select></Select>
         </Fragment>
     )
 }
