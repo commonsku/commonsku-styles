@@ -1,6 +1,6 @@
 import React from 'react'
 
-export {default as Select} from './Select'
+//export {default as Select} from './Select'
 export {default as Page} from './Page'
 export {default as Box} from './Box'
 export {default as Padding} from './Padding'
