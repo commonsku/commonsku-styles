@@ -5,8 +5,7 @@ const Wrapper = styled.div`
   display: inline-flex;
   max-width: 600px;
   justify-content: space-around;
-  width: 100%;
-`
+  width: 100%; `
 
 const Container = styled.div`
   background: #DAE9EE;
@@ -27,6 +26,7 @@ const ToggleLink = styled.a`
   line-height: 33px;
   width: 50%;
   justify-content: center;
+  cursor: pointer;
   background-color: ${props => props.selected ? "#02C0DA" : "#DAE9EE" };
   color:            ${props => props.selected ? "white" : "#02c0da" };
 `

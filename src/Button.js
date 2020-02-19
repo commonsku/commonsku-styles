@@ -31,4 +31,4 @@ const Button = styled.button`
   font-family: ${props => props.small ? "'skufont-normal', sans-serif" : "'skufont-demibold', sans-serif"};
 `;
 
-export default Button;
+export {Button};

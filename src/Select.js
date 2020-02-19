@@ -1,4 +1,5 @@
 import React from 'react'
+import {Label} from './Label'
 import Select, { NonceProvider } from 'react-select'
 
 const customStyles = {
@@ -43,4 +44,11 @@ const SKUSelect = props => <Select styles={customStyles} theme={theme => ({
 })}
 {...props}/>;
 
-export {SKUSelect as Select};
+const LabeledSelect = (props) => {
+  return <div>
+           <Label htmlFor={props.name}>{props.label}</Label>  
+	   <SKUSelect {...props}/>
+         </div>
+}
+
+export {SKUSelect as Select, LabeledSelect};

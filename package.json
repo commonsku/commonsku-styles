@@ -28,7 +28,8 @@
     "react-flexbox-grid": "^2.1.2",
     "react-select": "^2.4.4",
     "styled-components": "^5.0.1",
-    "transpile": "^2.7.2"
+    "transpile": "^2.7.2",
+    "ttf-loader": "^1.0.2"
   },
   "devDependencies": {
     "autosuggest-highlight": "^3.1.1",
@@ -49,6 +50,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^5.1.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "motion-ui": "~1.1.0",

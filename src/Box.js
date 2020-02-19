@@ -8,4 +8,4 @@ const Box = styled.div`
   padding: 20px ${props => props.padded ? 20 : 0}px;
 `;
 
-export default Box;
+export {Box};
