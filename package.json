@@ -8,7 +8,8 @@
     "start": "NODE_ENV=development webpack-dev-server --mode development --hot",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
-    "packTest": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
+    "packTest": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
+    "reinstall": "git pull && npm install && npm run transpile && npm pack && touch ${DIR:-~/project/commonsku-dev}/commonsku-styles-*.tgz && rm ${DIR:-~/project/commonsku-dev}/commonsku-styles-*.tgz 2> /dev/null && cp commonsku-styles-*.tgz ${DIR:-~/project/commonsku-dev}/ && cd ${DIR:-~/project/commonsku-dev}/ && npm install commonsku-styles-*.tgz"
   },
   "keywords": [
     "commonsku",
