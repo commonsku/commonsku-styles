@@ -45,10 +45,12 @@ const SKUSelect = props => <Select styles={customStyles} theme={theme => ({
 {...props}/>;
 
 const LabeledSelect = (props) => {
-  return <div>
-           <Label htmlFor={props.name}>{props.label}</Label>  
-	   <SKUSelect {...props}/>
-         </div>
+  return (
+    <div>
+      <Label htmlFor={props.name}>{props.label}</Label>  
+      <SKUSelect {...props}/>
+    </div>
+  )
 }
 
 export {SKUSelect as Select, LabeledSelect};
