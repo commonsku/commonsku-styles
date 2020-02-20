@@ -1,6 +1,23 @@
 import styled from 'styled-components'
+import { Typography } from './Typography'
+import React from 'react'
 
-const Page = styled.div`
+/* 
+
+  Styles common for every commonsku page
+
+*/
+
+const StyledPage = styled.div`
+  font-family: 'skufont-medium', sans-serif;
 `;
+
+
+function Page (props) {
+  return <StyledPage>
+           <Typography/>
+           {props.children}
+         </StyledPage>
+}
 
 export {Page};

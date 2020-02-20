@@ -21,9 +21,11 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
+    "aphrodite": "^2.4.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
+    "react-animations": "^1.0.0",
     "react-dom": "^16.12.0",
     "react-flexbox-grid": "^2.1.2",
     "react-select": "^2.4.4",
