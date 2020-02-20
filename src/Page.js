@@ -9,7 +9,7 @@ import React from 'react'
 */
 
 const StyledPage = styled.div`
-  font-family: 'skufont-medium', sans-serif;
+  font-family: 'skufont-regular', sans-serif;
 `;
 
 

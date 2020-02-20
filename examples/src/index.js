@@ -16,6 +16,7 @@ import {
     LabeledInput,
     SidePanel,
     Typography,
+    Tabs,
     LabeledSelect,
     LabeledProgress
 } from '../../src';
@@ -53,11 +54,19 @@ class App extends React.Component {
 		  <LabeledProgress label="Labeled Progress" min={0} max={100} value={65}/>
 
                   <H5>Toggle</H5>
-                  <Label>Toggle: </Label>
                   <Toggle>
                       <ToggleLink selected>Active</ToggleLink>
                       <ToggleLink>Inactive</ToggleLink>
                   </Toggle>
+
+		  <H5>Tabs</H5>
+                  <Tabs tabs={[
+                                { label: "First Tab",  content: <div>Hello World! This is the content of the very first tab.</div> },
+                                { label: "Second Tab", content: <div>This is tab number two</div> },
+                                { label: "Third Tab",  content: <div>This is the last tab</div> },
+                             ]}
+                  />
+		  
 		</Col>
 		<Col xs/>
 	      </Row>

@@ -29,6 +29,7 @@ const Button = styled.button`
   font-size: ${ props => props.tiny ? ".8em" : "1em" };
   padding: ${props => props.xl ? "17px 50px" : props => props.large ? "17px 30px" : props => props.small ? "7px 15px" : props => props.tiny ? "5px 5px" : "12px 25px" };
   font-family: ${props => props.small || props.tiny ? "'skufont-regular', sans-serif" : "'skufont-demibold', sans-serif"};
+  cursor: pointer;
 `;
 
 export {Button};
