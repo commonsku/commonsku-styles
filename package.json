@@ -28,7 +28,6 @@
     "react-flexbox-grid": "^2.1.2",
     "react-select": "^2.4.4",
     "styled-components": "^5.0.1",
-    "transpile": "^2.7.2",
     "ttf-loader": "^1.0.2"
   },
   "devDependencies": {
