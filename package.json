@@ -83,9 +83,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commonsku/skui.git"
+    "url": "git+https://github.com/commonsku/commonsku-styles.git"
   },
   "bugs": {
-    "url": "https://github.com/commonsku/skui/issues"
+    "url": "https://github.com/commonsku/commonsku-styles/issues"
   }
 }
