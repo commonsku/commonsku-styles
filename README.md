@@ -14,3 +14,28 @@ npm install @commonsku/styles
 Check out the examples/src folder to see how to import in your projects
 
 Todo: adding styles and more examples
+
+## Testing
+### Local development
+```yarn start```
+### From local
+```json
+// add absolute path to package.json
+"dependencies": {
+  "@commonsku/styles": "/abosolute/path/commonsku-styles",
+}
+```
+### From github
+```json
+// add absolute path to package.json
+"dependencies": {
+  "@commonsku/styles": "commonsku/commonsku-styles#branch-name",
+}
+```
+### From npm 
+```json
+// add absolute path to package.json
+"dependencies": {
+  "@commonsku/styles": "^1.0.0",
+}
+```
