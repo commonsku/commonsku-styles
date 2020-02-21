@@ -19,7 +19,9 @@
     "test": "react-scripts test",
     "prepare": "rm -rf dist && yarn run build",
     "packTest": "npm pack --dry-run",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "styleguide": "styleguidist server --open",
+    "styleguide:build": "styleguidist build"
   },
   "keywords": [
     "commonsku",
@@ -61,7 +63,9 @@
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-typescript": "^3.0.0",
     "@rollup/plugin-url": "^4.0.2",
+    "react-docgen-typescript": "^1.16.2",
     "react-scripts": "3.4.0",
+    "react-styleguidist": "^10.6.2",
     "rollup": "^1.31.1",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-postcss": "^2.0.6",
