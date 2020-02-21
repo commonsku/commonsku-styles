@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 
 import eot_bold     from './fonts/TT-Norms-Pro-Bold.eot'
@@ -30,7 +29,7 @@ const Typography = createGlobalStyle`
   @font-face {
     font-family: "skufont-bold";
     src: url(${eot_bold});
-    src: url(${otf_bold})   format("opentype"),
+    src: url(${otf_bold})   format("opentype"), 
          url(${ttf_bold})   format("TrueType"),
          url(${woff_bold})  format("woff"),
          url(${woff2_bold}) format("woff2");

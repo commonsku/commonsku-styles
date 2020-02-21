@@ -15,7 +15,7 @@ const Container = styled.div`
   width: 100%;
 `
 
-const ToggleLink = styled.a`
+const ToggleLink = styled.a<{selected?: boolean}>`
   font-family: 'skufont-medium', sans-serif;
   font-size: 14px;
   border-radius: 30px;
@@ -31,12 +31,12 @@ const ToggleLink = styled.a`
   color:            ${props => props.selected ? "white" : "#02c0da" };
 `
 
-function Toggle (props) {
+const Toggle = ({ children }: React.PropsWithChildren<{}>) => {
   return <Wrapper>
-           <Container>
-             {props.children}
-           </Container>
-         </Wrapper>
+    <Container>
+      {children}
+    </Container>
+  </Wrapper>
 }
 
 export {Toggle, ToggleLink};
