@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
+
 import placeholder from './avatar-placeholder.png'
 
 const AvatarWrapper = styled.div`
@@ -15,10 +16,10 @@ const AvatarPic = styled.img`
   width: 42px;
 `
 
-const Avatar = (props) => {
+const Avatar = ({ pic }: React.PropsWithChildren<{pic?: string}>) => {
   return <AvatarWrapper>
-           <AvatarPic src={props.pic ? props.pic : placeholder }/>
-         </AvatarWrapper>
+    <AvatarPic src={pic ?? placeholder }/>
+  </AvatarWrapper>
 }
 
-export {Avatar}
+export { Avatar }

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { useState } from 'react'
 
 const TabBar = styled.ul`
   display: block;
@@ -9,7 +9,7 @@ const TabBar = styled.ul`
   padding: 0;
 `
 
-const Tab = styled.li`
+const Tab = styled.li<{selected?: boolean}>`
   cursor: pointer;
   display: inline-block;
   border-bottom: ${props => props.selected ? "5px solid #02c0da" : "none"};
@@ -39,30 +39,24 @@ Here's how you use this:
 
 */
 
-class Tabs extends React.Component {
+const Tabs = ({ tabs }: { tabs: {label: string, content: React.ReactNode}[] }) => {
   /* add state, onclick event */
-  constructor(props) {
-    super(props)
-    this.state = { 
-      selectedTabIndex: 0,
-      selectedTab: props.tabs[0]
-    }
-  }
-  render() {
+  const [state, setState] = useState({ 
+    selectedTabIndex: 0,
+    selectedTab: tabs[0]
+  });
   return <div>
-           <TabBar>
-             { this.props.tabs.map((tab, index) => <Tab key={index}
-	                                                name={tab.name}
-							selected={index == this.state.selectedTabIndex}
-							onClick={() => this.setState({ selectedTabIndex: index }) }>
-	                                             {tab.label}
-						   </Tab>)}
-           </TabBar>
-	   <TabContent>
-	     {this.props.tabs[this.state.selectedTabIndex].content}
-	   </TabContent>
-	 </div>
-  }
+    <TabBar>
+      {tabs.map((tab, index) => <Tab key={index}
+        selected={index == state.selectedTabIndex}
+        onClick={() => setState({ ...state, selectedTabIndex: index })}>
+        {tab.label}
+      </Tab>)}
+    </TabBar>
+    <TabContent>
+      {tabs[state.selectedTabIndex].content}
+    </TabContent>
+  </div>
 }
 
 export {TabBar, Tab, Tabs};

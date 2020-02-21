@@ -1,8 +1,9 @@
 import React from 'react'
-import {Label} from './Label'
-import Select, { NonceProvider } from 'react-select'
+import Select, { Props as SelectProps, StylesConfig } from 'react-select'
 
-const customStyles = {
+import {Label} from './Label'
+
+const customStyles: StylesConfig = {
   option: (provided, state) => ({
     ...provided,
     borderBottom: 'none',
@@ -27,24 +28,27 @@ const customStyles = {
   },
 }
 
-const SKUSelect = props => <Select styles={customStyles} theme={theme => ({
-  ...theme,
-  borderRadius: 5,
-  colors: {
-    ...theme.colors,
-    primary25: '#DAE9EE',
-    primary75: '#DAE9EE',
-    primary50: '#C9E8F2',
-    primary: '#02c0da',
-    neutral20: '#ABC7D1',
-    neutral30: '#ABC7D1',
-    neutral80: '#52585C',
-    neutral90: '#52585C'
-  },
-})}
-{...props}/>;
+const SKUSelect = (props: SelectProps) => <Select 
+  styles={customStyles} 
+  theme={theme => ({
+    ...theme,
+    borderRadius: 5,
+    colors: {
+      ...theme.colors,
+      primary25: '#DAE9EE',
+      primary75: '#DAE9EE',
+      primary50: '#C9E8F2',
+      primary: '#02c0da',
+      neutral20: '#ABC7D1',
+      neutral30: '#ABC7D1',
+      neutral80: '#52585C',
+      neutral90: '#52585C'
+    },
+  })}
+  {...props}
+/>;
 
-const LabeledSelect = (props) => {
+const LabeledSelect = (props: SelectProps) => {
   return (
     <div>
       <Label htmlFor={props.name}>{props.label}</Label>  

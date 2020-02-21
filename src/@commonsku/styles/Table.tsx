@@ -5,7 +5,7 @@ const sharedStyle = css`
   box-sizing: border-box;
 `
 
-const optionalPadding = css`
+const optionalPadding = css<{padded?: boolean}>`
   &:first-child {
     padding-left: ${props => props.padded ? "20px" : "inherit"};
   }
@@ -26,7 +26,7 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))`
   ${sharedStyle}
 `;
 
-const TH= styled.th`
+const TH= styled.th<{clickable: boolean}>`
   background-color: #dae9ee;
   border: none;
   border-spacing: none;
@@ -43,7 +43,7 @@ const TH= styled.th`
   ${sharedStyle}
 `;
 
-const TD= styled.td`
+const TD= styled.td<{clickable: boolean}>`
   color: #52585c;
   font-size: .875rem;
   line-height: 1.75rem;

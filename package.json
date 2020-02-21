@@ -2,72 +2,84 @@
   "name": "@commonsku/styles",
   "version": "1.0.0",
   "description": "Common React components by commonsku",
-  "main": "dist/index.js",
+  "author": "commonsku",
+  "license": "ISC",
+  "main": "dist/@commonsku/styles/index.js",
+  "module": "dist/@commonsku/styles/index.es.js",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development webpack-dev-server --mode development --hot",
-    "transpile": "babel src -d dist --copy-files",
-    "prepublishOnly": "npm run transpile",
-    "packTest": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
-    "reinstall": "git pull && npm install && npm run transpile && npm pack && touch ${DIR:-~/project/commonsku-dev}/commonsku-styles-*.tgz && rm ${DIR:-~/project/commonsku-dev}/commonsku-styles-*.tgz 2> /dev/null && cp commonsku-styles-*.tgz ${DIR:-~/project/commonsku-dev}/ && cd ${DIR:-~/project/commonsku-dev}/ && npm install commonsku-styles-*.tgz"
+    "start": "react-scripts start",
+    "build": "rollup -c",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "keywords": [
     "commonsku",
     "React"
   ],
-  "author": "commonsku",
-  "license": "ISC",
   "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  },
-  "dependencies": {
     "aphrodite": "^2.4.0",
     "lodash": "^4.17.15",
-    "prop-types": "^15.6.2",
     "react": "^16.12.0",
     "react-animations": "^1.0.0",
     "react-dom": "^16.12.0",
     "react-flexbox-grid": "^2.1.2",
-    "react-select": "^2.4.4",
-    "styled-components": "^5.0.1",
-    "ttf-loader": "^1.0.2"
+    "react-select": "^3.0.8",
+    "styled-components": "^5.0.1"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^25.1.3",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.7.4",
+    "@types/react": "^16.9.21",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-select": "^3.0.10",
+    "@types/styled-components": "^5.0.0",
+    "aphrodite": "^2.4.0",
+    "lodash": "^4.17.15",
+    "react": "^16.12.0",
+    "react-animations": "^1.0.0",
+    "react-dom": "^16.12.0",
+    "react-flexbox-grid": "^2.1.2",
+    "react-select": "^3.0.8",
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
-    "autosuggest-highlight": "^3.1.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-react-hmre": "^1.1.1",
-    "babel-register": "^6.26.0",
-    "clean-webpack-plugin": "^0.1.19",
-    "css-loader": "^1.0.1",
-    "eslint": "^5.0.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.1",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "file-loader": "^5.1.0",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.4.0",
-    "motion-ui": "~1.1.0",
-    "postcss-loader": "^2.1.5",
-    "style-loader": "^0.23.1",
-    "stylelint": "^9.3.0",
-    "stylelint-config-recommended": "^2.1.0",
-    "stylelint-webpack-plugin": "^0.10.5",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.10.3",
-    "webpack-md5-hash": "^0.0.6"
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-image": "^2.0.4",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-typescript": "^3.0.0",
+    "@rollup/plugin-url": "^4.0.2",
+    "react-scripts": "3.4.0",
+    "rollup": "^1.31.1",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-postcss": "^2.0.6",
+    "rollup-plugin-typescript2": "^0.26.0",
+    "typescript": "^3.7.5"
   },
-  "directories": {
-    "example": "examples"
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "repository": {
     "type": "git",
@@ -75,6 +87,5 @@
   },
   "bugs": {
     "url": "https://github.com/commonsku/skui/issues"
-  },
-  "homepage": "https://github.com/commonsku/skui#readme"
+  }
 }

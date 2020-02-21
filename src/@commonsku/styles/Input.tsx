@@ -1,6 +1,7 @@
-import styled from 'styled-components'
-import {Label} from './Label'
 import React from 'react'
+import styled, { StyledComponentProps } from 'styled-components'
+
+import {Label} from './Label'
 
 const Input = styled.input`
   padding: .5rem;
@@ -18,11 +19,13 @@ const Input = styled.input`
   }
 `;
 
-const LabeledInput = (props) => {
+type InputProps = StyledComponentProps<'input', any, {}, never>;
+
+const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string}) => {
   return <div>
-           <Label for={props.name}>{props.label}</Label>  
-	   <Input {...props}></Input>
-         </div>
+    <Label htmlFor={name}>{label}</Label>
+    <Input {...props}></Input>
+  </div>
 }
 
 export {Input, LabeledInput};
