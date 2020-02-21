@@ -4,8 +4,8 @@
   "description": "Common React components by commonsku",
   "author": "commonsku",
   "license": "ISC",
-  "main": "dist/@commonsku/styles/index.js",
-  "module": "dist/@commonsku/styles/index.es.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
