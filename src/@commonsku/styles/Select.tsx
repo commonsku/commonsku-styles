@@ -3,33 +3,35 @@ import Select, { Props as SelectProps, StylesConfig } from 'react-select'
 
 import {Label} from './Label'
 
-const customStyles: StylesConfig = {
-  option: (provided, state) => ({
-    ...provided,
-    borderBottom: 'none',
-    padding: 10,
-  }),
-  input: (provided, state) => ({
-    ...provided,
-    height: 'auto'
-  }),
-  menu: (provided, state) => ({
-    ...provided,
-    border: 'none'
-  }),
-  indicatorSeparator: (provided, state) => ({
-    ...provided,
-    display: 'none'
-  }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-    return { ...provided, opacity, transition };
-  },
-}
-
 const SKUSelect = (props: SelectProps) => <Select 
-  styles={customStyles} 
+  styles={{
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: 'none',
+      padding: 10,
+    }),
+    input: (provided, state) => ({
+      ...provided,
+      height: 'auto',
+    }),
+    control: (provided, state) => ({
+      ...provided,
+      marginBottom: (props.noMargin ? 0 : '1rem'),
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      border: 'none'
+    }),
+    indicatorSeparator: (provided, state) => ({
+      ...provided,
+      display: 'none'
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+      return { ...provided, opacity, transition };
+    }
+  }}
   theme={theme => ({
     ...theme,
     borderRadius: 5,
@@ -48,7 +50,7 @@ const SKUSelect = (props: SelectProps) => <Select
   {...props}
 />;
 
-const LabeledSelect = (props: SelectProps) => {
+const LabeledSelect = (props: SelectProps & {noMargin?:boolean}) => {
   return (
     <div>
       <Label htmlFor={props.name}>{props.label}</Label>  

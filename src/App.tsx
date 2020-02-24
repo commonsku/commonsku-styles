@@ -11,6 +11,7 @@ import {
     Toggle,
     ToggleLink, 
     LabeledInput,
+    Input,
     SidePanel,
     Tabs,
     LabeledSelect,
@@ -35,7 +36,7 @@ const App = () => {
           <Avatar />
 
           <H5>Select</H5>
-          <LabeledSelect label="Labeled Select" name="events" options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
+          <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
           <H5>Input</H5>
           <LabeledInput label="Labeled Input" placeholder="Input" />
