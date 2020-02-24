@@ -36,7 +36,7 @@ const App = () => {
       ]}
       />
     </SidePanel>
-    <Box padded={true} borderless={true}>
+    <Box padded borderless controls={<Button>Test</Button>} title="Hello">
       <Row>
         <Col xs>
           <H1>Some commonsku components</H1>
