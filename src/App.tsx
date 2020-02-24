@@ -15,7 +15,8 @@ import {
     SidePanel,
     Tabs,
     LabeledSelect,
-    LabeledProgress
+    LabeledProgress,
+    PanelContact
 } from '@commonsku/styles';
 
 const App = () => {
@@ -24,6 +25,16 @@ const App = () => {
     <SidePanel visible={showPanel}>
       <H2>Hello World!</H2>
       <Button onClick={() => setShowPanel(false)}>Close Panel</Button>
+      <Tabs tabs={[
+        { label: "Contacts", content: <div>
+                                         <PanelContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeff@abc.com" phone="843-443-4432" />
+                                         <PanelContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
+                                         <PanelContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phone="843-443-4432" />
+                                       </div> },
+        { label: "Second Tab", content: <div>This is tab number two</div> },
+        { label: "Third Tab", content: <div>This is the last tab</div> },
+      ]}
+      />
     </SidePanel>
     <Box padded={true} borderless={true}>
       <Row>
@@ -51,8 +62,8 @@ const App = () => {
           </Toggle>
           <H5>Tabs</H5>
           <Tabs tabs={[
-            { label: "First Tab", content: <div>Hello World! This is the content of the very first tab.</div> },
-            { label: "Second Tab", content: <div>This is tab number two</div> },
+            { label: "First Tab", content: <div>This is the first tab</div> },
+	    { label: "Second Tab", content: <div>This is tab number two</div> },
             { label: "Third Tab", content: <div>This is the last tab</div> },
           ]}
           />
