@@ -13,7 +13,7 @@ const Box = (props: React.PropsWithChildren<{borderless?: boolean, padded?: bool
     padding: 20px ${props => props.padded ? 20 : 0}px;
   `
 
-  return ( <StyledBox>
+  return ( <StyledBox padded={props.padded} borderless={props.borderless}>
            {props.title || props.controls ?
 	     <Row>
 	       <Col xs>
