@@ -11,9 +11,13 @@ React components for faster and easier web development by commonsku.
 npm install @commonsku/styles
 ```
 
-Check out the examples/src folder to see how to import in your projects
+## Styleguide
+```sh
+// with npm
+npm run styleguide
+```
 
-Todo: adding styles and more examples
+You can also check out the src/App.tsx to see how to import in your projects
 
 ## Testing
 ### Local development

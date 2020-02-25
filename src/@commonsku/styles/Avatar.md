@@ -1,5 +1,5 @@
 Avatar example:
 
 ```js
-<Avatar pizza="🍕" />
+<Avatar pic="https://commonsku.com/img/brand/icon.png" />
 ```
