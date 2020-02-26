@@ -1,6 +1,7 @@
 export * from './Avatar'
 export * from './Box'
 export * from './Background'
+export * from './DropArea'
 export * from './Button'
 export * from './Headings'
 export * from './Input'

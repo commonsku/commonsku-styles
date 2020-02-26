@@ -5,6 +5,7 @@ import {
     Avatar, 
     Box, 
     Background,
+    DropArea,
     Button, 
     H1, H2, H5, 
     Label,
@@ -12,6 +13,7 @@ import {
     Toggle,
     ToggleLink, 
     LabeledInput,
+    LabeledTextarea,
     Input,
     SidePanel,
     Tabs,
@@ -37,7 +39,7 @@ const App = () => {
       ]}
       />
     </SidePanel>
-    <Background padded>
+    <Background padded fillWindow>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
         <Row>
           <Col xs>
@@ -53,8 +55,14 @@ const App = () => {
             <H5>Input</H5>
             <LabeledInput label="Labeled Input" placeholder="Input" />
 
+            <H5>Text Area</H5>
+            <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
+
             <H5>Progress</H5>
             <LabeledProgress max={100} value={65} />
+
+            <H5>Drop Area</H5>
+            <DropArea placeholder="Drop Here"></DropArea>
 
             <H5>Toggle</H5>
             <Toggle>
@@ -64,7 +72,7 @@ const App = () => {
             <H5>Tabs</H5>
             <Tabs tabs={[
               { label: "First Tab", content: <div>This is the first tab</div> },
-	      { label: "Second Tab", content: <div>This is tab number two</div> },
+	            { label: "Second Tab", content: <div>This is tab number two</div> },
               { label: "Third Tab", content: <div>This is the last tab</div> },
             ]}
             />
