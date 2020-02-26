@@ -11,7 +11,10 @@ const StyledBox = styled.div<{borderless?: boolean, padded?: boolean}>`
   padding: 20px ${props => props.padded ? 20 : 0}px;
 `
 
-const Box = (props: React.PropsWithChildren<{borderless?: boolean, padded?: boolean, title?:string, controls?:React.ReactNode }>) => {
+const Box = (props: React.PropsWithChildren<{borderless?: boolean,
+                                             padded?    : boolean,
+                                             title?     : string,
+                                             controls?  : React.ReactNode }>) => {
 
   return ( <StyledBox padded={props.padded} borderless={props.borderless}>
            {props.title || props.controls ?

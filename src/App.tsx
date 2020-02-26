@@ -4,6 +4,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import { 
     Avatar, 
     Box, 
+    Background,
     Button, 
     H1, H2, H5, 
     Label,
