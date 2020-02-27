@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
 
-import { Typography } from './Typography'
-
 /* 
 
   Styles common for every commonsku page
