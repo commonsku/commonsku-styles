@@ -15,6 +15,7 @@ import {
     LabeledInput,
     LabeledTextarea,
     Input,
+    Spinner,
     SidePanel,
     Tabs,
     LabeledSelect,
@@ -34,7 +35,7 @@ const App = () => {
                                          <PanelContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
                                          <PanelContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phone="843-443-4432" />
                                        </div> },
-        { label: "Second Tab", content: <div>This is tab number two</div> },
+        { label: "Addresses", content: <div>This is tab number two</div> },
         { label: "Third Tab", content: <div>This is the last tab</div> },
       ]}
       />
@@ -63,6 +64,8 @@ const App = () => {
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
+
+            <Spinner/>
 
             <H5>Toggle</H5>
             <Toggle>
