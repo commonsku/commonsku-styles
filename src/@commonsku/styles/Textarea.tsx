@@ -3,13 +3,12 @@ import styled, { StyledComponentProps } from 'styled-components'
 
 import {Label} from './Label'
 
-const Input = styled.input<{noMargin?: boolean}>`
+export const Textarea = styled.textarea<{noMargin?: boolean}>`
   padding: .5rem;
   color: #123952;
   width: 100%;
   border: 1px solid #ABC7D1;
   border-radius: 5px;
-  box-sizing: border-box;
   font-family: 'skufont-regular', sans-serif;
   font-size: 1rem;
   background-color: white;
@@ -21,13 +20,11 @@ const Input = styled.input<{noMargin?: boolean}>`
   }
 `;
 
-type InputProps = StyledComponentProps<'input', any, {}, never>;
+type TextareaProps = StyledComponentProps<'textarea', any, {}, never>;
 
-const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string, noMargin?: boolean}) => {
+export const LabeledTextarea = ({ label, name, ...props}: TextareaProps & {label: string, name?: string, noMargin?: boolean}) => {
   return <div>
     <Label htmlFor={name}>{label}</Label>
-    <Input {...props}></Input>
+    <Textarea {...props}></Textarea>
   </div>
 }
-
-export {Input, LabeledInput};

@@ -4,6 +4,8 @@ import { Row, Col } from 'react-flexbox-grid';
 import { 
     Avatar, 
     Box, 
+    Background,
+    DropArea,
     Button, 
     H1, H2, H5, 
     Label,
@@ -11,6 +13,7 @@ import {
     Toggle,
     ToggleLink, 
     LabeledInput,
+    LabeledTextarea,
     Input,
     SidePanel,
     Tabs,
@@ -36,41 +39,48 @@ const App = () => {
       ]}
       />
     </SidePanel>
-    <Box padded={true} borderless={true}>
-      <Row>
-        <Col xs>
-          <H1>Some commonsku components</H1>
-          <Button onClick={() => setShowPanel(true)}>Button</Button>
+    <Background padded fillWindow>
+      <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
+        <Row>
+          <Col xs>
+            <Button onClick={() => setShowPanel(true)}>Button</Button>
 
-          <H5>Avatar</H5>
-          <Avatar pic="https://commonsku.com/img/brand/icon.png" />
-          <Avatar />
+            <H5>Avatar</H5>
+            <Avatar pic="https://commonsku.com/img/brand/icon.png" />
+            <Avatar />
 
-          <H5>Select</H5>
-          <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
+            <H5>Select</H5>
+            <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
-          <H5>Input</H5>
-          <LabeledInput label="Labeled Input" placeholder="Input" />
+            <H5>Input</H5>
+            <LabeledInput label="Labeled Input" placeholder="Input" />
 
-          <H5>Progress</H5>
-          <LabeledProgress max={100} value={65} />
+            <H5>Text Area</H5>
+            <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
 
-          <H5>Toggle</H5>
-          <Toggle>
-            <ToggleLink selected>Active</ToggleLink>
-            <ToggleLink>Inactive</ToggleLink>
-          </Toggle>
-          <H5>Tabs</H5>
-          <Tabs tabs={[
-            { label: "First Tab", content: <div>This is the first tab</div> },
-	    { label: "Second Tab", content: <div>This is tab number two</div> },
-            { label: "Third Tab", content: <div>This is the last tab</div> },
-          ]}
-          />
-        </Col>
-        <Col xs />
-      </Row>
-    </Box>
+            <H5>Progress</H5>
+            <LabeledProgress max={100} value={65} />
+
+            <H5>Drop Area</H5>
+            <DropArea placeholder="Drop Here"></DropArea>
+
+            <H5>Toggle</H5>
+            <Toggle>
+              <ToggleLink selected>Active</ToggleLink>
+              <ToggleLink>Inactive</ToggleLink>
+            </Toggle>
+            <H5>Tabs</H5>
+            <Tabs tabs={[
+              { label: "First Tab", content: <div>This is the first tab</div> },
+	            { label: "Second Tab", content: <div>This is tab number two</div> },
+              { label: "Third Tab", content: <div>This is the last tab</div> },
+            ]}
+            />
+          </Col>
+          <Col xs />
+        </Row>
+      </Box>
+    </Background>
   </Page>
 }
 

@@ -4,15 +4,15 @@ import React from 'react'
 const Wrapper = styled.div`
   display: inline-flex;
   max-width: 600px;
-  justify-content: space-around;
+  justify-content: flex-start;
   width: 100%; `
 
-const Container = styled.div`
+const Container = styled.div<{stretch?:boolean}>`
   background: #DAE9EE;
   border-radius: 50px;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: ${props => props.stretch ? "100%" : "auto"};
 `
 
 const ToggleLink = styled.a<{selected?: boolean}>`
@@ -31,12 +31,12 @@ const ToggleLink = styled.a<{selected?: boolean}>`
   color:            ${props => props.selected ? "white" : "#02c0da" };
 `
 
-const Toggle = ({ children }: React.PropsWithChildren<{}>) => {
+const Toggle = (props: React.PropsWithChildren<{stretch?:boolean}>) => {
   return <Wrapper>
-    <Container>
-      {children}
+    <Container stretch={props.stretch}>
+      {props.children}
     </Container>
   </Wrapper>
 }
 
-export {Toggle, ToggleLink};
+export { Toggle, ToggleLink }
