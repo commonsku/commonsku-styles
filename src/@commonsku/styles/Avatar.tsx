@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
 
-import placeholder from './avatar-placeholder.png'
+import placeholder from './img/avatar-placeholder.png'
 
 const AvatarWrapper = styled.div`
   width: 42px;
