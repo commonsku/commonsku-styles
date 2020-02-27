@@ -13,7 +13,6 @@ const StyledPage = styled.div`
 
 function Page (props: React.PropsWithChildren<{}>) {
   return <StyledPage>
-    <Typography />
     {props.children}
   </StyledPage>
 }
