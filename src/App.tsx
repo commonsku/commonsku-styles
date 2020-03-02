@@ -26,10 +26,8 @@ import {
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   return <Page>
-    <SidePanel visible={showPanel}>
-      <H2>Hello World!</H2>
-      <Button onClick={() => setShowPanel(false)}>Close Panel</Button>
-      <Tabs tabs={[
+    <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
+      <Tabs padded tabs={[
         { label: "Contacts", content: <div>
                                          <PanelContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeff@abc.com" phone="843-443-4432" />
                                          <PanelContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
@@ -68,9 +66,9 @@ const App = () => {
             <Spinner/>
 
             <H5>Toggle</H5>
-            <Toggle>
-              <ToggleLink selected>Active</ToggleLink>
-              <ToggleLink>Inactive</ToggleLink>
+            <Toggle stretch>
+              <ToggleLink selected stretch>Active</ToggleLink>
+              <ToggleLink stretch>Inactive</ToggleLink>
             </Toggle>
             <H5>Tabs</H5>
             <Tabs tabs={[

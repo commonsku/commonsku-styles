@@ -15,7 +15,7 @@ const Container = styled.div<{stretch?:boolean}>`
   width: ${props => props.stretch ? "100%" : "auto"};
 `
 
-const ToggleLink = styled.a<{selected?: boolean}>`
+const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean}>`
   font-family: 'skufont-medium', sans-serif;
   font-size: 14px;
   border-radius: 30px;
@@ -24,7 +24,7 @@ const ToggleLink = styled.a<{selected?: boolean}>`
   padding: 3px 12px;
   height: 33px;
   line-height: 33px;
-  width: 50%;
+  width: ${props => props.stretch? "50%" : "auto"};
   justify-content: center;
   cursor: pointer;
   background-color: ${props => props.selected ? "#02C0DA" : "#DAE9EE" };

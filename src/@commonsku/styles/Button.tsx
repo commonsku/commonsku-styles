@@ -61,7 +61,7 @@ const Button = styled.button<{
   color: ${props => props.secondary ? "#02c0da" : "white"};
   border-color: ${props => props.cta ? "#fa237c" : "#02c0da" };
   font-size: ${getSizeStyle('font-size', '1em')};
-  padding: ${getSizeStyle('pedding', '12px 25px')};
+  padding: ${getSizeStyle('padding', '12px 25px')};
   font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
   cursor: pointer;
 `;

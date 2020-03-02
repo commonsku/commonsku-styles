@@ -1,4 +1,6 @@
-Input example:
+A text input field, with an optional label on top.
+
+Example:
 
 ```js
 import { LabeledInput } from './Input';

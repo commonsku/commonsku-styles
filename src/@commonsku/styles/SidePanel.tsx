@@ -4,6 +4,8 @@ import { slideInRight, slideOutRight } from 'react-animations';
 import styled from 'styled-components';
 import { Row, Col } from 'react-flexbox-grid';
 import { Avatar } from './Avatar'
+import { H2 } from './Headings'
+
 
 /* 
 
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
 const StyledPanel = styled.div`
   background: white;
   height: 100vh;
-  width: 45vw;
+  width: 560px;
   box-shadow: 0 0 10px rgba(61, 79, 90, 0.27);
   z-index: 300;
   position: fixed;
@@ -44,11 +46,19 @@ const StyledPanel = styled.div`
   overflow: scroll;
 `;
 
-const SidePanel = (props: React.PropsWithChildren<{ visible: boolean }>) => {
+const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode }>) => {
   return <StyledPanel
     style={{ visibility: (props.visible ? "visible" : "hidden") }} 
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
   >
+    <Row>
+      <Col xs>
+        <H2>{props.title}</H2>
+      </Col>
+      <div style={{ textAlign: "right" }}>
+        {props.controls}
+      </div>
+    </Row>
     {props.children}
   </StyledPanel>
 }

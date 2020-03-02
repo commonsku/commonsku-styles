@@ -34,6 +34,7 @@ const TH= styled.th<{clickable: boolean}>`
   font-size: 1rem;
   padding: 0.5rem 0.625rem 0.625rem;
   display: table-cell;
+  text-align: left;
   font-family: "skufont-demibold", sans-serif;
   &:hover {
     background-color: ${props => props.clickable ? "#d2e6ec" : "#dae9ee"};

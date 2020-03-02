@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 import React, { useState, Component } from 'react'
 
-const TabBar = styled.ul`
+const TabBar = styled.ul<{padded?: boolean}>`
   display: block;
   font-size: 1.125rem;
   font-family: 'skufont-demibold', sans-serif;
   margin: 0;
+  margin-bottom: ${props => props.padded ? "20px" : 0};
   padding: 0;
 `
 
@@ -57,7 +58,7 @@ Here's how you use this:
 
 type TabType = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
 type StateType = {selectedTabIndex: number, selectedTab: TabType};
-type TabsProps = {tabs: TabType[], selectedTabIndex?: number};
+type TabsProps = {tabs: TabType[], selectedTabIndex?: number, padded?: boolean};
 class Tabs extends Component<TabsProps, StateType> {
   constructor(props: TabsProps) {
     super(props);
@@ -75,7 +76,7 @@ class Tabs extends Component<TabsProps, StateType> {
   render () {
     const { tabs } = this.props;
     return <div>
-      <TabBar>
+      <TabBar padded={this.props.padded == true}>
         {tabs.map((tab, index) => <Tab key={index}
           selected={index == this.state.selectedTabIndex}
           onClick={() => {
