@@ -9,6 +9,7 @@ export const Textarea = styled.textarea<{noMargin?: boolean}>`
   width: 100%;
   border: 1px solid #ABC7D1;
   border-radius: 5px;
+  box-sizing: border-box;
   font-family: 'skufont-regular', sans-serif;
   font-size: 1rem;
   background-color: white;
