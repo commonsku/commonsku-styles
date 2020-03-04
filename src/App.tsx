@@ -26,12 +26,9 @@ import {
     LabeledSelect,
     LabeledProgress,
     PanelContact,
-<<<<<<< HEAD
-    Product
-=======
+    Product,
     Row, Col,
     Popup,
->>>>>>> e956cfe83bbeb82bff86d6ae4c6835f94545f661
 } from '@commonsku/styles';
 
 const App = () => {
