@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
-import { Row, Col } from 'react-flexbox-grid'
+import { Row, Col } from './FlexboxGrid'
 import { H2 } from './Headings'
 
 const StyledBox = styled.div<{borderless?: boolean, padded?: boolean}>`
@@ -19,7 +19,7 @@ const Box = (props: React.PropsWithChildren<{borderless?: boolean,
   return ( <StyledBox padded={props.padded} borderless={props.borderless}>
            {props.title || props.controls ?
 	     <Row>
-	       <Col xs>
+	       <Col xs={8}>
                  { props.title ? <H2>{props.title}</H2> : null} 
 	       </Col>
 	       <Col xs style={{ textAlign: "right" }}>

@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, css } from 'aphrodite';
 import { slideInRight, slideOutRight } from 'react-animations';
 import styled from 'styled-components';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from './FlexboxGrid';
 import { Avatar } from './Avatar'
 import { H2 } from './Headings'
 

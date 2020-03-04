@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-flexbox-grid';
 
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
@@ -27,11 +26,18 @@ import {
     LabeledSelect,
     LabeledProgress,
     PanelContact,
+<<<<<<< HEAD
     Product
+=======
+    Row, Col,
+    Popup,
+>>>>>>> e956cfe83bbeb82bff86d6ae4c6835f94545f661
 } from '@commonsku/styles';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
   return <Page>
     <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
       <Tabs padded tabs={[
@@ -46,10 +52,21 @@ const App = () => {
       />
     </SidePanel>
     <Background padded fillWindow>
+    <div>
+      {showPopup && <Popup
+        title={'Hello popup'}
+        onClose={() => {
+            setShowPopup(false);
+        }}
+      >Hello from Popup</Popup>}
+    </div>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
         <Row>
           <Col xs>
-            <Button onClick={() => setShowPanel(true)}>Button</Button>
+            <div>
+              <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
+              <Button onClick={() => setShowPopup(true)}>Show Popup</Button>
+            </div>
 
             <H5>Avatar</H5>
             <Avatar pic="https://commonsku.com/img/brand/icon.png" />
