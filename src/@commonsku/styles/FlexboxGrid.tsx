@@ -6,7 +6,7 @@ export const Grid = styled.div`
 
 export type RowPropTypes = {
     justify ?: string,
-    nowrap ?: boolean,
+    wrap ?: string, // 'wrap', 'nowrap', 'wrap-reverse', ...
     align ?: string,
 };
 export const Row = styled.div<RowPropTypes>`
@@ -15,13 +15,9 @@ export const Row = styled.div<RowPropTypes>`
     flex-direction: row;
     flex: 0 1 auto;
     justify-content: ${(props) => props.justify || 'space-between' };
-    flex-wrap: ${(props) => props.nowrap ? 'nowrap' : 'wrap' };
+    flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
     align-items: ${(props) => props.align || 'center' };
 `;
-
-// Row.defaultProps = {
-//     wrap: true,
-// };
 
 export type ColPropTypes = {
     [key: string]: any,
