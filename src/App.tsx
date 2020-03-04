@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 
+import product_pic1 from './products/1.png';
+import product_pic2 from './products/2.png';
+import product_pic3 from './products/3.png';
+import product_pic4 from './products/4.png';
+import product_pic5 from './products/5.png';
+
 import { 
     Avatar, 
     Box, 
@@ -20,7 +26,8 @@ import {
     Tabs,
     LabeledSelect,
     LabeledProgress,
-    PanelContact
+    PanelContact,
+    Product
 } from '@commonsku/styles';
 
 const App = () => {
@@ -63,7 +70,16 @@ const App = () => {
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
 
-            <Spinner/>
+            <H5>Product</H5>
+	    <Row>
+              <Col xs>
+                <Product name="Gratuiously Lengthy But Highly Descriptive Product Name" supplier="Extremely Long And Tedious Supplier Name" sku="#6410" rating={1} price={16.3} currency="USD" picture={product_pic1}/>
+              </Col>
+              <Col xs>
+                <Product name="Sueded Crew" supplier="Next Level Apparel" sku="#6410" rating={5} price={16.3} currency="USD" picture={product_pic2}/>
+              </Col>
+            </Row>
+
 
             <H5>Toggle</H5>
             <Toggle stretch>
