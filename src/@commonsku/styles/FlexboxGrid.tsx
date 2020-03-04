@@ -86,17 +86,17 @@ const media: {[key: string]: Function} = {
         }
     `,
     sm: (styles: any) => `
-        @media only screen and (min-width: 481px) and (max-width: 640px) {
+        @media only screen and (max-width: 640px) {
             ${styles}
         }
     `,
     md: (styles: any) => `
-        @media only screen and (min-width: 641px) and (max-width: 768px) {
+        @media only screen and (max-width: 768px) {
             ${styles}
         }
     `,
     lg: (styles: any) => `
-        @media only screen and (min-width: 769px) and (max-width: 1024px) {
+        @media only screen and (max-width: 1024px) {
             ${styles}
         }
     `,
