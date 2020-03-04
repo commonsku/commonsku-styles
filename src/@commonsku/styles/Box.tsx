@@ -19,7 +19,7 @@ const Box = (props: React.PropsWithChildren<{borderless?: boolean,
   return ( <StyledBox padded={props.padded} borderless={props.borderless}>
            {props.title || props.controls ?
 	     <Row>
-	       <Col lg={10} md={10} sm={8} xs={8}>
+	       <Col xs={8}>
                  { props.title ? <H2>{props.title}</H2> : null} 
 	       </Col>
 	       <Col xs style={{ textAlign: "right" }}>

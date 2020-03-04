@@ -6,7 +6,7 @@ export const Grid = styled.div`
 
 export type RowPropTypes = {
     justify ?: string,
-    wrap ?: boolean,
+    nowrap ?: boolean,
     align ?: string,
 };
 export const Row = styled.div<RowPropTypes>`
@@ -15,27 +15,18 @@ export const Row = styled.div<RowPropTypes>`
     flex-direction: row;
     flex: 0 1 auto;
     justify-content: ${(props) => props.justify || 'space-between' };
-    flex-wrap: ${(props) => props.wrap ? 'wrap' : 'initial' };
+    flex-wrap: ${(props) => props.nowrap ? 'nowrap' : 'wrap' };
     align-items: ${(props) => props.align || 'center' };
 `;
 
-
-type ViewportSizeType = {
-    xs: string,
-    sm: string,
-    md: string,
-    lg: string,
-    xl: string,
-}
-
-const sizes: Array<string> = [
-    'xs', 'sm', 'md', 'lg', 'xl',
-];
+// Row.defaultProps = {
+//     wrap: true,
+// };
 
 export type ColPropTypes = {
     [key: string]: any,
-    size?: number,
-    collapse?: string,
+    collapse?: string, // hide
+    offset?: number,
     xs?: number|boolean,
     sm?: number|boolean,
     md?: number|boolean,
@@ -46,25 +37,37 @@ export type ColPropTypes = {
     mdOffset?: number,
     lgOffset?: number,
     xlOffset?: number,
-    first?: ViewportSizeType,
-    last?: ViewportSizeType,
-    className?: string,
-    tagName?: string,
-    children?: React.ReactNode,
+    first?: string,
+    last?: string,
 };
 
 export const Col = styled.div<ColPropTypes>`
     flex: 12;
     flex-grow: 1;
     box-sizing: border-box;
+    margin-left: ${(props) => (props.offset || 0)/12 * 100}%;
     ${(props) => props.collapse && media[props.collapse](`
         display: none;
     `)};
-    ${(props) => props.xs ? media['xs'](``, props.xs) : ''};
-    ${(props) => props.sm ? media['sm']('', props.sm) : ''};
-    ${(props) => props.md ? media['md']('', props.md) : ''};
-    ${(props) => props.lg ? media['lg']('', props.lg) : ''};
-    ${(props) => props.xl ? media['xl']('', props.xl) : ''};    
+    ${(props) => {
+        let res = '';
+        for (let i = 0; i < sizes.length; i++) {
+            const s = sizes[i];
+            if(props[s]) {
+                res += media[s](`
+                    flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                    max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                `);
+            } if(props[`${s}Offset`]) {
+                res += media[s](`margin-left: ${(props[`${s}Offset`]/12 * 100)}%;`);
+            } if (props.first && props.first === s) {
+                res += media[s](`order: -1;`);
+            } if (props.last && props.last === s) {
+                res += media[s](`order: 1;`);
+            }
+        }
+        return res;
+    }};
 `;
 
 
@@ -72,40 +75,34 @@ export const Col = styled.div<ColPropTypes>`
  * Helpers
  *******************/
 
+const sizes: Array<string> = [
+    'xs', 'sm', 'md', 'lg', 'xl',
+];
+
 const media: {[key: string]: Function} = {
-    xs: (styles: any, size: number|boolean) => `
+    xs: (styles: any) => `
         @media only screen and (max-width: 480px) {
             ${styles}
-            flex-basis: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
-            max-width: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
         }
     `,
-    sm: (styles: any, size: number = 12) => `
+    sm: (styles: any) => `
         @media only screen and (min-width: 481px) and (max-width: 640px) {
             ${styles}
-            flex-basis: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
-            max-width: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
         }
     `,
-    md: (styles: any, size: number = 12) => `
+    md: (styles: any) => `
         @media only screen and (min-width: 641px) and (max-width: 768px) {
             ${styles}
-            flex-basis: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
-            max-width: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
         }
     `,
-    lg: (styles: any, size: number = 12) => `
+    lg: (styles: any) => `
         @media only screen and (min-width: 769px) and (max-width: 1024px) {
             ${styles}
-            flex-basis: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
-            max-width: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
         }
     `,
-    xl: (styles: any, size: number = 12) => `
+    xl: (styles: any) => `
         @media only screen and (min-width: 1025px) {
             ${styles}
-            flex-basis: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
-            max-width: ${(typeof(size) === 'boolean' ? 12 : size)/12 * 100}%;
         }
     `,
 };
