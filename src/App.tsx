@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-flexbox-grid';
 
 import { 
     Avatar, 
@@ -20,11 +19,15 @@ import {
     Tabs,
     LabeledSelect,
     LabeledProgress,
-    PanelContact
+    PanelContact,
+    Row, Col,
+    Popup,
 } from '@commonsku/styles';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
   return <Page>
     <SidePanel visible={showPanel}>
       <H2>Hello World!</H2>
@@ -41,10 +44,21 @@ const App = () => {
       />
     </SidePanel>
     <Background padded fillWindow>
+    <div>
+      {showPopup && <Popup
+        title={'Hello popup'}
+        onClose={() => {
+            setShowPopup(false);
+        }}
+      >Hello from Popup</Popup>}
+    </div>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
         <Row>
           <Col xs>
-            <Button onClick={() => setShowPanel(true)}>Button</Button>
+            <div>
+              <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
+              <Button onClick={() => setShowPopup(true)}>Show Popup</Button>
+            </div>
 
             <H5>Avatar</H5>
             <Avatar pic="https://commonsku.com/img/brand/icon.png" />
