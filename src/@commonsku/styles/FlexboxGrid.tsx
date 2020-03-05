@@ -8,6 +8,7 @@ export type RowPropTypes = {
     justify ?: string,
     wrap ?: string, // 'wrap', 'nowrap', 'wrap-reverse', ...
     align ?: string,
+    padded ?: boolean,
 };
 export const Row = styled.div<RowPropTypes>`
     display: flex;
@@ -17,6 +18,7 @@ export const Row = styled.div<RowPropTypes>`
     justify-content: ${(props) => props.justify || 'space-between' };
     flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
     align-items: ${(props) => props.align || 'center' };
+    padding: ${(props) => props.padded ? '0.5rem' : 'initial'}
 `;
 
 export type ColPropTypes = {
@@ -35,12 +37,14 @@ export type ColPropTypes = {
     xlOffset?: number,
     first?: string,
     last?: string,
+    padded ?: boolean,
 };
 
 export const Col = styled.div<ColPropTypes>`
     flex: 12;
     flex-grow: 1;
     box-sizing: border-box;
+    padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
     margin-left: ${(props) => (props.offset || 0)/12 * 100}%;
     ${(props) => props.collapse && media[props.collapse](`
         display: none;
@@ -82,17 +86,17 @@ const media: {[key: string]: Function} = {
         }
     `,
     sm: (styles: any) => `
-        @media only screen and (min-width: 481px) and (max-width: 640px) {
+        @media only screen and (max-width: 640px) {
             ${styles}
         }
     `,
     md: (styles: any) => `
-        @media only screen and (min-width: 641px) and (max-width: 768px) {
+        @media only screen and (max-width: 768px) {
             ${styles}
         }
     `,
     lg: (styles: any) => `
-        @media only screen and (min-width: 769px) and (max-width: 1024px) {
+        @media only screen and (max-width: 1024px) {
             ${styles}
         }
     `,
