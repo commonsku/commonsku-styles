@@ -38,6 +38,11 @@ export type ColPropTypes = {
     first?: string,
     last?: string,
     padded ?: boolean,
+    xsStyles ?: string,
+    smStyles ?: string,
+    mdStyles ?: string,
+    lgStyles ?: string,
+    xlStyles ?: string,
 };
 
 export const Col = styled.div<ColPropTypes>`
@@ -52,32 +57,36 @@ export const Col = styled.div<ColPropTypes>`
     ${(props) => {
         let res = '';
         for (let i = 0; i < sizes.length; i++) {
-            const s = sizes[i];
+            const s: string = sizes[i];
             if(props[s]) {
                 res += media[s](`
                     flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
                     max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
                 `);
-            } if(props[`${s}Offset`]) {
+            }
+            if(props[`${s}Offset`]) {
                 res += media[s](`margin-left: ${(props[`${s}Offset`]/12 * 100)}%;`);
-            } if (props.first && props.first === s) {
+            }
+            if (props.first && props.first === s) {
                 res += media[s](`order: -1;`);
-            } if (props.last && props.last === s) {
+            }
+            if (props.last && props.last === s) {
                 res += media[s](`order: 1;`);
+            }
+
+            // Add Custom Styles for media queries
+            if(props[`${s}Styles`]) {
+                res += media[s](props[`${s}Styles`]);
             }
         }
         return res;
-    }};
+    }}
 `;
 
 
 /*******************
  * Helpers
  *******************/
-
-const sizes: Array<string> = [
-    'xs', 'sm', 'md', 'lg', 'xl',
-];
 
 const media: {[key: string]: Function} = {
     xs: (styles: any) => `
@@ -106,3 +115,5 @@ const media: {[key: string]: Function} = {
         }
     `,
 };
+
+const sizes: Array<string> = Object.keys(media);
