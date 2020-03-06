@@ -66,4 +66,12 @@ const Button = styled.button<{
   cursor: pointer;
 `;
 
+export const ButtonsGroup = styled.div`
+  display: inline-flex;
+  max-width: 600px;
+  margin-bottom: 10px;
+  margin-right: 100px;
+  justify-content: space-around;
+`;
+
 export {Button};

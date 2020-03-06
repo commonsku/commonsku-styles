@@ -29,11 +29,13 @@ import {
     Product,
     Row, Col,
     Popup,
+    ButtonsGroup, LabeledRadio,
 } from '@commonsku/styles';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [activeRadio, setRadio] = useState(1);
 
   return <Page>
     <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
@@ -64,6 +66,13 @@ const App = () => {
               <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
               <Button onClick={() => setShowPopup(true)}>Show Popup</Button>
             </div>
+
+            <H5>Radio</H5>
+            <ButtonsGroup>
+              <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e: Event) => setRadio(1)} />
+              <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e: Event) => setRadio(0)} />
+              <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e: Event) => setRadio(-1)} />
+            </ButtonsGroup>
 
             <H5>Avatar</H5>
             <Avatar pic="https://commonsku.com/img/brand/icon.png" />
