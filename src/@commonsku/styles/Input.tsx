@@ -166,7 +166,7 @@ export const LabeledRadio = (
 }
 
 export const LabeledCheckbox = (
-  {label, name, checked, ...props}: {label: string, name?: string, [key: string]: any}
+  {label, name, checked, ...props}: {label: string|React.ReactNode, name?: string, [key: string]: any}
 ) => {
 
   const [ isHovering, updateHover ] = useState(false);
