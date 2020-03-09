@@ -70,6 +70,39 @@ export const Radio = styled.input<{isHovering?: boolean}>`
   ${props => props.isHovering && `background-color: #02c0da;`}
 `;
 
+export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean}>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 23px;
+  width: 23px;
+  background-color: ${(props) => (props.isHovering || props.checked) ? '#02c0da' : 'white'};
+  border: 2px solid #02c0da;
+  border-radius: 4px;
+  box-sizing: border-box;
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    background-color: #02c0da;};
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    box-sizing: border-box;
+    display: ${(props) => props.checked ? 'block' : 'none'};
+  }
+`
+
 export const Dot = styled.span<{checked?: boolean, isHovering?: boolean}>`
   position: absolute;
   top: 0;
@@ -109,6 +142,10 @@ Dot.defaultProps = {
   checked: false,
 }
 
+CheckMark.defaultProps = {
+  checked: false,
+}
+
 export const LabeledRadio = (
   {label, name, checked, ...props}: {label: string, name?: string, [key: string]: any}
 ) => {
@@ -124,6 +161,25 @@ export const LabeledRadio = (
       {label}
       <Radio type="radio" checked={checked} isHovering={isHovering} {...props} />
       <Dot checked={checked} isHovering={isHovering}  />
+    </RadioLabel>
+  );
+}
+
+export const LabeledCheckbox = (
+  {label, name, checked, ...props}: {label: string, name?: string, [key: string]: any}
+) => {
+
+  const [ isHovering, updateHover ] = useState(false);
+
+  return (
+    <RadioLabel
+      htmlFor={name}
+      onMouseOver={(e) => updateHover(true)}
+      onMouseLeave={(e) => updateHover(false)}
+    >
+      {label}
+      <Radio type="checkbox" checked={checked} isHovering={isHovering} {...props} />
+      <CheckMark checked={checked} isHovering={isHovering}  />
     </RadioLabel>
   );
 }

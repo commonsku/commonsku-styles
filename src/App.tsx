@@ -29,13 +29,15 @@ import {
     Product,
     Row, Col,
     Popup,
-    ButtonsGroup, LabeledRadio,
+    ButtonsGroup, LabeledRadio, LabeledCheckbox
 } from '@commonsku/styles';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
+  const [mustard, toggleMustard] = useState(false);
+  const [ketchup, toggleKetchup] = useState(false);
 
   return <Page>
     <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
@@ -72,6 +74,12 @@ const App = () => {
               <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e: Event) => setRadio(1)} />
               <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e: Event) => setRadio(0)} />
               <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e: Event) => setRadio(-1)} />
+            </ButtonsGroup>
+
+            <H5>Checkbox</H5>
+            <ButtonsGroup>
+              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+              <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
             </ButtonsGroup>
 
             <H5>Avatar</H5>
