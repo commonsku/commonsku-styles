@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "rollup -c",
-    "test": "react-scripts test",
+    "test": "echo \"No test specified\"",
     "prepare": "rm -rf dist && yarn run build",
     "packTest": "npm pack --dry-run",
     "eject": "react-scripts eject",
