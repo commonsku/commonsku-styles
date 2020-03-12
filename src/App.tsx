@@ -6,6 +6,12 @@ import product_pic3 from './products/3.png';
 import product_pic4 from './products/4.png';
 import product_pic5 from './products/5.png';
 
+import user_pic1 from './users/1.jpeg';
+import user_pic2 from './users/2.jpeg';
+import user_pic3 from './users/3.jpeg';
+import user_pic4 from './users/4.jpeg';
+import user_pic5 from './users/5.jpeg';
+
 import { 
     Avatar, 
     Box, 
@@ -27,8 +33,11 @@ import {
     LabeledProgress,
     PanelContact,
     Product,
+    Artwork,
     Row, Col,
     Popup,
+    Task,
+    FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox
 } from '@commonsku/styles';
 
@@ -102,7 +111,7 @@ const App = () => {
             <DropArea placeholder="Drop Here"></DropArea>
 
             <H5>Product</H5>
-	    <Row>
+       	    <Row>
               <Col xs>
                 <Product name="Gratuiously Lengthy But Highly Descriptive Product Name" supplier="Extremely Long And Tedious Supplier Name" sku="#6410" rating={1} price={16.3} currency="USD" picture={product_pic1}/>
               </Col>
@@ -111,6 +120,39 @@ const App = () => {
               </Col>
             </Row>
 
+            <H5>Artwork</H5>
+       	    <Row>
+              <Col xs>
+                <Artwork name="long_name_of_artwork_should_be_truncated.svg" picture={product_pic1} edit onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col xs>
+                <Artwork name="squirrel.png" picture={product_pic2} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+              </Col>
+            </Row>
+
+            <H5>Task</H5>
+            <Task date="2019-11-06" taskName="Check Status" taskBody="Call the client and check if they are ready to order"/>
+            <Task date="2019-11-06" taskName="Verify Client" taskBody="Verify this client's status"/>
+            <Task date="2019-11-06" taskName="Research" taskBody="Do some more research"/>
+            <Task date="2019-11-06" taskName="Find Products" taskBody="Find relevant products and put together a presentation"/>
+            
+            <H5>Feed</H5>
+            <Publisher/>
+            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+                      subject="SO#1233"
+                      date="Feb 20"
+                      body={<div>Samantha Kates added a note to <a href="#">John Doe's</a><br/>PO#15310 flagged as Confirmed. </div>}
+                      comments={[ <FeedPost author={{name:"Bob Peterson", avatar: user_pic1}} date="Feb 20" body={<div>Finally!</div>}/>]} />
+            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+                      subject="SO#1233"
+                      date="Feb 20"
+                      body={<div>Joe Jemple added a note to <a href="#">John Doe's</a><br/>PO#15310 flagged as Shipped. </div>}
+                      comments={[]} />
+            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+                      subject="SO#1233"
+                      date="Feb 20"
+                      body={<div>Subject: SALES ORDER #1233 <br/> This is an email about a portal</div>}
+                      comments={[]} />
 
             <H5>Toggle</H5>
             <Toggle stretch>
