@@ -38,7 +38,8 @@ import {
     Popup,
     Task,
     FeedPost, Publisher,
-    ButtonsGroup, LabeledRadio, LabeledCheckbox
+    ButtonsGroup, LabeledRadio, LabeledCheckbox,
+    Table, TD, TH, TR, THead, TBody,
 } from '@commonsku/styles';
 
 const App = () => {
@@ -166,6 +167,28 @@ const App = () => {
               { label: "Third Tab", content: <div>This is the last tab</div> },
             ]}
             />
+
+            <H5>Table</H5>
+            <Table>
+              <THead>
+                  <TR>
+                      <TH>Header 0</TH>
+                      <TH clickable>Header 1</TH>
+                      <TH>Header 2</TH>
+                      <TH>Header 3</TH>
+                      <TH>Header 4</TH>
+                  </TR>
+              </THead>
+              <TBody>
+                  <TR>
+                      <TD clickable>Body 0</TD>
+                      <TD>Body 1</TD>
+                      <TD>Body 2</TD>
+                      <TD>Body 3</TD>
+                      <TD>Body 4</TD>
+                  </TR>
+              </TBody>
+            </Table>
           </Col>
           <Col xs />
         </Row>
