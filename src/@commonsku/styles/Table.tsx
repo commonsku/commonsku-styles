@@ -26,7 +26,7 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))`
   ${sharedStyle}
 `;
 
-const TH= styled.th<{clickable: boolean}>`
+const TH= styled.th<{clickable?: boolean}>`
   background-color: #dae9ee;
   border: none;
   border-spacing: none;
@@ -44,7 +44,7 @@ const TH= styled.th<{clickable: boolean}>`
   ${sharedStyle}
 `;
 
-const TD= styled.td<{clickable: boolean}>`
+const TD= styled.td<{clickable?: boolean}>`
   color: #52585c;
   font-size: .875rem;
   line-height: 1.75rem;

@@ -52,9 +52,7 @@ const getSizeStyle = (style: string, defaults: string) => {
   };
 }
 
-const Button = styled.button<{
-  secondary?: boolean, cta?: boolean, size?: keyof typeof sizes
-}>`
+const Button = styled.button<ButtonProps>`
   border: 3px solid white;
   border-radius: 5px;
   background: ${props => props.secondary ? "transparent" : props => props.cta ? "#fa237c" : "#02c0da" };
@@ -64,6 +62,13 @@ const Button = styled.button<{
   padding: ${getSizeStyle('padding', '12px 25px')};
   font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
   cursor: pointer;
+  &:disabled {
+    background-color: #DAE9EE;
+    border-color: #C9E8F2;
+    color: #02c0da;
+    cursor: default;
+    opacity: 0.5;
+  }
 `;
 
 export const ButtonsGroup = styled.div`
