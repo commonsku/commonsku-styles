@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { media, sizes } from '../utils';
 
 export const Grid = styled.div`
 `;
@@ -82,38 +83,3 @@ export const Col = styled.div<ColPropTypes>`
         return res;
     }}
 `;
-
-
-/*******************
- * Helpers
- *******************/
-
-const media: {[key: string]: Function} = {
-    xs: (styles: any) => `
-        @media only screen and (max-width: 480px) {
-            ${styles}
-        }
-    `,
-    sm: (styles: any) => `
-        @media only screen and (max-width: 640px) {
-            ${styles}
-        }
-    `,
-    md: (styles: any) => `
-        @media only screen and (max-width: 768px) {
-            ${styles}
-        }
-    `,
-    lg: (styles: any) => `
-        @media only screen and (max-width: 1024px) {
-            ${styles}
-        }
-    `,
-    xl: (styles: any) => `
-        @media only screen and (min-width: 1025px) {
-            ${styles}
-        }
-    `,
-};
-
-const sizes: Array<string> = Object.keys(media);

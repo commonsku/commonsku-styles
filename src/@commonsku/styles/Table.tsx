@@ -1,4 +1,5 @@
 import styled, {css} from 'styled-components'
+import { SizesCss, SizeTypes } from './Sizes';
 
 const sharedStyle = css`
   line-height: 1.125rem;
@@ -24,9 +25,10 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))`
   display: table;
   font-family: 'skufont-regular', sans-serif
   ${sharedStyle}
+  ${SizesCss}
 `;
 
-const TH= styled.th<{clickable?: boolean}>`
+const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}|SizeTypes>`
   background-color: #dae9ee;
   border: none;
   border-spacing: none;
@@ -36,15 +38,17 @@ const TH= styled.th<{clickable?: boolean}>`
   display: table-cell;
   text-align: left;
   font-family: "skufont-demibold", sans-serif;
+  ${props => props.sticky ? `position: sticky; top: ${props.stickyTop ? props.stickyTop : 0};` : null}
   &:hover {
     background-color: ${props => props.clickable ? "#d2e6ec" : "#dae9ee"};
     cursor: ${props => props.clickable ? "pointer" : "normal"};
   }
   ${optionalPadding}
   ${sharedStyle}
+  ${SizesCss}
 `;
 
-const TD= styled.td<{clickable?: boolean}>`
+const TD= styled.td<{clickable?: boolean}|SizeTypes>`
   color: #52585c;
   font-size: .875rem;
   line-height: 1.75rem;
@@ -55,18 +59,22 @@ const TD= styled.td<{clickable?: boolean}>`
   }
   ${optionalPadding}
   ${sharedStyle}
+  ${SizesCss}
 `;
 
 const TR= styled.tr`
+  ${SizesCss}
   &:hover {
     background: #EDF2F4;
   }
 `;
 
 const THead= styled.thead`
+  ${SizesCss}
 `;
 
 const TBody= styled.tbody`
+  ${SizesCss}
 `;
 
 
