@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components'
-import { SizesCss, SizeTypes } from './Sizes';
+import { SizerCss, SizerTypes } from './Sizer';
 
 const sharedStyle = css`
   line-height: 1.125rem;
@@ -25,10 +25,10 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))`
   display: table;
   font-family: 'skufont-regular', sans-serif
   ${sharedStyle}
-  ${SizesCss}
+  ${SizerCss}
 `;
 
-const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}|SizeTypes>`
+const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}|SizerTypes>`
   background-color: #dae9ee;
   border: none;
   border-spacing: none;
@@ -45,10 +45,10 @@ const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}|
   }
   ${optionalPadding}
   ${sharedStyle}
-  ${SizesCss}
+  ${SizerCss}
 `;
 
-const TD= styled.td<{clickable?: boolean}|SizeTypes>`
+const TD= styled.td<{clickable?: boolean}|SizerTypes>`
   color: #52585c;
   font-size: .875rem;
   line-height: 1.75rem;
@@ -59,22 +59,22 @@ const TD= styled.td<{clickable?: boolean}|SizeTypes>`
   }
   ${optionalPadding}
   ${sharedStyle}
-  ${SizesCss}
+  ${SizerCss}
 `;
 
-const TR= styled.tr`
-  ${SizesCss}
+const TR= styled.tr<SizerTypes>`
+  ${SizerCss}
   &:hover {
     background: #EDF2F4;
   }
 `;
 
-const THead= styled.thead`
-  ${SizesCss}
+const THead= styled.thead<SizerTypes>`
+  ${SizerCss}
 `;
 
-const TBody= styled.tbody`
-  ${SizesCss}
+const TBody= styled.tbody<SizerTypes>`
+  ${SizerCss}
 `;
 
 

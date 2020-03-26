@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { sizes, media } from '../utils';
 
-export type SizeTypes = {
+export type SizerTypes = {
     [key: string]: any,
     collapse?: string|Array<string>, // hide for size(s)
     xs?: string|number|boolean,
@@ -12,7 +12,7 @@ export type SizeTypes = {
     xl?: string|number|boolean,
 };
 
-export const SizesCss = css<SizeTypes>`
+export const SizerCss = css<SizerTypes>`
     ${(props) => props.collapse && typeof(props.collapse) === 'string' && media[props.collapse](`
         display: none;
     `)};
@@ -47,6 +47,6 @@ export const SizesCss = css<SizeTypes>`
     }}
 `;
 
-export const SizesWrapper = styled.div<SizeTypes>`
-    ${SizesCss}
+export const SizerWrapper = styled.div<SizerTypes>`
+    ${SizerCss}
 `;
