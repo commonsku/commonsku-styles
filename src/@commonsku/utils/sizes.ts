@@ -1,26 +1,26 @@
 export const media: {[key: string]: Function} = {
     xs: (styles: any) => `
-        @media only screen and (max-width: 480px) {
+        @media only screen and (min-width: 0px) {
             ${styles}
         }
     `,
     sm: (styles: any) => `
-        @media only screen and (max-width: 640px) {
+        @media only screen and (min-width: 640px) {
             ${styles}
         }
     `,
     md: (styles: any) => `
-        @media only screen and (max-width: 768px) {
+        @media only screen and (min-width: 768px) {
             ${styles}
         }
     `,
     lg: (styles: any) => `
-        @media only screen and (max-width: 1024px) {
+        @media only screen and (min-width: 1024px) {
             ${styles}
         }
     `,
     xl: (styles: any) => `
-        @media only screen and (min-width: 1025px) {
+        @media only screen and (min-width: 1280px) {
             ${styles}
         }
     `,
