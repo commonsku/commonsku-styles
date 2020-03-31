@@ -52,7 +52,7 @@ const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: str
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
   >
     <Row>
-      <Col xs>
+      <Col xl={6} xs={6}>
         <H2>{props.title}</H2>
       </Col>
       <div style={{ textAlign: "right" }}>
