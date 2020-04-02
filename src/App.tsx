@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
@@ -40,7 +40,29 @@ import {
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox,
     Table, TD, TH, TR, THead, TBody,
+    DateSingleInput,
+    Datepicker,
+    DateRangeInput,
 } from '@commonsku/styles';
+
+const initialState = {
+  date: new Date(),
+  startDate: new Date(),
+  endDate: null,
+  focusedInput: false,
+};
+
+function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
+  console.log(action);
+  switch (action.type) {
+    case "focusChange":
+      return { ...state, ...action.payload };
+    case "dateChange":
+      return { ...state, ...action.payload };
+    default:
+      throw new Error();
+  }
+}
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -48,6 +70,8 @@ const App = () => {
   const [activeRadio, setRadio] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return <Page>
     <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
@@ -78,6 +102,19 @@ const App = () => {
               <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
               <Button onClick={() => setShowPopup(true)}>Show Popup</Button>
             </div>
+
+            <Row>
+              <Col xs={3}>
+                <H5>Single Datepicker</H5>
+                <DateSingleInput
+                  date={state.date}
+                  showDatepicker={state.showDatepicker}
+                  onDateChange={(data) => dispatch({type: "dateChange", payload: data })}
+                  onFocusChange={focusedInput => dispatch({type: "focusChange", payload: {showDatepicker: focusedInput}})}
+                  onClose={() => dispatch({type: "focusChange", payload: {showDatepicker: false}})}
+                />
+              </Col>
+            </Row>
 
             <H5>Radio</H5>
             <ButtonsGroup>
