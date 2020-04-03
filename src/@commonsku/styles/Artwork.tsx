@@ -28,6 +28,7 @@ const ArtworkControls = styled.div`
 const ArtworkInfo = styled.div`
   width: 100%;
   position: absolute;
+  height: 3rem;
   left: 0;
   bottom: 0;
   opacity: 1;
@@ -41,9 +42,9 @@ const ArtworkInfo = styled.div`
   z-index: 1;
 `
 
-const ArtworkWrapper = styled.div`
+const ArtworkWrapper = styled.div<{height:number}>`
   width: 100%;
-  height: 17rem;
+  height: ${props => props.height}vw;
   position: relative;
   line-height: 1.5em;
   cursor: pointer;
@@ -53,9 +54,9 @@ const ArtworkWrapper = styled.div`
   }
 `
 
-const ArtworkPicture = styled.div<{picture:string} >`
+const ArtworkPicture = styled.div<{picture:string, height:number} >`
   width: 100%;
-  height: 13.5rem;
+  height: calc(${props => props.height}vw - 3.5rem);
   overflow: hidden;
   background-image: url("${props => props.picture}");
   background-repeat: no-repeat;
@@ -70,17 +71,16 @@ const ArtworkPicture = styled.div<{picture:string} >`
     opacity: 1;
   }
 `
-
 function truncate(filename:string, max:number) {
   var extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
   var base_name = filename.replace('.' + extension, '');
   return base_name.substr(0, max) + (filename.length > max ? '..' : '') + '.' + extension;
 }
 
-export const Artwork = (props: {picture:string, name:string, date:string, edit?:boolean, onEdit?:Function|VoidFunction, onDelete?:Function|VoidFunction, onSave?:Function|VoidFunction }) => {
+export const Artwork = (props: {picture:string, name:string, height?:number, date?:string, edit?:boolean, onEdit?:Function|VoidFunction, onDelete?:Function|VoidFunction, onSave?:Function|VoidFunction }) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper>
-    <ArtworkPicture picture={props.picture}/>
+  return <ArtworkWrapper height={props.height ? props.height : 17}>
+    <ArtworkPicture height={props.height ? props.height : 17} picture={props.picture}/>
     {!props.edit ?
     <ArtworkControls>
       {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
@@ -94,7 +94,8 @@ export const Artwork = (props: {picture:string, name:string, date:string, edit?:
          <Button size="small" style={{height:"100%", marginLeft: 10}} onClick={() => props.onSave!()}>Save</Button>
        </div> :
        <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}
-       <UpdateDate>Updated {props.date}</UpdateDate>
+       {!props.edit && props.date ?
+       <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>
   </ArtworkWrapper>
 }
