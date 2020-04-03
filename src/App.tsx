@@ -5,6 +5,8 @@ import product_pic2 from './products/2.png';
 import product_pic3 from './products/3.png';
 import product_pic4 from './products/4.png';
 import product_pic5 from './products/5.png';
+import product_wide from './products/wide.png';
+import product_narrow from './products/narrow.png';
 
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
@@ -160,11 +162,17 @@ const App = () => {
 
             <H5>Artwork</H5>
        	    <Row>
-              <Col xs>
-                <Artwork name="long_name_of_artwork_should_be_truncated.svg" picture={product_pic1} edit onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.svg" picture={product_pic1} edit onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
               </Col>
-              <Col xs>
-                <Artwork name="squirrel.png" picture={product_pic2} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_pic2} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_wide} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_narrow} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
               </Col>
             </Row>
 
