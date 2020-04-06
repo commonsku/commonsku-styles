@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
-import {Input} from './Input'
+import {Input, InputProps} from './Input'
 
 const ArtworkName = styled.div`
   font-size: .9rem;
@@ -77,25 +77,48 @@ function truncate(filename:string, max:number) {
   return base_name.substr(0, max) + (filename.length > max ? '..' : '') + '.' + extension;
 }
 
-export const Artwork = (props: {picture:string, name:string, height?:number, date?:string, edit?:boolean, onEdit?:Function|VoidFunction, onDelete?:Function|VoidFunction, onSave?:Function|VoidFunction }) => {
+export const Artwork = ({
+  height=17,
+  edit=false,
+  date='',
+  inputProps={},
+  name='',
+  ...props
+}: {
+  picture:string,
+  name:string,
+  height?:number,
+  date?:string,
+  edit?:boolean,
+  onEdit?:Function|VoidFunction|undefined,
+  onDelete?:Function|VoidFunction|undefined,
+  onSave?:Function|VoidFunction|undefined,
+  inputProps?:InputProps,
+  inputEl?:React.ReactNode,
+}) => {
+
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper height={props.height ? props.height : 17}>
-    <ArtworkPicture height={props.height ? props.height : 17} picture={props.picture}/>
-    {!props.edit ?
-    <ArtworkControls>
-      {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
-      {props.onDelete ? <Button size="small" onClick={() => props.onDelete!()} style={{marginLeft: 10}}>Delete</Button> : null}
-    </ArtworkControls>
-    : null}
+  return <ArtworkWrapper height={height}>
+    <ArtworkPicture height={height} picture={props.picture}/>
+    {!edit ?
+      <ArtworkControls>
+        {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
+        {props.onDelete ? <Button size="small" onClick={() => props.onDelete!()} style={{marginLeft: 10}}>Delete</Button> : null}
+      </ArtworkControls> : null}
+
     <ArtworkInfo>
-      {props.edit && props.onSave ?
-        <div style={{display:"flex"}}>
-         <Input style={{flexGrow:1, marginBottom: 0}} value={props.name}/>
-         <Button size="small" style={{height:"100%", marginLeft: 10}} onClick={() => props.onSave!()}>Save</Button>
-       </div> :
-       <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}
-       {!props.edit && props.date ?
-       <UpdateDate>Updated {props.date}</UpdateDate> : null}
+      {edit && props.onSave 
+        ? <div style={{display:"flex"}}>
+            {props.inputEl || <Input
+              style={{flexGrow:1, marginBottom: 0}}
+              value={name}
+              {...inputProps} // Add onChange/onBlur to update name
+            />}
+            <Button size="small" style={{height:"100%", marginLeft: 10}} onClick={(e) => props.onSave!()}>Save</Button>
+          </div>
+        : <ArtworkName>{truncate(name, 20)}</ArtworkName>}
+
+       {!edit && date ? <UpdateDate>Updated {date}</UpdateDate> : null}
     </ArtworkInfo>
   </ArtworkWrapper>
 }

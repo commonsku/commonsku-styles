@@ -3,7 +3,9 @@ import styled, { StyledComponentProps } from 'styled-components'
 
 import {Label} from './Label'
 
-export const Input = styled.input<{noMargin?: boolean}>`
+export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean};
+
+export const Input = styled.input<InputProps>`
   padding: .5rem;
   color: #123952;
   width: 100%;
@@ -21,9 +23,7 @@ export const Input = styled.input<{noMargin?: boolean}>`
   }
 `;
 
-type InputProps = StyledComponentProps<'input', any, {}, never>;
-
-export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string, noMargin?: boolean}) => {
+export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string}) => {
   return <div>
     <Label htmlFor={name}>{label}</Label>
     <Input {...props}></Input>
