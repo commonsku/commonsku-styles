@@ -152,10 +152,13 @@ const App = () => {
 
             <H5>Product</H5>
        	    <Row>
-              <Col xs>
+              <Col padded xs={4}>
                 <Product name="Gratuiously Lengthy But Highly Descriptive Product Name" supplier="Extremely Long And Tedious Supplier Name" sku="#6410" rating={1} price={16.3} currency="USD" picture={product_pic1}/>
               </Col>
-              <Col xs>
+              <Col padded xs={4}>
+                <Product name="Sueded Crew" supplier="Next Level Apparel" sku="#6410" rating={5} price={16.3} currency="USD" picture={product_pic2}/>
+              </Col>
+              <Col padded xs={4}>
                 <Product name="Sueded Crew" supplier="Next Level Apparel" sku="#6410" rating={5} price={16.3} currency="USD" picture={product_pic2}/>
               </Col>
             </Row>
@@ -173,6 +176,20 @@ const App = () => {
               </Col>
               <Col padded xs={3}>
                 <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_narrow} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+              </Col>
+            </Row>
+       	    <Row>
+              <Col padded xs={3}>
+                <Artwork edit date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.doc" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.csv" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.xls" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.ppt" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
               </Col>
             </Row>
 
