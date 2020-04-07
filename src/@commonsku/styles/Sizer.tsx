@@ -30,12 +30,17 @@ export const SizerCss = css<SizerTypes>`
         }
 
         sizes.forEach((s: string) => {
-            if(props[s]) {
+            if(props[s] !== null && props[s] !== undefined) {
                 if (typeof(props[s]) === 'boolean' || typeof(props[s]) === 'number' || !isNaN(props[s])) {
-                    res += media[s](`
-                        flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
-                        max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
-                    `);
+                    if (props[s] === false) {
+                        res += media[s]('display: none;');
+                    } else {
+                        res += media[s](`
+                            flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                            max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                            display: initial;
+                        `);
+                    }
                 } else if (typeof(props[s]) === 'string') {
                     // Custom Styles
                     res += media[s](props[s]);

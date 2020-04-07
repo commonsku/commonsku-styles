@@ -59,11 +59,16 @@ export const Col = styled.div<ColPropTypes>`
         let res = '';
         for (let i = 0; i < sizes.length; i++) {
             const s: string = sizes[i];
-            if(props[s]) {
-                res += media[s](`
-                    flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
-                    max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
-                `);
+            if(props[s] !== null && props[s] !== undefined) {
+                if (props[s] === false) {
+                    res += media[s]('display: none;');
+                } else {
+                    res += media[s](`
+                        flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                        max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                        display: initial;
+                    `);
+                }
             }
             if(props[`${s}Offset`]) {
                 res += media[s](`margin-left: ${(props[`${s}Offset`]/12 * 100)}%;`);
