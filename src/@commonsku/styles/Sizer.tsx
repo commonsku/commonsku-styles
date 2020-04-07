@@ -5,14 +5,30 @@ import { sizes, media } from '../utils';
 export type SizerTypes = {
     [key: string]: any,
     collapse?: string|Array<string>, // hide for size(s)
+    offset?: number,
+    first?: string,
+    last?: string,
+    padded ?: boolean,
     xs?: string|number|boolean,
     sm?: string|number|boolean,
     md?: string|number|boolean,
     lg?: string|number|boolean,
     xl?: string|number|boolean,
+    xsOffset?: number,
+    smOffset?: number,
+    mdOffset?: number,
+    lgOffset?: number,
+    xlOffset?: number,
+    xsOffsetRight?: number,
+    smOffsetRight?: number,
+    mdOffsetRight?: number,
+    lgOffsetRight?: number,
+    xlOffsetRight?: number,
 };
 
 export const SizerCss = css<SizerTypes>`
+    padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
+    margin-left: ${(props) => (props.offset || 0)/12 * 100}%;
     ${(props) => props.collapse && typeof(props.collapse) === 'string' && media[props.collapse](`
         display: none;
     `)};
@@ -45,6 +61,13 @@ export const SizerCss = css<SizerTypes>`
                     // Custom Styles
                     res += media[s](props[s]);
                 }
+            }
+
+            if(props[`${s}Offset`]) {
+                res += media[s](`margin-left: ${(props[`${s}Offset`]/12 * 100)}%;`);
+            }
+            if(props[`${s}OffsetRight`]) {
+                res += media[s](`margin-right: ${(props[`${s}OffsetRight`]/12 * 100)}%;`);
             }
         });
 
