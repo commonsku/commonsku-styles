@@ -15,9 +15,10 @@
   ],
   "scripts": {
     "start": "react-scripts start",
-    "build": "NODE_ENV=production rollup -c",
+    "build": "NODE_ENV=production npx rollup -c",
     "test": "echo \"No test specified\"",
-    "prepack": "rm -rf dist && yarn run build",
+    "prepare": "echo \"install devDependencies for github install...\"",
+    "prepack": "rm -rf dist/* && yarn run build",
     "packTest": "npm pack --dry-run",
     "eject": "react-scripts eject",
     "styleguide": "styleguidist server --open",
