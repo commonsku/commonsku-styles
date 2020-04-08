@@ -120,14 +120,14 @@ const App = () => {
 
             <H5>Radio</H5>
             <ButtonsGroup>
-              <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e: Event) => setRadio(1)} />
+              <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e: Event) => setRadio(1)}/>
               <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e: Event) => setRadio(0)} />
               <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e: Event) => setRadio(-1)} />
             </ButtonsGroup>
 
             <H5>Checkbox</H5>
             <ButtonsGroup>
-              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} disabled />
+              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)}/>
               <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
             </ButtonsGroup>
 

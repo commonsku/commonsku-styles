@@ -30,7 +30,7 @@ export const LabeledInput = ({ label, name, ...props}: InputProps & {label: stri
   </div>
 }
 
-export const RadioLabel = styled.label`
+export const RadioLabel = styled.label<{disabled?: boolean}>`
   display: block;
   position: relative;
   padding-left: 35px;
@@ -47,6 +47,7 @@ export const RadioLabel = styled.label`
   font-weight: normal;
   line-height: 1.5;
   box-sizing: border-box;
+  opacity: ${(props) => props.disabled ? 0.7 : 1};
   &:focus {
     outline: 0;
   }
@@ -161,6 +162,7 @@ export const LabeledRadio = (
       htmlFor={name}
       onMouseOver={(e) => updateHover(true)}
       onMouseLeave={(e) => updateHover(false)}
+      disabled={disabled}
     >
       {label}
       <Radio type="radio" checked={checked} isHovering={isHovering} {...props} />
@@ -180,6 +182,7 @@ export const LabeledCheckbox = (
       htmlFor={name}
       onMouseOver={(e) => updateHover(true)}
       onMouseLeave={(e) => updateHover(false)}
+      disabled={disabled}
     >
       {label}
       <Radio type="checkbox" checked={checked} isHovering={isHovering} {...props} />
