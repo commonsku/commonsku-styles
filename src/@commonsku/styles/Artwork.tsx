@@ -103,7 +103,7 @@ export const Artwork = (props: {picture?:string, icon?:string, name:string, cssH
     <ArtworkInfo withPicture={props.picture?true:false} >
       {props.edit && props.onSave ?
         <div style={{display:"flex"}}>
-         <Input style={{flexGrow:1, marginBottom: 0}} value={props.name}/>
+         <Input style={{flexGrow:1, marginBottom: 0, fontSize: ".8rem", padding: ".3rem"}} value={props.name}/>
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
        </div> :
        <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}

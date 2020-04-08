@@ -70,13 +70,15 @@ export const Radio = styled.input<{isHovering?: boolean}>`
   ${props => props.isHovering && `background-color: #02c0da;`}
 `;
 
-export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean}>`
+export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}>`
   position: absolute;
   top: 0;
   left: 0;
   height: 23px;
   width: 23px;
   background-color: ${(props) => (props.isHovering || props.checked) ? '#02c0da' : 'white'};
+  opacity: ${(props) => props.disabled ? 0.7 : 1};
+  filter: ${(props) => props.disabled ? "grayscale(100%)" : "none"};
   border: 2px solid #02c0da;
   border-radius: 4px;
   box-sizing: border-box;
@@ -103,12 +105,14 @@ export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean}>`
   }
 `
 
-export const Dot = styled.span<{checked?: boolean, isHovering?: boolean}>`
+export const Dot = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}>`
   position: absolute;
   top: 0;
   left: 0;
   height: 23px;
   width: 23px;
+  opacity: ${(props) => props.disabled ? 0.7 : 1};
+  filter: ${(props) => props.disabled ? "grayscale(100%)" : "none"};
   background-color: ${(props) => 
       (props.isHovering && !props.checked) ? '#02c0da' : 'white'};
   border: 2px solid #02c0da;
@@ -147,7 +151,7 @@ CheckMark.defaultProps = {
 }
 
 export const LabeledRadio = (
-  {label, name, checked, ...props}: {label: string, name?: string, [key: string]: any}
+  {label, name, checked, disabled, ...props}: {label: string, name?: string, [key: string]: any}
 ) => {
 
   const [ isHovering, updateHover ] = useState(false);
@@ -160,13 +164,13 @@ export const LabeledRadio = (
     >
       {label}
       <Radio type="radio" checked={checked} isHovering={isHovering} {...props} />
-      <Dot checked={checked} isHovering={isHovering}  />
+      <Dot checked={checked} isHovering={isHovering} disabled={disabled}  />
     </RadioLabel>
   );
 }
 
 export const LabeledCheckbox = (
-  {label, name, checked, ...props}: {label: string|React.ReactNode, name?: string, [key: string]: any}
+  {label, name, checked, disabled, ...props}: {label: string|React.ReactNode, name?: string, [key: string]: any}
 ) => {
 
   const [ isHovering, updateHover ] = useState(false);
@@ -179,7 +183,7 @@ export const LabeledCheckbox = (
     >
       {label}
       <Radio type="checkbox" checked={checked} isHovering={isHovering} {...props} />
-      <CheckMark checked={checked} isHovering={isHovering}  />
+      <CheckMark checked={checked} isHovering={isHovering} disabled={disabled} />
     </RadioLabel>
   );
 }

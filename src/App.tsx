@@ -127,7 +127,7 @@ const App = () => {
 
             <H5>Checkbox</H5>
             <ButtonsGroup>
-              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} disabled />
               <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
             </ButtonsGroup>
 
@@ -145,7 +145,7 @@ const App = () => {
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
 
             <H5>Progress</H5>
-            <LabeledProgress max={100} value={65} />
+            <LabeledProgress max={100} value={150} />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
@@ -163,7 +163,7 @@ const App = () => {
               </Col>
             </Row>
 
-            <H5>Artwork</H5>
+            <H5>Artwork &amp; Files</H5>
        	    <Row>
               <Col padded xs={3}>
                 <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.svg" picture={product_pic1} edit onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
