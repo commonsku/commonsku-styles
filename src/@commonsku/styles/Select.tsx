@@ -50,9 +50,9 @@ const SKUSelect = (props: SelectProps) => <Select
   {...props}
 />;
 
-const LabeledSelect = (props: SelectProps & {noMargin?:boolean}) => {
+const LabeledSelect = (props: SelectProps & {noMargin?:boolean, parentStyle?:object}) => {
   return (
-    <div>
+    <div style={props.parentStyle}>
       <Label htmlFor={props.name}>{props.label}</Label>  
       <SKUSelect {...props}/>
     </div>

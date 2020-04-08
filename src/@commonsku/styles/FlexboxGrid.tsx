@@ -11,6 +11,8 @@ export type RowPropTypes = {
     wrap ?: string, // 'wrap', 'nowrap', 'wrap-reverse', ...
     align ?: string,
     padded ?: boolean,
+    start ?: boolean,
+    end ?: boolean,
 };
 export const Row = styled.div<RowPropTypes>`
     display: flex;
@@ -20,7 +22,9 @@ export const Row = styled.div<RowPropTypes>`
     justify-content: ${(props) => props.justify || 'space-between' };
     flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
     align-items: ${(props) => props.align || 'center' };
-    padding: ${(props) => props.padded ? '0.5rem' : 'initial'}
+    padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
+    ${props => props.start ? 'place-content: flex-start;' : ''}
+    ${props => props.end ? 'place-content: flex-end;' : ''}
 `;
 
 export const Col = styled.div<SizerTypes>`

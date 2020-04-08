@@ -24,6 +24,11 @@ export type SizerTypes = {
     mdOffsetRight?: number,
     lgOffsetRight?: number,
     xlOffsetRight?: number,
+    xsStyle?: string,
+    smStyle?: string,
+    mdStyle?: string,
+    lgStyle?: string,
+    xlStyle?: string,
 };
 
 export const SizerCss = css<SizerTypes>`
@@ -68,6 +73,10 @@ export const SizerCss = css<SizerTypes>`
             }
             if(props[`${s}OffsetRight`]) {
                 res += media[s](`margin-right: ${(props[`${s}OffsetRight`]/12 * 100)}%;`);
+            }
+
+            if(props[`${s}Style`]) {
+                res += media[s](props[`${s}Style`]);
             }
         });
 
