@@ -75,13 +75,13 @@ const getColor = (props: {isDragAccept?: boolean, isDragReject?: boolean, isDrag
 
 export type DropzoneTypes = { 
   placeholder ?: string|React.ReactNode,
-  showUploadedFiles ?: boolean,
+  showDroppedFiles ?: boolean,
 } & DropzoneOptions
 
-export function DropZoned({
+export function Dropzoned({
   placeholder="Drop Here",
   accept='image/*',
-  showUploadedFiles=false,
+  showDroppedFiles=false,
   ...props
 }: DropzoneTypes) {
   const {
@@ -91,9 +91,9 @@ export function DropZoned({
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({accept: accept});
+  } = useDropzone({accept, ...props});
 
-  const files = showUploadedFiles && acceptedFiles.map((file: File&{path?: string}) => (
+  const files = showDroppedFiles && acceptedFiles.map((file: File&{path?: string}) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
@@ -105,7 +105,7 @@ export function DropZoned({
         <input {...getInputProps()} />
         <PlaceHolder>{placeholder}</PlaceHolder>
       </StyledDropArea>
-      {showUploadedFiles && <aside>
+      {showDroppedFiles && <aside>
         <h4>Files</h4>
         <ul>{files}</ul>
       </aside>}
@@ -134,7 +134,8 @@ export function DropzonedPreviews({
       setFiles(acceptedFiles.map((file: File) => Object.assign(file, {
         preview: URL.createObjectURL(file)
       })));
-    }
+    },
+    ...props
   });
 
   const thumbs = files.map((file: {preview: string}&File) => (
