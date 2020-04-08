@@ -62,6 +62,7 @@ const Button = styled.button<ButtonProps>`
   padding: ${getSizeStyle('padding', '12px 25px')};
   font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
   cursor: pointer;
+  vertical-align: top;
   &:disabled {
     background-color: #DAE9EE;
     border-color: #C9E8F2;

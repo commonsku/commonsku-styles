@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {Button} from './Button'
 import {Input} from './Input'
 import {IconDoc} from './icon/FileIcon'
+import {DownloadIcon} from './icon/DownloadIcon'
 
 const ArtworkName = styled.div`
   font-size: .9rem;
@@ -86,11 +87,11 @@ function extension(filename:string) {
   return filename.substring(filename.lastIndexOf('.') + 1, filename.length);
 }
 
-export const Artwork = (props: {picture?:string, icon?:string, name:string, cssHeight?:number, date?:string, edit?:boolean, onEdit?:Function|VoidFunction, onDelete?:Function|VoidFunction, onSave?:Function|VoidFunction }) => {
+export const Artwork = (props: {picture?:string, icon?:string, name:string, cssHeight?:number, date?:string, edit?:boolean, onClick?:Function|VoidFunction, onEdit?:Function|VoidFunction, onDelete?:Function|VoidFunction, onSave?:Function|VoidFunction, onDownload?:Function|VoidFunction }) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0}>
     {props.picture?
-      <ArtworkPicture cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
+      <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
       :
       <IconDoc ext={extension(props.name)} style={{width:"3vw"}}/>
     }
@@ -98,6 +99,7 @@ export const Artwork = (props: {picture?:string, icon?:string, name:string, cssH
     <ArtworkControls>
       {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
       {props.onDelete ? <Button size="small" onClick={() => props.onDelete!()} style={{marginLeft: 10}}>Delete</Button> : null}
+      {props.onDownload ? <Button size="small" onClick={() => props.onDownload!()} style={{marginLeft: 10, padding: 4}}><DownloadIcon style={{height: "20px"}}/></Button> : null}
     </ArtworkControls>
     : null}
     <ArtworkInfo withPicture={props.picture?true:false} >
