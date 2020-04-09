@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
 
@@ -77,5 +78,13 @@ const TBody= styled.tbody<SizerTypes>`
   ${SizerCss}
 `;
 
+const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChildren<{parentProps?: {[key: string]: any, style?:object}}>) => {
+  return (
+    <div style={{overflowX: 'auto'}} {...parentProps}>
+      <Table style={{borderCollapse: 'collapse', borderSpacing: 0, width: '100%'}} {...props}>{children}</Table>
+    </div>
+  );
+}
 
-export { Table, TD, TH, TR, THead, TBody };
+
+export { Table, TD, TH, TR, THead, TBody, ResponsiveTable };
