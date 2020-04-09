@@ -2,6 +2,9 @@ import React, { ChangeEvent, useState } from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
 import {Input, InputProps} from './Input'
+import {IconDoc} from './icon/FileIcon'
+import {DownloadIcon} from './icon/DownloadIcon'
+
 
 const ArtworkName = styled.div`
   font-size: .9rem;
@@ -18,6 +21,7 @@ const ArtworkControls = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 99;
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -25,16 +29,18 @@ const ArtworkControls = styled.div`
   transition: .3s all;
 `
 
-const ArtworkInfo = styled.div`
+const ArtworkInfo = styled.div<{withPicture?:boolean}>`
+  padding-left: ${props => props.withPicture ? 0 : "4vw !important"};
   width: 100%;
   position: absolute;
   height: 3rem;
   left: 0;
-  bottom: 0;
+  ${props=>props.withPicture ? "bottom" : "top"} : 0;
   opacity: 1;
   color: black;
   font-size: 14px;
   box-sizing: border-box;
+  word-wrap: break-word;
   -moz-box-sizing: border-box;
   -webkit-transition: height .2s ease;
   -moz-transition: height .2s ease;
@@ -42,9 +48,10 @@ const ArtworkInfo = styled.div`
   z-index: 1;
 `
 
-const ArtworkWrapper = styled.div<{height:number}>`
+const ArtworkWrapper = styled.div<{cssHeight:number}>`
   width: 100%;
-  height: ${props => props.height}vw;
+  height: ${props => props.cssHeight > 0 ? props.cssHeight + "vw": "auto"};
+  min-height: 4rem;
   position: relative;
   line-height: 1.5em;
   cursor: pointer;
@@ -54,9 +61,9 @@ const ArtworkWrapper = styled.div<{height:number}>`
   }
 `
 
-const ArtworkPicture = styled.div<{picture:string, height:number} >`
+const ArtworkPicture = styled.div<{picture:string, cssHeight:number} >`
   width: 100%;
-  height: calc(${props => props.height}vw - 3.5rem);
+  height: calc(${props => props.cssHeight}vw - 3.5rem);
   overflow: hidden;
   background-image: url("${props => props.picture}");
   background-repeat: no-repeat;
@@ -77,48 +84,57 @@ function truncate(filename:string, max:number) {
   return base_name.substr(0, max) + (filename.length > max ? '..' : '') + '.' + extension;
 }
 
-export const Artwork = ({
-  height=17,
-  edit=false,
-  date='',
-  inputProps={},
-  name='',
-  ...props
-}: {
-  picture:string,
+function extension(filename:string) {
+  return filename.substring(filename.lastIndexOf('.') + 1, filename.length);
+}
+
+export type ArtworkProps = {
+  picture?:string,
+  icon?:string,
   name:string,
-  height?:number,
+  cssHeight?:number,
   date?:string,
   edit?:boolean,
-  onEdit?:Function|VoidFunction|undefined,
-  onDelete?:Function|VoidFunction|undefined,
-  onSave?:Function|VoidFunction|undefined,
+  onClick?:Function|VoidFunction,
+  onEdit?:Function|VoidFunction,
+  onDelete?:Function|VoidFunction,
+  onSave?:Function|VoidFunction,
+  onDownload?:Function|VoidFunction,
   inputProps?:InputProps,
   inputEl?:React.ReactNode,
-}) => {
+};
 
+export const Artwork = ({
+    inputProps={},
+    ...props
+  }: ArtworkProps) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper height={height}>
-    <ArtworkPicture height={height} picture={props.picture}/>
-    {!edit ?
-      <ArtworkControls>
-        {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
-        {props.onDelete ? <Button size="small" onClick={() => props.onDelete!()} style={{marginLeft: 10}}>Delete</Button> : null}
-      </ArtworkControls> : null}
-
-    <ArtworkInfo>
-      {edit && props.onSave 
-        ? <div style={{display:"flex"}}>
-            {props.inputEl || <Input
-              style={{flexGrow:1, marginBottom: 0}}
-              value={name}
+  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0}>
+    {props.picture?
+      <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
+      :
+      <IconDoc ext={extension(props.name)} style={{width:"3vw"}}/>
+    }
+    {!props.edit ?
+    <ArtworkControls>
+      {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
+      {props.onDelete ? <Button size="small" onClick={() => props.onDelete!()} style={{marginLeft: 10}}>Delete</Button> : null}
+      {props.onDownload ? <Button size="small" onClick={() => props.onDownload!()} style={{marginLeft: 10, padding: 4}}><DownloadIcon style={{height: "20px"}}/></Button> : null}
+    </ArtworkControls>
+    : null}
+    <ArtworkInfo withPicture={props.picture?true:false} >
+      {props.edit && props.onSave ?
+        <div style={{display:"flex"}}>
+         {props.inputEl || <Input // Custom or default Input Element
+              style={{flexGrow:1, marginBottom: 0, fontSize: ".8rem", padding: ".3rem"}}
+              value={props.name}
               {...inputProps} // Add onChange/onBlur to update name
             />}
-            <Button size="small" style={{height:"100%", marginLeft: 10}} onClick={(e) => props.onSave!()}>Save</Button>
-          </div>
-        : <ArtworkName>{truncate(name, 20)}</ArtworkName>}
-
-       {!edit && date ? <UpdateDate>Updated {date}</UpdateDate> : null}
+         <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
+       </div> :
+       <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}
+       {!props.edit && props.date ?
+       <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>
   </ArtworkWrapper>
 }

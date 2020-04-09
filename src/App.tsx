@@ -145,7 +145,7 @@ const App = () => {
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
 
             <H5>Progress</H5>
-            <LabeledProgress max={100} value={65} />
+            <LabeledProgress max={100} value={150} />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
@@ -160,27 +160,44 @@ const App = () => {
 
             <H5>Product</H5>
        	    <Row>
-              <Col xs>
+              <Col padded xs={4}>
                 <Product name="Gratuiously Lengthy But Highly Descriptive Product Name" supplier="Extremely Long And Tedious Supplier Name" sku="#6410" rating={1} price={16.3} currency="USD" picture={product_pic1}/>
               </Col>
-              <Col xs>
+              <Col padded xs={4}>
+                <Product name="Sueded Crew" supplier="Next Level Apparel" sku="#6410" rating={5} price={16.3} currency="USD" picture={product_pic2}/>
+              </Col>
+              <Col padded xs={4}>
                 <Product name="Sueded Crew" supplier="Next Level Apparel" sku="#6410" rating={5} price={16.3} currency="USD" picture={product_pic2}/>
               </Col>
             </Row>
 
-            <H5>Artwork</H5>
+            <H5>Artwork &amp; Files</H5>
        	    <Row>
               <Col padded xs={3}>
                 <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.svg" picture={product_pic1} edit onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
               </Col>
               <Col padded xs={3}>
-                <Artwork name="squirrel.png" picture={product_pic2} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+                <Artwork name="squirrel.png" picture={product_pic2} onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onClick={() => alert("clicked")} onDownload={() => alert("downloading")}/>
               </Col>
               <Col padded xs={3}>
                 <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_wide} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
               </Col>
               <Col padded xs={3}>
                 <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_narrow} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+              </Col>
+            </Row>
+       	    <Row>
+              <Col padded xs={3}>
+                <Artwork edit date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.doc" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.csv" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.xls" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
+              </Col>
+              <Col padded xs={3}>
+                <Artwork date="Jan 3 2020" name="long_name_of_artwork_should_be_truncated.ppt" onEdit={() => alert("hi")} onDelete={() => alert("deleting")} onSave={() => alert("saving")}/>
               </Col>
             </Row>
 

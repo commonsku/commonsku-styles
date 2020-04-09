@@ -1,11 +1,16 @@
+import babel from 'rollup-plugin-babel';
+import commonjs from 'rollup-plugin-commonjs';
+import progress from 'rollup-plugin-progress';
+import filesize from 'rollup-plugin-filesize';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import url from '@rollup/plugin-url';
 import image from '@rollup/plugin-image';
+import svgr from '@svgr/rollup';
 // import typescript from '@rollup/plugin-typescript';
 import typescript from 'rollup-plugin-typescript2';
+import replace from 'rollup-plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 
 import pkg from './package.json';
 
@@ -23,10 +28,8 @@ export default {
     sourcemap: true
   }],
   plugins: [
+    progress(),
     peerDepsExternal(),
-    postcss({
-      modules: true
-    }),
     image(),
     url({ 
       include: [
@@ -34,10 +37,34 @@ export default {
         '**/*.png', '**/*.jpg', '**/*.gif'
       ], 
     }),
+    svgr(),
+    commonjs({
+      include: ['node_modules/**'],
+      exclude: ['node_modules/process-es6/**'],
+      namedExports: {
+        'node_modules/react/index.js': [
+          'Children',
+          'Component',
+          'PropTypes',
+          'createElement',
+        ],
+        'node_modules/react-dom/index.js': ['render'],
+      },
+    }),
+    postcss({
+      modules: true
+    }),
     resolve(),
+    babel({
+      exclude: 'node_modules/**',
+      runtimeHelpers: true
+    }),
+    filesize(),
     typescript({
       tsconfig: 'tsconfig.lib.json',
     }),
-    commonjs()
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
   ]
 };

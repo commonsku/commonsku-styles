@@ -30,7 +30,7 @@ export const LabeledInput = ({ label, name, ...props}: InputProps & {label: stri
   </div>
 }
 
-export const RadioLabel = styled.label`
+export const RadioLabel = styled.label<{disabled?: boolean}>`
   display: block;
   position: relative;
   padding-left: 35px;
@@ -47,6 +47,7 @@ export const RadioLabel = styled.label`
   font-weight: normal;
   line-height: 1.5;
   box-sizing: border-box;
+  opacity: ${(props) => props.disabled ? 0.7 : 1};
   &:focus {
     outline: 0;
   }
@@ -70,13 +71,15 @@ export const Radio = styled.input<{isHovering?: boolean}>`
   ${props => props.isHovering && `background-color: #02c0da;`}
 `;
 
-export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean}>`
+export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}>`
   position: absolute;
   top: 0;
   left: 0;
   height: 23px;
   width: 23px;
-  background-color: ${(props) => (props.isHovering || props.checked) ? '#02c0da' : 'white'};
+  background-color: ${(props) => ((props.isHovering || props.checked) && !props.disabled) ? '#02c0da' : 'white'};
+  opacity: ${(props) => props.disabled ? 0.7 : 1};
+  filter: ${(props) => props.disabled ? "grayscale(100%)" : "none"};
   border: 2px solid #02c0da;
   border-radius: 4px;
   box-sizing: border-box;
@@ -84,7 +87,7 @@ export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean}>`
     outline: 0;
   }
   &:hover {
-    background-color: #02c0da;};
+    background-color: ${(props) => props.disabled ? "white" : "#02c0da"};
   }
   &:after {
     content: "";
@@ -103,14 +106,15 @@ export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean}>`
   }
 `
 
-export const Dot = styled.span<{checked?: boolean, isHovering?: boolean}>`
+export const Dot = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}>`
   position: absolute;
   top: 0;
   left: 0;
   height: 23px;
   width: 23px;
-  background-color: ${(props) => 
-      (props.isHovering && !props.checked) ? '#02c0da' : 'white'};
+  opacity: ${(props) => props.disabled ? 0.7 : 1};
+  filter: ${(props) => props.disabled ? "grayscale(100%)" : "none"};
+  background-color: ${(props) => (props.isHovering && !props.checked && !props.disabled) ? '#02c0da' : 'white'};
   border: 2px solid #02c0da;
   border-radius: 50%;
   box-sizing: border-box;
@@ -118,8 +122,7 @@ export const Dot = styled.span<{checked?: boolean, isHovering?: boolean}>`
     outline: 0;
   }
   &:hover {
-    background-color: ${(props) => 
-      !props.checked ? '#02c0da;' : 'white'};
+    background-color: ${(props) => !props.checked && !props.disabled ? '#02c0da;' : 'white'};
   }
 
   &:after {
@@ -147,7 +150,7 @@ CheckMark.defaultProps = {
 }
 
 export const LabeledRadio = (
-  {label, name, checked, ...props}: {label: string, name?: string, [key: string]: any}
+  {label, name, checked, disabled, onChange, ...props}: {label: string, name?: string, [key: string]: any}
 ) => {
 
   const [ isHovering, updateHover ] = useState(false);
@@ -157,16 +160,17 @@ export const LabeledRadio = (
       htmlFor={name}
       onMouseOver={(e) => updateHover(true)}
       onMouseLeave={(e) => updateHover(false)}
+      disabled={disabled}
     >
       {label}
-      <Radio type="radio" checked={checked} isHovering={isHovering} {...props} />
-      <Dot checked={checked} isHovering={isHovering}  />
+      <Radio type="radio" checked={checked} isHovering={isHovering}  onChange={disabled? null : onChange} {...props} />
+      <Dot checked={checked} isHovering={isHovering} disabled={disabled}  />
     </RadioLabel>
   );
 }
 
 export const LabeledCheckbox = (
-  {label, name, checked, ...props}: {label: string|React.ReactNode, name?: string, [key: string]: any}
+  {label, name, checked, disabled, onChange, ...props}: {label: string|React.ReactNode, name?: string, [key: string]: any}
 ) => {
 
   const [ isHovering, updateHover ] = useState(false);
@@ -176,10 +180,11 @@ export const LabeledCheckbox = (
       htmlFor={name}
       onMouseOver={(e) => updateHover(true)}
       onMouseLeave={(e) => updateHover(false)}
+      disabled={disabled}
     >
       {label}
-      <Radio type="checkbox" checked={checked} isHovering={isHovering} {...props} />
-      <CheckMark checked={checked} isHovering={isHovering}  />
+      <Radio type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? null : onChange} {...props} />
+      <CheckMark checked={checked} isHovering={isHovering} disabled={disabled} />
     </RadioLabel>
   );
 }
