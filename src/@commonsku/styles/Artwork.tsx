@@ -29,7 +29,7 @@ const ArtworkControls = styled.div`
 `
 
 const ArtworkInfo = styled.div<{withPicture?:boolean}>`
-  padding-left: ${props => props.withPicture ? 0 : "4vw"};
+  padding-left: ${props => props.withPicture ? 0 : "4vw !important"};
   width: 100%;
   position: absolute;
   height: 3rem;
