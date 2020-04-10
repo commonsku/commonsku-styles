@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
-import {Input} from './Input'
+import {Input, InputProps} from './Input'
 import {IconDoc} from './icon/FileIcon'
 import {DownloadIcon} from './icon/DownloadIcon'
+
 
 const ArtworkName = styled.div`
   font-size: .9rem;
@@ -87,7 +88,26 @@ function extension(filename:string) {
   return filename.substring(filename.lastIndexOf('.') + 1, filename.length);
 }
 
-export const Artwork = (props: {picture?:string, icon?:string, name:string, cssHeight?:number, date?:string, edit?:boolean, onClick?:Function|VoidFunction, onEdit?:Function|VoidFunction, onDelete?:Function|VoidFunction, onSave?:Function|VoidFunction, onDownload?:Function|VoidFunction }) => {
+export type ArtworkProps = {
+  picture?:string,
+  icon?:string,
+  name:string,
+  cssHeight?:number,
+  date?:string,
+  edit?:boolean,
+  onClick?:Function|VoidFunction,
+  onEdit?:Function|VoidFunction,
+  onDelete?:Function|VoidFunction,
+  onSave?:Function|VoidFunction,
+  onDownload?:Function|VoidFunction,
+  inputProps?:InputProps,
+  inputEl?:React.ReactNode,
+};
+
+export const Artwork = ({
+    inputProps={},
+    ...props
+  }: ArtworkProps) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0}>
     {props.picture?
@@ -105,7 +125,11 @@ export const Artwork = (props: {picture?:string, icon?:string, name:string, cssH
     <ArtworkInfo withPicture={props.picture?true:false} >
       {props.edit && props.onSave ?
         <div style={{display:"flex"}}>
-         <Input style={{flexGrow:1, marginBottom: 0, fontSize: ".8rem", padding: ".3rem"}} value={props.name}/>
+         {props.inputEl || <Input // Custom or default Input Element
+              style={{flexGrow:1, marginBottom: 0, fontSize: ".8rem", padding: ".3rem"}}
+              value={props.name}
+              {...inputProps} // Add onChange/onBlur to update name
+            />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
        </div> :
        <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}
