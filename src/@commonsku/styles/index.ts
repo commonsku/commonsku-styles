@@ -26,4 +26,8 @@ export * from './Feed'
 export * from './Sizer'
 export * from './ErrorBoundary'
 export * from './Datepicker'
+export * from './SharedStyles'
+
 export * from './icons'
+export * from './Theme'
+export {default as Theme} from './Theme'

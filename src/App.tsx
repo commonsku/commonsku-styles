@@ -227,7 +227,7 @@ const App = () => {
 
             <H5>Toggle</H5>
             <Toggle stretch>
-              <ToggleLink selected stretch>Active</ToggleLink>
+              <ToggleLink selected stretch pr pl>Active</ToggleLink>
               <ToggleLink stretch>Inactive</ToggleLink>
             </Toggle>
             <H5>Tabs</H5>
