@@ -26,7 +26,7 @@ const LabeledProgress = (props: ProgressBarProps) => {
       <span style={{ color: "#00a259" }}>${props.value}</span>
     </strong> / ${props.max}
     <br />
-    <Progress value={props.value} max={props.max} />
+    <Progress value={props.value < props.max ? props.value : props.max} max={props.max} />
   </div>
 }
 

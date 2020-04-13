@@ -145,7 +145,7 @@ const App = () => {
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
 
             <H5>Progress</H5>
-            <LabeledProgress max={100} value={150} />
+            <LabeledProgress max={89.99} value={84.44} />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
