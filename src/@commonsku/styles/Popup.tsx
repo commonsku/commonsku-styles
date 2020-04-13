@@ -18,14 +18,39 @@ export const Overlay = styled.div`
 `;
 
 const PopupWindow = styled.div`
-    position: relative;
-    background: rgb(255, 255, 255);
-    width: 90%;
-    height: 90%;
-    margin: auto;
-    border: 1px solid rgb(187, 187, 187);
+/*
     padding: 5px;
+    position: relative;
     overflow: auto;
+    margin: auto;
+    height: 90%;
+    border: 1px solid rgb(187, 187, 187);
+    background: rgb(255, 255, 255);
+*/
+    width: 90%;
+    margin: 0 !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    height: 75%;
+    max-height: 700px;
+    overflow-y: hidden;
+    display: block;
+    z-index: 1006;
+
+    padding: 1rem;
+    border: 1px solid #CCD5DA;
+    background-color: #fefefe;
+    border-radius: 3px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+    .popup-content {
+        overflow-y: auto;
+        height: 90%;
+    }
 `;
 
 export const PopupHeader = styled.div`
@@ -36,11 +61,10 @@ export const PopupHeader = styled.div`
     justify-content: space-between;
     background: white;
     padding: 3px;
-    top: -5px;
     z-index: 99;
     .title {
         font-size: 1.8rem;
-        font-weight: bold;
+        font-weight: 500;
         text-align: left;
         align-self: center;
         padding-top: 3px;
@@ -61,7 +85,7 @@ export type PopupProps = React.PropsWithChildren<{
 export const Popup = ({ header, title, controls, children, onClose, ...props }: PopupProps) => {
     return <Overlay>
         <PopupWindow className="popup" {...props}>
-            {header ? header : <div>
+            {header ? header : (
                 <PopupHeader className="popup-header">
                     <Col style={{textAlign: 'left', alignSelf: 'center'}}>
                         <span className="title">{title}</span>
@@ -70,8 +94,7 @@ export const Popup = ({ header, title, controls, children, onClose, ...props }: 
                         {controls || <Button onClick={onClose}>Close</Button>}
                     </Col>
                 </PopupHeader>
-                <hr />
-            </div>}
+            )}
             <div className="popup-content">{children}</div>
         </PopupWindow>
     </Overlay>
