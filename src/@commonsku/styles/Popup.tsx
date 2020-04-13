@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import { Button } from './Button';
+import { H3 } from './Headings';
+import { Col } from './FlexboxGrid';
 
 export const Overlay = styled.div`
     position: fixed;
@@ -12,43 +15,42 @@ export const Overlay = styled.div`
     z-index: 999;
     margin-left: auto;
     margin-right: auto;
-/*
-    display: block;
-    overflow: hidden;
-    z-index: 1005;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(42, 56, 63, 0.45);
-    overflow-y: auto;
-*/
 `;
 
 const PopupWindow = styled.div`
 /*
-    position: fixed;
-    overflow: auto;
-    padding: 0 10px 10px 10px;
-    width: 80%;
-    height: 80%;
-    left: 10%; 
-    top: 10%;
-    background: white;
-    box-shadow: 2px 2px 10px -1px rgba(0,0,0,0.2);
-    border-radius: 7px;
-    z-index: 99999;
-*/
-
-    position: relative;
-    background: rgb(255, 255, 255);
-    width: 90%;
-    height: 90%;
-    margin: auto;
-    border: 1px solid rgb(187, 187, 187);
     padding: 5px;
+    position: relative;
     overflow: auto;
+    margin: auto;
+    height: 90%;
+    border: 1px solid rgb(187, 187, 187);
+    background: rgb(255, 255, 255);
+*/
+    width: 90%;
+    margin: 0 !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    height: 75%;
+    max-height: 700px;
+    overflow-y: hidden;
+    display: block;
+    z-index: 1006;
+
+    padding: 1rem;
+    border: 1px solid #CCD5DA;
+    background-color: #fefefe;
+    border-radius: 3px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+    .popup-content {
+        overflow-y: auto;
+        height: 90%;
+    }
 `;
 
 export const PopupHeader = styled.div`
@@ -59,38 +61,40 @@ export const PopupHeader = styled.div`
     justify-content: space-between;
     background: white;
     padding: 3px;
-    top: -5px;
     z-index: 99;
     .title {
-        padding: 7px;
-        font-size: 20px;
-        font-weight: bolder;
-    }
-    .close {
-        font-size: 24px;
-        font-weight: bolder;
-        text-align: top;
-        cursor: pointer;
+        font-size: 1.8rem;
+        font-weight: 500;
+        text-align: left;
+        align-self: center;
+        padding-top: 3px;
+        padding-left: 3px;
+        border-bottom: none;
+        font-family: "skufont-demibold",sans-serif;
+        color: #123952;
     }
 `;
 
 export type PopupProps = React.PropsWithChildren<{ 
     header?: React.Component,
     title?: string|React.Component,
-    onClose: (event?: React.MouseEvent) => void,
+    controls?: Array<React.ReactNode>,
+    onClose?: (event?: React.MouseEvent) => void,
 }> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({ header, title, children, onClose, ...props }: PopupProps) => {
+export const Popup = ({ header, title, controls, children, onClose, ...props }: PopupProps) => {
     return <Overlay>
         <PopupWindow className="popup" {...props}>
-            {header ? header : <div>
+            {header ? header : (
                 <PopupHeader className="popup-header">
-                    <span></span>
-                    <span className="title">{title}</span>
-                    <span className="close" onClick={onClose}>&times;</span>
+                    <Col style={{textAlign: 'left', alignSelf: 'center'}}>
+                        <span className="title">{title}</span>
+                    </Col>
+                    <Col style={{textAlign: 'right', alignSelf: 'center'}}>
+                        {controls || <Button onClick={onClose}>Close</Button>}
+                    </Col>
                 </PopupHeader>
-                <hr />
-            </div>}
+            )}
             <div className="popup-content">{children}</div>
         </PopupWindow>
     </Overlay>
