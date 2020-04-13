@@ -26,6 +26,6 @@ type TextareaProps = StyledComponentProps<'textarea', any, {}, never>;
 export const LabeledTextarea = ({ label, name, ...props}: TextareaProps & {label: string, name?: string, noMargin?: boolean}) => {
   return <div>
     <Label htmlFor={name}>{label}</Label>
-    <Textarea {...props}></Textarea>
+    <Textarea name={name} {...props}></Textarea>
   </div>
 }
