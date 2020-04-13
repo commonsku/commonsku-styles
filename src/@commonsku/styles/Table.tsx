@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
+import { UpDownArrowsIcon, UpArrowIcon, DownArrowIcon, } from './icons';
 
 const sharedStyle = css`
   line-height: 1.125rem;
@@ -63,11 +64,12 @@ const TD= styled.td<{clickable?: boolean}|SizerTypes>`
   ${SizerCss}
 `;
 
-const TR= styled.tr<SizerTypes>`
+const TR= styled.tr<SizerTypes&{selected?: boolean}>`
   ${SizerCss}
   &:hover {
     background: #EDF2F4;
   }
+  ${p => p.selected && 'background: #EDF2F4;'}
 `;
 
 const THead= styled.thead<SizerTypes>`
@@ -86,5 +88,18 @@ const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChild
   );
 }
 
+const THSorted = ({children, order, iconHeight=15, iconStyles, ...props}: React.PropsWithChildren<{order?: string, iconHeight?: number, iconStyles?: object}>) => {
+  return (
+    <TH {...props}>
+      {order==='desc' 
+        ? <DownArrowIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+        : order==='asc'
+          ? <UpArrowIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+          : <UpDownArrowsIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+      } {children}
+    </TH>
+  );
+}
 
-export { Table, TD, TH, TR, THead, TBody, ResponsiveTable };
+
+export { Table, TD, TH, TR, THead, TBody, ResponsiveTable, THSorted };
