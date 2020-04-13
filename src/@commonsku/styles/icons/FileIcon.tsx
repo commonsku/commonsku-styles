@@ -1,20 +1,20 @@
 import React from "react"
 
-const BlankFile = (props) => {
+const BlankFile = ({color="#000000"}: {color?:string}) => {
   return (
       <g>
         <path
           d="M36.884 1.171l14.632 14.631V54.79a5.913 5.913 0 01-5.914 5.913H7.43a5.914 5.914 0 01-5.914-5.913V7.085A5.914 5.914 0 017.43 1.171h29.454z"
           fill="#fff"
-          stroke={props.color}
+          stroke={color}
           strokeWidth={3}
         />
-        <path d="M36.09.307v17.539h16.093L36.091.307z" fill={props.color} />
+        <path d="M36.09.307v17.539h16.093L36.091.307z" fill={color} />
       </g>
   )
 }
 
-export const IconDoc = (props) => { 
+export const IconDoc = ({ext, ...props}: {[key: string]: any, ext?:string}) => {
   return (
     <svg
       viewBox="0 0 53 62"
@@ -25,7 +25,7 @@ export const IconDoc = (props) => {
       strokeMiterlimit={1.5}
       {...props}
     >
-      { props.ext === "csv" ?
+      { ext === "csv" ?
       <g>
         <BlankFile color="#a4abae"/>
         <path
@@ -51,7 +51,7 @@ export const IconDoc = (props) => {
           fill="#a4abae"
         />
       </g>
-      : props.ext === "doc" ||  props.ext === "docx" ?
+      : ext === "doc" ||  ext === "docx" ?
       <g>
         <BlankFile color="#bedbe5"/>
         <path
@@ -68,7 +68,7 @@ export const IconDoc = (props) => {
           fill="#bedbe5"
         />
       </g>
-    : props.ext === "ppt" ||  props.ext === "pptx" ?
+    : ext === "ppt" || ext === "pptx" ?
       <g>
         <BlankFile color="#db3d24"/>
         <path
@@ -82,7 +82,7 @@ export const IconDoc = (props) => {
           fillRule="nonzero"
         />
       </g>
-    : props.ext === "xls" ||  props.ext === "xlsx" ?
+    : ext === "xls" || ext === "xlsx" ?
       <g>
         <BlankFile color="#00d374"/>
         <path
@@ -110,7 +110,7 @@ export const IconDoc = (props) => {
           fill="#fff"
         />
       </g>
-    : 
+    :
       <BlankFile color="#a4abae"/>
     }
     </svg>

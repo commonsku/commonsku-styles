@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
 import {Input, InputProps} from './Input'
-import {IconDoc} from './icon/FileIcon'
-import {DownloadIcon} from './icon/DownloadIcon'
+import {IconDoc, DownloadIcon} from './icons'
 
 
 const ArtworkName = styled.div`
