@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { Button } from './Button';
 import { H3 } from './Headings';
+import { Col } from './FlexboxGrid';
 
 export const Overlay = styled.div`
     position: fixed;
@@ -38,16 +39,15 @@ export const PopupHeader = styled.div`
     top: -5px;
     z-index: 99;
     .title {
+        font-size: 1.8rem;
+        font-weight: bold;
         text-align: left;
-        padding: 7px;
-        font-size: 20px;
-        font-weight: bolder;
-    }
-    .close {
-        font-size: 24px;
-        font-weight: bolder;
-        text-align: top;
-        cursor: pointer;
+        align-self: center;
+        padding-top: 3px;
+        padding-left: 3px;
+        border-bottom: none;
+        font-family: "skufont-demibold",sans-serif;
+        color: #123952;
     }
 `;
 
@@ -63,9 +63,12 @@ export const Popup = ({ header, title, controls, children, onClose, ...props }: 
         <PopupWindow className="popup" {...props}>
             {header ? header : <div>
                 <PopupHeader className="popup-header">
-                    <H3>{title}</H3>
-                    {controls || 
-                        <Button onClick={onClose}>Close</Button>}
+                    <Col style={{textAlign: 'left', alignSelf: 'center'}}>
+                        <span className="title">{title}</span>
+                    </Col>
+                    <Col style={{textAlign: 'right', alignSelf: 'center'}}>
+                        {controls || <Button onClick={onClose}>Close</Button>}
+                    </Col>
                 </PopupHeader>
                 <hr />
             </div>}
