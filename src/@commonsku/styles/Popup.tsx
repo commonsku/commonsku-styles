@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import { Button, H3 } from './';
 
 export const Overlay = styled.div`
     position: fixed;
@@ -12,35 +13,9 @@ export const Overlay = styled.div`
     z-index: 999;
     margin-left: auto;
     margin-right: auto;
-/*
-    display: block;
-    overflow: hidden;
-    z-index: 1005;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(42, 56, 63, 0.45);
-    overflow-y: auto;
-*/
 `;
 
 const PopupWindow = styled.div`
-/*
-    position: fixed;
-    overflow: auto;
-    padding: 0 10px 10px 10px;
-    width: 80%;
-    height: 80%;
-    left: 10%; 
-    top: 10%;
-    background: white;
-    box-shadow: 2px 2px 10px -1px rgba(0,0,0,0.2);
-    border-radius: 7px;
-    z-index: 99999;
-*/
-
     position: relative;
     background: rgb(255, 255, 255);
     width: 90%;
@@ -62,6 +37,7 @@ export const PopupHeader = styled.div`
     top: -5px;
     z-index: 99;
     .title {
+        text-align: left;
         padding: 7px;
         font-size: 20px;
         font-weight: bolder;
@@ -77,17 +53,18 @@ export const PopupHeader = styled.div`
 export type PopupProps = React.PropsWithChildren<{ 
     header?: React.Component,
     title?: string|React.Component,
-    onClose: (event?: React.MouseEvent) => void,
+    controls?: Array<React.ReactNode>,
+    onClose?: (event?: React.MouseEvent) => void,
 }> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({ header, title, children, onClose, ...props }: PopupProps) => {
+export const Popup = ({ header, title, controls, children, onClose, ...props }: PopupProps) => {
     return <Overlay>
         <PopupWindow className="popup" {...props}>
             {header ? header : <div>
                 <PopupHeader className="popup-header">
-                    <span></span>
-                    <span className="title">{title}</span>
-                    <span className="close" onClick={onClose}>&times;</span>
+                    <H3>{title}</H3>
+                    {controls || 
+                        <Button onClick={onClose}>Close</Button>}
                 </PopupHeader>
                 <hr />
             </div>}
