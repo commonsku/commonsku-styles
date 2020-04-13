@@ -18,7 +18,7 @@ import {
     Avatar, 
     Box, 
     Background,
-    DropArea,
+    DropArea, Dropzoned, DropzonedPreviews,
     Button, 
     H1, H2, H5, 
     Label,
@@ -149,6 +149,14 @@ const App = () => {
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
+
+            <H5>Dropzoned</H5>
+            <Dropzoned showDroppedFiles />
+
+            <H5>DropZoned Preview</H5>
+            <DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
+              console.log(acceptedFiles);
+            }} />
 
             <H5>Product</H5>
        	    <Row>
