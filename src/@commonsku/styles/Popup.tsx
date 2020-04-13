@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Button, H3 } from './';
+import { Button } from './Button';
+import { H3 } from './Headings';
 
 export const Overlay = styled.div`
     position: fixed;
