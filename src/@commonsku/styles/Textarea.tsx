@@ -7,7 +7,7 @@ export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean}>`
   padding: .5rem;
   color: #123952;
   width: 100%;
-  border: 1px solid #ABC7D1;
+  border: 1px solid ${p => p.error ? '#fa237c' : '#ABC7D1'};
   border-radius: 5px;
   box-sizing: border-box;
   font-family: 'skufont-regular', sans-serif;
