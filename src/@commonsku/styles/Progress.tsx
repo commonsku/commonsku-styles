@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import React from 'react'
 
 const ProgressWrapper = styled.div`
+  max-width: 100%;
   width: 100%;
   height: 20px;
   background: #ECF4F7;
@@ -9,6 +10,7 @@ const ProgressWrapper = styled.div`
 
 type ProgressBarProps = React.PropsWithChildren<{value: number, max: number}>;
 const ProgressBar = styled.div<ProgressBarProps>`
+  max-width: 100%;
   width: ${props => 100 * props.value / props.max}%;
   height: 100%;
   background: #00d374;
