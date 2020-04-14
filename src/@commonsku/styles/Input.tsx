@@ -9,7 +9,7 @@ export const Input = styled.input<InputProps>`
   padding: .5rem;
   color: #123952;
   width: 100%;
-  border: 1px solid #ABC7D1;
+  border: 1px solid ${p => p.error ? '#fa237c' : '#ABC7D1'};
   border-radius: 5px;
   box-sizing: border-box;
   font-family: 'skufont-regular', sans-serif;
@@ -26,7 +26,7 @@ export const Input = styled.input<InputProps>`
 export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string}) => {
   return <div>
     <Label htmlFor={name}>{label}</Label>
-    <Input {...props}></Input>
+    <Input name={name} {...props}></Input>
   </div>
 }
 
@@ -163,7 +163,7 @@ export const LabeledRadio = (
       disabled={disabled}
     >
       {label}
-      <Radio type="radio" checked={checked} isHovering={isHovering}  onChange={disabled? null : onChange} {...props} />
+      <Radio name={name} type="radio" checked={checked} isHovering={isHovering}  onChange={disabled? null : onChange} {...props} />
       <Dot checked={checked} isHovering={isHovering} disabled={disabled}  />
     </RadioLabel>
   );
@@ -183,7 +183,7 @@ export const LabeledCheckbox = (
       disabled={disabled}
     >
       {label}
-      <Radio type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? null : onChange} {...props} />
+      <Radio name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? null : onChange} {...props} />
       <CheckMark checked={checked} isHovering={isHovering} disabled={disabled} />
     </RadioLabel>
   );

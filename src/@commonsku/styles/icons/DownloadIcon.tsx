@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export const DownloadIcon = (props) => {
+export const DownloadIcon = (props: {[key: string]: any}) => {
   return (
     <svg
       viewBox="0 0 40 40"
