@@ -1,5 +1,8 @@
 import { get } from 'lodash';
 import styled from 'styled-components'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 /*
 
@@ -52,32 +55,34 @@ const getSizeStyle = (style: string, defaults: string) => {
   };
 }
 
-const Button = styled.button<ButtonProps>`
+const Button = styled.button<ButtonProps&SharedStyleTypes>`
   border: 3px solid white;
   border-radius: 5px;
-  background: ${props => props.secondary ? "transparent" : props => props.cta ? "#fa237c" : "#02c0da" };
-  color: ${props => props.secondary ? "#02c0da" : "white"};
-  border-color: ${props => props.cta ? "#fa237c" : "#02c0da" };
+  background: ${props => props.secondary ? "transparent" : props => props.cta ? aeval(props.theme.colors, 'cta', colors.cta) : aeval(props.theme.colors, 'primary', colors.primary) };
+  color: ${props => props.secondary ? aeval(props.theme.colors, 'primary', colors.primary) : "white"};
+  border-color: ${props => props.cta ? aeval(props.theme.colors, 'cta', colors.cta) : aeval(props.theme.colors, 'primary', colors.primary)};
   font-size: ${getSizeStyle('font-size', '1em')};
   padding: ${getSizeStyle('padding', '12px 25px')};
   font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
   cursor: pointer;
   vertical-align: top;
   &:disabled {
-    background-color: #DAE9EE;
-    border-color: #C9E8F2;
-    color: #02c0da;
+    background-color: ${props => aeval(props.theme.colors, 'disabledButton', colors.disabledButton)};
+    border-color: ${props => aeval(props.theme.colors, 'disabledButtonBorder', colors.disabledButtonBorder)};
+    color: ${props => aeval(props.theme.colors, 'primary', colors.primary)};
     cursor: default;
     opacity: 0.5;
   }
+  ${SharedStyles}
 `;
 
-export const ButtonsGroup = styled.div`
+export const ButtonsGroup = styled.div<SharedStyleTypes>`
   display: inline-flex;
   max-width: 600px;
   margin-bottom: 10px;
   margin-right: 100px;
   justify-content: space-around;
+  ${SharedStyles}
 `;
 
 export {Button};

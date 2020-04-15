@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
+import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 /* 
 
@@ -7,12 +8,13 @@ import React from 'react'
 
 */
 
-const StyledPage = styled.div`
+const StyledPage = styled.div<SharedStyleTypes>`
   font-family: 'skufont-regular', sans-serif;
+  ${SharedStyles}
 `;
 
-function Page (props: React.PropsWithChildren<{}>) {
-  return <StyledPage>
+function Page (props: React.PropsWithChildren<SharedStyleTypes>) {
+  return <StyledPage {...props}>
     {props.children}
   </StyledPage>
 }

@@ -1,9 +1,11 @@
 import React from 'react'
 import styled, { StyledComponentProps } from 'styled-components'
-
 import {Label} from './Label'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean}>`
+export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean} & SharedStyleTypes>`
   padding: .5rem;
   color: #123952;
   width: 100%;
@@ -19,11 +21,12 @@ export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean}>`
     border: 2px solid ${p => p.error ? '#fa237c' : '#02c0da'};
     outline: none;
   }
+  ${SharedStyles}
 `;
 
 type TextareaProps = StyledComponentProps<'textarea', any, {}, never>;
 
-export const LabeledTextarea = ({ label, name, ...props}: TextareaProps & {label: string, name?: string, noMargin?: boolean}) => {
+export const LabeledTextarea = ({ label, name, ...props}: TextareaProps & {label: string, name?: string, noMargin?: boolean} & SharedStyleTypes) => {
   return <div>
     <Label htmlFor={name}>{label}</Label>
     <Textarea name={name} {...props}></Textarea>

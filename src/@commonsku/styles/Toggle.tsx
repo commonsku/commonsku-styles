@@ -10,12 +10,13 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   width: 100%; `
 
-const Container = styled.div<{stretch?:boolean}>`
-  background: #DAE9EE;
+const Container = styled.div<{stretch?:boolean}&SharedStyleTypes>`
+  background: ${props => aeval(props.theme.colors, 'primary0', colors.primary0)};
   border-radius: 50px;
   display: flex;
   justify-content: space-between;
   width: ${props => props.stretch ? "100%" : "auto"};
+  ${SharedStyles}
 `
 
 const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean}&SharedStyleTypes>`
@@ -36,8 +37,8 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean}&SharedStyleTy
 `
 
 const Toggle = (props: React.PropsWithChildren<{stretch?:boolean}&SharedStyleTypes>) => {
-  return <Wrapper>
-    <Container stretch={props.stretch}>
+  return <Wrapper {...props}>
+    <Container stretch={props.stretch} {...props}>
       {props.children}
     </Container>
   </Wrapper>

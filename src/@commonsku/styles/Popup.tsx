@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { Button } from './Button';
 import { H3 } from './Headings';
 import { Col } from './FlexboxGrid';
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 export const Overlay = styled.div`
     position: fixed;
@@ -17,7 +20,7 @@ export const Overlay = styled.div`
     margin-right: auto;
 `;
 
-const PopupWindow = styled.div`
+const PopupWindow = styled.div<SharedStyleTypes>`
 /*
     padding: 5px;
     position: relative;
@@ -51,6 +54,7 @@ const PopupWindow = styled.div`
         overflow-y: auto;
         height: 90%;
     }
+    ${SharedStyles}
 `;
 
 export const PopupHeader = styled.div`
@@ -80,7 +84,7 @@ export type PopupProps = React.PropsWithChildren<{
     title?: string|React.Component,
     controls?: Array<React.ReactNode>,
     onClose?: (event?: React.MouseEvent) => void,
-}> & React.HTMLAttributes<HTMLDivElement>;
+} & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
 export const Popup = ({ header, title, controls, children, onClose, ...props }: PopupProps) => {
     return <Overlay>
