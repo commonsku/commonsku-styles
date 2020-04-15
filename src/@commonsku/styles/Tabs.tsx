@@ -1,16 +1,20 @@
 import styled from 'styled-components'
 import React, { useState, Component } from 'react'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const TabBar = styled.ul<{padded?: boolean}>`
+const TabBar = styled.ul<{padded?: boolean} & SharedStyleTypes>`
   display: block;
   font-size: 1.125rem;
   font-family: 'skufont-demibold', sans-serif;
   margin: 0;
   margin-bottom: ${props => props.padded ? "20px" : 0};
   padding: 0;
+  ${SharedStyles}
 `
 
-const Tab = styled.li<{selected?: boolean}>`
+const Tab = styled.li<{selected?: boolean} & SharedStyleTypes>`
   cursor: pointer;
   display: inline-block;
   border-bottom: ${props => props.selected ? "5px solid #02c0da" : "none"};
@@ -21,6 +25,7 @@ const Tab = styled.li<{selected?: boolean}>`
   position: relative;
   padding: 1rem 12px;
   margin-right: 15px;
+  ${SharedStyles}
 `
 
 const TabContent = styled.div``

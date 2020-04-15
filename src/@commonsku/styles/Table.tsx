@@ -2,6 +2,9 @@ import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
 import { UpDownArrowsIcon, UpArrowIcon, DownArrowIcon, } from './icons';
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const sharedStyle = css`
   line-height: 1.125rem;
@@ -18,7 +21,7 @@ const optionalPadding = css<{padded?: boolean}>`
   }
 `
 
-const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))`
+const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))<SharedStyleTypes>`
   background-color: white;
   border: none;
   border-spacing: none;
@@ -28,9 +31,10 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))`
   font-family: 'skufont-regular', sans-serif
   ${sharedStyle}
   ${SizerCss}
+  ${SharedStyles}
 `;
 
-const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}|SizerTypes>`
+const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}&SharedStyleTypes|SizerTypes>`
   background-color: #dae9ee;
   border: none;
   border-spacing: none;
@@ -48,9 +52,10 @@ const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}|
   ${optionalPadding}
   ${sharedStyle}
   ${SizerCss}
+  ${SharedStyles}
 `;
 
-const TD= styled.td<{clickable?: boolean}|SizerTypes>`
+const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   color: #52585c;
   font-size: .875rem;
   line-height: 1.75rem;
@@ -62,6 +67,7 @@ const TD= styled.td<{clickable?: boolean}|SizerTypes>`
   ${optionalPadding}
   ${sharedStyle}
   ${SizerCss}
+  ${SharedStyles}
 `;
 
 const TR= styled.tr<SizerTypes&{selected?: boolean}>`
@@ -80,7 +86,7 @@ const TBody= styled.tbody<SizerTypes>`
   ${SizerCss}
 `;
 
-const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChildren<{parentProps?: {[key: string]: any, style?:object}}>) => {
+const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChildren<{parentProps?: {[key: string]: any, style?:object}} & SharedStyleTypes>) => {
   return (
     <div style={{overflowX: 'auto'}} {...parentProps}>
       <Table style={{borderCollapse: 'collapse', borderSpacing: 0, width: '100%'}} {...props}>{children}</Table>

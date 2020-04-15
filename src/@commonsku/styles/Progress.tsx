@@ -1,13 +1,18 @@
 import styled from 'styled-components'
 import React from 'react'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const ProgressWrapper = styled.div`
+const ProgressWrapper = styled.div<SharedStyleTypes>`
   width: 100%;
   height: 20px;
   background: #ECF4F7;
+  ${SharedStyles}
 `
 
-type ProgressBarProps = React.PropsWithChildren<{value: number, max: number}>;
+type ProgressBarProps = React.PropsWithChildren<{value: number, max: number} & SharedStyleTypes>;
+
 const ProgressBar = styled.div<ProgressBarProps>`
   width: ${props => 100 * props.value / props.max}%;
   height: 100%;
@@ -15,7 +20,7 @@ const ProgressBar = styled.div<ProgressBarProps>`
 `
 
 const Progress = (props: ProgressBarProps) => {
-  return <ProgressWrapper>
+  return <ProgressWrapper {...props}>
     <ProgressBar value={props.value} max={props.max} />
   </ProgressWrapper>
 }

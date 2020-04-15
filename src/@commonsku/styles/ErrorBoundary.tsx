@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const Wrapper = styled.div`
-    background: #E2EBF2;
+const Wrapper = styled.div<SharedStyleTypes>`
+    background: ${props => aeval(props.theme.colors, 'bgblue', colors.bgblue)};
     text-align: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    ${SharedStyles}
 `;
 
 const ErrorTextContainer = styled.div`
@@ -72,7 +76,7 @@ export class ErrorBoundary extends Component<object, StateType> {
   render() {
     if (this.state.hasError) {
       return (
-        <Wrapper>
+        <Wrapper {...this.props}>
           <div style={{ display: 'flex', flexWrap: 'wrap', position: 'fixed', width: '100%', }}>
             <ErrorTextContainer>
                 I&apos;m sorry... this page cannot be loaded.<br /><br /><a href="/">Back to home</a>

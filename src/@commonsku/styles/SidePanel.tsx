@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { Row, Col } from './FlexboxGrid';
 import { Avatar } from './Avatar'
 import { H2 } from './Headings'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 
 /* 
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const StyledPanel = styled.div`
+const StyledPanel = styled.div<SharedStyleTypes>`
   background: white;
   height: 100vh;
   width: 560px;
@@ -44,12 +47,14 @@ const StyledPanel = styled.div`
   top: 0;
   padding: 1em;
   overflow: scroll;
+  ${SharedStyles}
 `;
 
-const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode }>) => {
+const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes>) => {
   return <StyledPanel
     style={{ visibility: (props.visible ? "visible" : "hidden") }} 
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
+    {...props}
   >
     <Row>
       <Col xl={6} xs={6}>

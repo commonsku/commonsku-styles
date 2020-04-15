@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import {Button} from './Button'
 import {Input, InputProps} from './Input'
 import {IconDoc, DownloadIcon} from './icons'
+import { colors, fontSizes } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 
 const ArtworkName = styled.div`
@@ -11,8 +14,8 @@ const ArtworkName = styled.div`
 `
 
 const UpdateDate = styled.div`
-  font-size: .75rem;
-  color: #9BAEB9;
+  font-size: ${props => aeval(props.theme.fontSizes, 'tiny', fontSizes.tiny)};
+  color: ${props => aeval(props.theme.colors, 'textbody', colors.textbody)};
 `
 
 const ArtworkControls = styled.div`
@@ -47,7 +50,7 @@ const ArtworkInfo = styled.div<{withPicture?:boolean}>`
   z-index: 1;
 `
 
-const ArtworkWrapper = styled.div<{cssHeight:number}>`
+const ArtworkWrapper = styled.div<{cssHeight:number}&SharedStyleTypes>`
   width: 100%;
   height: ${props => props.cssHeight > 0 ? props.cssHeight + "vw": "auto"};
   min-height: 4rem;
@@ -58,6 +61,7 @@ const ArtworkWrapper = styled.div<{cssHeight:number}>`
   &:hover ${ArtworkControls} {
     opacity: 1;
   }
+  ${SharedStyles}
 `
 
 const ArtworkPicture = styled.div<{picture:string, cssHeight:number} >`
@@ -106,9 +110,9 @@ export type ArtworkProps = {
 export const Artwork = ({
     inputProps={},
     ...props
-  }: ArtworkProps) => {
+  }: ArtworkProps & SharedStyleTypes) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0}>
+  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} {...props}>
     {props.picture?
       <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
       :

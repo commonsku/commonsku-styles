@@ -45,6 +45,7 @@ import {
     DateSingleInput,
     Datepicker,
     DateRangeInput,
+    ErrorBoundary,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -102,7 +103,7 @@ const App = () => {
           <Col xs>
             <div>
               <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
-              <Button onClick={() => setShowPopup(true)}>Show Popup</Button>
+              <Button cta onClick={() => setShowPopup(true)}>Show Popup</Button>
             </div>
 
             <Row>
@@ -139,7 +140,7 @@ const App = () => {
             <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
             <H5>Input</H5>
-            <LabeledInput label="Labeled Input" placeholder="Input" />
+            <LabeledInput mt={100} label="Labeled Input" placeholder="Input" />
 
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
@@ -226,9 +227,14 @@ const App = () => {
                       comments={[]} />
 
             <H5>Toggle</H5>
-            <Toggle stretch>
+            <Toggle stretch mb={10}>
               <ToggleLink selected stretch pr pl>Active</ToggleLink>
               <ToggleLink stretch>Inactive</ToggleLink>
+            </Toggle>
+            <br/><br/>
+            <Toggle ml={10}>
+              <ToggleLink selected stretch pr={20} pl={20}>Active</ToggleLink>
+              <ToggleLink stretch pr={20} pl={20}>Inactive</ToggleLink>
             </Toggle>
             <H5>Tabs</H5>
             <Tabs tabs={[
@@ -262,6 +268,7 @@ const App = () => {
           </Col>
           <Col xs />
         </Row>
+        <ErrorBoundary>this is an error boundary</ErrorBoundary>
       </Box>
     </Background>
   </Page>

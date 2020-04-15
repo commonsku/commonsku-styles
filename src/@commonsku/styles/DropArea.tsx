@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useDropzone, DropzoneOptions, DropEvent } from 'react-dropzone';
 import styled from 'styled-components';
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
-export const StyledDropArea = styled.div<{isDragAccept?: boolean, isDragReject?: boolean, isDragActive?: boolean}>`
+export const StyledDropArea = styled.div<{isDragAccept?: boolean, isDragReject?: boolean, isDragActive?: boolean}&SharedStyleTypes>`
   padding: 20px;
-  border: 2px dashed #02c0da; 
+  border: 2px dashed ${props => aeval(props.theme.colors, 'primary', colors.primary)}; 
   cursor: pointer;
   border-radius: 5px;
   &:hover {
-    background-color: #ECF4F7;
+    background-color: ${props => aeval(props.theme.colors, 'bgblue', colors.bgblue)};
   }
   border-color: ${props => getColor(props)};
   outline: none;
   transition: border .24s ease-in-out;
+  ${SharedStyles}
 `;
 
 const PlaceHolder = styled.label`
-  color: #02c0da;
+  color: ${props => aeval(props.theme.colors, 'primary', colors.primary)};
   text-align: center;
   width: 100%;
   display: block;
@@ -31,7 +35,7 @@ const ThumbsContainer = styled.aside`
 const Thumb = styled.div`
   display: inline-flex;
   border-radius: 2px;
-  border: 1px solid #eaeaea;
+  border: 1px solid #eaeaea ${props => aeval(props.theme.colors, 'bggray', colors.bggray)};
   margin-bottom: 8px;
   margin-right: 8px;
   width: 100px;
@@ -53,8 +57,8 @@ const ImgPreview = styled.img`
 `;
 
 
-export const DropArea = (props: React.PropsWithChildren<{ placeholder?:string|React.ReactNode}>) => {
-  return <StyledDropArea>
+export const DropArea = (props: React.PropsWithChildren<{ placeholder?:string|React.ReactNode} & SharedStyleTypes>) => {
+  return <StyledDropArea {...props}>
            {props.children ? props.children : <PlaceHolder>{props.placeholder}</PlaceHolder>}
          </StyledDropArea>
 }

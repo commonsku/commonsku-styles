@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import {StarRating} from './StarRating'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 
 const ProductInfo = styled.div`
@@ -43,7 +46,7 @@ const SupplierName = styled.div`
   text-overflow: ellipsis;
 `
 
-const ProductWrapper = styled.div<{picture:string} >`
+const ProductWrapper = styled.div<{picture:string} & SharedStyleTypes >`
   width: 100%;
   height: 17rem;
   overflow: hidden;
@@ -64,10 +67,11 @@ const ProductWrapper = styled.div<{picture:string} >`
     overflow: visible;
     white-space: normal;
   }
+  ${SharedStyles}
 `
 
-export const Product = (props: {sku:string, picture:string, supplier:string, name:string, price?:number, currency?:string, rating?:number}) => {
-  return <ProductWrapper picture={props.picture}>
+export const Product = (props: {sku:string, picture:string, supplier:string, name:string, price?:number, currency?:string, rating?:number} & SharedStyleTypes) => {
+  return <ProductWrapper picture={props.picture} {...props}>
     <ProductInfo>
       <SupplierName>{props.supplier}</SupplierName>
       <ProductName>{props.name}</ProductName>

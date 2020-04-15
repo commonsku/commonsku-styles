@@ -1,13 +1,16 @@
 import styled from 'styled-components'
 import React from 'react'
 import {LabeledCheckbox} from './Input'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const Task = (props: React.PropsWithChildren<{taskName:string, date:string, done?:boolean, assignee?: string, taskBody: string}>) => {
+const Task = (props: React.PropsWithChildren<{taskName:string, date:string, done?:boolean, assignee?: string, taskBody: string} & SharedStyleTypes>) => {
   const TaskLabel  = styled.div`display: flex;`
   const TaskName   = styled.div`flex-grow: 1;`
-  const StyledTask = styled.div`margin-bottom: 1.5em;`
+  const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
   const TaskBody   = styled.div`margin-left:34px;`
-  return <StyledTask>
+  return <StyledTask {...props}>
            <LabeledCheckbox label={<TaskLabel>
                                      <TaskName>{props.taskName}</TaskName>
                                      <div>{props.date}</div>

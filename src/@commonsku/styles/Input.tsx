@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import styled, { StyledComponentProps } from 'styled-components'
+import { colors } from './Theme';
+import { aeval } from '../utils';
+import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 import {Label} from './Label'
 
 export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean};
 
-export const Input = styled.input<InputProps>`
+export const Input = styled.input<InputProps & SharedStyleTypes>`
   padding: .5rem;
-  color: #123952;
+  color: ${props => aeval(props.theme.colors, 'textlabel', colors.textlabel)};
   width: 100%;
-  border: 1px solid ${p => p.error ? '#fa237c' : '#ABC7D1'};
+  border: 1px solid ${p => p.error ? aeval(p.theme.colors, 'special3', colors.special3) : aeval(p.theme.colors, 'inputBorder', colors.inputBorder)};
   border-radius: 5px;
   box-sizing: border-box;
   font-family: 'skufont-regular', sans-serif;
@@ -18,12 +21,13 @@ export const Input = styled.input<InputProps>`
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-bottom: ${props => props.noMargin ? 0 : "1rem"};
   &:focus {
-    border: 2px solid ${p => p.error ? '#fa237c' : '#02c0da'};
+    border: 2px solid ${p => p.error ? aeval(p.theme.colors, 'special3', colors.special3) : aeval(p.theme.colors, 'inputBorder', colors.primary)};
     outline: none;
   }
+  ${SharedStyles}
 `;
 
-export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string}) => {
+export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string} & SharedStyleTypes) => {
   return <div>
     <Label htmlFor={name}>{label}</Label>
     <Input name={name} {...props}></Input>
@@ -53,7 +57,7 @@ export const RadioLabel = styled.label<{disabled?: boolean}>`
   }
 `;
 
-export const Radio = styled.input<{isHovering?: boolean}>`
+export const Radio = styled.input<{isHovering?: boolean} & SharedStyleTypes>`
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -69,9 +73,10 @@ export const Radio = styled.input<{isHovering?: boolean}>`
     background-color: #02c0da;
   }
   ${props => props.isHovering && `background-color: #02c0da;`}
+  ${SharedStyles}
 `;
 
-export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}>`
+export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}&SharedStyleTypes>`
   position: absolute;
   top: 0;
   left: 0;
@@ -104,9 +109,10 @@ export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean, d
     box-sizing: border-box;
     display: ${(props) => props.checked ? 'block' : 'none'};
   }
+  ${SharedStyles}
 `
 
-export const Dot = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}>`
+export const Dot = styled.span<{checked?: boolean, isHovering?: boolean, disabled?: boolean}&SharedStyleTypes>`
   position: absolute;
   top: 0;
   left: 0;
@@ -139,6 +145,7 @@ export const Dot = styled.span<{checked?: boolean, isHovering?: boolean, disable
     display: block;
     `}
   }
+  ${SharedStyles}
 `;
 
 Dot.defaultProps = {
