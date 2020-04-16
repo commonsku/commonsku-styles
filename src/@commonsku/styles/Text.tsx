@@ -6,7 +6,7 @@ import { colors, fonts } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 export const Text = styled.span<{color?: keyof typeof colors} & SharedStyleTypes>`
-  font-family: ${fonts};
+  font-family: ${fonts.join(', ')};
 
   color: ${props => colors[props.color ?? 'textbody']};
   background-color: ${props => props.bg ? get(colors, `${props.color}Bg`, 'transparent') : 'transparent'};
