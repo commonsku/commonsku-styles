@@ -72,26 +72,25 @@ const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: str
 }
 
 
+const NameAndPosition = styled.div`
+  display: inline-block;
+  width: calc(100% - 80px);
+`
+
+const Name = styled.div`
+  font-weight: bold;
+`
+
+const Position = styled.div`
+  font-size: .8em;
+`
+const Contact = styled.div`
+  display: flex;
+  margin-bottom: 15px;
+`
+
 // TODO: do we allow unnamed contacts?
 const PanelContact = (props: { name:string, position?:string, email?:string, phone?:string, avatar?:React.ReactNode }) => {
-
-  const NameAndPosition = styled.div`
-    display: inline-block;
-    width: calc(100% - 80px);
-  `
-
-  const Name = styled.div`
-    font-weight: bold;
-  `
-
-  const Position = styled.div`
-    font-size: .8em;
-  `
-  const Contact = styled.div`
-    display: flex;
-    margin-bottom: 15px;
-  `
-
   return (
     <Contact>
       <Col xs>
