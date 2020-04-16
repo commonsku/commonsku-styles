@@ -7,6 +7,7 @@ import { Avatar } from './Avatar'
 import { H2 } from './Headings'
 import { colors } from './Theme';
 import { aeval } from '../utils';
+import { useDelayUnmount } from './hooks';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 
@@ -50,20 +51,6 @@ const StyledPanel = styled.div<SharedStyleTypes>`
   ${SharedStyles}
 `;
 
-function useDelayUnmount(isMounted: boolean, delayTime: number) {
-  const [shouldRender, setShouldRender] = React.useState(false);
-
-  React.useEffect(() => {
-    let timeoutId: number;
-    if (isMounted && !shouldRender) {
-      setShouldRender(true);
-    } else if (!isMounted && shouldRender) {
-      timeoutId = setTimeout(() => setShouldRender(false), delayTime);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [isMounted, delayTime, shouldRender]);
-  return shouldRender;
-}
 
 const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes>) => {
   const shouldRenderChild = useDelayUnmount(props.visible, 500);
