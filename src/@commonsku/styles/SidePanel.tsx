@@ -50,9 +50,25 @@ const StyledPanel = styled.div<SharedStyleTypes>`
   ${SharedStyles}
 `;
 
+function useDelayUnmount(isMounted: boolean, delayTime: number) {
+  const [shouldRender, setShouldRender] = React.useState(false);
+
+  React.useEffect(() => {
+    let timeoutId: number;
+    if (isMounted && !shouldRender) {
+      setShouldRender(true);
+    } else if (!isMounted && shouldRender) {
+      timeoutId = setTimeout(() => setShouldRender(false), delayTime);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [isMounted, delayTime, shouldRender]);
+  return shouldRender;
+}
+
 const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes>) => {
-  return <StyledPanel
-    style={{ visibility: (props.visible ? "visible" : "hidden") }} 
+  const shouldRenderChild = useDelayUnmount(props.visible, 500);
+  return shouldRenderChild ? <StyledPanel
+    // style={{ visibility: (props.visible ? "visible" : "hidden") }}
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
     {...props}
   >
@@ -65,7 +81,7 @@ const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: str
       </div>
     </Row>
     {props.children}
-  </StyledPanel>
+  </StyledPanel> : null;
 }
 
 
