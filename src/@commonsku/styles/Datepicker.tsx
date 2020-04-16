@@ -4,9 +4,10 @@ import {
   Datepicker as BaseDatepicker,
   DateSingleInput as BaseDateSingleInput,
   DateRangeInput as BaseDateRangeInput,
-  OnDateChangeProps,
-  OnDatesChangeProps,
 } from '@datepicker-react/styled';
+import { DateSingleInputProps } from '@datepicker-react/styled/lib/components/DateSingleInput/DateSingleInput';
+import { DatepickerProps } from '@datepicker-react/styled/lib/components/Datepicker/Datepicker';
+import { DateRangeInputProps } from '@datepicker-react/styled/lib/components/DateRangeInput/DateRangeInput';
 
 const commonStyles = css`
   label {
@@ -65,39 +66,20 @@ const theme: {[key: string]: any} = {
   }
 };
 
-export function DateSingleInput({
-  showCalendarIcon=false,
-  ...props
-}: {
-  [key: string]: any,
-  date: Date | null,
-  showDatepicker: boolean,
-  onDateChange(data: OnDateChangeProps): void,
-  onFocusChange(focusInput: boolean): void
-}) {
-  if (showCalendarIcon) {
+export function DateSingleInput(props: DateSingleInputProps) {
+  if (props.showCalendarIcon) {
     theme['inputPadding'] = '2.5rem';
   } else {
     theme['inputPadding'] = '.5rem';
   }
   return <ThemeProvider theme={theme}>
     <Wrapper>
-      <BaseDateSingleInput
-        showCalendarIcon={showCalendarIcon}
-        {...props}
-      />
+      <BaseDateSingleInput {...props}/>
     </Wrapper>
   </ThemeProvider>
 }
 
-declare type FocusedInput = 'startDate' | 'endDate' | null
-export function Datepicker(props: {
-  [key: string]: any,
-  onDatesChange(data: OnDatesChangeProps): void,
-  startDate: Date | null,
-  endDate: Date | null,
-  focusedInput: FocusedInput
-}) {
+export function Datepicker(props: DatepickerProps) {
   return <ThemeProvider theme={theme}>
     <Wrapper>
       <BaseDatepicker {...props} />
@@ -105,14 +87,7 @@ export function Datepicker(props: {
   </ThemeProvider>
 }
 
-export function DateRangeInput(props: {
-  [key: string]: any,
-  onFocusChange(focusInput: FocusedInput): void,
-  onDatesChange(data: OnDatesChangeProps): void,
-  startDate: Date | null,
-  endDate: Date | null,
-  focusedInput: FocusedInput
-}) {
+export function DateRangeInput(props: DateRangeInputProps) {
   return <ThemeProvider theme={theme}>
     <Wrapper><BaseDateRangeInput {...props} /></Wrapper>
   </ThemeProvider>
