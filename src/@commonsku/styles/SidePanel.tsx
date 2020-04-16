@@ -7,6 +7,7 @@ import { Avatar } from './Avatar'
 import { H2 } from './Headings'
 import { colors } from './Theme';
 import { aeval } from '../utils';
+import { useDelayUnmount } from './hooks';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 
@@ -50,9 +51,11 @@ const StyledPanel = styled.div<SharedStyleTypes>`
   ${SharedStyles}
 `;
 
+
 const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes>) => {
-  return <StyledPanel
-    style={{ visibility: (props.visible ? "visible" : "hidden") }} 
+  const shouldRenderChild = useDelayUnmount(props.visible, 500);
+  return shouldRenderChild ? <StyledPanel
+    // style={{ visibility: (props.visible ? "visible" : "hidden") }}
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
     {...props}
   >
@@ -65,7 +68,7 @@ const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: str
       </div>
     </Row>
     {props.children}
-  </StyledPanel>
+  </StyledPanel> : null;
 }
 
 
