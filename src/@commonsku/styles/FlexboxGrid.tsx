@@ -28,7 +28,7 @@ export const Row = styled.div<RowPropTypes>`
         justify-content: ${(props) => props.justify || 'space-between' };
         flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
         align-items: ${(props) => props.align || 'center' };
-        padding: ${(props) => props.padded ? '0.5rem' : 'initial'}
+        padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
         ${props => props.start ? 'place-content: flex-start;' : ''}
         ${props => props.end ? 'place-content: flex-end;' : ''}
         ${SharedStyles}

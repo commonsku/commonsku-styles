@@ -80,7 +80,6 @@ export const Radio = styled.input<RadioProps>`
       background-color: #02c0da;
     }
     ${props => props.isHovering && `background-color: #02c0da;`}
-    ${props => props.isHovering && `background-color: #02c0da;`}
     ${SharedStyles}
   }
 `;
@@ -103,38 +102,20 @@ export const CheckMark = styled.span<{checked?: boolean, isHovering?: boolean, d
   &:hover {
     background-color: ${(props) => props.disabled ? "white" : "#02c0da"};
   }
-  &:after {
+  &::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 23px;
-    width: 23px;
-    background-color: ${(props) => (props.isHovering || props.checked) ? '#02c0da' : 'white'};
-    border: 2px solid #02c0da;
-    border-radius: 4px;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
     box-sizing: border-box;
-    &:focus {
-      outline: 0;
-    }
-    &:hover {
-      background-color: #02c0da;};
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      left: 9px;
-      top: 5px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-      box-sizing: border-box;
-      display: ${(props) => props.checked ? 'block' : 'none'};
-    }
+    display: ${(props) => props.checked ? 'block' : 'none'};
   }
   ${SharedStyles}
 `
@@ -156,41 +137,21 @@ export const Dot = styled.span<{checked?: boolean, isHovering?: boolean, disable
       outline: 0;
     }
     &:hover {
-      background-color: ${(props) => !props.checked && !props.disabled ? '#02c0da;' : 'white'};
+      background-color: ${(props) => !props.checked && !props.disabled ? '#02c0da' : 'white'};
     }
-
-    &:after {
+    &::after {
       top: 5px;
       left: 5px;
       width: 9px;
       height: 9px;
       border-radius: 50%;
-      box-sizing: border-box;
-      &:focus {
-        outline: 0;
-      }
-      &:hover {
-        background-color: ${(props) => 
-          !props.checked ? '#02c0da;' : 'white'};
-      }
-
-      &:after {
-        top: 5px;
-        left: 5px;
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: #02c0da;
-        content: "";
-        position: absolute;
-        display: none;
-        ${(props) => props.checked && `
-        display: block;
-        `}
-      }
+      background: #02c0da;
+      content: "";
+      position: absolute;
+      display: none;
+      ${(props) => props.checked && `display: block;`}
     }
     ${SharedStyles}
-  }
 `;
 
 Dot.defaultProps = {
