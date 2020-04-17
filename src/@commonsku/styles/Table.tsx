@@ -25,11 +25,11 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))<Shar
   &&& {
     background-color: white;
     border: none;
-    border-spacing: none;
+    border-spacing: 0;
     width: 100%;
     table-layout: auto;
     display: table;
-    font-family: 'skufont-regular', sans-serif
+    font-family: 'skufont-regular', sans-serif;
     ${sharedStyle}
     ${SizerCss}
     ${SharedStyles}
@@ -40,7 +40,7 @@ const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}&
   &&& {
     background-color: #dae9ee;
     border: none;
-    border-spacing: none;
+    border-spacing: 0;
     color: ${props => props.clickable ? "#00889B" : "#123952"};
     font-size: 1rem;
     padding: 0.5rem 0.625rem 0.625rem;
@@ -61,6 +61,7 @@ const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}&
 
 const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   &&& {
+    border: 0;
     color: #52585c;
     font-size: .875rem;
     line-height: 1.75rem;
