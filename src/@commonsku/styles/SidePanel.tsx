@@ -48,6 +48,9 @@ const StyledPanel = styled.div<SharedStyleTypes>`
   top: 0;
   padding: 1em;
   overflow: scroll;
+  @media only screen and (max-width: 640px) {
+    width: auto !important;
+  }
   ${SharedStyles}
 `;
 
