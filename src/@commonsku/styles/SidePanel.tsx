@@ -74,7 +74,7 @@ const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: str
 
 const NameAndPosition = styled.div`
   display: inline-block;
-  width: calc(100% - 80px);
+  width: 95%;
 `
 
 const Name = styled.div`
