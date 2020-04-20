@@ -28,8 +28,8 @@ export default {
     sourcemap: true
   }],
   plugins: [
-    progress(),
     peerDepsExternal(),
+    progress(),
     image(),
     url({ 
       include: [

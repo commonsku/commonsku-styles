@@ -1,7 +1,6 @@
 import { get } from 'lodash';
 import styled from 'styled-components'
 import { colors } from './Theme';
-import { aeval } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 /*
@@ -44,7 +43,7 @@ const sizes = {
 
 type ButtonProps = {
   secondary?: boolean, cta?: boolean, size?: keyof typeof sizes
-};
+} & SharedStyleTypes;
 
 const getSizeStyle = (style: string, defaults: string) => {
   return ({ size }: ButtonProps) => {
@@ -55,34 +54,41 @@ const getSizeStyle = (style: string, defaults: string) => {
   };
 }
 
-const Button = styled.button<ButtonProps&SharedStyleTypes>`
-  border: 3px solid white;
-  border-radius: 5px;
-  background: ${props => props.secondary ? "transparent" : props => props.cta ? aeval(props.theme.colors, 'cta', colors.cta) : aeval(props.theme.colors, 'primary', colors.primary) };
-  color: ${props => props.secondary ? aeval(props.theme.colors, 'primary', colors.primary) : "white"};
-  border-color: ${props => props.cta ? aeval(props.theme.colors, 'cta', colors.cta) : aeval(props.theme.colors, 'primary', colors.primary)};
-  font-size: ${getSizeStyle('font-size', '1em')};
-  padding: ${getSizeStyle('padding', '12px 25px')};
-  font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
-  cursor: pointer;
-  vertical-align: top;
-  &:disabled {
-    background-color: ${props => aeval(props.theme.colors, 'disabledButton', colors.disabledButton)};
-    border-color: ${props => aeval(props.theme.colors, 'disabledButtonBorder', colors.disabledButtonBorder)};
-    color: ${props => aeval(props.theme.colors, 'primary', colors.primary)};
-    cursor: default;
-    opacity: 0.5;
+const Button = styled.button<ButtonProps>`
+  &&& {
+    border: 3px solid white;
+    border-radius: 5px;
+    background: ${({ secondary, cta, theme }) => 
+      secondary ? "transparent" : 
+      cta ? (theme.colors.cta ?? colors.cta) : (theme.colors.primary ?? colors.primary)
+    };
+    color: ${props => props.secondary ? (props.theme.colors.primary ?? colors.primary) : "white"};
+    border-color: ${props => props.cta ? (props.theme.colors.cta ?? colors.cta) : (props.theme.colors.primary ?? colors.primary)};
+    font-size: ${getSizeStyle('font-size', '1em')};
+    padding: ${getSizeStyle('padding', '12px 25px')};
+    font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
+    cursor: pointer;
+    vertical-align: top;
+    &:disabled {
+      background-color: ${props => (props.theme.colors.disabledButton ?? colors.disabledButton)};
+      border-color: ${props => (props.theme.colors.disabledButtonBorder ?? colors.disabledButtonBorder)};
+      color: ${props => (props.theme.colors.primary ?? colors.primary)};
+      cursor: default;
+      opacity: 0.5;
+    }
   }
   ${SharedStyles}
 `;
 
 export const ButtonsGroup = styled.div<SharedStyleTypes>`
-  display: inline-flex;
-  max-width: 600px;
-  margin-bottom: 10px;
-  margin-right: 100px;
-  justify-content: space-around;
-  ${SharedStyles}
+  &&& {
+    display: inline-flex;
+    max-width: 600px;
+    margin-bottom: 10px;
+    margin-right: 100px;
+    justify-content: space-around;
+    ${SharedStyles}
+  }
 `;
 
 export {Button};

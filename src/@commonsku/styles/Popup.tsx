@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Button } from './Button';
 import { H3 } from './Headings';
@@ -8,6 +9,7 @@ import { aeval } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 export const Overlay = styled.div`
+  &&& {
     position: fixed;
     top: 0px;
     bottom: 0px;
@@ -18,25 +20,27 @@ export const Overlay = styled.div`
     z-index: 999;
     margin-left: auto;
     margin-right: auto;
+  }
 `;
 
-const PopupWindow = styled.div<SharedStyleTypes>`
-/*
-    padding: 5px;
-    position: relative;
-    overflow: auto;
-    margin: auto;
-    height: 90%;
-    border: 1px solid rgb(187, 187, 187);
-    background: rgb(255, 255, 255);
-*/
-    width: 90%;
+const PopupWindow = styled.div<SharedStyleTypes & {width?: string, height?: string}>`
+  &&& {
+    /*
+        padding: 5px;
+        position: relative;
+        overflow: auto;
+        margin: auto;
+        height: 90%;
+        border: 1px solid rgb(187, 187, 187);
+        background: rgb(255, 255, 255);
+    */
+    width: ${props => props.width ?? '90%'};
+    height: ${props => props.width ?? '75%'}; 
     margin: 0 !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: fixed;
-    height: 75%;
     max-height: 700px;
     overflow-y: hidden;
     display: block;
@@ -55,9 +59,11 @@ const PopupWindow = styled.div<SharedStyleTypes>`
         height: 90%;
     }
     ${SharedStyles}
+  }
 `;
 
 export const PopupHeader = styled.div`
+  &&& {
     position: sticky;
     top: 0;
     display: flex;
@@ -77,7 +83,21 @@ export const PopupHeader = styled.div`
         font-family: "skufont-demibold",sans-serif;
         color: #123952;
     }
+  }
 `;
+
+const PopupContainer: React.FC<{}> = ({ children }) => {
+  const ref = React.useRef(document.createElement('div'));
+
+  useEffect(() => {
+    document.body.append(ref.current);
+    return () => {
+      ref.current.remove();
+    }
+  }, []);
+
+  return ReactDOM.createPortal(children, ref.current);
+}
 
 export type PopupProps = React.PropsWithChildren<{ 
     header?: React.Component,
@@ -87,37 +107,35 @@ export type PopupProps = React.PropsWithChildren<{
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
 export const Popup = ({ header, title, controls, children, onClose, ...props }: PopupProps) => {
-    return <Overlay>
-        <PopupWindow className="popup" {...props}>
-            {header ? header : (
-                <PopupHeader className="popup-header">
-                    <Col style={{textAlign: 'left', alignSelf: 'center'}}>
-                        <span className="title">{title}</span>
-                    </Col>
-                    <Col style={{textAlign: 'right', alignSelf: 'center'}}>
-                        {controls || <Button onClick={onClose}>Close</Button>}
-                    </Col>
-                </PopupHeader>
-            )}
-            <div className="popup-content">{children}</div>
-        </PopupWindow>
+  return <PopupContainer>
+    <Overlay>
+      <PopupWindow className="popup" {...props}>
+          {header ? header : (
+              <PopupHeader className="popup-header">
+                  <Col style={{textAlign: 'left', alignSelf: 'center'}}>
+                      <span className="title">{title}</span>
+                  </Col>
+                  <Col style={{textAlign: 'right', alignSelf: 'center'}}>
+                      {controls || <Button onClick={onClose}>Close</Button>}
+                  </Col>
+              </PopupHeader>
+          )}
+          <div className="popup-content">{children}</div>
+      </PopupWindow>
     </Overlay>
+  </PopupContainer>
 }
 
-
-export const Showpopup = ({
-    show=false, children
-}: {show?: boolean, children ?: React.ReactNode}) => {
-    const [showPopup, setShowPopup] = useState(show);
-    return <div>
-            {showPopup && <Popup
-                title={'Hello popup'}
-                onClose={() => {
-                    setShowPopup(false);
-                }}
-            >Hello from Popup</Popup>}
-    </div>
+export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
+  popup: React.ComponentType<PopupProps>,
+  autoOpen?: boolean,
+  render?: React.FC<{onClick: () => void}>
+}> = ({ autoOpen = false, popup: PopupComponent, render, ...props }) => {
+  const [showPopup, setShowPopup] = useState(autoOpen);
+  return <>
+    {showPopup && <PopupComponent onClose={() => setShowPopup(false)} {...props}/>}
+    {render && render({onClick: () => setShowPopup(!showPopup)})}
+  </>
 }
-
 
 export default Popup;

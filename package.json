@@ -18,7 +18,7 @@
     "build": "NODE_ENV=production npx rollup -c",
     "test": "echo \"No test specified\"",
     "prepare": "echo \"install devDependencies for github install...\"",
-    "prepack": "rm -rf dist/* && yarn run build",
+    "prepack": "rm -rf dist && npm run build",
     "packTest": "npm pack --dry-run",
     "eject": "react-scripts eject",
     "styleguide": "styleguidist server --open",
@@ -36,7 +36,7 @@
     "react-dom": "^16.12.0",
     "react-flexbox-grid": "^2.1.2",
     "react-select": "^3.0.8",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.1.0"
   },
   "dependencies": {
     "@datepicker-react/styled": "^2.3.1",
@@ -57,7 +57,7 @@
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.2",
     "react-select": "^3.0.8",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",

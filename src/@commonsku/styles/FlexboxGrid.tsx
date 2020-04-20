@@ -17,25 +17,32 @@ export type RowPropTypes = {
     padded ?: boolean,
     start ?: boolean,
     end ?: boolean,
-};
-export const Row = styled.div<RowPropTypes & SharedStyleTypes>`
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: row;
-    flex: 0 1 auto;
-    justify-content: ${(props) => props.justify || 'space-between' };
-    flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
-    align-items: ${(props) => props.align || 'center' };
-    padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
-    ${props => props.start ? 'place-content: flex-start;' : ''}
-    ${props => props.end ? 'place-content: flex-end;' : ''}
-    ${SharedStyles}
+} & SharedStyleTypes;
+
+export const Row = styled.div<RowPropTypes>`
+    &&& {
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: row;
+        flex: 0 1 auto;
+        justify-content: ${(props) => props.justify || 'space-between' };
+        flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
+        align-items: ${(props) => props.align || 'center' };
+        padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
+        ${props => props.start ? 'place-content: flex-start;' : ''}
+        ${props => props.end ? 'place-content: flex-end;' : ''}
+        ${SharedStyles}
+    }
 `;
 
-export const Col = styled.div<SizerTypes & SharedStyleTypes>`
-    flex: 12;
-    flex-grow: 1;
-    box-sizing: border-box;
-    ${SizerCss}
-    ${SharedStyles}
+export type ColPropTypes = SizerTypes & SharedStyleTypes;
+
+export const Col = styled.div<ColPropTypes>`
+    &&& {
+        flex: 12;
+        flex-grow: 1;
+        box-sizing: border-box;
+        ${SizerCss}
+        ${SharedStyles}
+    }
 `;
