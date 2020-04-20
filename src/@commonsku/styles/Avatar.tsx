@@ -1,25 +1,41 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import React from 'react'
 import placeholder from './img/avatar-placeholder.png'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
-const AvatarWrapper = styled.div<SharedStyleTypes>`
-  width: 42px;
-  height: 42px;
-  margin-right: 15px;
-  display: inline-block;
-  vertical-align: top;
-  overflow: hidden;
-  ${SharedStyles}
+const avatarSizes = {
+  small: css`
+    width: 32px;
+    height: 32px;
+  `,
+  medium: css`
+    width: 42px;
+    height: 42px;
+  `,
+};
+
+type _AvatarProps = {size?: keyof typeof avatarSizes} & React.HTMLAttributes<HTMLDivElement> & SharedStyleTypes;
+const AvatarWrapper = styled.div<_AvatarProps>`
+  &&& {
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    margin: 0;
+    ${SharedStyles}
+
+    ${props => avatarSizes[props.size || 'medium']}
+  }
 `
 
-const AvatarPic = styled.img`
-  width: 42px;
+const AvatarPic = styled.img<_AvatarProps>`
+  &&& {
+    ${props => avatarSizes[props.size || 'medium']}
+  }
 `
 
-const Avatar = (props: React.PropsWithChildren<{pic?: string}> & SharedStyleTypes) => {
-  return <AvatarWrapper {...props}>
-    <AvatarPic src={props.pic ?? placeholder }/>
+const Avatar: React.FC<{pic?: string} & _AvatarProps> = ({ pic, size, ...props }) => {
+  return <AvatarWrapper size={size} {...props}>
+    <AvatarPic src={pic ?? placeholder } size={size}/>
   </AvatarWrapper>
 }
 

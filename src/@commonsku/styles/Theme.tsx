@@ -19,6 +19,9 @@ export const colors = {
   special1: '#ffd302',
   special2: '#00d374',
   special3: '#ff297c',
+  primaryBg: '#EAF2F6',
+  special2Bg: '#E7FFE9',
+  transparent: 'transparent',
 };
 export const fonts = ['skufont-demibold', 'sans-serif', 'Roboto'];
 export const fontSizes = {
