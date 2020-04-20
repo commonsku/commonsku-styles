@@ -39,6 +39,7 @@ import {
     Row, Col,
     Popup,
     Task,
+    Link,
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox,
     Table, TD, TH, TR, THead, TBody,
@@ -46,6 +47,7 @@ import {
     Datepicker,
     DateRangeInput,
     ErrorBoundary,
+    Theme,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -76,7 +78,7 @@ const App = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return <Page>
+  return <Theme><Page>
     <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
       <Tabs padded tabs={[
         { label: "Contacts", content: <div>
@@ -104,6 +106,7 @@ const App = () => {
             <div>
               <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
               <Button cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+              <Link block mt={20}>Link</Link>
             </div>
 
             <Row>
@@ -271,7 +274,7 @@ const App = () => {
         <ErrorBoundary>this is an error boundary</ErrorBoundary>
       </Box>
     </Background>
-  </Page>
+  </Page></Theme>
 }
 
 export default App;

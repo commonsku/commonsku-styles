@@ -16,9 +16,10 @@ export const Text = styled.span<{color?: keyof typeof colors} & SharedStyleTypes
 `;
 type TextProps = React.ComponentProps<typeof Text>;
 
-const _Link: React.FC<{highlight?: boolean} & TextProps> = ({ highlight, ...props }) => {
+const _Link: React.FC<{highlight?: boolean} & TextProps & SharedStyleTypes> = ({ highlight, ...props }) => {
   return <Text color={highlight ? 'special2' : 'primary'} {...props}/>;
 }
 export const Link = styled(_Link)`
   cursor: pointer;
+  ${SharedStyles}
 `;
