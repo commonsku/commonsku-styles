@@ -6,14 +6,14 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 import {Label} from './Label'
 
-export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean};
+export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, showError?:boolean};
 
 export const Input = styled.input<InputProps & SharedStyleTypes>`
   &&& {
     padding: .5rem;
     color: ${props => getThemeColor(props, 'textlabel')};
     width: 100%;
-    border: 1px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
+    border: 1px solid ${p => p.showError && p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
     border-radius: 5px;
     box-sizing: border-box;
     font-family: 'skufont-regular', sans-serif;

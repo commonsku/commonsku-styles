@@ -13,7 +13,7 @@ const SKUSelect = (props: SelectProps) => <Select
     input: (provided, state) => ({
       ...provided,
       height: 'auto',
-      borderColor: props.error ? getThemeColor(props, 'special3'): getThemeColor(props, 'inputBorder')
+      borderColor: props.showError && props.error ? getThemeColor(props, 'special3'): getThemeColor(props, 'inputBorder')
     }),
     control: (provided, state) => ({
       ...provided,

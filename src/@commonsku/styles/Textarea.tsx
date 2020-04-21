@@ -4,11 +4,11 @@ import {Label} from './Label'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean} & SharedStyleTypes>`
+export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean, showError?:boolean} & SharedStyleTypes>`
   padding: .5rem;
   color: #123952;
   width: 100%;
-  border: 1px solid ${p => p.error ? '#fa237c' : '#ABC7D1'};
+  border: 1px solid ${p => p.showError && p.error ? '#fa237c' : '#ABC7D1'};
   border-radius: 5px;
   box-sizing: border-box;
   font-family: 'skufont-regular', sans-serif;
