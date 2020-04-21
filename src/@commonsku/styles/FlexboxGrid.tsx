@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { media, sizes } from '../utils';
 import { SizerCss, SizerTypes } from './Sizer';
-import { colors } from './Theme';
-import { aeval } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 export const Grid = styled.div<SharedStyleTypes>`

@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import {Button} from './Button'
 import {Input, InputProps} from './Input'
 import {IconDoc, DownloadIcon} from './icons'
-import { colors, fontSizes } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor, getThemeFontSize } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 
@@ -14,8 +13,8 @@ const ArtworkName = styled.div`
 `
 
 const UpdateDate = styled.div`
-  font-size: ${props => aeval(props.theme.fontSizes, 'tiny', fontSizes.tiny)};
-  color: ${props => aeval(props.theme.colors, 'textbody', colors.textbody)};
+  font-size: ${props => getThemeFontSize(props, 'tiny')};
+  color: ${props => getThemeColor(props, 'textbody')};
 `
 
 const ArtworkControls = styled.div`

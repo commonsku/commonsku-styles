@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 const Wrapper = styled.div`
@@ -11,7 +10,7 @@ const Wrapper = styled.div`
   width: 100%; `
 
 const Container = styled.div<{stretch?:boolean}&SharedStyleTypes>`
-  background: ${props => aeval(props.theme.colors, 'primary0', colors.primary0)};
+  background: ${props => getThemeColor(props, 'primary0')};
   border-radius: 50px;
   display: flex;
   justify-content: space-between;
@@ -31,8 +30,8 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean}&SharedStyleTy
   width: ${props => props.stretch? "50%" : "auto"};
   justify-content: center;
   cursor: pointer;
-  background-color: ${props => props.selected ? aeval(props.theme.colors, 'primary', colors.primary) : aeval(props.theme.colors, 'primary0', colors.primary0) };
-  color:            ${props => props.selected ? "white" : aeval(props.theme.colors, 'primary', colors.primary) };
+  background-color: ${props => props.selected ? getThemeColor(props, 'primary') : getThemeColor(props, 'primary0') };
+  color:            ${props => props.selected ? "white" : getThemeColor(props, 'primary') };
   ${SharedStyles}
 `
 

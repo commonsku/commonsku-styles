@@ -37,6 +37,55 @@ export const themeOptions = {
   fontSizes
 }
 
+export function getColor(color?: string, def?: string): string {
+  // @ts-ignore
+  return color && colors[color] ? colors[color] : colors[def];
+}
+
+export function getFontSize(value?: string, def?: string): string {
+  // @ts-ignore
+  return value && fontSizes[value] ? fontSizes[value] : fontSizes[def];
+}
+
+export function getFonts(value?: string): string {
+  let result = fonts;
+  // @ts-ignore
+  if (value?.toLowerCase() !== 'all') {
+    result = fonts.filter((v: string) => v===value);
+  }
+
+  let _result = result.join("','");
+  if (_result.charAt(0) !== "'") { _result = "'" + _result }
+  if (_result.charAt(_result.length-1) !== "'") { _result = _result + "'" };
+
+  return _result;
+}
+
+export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
+  return getThemeProperty(props, 'colors', color, fallbackColor);
+}
+
+export function getThemeFontSize(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
+  return getThemeProperty(props, 'fontSizes', value, fallbackValue);
+}
+
+export function getThemeFonts(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
+  return getThemeProperty(props, 'fonts', value, fallbackValue);
+}
+
+export function getThemeProperty(props: {[key: string]: any}, prop: string, value: string, fallbackValue?: string): string {
+  if (props.theme && props.theme[prop] && props.theme[prop][value]) {
+    return props.theme[prop][value];
+  }
+  // @ts-ignore
+  return prop === 'fontSizes' 
+    ? getFontSize(fallbackValue, value)
+    : prop === 'colors'
+    ? getColor(fallbackValue, value)
+    : prop === 'fonts'
+    ? getColor(fallbackValue, value)
+    : null;
+}
 
 const Theme = ({ children }: React.PropsWithChildren<{}>) => (
   <ThemeProvider theme={themeOptions}>{children}</ThemeProvider>

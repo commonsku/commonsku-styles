@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import styled from 'styled-components'
-import { colors } from './Theme';
+import { colors, getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 /*
@@ -58,21 +58,21 @@ const Button = styled.button<ButtonProps>`
   &&& {
     border: 3px solid white;
     border-radius: 5px;
-    background: ${({ secondary, cta, theme }) => 
+    background: ${({ secondary, cta, ...props }) => 
       secondary ? "transparent" : 
-      cta ? (theme.colors.cta ?? colors.cta) : (theme.colors.primary ?? colors.primary)
+      cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')
     };
-    color: ${props => props.secondary ? (props.theme.colors.primary ?? colors.primary) : "white"};
-    border-color: ${props => props.cta ? (props.theme.colors.cta ?? colors.cta) : (props.theme.colors.primary ?? colors.primary)};
+    color: ${props => props.secondary ? getThemeColor(props, 'primary') : "white"};
+    border-color: ${props => props.cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')};
     font-size: ${getSizeStyle('font-size', '1em')};
     padding: ${getSizeStyle('padding', '12px 25px')};
     font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
     cursor: pointer;
     vertical-align: top;
     &:disabled {
-      background-color: ${props => (props.theme.colors.disabledButton ?? colors.disabledButton)};
-      border-color: ${props => (props.theme.colors.disabledButtonBorder ?? colors.disabledButtonBorder)};
-      color: ${props => (props.theme.colors.primary ?? colors.primary)};
+      background-color: ${props => getThemeColor(props, 'disabledButton')};
+      border-color: ${props => getThemeColor(props, 'disabledButtonBorder')};
+      color: ${props => getThemeColor(props, 'primary')};
       cursor: default;
       opacity: 0.5;
     }

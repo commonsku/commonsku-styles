@@ -1,8 +1,7 @@
 import React from 'react'
 import styled, { StyledComponentProps } from 'styled-components'
 import {Label} from './Label'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean} & SharedStyleTypes>`
