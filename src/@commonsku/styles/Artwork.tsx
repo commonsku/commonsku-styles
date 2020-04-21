@@ -22,7 +22,7 @@ const ArtworkControls = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: 2;
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -46,7 +46,7 @@ const ArtworkInfo = styled.div<{withPicture?:boolean}>`
   -webkit-transition: height .2s ease;
   -moz-transition: height .2s ease;
   transition: height .2s ease;
-  z-index: -1;
+  z-index: 1;
 `
 
 const ArtworkWrapper = styled.div<{cssHeight:number}&SharedStyleTypes>`
