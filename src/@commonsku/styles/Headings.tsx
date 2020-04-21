@@ -1,11 +1,10 @@
 import styled, {css} from 'styled-components'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const headingStyle = css`
   font-family: "skufont-demibold", sans-serif;
-  color: ${props => aeval(props.theme.colors, 'texttitle', colors.texttitle)};
+  color: ${props => getThemeColor(props, 'texttitle')};
 `
 
 const H1= styled.h1<{underlined?:boolean} & SharedStyleTypes>`

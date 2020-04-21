@@ -1,6 +1,6 @@
 import React from 'react'
 import Select, { Props as SelectProps, StylesConfig } from 'react-select'
-
+import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
 
 const SKUSelect = (props: SelectProps) => <Select 
@@ -13,6 +13,7 @@ const SKUSelect = (props: SelectProps) => <Select
     input: (provided, state) => ({
       ...provided,
       height: 'auto',
+      borderColor: props.error ? getThemeColor(props, 'special3'): getThemeColor(props, 'inputBorder')
     }),
     control: (provided, state) => ({
       ...provided,
@@ -37,14 +38,14 @@ const SKUSelect = (props: SelectProps) => <Select
     borderRadius: 5,
     colors: {
       ...theme.colors,
-      primary25: '#DAE9EE',
-      primary75: '#DAE9EE',
-      primary50: '#C9E8F2',
-      primary: '#02c0da',
-      neutral20: '#ABC7D1',
-      neutral30: '#ABC7D1',
-      neutral80: '#52585C',
-      neutral90: '#52585C'
+      primary25: colors.primary0,
+      primary75: colors.primary0,
+      primary50: colors.primary10,
+      primary: colors.primary,
+      neutral20: colors.inputBorder,
+      neutral30: colors.inputBorder,
+      neutral80: colors.textbody,
+      neutral90: colors.textbody
     },
   })}
   {...props}

@@ -1,8 +1,7 @@
 import { map } from 'lodash';
 import React, { useState, useRef } from 'react'
 import styled, { StyledComponentProps } from 'styled-components'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 import {Label} from './Label'
@@ -12,9 +11,9 @@ export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMarg
 export const Input = styled.input<InputProps & SharedStyleTypes>`
   &&& {
     padding: .5rem;
-    color: ${props => aeval(props.theme.colors, 'textlabel', colors.textlabel)};
+    color: ${props => getThemeColor(props, 'textlabel')};
     width: 100%;
-    border: 1px solid ${p => p.error ? aeval(p.theme.colors, 'special3', colors.special3) : aeval(p.theme.colors, 'inputBorder', colors.inputBorder)};
+    border: 1px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
     border-radius: 5px;
     box-sizing: border-box;
     font-family: 'skufont-regular', sans-serif;
@@ -23,7 +22,7 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: ${props => props.noMargin ? 0 : "1rem"};
     &:focus {
-      border: 2px solid ${p => p.error ? (p.theme.colors.special3 ?? colors.special3) : (p.theme.colors.inputBorder ?? colors.primary)};
+      border: 2px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')};
       outline: none;
     }
   }

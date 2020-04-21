@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {StarRating} from './StarRating'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 

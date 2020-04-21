@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import { Button } from './Button';
 import { H3 } from './Headings';
 import { Col } from './FlexboxGrid';
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 export const Overlay = styled.div`

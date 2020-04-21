@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const Wrapper = styled.div<SharedStyleTypes>`
-    background: ${props => aeval(props.theme.colors, 'bgblue', colors.bgblue)};
+    background: ${props => getThemeColor(props, 'bgblue')};
     text-align: center;
     position: fixed;
     top: 0;

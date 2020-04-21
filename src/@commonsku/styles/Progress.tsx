@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 

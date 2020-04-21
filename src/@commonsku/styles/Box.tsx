@@ -2,8 +2,6 @@ import styled from 'styled-components'
 import React from 'react'
 import { Row, Col } from './FlexboxGrid'
 import { H2 } from './Headings'
-import { colors } from './Theme';
-import { aeval } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 const StyledBox = styled.div<{borderless?: boolean, padded?: boolean}&SharedStyleTypes>`

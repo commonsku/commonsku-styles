@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import { Row, Col } from './FlexboxGrid';
 import { Avatar } from './Avatar'
 import { H2 } from './Headings'
-import { colors } from './Theme';
-import { aeval } from '../utils';
 import { useDelayUnmount } from './hooks';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 

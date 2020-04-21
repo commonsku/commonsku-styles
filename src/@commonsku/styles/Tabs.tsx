@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 import React, { useState, Component } from 'react'
-import { colors } from './Theme';
-import { aeval } from '../utils';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const tabSizes = {
