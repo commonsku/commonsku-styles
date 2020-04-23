@@ -37,6 +37,7 @@ export type ColPropTypes = SizerTypes & SharedStyleTypes;
 
 export const Col = styled.div<ColPropTypes>`
     &&& {
+        padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
         flex: 12;
         flex-grow: 1;
         box-sizing: border-box;
