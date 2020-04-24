@@ -95,7 +95,7 @@ const PanelContact = ({avatar, name, position, email, ...props}: { name:string, 
     <Contact {...props}>
       <Col xs>
         { avatar ? avatar : null }
-        <NameAndPosition>
+        <NameAndPosition style={{ width: avatar ? '77%' : '95%' }}>
           <Name>{name}</Name>
           { position ? <Position>{position}</Position> : null }
         </NameAndPosition>
