@@ -133,8 +133,8 @@ export const Artwork = ({
               {...inputProps} // Add onChange/onBlur to update name
             />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
-       </div> :
-       <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}
+       </div> : props.name ?
+       <ArtworkName>{truncate(props.name, 20)}</ArtworkName> : null}
        {!props.edit && props.date ?
        <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>

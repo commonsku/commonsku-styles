@@ -1,58 +1,71 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useDropzone, DropzoneOptions, DropEvent } from 'react-dropzone';
 import styled from 'styled-components';
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 export const StyledDropArea = styled.div<{isDragAccept?: boolean, isDragReject?: boolean, isDragActive?: boolean}&SharedStyleTypes>`
-  padding: 20px;
-  border: 2px dashed ${props => getThemeColor(props, 'primary')}; 
-  cursor: pointer;
-  border-radius: 5px;
-  &:hover {
-    background-color: ${props => getThemeColor(props, 'bgblue')};
+  &&& {
+    padding: 20px;
+    border: 2px dashed ${props => getThemeColor(props, 'primary')}; 
+    cursor: pointer;
+    border-radius: 5px;
+    &:hover {
+      background-color: ${props => getThemeColor(props, 'bgblue')};
+    }
+    border-color: ${props => getColor(props)};
+    outline: none;
+    transition: border .24s ease-in-out;
+    width: 100%;
   }
-  border-color: ${props => getColor(props)};
-  outline: none;
-  transition: border .24s ease-in-out;
   ${SharedStyles}
 `;
 
 const PlaceHolder = styled.label`
-  color: ${props => getThemeColor(props, 'primary')};
-  text-align: center;
-  width: 100%;
-  display: block;
+  &&& {
+    color: ${props => getThemeColor(props, 'primary')};
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
 `
 const ThumbsContainer = styled.aside`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 16px;
+  &&& {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
 `;
 
 const Thumb = styled.div`
-  display: inline-flex;
-  border-radius: 2px;
-  border: 1px solid #eaeaea ${props => getThemeColor(props, 'bggray')};
-  margin-bottom: 8px;
-  margin-right: 8px;
-  width: 100px;
-  height: 100px;
-  padding: 4px;
-  box-sizing: border-box;
+  &&& {
+    display: inline-flex;
+    border-radius: 2px;
+    border: 1px solid #eaeaea ${props => getThemeColor(props, 'bggray')};
+    margin-bottom: 8px;
+    margin-right: 8px;
+    width: 100px;
+    height: 100px;
+    padding: 4px;
+    box-sizing: border-box;
+  }
 `;
 
 const ThumbInner = styled.div`
-  display: flex;
-  min-width: 0px;
-  overflow: hidden;
+  &&& {
+    display: flex;
+    min-width: 0px;
+    overflow: hidden;
+  }
 `;
 
 const ImgPreview = styled.img`
-  display: block;
-  width: auto;
-  height: 100%;
+  &&& {
+    display: block;
+    width: auto;
+    height: 100%;
+  }
 `;
 
 
@@ -103,7 +116,7 @@ export function Dropzoned({
   ));
 
   return (
-    <div>
+    <Fragment>
       <StyledDropArea {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
         <input {...getInputProps()} />
         <PlaceHolder>{placeholder}</PlaceHolder>
@@ -112,7 +125,7 @@ export function Dropzoned({
         <h4>Files</h4>
         <ul>{files}</ul>
       </aside>}
-    </div>
+    </Fragment>
   )
 }
 
