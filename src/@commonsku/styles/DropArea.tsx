@@ -96,7 +96,7 @@ export type DropzoneTypes = {
 
 export function Dropzoned({
   placeholder="Drop Here",
-  accept='image/*',
+  accept,
   showDroppedFiles=false,
   ...props
 }: DropzoneTypes) {
@@ -131,7 +131,7 @@ export function Dropzoned({
 
 export function DropzonedPreviews({
   placeholder="Drop Here",
-  accept='image/*',
+  accept,
   onDrop,
   ...props
 }: DropzoneTypes) {
