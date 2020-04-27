@@ -5,6 +5,7 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 const headingStyle = css`
   font-family: "skufont-demibold", sans-serif;
   color: ${props => getThemeColor(props, 'texttitle')};
+  font-weight: bold;
 `
 
 const H1= styled.h1<{underlined?:boolean} & SharedStyleTypes>`

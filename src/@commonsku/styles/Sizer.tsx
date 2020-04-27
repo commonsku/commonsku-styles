@@ -32,7 +32,7 @@ export type SizerTypes = {
 };
 
 export const SizerCss = css<SizerTypes>`
-    ${(props) => props.offset && `margin-left: ${(props.offset || 0)/12 * 100}%;`}
+    ${(props) => props.offset && `margin-left: ${props.offset/12 * 100}%;`}
     ${(props) => props.collapse && typeof(props.collapse) === 'string' && media[props.collapse](`
         display: none;
     `)};
