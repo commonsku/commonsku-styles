@@ -22,7 +22,7 @@ const ArtworkControls = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 2;
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -111,7 +111,7 @@ export const Artwork = ({
     ...props
   }: ArtworkProps & SharedStyleTypes) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} {...props}>
+  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0}>
     {props.picture?
       <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
       :
@@ -133,8 +133,8 @@ export const Artwork = ({
               {...inputProps} // Add onChange/onBlur to update name
             />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
-       </div> :
-       <ArtworkName>{truncate(props.name, 20)}</ArtworkName>}
+       </div> : props.name ?
+       <ArtworkName>{truncate(props.name, 20)}</ArtworkName> : null}
        {!props.edit && props.date ?
        <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>

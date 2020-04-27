@@ -8,7 +8,7 @@ const SKUSelect = (props: SelectProps) => <Select
     option: (provided, state) => ({
       ...provided,
       borderBottom: 'none',
-      padding: 10,
+      padding: 10
     }),
     input: (provided, state) => ({
       ...provided,
@@ -21,7 +21,8 @@ const SKUSelect = (props: SelectProps) => <Select
     }),
     menu: (provided, state) => ({
       ...provided,
-      border: 'none'
+      border: 'none',
+      zIndex: 10
     }),
     indicatorSeparator: (provided, state) => ({
       ...provided,
