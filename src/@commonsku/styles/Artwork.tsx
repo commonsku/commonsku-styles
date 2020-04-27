@@ -115,7 +115,7 @@ export const Artwork = ({
     {props.picture?
       <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
       :
-      <IconDoc ext={extension(props.name)} style={{width:"3vw"}} onClick={() => props.onClick ? props.onClick!() : null} />
+      <IconDoc ext={extension(props.name)} style={{width:"3vw"}} />
     }
     {!props.edit ?
     <ArtworkControls>
