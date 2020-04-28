@@ -4,3 +4,4 @@ export * from './DownArrowIcon';
 export * from './UpDownArrowsIcon';
 export * from './FileIcon';
 export * from './DownloadIcon';
+export * from './CalendarIcon';
