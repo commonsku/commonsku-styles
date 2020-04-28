@@ -3,6 +3,8 @@ import { ThemeProvider } from "styled-components";
 
 
 export const colors = {
+  white: '#fff',
+  black: '#000',
   primary: '#02c0da',
   cta: '#fa237c',
   primary0: '#DAE9EE', // lighter
