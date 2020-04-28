@@ -7,6 +7,7 @@ import { Avatar } from './Avatar'
 import { H2 } from './Headings'
 import { useDelayUnmount } from './hooks';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+import { SizerTypes, SizerCss } from './Sizer'
 
 
 /* 
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const StyledPanel = styled.div<SharedStyleTypes>`
+const StyledPanel = styled.div<SharedStyleTypes & SizerTypes>`
   background: white;
   height: 100vh;
   width: 560px;
@@ -50,24 +51,21 @@ const StyledPanel = styled.div<SharedStyleTypes>`
     width: auto !important;
   }
   ${SharedStyles}
+  ${SizerCss}
 `;
 
 
-const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes>) => {
+const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes & SizerTypes>) => {
   const shouldRenderChild = useDelayUnmount(props.visible, 500);
   return shouldRenderChild ? <StyledPanel
     // style={{ visibility: (props.visible ? "visible" : "hidden") }}
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
     {...props}
   >
-    <Row>
-      <Col xl={6} xs={6}>
-        <H2>{props.title}</H2>
-      </Col>
-      <div style={{ textAlign: "right" }}>
-        {props.controls}
-      </div>
-    </Row>
+    {props.header || <Row>
+      <Col><H2>{props.title}</H2></Col>
+      <Col style={{ textAlign: "right" }}>{props.controls}</Col>
+    </Row>}
     {props.children}
   </StyledPanel> : null;
 }
@@ -75,7 +73,7 @@ const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: str
 
 const NameAndPosition = styled.div`
   display: inline-block;
-  width: 95%;
+  width: 90%;
 `
 
 const Name = styled.div`
@@ -85,24 +83,25 @@ const Name = styled.div`
 const Position = styled.div`
   font-size: .8em;
 `
-const Contact = styled.div`
+const Contact = styled.div<SizerTypes>`
   display: flex;
   margin-bottom: 15px;
+  ${SizerCss}
 `
 
 // TODO: do we allow unnamed contacts?
-const PanelContact = (props: { name:string, position?:string, email?:string, phone?:string, avatar?:React.ReactNode }) => {
+const PanelContact = ({avatar, name, position, email, ...props}: { name:string, position?:string, email?:string, phone?:string, avatar?:React.ReactNode } & SizerTypes) => {
   return (
-    <Contact>
+    <Contact {...props}>
       <Col xs>
-        { props.avatar ? props.avatar : null }
-        <NameAndPosition>
-          <Name>{props.name}</Name>
-          { props.position ? <Position>{props.position}</Position> : null }
+        { avatar ? avatar : null }
+        <NameAndPosition style={{ width: avatar ? '77%' : '95%' }}>
+          <Name>{name}</Name>
+          { position ? <Position>{position}</Position> : null }
         </NameAndPosition>
       </Col>
-      { props.email ? <Col xs>
-        <a href={"mailto:" + props.email}>{props.email}</a>
+      { email ? <Col xs>
+        <a href={"mailto:" + email}>{email}</a>
       </Col> : null }
     </Contact>
   )
