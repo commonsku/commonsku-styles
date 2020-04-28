@@ -34,7 +34,7 @@ const PopupWindow = styled.div<SharedStyleTypes & {width?: string, height?: stri
         background: rgb(255, 255, 255);
     */
     width: ${props => props.width ?? '90%'};
-    height: ${props => props.width ?? '75%'}; 
+    height: ${props => props.height ?? '75%'}; 
     margin: 0 !important;
     top: 50%;
     left: 50%;
