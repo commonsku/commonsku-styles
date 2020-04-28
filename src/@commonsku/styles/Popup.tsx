@@ -40,7 +40,7 @@ const PopupWindow = styled.div<SharedStyleTypes & {width?: string, height?: stri
     left: 50%;
     transform: translate(-50%, -50%);
     position: fixed;
-    max-height: 700px;
+    ${props => props.height ?  '' : 'max-height: 700px;'}
     overflow-y: hidden;
     display: block;
     z-index: 1006;
