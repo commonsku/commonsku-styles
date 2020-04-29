@@ -28,6 +28,7 @@ export * from './Sizer'
 export * from './ErrorBoundary'
 export * from './Datepicker'
 export * from './SharedStyles'
+export * from './Dropdown'
 
 export * from './icons'
 export * from './Theme'

@@ -43,9 +43,7 @@ import {
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox,
     Table, TD, TH, TR, THead, TBody,
-    DateSingleInput,
     Datepicker,
-    DateRangeInput,
     ErrorBoundary,
     Theme,
 } from '@commonsku/styles';
@@ -112,12 +110,9 @@ const App = () => {
             <Row>
               <Col xs={3}>
                 <H5>Single Datepicker</H5>
-                <DateSingleInput
-                  date={state.date}
-                  showDatepicker={state.showDatepicker}
-                  onDateChange={(data) => dispatch({type: "dateChange", payload: data })}
-                  onFocusChange={focusedInput => dispatch({type: "focusChange", payload: {showDatepicker: focusedInput}})}
-                  onClose={() => dispatch({type: "focusChange", payload: {showDatepicker: false}})}
+                <Datepicker
+                  value={state.date}
+                  onChange={(data: any) => dispatch({type: "dateChange", payload: data })}
                 />
               </Col>
             </Row>
