@@ -9,6 +9,7 @@ export const colors = {
   cta: '#fa237c',
   primary0: '#DAE9EE', // lighter
   primary10: '#C9E8F2', // light
+  primary100: '#00889B', // dark
   disabledButton: '#DAE9EE',
   disabledButtonBorder: '#C9E8F2',
   texttitle: '#123952', // a dark blue text

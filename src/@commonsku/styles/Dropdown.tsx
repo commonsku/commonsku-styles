@@ -10,7 +10,11 @@ export const StyledDropdown = styled.div`
     display: inline-block;
 `;
 
-export const DropDownContent = styled.div<{primary?: boolean}>`
+type DropdownContentProps = {
+    primary?: boolean,
+    underlined?: boolean
+}
+export const DropDownContent = styled.div<DropdownContentProps>`
     display: block;
     position: absolute;
     background-color: ${p => getColor(p.primary ? 'white' : 'white')};
@@ -25,7 +29,9 @@ export const DropDownContent = styled.div<{primary?: boolean}>`
         padding: 8px 8px;
         text-decoration: none;
         display: block;
-        border-bottom: 1px solid ${p => getColor(p.primary ? 'primary' : 'white')};
+        ${p => p.underlined && 
+            `border-bottom: 1px solid ${getColor(p.primary ? 'primary' : 'white')};`
+        }
         font-weight: bold;
         :last-child {
             border-bottom: none;
@@ -40,15 +46,20 @@ export const DropDownContent = styled.div<{primary?: boolean}>`
     }
 `;
 
-export const Dropdown = ({ items, primary, ...props }: { items: Array<ReactNode>, primary?: boolean }) => {
+export const Dropdown = ({ items, underlined, primary, ...props }: {items: Array<ReactNode>} & DropdownContentProps) => {
     const [showMenu, setShowMenu] = useState(false);
+    const iconProps = {
+        width: '10%',
+        fill: getColor(primary ? 'primary100' : 'white'),
+        style: {verticalAlign: 'middle'},
+    };
 
     return (
         <StyledDropdown {...props}>
             <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
-                Actions {showMenu ? <UpArrowIcon width="10%" style={{ verticalAlign: 'middle' }} /> : <DownArrowIcon width="10%" style={{ verticalAlign: 'middle' }} />}
+                Actions {showMenu ? <UpArrowIcon {...iconProps} /> : <DownArrowIcon {...iconProps} />}
             </Button>
-            {showMenu && <DropDownContent primary={primary}>{items}</DropDownContent>}
+            {showMenu && <DropDownContent underlined={underlined} primary={primary}>{items}</DropDownContent>}
         </StyledDropdown>
     );
 }
