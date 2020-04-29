@@ -70,7 +70,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 `;
 
 export const Dropdown = ({ items, underlined, primary, ...props }: {
-    items: Array<{onClick?: Function|VoidFunction|null, props?:object, content: ReactNode|string|any}>
+    items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -100,15 +100,16 @@ export const Dropdown = ({ items, underlined, primary, ...props }: {
 
     return (
         // @ts-ignore
-        <StyledDropdown ref={node}  {...props}>
+        <StyledDropdown ref={node} {...props}>
             <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
                 Actions {showMenu ? <UpArrowIcon {...iconProps} /> : <DownArrowIcon {...iconProps} />}
             </Button>
             {showMenu && <DropDownContent underlined={underlined} primary={primary}>
                 {items.map((item, i) => {
-                    return item && <DropdownItem key={'dropdown-item-'+i} {...item.props}
+                    return item && <DropdownItem key={'dropdown-item-'+i}
+                        {...item.props}
                         primary={primary}
-                        underlined={underlined}
+                        underlined={item.props && item.props.underlined ? item.props.underlined : underlined}
                         onClick={() => {
                             setShowMenu(false);
                             item.onClick && item.onClick()
