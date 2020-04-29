@@ -34,13 +34,13 @@ const PopupWindow = styled.div<SharedStyleTypes & {width?: string, height?: stri
         background: rgb(255, 255, 255);
     */
     width: ${props => props.width ?? '90%'};
-    height: ${props => props.width ?? '75%'}; 
+    height: ${props => props.height ?? '75%'}; 
     margin: 0 !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: fixed;
-    max-height: 700px;
+    ${props => props.height ?  '' : 'max-height: 700px;'}
     overflow-y: hidden;
     display: block;
     z-index: 1006;

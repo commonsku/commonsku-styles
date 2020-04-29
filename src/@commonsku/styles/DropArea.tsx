@@ -17,8 +17,8 @@ export const StyledDropArea = styled.div<{isDragAccept?: boolean, isDragReject?:
     outline: none;
     transition: border .24s ease-in-out;
     width: 100%;
+    ${SharedStyles}
   }
-  ${SharedStyles}
 `;
 
 const PlaceHolder = styled.label`
