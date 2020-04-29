@@ -84,9 +84,11 @@ const Position = styled.div`
   font-size: .8em;
 `
 const Contact = styled.div<SizerTypes>`
-  display: flex;
-  margin-bottom: 15px;
-  ${SizerCss}
+ &&& {
+    display: flex;
+    margin-bottom: 15px;
+    ${SizerCss}
+  }
 `
 
 // TODO: do we allow unnamed contacts?
