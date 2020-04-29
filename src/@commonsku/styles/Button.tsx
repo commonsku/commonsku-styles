@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import styled from 'styled-components'
 import { colors, getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
+import { SizerCss, SizerTypes } from './Sizer';
 
 /*
 
@@ -43,7 +44,7 @@ const sizes = {
 
 type ButtonProps = {
   secondary?: boolean, cta?: boolean, size?: keyof typeof sizes
-} & SharedStyleTypes;
+} & SharedStyleTypes & SizerTypes;
 
 const getSizeStyle = (style: string, defaults: string) => {
   return ({ size }: ButtonProps) => {
@@ -76,11 +77,12 @@ const Button = styled.button<ButtonProps>`
       cursor: default;
       opacity: 0.5;
     }
+    ${SharedStyles}
+    ${SizerCss}
   }
-  ${SharedStyles}
 `;
 
-export const ButtonsGroup = styled.div<SharedStyleTypes>`
+export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
   &&& {
     display: inline-flex;
     max-width: 600px;
@@ -88,6 +90,7 @@ export const ButtonsGroup = styled.div<SharedStyleTypes>`
     margin-right: 100px;
     justify-content: space-around;
     ${SharedStyles}
+    ${SizerCss}
   }
 `;
 
