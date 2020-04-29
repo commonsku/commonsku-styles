@@ -23,7 +23,7 @@ export const Row = styled.div<RowPropTypes>`
         box-sizing: border-box;
         flex-direction: row;
         flex: 0 1 auto;
-        justify-content: ${(props) => props.justify || 'space-between' };
+        justify-content: ${(props) => props.justify || 'left' };
         flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
         align-items: ${(props) => props.align || 'center' };
         padding: ${(props) => props.padded ? '0.5rem' : 'initial'};

@@ -25,8 +25,8 @@ const AvatarWrapper = styled.div<_AvatarProps>`
 
 const AvatarPic = styled.img<_AvatarProps>`
   &&& {
-    width: ${props => props.size};
-    height: ${props => props.size};
+    width: 100%;
+    height: 100%;
   }
 `
 
