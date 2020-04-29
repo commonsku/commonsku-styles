@@ -1,7 +1,6 @@
 import { get } from 'lodash';
 import React from 'react';
 import styled from 'styled-components'
-
 import { colors, fonts } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 

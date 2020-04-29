@@ -25,6 +25,7 @@ export const colors = {
   primaryBg: '#EAF2F6',
   special2Bg: '#E7FFE9',
   transparent: 'transparent',
+  error: '#B21154',
 };
 export const fonts = ['skufont-demibold', 'sans-serif', 'Roboto'];
 export const fontSizes = {
