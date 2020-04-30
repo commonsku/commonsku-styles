@@ -28,11 +28,13 @@ TODO: consider breaking these up into separate components
 const styles = StyleSheet.create({
   slideInRight: {
     animationName: slideInRight,
-    animationDuration: '.5s'
+    animationDuration: '.3s',
+    delay: '0s'
   },
   slideOutRight: {
     animationName: slideOutRight,
-    animationDuration: '.5s'
+    animationDuration: '.3s',
+    delay: '0s'
   }
 })
 
@@ -56,7 +58,7 @@ const StyledPanel = styled.div<SharedStyleTypes & SizerTypes>`
 
 
 const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes & SizerTypes>) => {
-  const shouldRenderChild = useDelayUnmount(props.visible, 500);
+  const shouldRenderChild = useDelayUnmount(props.visible, 300);
   return shouldRenderChild ? <StyledPanel
     // style={{ visibility: (props.visible ? "visible" : "hidden") }}
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
