@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
@@ -14,6 +14,28 @@ type DropdownContentProps = {
     primary?: boolean,
     underlined?: boolean
 }
+
+export const DropdownItem = styled.div<DropdownContentProps>`
+    color: ${p => getColor(p.primary ? 'primary' : 'cta')};
+    padding: 8px 8px;
+    text-decoration: none;
+    display: block;
+    ${p => p.underlined && 
+        `border-bottom: 1px solid ${getColor(p.primary ? 'primary' : 'white')};`
+    }
+    font-weight: bold;
+    :last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background-color: ${p => getColor(p.primary ? 'primary0' : 'cta')};
+        color: ${p => getColor(p.primary ? 'texttitle' : 'white')};
+        border-radius: 5px;
+        cursor: pointer;
+    }
+`;
+
 export const DropDownContent = styled.div<DropdownContentProps>`
     display: block;
     position: absolute;
@@ -23,7 +45,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
     padding: 8px 8px;
     z-index: 1;
     border-radius: 5px;
-
+/*
     a {
         color: ${p => getColor(p.primary ? 'primary' : 'cta')};
         padding: 8px 8px;
@@ -44,9 +66,14 @@ export const DropDownContent = styled.div<DropdownContentProps>`
             cursor: pointer;
         }
     }
+*/
 `;
 
-export const Dropdown = ({ items, underlined, primary, ...props }: {items: Array<ReactNode>} & DropdownContentProps) => {
+export const Dropdown = ({ items, underlined, primary, ...props }: {
+    items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
+} & DropdownContentProps) => {
+
+    const node = useRef();
     const [showMenu, setShowMenu] = useState(false);
     const iconProps = {
         width: '10%',
@@ -54,12 +81,42 @@ export const Dropdown = ({ items, underlined, primary, ...props }: {items: Array
         style: {verticalAlign: 'middle'},
     };
 
+    const handleClick = (e: Event) => {
+        // @ts-ignore
+        if (node.current?.contains(e.target)) {
+          return;
+        }
+        setShowMenu(false);
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClick);
+
+        return () => {
+          document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
+
+
     return (
-        <StyledDropdown {...props}>
+        // @ts-ignore
+        <StyledDropdown ref={node} {...props}>
             <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
                 Actions {showMenu ? <UpArrowIcon {...iconProps} /> : <DownArrowIcon {...iconProps} />}
             </Button>
-            {showMenu && <DropDownContent underlined={underlined} primary={primary}>{items}</DropDownContent>}
+            {showMenu && <DropDownContent underlined={underlined} primary={primary}>
+                {items.map((item, i) => {
+                    return item && <DropdownItem key={'dropdown-item-'+i}
+                        {...item.props}
+                        primary={primary}
+                        underlined={item.props && item.props.underlined ? item.props.underlined : underlined}
+                        onClick={() => {
+                            setShowMenu(false);
+                            item.onClick && item.onClick()
+                        }}
+                    >{item.content}</DropdownItem>
+                })}
+            </DropDownContent>}
         </StyledDropdown>
     );
 }
