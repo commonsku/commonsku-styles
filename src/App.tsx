@@ -46,6 +46,7 @@ import {
     Datepicker,
     ErrorBoundary,
     Theme,
+    Dropdown,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -102,8 +103,14 @@ const App = () => {
         <Row>
           <Col xs>
             <div>
-              <Button style={{ marginRight: '1rem', }} onClick={() => setShowPanel(true)}>Show Panel</Button>
-              <Button cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+              <Button mr={10} onClick={() => setShowPanel(true)}>Show Panel</Button>
+              <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+              <Dropdown text="Drop Down" items={
+                [
+                  {onClick: () => null, content: 'New Contact'},
+                  {onClick: () => null, content: 'New Address'},
+                ]
+               }/>
               <Link block mt={20}>Link</Link>
             </div>
 

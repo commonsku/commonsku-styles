@@ -12,25 +12,24 @@ export const StyledDropdown = styled.div`
 
 type DropdownContentProps = {
     primary?: boolean,
-    underlined?: boolean
+    underlined?: boolean,
+    text?: string,
 }
 
 export const DropdownItem = styled.div<DropdownContentProps>`
-    color: ${p => getColor(p.primary ? 'primary' : 'cta')};
+    color: ${p => getColor('primary')};
     padding: 8px 8px;
     text-decoration: none;
     display: block;
     ${p => p.underlined && 
         `border-bottom: 1px solid ${getColor(p.primary ? 'primary' : 'white')};`
     }
-    font-weight: bold;
     :last-child {
         border-bottom: none;
     }
 
     &:hover {
-        background-color: ${p => getColor(p.primary ? 'primary0' : 'cta')};
-        color: ${p => getColor(p.primary ? 'texttitle' : 'white')};
+        background-color: ${p => getColor('bgblue')};
         border-radius: 5px;
         cursor: pointer;
     }
@@ -45,6 +44,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
     padding: 8px 8px;
     z-index: 1;
     border-radius: 5px;
+    text-align: left;
 /*
     a {
         color: ${p => getColor(p.primary ? 'primary' : 'cta')};
@@ -69,14 +69,14 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export const Dropdown = ({ items, underlined, primary, ...props }: {
+export const Dropdown = ({ items, underlined, primary, text, ...props }: {
     items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
 } & DropdownContentProps) => {
 
     const node = useRef();
     const [showMenu, setShowMenu] = useState(false);
     const iconProps = {
-        width: '10%',
+        width: '10px',
         fill: getColor(primary ? 'primary100' : 'white'),
         style: {verticalAlign: 'middle'},
     };
@@ -102,7 +102,7 @@ export const Dropdown = ({ items, underlined, primary, ...props }: {
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
             <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
-                Actions {showMenu ? <UpArrowIcon {...iconProps} /> : <DownArrowIcon {...iconProps} />}
+                {text ? text : "Actions"} {showMenu ? <UpArrowIcon {...iconProps} /> : <DownArrowIcon {...iconProps} />}
             </Button>
             {showMenu && <DropDownContent underlined={underlined} primary={primary}>
                 {items.map((item, i) => {
