@@ -78,7 +78,7 @@ export const Dropdown = ({ items, underlined, primary, text, ...props }: {
     const iconProps = {
         width: '10px',
         fill: getColor(primary ? 'primary100' : 'white'),
-        style: {verticalAlign: 'middle'},
+        style: {verticalAlign: 'middle', transitionDuration: '.3s', transform: 'rotate(' + ( showMenu ? 0 : 180 ) + 'deg)'},
     };
 
     const handleClick = (e: Event) => {
@@ -102,7 +102,7 @@ export const Dropdown = ({ items, underlined, primary, text, ...props }: {
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
             <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
-                {text ? text : "Actions"} {showMenu ? <UpArrowIcon {...iconProps} /> : <DownArrowIcon {...iconProps} />}
+                {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
             </Button>
             {showMenu && <DropDownContent underlined={underlined} primary={primary}>
                 {items.map((item, i) => {
