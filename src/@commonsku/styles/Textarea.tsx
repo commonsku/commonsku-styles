@@ -17,7 +17,10 @@ export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean} & S
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-bottom: ${props => props.noMargin ? 0 : "1rem"};
   &:focus {
-    border: 2px solid ${p => p.error ? '#fa237c' : '#02c0da'};
+    box-shadow: 1px  1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
+               -1px -1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
+                1px -1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
+               -1px  1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')};
     outline: none;
   }
   ${SharedStyles}
