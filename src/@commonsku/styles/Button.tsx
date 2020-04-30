@@ -70,6 +70,14 @@ const Button = styled.button<ButtonProps>`
     font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
     cursor: pointer;
     vertical-align: top;
+    &:focus {
+      outline: none;
+      opacity: .9;
+      box-shadow: 0 0 8px ${({ secondary, cta, ...props }) => 
+        secondary ? getThemeColor(props, 'primary'): 
+        cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')
+      };
+    }
     &:disabled {
       background-color: ${props => getThemeColor(props, 'disabledButton')};
       border-color: ${props => getThemeColor(props, 'disabledButtonBorder')};
