@@ -22,8 +22,15 @@ const ProgressBar = styled.div<ProgressBarProps>`
 `
 
 const Progress = (props: ProgressBarProps) => {
+  const val = typeof props.value === 'number'
+                ? props.value
+                : !isNaN(props.value) ? parseInt(props.value) : 0;
+  const max = typeof props.max === 'number'
+                ? props.max
+                : !isNaN(props.max) ? parseInt(props.max) : 0;
+
   return <ProgressWrapper {...props}>
-    <ProgressBar value={props.value} max={props.max} error={props.error} />
+    <ProgressBar value={val < max ? val : max} max={max} error={props.error} />
     {props.error ? <Text color="error" bold>{props.error}</Text> : null}
   </ProgressWrapper>
 }
@@ -34,7 +41,7 @@ const LabeledProgress = (props: ProgressBarProps) => {
       <span style={{ color: "#00a259" }}>${props.value}</span>
     </strong> / ${props.max}
     <br />
-    <Progress value={props.value < props.max ? props.value : props.max} max={props.max} error={props.error}/>
+    <Progress value={props.value} max={props.max} error={props.error}/>
   </div>
 }
 
