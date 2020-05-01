@@ -34,6 +34,7 @@ import {
     LabeledSelect,
     LabeledProgress,
     PanelContact,
+    PanelTileContact,
     Product,
     Artwork,
     Row, Col,
@@ -80,11 +81,11 @@ const App = () => {
   return <Theme><Page>
     <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
       <Tabs padded tabs={[
-        { label: "Contacts", content: <div>
-                                         <PanelContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeff@abc.com" phone="843-443-4432" />
-                                         <PanelContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
-                                         <PanelContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phone="843-443-4432" />
-                                       </div> },
+        { label: "Contacts", content: <Row>
+                                         <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeff@abc.com" phone="843-443-4432" />
+                                         <PanelTileContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
+                                         <PanelTileContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phone="843-443-4432" />
+                                      </Row>},
         { label: "Addresses", content: <div>This is tab number two</div> },
         { label: "Third Tab", content: <div>This is the last tab</div> },
       ]}
@@ -145,7 +146,7 @@ const App = () => {
             <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
             <H5>Input</H5>
-            <LabeledInput mt={100} label="Labeled Input" placeholder="Input" />
+            <LabeledInput label="Labeled Input" placeholder="Input" />
 
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />

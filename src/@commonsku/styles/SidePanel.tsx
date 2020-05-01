@@ -3,7 +3,6 @@ import { StyleSheet, css } from 'aphrodite';
 import { slideInRight, slideOutRight } from 'react-animations';
 import styled from 'styled-components';
 import { Row, Col } from './FlexboxGrid';
-import { Avatar } from './Avatar'
 import { H2 } from './Headings'
 import { useDelayUnmount } from './hooks';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
@@ -88,12 +87,12 @@ const Position = styled.div`
 const Contact = styled.div<SizerTypes>`
  &&& {
     display: flex;
+    flex-basis: 50%;
     margin-bottom: 15px;
     ${SizerCss}
   }
 `
 
-// TODO: do we allow unnamed contacts?
 const PanelContact = ({avatar, name, position, email, ...props}: { name:string, position?:string, email?:string, phone?:string, avatar?:React.ReactNode } & SizerTypes) => {
   return (
     <Contact {...props}>
@@ -111,5 +110,18 @@ const PanelContact = ({avatar, name, position, email, ...props}: { name:string, 
   )
 }
 
-export { SidePanel, PanelContact };
+const PanelTileContact = ({avatar, name, position, email, ...props}: { name:string, position?:string, email?:string, phone?:string, avatar?:React.ReactNode } & SizerTypes) => {
+  return (
+    <Contact {...props}>
+        { avatar ? avatar : null }
+        <NameAndPosition style={ avatar ? { width: '74%', marginLeft: '3%' } : {width: '95%'}}>
+          <Name>{name}</Name>
+          { position ? <Position>{position}</Position> : null }
+          { email ? <a href={"mailto:" + email}>{email}</a> : null }
+        </NameAndPosition>
+    </Contact>
+  )
+}
+
+export { SidePanel, PanelContact, PanelTileContact };
 
