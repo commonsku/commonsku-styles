@@ -6,6 +6,7 @@ import { H3 } from './Headings';
 import { Col } from './FlexboxGrid';
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+import { SizerCss, SizerTypes } from './Sizer'
 
 export const Overlay = styled.div`
   &&& {
@@ -22,7 +23,7 @@ export const Overlay = styled.div`
   }
 `;
 
-const PopupWindow = styled.div<SharedStyleTypes & {width?: string, height?: string}>`
+const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string}>`
   &&& {
     /*
         padding: 5px;
@@ -58,6 +59,7 @@ const PopupWindow = styled.div<SharedStyleTypes & {width?: string, height?: stri
         height: 90%;
     }
     ${SharedStyles}
+    ${SizerCss}
   }
 `;
 
