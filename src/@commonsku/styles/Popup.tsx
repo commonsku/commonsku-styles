@@ -131,6 +131,7 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
   }, []);
 
   const handleKeyDown = (e: Event) => {
+    // @ts-ignore
     if (e.key === "Escape") {
       e.stopPropagation();
       onClose && onClose();
