@@ -25,7 +25,7 @@ export const Row = styled.div<RowPropTypes>`
         flex: 0 1 auto;
         justify-content: ${(props) => props.justify || 'left' };
         flex-wrap: ${(props) => props.wrap ? props.wrap : 'wrap' };
-        align-items: ${(props) => props.align || 'center' };
+        align-items: ${(props) => props.align || 'stretch' };
         padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
         ${props => props.start ? 'place-content: flex-start;' : ''}
         ${props => props.end ? 'place-content: flex-end;' : ''}

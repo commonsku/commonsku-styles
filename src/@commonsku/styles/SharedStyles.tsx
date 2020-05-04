@@ -28,6 +28,7 @@ export type SharedStyleTypes = {
 }
 
 export const SharedStyles = css<SharedStyleTypes>`
+  box-sizing: border-box;
   ${p => map(pick(p, keys(SHARED_STYLE_MAPS)), (v, k) => {
     return isUndefined(v) ? '' : SHARED_STYLE_MAPS[k](v);
   }).join('')}
