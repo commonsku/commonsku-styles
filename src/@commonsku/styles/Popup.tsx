@@ -105,12 +105,49 @@ export type PopupProps = React.PropsWithChildren<{
     title?: string|React.Component,
     controls?: Array<React.ReactNode>,
     onClose?: (event?: React.MouseEvent) => void,
+    closeOnClickOutside?: boolean,
+    closeOnEsc?: boolean,
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({ header, title, controls, children, onClose, ...props }: PopupProps) => {
+export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=true, ...props }: PopupProps) => {
+  const ref = React.useRef();
+
+  useEffect(() => {
+    if(closeOnClickOutside) {
+      document.addEventListener("mousedown", handleClick);
+    }
+    if (closeOnEsc) {
+      document.addEventListener("keyup", handleKeyDown);
+    }
+
+    return () => {
+      if(closeOnClickOutside) {
+        document.removeEventListener("mousedown", handleClick);
+      }
+      if (closeOnEsc) {
+        document.removeEventListener("keyup", handleKeyDown);
+      }
+    }
+  }, []);
+
+  const handleKeyDown = (e: Event) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      onClose && onClose();
+    }
+  };
+
+  const handleClick = (e: Event) => {
+    // @ts-ignore
+    if (ref.current?.contains(e.target)) {
+      return;
+    }
+    onClose && onClose();
+  };
+
   return <PopupContainer>
     <Overlay>
-      <PopupWindow className="popup" {...props}>
+      <PopupWindow className="popup" {...props} ref={ref}>
           {header ? header : (
               <PopupHeader className="popup-header">
                   <Col style={{textAlign: 'left', alignSelf: 'center'}}>
@@ -131,10 +168,10 @@ export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
   popup: React.ComponentType<PopupProps>,
   autoOpen?: boolean,
   render?: React.FC<{onClick: () => void}>
-}> = ({ autoOpen = false, popup: PopupComponent, render, ...props }) => {
+}> = ({ autoOpen = false, popup: PopupComponent, render, closeOnEsc=true, closeOnClickOutside=true, ...props }) => {
   const [showPopup, setShowPopup] = useState(autoOpen);
   return <>
-    {showPopup && <PopupComponent onClose={() => setShowPopup(false)} {...props}/>}
+    {showPopup && <PopupComponent onClose={() => setShowPopup(false)} closeOnEsc={closeOnEsc} closeOnClickOutside={closeOnClickOutside} {...props}/>}
     {render && render({onClick: () => setShowPopup(!showPopup)})}
   </>
 }
