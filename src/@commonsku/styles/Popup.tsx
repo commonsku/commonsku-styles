@@ -114,7 +114,7 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
 
   useEffect(() => {
     if(closeOnClickOutside) {
-      document.addEventListener("mousedown", handleClick);
+      //document.addEventListener("mousedown", handleClick);
     }
     if (closeOnEsc) {
       document.addEventListener("keyup", handleKeyDown);
@@ -122,7 +122,7 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
 
     return () => {
       if(closeOnClickOutside) {
-        document.removeEventListener("mousedown", handleClick);
+        //document.removeEventListener("mousedown", handleClick);
       }
       if (closeOnEsc) {
         document.removeEventListener("keyup", handleKeyDown);
@@ -138,6 +138,7 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
     }
   };
 
+  //there is a bug where this closes popup involuntarily
   const handleClick = (e: Event) => {
     // @ts-ignore
     if (ref.current?.contains(e.target)) {
