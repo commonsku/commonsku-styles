@@ -109,7 +109,7 @@ export type PopupProps = React.PropsWithChildren<{
     closeOnEsc?: boolean,
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=true, ...props }: PopupProps) => {
+export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=false, ...props }: PopupProps) => {
   const ref = React.useRef();
 
   useEffect(() => {
@@ -170,7 +170,7 @@ export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
   popup: React.ComponentType<PopupProps>,
   autoOpen?: boolean,
   render?: React.FC<{onClick: () => void}>
-}> = ({ autoOpen = false, popup: PopupComponent, render, closeOnEsc=true, closeOnClickOutside=true, ...props }) => {
+}> = ({ autoOpen = false, popup: PopupComponent, render, closeOnEsc=true, closeOnClickOutside=false, ...props }) => {
   const [showPopup, setShowPopup] = useState(autoOpen);
   return <>
     {showPopup && <PopupComponent onClose={() => setShowPopup(false)} closeOnEsc={closeOnEsc} closeOnClickOutside={closeOnClickOutside} {...props}/>}

@@ -6,6 +6,7 @@ import {Label} from './Label'
 type SKUSelectProps = {
   noMargin?: boolean,
   menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
+
 } & SelectProps
 
 const SKUSelect = (props: SKUSelectProps) => <Select 
@@ -23,6 +24,7 @@ const SKUSelect = (props: SKUSelectProps) => <Select
     control: (provided, state) => ({
       ...provided,
       marginBottom: (props.noMargin ? 0 : '1rem'),
+      borderColor: props.error ? getThemeColor(props, 'special3'): provided.borderColor,
     }),
     menu: (provided, state) => ({
       ...provided,
