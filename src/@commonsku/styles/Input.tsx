@@ -8,11 +8,11 @@ import {Label} from './Label'
 
 export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, isPercent?:boolean};
 
-const IconLabel = styled.div<{current:boolean}>`
+const IconLabel = styled.div<InputProps>`
   box-sizing: border-box;
   width: 40px;
-  height: 36px;
-  background-color: #ABC7D1;
+  height: ${p => p.error ? 38 : 36}px;
+  background-color: ${p => p.error ? getThemeColor(p, 'special3') : "#ABC7D1"};
   border-radius: 5px 0 0 5px;
   margin-bottom: 1rem;
   color: white;
@@ -33,7 +33,7 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
     padding: .5rem;
     color: ${props => getThemeColor(props, 'textlabel')};
     width: 100%;
-    border: 1px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
+    border: ${p => p.error ? 2 : 1}px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
     border-radius: ${p => p.isPercent ?  "0 5px 5px 0" : "5"}px;
     box-sizing: border-box;
     font-family: 'skufont-regular', sans-serif;
@@ -57,7 +57,7 @@ export const LabeledInput = ({ label, name, ...props}: InputProps & {label: stri
   return <div>
     <Label htmlFor={name}>{label}</Label>
     {props.isPercent ? <IconLabelContainer>
-                         <IconLabel current={input.current !== undefined}>%</IconLabel>
+                         <IconLabel {...props}>%</IconLabel>
                          <Input name={name} {...props}/>
                        </IconLabelContainer>
                      : <Input name={name} {...props}></Input>}
