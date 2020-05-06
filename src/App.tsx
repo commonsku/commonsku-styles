@@ -152,10 +152,10 @@ const App = () => {
             <Avatar />
 
             <H5>Select</H5>
-            <LabeledSelect error label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
+            <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
             <H5>Input</H5>
-            <LabeledInput label="Labeled Input" placeholder="Input" />
+            <LabeledInput label="Labeled Input" placeholder="Input" isPercent />
 
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />

@@ -6,7 +6,27 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 import {Label} from './Label'
 
-export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean};
+export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, isPercent?:boolean};
+
+const IconLabel = styled.div<{current:boolean}>`
+  box-sizing: border-box;
+  width: 40px;
+  height: 36px;
+  background-color: #ABC7D1;
+  border-radius: 5px 0 0 5px;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  padding-top: 6px;
+  line-height: 1.5rem;
+`
+
+const IconLabelContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
 
 export const Input = styled.input<InputProps & SharedStyleTypes>`
   &&& {
@@ -14,7 +34,7 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
     color: ${props => getThemeColor(props, 'textlabel')};
     width: 100%;
     border: 1px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
-    border-radius: 5px;
+    border-radius: ${p => p.isPercent ?  "0 5px 5px 0" : "5"}px;
     box-sizing: border-box;
     font-family: 'skufont-regular', sans-serif;
     font-size: 1rem;
@@ -32,10 +52,16 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
   ${SharedStyles}
 `;
 
-export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string} & SharedStyleTypes) => {
+export const LabeledInput = ({ label, name, ...props}: InputProps & {label: string, name?: string, isPercent?: boolean} & SharedStyleTypes) => {
+  const input = useRef<HTMLInputElement>(null);
   return <div>
     <Label htmlFor={name}>{label}</Label>
-    <Input name={name} {...props}></Input>
+    {props.isPercent ? <IconLabelContainer>
+                         <IconLabel current={input.current !== undefined}>%</IconLabel>
+                         <Input name={name} {...props}/>
+                       </IconLabelContainer>
+                     : <Input name={name} {...props}></Input>}
+    
   </div>
 }
 
