@@ -22,3 +22,14 @@ export const Link = styled(_Link)`
   cursor: pointer;
   ${SharedStyles}
 `;
+
+function numberWithCommas(num: string) {
+  return num.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export const Number = (props: {num: number, commas?: boolean, decimalPoints?:number} & SharedStyleTypes) => {
+  let fixedNum = props.num.toFixed(props.decimalPoints !== undefined ? props.decimalPoints : 2)
+  return <span {...props}>
+    { props.commas ? numberWithCommas(fixedNum) : fixedNum }
+  </span>
+}

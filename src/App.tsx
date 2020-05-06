@@ -41,6 +41,7 @@ import {
     Popup,
     Task,
     Link,
+    Number,
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox,
     Table, TD, TH, TR, THead, TBody,
@@ -114,6 +115,14 @@ const App = () => {
                }/>
               <Link block mt={20}>Link</Link>
             </div>
+
+
+            <H5>Number formatting</H5>
+            <Number commas decimalPoints={4} num={334353434.44334}/>
+            <br/>
+            <Number commas decimalPoints={0} num={334353434.44334}/>
+            <br/>
+            <Number commas num={334353434.44334}/>
 
             <Row>
               <Col xs={3}>
