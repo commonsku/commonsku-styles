@@ -56,17 +56,28 @@ const StyledPanel = styled.div<SharedStyleTypes & SizerTypes>`
 `;
 
 
-const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode } & SharedStyleTypes & SizerTypes>) => {
+const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode, fullWidthTitle?: boolean } & SharedStyleTypes & SizerTypes>) => {
   const shouldRenderChild = useDelayUnmount(props.visible, 300);
   return shouldRenderChild ? <StyledPanel
     // style={{ visibility: (props.visible ? "visible" : "hidden") }}
     className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
     {...props}
   >
-    {props.header || <Row>
-      <Col><H2>{props.title}</H2></Col>
-      <Col style={{ textAlign: "right" }}>{props.controls}</Col>
-    </Row>}
+    {props.header || <div>
+      { !props.fullWidthTitle ? 
+      <Row>
+        <Col><H2>{props.title}</H2></Col>
+        <Col style={{ textAlign: "right" }}>{props.controls}</Col>
+      </Row> :
+      <div>
+      <Row>
+        <Col style={{ textAlign: "right" }}>{props.controls}</Col>
+      </Row>
+      <Row>
+        <Col><H2>{props.title}</H2></Col>
+      </Row>
+      </div>}
+      </div>}
     {props.children}
   </StyledPanel> : null;
 }
@@ -84,6 +95,14 @@ const Name = styled.div`
 const Position = styled.div`
   font-size: .8em;
 `
+const Email = styled.a`
+  font-size: .8em;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+`
+
 const Contact = styled.div<SizerTypes>`
  &&& {
     display: flex;
@@ -104,7 +123,7 @@ const PanelContact = ({avatar, name, position, email, ...props}: { name:string, 
         </NameAndPosition>
       </Col>
       { email ? <Col xs>
-        <a href={"mailto:" + email}>{email}</a>
+        <Email href={"mailto:" + email}>{email}</Email>
       </Col> : null }
     </Contact>
   )
@@ -117,7 +136,7 @@ const PanelTileContact = ({avatar, name, position, email, ...props}: { name:stri
         <NameAndPosition style={ avatar ? { width: '74%', marginLeft: '3%' } : {width: '95%'}}>
           <Name>{name}</Name>
           { position ? <Position>{position}</Position> : null }
-          { email ? <a href={"mailto:" + email}>{email}</a> : null }
+          { email ? <Email href={"mailto:" + email}>{email}</Email> : null }
         </NameAndPosition>
     </Contact>
   )

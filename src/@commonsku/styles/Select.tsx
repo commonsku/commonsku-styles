@@ -5,6 +5,7 @@ import {Label} from './Label'
 
 type SKUSelectProps = {
   noMargin?: boolean,
+  error?: boolean,
   menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
 
 } & SelectProps
