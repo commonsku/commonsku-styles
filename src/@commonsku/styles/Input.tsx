@@ -32,9 +32,9 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
   ${SharedStyles}
 `;
 
-export const LabeledInput = ({ label, name, required, placeholder, ...props}: InputProps & {label: string, name?: string} & SharedStyleTypes) => {
+export const LabeledInput = ({ label, name, required, placeholder, labelBold, ...props}: InputProps & {label: string, name?: string, labelBold?: boolean} & SharedStyleTypes) => {
   return <div>
-    <Label htmlFor={name}>{label} {required && '*'}</Label>
+    <Label htmlFor={name} bold={labelBold}>{label} {required && '*'}</Label>
     <Input name={name} required={required} placeholder={placeholder || (required && 'Required Field') || ''} {...props}></Input>
   </div>
 }
