@@ -6,15 +6,35 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 import {Label} from './Label'
 
-export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean};
+export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, isPercent?:boolean};
+
+const IconLabel = styled.div<InputProps>`
+  box-sizing: border-box;
+  width: 40px;
+  height: ${p => p.error ? 38 : 36}px;
+  background-color: ${p => p.error ? getThemeColor(p, 'special3') : "#ABC7D1"};
+  border-radius: 5px 0 0 5px;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  padding-top: 6px;
+  line-height: 1.5rem;
+`
+
+const IconLabelContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
 
 export const Input = styled.input<InputProps & SharedStyleTypes>`
   &&& {
     padding: .5rem;
     color: ${props => getThemeColor(props, 'textlabel')};
     width: 100%;
-    border: 1px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
-    border-radius: 5px;
+    border: ${p => p.error ? 2 : 1}px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
+    border-radius: ${p => p.isPercent ?  "0 5px 5px 0" : "5"}px;
     box-sizing: border-box;
     font-family: 'skufont-regular', sans-serif;
     font-size: 1rem;
@@ -32,10 +52,16 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
   ${SharedStyles}
 `;
 
-export const LabeledInput = ({ label, name, required, placeholder, labelBold, ...props}: InputProps & {label: string, name?: string, labelBold?: boolean} & SharedStyleTypes) => {
+
+export const LabeledInput = ({ label, name, required, labelBold, ...props}: InputProps & {label: string, name?: string, isPercent?: boolean, labelBold?: boolean} & SharedStyleTypes) => {
+  const input = useRef<HTMLInputElement>(null);
   return <div>
     <Label htmlFor={name} bold={labelBold}>{label} {required && '*'}</Label>
-    <Input name={name} required={required} placeholder={placeholder || (required && 'Required Field') || ''} {...props}></Input>
+    {props.isPercent ? <IconLabelContainer>
+                         <IconLabel {...props}>%</IconLabel>
+                         <Input name={name} required={required} {...props}/>
+                       </IconLabelContainer>
+                     : <Input name={name} required={required} {...props}></Input>}
   </div>
 }
 

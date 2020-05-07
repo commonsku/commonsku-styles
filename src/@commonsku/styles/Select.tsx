@@ -5,6 +5,7 @@ import {Label} from './Label'
 
 type SKUSelectProps = {
   noMargin?: boolean,
+  error?: boolean,
   menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
 
 } & SelectProps
@@ -60,10 +61,10 @@ const SKUSelect = (props: SKUSelectProps) => <Select
   {...props}
 />;
 
-const LabeledSelect = (props: SKUSelectProps & {parentStyle?:object}) => {
+const LabeledSelect = ({ labelBold, parentStyle, ...props }: SKUSelectProps & {parentStyle?:object, labelBold?:boolean}) => {
   return (
-    <div style={props.parentStyle}>
-      <Label htmlFor={props.name}>{props.label}</Label>  
+    <div style={parentStyle}>
+      <Label htmlFor={props.name} bold={labelBold}>{props.label}</Label>
       <SKUSelect {...props}/>
     </div>
   )

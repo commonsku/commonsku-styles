@@ -41,6 +41,7 @@ import {
     Popup,
     Task,
     Link,
+    Number,
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox,
     Table, TD, TH, TR, THead, TBody,
@@ -79,10 +80,10 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return <Theme><Page>
-    <SidePanel title="Stuff" controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
+    <SidePanel title="Panel Title" fullWidthTitle controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
       <Tabs padded tabs={[
         { label: "Contacts", content: <Row>
-                                         <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeff@abc.com" phone="843-443-4432" />
+                                         <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeffdfsdfsdfsdfs.dfsdfsdfs@sdfsdfsdabc.com" phone="843-443-4432" />
                                          <PanelTileContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
                                          <PanelTileContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phone="843-443-4432" />
                                       </Row>},
@@ -115,6 +116,14 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
+
+            <H5>Number formatting</H5>
+            <Number commas decimalPoints={4} num={334353434.44334}/>
+            <br/>
+            <Number commas decimalPoints={0} num={334353434.44334}/>
+            <br/>
+            <Number commas num={334353434.44334}/>
+
             <Row>
               <Col xs={3}>
                 <H5>Single Datepicker</H5>
@@ -146,13 +155,13 @@ const App = () => {
             <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
             <H5>Input</H5>
-            <LabeledInput label="Labeled Input" placeholder="Input" />
+            <LabeledInput label="Labeled Input" placeholder="Input" isPercent />
 
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
 
             <H5>Progress</H5>
-            <LabeledProgress max={89.99} value={84.44}/>
+            <LabeledProgress max={4389.99} value={8434.44}/>
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>

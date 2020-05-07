@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import React from 'react'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
-import {Text} from './Text'
+import {Text, Number} from './Text'
 
 
 const ProgressWrapper = styled.div<SharedStyleTypes>`
@@ -38,8 +38,10 @@ const Progress = (props: ProgressBarProps) => {
 const LabeledProgress = (props: ProgressBarProps) => {
   return <div>
     <strong>
-      <span style={{ color: "#00a259" }}>${props.value}</span>
-    </strong> / ${props.max}
+      <span style={{ color: "#00a259" }}>
+        $<Number commas decimalPoints={0} num={props.value}/>
+      </span>
+    </strong> / $<Number commas decimalPoints={0} num={props.max}/> 
     <br />
     <Progress value={props.value} max={props.max} error={props.error}/>
   </div>
