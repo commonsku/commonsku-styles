@@ -31,6 +31,7 @@ import {
     Spinner,
     SidePanel,
     Tabs,
+    Select,
     LabeledSelect,
     LabeledProgress,
     PanelContact,
@@ -57,6 +58,17 @@ const initialState = {
   endDate: null,
   focusedInput: false,
 };
+
+const options = [
+  { value: 'skucon', label: 'Skucon' },
+  { value: 'skucamp', label: 'Skucamp' },
+  { value: 'others', label: 'Others' },
+  { value: 'others 1', label: 'Others 1' },
+  { value: 'others 2', label: 'Others 2' },
+  { value: 'others 3', label: 'Others 3' },
+  { value: 'others 4', label: 'Others 4' },
+  { value: 'others 5', label: 'Others 5' },
+]
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
   console.log(action);
@@ -99,7 +111,11 @@ const App = () => {
         onClose={() => {
             setShowPopup(false);
         }}
-      >Hello from Popup</Popup>}
+      >
+        Hello from Popup
+        <br/>
+        <Select inPopup options={options} value={options[0]} />
+      </Popup>}
     </div>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
         <Row>

@@ -7,10 +7,15 @@ type SKUSelectProps = {
   noMargin?: boolean,
   error?: boolean,
   menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
-
+  inPopup?:boolean,
 } & SelectProps
 
-const SKUSelect = (props: SKUSelectProps) => <Select 
+const SKUSelect = ({noMargin, menuRelative, inPopup, ...props}: SKUSelectProps) => <Select 
+  {...(inPopup ? {
+    menuPlacement: 'auto',
+    menuPosition: 'fixed',
+    menuPortalTarget: document.body,
+  } : {})}
   styles={{
     option: (provided, state) => ({
       ...provided,
@@ -32,6 +37,10 @@ const SKUSelect = (props: SKUSelectProps) => <Select
       border: 'none',
       zIndex: 10,
       position: props.menuRelative ? 'relative' : provided.position,
+    }),
+    menuPortal: (provided, state) => ({
+      ...provided,
+      zIndex: 9999,
     }),
     indicatorSeparator: (provided, state) => ({
       ...provided,
