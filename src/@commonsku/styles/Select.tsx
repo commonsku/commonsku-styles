@@ -70,10 +70,10 @@ const SKUSelect = ({noMargin, menuRelative, inPopup, ...props}: SKUSelectProps) 
   {...props}
 />;
 
-const LabeledSelect = ({ labelBold, parentStyle, ...props }: SKUSelectProps & {parentStyle?:object, labelBold?:boolean}) => {
+const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
-      <Label htmlFor={props.name} bold={labelBold}>{props.label}</Label>
+      <Label htmlFor={props.name}>{props.label}</Label>
       <SKUSelect {...props}/>
     </div>
   )
