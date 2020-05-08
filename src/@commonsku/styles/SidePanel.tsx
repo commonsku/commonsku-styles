@@ -129,7 +129,20 @@ const PanelContact = ({avatar, name, position, email, ...props}: { name:string, 
   )
 }
 
-const PanelTileContact = ({avatar, name, position, email, ...props}: { name:string, position?:string, email?:string, phone?:string, avatar?:React.ReactNode } & SizerTypes) => {
+const PHONE_TYPES: {[key: string]: string} = {
+  'WORK': 'W',
+  'HOME': 'H',
+  'CELL': 'C',
+  'FAX': 'F',
+};
+
+type PhoneType = {
+  phone_number?: string,
+  phone_type?: string,
+  phone_extension?: string,
+}
+
+const PanelTileContact = ({avatar, name, position, email, phones, ...props}: { name:string, position?:string, email?:string, phones?:Array<PhoneType>, avatar?:React.ReactNode } & SizerTypes) => {
   return (
     <Contact {...props}>
         { avatar ? avatar : null }
@@ -137,6 +150,11 @@ const PanelTileContact = ({avatar, name, position, email, ...props}: { name:stri
           <Name>{name}</Name>
           { position ? <Position>{position}</Position> : null }
           { email ? <Email href={"mailto:" + email}>{email}</Email> : null }
+          { phones && phones.length>0 ? phones.map((p, i) =>
+            <div key={'PHONE-' + p.phone_type + i}>
+              {p.phone_type ? (PHONE_TYPES[p.phone_type] || p.phone_type) : 'Ph'} {p.phone_number} {p.phone_extension && 'x'+p.phone_extension}
+            </div>
+          ) : null }
         </NameAndPosition>
     </Contact>
   )

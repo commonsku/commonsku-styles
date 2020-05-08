@@ -24,11 +24,15 @@ export const Link = styled(_Link)`
 `;
 
 function numberWithCommas(num: string) {
-  return num.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return num.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 export const Number = (props: {num: number, commas?: boolean, decimalPoints?:number} & SharedStyleTypes) => {
-  let fixedNum = props.num.toFixed(props.decimalPoints !== undefined ? props.decimalPoints : 2)
+  const val = typeof props.num === 'number'
+                ? props.num
+                : !isNaN(props.num) ? parseFloat(props.num) : 0;
+
+  let fixedNum = val.toFixed(props.decimalPoints !== undefined ? props.decimalPoints : 2)
   return <span {...props}>
     { props.commas ? numberWithCommas(fixedNum) : fixedNum }
   </span>

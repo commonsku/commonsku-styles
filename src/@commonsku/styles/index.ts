@@ -29,6 +29,7 @@ export * from './ErrorBoundary'
 export * from './Datepicker'
 export * from './SharedStyles'
 export * from './Dropdown'
+export * from './Badge'
 
 export * from './icons'
 export * from './Theme'
