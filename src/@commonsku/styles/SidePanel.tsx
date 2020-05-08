@@ -151,9 +151,9 @@ const PanelTileContact = ({avatar, name, position, email, phones, ...props}: { n
           { position ? <Position>{position}</Position> : null }
           { email ? <Email href={"mailto:" + email}>{email}</Email> : null }
           { phones && phones.length>0 ? phones.map((p, i) =>
-            <div key={'PHONE-' + p.phone_type + i}>
+            p.phone_number ? <div key={'PHONE-' + p.phone_type + i}>
               {p.phone_type ? (PHONE_TYPES[p.phone_type] || p.phone_type) : 'Ph'} {p.phone_number} {p.phone_extension && 'x'+p.phone_extension}
-            </div>
+            </div> : ''
           ) : null }
         </NameAndPosition>
     </Contact>
