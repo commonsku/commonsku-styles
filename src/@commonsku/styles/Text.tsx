@@ -24,7 +24,7 @@ export const Link = styled(_Link)`
 `;
 
 function numberWithCommas(num: string) {
-  return num.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return num.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 export const Number = (props: {num: number, commas?: boolean, decimalPoints?:number} & SharedStyleTypes) => {
