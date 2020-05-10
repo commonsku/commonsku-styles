@@ -92,7 +92,7 @@ const SKUSelect = ({noMargin, menuRelative, inPopup, error, ...props}: SKUSelect
 const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label}</Label>
+      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
       <SKUSelect {...props}/>
     </div>
   )
@@ -111,7 +111,7 @@ const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: Additio
 const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label}</Label>
+      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
       <SKUCreatableSelect {...props}/>
     </div>
   )
@@ -130,7 +130,7 @@ const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalS
 const LabeledAsyncSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label}</Label>
+      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
       <SKUAsyncSelect {...props}/>
     </div>
   )
