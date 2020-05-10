@@ -1,17 +1,20 @@
 import React from 'react'
-import Select, { Props as SelectProps, Styles, Theme } from 'react-select'
-import CreatableSelect, { Props as CreatableSelectProps } from 'react-select/creatable'
+import BaseSelect, { Props as SelectProps, Styles, Theme } from 'react-select'
+import BaseCreatableSelect, { Props as CreatableSelectProps } from 'react-select/creatable'
+import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
 
-type AssitionalSKUSelectProps = {
+type AdditionalSKUSelectProps = {
   noMargin?: boolean,
   error?: boolean,
   menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
   inPopup?:boolean,
 }
 
-type SKUSelectProps = AssitionalSKUSelectProps & SelectProps
+type SKUSelectProps = AdditionalSKUSelectProps & SelectProps
+
+type SKUSelectStylesProps = SKUSelectProps | AsyncSelectProps<{[key: string]: any}> | CreatableSelectProps<{[key: string]: any}>
 
 const popupStyles: SelectProps = {
   menuPlacement: 'auto',
@@ -19,7 +22,7 @@ const popupStyles: SelectProps = {
   menuPortalTarget: document.body,
 }
 
-function skuSelectStyles(props: SKUSelectProps | CreatableSelectProps<{[key: string]: any}>): Styles {
+function skuSelectStyles(props: SKUSelectStylesProps): Styles {
   return {
     option: (provided, state) => ({
       ...provided,
@@ -76,7 +79,7 @@ const skuSelectTheme = (theme: Theme) => ({
 })
 
 const SKUSelect = ({noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps) =>
-  <Select 
+  <BaseSelect 
     {...(inPopup ? popupStyles : {})}
     noMargin={noMargin}
     menuRelative={menuRelative}
@@ -96,20 +99,39 @@ const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?
 }
 
 
-const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: AssitionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}>) =>
+const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}>) =>
   // @ts-ignore
-  <CreatableSelect 
+  <BaseCreatableSelect 
     {...(inPopup ? popupStyles : {})}
     styles={skuSelectStyles(props)}
     theme={skuSelectTheme}
     {...props}
   />;
 
-const LabeledCreatableSelect = ({ parentStyle, ...props }: AssitionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
+const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
       <Label htmlFor={props.name}>{props.label}</Label>
       <SKUCreatableSelect {...props}/>
+    </div>
+  )
+}
+
+
+const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}>) =>
+  // @ts-ignore
+  <BaseAsyncSelect 
+    {...(inPopup ? popupStyles : {})}
+    styles={skuSelectStyles(props)}
+    theme={skuSelectTheme}
+    {...props}
+  />;
+
+const LabeledAsyncSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
+  return (
+    <div style={parentStyle}>
+      <Label htmlFor={props.name}>{props.label}</Label>
+      <SKUAsyncSelect {...props}/>
     </div>
   )
 }
@@ -119,4 +141,6 @@ export {
   LabeledSelect,
   SKUCreatableSelect as CreatableSelect,
   LabeledCreatableSelect,
+  SKUAsyncSelect as AsyncSelect,
+  LabeledAsyncSelect,
 };
