@@ -50,6 +50,7 @@ import {
     ErrorBoundary,
     Theme,
     Dropdown,
+    CreatableSelect,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -115,6 +116,13 @@ const App = () => {
         Hello from Popup
         <br/>
         <Select inPopup options={options} value={options[0]} />
+        <CreatableSelect inPopup options={options} value={options[0]}
+          onChange={(newValue: any, actionMeta: any) => {
+            console.group('Value Changed');
+            console.log(newValue);
+            console.log(`action: ${actionMeta.action}`);
+            console.groupEnd();
+          }} />
       </Popup>}
     </div>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
