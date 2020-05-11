@@ -25,15 +25,6 @@ export const Overlay = styled.div`
 
 const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string}>`
   &&& {
-    /*
-        padding: 5px;
-        position: relative;
-        overflow: auto;
-        margin: auto;
-        height: 90%;
-        border: 1px solid rgb(187, 187, 187);
-        background: rgb(255, 255, 255);
-    */
     width: ${props => props.width ?? '90%'};
     height: ${props => props.height ?? '75%'}; 
     margin: 0 !important;
@@ -63,7 +54,7 @@ const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, 
   }
 `;
 
-export const PopupHeader = styled.div`
+export const PopupHeader = styled.div<SharedStyleTypes>`
   &&& {
     position: sticky;
     top: 0;
@@ -84,6 +75,7 @@ export const PopupHeader = styled.div`
         font-family: "skufont-demibold",sans-serif;
         color: #123952;
     }
+    ${SharedStyles}
   }
 `;
 
@@ -151,7 +143,7 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
     <Overlay>
       <PopupWindow className="popup" {...props} ref={ref}>
           {header ? header : (
-              <PopupHeader className="popup-header">
+              <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
                   <Col style={{textAlign: 'left', alignSelf: 'center'}}>
                       <span className="title">{title}</span>
                   </Col>
