@@ -49,7 +49,7 @@ const StyledPanel = styled.div<SharedStyleTypes & SizerTypes>`
   padding: 1em;
   overflow: scroll;
   @media only screen and (max-width: 640px) {
-    width: auto !important;
+    width: 100% !important;
   }
   ${SharedStyles}
   ${SizerCss}
