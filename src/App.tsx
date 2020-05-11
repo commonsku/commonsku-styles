@@ -14,6 +14,8 @@ import user_pic3 from './users/3.jpeg';
 import user_pic4 from './users/4.jpeg';
 import user_pic5 from './users/5.jpeg';
 
+import {CouponIcon} from './@commonsku/styles/icons/CouponIcon';
+
 import { 
     Avatar, 
     Box, 
@@ -139,6 +141,9 @@ const App = () => {
                }/>
               <Link block mt={20}>Link</Link>
             </div>
+
+            <CouponIcon color={"red"} width={"1.5rem"} mr={5} />
+            <Link mt={20}>Link</Link>
 
 
             <H5>Number formatting</H5>
