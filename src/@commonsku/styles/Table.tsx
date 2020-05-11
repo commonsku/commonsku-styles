@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, {css} from 'styled-components'
-import { SizerCss, SizerTypes } from './Sizer';
+import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { UpDownArrowsIcon, UpArrowIcon, DownArrowIcon, } from './icons';
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
@@ -98,6 +98,12 @@ const TBody= styled.tbody<SizerTypes>`
   }
 `;
 
+const THContentWrapper = styled.span<SizerTypes>`
+  &&& {
+    ${SizerCss}
+  }
+`;
+
 const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChildren<{parentProps?: {[key: string]: any, style?:object}} & SharedStyleTypes>) => {
   return (
     <div style={{overflowX: 'auto'}} {...parentProps}>
@@ -106,15 +112,18 @@ const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChild
   );
 }
 
-const THSorted = ({children, order, iconHeight=15, iconStyles, ...props}: React.PropsWithChildren<{order?: string, iconHeight?: number, iconStyles?: object}>) => {
+const THSorted = ({children, order, iconHeight=15, iconStyles, hideIconOnMobile, ...props}: React.PropsWithChildren<{order?: string, iconHeight?: number, iconStyles?: object, hideIconOnMobile?:boolean}>) => {
   return (
     <TH {...props}>
-      {order==='desc' 
+      <THContentWrapper
+        xs={`display: ${hideIconOnMobile ? 'none': 'inline-block'};`}
+        sm={"display: inline-block;"}
+      >{order==='desc' 
         ? <DownArrowIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
         : order==='asc'
           ? <UpArrowIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
           : <UpDownArrowsIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
-      } {children}
+      }</THContentWrapper> {children}
     </TH>
   );
 }
