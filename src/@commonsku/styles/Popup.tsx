@@ -54,7 +54,7 @@ const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, 
   }
 `;
 
-export const PopupHeader = styled.div<SharedStyleTypes>`
+export const PopupHeader = styled.div<SharedStyleTypes & SizerTypes>`
   &&& {
     position: sticky;
     top: 0;
@@ -76,6 +76,7 @@ export const PopupHeader = styled.div<SharedStyleTypes>`
         color: #123952;
     }
     ${SharedStyles}
+    ${SizerCss}
   }
 `;
 
