@@ -19,9 +19,9 @@ export const colors = {
   bggray: '#EDF2F4',
   bgblue: '#ECF4F7',
   inputBorder: '#ABC7D1',
-  special1: '#ffd302',
-  special2: '#00d374',
-  special3: '#ff297c',
+  special1: '#ffd302',        // yellow
+  special2: '#00d374',        // green
+  special3: '#ff297c',        // red
   primaryBg: '#EAF2F6',
   special2Bg: '#E7FFE9',
   transparent: 'transparent',
