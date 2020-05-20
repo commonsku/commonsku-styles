@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import BaseSelect, { Props as SelectProps, Styles, Theme } from 'react-select'
 import BaseCreatableSelect, { Props as CreatableSelectProps } from 'react-select/creatable'
 import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
@@ -78,16 +79,69 @@ const skuSelectTheme = (theme: Theme) => ({
   },
 })
 
-const SKUSelect = ({noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps) =>
-  <BaseSelect 
-    {...(inPopup ? popupStyles : {})}
-    noMargin={noMargin}
-    menuRelative={menuRelative}
-    error={error}
-    styles={skuSelectStyles(props)}
-    theme={skuSelectTheme}
-    {...props}
-  />;
+// duplicate styles to overide .resku global styles
+const SKUSelect = styled(
+  React.forwardRef((
+    {noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps,
+    ref: React.Ref<BaseSelect>
+  ) => {
+    return <BaseSelect 
+      ref={ref}
+      classNamePrefix="commonsku-styles-select"
+      {...(inPopup ? popupStyles : {})}
+      noMargin={noMargin}
+      menuRelative={menuRelative}
+      error={error}
+      styles={skuSelectStyles(props)}
+      theme={skuSelectTheme}
+      {...props}
+    />
+  })
+)`
+  &&& {
+    .commonsku-styles-select__option {
+      border-bottom: none;
+      padding: 10px;
+    }
+
+    .commonsku-styles-select__value-container {
+      padding: 2px 8px;
+    }
+
+    .commonsku-styles-select__input {
+      height: auto;
+      border-color: ${(props) => getThemeColor(props, 'inputBorder', 'primary')};
+
+      input {
+        height: auto;
+      }
+    }
+
+    .commonsku-styles-select__control {
+      margin-bottom: ${(props) => props.noMargin ? 0 : '1rem'};
+    }
+
+    .commonsku-styles-select__menu {
+      border: none;
+      zIndex: 10;
+      ${(props) => props.menuRelative ? 'position: relative;' : ''}
+    }
+
+    .commonsku-styles-select__menuPortal {
+      zIndex: 9999;
+    }
+
+    .commonsku-styles-select__indicatorSeparator {
+      display: none;
+    }
+
+    ${props => !props.error ? '' : `
+      .commonsku-styles-select__input, .commonsku-styles-select__control {
+        border-color: ${getThemeColor(props, 'special3')};
+      }
+    `}
+  }
+`;
 
 const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?:object}) => {
   return (
@@ -97,7 +151,6 @@ const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?
     </div>
   )
 }
-
 
 const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}>) =>
   // @ts-ignore
