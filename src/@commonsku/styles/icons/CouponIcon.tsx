@@ -1,6 +1,16 @@
 import React from "react"
 
-export const CouponIcon = ({color="#000000", width, mr}: {color?:string, width?:string, mr?:number}) => {
+export function CouponIcon({
+  color="#000000", 
+  width, 
+  mr,
+  mt
+}: React.PropsWithChildren<{
+  color?:string, 
+  width?:string, 
+  mr?:number,
+  mt?:number
+}>) {
   return (
     <svg
       viewBox="0 0 104 72"
@@ -10,7 +20,7 @@ export const CouponIcon = ({color="#000000", width, mr}: {color?:string, width?:
       strokeLinejoin="round"
       strokeMiterlimit={2}
       width={width}
-      style={{display:"inline-block", verticalAlign: "top", marginRight: mr}}
+      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
     >
       <path fill="none" d="M0 0h103.217v71.036H0z" />
       <path d="M1.629 20.84a3 3 0 002.936 2.999c6.11.13 11.027 5.139 11.027 11.285 0 6.145-4.916 11.153-11.027 11.285a3 3 0 00-2.936 2.999V59.78c0 5.193 4.216 9.408 9.408 9.408h81.007c5.192 0 9.408-4.215 9.408-9.408V10.466c0-5.192-4.216-9.408-9.408-9.408H11.037c-5.192 0-9.408 4.216-9.408 9.408V20.84zm6 31.252v7.689a3.41 3.41 0 003.408 3.408h81.007a3.41 3.41 0 003.408-3.408V10.466a3.41 3.41 0 00-3.408-3.408H11.037a3.41 3.41 0 00-3.408 3.408v7.689c7.954 1.548 13.963 8.56 13.963 16.969 0 8.407-6.01 15.42-13.963 16.968z" />
@@ -22,3 +32,5 @@ export const CouponIcon = ({color="#000000", width, mr}: {color?:string, width?:
     </svg>
   )
 }
+
+export default CouponIcon
