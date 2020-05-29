@@ -39,3 +39,5 @@ export function InfoIcon({
     </svg>
   )
 }
+
+export default InfoIcon
