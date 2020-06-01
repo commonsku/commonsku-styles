@@ -67,7 +67,7 @@ export const LabeledInput = ({ label, name, required, ...props}: InputProps & {l
 
 export const RadioLabel = styled.label<{disabled?: boolean}>`
   &&& {
-    display: block;
+    display: inline-block;
     position: relative;
     padding-left: 35px;
     margin-bottom: 12px;

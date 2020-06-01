@@ -165,6 +165,12 @@ const App = () => {
               </Col>
             </Row>
 
+            <Row>
+              <Col xs={3}>
+            <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
+            </Col>
+            </Row>
+
             <H5>Radio</H5>
             <ButtonsGroup>
               <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
