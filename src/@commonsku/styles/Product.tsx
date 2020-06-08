@@ -70,7 +70,7 @@ const ProductWrapper = styled.div<{picture:string} & SharedStyleTypes >`
 `
 
 export const Product = (props: {sku:string, picture:string, supplier:string, name:string, price?:number, currency?:string, rating?:number} & SharedStyleTypes) => {
-  return <ProductWrapper picture={props.picture} {...props}>
+  return <ProductWrapper {...props}>
     <ProductInfo>
       <SupplierName>{props.supplier}</SupplierName>
       <ProductName>{props.name}</ProductName>

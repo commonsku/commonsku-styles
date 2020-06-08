@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Button } from './Button';
-import { H3 } from './Headings';
 import { Col } from './FlexboxGrid';
-import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerCss, SizerTypes } from './Sizer'
+import { document } from '../utils';
 
 export const Overlay = styled.div`
   &&& {
@@ -84,9 +83,9 @@ const PopupContainer: React.FC<{}> = ({ children }) => {
   const ref = React.useRef(document.createElement('div'));
 
   useEffect(() => {
-    document.body.append(ref.current);
+    document.body.appendChild(ref.current);
     return () => {
-      ref.current.remove();
+      document.body.removeChild(ref.current);
     }
   }, []);
 

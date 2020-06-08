@@ -2,8 +2,8 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
-import { DownArrowIcon, UpArrowIcon } from './icons';
-
+import { UpArrowIcon } from './icons';
+import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
     position: relative;
@@ -93,10 +93,9 @@ export const Dropdown = ({ items, underlined, primary, text, ...props }: {
         document.addEventListener("mousedown", handleClick);
 
         return () => {
-          document.removeEventListener("mousedown", handleClick);
+            document.removeEventListener("mousedown", handleClick);
         };
     }, []);
-
 
     return (
         // @ts-ignore

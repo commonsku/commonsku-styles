@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, toNumber } from 'lodash';
 import React from 'react';
 import styled from 'styled-components'
 import { colors, fonts } from './Theme';
@@ -27,13 +27,11 @@ function numberWithCommas(num: string) {
   return num.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
-export const Number = (props: {num: number, commas?: boolean, decimalPoints?:number} & SharedStyleTypes) => {
-  const val = typeof props.num === 'number'
-                ? props.num
-                : !isNaN(props.num) ? parseFloat(props.num) : 0;
-
-  let fixedNum = val.toFixed(props.decimalPoints !== undefined ? props.decimalPoints : 2)
+export const Number: React.FC<{num: number, commas?: boolean, decimalPoints?:number} & SharedStyleTypes> = ({
+  num, commas, decimalPoints = 2, ...props
+}) => {
+  let fixedNum = (toNumber(num) || 0).toFixed(decimalPoints)
   return <span {...props}>
-    { props.commas ? numberWithCommas(fixedNum) : fixedNum }
+    { commas ? numberWithCommas(fixedNum) : fixedNum }
   </span>
 }
