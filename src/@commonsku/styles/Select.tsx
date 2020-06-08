@@ -5,6 +5,7 @@ import BaseCreatableSelect, { Props as CreatableSelectProps } from 'react-select
 import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
+import { document } from '../utils';
 
 type AdditionalSKUSelectProps = {
   noMargin?: boolean,
