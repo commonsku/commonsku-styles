@@ -16,6 +16,7 @@ import user_pic5 from './users/5.jpeg';
 
 import {CouponIcon} from './@commonsku/styles/icons/CouponIcon';
 import {InfoIcon} from './@commonsku/styles/icons/InfoIcon';
+import {LockIcon} from './@commonsku/styles/icons/LockIcon';
 
 import { 
     Avatar, 
@@ -92,6 +93,7 @@ const App = () => {
   const [activeRadio, setRadio] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
+  const [lock, setLock] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -146,6 +148,10 @@ const App = () => {
             
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
+
+            <Link onClick={() => setLock(!lock)}>
+              <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
+            </Link>
 
 
             <H5>Number formatting</H5>
