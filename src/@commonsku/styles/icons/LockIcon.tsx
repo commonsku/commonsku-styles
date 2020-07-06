@@ -31,7 +31,7 @@ export function LockIcon({
         fill={color}
       />
       <path
-        style={{transform: locked ? "translate(261px, -41px) scaleX(-1)" : "none", transition: "all .2s"}}
+        style={{transform: locked ? "none" : "translate(261px, -41px) scaleX(-1)", transition: "all .2s"}}
         d="M27 114.506v-21C27 59.56 54.56 32 88.508 32c33.946 0 61.506 27.56 61.506 61.506v98h-28v-98C122.013 75.013 106.999 60 88.507 60S55 75.013 55 93.506v21H27z"
         fill={color}
       />
