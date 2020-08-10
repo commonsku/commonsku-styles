@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
+import {Img} from './Img'
 import {Input, InputProps} from './Input'
 import {IconDoc, DownloadIcon} from './icons'
 import { getThemeColor, getThemeFontSize } from './Theme';
@@ -63,14 +64,10 @@ const ArtworkWrapper = styled.div<{cssHeight:number}&SharedStyleTypes>`
   ${SharedStyles}
 `
 
-const ArtworkPicture = styled.div<{picture:string, cssHeight:number} >`
+const ArtworkPicture = styled.div<{cssHeight:number} >`
   width: 100%;
   height: calc(${props => props.cssHeight}vw - 3.5rem);
   overflow: hidden;
-  background-image: url("${props => props.picture}");
-  background-repeat: no-repeat;
-  background-position: center ;
-  background-size: contain;
   position: relative;
   line-height: 1.5em;
   cursor: pointer;
@@ -113,7 +110,9 @@ export const Artwork = ({
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : null}>
     {props.picture?
-      <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17} picture={props.picture}/>
+      <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17}>
+        <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}}/>
+      </ArtworkPicture>
       :
       <IconDoc ext={extension(props.name)} style={{width:"3vw"}} />
     }
