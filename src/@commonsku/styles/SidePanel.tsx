@@ -58,7 +58,7 @@ const Backdrop = styled.div<SidePanelType>`
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(67, 83, 91, .3);
   z-index: 100;
   ${p => getSlideStyles(p.from, p.visible, p.height)}
 `;

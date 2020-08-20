@@ -105,6 +105,7 @@ const App = () => {
       animationDuration={300}
       from="right"
       height={100}
+      backdrop
     >
       <Tabs padded tabs={[
         { label: "Contacts", content: <Row>
