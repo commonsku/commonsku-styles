@@ -29,24 +29,24 @@ function getSlideStyles(from:"left"|"right"|"bottom"|"top"="right", visible:bool
 }
 
 export const StyledPanel = styled.div<SidePanelType>`
-    height: ${p => valIsValid(p.height) ? p.height : p.from === "bottom" || p.from === "top" ? 50 : 100}vh;
-    background: white;
-    position: fixed;
-    width: ${p => valIsValid(p.width) ? p.width : p.from === "bottom" || p.from === "top" ? '100%' : '560px'};
-    z-index: 300;
-    box-shadow: 0 0 10px rgba(61, 79, 90, 0.27);
-    padding: 1em;
-    overflow: scroll;
-    @media only screen and (max-width: 640px) {
-        width: 100% !important;
-    }
-    ${p => getSlideStyles(p.from, p.visible, p.height)}
-    transition: transform ${p => (
+  height: ${p => valIsValid(p.height) ? p.height : p.from === "bottom" || p.from === "top" ? 50 : 100}vh;
+  background: white;
+  position: fixed;
+  width: ${p => valIsValid(p.width) ? p.width : p.from === "bottom" || p.from === "top" ? '100%' : '560px'};
+  z-index: 300;
+  box-shadow: 0 0 10px rgba(61, 79, 90, 0.27);
+  padding: 1em;
+  overflow: scroll;
+  @media only screen and (max-width: 640px) {
+    width: 100% !important;
+  }
+  ${p => getSlideStyles(p.from, p.visible, p.height)}
+  transition: transform ${p => (
     //@ts-ignore
     (valIsValid(p.animationDuration) ? p.animationDuration : 300) / 1000
   )}s ease-out;
-    ${SharedStyles}
-    ${SizerCss}
+  ${SharedStyles}
+  ${SizerCss}
 `;
 StyledPanel.defaultProps = {
   animationDuration: 300,
