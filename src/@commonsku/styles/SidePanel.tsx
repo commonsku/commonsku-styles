@@ -54,29 +54,47 @@ StyledPanel.defaultProps = {
   from: "right",
 };
 
+const Backdrop = styled.div<SidePanelType>`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 100;
+  ${p => getSlideStyles(p.from, p.visible, p.height)}
+`;
+Backdrop.defaultProps = {
+  visible: false,
+  from: "right",
+};
+
 const SidePanel = ({
   from = "right", visible = false, animationDuration = 300, fullWidthTitle = false,
-  controls, header, title, children,
+  backdrop=false, controls, header, title,
+  children,
   ...props }: React.PropsWithChildren<{
     header?: React.ReactNode,
     title: string,
     controls: React.ReactNode,
     fullWidthTitle?: boolean,
+    backdrop?: boolean,
   } & SidePanelType & SharedStyleTypes & SizerTypes>) => {
-  return <StyledPanel animationDuration={animationDuration} visible={visible} from={from} {...props}>
-    {header || <div>
-      {!fullWidthTitle
-        ? <Row>
-          <Col><H2>{title}</H2></Col>
-          <Col style={{ textAlign: "right" }}>{controls}</Col>
-        </Row>
-        : <div>
-          <Row><Col style={{ textAlign: "right" }}>{controls}</Col></Row>
-          <Row><Col><H2>{title}</H2></Col></Row>
-        </div>}
-    </div>}
-    {children}
-  </StyledPanel>
+  return <>
+    <StyledPanel animationDuration={animationDuration} visible={visible} from={from} {...props}>
+      {header || <div>
+        {!fullWidthTitle
+          ? <Row>
+            <Col><H2>{title}</H2></Col>
+            <Col style={{ textAlign: "right" }}>{controls}</Col>
+          </Row>
+          : <div>
+            <Row><Col style={{ textAlign: "right" }}>{controls}</Col></Row>
+            <Row><Col><H2>{title}</H2></Col></Row>
+          </div>}
+      </div>}
+      {children}
+    </StyledPanel>
+    {backdrop ? <Backdrop visible={visible} from={from} height={props.height} /> : null}
+  </>
 }
 
 
