@@ -1,85 +1,82 @@
 import React from 'react'
-import { StyleSheet, css } from 'aphrodite';
-import { slideInRight, slideOutRight } from 'react-animations';
 import styled from 'styled-components';
 import { Row, Col } from './FlexboxGrid';
 import { H2 } from './Headings'
-import { useDelayUnmount } from './hooks';
+import { valIsValid } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerTypes, SizerCss } from './Sizer'
 
 
-/* 
+type SidePanelType = {
+  animationDuration?: number;
+  visible?: boolean;
+  from?: "left" | "right" | "bottom" | "top";
+  height?: number;
+  width?: number;
+};
 
-SidePanel: a narrow modal with a slide animation
-
-PanelContact: a contact designed to fit within a panel
-Address: an address designed to fit within a panel
-Project: a project designed to fit within a panel
-
-TODO: consider breaking these up into separate components
-      with the layout being determined by the amount of space we have. 
-
-*/
-
-
-
-const styles = StyleSheet.create({
-  slideInRight: {
-    animationName: slideInRight,
-    animationDuration: '.3s',
-    delay: '0s'
-  },
-  slideOutRight: {
-    animationName: slideOutRight,
-    animationDuration: '.3s',
-    delay: '0s'
+function getSlideStyles(from:"left"|"right"|"bottom"|"top"="right", visible:boolean=false, height:number=50) {
+  if (from === "right") {
+    return `left: auto; right: 0; top: 0; bottom: 0; transform: translateX(${visible ? '0%' : '100%'});`;
+  } else if (from === "left") {
+    return `right: auto; left: 0; top: 0; bottom: 0; transform: translateX(${visible ? '0%' : '-100%'});`;
+  } else if (from === "bottom") {
+    return `height: ${height}vh; right: 0; left: 0; top: ${100 - height}vh; bottom: 0; transform: translateY(${visible ? '0%' : '100%'});`;
+  } else if (from === "top") {
+    return `height: ${height}vh; right: 0; left: 0; bottom: ${100 - height}vh; top: 0; transform: translateY(${visible ? '0%' : '-100%'});`;
   }
-})
+  return '';
+}
 
-const StyledPanel = styled.div<SharedStyleTypes & SizerTypes>`
-  background: white;
-  height: 100vh;
-  width: 560px;
-  box-shadow: 0 0 10px rgba(61, 79, 90, 0.27);
-  z-index: 300;
-  position: fixed;
-  right: 0;
-  top: 0;
-  padding: 1em;
-  overflow: scroll;
-  @media only screen and (max-width: 640px) {
-    width: 100% !important;
-  }
-  ${SharedStyles}
-  ${SizerCss}
+export const StyledPanel = styled.div<SidePanelType>`
+    height: ${p => valIsValid(p.height) ? p.height : p.from === "bottom" || p.from === "top" ? 50 : 100}vh;
+    background: white;
+    position: fixed;
+    width: ${p => valIsValid(p.width) ? p.width : p.from === "bottom" || p.from === "top" ? '100%' : '560px'};
+    z-index: 300;
+    box-shadow: 0 0 10px rgba(61, 79, 90, 0.27);
+    padding: 1em;
+    overflow: scroll;
+    @media only screen and (max-width: 640px) {
+        width: 100% !important;
+    }
+    ${p => getSlideStyles(p.from, p.visible, p.height)}
+    transition: transform ${p => (
+    //@ts-ignore
+    (valIsValid(p.animationDuration) ? p.animationDuration : 300) / 1000
+  )}s ease-out;
+    ${SharedStyles}
+    ${SizerCss}
 `;
+StyledPanel.defaultProps = {
+  animationDuration: 300,
+  visible: false,
+  from: "right",
+};
 
-
-const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode, fullWidthTitle?: boolean } & SharedStyleTypes & SizerTypes>) => {
-  const shouldRenderChild = useDelayUnmount(props.visible, 300);
-  return shouldRenderChild ? <StyledPanel
-    // style={{ visibility: (props.visible ? "visible" : "hidden") }}
-    className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
-    {...props}
-  >
-    {props.header || <div>
-      { !props.fullWidthTitle ? 
-      <Row>
-        <Col><H2>{props.title}</H2></Col>
-        <Col style={{ textAlign: "right" }}>{props.controls}</Col>
-      </Row> :
-      <div>
-      <Row>
-        <Col style={{ textAlign: "right" }}>{props.controls}</Col>
-      </Row>
-      <Row>
-        <Col><H2>{props.title}</H2></Col>
-      </Row>
-      </div>}
-      </div>}
-    {props.children}
-  </StyledPanel> : null;
+const SidePanel = ({
+  from = "right", visible = false, animationDuration = 300, fullWidthTitle = false,
+  controls, header, title, children,
+  ...props }: React.PropsWithChildren<{
+    header?: React.ReactNode,
+    title: string,
+    controls: React.ReactNode,
+    fullWidthTitle?: boolean,
+  } & SidePanelType & SharedStyleTypes & SizerTypes>) => {
+  return <StyledPanel animationDuration={animationDuration} visible={visible} from={from} {...props}>
+    {header || <div>
+      {!fullWidthTitle
+        ? <Row>
+          <Col><H2>{title}</H2></Col>
+          <Col style={{ textAlign: "right" }}>{controls}</Col>
+        </Row>
+        : <div>
+          <Row><Col style={{ textAlign: "right" }}>{controls}</Col></Row>
+          <Row><Col><H2>{title}</H2></Col></Row>
+        </div>}
+    </div>}
+    {children}
+  </StyledPanel>
 }
 
 
