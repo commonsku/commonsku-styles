@@ -24,16 +24,16 @@ TODO: consider breaking these up into separate components
 
 
 
-const styles = StyleSheet.create({
+const styles = (animationDuration: number = 300, delay: number = 0) => StyleSheet.create({
   slideInRight: {
     animationName: slideInRight,
-    animationDuration: '.3s',
+    animationDuration: `${animationDuration/1000}s`,
     delay: '0s'
   },
   slideOutRight: {
     animationName: slideOutRight,
-    animationDuration: '.3s',
-    delay: '0s'
+    animationDuration: `${animationDuration/1000}s`,
+    delay: `${delay/1000}s`
   }
 })
 
@@ -56,11 +56,18 @@ const StyledPanel = styled.div<SharedStyleTypes & SizerTypes>`
 `;
 
 
-const SidePanel = (props: React.PropsWithChildren<{ visible: boolean, title: string, controls: React.ReactNode, fullWidthTitle?: boolean } & SharedStyleTypes & SizerTypes>) => {
-  const shouldRenderChild = useDelayUnmount(props.visible, 300);
+const SidePanel = ({visible=false, animationDuration=300, animationDelay=0, ...props}: React.PropsWithChildren<{
+  visible: boolean,
+  title: string,
+  controls: React.ReactNode,
+  fullWidthTitle?: boolean,
+  animationDuration?: number,
+  animationDelay?: number,
+} & SharedStyleTypes & SizerTypes>) => {
+  const shouldRenderChild = useDelayUnmount(visible, animationDuration);
+  const animationStyles = styles(animationDuration, animationDelay);
   return shouldRenderChild ? <StyledPanel
-    // style={{ visibility: (props.visible ? "visible" : "hidden") }}
-    className={(props.visible ? css(styles.slideInRight) : css(styles.slideOutRight))}
+    className={(visible ? css(animationStyles.slideInRight) : css(animationStyles.slideOutRight))}
     {...props}
   >
     {props.header || <div>
