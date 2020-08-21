@@ -8,3 +8,4 @@ export * from './CalendarIcon';
 export * from './CouponIcon';
 export * from './InfoIcon';
 export * from './LockIcon';
+export * from './BarsLoadingIcon';
