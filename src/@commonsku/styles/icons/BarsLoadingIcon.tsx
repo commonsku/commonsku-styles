@@ -1,11 +1,7 @@
 import * as React from "react"
 import { colors } from "../Theme"
-import { SharedStyles, SharedStyleTypes } from '../SharedStyles'
-import styled from "styled-components"
-
-const SVG = styled.svg`
-  ${SharedStyles}
-`;
+import { SharedStyleTypes } from '../SharedStyles'
+import SVG from './SVG'
 
 export function BarsLoadingIcon({
   height=60,
