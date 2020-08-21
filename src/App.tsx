@@ -106,6 +106,7 @@ const App = () => {
       from="right"
       height={100}
       backdrop
+      bodyScrollable={false}
     >
       <Tabs padded tabs={[
         { label: "Contacts", content: <Row>

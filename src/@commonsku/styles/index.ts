@@ -30,6 +30,7 @@ export * from './Datepicker'
 export * from './SharedStyles'
 export * from './Dropdown'
 export * from './Badge'
+export * from './Backdrop'
 
 export * from './icons'
 export * from './Theme'

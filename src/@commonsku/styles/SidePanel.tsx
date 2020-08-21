@@ -5,6 +5,7 @@ import { H2 } from './Headings'
 import { valIsValid } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerTypes, SizerCss } from './Sizer'
+import { Backdrop } from './Backdrop'
 
 
 type SidePanelType = {
@@ -54,22 +55,9 @@ StyledPanel.defaultProps = {
   from: "right",
 };
 
-const Backdrop = styled.div<SidePanelType>`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(67, 83, 91, .3);
-  z-index: 100;
-  ${p => getSlideStyles(p.from, p.visible, p.height)}
-`;
-Backdrop.defaultProps = {
-  visible: false,
-  from: "right",
-};
-
 const SidePanel = ({
   from = "right", visible = false, animationDuration = 300, fullWidthTitle = false,
-  backdrop=false, controls, header, title,
+  bodyScrollable=true, backdrop=false, controls, header, title,
   children,
   ...props }: React.PropsWithChildren<{
     header?: React.ReactNode,
@@ -77,24 +65,30 @@ const SidePanel = ({
     controls: React.ReactNode,
     fullWidthTitle?: boolean,
     backdrop?: boolean,
+    bodyScrollable?: boolean,
   } & SidePanelType & SharedStyleTypes & SizerTypes>) => {
-  return <>
-    <StyledPanel animationDuration={animationDuration} visible={visible} from={from} {...props}>
-      {header || <div>
-        {!fullWidthTitle
-          ? <Row>
-            <Col><H2>{title}</H2></Col>
-            <Col style={{ textAlign: "right" }}>{controls}</Col>
-          </Row>
-          : <div>
-            <Row><Col style={{ textAlign: "right" }}>{controls}</Col></Row>
-            <Row><Col><H2>{title}</H2></Col></Row>
-          </div>}
-      </div>}
-      {children}
-    </StyledPanel>
-    {backdrop ? <Backdrop visible={visible} from={from} height={props.height} /> : null}
-  </>
+    if(!bodyScrollable && visible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return <>
+      <StyledPanel animationDuration={animationDuration} visible={visible} from={from} {...props}>
+        {header || <div>
+          {!fullWidthTitle
+            ? <Row>
+              <Col><H2>{title}</H2></Col>
+              <Col style={{ textAlign: "right" }}>{controls}</Col>
+            </Row>
+            : <div>
+              <Row><Col style={{ textAlign: "right" }}>{controls}</Col></Row>
+              <Row><Col><H2>{title}</H2></Col></Row>
+            </div>}
+        </div>}
+        {children}
+      </StyledPanel>
+      {backdrop && visible ? <Backdrop /> : null}
+    </>
 }
 
 
