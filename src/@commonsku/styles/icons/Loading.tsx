@@ -54,8 +54,11 @@ function Loading({
     };
 
     const generateBars = () => {
-        const barsArr = Array.from({length: bars}, (v, i) => i);
-        return barsArr.map((v) => generateBar(v));
+        const result = [];
+        for (let i = 0; i < bars; i++) {
+          result.push(generateBar(i));
+        }
+        return result;
     };
 
     return (
