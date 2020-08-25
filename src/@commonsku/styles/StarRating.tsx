@@ -17,6 +17,6 @@ const StyledRating = styled.div<SharedStyleTypes>`
 
 export const StarRating = (props: {rating:number} & SharedStyleTypes) => {
   return <StyledRating {...props}>
-    {[1,2,3,4,5].map((x,i) => i < props.rating ? <StyledStar src={star_light}/> : <StyledStar src={star_dark}/>)}
+    {[1,2,3,4,5].map((x,i) => i < props.rating ? <StyledStar key={`star${i}`} src={star_light}/> : <StyledStar key={`star${i}`} src={star_dark}/>)}
   </StyledRating>
 }

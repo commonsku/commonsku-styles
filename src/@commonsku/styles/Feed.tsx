@@ -5,8 +5,8 @@ import {Avatar} from './Avatar'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
+const PublisherWrapper = styled.div`background: ${props => getThemeColor(props, "bgblue")}; border-radius:5px; padding: 1em; margin-bottom: 1em;`
 export const Publisher = (props: React.PropsWithChildren<{}>) => {
-  const PublisherWrapper = styled.div`background: ${props => getThemeColor(props, "bgblue")}; border-radius:5px; padding: 1em; margin-bottom: 1em;`
   return <PublisherWrapper>
            <Textarea placeholder="Post a note about this project"/>
          </PublisherWrapper>
