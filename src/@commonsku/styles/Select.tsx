@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import BaseSelect, { Props as SelectProps, Styles, Theme } from 'react-select'
-import BaseCreatableSelect, { Props as CreatableSelectProps } from 'react-select/creatable'
+import BaseSelect, { Props as SelectProps, Styles, Theme, components, createFilter, mergeStyles } from 'react-select'
+import BaseCreatableSelect, { Props as CreatableSelectProps, makeCreatableSelect } from 'react-select/creatable'
 import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
@@ -197,4 +197,8 @@ export {
   LabeledCreatableSelect,
   SKUAsyncSelect as AsyncSelect,
   LabeledAsyncSelect,
+  components,
+  makeCreatableSelect,
+  createFilter,
+  mergeStyles,
 };

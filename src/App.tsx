@@ -14,9 +14,7 @@ import user_pic3 from './users/3.jpeg';
 import user_pic4 from './users/4.jpeg';
 import user_pic5 from './users/5.jpeg';
 
-import {CouponIcon} from './@commonsku/styles/icons/CouponIcon';
-import {InfoIcon} from './@commonsku/styles/icons/InfoIcon';
-import {LockIcon} from './@commonsku/styles/icons/LockIcon';
+import { BarsLoadingIcon, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -154,7 +152,10 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
-            
+
+            <H5>Bars Loading</H5>
+            <BarsLoadingIcon mb={10} block />
+
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
 
