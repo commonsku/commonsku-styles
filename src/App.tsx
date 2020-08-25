@@ -14,7 +14,7 @@ import user_pic3 from './users/3.jpeg';
 import user_pic4 from './users/4.jpeg';
 import user_pic5 from './users/5.jpeg';
 
-import { BarsLoadingIcon, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -92,6 +92,7 @@ const App = () => {
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
   const [lock, setLock] = useState(false);
+  const [colorfulBars, setColorfulBars] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -154,7 +155,15 @@ const App = () => {
 
 
             <H5>Bars Loading</H5>
-            <BarsLoadingIcon mb={10} block />
+            <div style={{maxWidth: 150}}>
+              <Toggle stretch mb={10} onClick={() => setColorfulBars(!colorfulBars)}>
+                <ToggleLink selected={!colorfulBars} stretch pr pl>Regular</ToggleLink>
+                <ToggleLink selected={colorfulBars} stretch>Colorful</ToggleLink>
+              </Toggle>
+            </div>
+            <div style={{maxWidth: 90}}>
+              <Loading mb={10} colorful={colorfulBars} />
+            </div>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
