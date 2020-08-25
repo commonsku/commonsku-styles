@@ -98,7 +98,16 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return <Theme><Page>
-    <SidePanel title="Panel Title" fullWidthTitle controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>} visible={showPanel}>
+    <SidePanel title="Panel Title"
+      // fullWidthTitle
+      controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>}
+      visible={showPanel}
+      animationDuration={300}
+      from="right"
+      height={100}
+      backdrop
+      bodyScrollable={false}
+    >
       <Tabs padded tabs={[
         { label: "Contacts", content: <Row>
                                          <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeffdfsdfsdfsdfs.dfsdfsdfs@sdfsdfsdabc.com" phone="843-443-4432" />
@@ -134,7 +143,7 @@ const App = () => {
         <Row>
           <Col xs>
             <div>
-              <Button mr={10} onClick={() => setShowPanel(true)}>Show Panel</Button>
+              <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
               <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
               <Dropdown text="Drop Down" items={
                 [
