@@ -1,5 +1,6 @@
 import ssr from './ssr';
 export * from './sizes';
+export { default as generateColor } from './generateColor';
 
 export const valIsValid = (val: any) => val !== null && val !== undefined && val !== ''; // not checking for 0
 
