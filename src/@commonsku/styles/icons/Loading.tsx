@@ -10,6 +10,7 @@ function Loading({
     width,
     animationDuration = 1000,
     barWidth = 14,
+    barRadius = 2,
     colorful = false,
     bars = 4,
     viewBox = "10 0 51 50",
@@ -22,6 +23,7 @@ function Loading({
     width?: number,
     animationDuration?: number,
     barWidth?: number,
+    barRadius?: number,
     colorful?: boolean,
     bars?: number,
     viewBox?: string,
@@ -41,6 +43,7 @@ function Loading({
                 width={barWidth || 14}
                 height={height}
                 fill={`#${colorGradient[v]}`}
+                rx={barRadius}
             >
                 <animate
                     attributeName="height"
