@@ -1,4 +1,5 @@
 import React, { useState, useReducer } from 'react';
+import styled from 'styled-components'
 
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
@@ -13,6 +14,8 @@ import user_pic2 from './users/2.jpeg';
 import user_pic3 from './users/3.jpeg';
 import user_pic4 from './users/4.jpeg';
 import user_pic5 from './users/5.jpeg';
+
+import makeData from './makeData';
 
 import { Loading, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
 
@@ -53,6 +56,7 @@ import {
     Theme,
     Dropdown,
     CreatableSelect,
+    HeadlessTable
 } from '@commonsku/styles';
 
 const initialState = {
@@ -71,6 +75,104 @@ const options = [
   { value: 'others 3', label: 'Others 3' },
   { value: 'others 4', label: 'Others 4' },
   { value: 'others 5', label: 'Others 5' },
+]
+
+const Styles = styled.div`
+  padding: 1rem;
+  overflow-x: scroll;
+
+  .react-table {
+    border: 1px solid #ddd;
+
+    .tr {
+      :last-child {
+        .td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    .th,
+    .td {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      background-color: #fff;
+      overflow: hidden;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+
+    &.react-table-sticky {
+      overflow: scroll;
+      .header,
+      .footer {
+        position: sticky;
+        z-index: 1;
+        width: fit-content;
+      }
+
+      .header {
+        top: 0;
+        box-shadow: 0px 3px 3px #ccc;
+      }
+
+      .footer {
+        bottom: 0;
+        box-shadow: 0px -3px 3px #ccc;
+      }
+
+      .body {
+        position: relative;
+        z-index: 0;
+      }
+
+      [data-sticky-td] {
+        position: sticky;
+      }
+
+      [data-sticky-last-left-td] {
+        box-shadow: 2px 0px 3px #ccc;
+      }
+
+      [data-sticky-first-right-td] {
+        box-shadow: -2px 0px 3px #ccc;
+      }
+    }
+  }
+
+  .react-table-pagination {
+    padding: 0.5rem;
+  }
+`
+const tableData = [{"firstName":"profit","lastName":"doctor","age":24,"visits":71,"progress":24,"status":"relationship"},{"firstName":"hall","lastName":"shake","age":3,"visits":18,"progress":15,"status":"single"},{"firstName":"flesh","lastName":"bag","age":2,"visits":15,"progress":85,"status":"complicated"},{"firstName":"bat","lastName":"inspector","age":18,"visits":77,"progress":89,"status":"relationship"},{"firstName":"tail","lastName":"stranger","age":13,"visits":42,"progress":16,"status":"complicated"},{"firstName":"ducks","lastName":"neck","age":11,"visits":68,"progress":27,"status":"single"},{"firstName":"baseball","lastName":"trip","age":24,"visits":63,"progress":12,"status":"relationship"},{"firstName":"requirement","lastName":"priority","age":29,"visits":58,"progress":90,"status":"complicated"},{"firstName":"grocery","lastName":"system","age":15,"visits":13,"progress":70,"status":"complicated"},{"firstName":"ring","lastName":"protection","age":12,"visits":2,"progress":94,"status":"relationship"},{"firstName":"floor","lastName":"snakes","age":2,"visits":8,"progress":37,"status":"relationship"},{"firstName":"photo","lastName":"flame","age":29,"visits":46,"progress":49,"status":"relationship"},{"firstName":"lake","lastName":"hope","age":4,"visits":13,"progress":55,"status":"complicated"},{"firstName":"able","lastName":"weakness","age":12,"visits":31,"progress":91,"status":"complicated"},{"firstName":"attempt","lastName":"lace","age":1,"visits":17,"progress":84,"status":"relationship"},{"firstName":"weather","lastName":"breath","age":1,"visits":2,"progress":58,"status":"single"},{"firstName":"hand","lastName":"bread","age":6,"visits":57,"progress":62,"status":"complicated"},{"firstName":"vest","lastName":"manager","age":9,"visits":95,"progress":62,"status":"complicated"},{"firstName":"representative","lastName":"tongue","age":2,"visits":3,"progress":56,"status":"single"},{"firstName":"cast","lastName":"childhood","age":22,"visits":48,"progress":94,"status":"relationship"}] 
+const tableColumns = [
+  {
+    Header: 'First Name',
+    accessor: 'firstName',
+  },
+  {
+    Header: 'Last Name',
+    accessor: 'lastName',
+  },
+  {
+    Header: 'Age',
+    accessor: 'age',
+  },
+  {
+    Header: 'Visits',
+    accessor: 'visits',
+  },
+  {
+    Header: 'Status',
+    accessor: 'status',
+  },
+  {
+    Header: 'Profile Progress',
+    accessor: 'progress',
+  },
 ]
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
@@ -93,6 +195,7 @@ const App = () => {
   const [ketchup, toggleKetchup] = useState(false);
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
+  const [sidePanelRow, setSidePanelRow] = useState(null);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -347,6 +450,12 @@ const App = () => {
           <Col xs />
         </Row>
         <ErrorBoundary>this is an error boundary</ErrorBoundary>
+
+        <Styles>
+          <HeadlessTable columns={tableColumns} data={tableData} setSidePanelRow={setSidePanelRow} />
+        </Styles>
+
+
       </Box>
     </Background>
   </Page></Theme>

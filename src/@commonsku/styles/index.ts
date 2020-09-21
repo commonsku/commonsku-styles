@@ -31,6 +31,7 @@ export * from './SharedStyles'
 export * from './Dropdown'
 export * from './Badge'
 export * from './Backdrop'
+export * from './HeadlessTable'
 
 export * from './icons'
 export * from './Theme'

@@ -3979,6 +3979,11 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+crypto-extra@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/crypto-extra/-/crypto-extra-1.0.1.tgz#91d9e3d8d35f9a16d548c073c31b147f34eab11e"
+  integrity sha512-EDJ07p6UDdyX+7GL6Bb6FqCuCHY34GuII9esE/xXZtW7tlB+A7MYT9O/c1M/ov2aGTdwvw0b3z5OcO50zYBG5Q==
+
 css-blank-pseudo@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/css-blank-pseudo/-/css-blank-pseudo-0.1.4.tgz#dfdefd3254bf8a82027993674ccf35483bfcb3c5"
@@ -8125,6 +8130,13 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
+namor@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/namor/-/namor-2.0.2.tgz#5b1f4e63b91d1fdc8b67d5b9962edd73f67cfcbe"
+  integrity sha512-2LNDTv2naxXm7j0op8ngH472iL5ftTlLUmnq7Uj0kapkNxP2Oa3IyDpo4KUlHcgdQBHBSrUpJLEyUWkMqjFkMQ==
+  dependencies:
+    crypto-extra "1.0.1"
+
 nan@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
@@ -10276,6 +10288,16 @@ react-styleguidist@^10.6.2:
     unist-util-visit "^2.0.0"
     webpack-dev-server "^3.9.0"
     webpack-merge "^4.2.2"
+
+react-table-sticky@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-table-sticky/-/react-table-sticky-1.1.3.tgz#af27c0afb2c4a32c292d486b21d9a896d354ba70"
+  integrity sha512-9hyjbveY1aDyo9wkyMOsmKIpQdFUaw2yG6/f8c5SPE4pOTuKm7L2zLnDa+AxpG+3315USulViaO4XSOkX1KdVA==
+
+react-table@^7.5.1:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.5.1.tgz#b6a9b46e52c0f37ff91717ac478f430c6a357e41"
+  integrity sha512-rprrUElCqvj79lyY2XbUoYLzwA5Mm4CGS8ElQ8OyzocvmkvCcmunvvfbpIg9Jm9HnMBjVZcVyPFPZ1BFelIBKw==
 
 react-transition-group@^4.3.0:
   version "4.3.0"

@@ -19,7 +19,7 @@ function trim(s: string) {
 
 /* Convert a hex string to an RGB triplet */
 function convertToRGB(hex: string) {
-    const color = [];
+    const color = [] as number[];
     color[0] = parseInt(trim(hex).substring(0, 2), 16);
     color[1] = parseInt(trim(hex).substring(2, 4), 16);
     color[2] = parseInt(trim(hex).substring(4, 6), 16);
@@ -35,9 +35,9 @@ function generateColor(colorStart: string, colorEnd: string, colorCount: number)
     const len = colorCount;
     //Alpha blending amount
     let alpha = 0.0;
-    const saida = [];
+    const saida = [] as string[];
     for (let i = 0; i < len; i++) {
-        var c = [];
+        var c = [] as number[];
         alpha += 1.0 / len;
         c[0] = start[0] * alpha + (1 - alpha) * end[0];
         c[1] = start[1] * alpha + (1 - alpha) * end[1];

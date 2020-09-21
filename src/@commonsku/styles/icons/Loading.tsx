@@ -57,7 +57,7 @@ function Loading({
     };
 
     const generateBars = () => {
-        const result = [];
+        const result = [] as any[];
         for (let i = 0; i < bars; i++) {
           result.push(generateBar(i));
         }
