@@ -152,6 +152,7 @@ const tableColumns = [
   {
     Header: 'First Name',
     accessor: 'firstName',
+    sticky: 'left'
   },
   {
     Header: 'Last Name',
