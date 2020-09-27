@@ -56,7 +56,9 @@ import {
     Theme,
     Dropdown,
     CreatableSelect,
-    HeadlessTable
+    HeadlessTable,
+    StatusDropdown,
+    StateDropdown,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -75,6 +77,20 @@ const options = [
   { value: 'others 3', label: 'Others 3' },
   { value: 'others 4', label: 'Others 4' },
   { value: 'others 5', label: 'Others 5' },
+]
+
+const statuses = [
+  { value: 'ok', content: 'OK', color: "#00D374" },
+  { value: 'problem', content: 'Problem', color: "#FF2674" },
+  { value: 'followup', content: 'Followup', color: "#FFAE00"},
+]
+
+const states = [
+  { value: 'new', content: 'New', order: 1 },
+  { value: 'submitted', content: 'Submitted', order: 2 },
+  { value: 'reviewed', content: 'Reviewed', order: 3},
+  { value: 'attempted', content: 'Attempted', order: 4},
+  { value: 'abandoned', content: 'Abandoned', order: 5},
 ]
 
 const Styles = styled.div`
@@ -147,7 +163,7 @@ const Styles = styled.div`
     padding: 0.5rem;
   }
 `
-const tableData = [{"firstName":"profit","lastName":"doctor","age":24,"visits":71,"progress":24,"status":"relationship"},{"firstName":"hall","lastName":"shake","age":3,"visits":18,"progress":15,"status":"single"},{"firstName":"flesh","lastName":"bag","age":2,"visits":15,"progress":85,"status":"complicated"},{"firstName":"bat","lastName":"inspector","age":18,"visits":77,"progress":89,"status":"relationship"},{"firstName":"tail","lastName":"stranger","age":13,"visits":42,"progress":16,"status":"complicated"},{"firstName":"ducks","lastName":"neck","age":11,"visits":68,"progress":27,"status":"single"},{"firstName":"baseball","lastName":"trip","age":24,"visits":63,"progress":12,"status":"relationship"},{"firstName":"requirement","lastName":"priority","age":29,"visits":58,"progress":90,"status":"complicated"},{"firstName":"grocery","lastName":"system","age":15,"visits":13,"progress":70,"status":"complicated"},{"firstName":"ring","lastName":"protection","age":12,"visits":2,"progress":94,"status":"relationship"},{"firstName":"floor","lastName":"snakes","age":2,"visits":8,"progress":37,"status":"relationship"},{"firstName":"photo","lastName":"flame","age":29,"visits":46,"progress":49,"status":"relationship"},{"firstName":"lake","lastName":"hope","age":4,"visits":13,"progress":55,"status":"complicated"},{"firstName":"able","lastName":"weakness","age":12,"visits":31,"progress":91,"status":"complicated"},{"firstName":"attempt","lastName":"lace","age":1,"visits":17,"progress":84,"status":"relationship"},{"firstName":"weather","lastName":"breath","age":1,"visits":2,"progress":58,"status":"single"},{"firstName":"hand","lastName":"bread","age":6,"visits":57,"progress":62,"status":"complicated"},{"firstName":"vest","lastName":"manager","age":9,"visits":95,"progress":62,"status":"complicated"},{"firstName":"representative","lastName":"tongue","age":2,"visits":3,"progress":56,"status":"single"},{"firstName":"cast","lastName":"childhood","age":22,"visits":48,"progress":94,"status":"relationship"}] 
+const tableData = [{"firstName":"profit","lastName":"doctor","age":24,"visits":<StateDropdown items={states} value={states[2]}/>,"progress":24,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},{"firstName":"hall","lastName":"shake","age":3,"visits":<StateDropdown items={states} value={states[1]}/>,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},{"firstName":"flesh","lastName":"bag","age":2,"visits":<StateDropdown items={states} value={states[2]}/>,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>},{"firstName":"bat","lastName":"inspector","age":18,"visits":77,"progress":89,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"tail","lastName":"stranger","age":13,"visits":42,"progress":16,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"ducks","lastName":"neck","age":11,"visits":68,"progress":27,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"baseball","lastName":"trip","age":24,"visits":63,"progress":12,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"requirement","lastName":"priority","age":29,"visits":58,"progress":90,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"grocery","lastName":"system","age":15,"visits":13,"progress":70,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"ring","lastName":"protection","age":12,"visits":2,"progress":94,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"floor","lastName":"snakes","age":2,"visits":8,"progress":37,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"photo","lastName":"flame","age":29,"visits":46,"progress":49,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"lake","lastName":"hope","age":4,"visits":13,"progress":55,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"able","lastName":"weakness","age":12,"visits":31,"progress":91,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"attempt","lastName":"lace","age":1,"visits":17,"progress":84,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"weather","lastName":"breath","age":1,"visits":2,"progress":58,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"hand","lastName":"bread","age":6,"visits":57,"progress":62,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"vest","lastName":"manager","age":9,"visits":95,"progress":62,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"representative","lastName":"tongue","age":2,"visits":3,"progress":56,"status":"single"},{"firstName":"cast","lastName":"childhood","age":22,"visits":48,"progress":94,"status":"relationship"}] 
 const tableColumns = [
   {
     Header: 'First Name',
@@ -257,6 +273,7 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
+            <StatusDropdown items={statuses} value={statuses[0]}/>
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>

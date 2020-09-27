@@ -1,7 +1,26 @@
 import React from 'react';
+import styled, {css} from 'styled-components'
+import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+
+const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
+  &&& {
+    border: 0;
+    color: #52585c;
+    font-size: .875rem;
+    line-height: 1.75rem;
+    display: table-cell;
+    padding: 0.5625rem 0.625rem;
+    overflow: visible !important;
+    &:hover {
+      cursor: ${props => props.clickable ? "pointer" : "normal"};
+    }
+    ${SizerCss}
+    ${SharedStyles}
+  }
+`;
 
 type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setSidePanelRow?: any} & SharedStyleTypes>;
 
@@ -101,7 +120,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
             return (
               <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
                 {row.cells.map((cell, c) => {
-                  return <td key={c} {...cell.getCellProps()} className="td">{cell.render('Cell')}</td>
+                  return <TD key={c} {...cell.getCellProps()} className="td">{cell.render('Cell')}</TD>
                 })}
               </tr>
             )
