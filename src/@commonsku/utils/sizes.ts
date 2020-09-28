@@ -1,29 +1,29 @@
-export const media: {[key: string]: Function} = {
-    xs: (styles: any) => `
-        @media only screen and (min-width: 0px) {
-            ${styles}
-        }
-    `,
-    sm: (styles: any) => `
-        @media only screen and (min-width: 640px) {
-            ${styles}
-        }
-    `,
-    md: (styles: any) => `
-        @media only screen and (min-width: 768px) {
-            ${styles}
-        }
-    `,
-    lg: (styles: any) => `
-        @media only screen and (min-width: 1024px) {
-            ${styles}
-        }
-    `,
-    xl: (styles: any) => `
-        @media only screen and (min-width: 1280px) {
-            ${styles}
-        }
-    `,
+export const buildMediaQuery = (breakpoint: string | number) =>
+  `@media screen and (min-width: ${
+    typeof breakpoint === "number" ? breakpoint + "px" : breakpoint
+  })`;
+
+export interface SizeType {
+  [key: string]: any,
+  xs?: number,
+  sm?: number,
+  md?: number,
+  lg?: number,
+  xl?: number,
+}
+export const sizeMeasurements: SizeType = {
+  xs: 0,
+  sm: 647,
+  md: 768,
+  lg: 1024,
+  xl: 1280
 };
 
-export const sizes: Array<string> = Object.keys(media);
+export const sizes: Array<string> = Object.keys(sizeMeasurements);
+export const media: { [key: string]: Function } = sizes.reduce((acc, s) => {
+  const sizeQuery = buildMediaQuery(sizeMeasurements[s]);
+  return {
+    [s]: (styles: any) => `${sizeQuery} {${styles}}`,
+    ...acc
+  };
+}, {});

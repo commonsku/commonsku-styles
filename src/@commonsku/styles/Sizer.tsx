@@ -34,17 +34,17 @@ export type SizerTypes = {
 export const SizerCss = css<SizerTypes>`
     ${(props) => props.offset && `margin-left: ${props.offset/12 * 100}%;`}
     ${(props) => props.collapse && typeof(props.collapse) === 'string' && media[props.collapse](`
-        display: none;
+        visibility: hidden;
     `)};
     ${(props) => {
         let res = '';
 
         if (props.collapse) {
             if (typeof(props.collapse) === 'string') {
-                res += media[props.collapse]('display: none;');
+                res += media[props.collapse]('visibility: hidden;');
             } else if (typeof(props.collapse) === 'object' && Array.isArray(props.collapse)) {
                 props.collapse.forEach((s: string) => {
-                    res += media[s]('display: none;');
+                    res += media[s]('visibility: hidden;');
                 });
             }
         }
@@ -53,12 +53,12 @@ export const SizerCss = css<SizerTypes>`
             if(props[s] !== null && props[s] !== undefined) {
                 if (typeof(props[s]) === 'boolean' || typeof(props[s]) === 'number' || !isNaN(props[s])) {
                     if (props[s] === false) {
-                        res += media[s]('display: none;');
+                        res += media[s]('visibility: hidden;');
                     } else {
                         res += media[s](`
                             flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
                             max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
-                            display: initial;
+                            visibility: visible;
                         `);
                     }
                 } else if (typeof(props[s]) === 'string') {

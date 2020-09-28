@@ -1,30 +1,35 @@
 import { map, pick, keys, isUndefined } from 'lodash';
 import styled, { css } from 'styled-components';
-import { valIsValid } from '../utils';
+import { parseMeasurement, sizes, media } from '../utils';
+
+type SizeType = {[key: string]: string|number|boolean};
 
 export type SharedStyleTypes = {
   [key: string]: any,
-  pr?: boolean | number,
-  pl?: boolean | number,
-  pt?: boolean | number,
-  pb?: boolean | number,
-  px?: boolean | number,
-  py?: boolean | number,
-  mr?: boolean | number,
-  ml?: boolean | number,
-  mt?: boolean | number,
-  mb?: boolean | number,
-  mx?: boolean | number,
-  my?: boolean | number,
+  pr?: boolean | string | number,
+  pl?: boolean | string | number,
+  pt?: boolean | string | number,
+  pb?: boolean | string | number,
+  px?: boolean | string | number,
+  py?: boolean | string | number,
+  mr?: boolean | string | number,
+  ml?: boolean | string | number,
+  mt?: boolean | string | number,
+  mb?: boolean | string | number,
+  mx?: boolean | string | number,
+  my?: boolean | string | number,
   hidden?: boolean,
+  hide?: boolean,
+  show?: boolean,
   block?: boolean,
-  inline_block?: boolean,
+  inlineBlock?: boolean,
   flex?: boolean,
   inline_flex?: boolean,
   grid?: boolean,
   custom?: string,
   bg?: string,
   float?: string,
+  sizer?: {[key: string]: string|number|boolean},
 }
 
 export const SharedStyles = css<SharedStyleTypes>`
@@ -36,37 +41,44 @@ export const SharedStyles = css<SharedStyleTypes>`
 
 export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   // Padding
-  pr: (val?: string | number) => `padding-right: ${valIsValid(val) ? val : '5'}px;`,
-  pl: (val?: string | number) => `padding-left: ${valIsValid(val) ? val : '5'}px;`,
-  pt: (val?: string | number) => `padding-top: ${valIsValid(val) ? val : '5'}px;`,
-  pb: (val?: string | number) => `padding-bottom: ${valIsValid(val) ? val : '5'}px;`,
-  px: (val?: string | number) => `
-        padding-left: ${valIsValid(val) ? val : '5'}px;
-        padding-right: ${valIsValid(val) ? val : '5'}px;
-    `,
-  py: (val?: string | number) => `
-        padding-top: ${valIsValid(val) ? val : '5'}px;
-        padding-bottom: ${valIsValid(val) ? val : '5'}px;
-    `,
+  padded: (val?: string | number) => `padding: ${parseMeasurement(val || 5)};`,
+  p: (val?: string | number) => val && `padding: ${parseMeasurement(val)};`,
+  padding: (val?: string | number) => val && `padding: ${parseMeasurement(val)};`,
+  pr: (val?: string | number) => val && `padding-right: ${parseMeasurement(val)};`,
+  pl: (val?: string | number) => val && `padding-left: ${parseMeasurement(val)};`,
+  pt: (val?: string | number) => val && `padding-top: ${parseMeasurement(val)};`,
+  pb: (val?: string | number) => val && `padding-bottom: ${parseMeasurement(val)};`,
+  px: (val?: string | number) => val && `
+    padding-left: ${parseMeasurement(val)};
+    padding-right: ${parseMeasurement(val)};
+  `,
+  py: (val?: string | number) => val && `
+    padding-top: ${parseMeasurement(val)};
+    padding-bottom: ${parseMeasurement(val)};
+  `,
   // Margin
-  mr: (val?: string | number) => `margin-right: ${valIsValid(val) ? val : '5'}px;`,
-  ml: (val?: string | number) => `margin-left: ${valIsValid(val) ? val : '5'}px;`,
-  mt: (val?: string | number) => `margin-top: ${valIsValid(val) ? val : '5'}px;`,
-  mb: (val?: string | number) => `margin-bottom: ${valIsValid(val) ? val : '5'}px;`,
-  mx: (val?: string | number) => `
-        margin-left: ${valIsValid(val) ? val : '5'}px;
-        margin-right: ${valIsValid(val) ? val : '5'}px;
-    `,
-  my: (val?: string | number) => `
-        margin-top: ${valIsValid(val) ? val : '5'}px;
-        margin-bottom: ${valIsValid(val) ? val : '5'}px;
-    `,
+  m: (val?: string | number) => val && `margin: ${parseMeasurement(val)};`,
+  margin: (val?: string | number) => val && `margin: ${parseMeasurement(val)};`,
+  mr: (val?: string | number) => val && `margin-right: ${parseMeasurement(val)};`,
+  ml: (val?: string | number) => val && `margin-left: ${parseMeasurement(val)};`,
+  mt: (val?: string | number) => val && `margin-top: ${parseMeasurement(val)};`,
+  mb: (val?: string | number) => val && `margin-bottom: ${parseMeasurement(val)};`,
+  mx: (val?: string | number) => val && `
+    margin-left: ${parseMeasurement(val)};
+    margin-right: ${parseMeasurement(val)};
+  `,
+  my: (val?: string | number) => val && `
+    margin-top: ${parseMeasurement(val)};
+    margin-bottom: ${parseMeasurement(val)};
+  `,
   // Background
   bg: (val: string) => `background: ${val};`,
   // Display
-  hidden: () => `display: none;`,
+  hidden: () => `visibility: hidden;`,
+  hide: () => `visibility: hidden;`,
+  show: () => `visibility: visible;`,
   block: () => `display: block;`,
-  inline_block: () => `display: inline-block;`,
+  inlineBlock: () => `display: inline-block;`,
   'inline-block': () => `display: inline-block;`,
   inline: () => `display: inline;`,
   flex: () => `display: flex;`,
@@ -75,11 +87,11 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   grid: () => `display: grid;`,
   // Float
   float: (val: string) => `${val === 'clearfix' ? `
-        &::after {
-            content: "";
-            display: table;
-            clear: both;
-        }` : `float: ${val}`};`, // left, right, none, clearfix
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }` : `float: ${val}`};`, // left, right, none, clearfix
   // Position
   pos: (val: string) => `position: ${val}`,
   position: (val: string) => `position: ${val}`,
@@ -88,6 +100,37 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   // z-index
   z: (val: string | number) => `z-index: ${val}`,
   // Custom Styles
+  sizer: (val: {[key: string]: string|number|boolean}) => {
+    let result = "";
+    Object.keys(val).forEach(k => {
+      if (sizes.includes(k)) {
+        if (["number", "boolean"].includes(typeof val[k])) {
+          if (val[k] === false) {
+            result += media[k](`visibility: hidden;`);
+          } else {
+            const w = typeof(val[k]) === 'boolean' ? 12 : val[k];
+            //@ts-ignore
+            result += media[k](`visibility: visible; max-width: ${w/12 * 100}%; flex-basis: ${w/12 * 100}%;`);
+          }
+        } else {
+          result += media[k](val[k]);
+        }
+      }
+
+      if (val[`${k}Offset`]) {
+        //@ts-ignore
+        result += media[k](`margin-left: ${(val[`${k}Offset`]/12 * 100)}%;`);
+      }
+      if (val[`${k}OffsetRight`]) {
+        //@ts-ignore
+        result += media[k](`margin-right: ${(val[`${k}OffsetRight`]/12 * 100)}%;`);
+      }
+      if (val[`${k}Style`]) {
+        result += media[k](val[`${k}Style`]);
+      }
+    });
+    return result;
+  },
   custom: (val?: string) => `${val}`,
 };
 
