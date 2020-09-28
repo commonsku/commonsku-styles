@@ -1,4 +1,4 @@
-import { map, pick, keys, isUndefined } from 'lodash';
+import { map, pick, keys, isUndefined, get, isObject } from 'lodash';
 import styled, { css } from 'styled-components';
 import { parseMeasurement, sizes, media } from '../utils';
 
@@ -30,6 +30,8 @@ export type SharedStyleTypes = {
   bg?: string,
   float?: string,
   sizer?: {[key: string]: string|number|boolean},
+  row: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean},
+  col: {padded: boolean, start: boolean, end: boolean},
 }
 
 export const SharedStyles = css<SharedStyleTypes>`
@@ -129,6 +131,32 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
         result += media[k](val[`${k}Style`]);
       }
     });
+    return result;
+  },
+  row: (val: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean}) => {
+    let result = `
+      display: flex;
+      box-sizing: border-box;
+      flex-direction: row;
+      flex: 0 1 auto;
+      justify-content: ${get(val, 'justify', 'left')};
+      flex-wrap: ${get(val, 'wrap', 'wrap')};
+      align-items: ${get(val, 'align', 'stretch')};
+    `;
+    if (val.padded) { result += "padding: 0.5rem;"; }
+    if (val.start) { result += "place-content: flex-start;"; }
+    if (val.end) { result += "place-content: flex-end;";}
+    return result;
+  },
+  col: (val: {padded: boolean, start: boolean, end: boolean}) => {
+    let result = `
+      flex: 12;
+      flex-grow: 1;
+      box-sizing: border-box;
+    `;
+    if (val.padded) { result += "padding: 0.5rem;"; }
+    if (val.start) { result += "place-content: flex-start;"; }
+    if (val.end) { result += "place-content: flex-end;"; }
     return result;
   },
   custom: (val?: string) => `${val}`,
