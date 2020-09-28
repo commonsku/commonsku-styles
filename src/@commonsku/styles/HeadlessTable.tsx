@@ -59,17 +59,17 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     state: { pageIndex, pageSize },
   } = table
 
-  let columnBeingDragged = null;
+  let columnBeingDragged: any = null;
 
-  const onDragStart = e => {
+  const onDragStart:any = e => {
     columnBeingDragged = e.target.dataset.columnIndex;
   };
 
-  const onDrop = e => {
+  const onDrop:any = e => {
     e.preventDefault();
-    const newPosition = e.target.dataset.columnIndex;
-    const currentCols = visibleColumns.map(c => c.id);
-    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+    const newPosition:any = e.target.dataset.columnIndex;
+    const currentCols:any = visibleColumns.map(c => c.id);
+    const colToBeMoved:any = currentCols.splice(columnBeingDragged, 1);
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
     setColumnOrder(currentCols);
   };
@@ -155,7 +155,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
             type="number"
             defaultValue={pageIndex + 1}
             onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              const page:any = e.target.value ? Number(e.target.value) - 1 : 0
               gotoPage(page)
             }}
             style={{ width: '100px' }}
