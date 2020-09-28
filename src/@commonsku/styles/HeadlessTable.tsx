@@ -25,6 +25,21 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
 type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setSidePanelRow?: any} & SharedStyleTypes>;
 
 const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) => {
+  const partials: any = { pageIndex: 0 }
+
+  const table: any = useTable(
+    {
+      columns,
+      data,
+      initialState: partials,
+    },
+    useSortBy,
+    usePagination,
+    useColumnOrder,
+    useSticky,
+    useBlockLayout
+  )
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -32,7 +47,6 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     visibleColumns,
     prepareRow,
     setColumnOrder,
-
     page,
     canPreviousPage,
     canNextPage,
@@ -43,18 +57,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    useSortBy,
-    usePagination,
-    useColumnOrder,
-    useSticky,
-    useBlockLayout
-  )
+  } = table
 
   let columnBeingDragged = null;
 
