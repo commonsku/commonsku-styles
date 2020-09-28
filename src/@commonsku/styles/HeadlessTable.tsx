@@ -24,7 +24,8 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
 
 type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setSidePanelRow?: any} & SharedStyleTypes>;
 
-const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) => {
+export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableProps) {
+  //@ts-ignore
   const partials: any = { pageIndex: 0 }
 
   const table: any = useTable(
@@ -177,5 +178,3 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     </>
   )
 }
-
-export { HeadlessTable };
