@@ -50,6 +50,7 @@
     "@types/react-datepicker": "^2.11.0",
     "@types/react-dom": "^16.9.5",
     "@types/react-select": "^3.0.10",
+    "@types/react-table": "^7.0.23",
     "@types/styled-components": "^5.0.0",
     "aphrodite": "^2.4.0",
     "lodash": "^4.17.15",
