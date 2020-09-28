@@ -1,8 +1,6 @@
-import { map, pick, keys, isUndefined, get, isObject } from 'lodash';
+import { map, pick, keys, isUndefined, get } from 'lodash';
 import styled, { css } from 'styled-components';
 import { parseMeasurement, sizes, media } from '../utils';
-
-type SizeType = {[key: string]: string|number|boolean};
 
 export type SharedStyleTypes = {
   [key: string]: any,
@@ -30,8 +28,8 @@ export type SharedStyleTypes = {
   bg?: string,
   float?: string,
   sizer?: {[key: string]: string|number|boolean},
-  row: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean},
-  col: {padded: boolean, start: boolean, end: boolean},
+  row?: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean},
+  col?: {padded: boolean, start: boolean, end: boolean},
 }
 
 export const SharedStyles = css<SharedStyleTypes>`
