@@ -95,7 +95,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
         <thead className="header">
           {headerGroups.map((headerGroup: any, h: any) => (
             <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-              {headerGroup.headers.map((column, i) => (
+              {headerGroup.headers.map((column: any, i: any) => (
                 <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
                   data-column-index={i}
                   draggable="true"
@@ -118,11 +118,11 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
           ))}
         </thead>
         <tbody {...getTableBodyProps()} className="body">
-          {page.map((row: any, r:any) => {
+          {page.map((row: any, r: any) => {
             prepareRow(row)
             return (
               <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
-                {row.cells.map((cell, c) => {
+                {row.cells.map((cell: any, c: any) => {
                   return <TD key={c} {...cell.getCellProps()} className="td">{cell.render('Cell')}</TD>
                 })}
               </tr>
