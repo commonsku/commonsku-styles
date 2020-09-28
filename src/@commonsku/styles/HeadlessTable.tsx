@@ -93,7 +93,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
       </pre>
       <table {...getTableProps()} className="react-table react-table-sticky">
         <thead className="header">
-          {headerGroups.map((headerGroup, h) => (
+          {headerGroups.map((headerGroup: any, h: any) => (
             <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map((column, i) => (
                 <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -118,7 +118,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
           ))}
         </thead>
         <tbody {...getTableBodyProps()} className="body">
-          {page.map((row, r) => {
+          {page.map((row: any, r:any) => {
             prepareRow(row)
             return (
               <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
@@ -163,7 +163,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
         </span>{' '}
         <select
           value={pageSize}
-          onChange={e => {
+          onChange={(e: any) => {
             setPageSize(Number(e.target.value))
           }}
         >
