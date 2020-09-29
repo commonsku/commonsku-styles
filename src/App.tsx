@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import styled from 'styled-components'
 
 import product_pic1 from './products/1.png';
@@ -216,10 +216,18 @@ const App = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    if(sidePanelRow) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  }, [sidePanelRow])
+
   return <Theme><Page>
     <SidePanel title="Panel Title"
       // fullWidthTitle
-      controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>}
+      controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}
       visible={showPanel}
       animationDuration={300}
       from="right"

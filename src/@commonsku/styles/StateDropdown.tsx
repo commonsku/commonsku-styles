@@ -101,7 +101,7 @@ export const StateDropdown = ({ items, text, value, ...props }: {
     return (
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
-            <DropdownItem rounded active={showMenu} onClick={() => setShowMenu(!showMenu)}>
+            <DropdownItem rounded active={showMenu} onClick={e => { e.stopPropagation(); setShowMenu(!showMenu) }}>
               <Circles max={items.length} val={value2.order}/>
               {value2.content}
             </DropdownItem>
