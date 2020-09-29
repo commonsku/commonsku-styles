@@ -1,18 +1,18 @@
 import React, { useState, useReducer } from 'react';
-
+import styled from 'styled-components';
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
-import product_pic3 from './products/3.png';
-import product_pic4 from './products/4.png';
-import product_pic5 from './products/5.png';
+// import product_pic3 from './products/3.png';
+// import product_pic4 from './products/4.png';
+// import product_pic5 from './products/5.png';
 import product_wide from './products/wide.png';
 import product_narrow from './products/narrow.png';
 
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
-import user_pic3 from './users/3.jpeg';
-import user_pic4 from './users/4.jpeg';
-import user_pic5 from './users/5.jpeg';
+// import user_pic3 from './users/3.jpeg';
+// import user_pic4 from './users/4.jpeg';
+// import user_pic5 from './users/5.jpeg';
 
 import { Loading, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
 
@@ -22,21 +22,22 @@ import {
     Background,
     DropArea, Dropzoned, DropzonedPreviews,
     Button, 
-    H1, H2, H5, 
-    Label,
+    // H1, H2,
+    H5, 
+    // Label,
     Page,
     Toggle,
     ToggleLink, 
     LabeledInput,
     LabeledTextarea,
-    Input,
-    Spinner,
+    // Input,
+    // Spinner,
     SidePanel,
     Tabs,
     Select,
     LabeledSelect,
     LabeledProgress,
-    PanelContact,
+    // PanelContact,
     PanelTileContact,
     Product,
     Artwork,
@@ -54,6 +55,7 @@ import {
     Dropdown,
     CreatableSelect,
     Csku,
+    SharedStyleTypes,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -85,6 +87,8 @@ function reducer(state: {[key: string]: any} = initialState, action: {type: stri
       throw new Error();
   }
 }
+
+const CskuButton = styled(Csku).attrs({as: Button})<SharedStyleTypes>``;
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -177,9 +181,9 @@ const App = () => {
 
               <Csku>
                 <Csku as="p" show={showCsku}>Click button to see magic</Csku>
-                <Csku as={Button} onClick={() => setShowCsku(!showCsku)}>
+                <CskuButton cta onClick={() => setShowCsku(!showCsku)}>
                   {showCsku ? 'Hide' : 'Show'} Text
-                </Csku>
+                </CskuButton>
               </Csku>
             </Csku>
             <H5>Bars Loading</H5>

@@ -53,7 +53,7 @@ class Img extends Component {
       onError: this.onError
     };
     return (
-      <img {...props} />
+      <img alt="img" {...props} />
     );
   }
 }

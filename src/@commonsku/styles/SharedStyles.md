@@ -2,10 +2,13 @@ SharedStyles example:
 
 ```js
 import React from 'react';
-import { Csku } from './SharedStyles';
+import styled from 'styled-components';
+import { Csku, SharedStyleTypes } from './SharedStyles';
 import { H5 } from './Heading';
 import { Button } from './Button';
 
+
+const NewButton = styled(Csku).attrs({as: Button})<SharedStyleTypes>``;
 
 function SomeComponent() {
   const [showCsku, setShowCsku] = React.useState(true);
@@ -33,9 +36,9 @@ function SomeComponent() {
 
       <Csku>
         <Csku as="p" show={showCsku}>Click button to see magic</Csku>
-        <Csku as={Button} onClick={() => setShowCsku(!showCsku)}>
+        <NewButton onClick={() => setShowCsku(!showCsku)}>
           {showCsku ? 'Hide' : 'Show'} Text
-        </Csku>
+        </NewButton>
       </Csku>
     </Csku>
   );

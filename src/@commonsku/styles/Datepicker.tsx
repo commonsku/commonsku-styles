@@ -1,8 +1,6 @@
 import React from 'react';
-import styled, { ThemeProvider, css } from 'styled-components';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { Input, InputProps } from './Input';
-import { getThemeColor } from './Theme';
 
 export function Datepicker({
   noMargin,

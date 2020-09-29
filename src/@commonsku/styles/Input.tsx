@@ -54,7 +54,6 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
 
 
 export const LabeledInput = ({ label, name, required, ...props}: InputProps & {label: string, name?: string, isPercent?: boolean} & SharedStyleTypes) => {
-  const input = useRef<HTMLInputElement>(null);
   return <div>
     <Label htmlFor={name}>{label} {required && '*'}</Label>
     {props.isPercent ? <IconLabelContainer>
