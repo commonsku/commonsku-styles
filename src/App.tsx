@@ -53,6 +53,7 @@ import {
     Theme,
     Dropdown,
     CreatableSelect,
+    Csku,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -93,6 +94,7 @@ const App = () => {
   const [ketchup, toggleKetchup] = useState(false);
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
+  const [showCsku, setShowCsku] = useState(true);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -153,7 +155,33 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
+            <Csku as={H5}>Csku Wrapper with shared styles</Csku>
+            <Csku>
+              <Csku px="2px" py="1em" mr={1}>
+                <Csku as="p">Hello in `P` Tag</Csku>
+              </Csku>
 
+              <Csku row>
+                <Csku col sizer={{
+                  xs: true,
+                  md: 4,
+                  lg: 3,
+                  smOffset: 3,
+                  xsStyle: `color: red;`,
+                  mdStyle: `color: green;`,
+                  lgStyle: `color: blue;`
+                }}>
+                  <Csku as="p" sizer={{lg: `color: black;`}}>Hello in Row - Col - P Tag</Csku>
+                </Csku>
+              </Csku>
+
+              <Csku>
+                <Csku as="p" show={showCsku}>Click button to see magic</Csku>
+                <Csku as={Button} onClick={() => setShowCsku(!showCsku)}>
+                  {showCsku ? 'Hide' : 'Show'} Text
+                </Csku>
+              </Csku>
+            </Csku>
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>
               <Toggle stretch mb={10} onClick={() => setColorfulBars(!colorfulBars)}>

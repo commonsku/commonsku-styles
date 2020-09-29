@@ -10,7 +10,7 @@ export const aeval = (obj:{[key: string]: any}, key: string, def: any) => {
 
 // (+|-)100(px|em|rem|...) => px|em|rem|...
 export const getUnit = (measurement: string|number) => {
-  if (typeof measurement === "number") {
+  if (typeof measurement !== "string") {
     return "px";
   }
   const matchedMeasurement = measurement.match(/^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/);

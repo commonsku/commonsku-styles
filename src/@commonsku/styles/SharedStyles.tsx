@@ -1,6 +1,7 @@
 import { map, pick, keys, isUndefined, get } from 'lodash';
 import styled, { css } from 'styled-components';
 import { parseMeasurement, sizes, media } from '../utils';
+import { SizerTypes } from './Sizer'
 
 export type SharedStyleTypes = {
   [key: string]: any,
@@ -27,7 +28,7 @@ export type SharedStyleTypes = {
   custom?: string,
   bg?: string,
   float?: string,
-  sizer?: {[key: string]: string|number|boolean},
+  sizer?: SizerTypes,
   row?: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean},
   col?: {padded: boolean, start: boolean, end: boolean},
 }
@@ -76,7 +77,7 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   // Display
   hidden: () => `visibility: hidden;`,
   hide: () => `visibility: hidden;`,
-  show: () => `visibility: visible;`,
+  show: (val: boolean) => val === true ? "visibility: visible;" : val === false ? "visibility: hidden;" : "",
   block: () => `display: block;`,
   inlineBlock: () => `display: inline-block;`,
   'inline-block': () => `display: inline-block;`,
@@ -100,33 +101,33 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   // z-index
   z: (val: string | number) => `z-index: ${val}`,
   // Custom Styles
-  sizer: (val: {[key: string]: string|number|boolean}) => {
+  sizer: (val: SizerTypes) => {
     let result = "";
-    Object.keys(val).forEach(k => {
-      if (sizes.includes(k)) {
-        if (["number", "boolean"].includes(typeof val[k])) {
-          if (val[k] === false) {
-            result += media[k](`visibility: hidden;`);
+    sizes.forEach(s => {
+      if (val[s]) {
+        if (["number", "boolean"].includes(typeof val[s])) {
+          if (val[s] === false) {
+            result += media[s](`visibility: hidden;`);
           } else {
-            const w = typeof(val[k]) === 'boolean' ? 12 : val[k];
+            const w = typeof(val[s]) === 'boolean' ? 12 : val[s];
             //@ts-ignore
-            result += media[k](`visibility: visible; max-width: ${w/12 * 100}%; flex-basis: ${w/12 * 100}%;`);
+            result += media[s](`visibility: visible; max-width: ${w/12 * 100}%; flex-basis: ${w/12 * 100}%;`);
           }
         } else {
-          result += media[k](val[k]);
+          result += media[s](val[s]);
         }
       }
 
-      if (val[`${k}Offset`]) {
+      if (val[`${s}Offset`]) {
         //@ts-ignore
-        result += media[k](`margin-left: ${(val[`${k}Offset`]/12 * 100)}%;`);
+        result += media[s](`margin-left: ${(val[`${s}Offset`]/12 * 100)}%;`);
       }
-      if (val[`${k}OffsetRight`]) {
+      if (val[`${s}OffsetRight`]) {
         //@ts-ignore
-        result += media[k](`margin-right: ${(val[`${k}OffsetRight`]/12 * 100)}%;`);
+        result += media[s](`margin-right: ${(val[`${s}OffsetRight`]/12 * 100)}%;`);
       }
-      if (val[`${k}Style`]) {
-        result += media[k](val[`${k}Style`]);
+      if (val[`${s}Style`]) {
+        result += media[s](val[`${s}Style`]);
       }
     });
     return result;
@@ -161,3 +162,4 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
 };
 
 export const Wrapper = styled.div`${SharedStyles}`;
+export const Csku = styled.div`${SharedStyles}`;
