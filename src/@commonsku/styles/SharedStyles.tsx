@@ -1,7 +1,7 @@
 import { map, pick, keys, isUndefined, get } from 'lodash';
 import styled, { css } from 'styled-components';
-import { parseMeasurement, sizes, media } from '../utils';
-import { SizerTypes } from './Sizer'
+import { parseMeasurement } from '../utils';
+import { SizerTypes, getSizerStyles } from './Sizer'
 
 export type SharedStyleTypes = {
   [key: string]: any,
@@ -102,37 +102,7 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   // z-index
   z: (val: string | number) => `z-index: ${val}`,
   // Custom Styles
-  sizer: (val: SizerTypes) => {
-    let result = "";
-    sizes.forEach(s => {
-      if (val[s]) {
-        if (["number", "boolean"].includes(typeof val[s])) {
-          if (val[s] === false) {
-            result += media[s](`visibility: hidden;`);
-          } else {
-            const w = typeof(val[s]) === 'boolean' ? 12 : val[s];
-            //@ts-ignore
-            result += media[s](`visibility: visible; max-width: ${w/12 * 100}%; flex-basis: ${w/12 * 100}%;`);
-          }
-        } else {
-          result += media[s](val[s]);
-        }
-      }
-
-      if (val[`${s}Offset`]) {
-        //@ts-ignore
-        result += media[s](`margin-left: ${(val[`${s}Offset`]/12 * 100)}%;`);
-      }
-      if (val[`${s}OffsetRight`]) {
-        //@ts-ignore
-        result += media[s](`margin-right: ${(val[`${s}OffsetRight`]/12 * 100)}%;`);
-      }
-      if (val[`${s}Style`]) {
-        result += media[s](val[`${s}Style`]);
-      }
-    });
-    return result;
-  },
+  sizer: getSizerStyles,
   row: (val: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean}) => {
     let result = `
       display: flex;
