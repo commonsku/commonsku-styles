@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+import { StateDropdown } from './StateDropdown'
 
 const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   &&& {
@@ -124,7 +126,19 @@ export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableP
             return (
               <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
                 {row.cells.map((cell: any, c: any) => {
-                  return <TD key={c} {...cell.getCellProps()} className="td">{cell.render('Cell')}</TD>
+                  if(/state/.test(cell.getCellProps().key)) {
+                    return (
+                      <TD key={c} {...cell.getCellProps()} className="td">
+                        <StateDropdown items={row.original.tableStates} value={_.find(row.original.tableStates, { value: row.original.tableState.value })} />
+                      </TD>
+                    )
+                  }
+
+                  return (
+                    <TD key={c} {...cell.getCellProps()} className="td">
+                      {cell.render('Cell')}
+                    </TD>
+                  )
                 })}
               </tr>
             )
