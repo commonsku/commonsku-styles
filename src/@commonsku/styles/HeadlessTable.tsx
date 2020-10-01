@@ -129,9 +129,10 @@ export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableP
                   if(/state/.test(cell.getCellProps().key)) {
                     return (
                       <TD key={c} {...cell.getCellProps()} className="td">
-                        <StateDropdown 
+                        <StateDropdown
                           items={row.original.tableStates} 
                           value={_.find(row.original.tableStates, { value: row.original.tableState.value })} 
+                          row={row.original}
                         />
                       </TD>
                     )

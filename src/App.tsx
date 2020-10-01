@@ -85,8 +85,8 @@ const statuses = [
   { value: 'followup', content: 'Followup', color: "#FFAE00"},
 ]
 
-const clickFunc = (item) => {
-  console.log(item)
+const clickFunc = (item, row) => {
+  console.log(item, row)
 }
 
 const states = [
