@@ -2,6 +2,7 @@ import { map, pick, keys, isUndefined, get } from 'lodash';
 import styled, { css } from 'styled-components';
 import { parseMeasurement } from '../utils';
 import { SizerTypes, getSizerStyles } from './Sizer'
+import { themeOptions, ThemeProps } from './Theme'
 
 export type SharedStyleTypes = {
   [key: string]: any,
@@ -133,4 +134,7 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
 };
 
 export const Wrapper = styled.div`${SharedStyles}`;
-export const Csku = styled.div`${SharedStyles}`;
+export const Csku = styled.div<SharedStyleTypes & {theme: ThemeProps}>`${SharedStyles} ${p => p.theme}`;
+Csku.defaultProps = {
+  theme: themeOptions,
+}

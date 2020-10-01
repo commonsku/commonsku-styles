@@ -1,8 +1,32 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
+export type ColorsProps = {
+  white: '#fff',
+  black: '#000',
+  primary: '#02c0da',
+  cta: '#fa237c',
+  transparent: string,
+  error: string,
+  [key: string]: string,
+}
 
-export const colors = {
+export type FontsProps = Array<string>;
+
+export type FontSizesProps = {
+  tiny: string,
+  small: string,
+  medium: string,
+  large: string
+};
+
+export type ThemeProps = {
+  colors: ColorsProps,
+  fonts: FontsProps,
+  fontSizes: FontSizesProps,
+}
+
+export const colors: ColorsProps = {
   white: '#fff',
   black: '#000',
   primary: '#02c0da',
@@ -27,15 +51,15 @@ export const colors = {
   transparent: 'transparent',
   error: '#B21154',
 };
-export const fonts = ['skufont-demibold', 'sans-serif', 'Roboto'];
-export const fontSizes = {
+export const fonts: FontsProps = ['skufont-demibold', 'sans-serif', 'Roboto'];
+export const fontSizes: FontSizesProps = {
   tiny: '.8em',
   small: '1em',
   medium: '2em',
   large: '3em'
 };
 
-export const themeOptions = {
+export const themeOptions: ThemeProps = {
   colors,
   fonts,
   fontSizes
