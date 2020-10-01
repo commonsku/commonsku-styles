@@ -101,10 +101,10 @@ export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableP
               {headerGroup.headers.map((column: any, i: any) => (
                 <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
                   data-column-index={i}
-                  draggable="true"
-                  onDragStart={onDragStart}
+                  draggable={column.noDrag ? false : true}
+                  onDragStart={column.noDrag ? false : onDragStart}
                   onDragOver={e => e.preventDefault()}
-                  onDrop={onDrop}
+                  onDrop={column.noDrag ? false : onDrop}
                   className="th"
                 >
                   {column.render('Header')}
@@ -126,18 +126,6 @@ export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableP
             return (
               <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
                 {row.cells.map((cell: any, c: any) => {
-                  if(/state/.test(cell.getCellProps().key)) {
-                    return (
-                      <TD key={c} {...cell.getCellProps()} className="td">
-                        <StateDropdown
-                          items={row.original.tableStates} 
-                          value={_.find(row.original.tableStates, { value: row.original.tableState.value })} 
-                          row={row.original}
-                        />
-                      </TD>
-                    )
-                  }
-
                   return (
                     <TD key={c} {...cell.getCellProps()} className="td">
                       {cell.render('Cell')}

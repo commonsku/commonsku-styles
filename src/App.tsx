@@ -174,9 +174,10 @@ const tableData = [
 ] 
 const tableColumns = [
   {
-    Header: 'First Name',
+    Header: () => <div style={{ textAlign: "left" }}>First Name</div>,
     accessor: 'firstName',
-    sticky: 'left'
+    sticky: 'left',
+    noDrag: true
   },
   {
     Header: 'Last Name',
