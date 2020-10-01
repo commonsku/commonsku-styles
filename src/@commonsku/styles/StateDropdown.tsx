@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
 import { document } from '../utils';
+import { AnyMxRecord } from 'dns';
 
 const StyledCircles = styled.div`
   line-height: 0;
@@ -74,8 +75,8 @@ const Circles = ({val, max}:{val: number, max: number}) => {
 }
 
 export const StateDropdown = ({ items, text, value, ...props }: {
-    items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
-    value: {onClick?: Function|VoidFunction|null, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}
+    items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
+    value: {onClick?: (e: Event) => void, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -109,10 +110,11 @@ export const StateDropdown = ({ items, text, value, ...props }: {
                 {items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i} 
                         {...item.props}
-                        onClick={() => {
-                            setShowMenu(false);
+                        onClick={e => {
+                            e.stopPropagation()
+                            setShowMenu(false)
                             setValue(item)
-                            item.onClick && item.onClick()
+                            item.onClick && item.onClick(item)
                         }}
                     >{item.content}</DropdownItem>
                 })}

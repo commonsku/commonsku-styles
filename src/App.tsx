@@ -85,12 +85,16 @@ const statuses = [
   { value: 'followup', content: 'Followup', color: "#FFAE00"},
 ]
 
+const clickFunc = (item) => {
+  console.log(item)
+}
+
 const states = [
-  { value: 'new', content: 'New', order: 1 },
-  { value: 'submitted', content: 'Submitted', order: 2 },
-  { value: 'reviewed', content: 'Reviewed', order: 3},
-  { value: 'attempted', content: 'Attempted', order: 4},
-  { value: 'abandoned', content: 'Abandoned', order: 5},
+  { value: 'new', content: 'New', order: 1, onClick: clickFunc },
+  { value: 'submitted', content: 'Submitted', order: 2, onClick: clickFunc },
+  { value: 'reviewed', content: 'Reviewed', order: 3, onClick: clickFunc },
+  { value: 'attempted', content: 'Attempted', order: 4, onClick: clickFunc },
+  { value: 'abandoned', content: 'Abandoned', order: 5, onClick: clickFunc },
 ]
 
 const Styles = styled.div`
@@ -164,9 +168,9 @@ const Styles = styled.div`
   }
 `
 const tableData = [
-  {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,tableState:states[2],"tableStates":states,"progress":24,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
-  {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,tableState:states[3],"tableStates":states,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
-  {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,tableState:states[1],"tableStates":states,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>}
+  {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"tableState":states[2],"tableStates":states,"progress":24,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
+  {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"tableState":states[3],"tableStates":states,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
+  {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"tableState":states[1],"tableStates":states,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>}
 ] 
 const tableColumns = [
   {
