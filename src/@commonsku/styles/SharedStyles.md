@@ -13,7 +13,7 @@ const NewButton = styled(Csku).attrs({as: Button})<SharedStyleTypes>``;
 function SomeComponent() {
   const [showCsku, setShowCsku] = React.useState(true);
 
-  return (
+  return (<Csku bg="antiquewhite" p="1em">
     <Csku as={H5}>Csku Wrapper with shared styles</Csku>
     <Csku>
       <Csku px="2px" py="1em" mr={1}>
@@ -41,6 +41,6 @@ function SomeComponent() {
         </NewButton>
       </Csku>
     </Csku>
-  );
+  </Csku>);
 }
 ```
