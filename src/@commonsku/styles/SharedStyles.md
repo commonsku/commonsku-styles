@@ -3,12 +3,12 @@ SharedStyles example:
 ```js
 import React from 'react';
 import styled from 'styled-components';
-import { Csku, SharedStyleTypes } from './SharedStyles';
+import { Csku } from './SharedStyles';
 import { H5 } from './Heading';
 import { Button } from './Button';
 
 
-const NewButton = styled(Csku).attrs({as: Button})<SharedStyleTypes>``;
+const NewButton = styled(Csku).attrs({as: Button})``;
 
 function SomeComponent() {
   const [showCsku, setShowCsku] = React.useState(true);

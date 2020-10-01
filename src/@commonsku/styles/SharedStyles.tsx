@@ -135,6 +135,4 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
 
 export const Wrapper = styled.div`${SharedStyles}`;
 export const Csku = styled.div<SharedStyleTypes & {theme: ThemeProps}>`${SharedStyles} ${p => p.theme}`;
-Csku.defaultProps = {
-  theme: themeOptions,
-}
+Csku.defaultProps = {theme: themeOptions}
