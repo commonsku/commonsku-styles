@@ -159,7 +159,7 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
-            <Csku bg="antiquewhite" p="1em" >
+            <Csku bg="antiquewhite" p="1em">
               <Csku as={H5} mt={5}>Csku Wrapper with shared styles</Csku>
               <Csku>
                 <Csku px="2px" py="1em" mr={1}>
