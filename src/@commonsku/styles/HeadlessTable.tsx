@@ -23,9 +23,9 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   }
 `;
 
-type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setSidePanelRow?: any} & SharedStyleTypes>;
+type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any} & SharedStyleTypes>;
 
-export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableProps) {
+export function HeadlessTable({ columns, data }: HeadlessTableProps) {
   //@ts-ignore
   const partials: any = { pageIndex: 0, pageSize: 50 }
 
@@ -124,7 +124,7 @@ export function HeadlessTable({ columns, data, setSidePanelRow }: HeadlessTableP
           {page.map((row: any, r: any) => {
             prepareRow(row)
             return (
-              <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
+              <tr key={r} {...row.getRowProps()}>
                 {row.cells.map((cell: any, c: any) => {
                   return (
                     <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
