@@ -103,6 +103,7 @@ const Styles = styled.div`
 
   .react-table {
     border: 1px solid #ddd;
+    border-collapse: collapse;
 
     .tr {
       :last-child {
@@ -119,6 +120,7 @@ const Styles = styled.div`
       border-right: 1px solid #ddd;
       background-color: #fff;
       overflow: hidden;
+      border: none !important;
 
       :last-child {
         border-right: 0;
@@ -186,6 +188,7 @@ const tableColumns = [
   {
     Header: 'Age',
     accessor: 'age',
+    width: '300px'
   },
   {
     Header: 'Visits',
