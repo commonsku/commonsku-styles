@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
 import {LabeledCheckbox} from './Input'
-import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const TaskLabel  = styled.div`display: flex;`

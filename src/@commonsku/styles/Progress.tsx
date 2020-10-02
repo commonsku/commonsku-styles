@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import React from 'react'
-import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import {Text, Number} from './Text'
 

@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import styled from 'styled-components'
-import { colors, getThemeColor } from './Theme';
+import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 

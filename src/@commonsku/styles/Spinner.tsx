@@ -16,6 +16,6 @@ const Wrapper = styled.div<SharedStyleTypes>`
 
 export const Spinner = ( props : React.PropsWithChildren<{small?:boolean} & SharedStyleTypes>) => {
   return <Wrapper {...props}>
-           <img src={props.small ? gearsSmall : gears}/>
+           <img alt="Spinner" src={props.small ? gearsSmall : gears}/>
          </Wrapper>
 }

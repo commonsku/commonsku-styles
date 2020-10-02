@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { media, sizes } from '../utils';
 import { SizerCss, SizerTypes } from './Sizer';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
@@ -10,7 +8,7 @@ export const Grid = styled.div<SharedStyleTypes>`
 
 export type RowPropTypes = {
     justify ?: string,
-    wrap ?: string, // 'wrap', 'nowrap', 'wrap-reverse', ...
+    wrap ?: "wrap" | "nowrap" | "wrap-reverse" | "revert" | "unset" | "inherit" | "initial",
     align ?: string,
     padded ?: boolean,
     start ?: boolean,

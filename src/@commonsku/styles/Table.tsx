@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, {css} from 'styled-components'
-import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
+import { SizerCss, SizerTypes } from './Sizer';
 import { UpDownArrowsIcon, UpArrowIcon, DownArrowIcon, } from './icons';
-import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const sharedStyle = css`

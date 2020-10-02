@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
-import React, { useState, Component } from 'react'
-import { getThemeColor } from './Theme';
+import React, { Component } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const tabSizes = {
@@ -46,7 +45,7 @@ const Tab = styled.li<{selected?: boolean, size?: keyof typeof tabSizes} & Share
   }
 `
 
-const TabContent = styled.div``
+// const TabContent = styled.div``
 
 
 /* 
