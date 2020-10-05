@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import styled from 'styled-components'
 
 import product_pic1 from './products/1.png';
@@ -85,12 +85,16 @@ const statuses = [
   { value: 'followup', content: 'Followup', color: "#FFAE00"},
 ]
 
+const clickFunc = (item, row) => {
+  console.log(item, row)
+}
+
 const states = [
-  { value: 'new', content: 'New', order: 1 },
-  { value: 'submitted', content: 'Submitted', order: 2 },
-  { value: 'reviewed', content: 'Reviewed', order: 3},
-  { value: 'attempted', content: 'Attempted', order: 4},
-  { value: 'abandoned', content: 'Abandoned', order: 5},
+  { value: 'new', content: 'New', order: 1, onClick: clickFunc },
+  { value: 'submitted', content: 'Submitted', order: 2, onClick: clickFunc },
+  { value: 'reviewed', content: 'Reviewed', order: 3, onClick: clickFunc },
+  { value: 'attempted', content: 'Attempted', order: 4, onClick: clickFunc },
+  { value: 'abandoned', content: 'Abandoned', order: 5, onClick: clickFunc },
 ]
 
 const Styles = styled.div`
@@ -99,6 +103,7 @@ const Styles = styled.div`
 
   .react-table {
     border: 1px solid #ddd;
+    border-collapse: collapse;
 
     .tr {
       :last-child {
@@ -115,6 +120,7 @@ const Styles = styled.div`
       border-right: 1px solid #ddd;
       background-color: #fff;
       overflow: hidden;
+      border: none !important;
 
       :last-child {
         border-right: 0;
@@ -163,12 +169,17 @@ const Styles = styled.div`
     padding: 0.5rem;
   }
 `
-const tableData = [{"firstName":"profit","lastName":"doctor","age":24,"visits":<StateDropdown items={states} value={states[2]}/>,"progress":24,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},{"firstName":"hall","lastName":"shake","age":3,"visits":<StateDropdown items={states} value={states[1]}/>,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},{"firstName":"flesh","lastName":"bag","age":2,"visits":<StateDropdown items={states} value={states[2]}/>,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>},{"firstName":"bat","lastName":"inspector","age":18,"visits":77,"progress":89,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"tail","lastName":"stranger","age":13,"visits":42,"progress":16,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"ducks","lastName":"neck","age":11,"visits":68,"progress":27,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"baseball","lastName":"trip","age":24,"visits":63,"progress":12,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"requirement","lastName":"priority","age":29,"visits":58,"progress":90,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"grocery","lastName":"system","age":15,"visits":13,"progress":70,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"ring","lastName":"protection","age":12,"visits":2,"progress":94,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"floor","lastName":"snakes","age":2,"visits":8,"progress":37,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"photo","lastName":"flame","age":29,"visits":46,"progress":49,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"lake","lastName":"hope","age":4,"visits":13,"progress":55,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"able","lastName":"weakness","age":12,"visits":31,"progress":91,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"attempt","lastName":"lace","age":1,"visits":17,"progress":84,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"weather","lastName":"breath","age":1,"visits":2,"progress":58,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"hand","lastName":"bread","age":6,"visits":57,"progress":62,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"vest","lastName":"manager","age":9,"visits":95,"progress":62,"status":<StatusDropdown items={statuses} value={statuses[0]}/>},{"firstName":"representative","lastName":"tongue","age":2,"visits":3,"progress":56,"status":"single"},{"firstName":"cast","lastName":"childhood","age":22,"visits":48,"progress":94,"status":"relationship"}] 
+const tableData = [
+  {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"tableState":states[2],"tableStates":states,"progress":24,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
+  {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"tableState":states[3],"tableStates":states,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
+  {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"tableState":states[1],"tableStates":states,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>}
+] 
 const tableColumns = [
   {
-    Header: 'First Name',
+    Header: () => <div style={{ textAlign: "left" }}>First Name</div>,
     accessor: 'firstName',
-    sticky: 'left'
+    sticky: 'left',
+    noDrag: true
   },
   {
     Header: 'Last Name',
@@ -177,10 +188,11 @@ const tableColumns = [
   {
     Header: 'Age',
     accessor: 'age',
+    width: '300px'
   },
   {
     Header: 'Visits',
-    accessor: 'visits',
+    accessor: 'state',
   },
   {
     Header: 'Status',
@@ -216,10 +228,18 @@ const App = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    if(sidePanelRow) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  }, [sidePanelRow])
+
   return <Theme><Page>
     <SidePanel title="Panel Title"
       // fullWidthTitle
-      controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>}
+      controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}
       visible={showPanel}
       animationDuration={300}
       from="right"

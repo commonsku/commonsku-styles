@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
@@ -7,7 +8,7 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   &&& {
-    border: 0;
+    border: 0 !important;
     color: #52585c;
     font-size: .875rem;
     line-height: 1.75rem;
@@ -22,9 +23,25 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   }
 `;
 
-type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setSidePanelRow?: any} & SharedStyleTypes>;
+type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any} & SharedStyleTypes>;
 
-const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) => {
+export function HeadlessTable({ columns, data }: HeadlessTableProps) {
+  //@ts-ignore
+  const partials: any = { pageIndex: 0, pageSize: 50 }
+
+  const table: any = useTable(
+    {
+      columns,
+      data,
+      initialState: partials,
+    },
+    useSortBy,
+    usePagination,
+    useColumnOrder,
+    useSticky,
+    useBlockLayout
+  )
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -32,7 +49,6 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     visibleColumns,
     prepareRow,
     setColumnOrder,
-
     page,
     canPreviousPage,
     canNextPage,
@@ -43,29 +59,18 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    useSortBy,
-    usePagination,
-    useColumnOrder,
-    useSticky,
-    useBlockLayout
-  )
+  } = table
 
-  let columnBeingDragged = null;
+  let columnBeingDragged: any = null;
 
-  const onDragStart = e => {
+  const onDragStart = (e: any) => {
     columnBeingDragged = e.target.dataset.columnIndex;
   };
 
-  const onDrop = e => {
+  const onDrop = (e: any) => {
     e.preventDefault();
     const newPosition = e.target.dataset.columnIndex;
-    const currentCols = visibleColumns.map(c => c.id);
+    const currentCols = visibleColumns.map((c: any) => c.id);
     const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
     setColumnOrder(currentCols);
@@ -90,16 +95,17 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
       </pre>
       <table {...getTableProps()} className="react-table react-table-sticky">
         <thead className="header">
-          {headerGroups.map((headerGroup, h) => (
+          {headerGroups.map((headerGroup: any, h: any) => (
             <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-              {headerGroup.headers.map((column, i) => (
+              {headerGroup.headers.map((column: any, i: any) => (
                 <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
                   data-column-index={i}
-                  draggable="true"
-                  onDragStart={onDragStart}
+                  draggable={column.noDrag ? false : true}
+                  onDragStart={column.noDrag ? false : onDragStart}
                   onDragOver={e => e.preventDefault()}
-                  onDrop={onDrop}
+                  onDrop={column.noDrag ? false : onDrop}
                   className="th"
+                  width={column.width}
                 >
                   {column.render('Header')}
                   <span>
@@ -115,12 +121,16 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
           ))}
         </thead>
         <tbody {...getTableBodyProps()} className="body">
-          {page.map((row, r) => {
+          {page.map((row: any, r: any) => {
             prepareRow(row)
             return (
-              <tr key={r} {...row.getRowProps()} onClick={() => {setSidePanelRow(row.original)}}>
-                {row.cells.map((cell, c) => {
-                  return <TD key={c} {...cell.getCellProps()} className="td">{cell.render('Cell')}</TD>
+              <tr key={r} {...row.getRowProps()}>
+                {row.cells.map((cell: any, c: any) => {
+                  return (
+                    <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
+                      {cell.render('Cell')}
+                    </TD>
+                  )
                 })}
               </tr>
             )
@@ -151,7 +161,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
           <input
             type="number"
             defaultValue={pageIndex + 1}
-            onChange={e => {
+            onChange={(e: any) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0
               gotoPage(page)
             }}
@@ -160,7 +170,7 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
         </span>{' '}
         <select
           value={pageSize}
-          onChange={e => {
+          onChange={(e: any) => {
             setPageSize(Number(e.target.value))
           }}
         >
@@ -174,5 +184,3 @@ const HeadlessTable = ({ columns, data, setSidePanelRow }: HeadlessTableProps) =
     </>
   )
 }
-
-export { HeadlessTable };
