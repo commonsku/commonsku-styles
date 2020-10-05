@@ -101,9 +101,9 @@ export function HeadlessTable({ columns, data }: HeadlessTableProps) {
                 <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
                   data-column-index={i}
                   draggable={column.noDrag ? false : true}
-                  onDragStart={column.noDrag ? false : onDragStart}
+                  onDragStart={column.noDrag ? undefined : onDragStart}
                   onDragOver={e => e.preventDefault()}
-                  onDrop={column.noDrag ? false : onDrop}
+                  onDrop={column.noDrag ? undefined : onDrop}
                   className="th"
                   width={column.width}
                 >
