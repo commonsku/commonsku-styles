@@ -17,7 +17,7 @@ import user_pic5 from './users/5.jpeg';
 
 import makeData from './makeData';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -292,6 +292,8 @@ const App = () => {
             <Link onClick={() => setLock(!lock)}>
               <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
+
+            <PanelIcon color={"#00d374"} width={".9rem"}/>
 
 
             <H5>Number formatting</H5>
