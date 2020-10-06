@@ -79,7 +79,7 @@ export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTab
   const headers = headerGroups[0].headers
   const headersJSON = JSON.stringify(headers)
   useEffect(() => {
-    const info = headers.map(h => { return { accessor: h.id, isSorted: h.isSorted, isSortedDesc: h.isSortedDesc } })
+    const info = headers.map((h: any) => { return { accessor: h.id, isSorted: h.isSorted, isSortedDesc: h.isSortedDesc } })
     setTableHeaderInfo(info)
   }, [headersJSON])
 
