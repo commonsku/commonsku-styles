@@ -162,36 +162,6 @@ const tableData = [
   {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"tableState":states[3],"tableStates":states,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
   {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"tableState":states[1],"tableStates":states,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>}
 ] 
-const tableColumns = [
-  {
-    Header: () => <div style={{ textAlign: "left" }}>First Name</div>,
-    accessor: 'firstName',
-    sticky: 'left',
-    noDrag: true
-  },
-  {
-    Header: 'Last Name',
-    accessor: 'lastName',
-    sticky: 'left',
-    noDrag: true
-  },
-  {
-    Header: 'Age',
-    accessor: 'age',
-  },
-  {
-    Header: 'Visits',
-    accessor: 'state',
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-  },
-  {
-    Header: 'Profile Progress',
-    accessor: 'progress',
-  },
-]
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
   console.log(action);
@@ -214,8 +184,57 @@ const App = () => {
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
+  const [tableHeaderInfo, setTableHeaderInfo] = useState(null);
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const tableColumns = [
+    {
+      Header: () => <div>&nbsp;</div>, 
+      accessor: 'purchase_order_id', 
+      sticky: 'left',
+      noDrag: true,
+      width: '50px',
+      Cell: (row) => {
+        const original = row.row.original
+  
+        return (
+          <div onClick={() => setSidePanelRow(original)} style={{ paddingTop: '10px' }}>
+            <PanelIcon color={"#00d374"} width="30" />
+          </div> 
+        )
+      }
+    },
+    {
+      Header: () => <div style={{ textAlign: "left" }}>First Name</div>,
+      accessor: 'firstName',
+      sticky: 'left',
+      noDrag: true,
+      width: '100px'
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'lastName',
+      sticky: 'left',
+      noDrag: true
+    },
+    {
+      Header: 'Age',
+      accessor: 'age',
+    },
+    {
+      Header: 'Visits',
+      accessor: 'state',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+    },
+    {
+      Header: 'Profile Progress',
+      accessor: 'progress',
+    },
+  ]
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -224,6 +243,10 @@ const App = () => {
       setShowPanel(false)
     }
   }, [sidePanelRow])
+
+  useEffect(() => {
+    console.log(tableHeaderInfo)
+  }, [tableHeaderInfo])
 
   return <Theme><Page>
     <SidePanel title="Panel Title"
@@ -481,7 +504,7 @@ const App = () => {
         <ErrorBoundary>this is an error boundary</ErrorBoundary>
 
         <Styles>
-          <HeadlessTable columns={tableColumns} data={tableData} setSidePanelRow={setSidePanelRow} />
+          <HeadlessTable columns={tableColumns} data={tableData} setTableHeaderInfo={setTableHeaderInfo} />
         </Styles>
 
 

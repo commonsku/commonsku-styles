@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
@@ -23,9 +23,9 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   }
 `;
 
-type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any} & SharedStyleTypes>;
+type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setTableHeaderInfo: any} & SharedStyleTypes>;
 
-export function HeadlessTable({ columns, data }: HeadlessTableProps) {
+export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTableProps) {
   //@ts-ignore
   const partials: any = { pageIndex: 0, pageSize: 50 }
 
@@ -75,6 +75,13 @@ export function HeadlessTable({ columns, data }: HeadlessTableProps) {
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
     setColumnOrder(currentCols);
   };
+
+  const headers = headerGroups[0].headers
+  const headersJSON = JSON.stringify(headers)
+  useEffect(() => {
+    const info = headers.map(h => { return { accessor: h.id, isSorted: h.isSorted, isSortedDesc: h.isSortedDesc } })
+    setTableHeaderInfo(info)
+  }, [headersJSON])
 
   return (
     <>
