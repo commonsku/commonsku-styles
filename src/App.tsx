@@ -194,7 +194,7 @@ const App = () => {
       accessor: 'purchase_order_id', 
       sticky: 'left',
       noDrag: true,
-      width: '50px',
+      width: 50,
       Cell: (row) => {
         const original = row.row.original
   
@@ -210,7 +210,7 @@ const App = () => {
       accessor: 'firstName',
       sticky: 'left',
       noDrag: true,
-      width: '100px'
+      width: 100
     },
     {
       Header: 'Last Name',
