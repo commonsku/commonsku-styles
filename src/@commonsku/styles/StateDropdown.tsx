@@ -65,11 +65,11 @@ const DropDownContent = styled.div<DropdownContentProps>`
 
 const Circles = ({val, max}:{val: number, max: number}) => {
     return <StyledCircles>
-      {[...Array(val)].map((item,i) => {
-        return <Circle/>
+      {[...Array(val)].map((item, i) => {
+        return <Circle key={i}/>
       })}
-      {[...Array(max - val)].map((item,i) => {
-        return <Circle disabled/>
+      {[...Array(max - val)].map((item, i) => {
+        return <Circle key={i} disabled/>
       })}
     </StyledCircles>
 }

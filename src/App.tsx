@@ -101,30 +101,18 @@ const Styles = styled.div`
   padding: 1rem;
   overflow-x: scroll;
 
+  .th,
+  .td {
+    padding: 5px;
+    background-color: #fff;
+    overflow: hidden;
+    border: none !important;
+  }
+
   .react-table {
-    border: 1px solid #ddd;
-    border-collapse: collapse;
-
-    .tr {
-      :last-child {
-        .td {
-          border-bottom: 0;
-        }
-      }
-    }
-
     .th,
     .td {
-      padding: 5px;
-      border-bottom: 1px solid #ddd;
-      border-right: 1px solid #ddd;
-      background-color: #fff;
-      overflow: hidden;
-      border: none !important;
-
-      :last-child {
-        border-right: 0;
-      }
+      background: '#fff'
     }
 
     &.react-table-sticky {
@@ -138,7 +126,7 @@ const Styles = styled.div`
 
       .header {
         top: 0;
-        box-shadow: 0px 3px 3px #ccc;
+        //box-shadow: 0px 3px 3px #ccc;
       }
 
       .footer {
@@ -156,11 +144,11 @@ const Styles = styled.div`
       }
 
       [data-sticky-last-left-td] {
-        box-shadow: 2px 0px 3px #ccc;
+        box-shadow: 2px 0px 0px #ccc;
       }
 
       [data-sticky-first-right-td] {
-        box-shadow: -2px 0px 3px #ccc;
+        box-shadow: -2px 0px 0px #ccc;
       }
     }
   }
@@ -184,11 +172,12 @@ const tableColumns = [
   {
     Header: 'Last Name',
     accessor: 'lastName',
+    sticky: 'left',
+    noDrag: true
   },
   {
     Header: 'Age',
     accessor: 'age',
-    width: '300px'
   },
   {
     Header: 'Visits',
