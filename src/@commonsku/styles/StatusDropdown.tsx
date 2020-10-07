@@ -47,9 +47,10 @@ const DropDownContent = styled.div<DropdownContentProps>`
     overflow: hidden;
 `;
 
-export const StatusDropdown = ({ items, text, value, ...props }: {
-    items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string}>,
-    value: {onClick?: Function|VoidFunction|null, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string}
+export const StatusDropdown = ({ items, text, value, row, ...props }: {
+    items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string}>,
+    value: {onClick?: (e: Event) => void, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string},
+    row: any
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -80,10 +81,11 @@ export const StatusDropdown = ({ items, text, value, ...props }: {
                 {items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i} color={item.color}
                         {...item.props}
-                        onClick={() => {
+                        onClick={e => {
+                            e.stopPropagation()
                             setShowMenu(false);
                             setValue(item)
-                            item.onClick && item.onClick()
+                            item.onClick && item.onClick(item, row)
                         }}
                     >{item.content}</DropdownItem>
                 })}
