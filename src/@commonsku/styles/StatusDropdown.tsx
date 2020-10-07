@@ -73,6 +73,10 @@ export const StatusDropdown = ({ items, text, value, row, ...props }: {
         };
     }, []);
 
+    useEffect(() => {
+        setValue(value)
+    }, [value])
+
     return (
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>

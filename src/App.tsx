@@ -80,9 +80,9 @@ const options = [
 ]
 
 const statuses = [
-  { value: 'ok', content: 'OK', color: "#00D374" },
-  { value: 'problem', content: 'Problem', color: "#FF2674" },
-  { value: 'followup', content: 'Followup', color: "#FFAE00"},
+  { value: 'OK', content: 'OK', color: "#00D374" },
+  { value: 'PROBLEM', content: 'Problem', color: "#FF2674" },
+  { value: 'FOLLOWUP', content: 'Followup', color: "#FFAE00"},
 ]
 
 const clickFunc = (item, row) => {

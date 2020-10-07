@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
 import { document } from '../utils';
-import { AnyMxRecord } from 'dns';
 
 const StyledCircles = styled.div`
   line-height: 0;
