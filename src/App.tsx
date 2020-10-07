@@ -80,21 +80,73 @@ const options = [
 ]
 
 const statuses = [
-  { value: 'OK', content: 'OK', color: "#00D374" },
-  { value: 'PROBLEM', content: 'Problem', color: "#FF2674" },
-  { value: 'FOLLOWUP', content: 'Followup', color: "#FFAE00"},
+  { 
+    value: 'OK', 
+    content: 'OK', 
+    color: "#00D374", 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'PROBLEM', 
+    content: 'Problem', 
+    color: "#FF2674", 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'FOLLOWUP', 
+    content: 'Followup', 
+    color: "#FFAE00", 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  }
 ]
 
-const clickFunc = (item, row) => {
-  console.log(item, row)
-}
-
 const states = [
-  { value: 'new', content: 'New', order: 1, onClick: clickFunc },
-  { value: 'submitted', content: 'Submitted', order: 2, onClick: clickFunc },
-  { value: 'reviewed', content: 'Reviewed', order: 3, onClick: clickFunc },
-  { value: 'attempted', content: 'Attempted', order: 4, onClick: clickFunc },
-  { value: 'abandoned', content: 'Abandoned', order: 5, onClick: clickFunc },
+  { 
+    value: 'new', 
+    content: 'New', 
+    order: 1, 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'submitted', 
+    content: 'Submitted', 
+    order: 2, 
+    oonClick: (item, row) => {
+      console.log(item, row)
+    } 
+  },
+  { 
+    value: 'reviewed', 
+    content: 'Reviewed', 
+    order: 3, 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'attempted', 
+    content: 'Attempted', 
+    order: 4, 
+    oonClick: (item, row) => {
+      console.log(item, row)
+    } 
+  },
+  { 
+    value: 'abandoned', 
+    content: 'Abandoned', 
+    order: 5, 
+    oonClick: (item, row) => {
+      console.log(item, row)
+    } 
+  },
 ]
 
 const Styles = styled.div`
@@ -158,9 +210,9 @@ const Styles = styled.div`
   }
 `
 const tableData = [
-  {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"tableState":states[2],"tableStates":states,"progress":24,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
-  {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"tableState":states[3],"tableStates":states,"progress":15,"status":<StatusDropdown items={statuses} value={statuses[2]}/>},
-  {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"tableState":states[1],"tableStates":states,"progress":85,"status":<StatusDropdown items={statuses} value={statuses[1]}/>}
+  {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ] 
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
@@ -225,10 +277,32 @@ const App = () => {
     {
       Header: 'Visits',
       accessor: 'state',
+      Cell: (row) => {
+        const po = row.row.original
+  
+        return (
+          <StateDropdown
+            items={states} 
+            value={states[0]} 
+            row={po}
+          />
+        )
+      }
     },
     {
       Header: 'Status',
       accessor: 'status',
+      Cell: (row) => {
+        const po = row.row.original
+  
+        return (
+          <StatusDropdown
+            items={statuses} 
+            value={statuses[0]} 
+            row={po}
+          />
+        )
+      }
     },
     {
       Header: 'Profile Progress',
@@ -304,8 +378,6 @@ const App = () => {
                }/>
               <Link block mt={20}>Link</Link>
             </div>
-
-            <StatusDropdown items={statuses} value={statuses[0]}/>
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>

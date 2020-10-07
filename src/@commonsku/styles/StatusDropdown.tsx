@@ -49,7 +49,7 @@ const DropDownContent = styled.div<DropdownContentProps>`
 
 export const StatusDropdown = ({ items, text, value, row, ...props }: {
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string}>,
-    value: {onClick?: (e: Event) => void, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string},
+    value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string},
     row: any
 } & DropdownContentProps) => {
 
