@@ -150,9 +150,9 @@ const states = [
 ]
 
 const tableData = [
-  {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
-  {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
-  {"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
+  {"rowId":1,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":2,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":3,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ] 
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
@@ -183,7 +183,7 @@ const App = () => {
   const tableColumns = [
     {
       Header: () => <div>&nbsp;</div>, 
-      accessor: 'purchase_order_id', 
+      accessor: 'rowId', 
       sticky: 'left',
       noDrag: true,
       width: 50,

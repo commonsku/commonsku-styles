@@ -68,7 +68,7 @@ const Styles = styled.div`
   }
 `
 
-const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
+const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleTypes|SizerTypes>`
   &&& {
     border: 0 !important;
     color: #52585c;
@@ -77,6 +77,7 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
     display: table-cell;
     padding: 0.5625rem 0.625rem;
     overflow: visible !important;
+    background-color: ${props => props.backgroundColor ? props.backgroundColor : "#fff"};
     &:hover {
       cursor: ${props => props.clickable ? "pointer" : "normal"};
     }
@@ -198,20 +199,27 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
               return (
                 <tr key={r} {...row.getRowProps()}>
                   {row.cells.map((cell: any, c: any) => {
-                    if(cell.column.isRowId) {
-                      return (
-                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
-                          <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
-                            style={{ paddingTop: '10px' }}
-                          >
-                            <PanelIcon color={"#00d374"} width="30" />
-                          </div> 
-                        </TD>
-                      )
+                    let highlight = false
+                    if(setSidePanelRow) {
+                      if(row.original === sidePanelRow) {
+                        highlight = true
+                      }
+
+                      if(cell.column.isRowId) {
+                        return (
+                          <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
+                            <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
+                              style={{ paddingTop: '10px' }}
+                            >
+                              <PanelIcon color={"#00d374"} width="30" />
+                            </div> 
+                          </TD>
+                        )
+                      }
                     }
 
                     return (
-                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
+                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
                         {cell.render('Cell')}
                       </TD>
                     )
