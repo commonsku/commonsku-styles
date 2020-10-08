@@ -6,6 +6,67 @@ import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } fr
 import { useSticky } from 'react-table-sticky';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
+const Styles = styled.div`
+  padding: 1rem;
+  overflow-x: scroll;
+
+  .th,
+  .td {
+    padding: 5px;
+    background-color: #fff;
+    overflow: hidden;
+    border: none !important;
+  }
+
+  .react-table {
+    .th,
+    .td {
+      background: '#fff'
+    }
+
+    &.react-table-sticky {
+      overflow: scroll;
+      .header,
+      .footer {
+        position: sticky;
+        z-index: 1;
+        width: fit-content;
+      }
+
+      .header {
+        top: 0;
+        //box-shadow: 0px 3px 3px #ccc;
+      }
+
+      .footer {
+        bottom: 0;
+        box-shadow: 0px -3px 3px #ccc;
+      }
+
+      .body {
+        position: relative;
+        z-index: 0;
+      }
+
+      [data-sticky-td] {
+        position: sticky;
+      }
+
+      [data-sticky-last-left-td] {
+        box-shadow: 2px 0px 0px #ccc;
+      }
+
+      [data-sticky-first-right-td] {
+        box-shadow: -2px 0px 0px #ccc;
+      }
+    }
+  }
+
+  .react-table-pagination {
+    padding: 0.5rem;
+  }
+`
+
 const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   &&& {
     border: 0 !important;
@@ -23,7 +84,7 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   }
 `;
 
-type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setTableHeaderInfo: any} & SharedStyleTypes>;
+type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setTableHeaderInfo?: any} & SharedStyleTypes>;
 
 export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTableProps) {
   //@ts-ignore
@@ -80,114 +141,118 @@ export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTab
   const headersJSON = JSON.stringify(headers)
   useEffect(() => {
     const info = headers.map((h: any) => { return { accessor: h.id, isSorted: h.isSorted, isSortedDesc: h.isSortedDesc } })
-    setTableHeaderInfo(info)
+    if(setTableHeaderInfo) {
+      setTableHeaderInfo(info)
+    }
   }, [headersJSON])
 
   return (
-    <>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage,
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
-      <table {...getTableProps()} className="react-table react-table-sticky">
-        <thead className="header">
-          {headerGroups.map((headerGroup: any, h: any) => (
-            <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-              {headerGroup.headers.map((column: any, i: any) => (
-                <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
-                  data-column-index={i}
-                  draggable={column.noDrag ? false : true}
-                  onDragStart={column.noDrag ? undefined : onDragStart}
-                  onDragOver={e => e.preventDefault()}
-                  onDrop={column.noDrag ? undefined : onDrop}
-                  className="th"
-                  width={column.width}
-                >
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()} className="body">
-          {page.map((row: any, r: any) => {
-            prepareRow(row)
-            return (
-              <tr key={r} {...row.getRowProps()}>
-                {row.cells.map((cell: any, c: any) => {
-                  return (
-                    <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
-                      {cell.render('Cell')}
-                    </TD>
-                  )
-                })}
+    <Styles>
+      <>
+        <pre>
+          <code>
+            {JSON.stringify(
+              {
+                pageIndex,
+                pageSize,
+                pageCount,
+                canNextPage,
+                canPreviousPage,
+              },
+              null,
+              2
+            )}
+          </code>
+        </pre>
+        <table {...getTableProps()} className="react-table react-table-sticky">
+          <thead className="header">
+            {headerGroups.map((headerGroup: any, h: any) => (
+              <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+                {headerGroup.headers.map((column: any, i: any) => (
+                  <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+                    data-column-index={i}
+                    draggable={column.noDrag ? false : true}
+                    onDragStart={column.noDrag ? undefined : onDragStart}
+                    onDragOver={e => e.preventDefault()}
+                    onDrop={column.noDrag ? undefined : onDrop}
+                    className="th"
+                    width={column.width}
+                  >
+                    {column.render('Header')}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
+                    </span>
+                  </th>
+                ))}
               </tr>
-            )
-          })}
-        </tbody>
-      </table>
-      <div className="react-table-pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()} className="body">
+            {page.map((row: any, r: any) => {
+              prepareRow(row)
+              return (
+                <tr key={r} {...row.getRowProps()}>
+                  {row.cells.map((cell: any, c: any) => {
+                    return (
+                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
+                        {cell.render('Cell')}
+                      </TD>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+        <div className="react-table-pagination">
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            {'<<'}
+          </button>{' '}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {'<'}
+          </button>{' '}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {'>'}
+          </button>{' '}
+          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+            {'>>'}
+          </button>{' '}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+          </span>
+          <span>
+            | Go to page:{' '}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={(e: any) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                gotoPage(page)
+              }}
+              style={{ width: '100px' }}
+            />
+          </span>{' '}
+          <select
+            value={pageSize}
             onChange={(e: any) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(page)
+              setPageSize(Number(e.target.value))
             }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
-        <select
-          value={pageSize}
-          onChange={(e: any) => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {[10, 20, 30, 40, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-    </>
+          >
+            {[10, 20, 30, 40, 50].map(pageSize => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+      </>
+    </Styles>
   )
 }

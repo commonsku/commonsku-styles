@@ -149,66 +149,6 @@ const states = [
   },
 ]
 
-const Styles = styled.div`
-  padding: 1rem;
-  overflow-x: scroll;
-
-  .th,
-  .td {
-    padding: 5px;
-    background-color: #fff;
-    overflow: hidden;
-    border: none !important;
-  }
-
-  .react-table {
-    .th,
-    .td {
-      background: '#fff'
-    }
-
-    &.react-table-sticky {
-      overflow: scroll;
-      .header,
-      .footer {
-        position: sticky;
-        z-index: 1;
-        width: fit-content;
-      }
-
-      .header {
-        top: 0;
-        //box-shadow: 0px 3px 3px #ccc;
-      }
-
-      .footer {
-        bottom: 0;
-        box-shadow: 0px -3px 3px #ccc;
-      }
-
-      .body {
-        position: relative;
-        z-index: 0;
-      }
-
-      [data-sticky-td] {
-        position: sticky;
-      }
-
-      [data-sticky-last-left-td] {
-        box-shadow: 2px 0px 0px #ccc;
-      }
-
-      [data-sticky-first-right-td] {
-        box-shadow: -2px 0px 0px #ccc;
-      }
-    }
-  }
-
-  .react-table-pagination {
-    padding: 0.5rem;
-  }
-`
 const tableData = [
   {"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
   {"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
@@ -575,10 +515,7 @@ const App = () => {
         </Row>
         <ErrorBoundary>this is an error boundary</ErrorBoundary>
 
-        <Styles>
-          <HeadlessTable columns={tableColumns} data={tableData} setTableHeaderInfo={setTableHeaderInfo} />
-        </Styles>
-
+        <HeadlessTable columns={tableColumns} data={tableData} setTableHeaderInfo={setTableHeaderInfo} />
 
       </Box>
     </Background>
