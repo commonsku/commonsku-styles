@@ -187,15 +187,7 @@ const App = () => {
       sticky: 'left',
       noDrag: true,
       width: 50,
-      Cell: (row) => {
-        const original = row.row.original
-  
-        return (
-          <div onClick={() => setSidePanelRow(original)}>
-            <PanelIcon color={"#00d374"} width="30" />
-          </div> 
-        )
-      }
+      isRowId: true
     },
     {
       Header: () => <div style={{ textAlign: "left" }}>First Name</div>,
@@ -272,7 +264,7 @@ const App = () => {
       animationDuration={300}
       from="right"
       height={100}
-      backdrop
+      //backdrop
       bodyScrollable={false}
     >
       <Tabs padded tabs={[
@@ -517,8 +509,13 @@ const App = () => {
         </Row>
         <ErrorBoundary>this is an error boundary</ErrorBoundary>
 
-        <HeadlessTable columns={tableColumns} data={tableData} setTableHeaderInfo={setTableHeaderInfo} />
-
+        <HeadlessTable 
+          columns={tableColumns} 
+          data={tableData} 
+          sidePanelRow={sidePanelRow} 
+          setSidePanelRow={setSidePanelRow}
+          setTableHeaderInfo={setTableHeaderInfo} 
+        />
       </Box>
     </Background>
   </Page></Theme>

@@ -4,6 +4,7 @@ import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
+import { PanelIcon } from './icons/PanelIcon'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const Styles = styled.div`
@@ -84,9 +85,9 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   }
 `;
 
-type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, setTableHeaderInfo?: any} & SharedStyleTypes>;
+type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, sidePanelRow?: any, setSidePanelRow?: any, setTableHeaderInfo?: any} & SharedStyleTypes>;
 
-export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTableProps) {
+export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, setTableHeaderInfo }: HeadlessTableProps) {
   //@ts-ignore
   const partials: any = { pageIndex: 0, pageSize: 50 }
 
@@ -149,7 +150,7 @@ export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTab
   return (
     <Styles>
       <>
-        <pre>
+        {/* <pre>
           <code>
             {JSON.stringify(
               {
@@ -163,7 +164,7 @@ export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTab
               2
             )}
           </code>
-        </pre>
+            </pre> */}
         <table {...getTableProps()} className="react-table react-table-sticky">
           <thead className="header">
             {headerGroups.map((headerGroup: any, h: any) => (
@@ -197,6 +198,18 @@ export function HeadlessTable({ columns, data, setTableHeaderInfo }: HeadlessTab
               return (
                 <tr key={r} {...row.getRowProps()}>
                   {row.cells.map((cell: any, c: any) => {
+                    if(cell.column.isRowId) {
+                      return (
+                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
+                          <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
+                            style={{ paddingTop: '10px' }}
+                          >
+                            <PanelIcon color={"#00d374"} width="30" />
+                          </div> 
+                        </TD>
+                      )
+                    }
+
                     return (
                       <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width}>
                         {cell.render('Cell')}
