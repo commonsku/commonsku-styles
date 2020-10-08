@@ -211,6 +211,23 @@ const App = () => {
       noDrag: true
     },
     {
+      Header: 'Status',
+      accessor: 'status',
+      sticky: 'left',
+      noDrag: true,
+      Cell: (row) => {
+        const po = row.row.original
+  
+        return (
+          <StatusDropdown
+            items={statuses} 
+            value={statuses[0]} 
+            row={po}
+          />
+        )
+      }
+    },
+    {
       Header: 'Age',
       accessor: 'age',
     },
@@ -224,21 +241,6 @@ const App = () => {
           <StateDropdown
             items={states} 
             value={states[0]} 
-            row={po}
-          />
-        )
-      }
-    },
-    {
-      Header: 'Status',
-      accessor: 'status',
-      Cell: (row) => {
-        const po = row.row.original
-  
-        return (
-          <StatusDropdown
-            items={statuses} 
-            value={statuses[0]} 
             row={po}
           />
         )
