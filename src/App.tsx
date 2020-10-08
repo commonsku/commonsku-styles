@@ -191,7 +191,7 @@ const App = () => {
         const original = row.row.original
   
         return (
-          <div onClick={() => setSidePanelRow(original)} style={{ paddingTop: '10px' }}>
+          <div onClick={() => setSidePanelRow(original)}>
             <PanelIcon color={"#00d374"} width="30" />
           </div> 
         )
