@@ -59,6 +59,12 @@ import {
     HeadlessTable,
     StatusDropdown,
     StateDropdown,
+    AwaitingProofIcon,
+    ProofReceivedIcon,
+    PendingApprovalIcon,
+    ChangeRequestedIcon,
+    ClientApprovedIcon,
+    ProofingCompleteIcon,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -332,14 +338,26 @@ const App = () => {
               <Loading mb={10} colorful={colorfulBars} />
             </div>
 
+            <ProofingCompleteIcon width={"1.5rem"}/>
+            <ClientApprovedIcon width={"1.5rem"}/>
+            <AwaitingProofIcon width={"1.5rem"}/>
+            <ProofReceivedIcon width={"1.5rem"}/>
+            <PendingApprovalIcon width={"1.5rem"}/>
+            <ChangeRequestedIcon width={"1.5rem"}/>
+
+            <PanelIcon color={"#00d374"} width={".9rem"}/>
+
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
+
+
+
 
             <Link onClick={() => setLock(!lock)}>
               <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
 
-            <PanelIcon color={"#00d374"} width={".9rem"}/>
+
 
 
             <H5>Number formatting</H5>
