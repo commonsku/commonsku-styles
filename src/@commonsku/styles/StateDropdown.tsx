@@ -120,7 +120,7 @@ export const StateDropdown = ({ items, text, value, row, ...props }: {
                             setValue(item)
                             item.onClick && item.onClick(item, row)
                         }}
-                    >{item.content}</DropdownItem>
+                    ><Circles max={items.length} val={item.order}/> {item.content} </DropdownItem> 
                 })}
             </DropDownContent>}
         </StyledDropdown>
