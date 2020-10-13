@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect, useRef } from 'react';
 import styled from 'styled-components'
 
 import product_pic1 from './products/1.png';
@@ -66,6 +66,7 @@ import {
     ClientApprovedIcon,
     ProofingCompleteIcon,
 } from '@commonsku/styles';
+import { useFilters } from 'react-table';
 
 const initialState = {
   date: new Date(),
@@ -215,13 +216,32 @@ const App = () => {
       noDrag: true,
       Cell: (row) => {
         const po = row.row.original
-  
+        const wrapper = useRef(null)
+        const [menuIsOpen, setMenuIsOpen] = useState(false)
+
+        useEffect(() => {
+          setZIndex()
+        }, [menuIsOpen])
+
+        function setZIndex() {
+          if(menuIsOpen) {
+            // @ts-ignore
+            wrapper.current.parentNode.style.zIndex = 4
+          }else{
+            // @ts-ignore
+            wrapper.current.parentNode.style.zIndex = 3
+          }
+        }
+
         return (
-          <StatusDropdown
-            items={statuses} 
-            value={statuses[0]} 
-            row={po}
-          />
+          <div ref={wrapper}>
+            <StatusDropdown
+              items={statuses} 
+              value={statuses[0]} 
+              row={po}
+              setMenuIsOpen={setMenuIsOpen}
+            />
+          </div>
         )
       }
     },

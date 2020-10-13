@@ -47,10 +47,11 @@ const DropDownContent = styled.div<DropdownContentProps>`
     overflow: hidden;
 `;
 
-export const StatusDropdown = ({ items, text, value, row, ...props }: {
+export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, ...props }: {
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string}>,
     value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string},
-    row: any
+    row: any,
+    setMenuIsOpen ?: any
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -76,6 +77,12 @@ export const StatusDropdown = ({ items, text, value, row, ...props }: {
     useEffect(() => {
         setValue(value)
     }, [value])
+
+    useEffect(() => {
+        if(setMenuIsOpen) {
+            setMenuIsOpen(showMenu)
+        }
+    }, [showMenu])
 
     return (
         // @ts-ignore
