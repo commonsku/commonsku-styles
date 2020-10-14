@@ -69,8 +69,9 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export const Dropdown = ({ items, underlined, primary, text, ...props }: {
-    items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
+export const Dropdown = ({ items, children, underlined, primary, text, ...props }: {
+    items?: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
+    children?: any
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -104,7 +105,7 @@ export const Dropdown = ({ items, underlined, primary, text, ...props }: {
                 {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
             </Button>
             {showMenu && <DropDownContent underlined={underlined} primary={primary}>
-                {items.map((item, i) => {
+                {items && items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i}
                         {...item.props}
                         primary={primary}
@@ -115,6 +116,7 @@ export const Dropdown = ({ items, underlined, primary, text, ...props }: {
                         }}
                     >{item.content}</DropdownItem>
                 })}
+                {children ? children : null}
             </DropDownContent>}
         </StyledDropdown>
     );

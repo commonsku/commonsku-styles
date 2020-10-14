@@ -336,6 +336,7 @@ const App = () => {
                   {onClick: () => null, content: 'New Address'},
                 ]
                }/>
+              <Dropdown text="Drop Down"><div>Hi</div></Dropdown>
               <Link block mt={20}>Link</Link>
             </div>
 
