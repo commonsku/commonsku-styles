@@ -148,6 +148,8 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
     }
   }, [headersJSON])
 
+  const [mouseOverRow, setMouseOverRow] = useState(null)
+
   return (
     <Styles>
       <>
@@ -197,11 +199,11 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
             {page.map((row: any, r: any) => {
               prepareRow(row)
               return (
-                <tr key={r} {...row.getRowProps()}>
+                <tr key={r} {...row.getRowProps()} onMouseEnter={() => setMouseOverRow(row.original)} onMouseLeave={() => setMouseOverRow(null)}>
                   {row.cells.map((cell: any, c: any) => {
                     let highlight = false
                     if(setSidePanelRow) {
-                      if(row.original === sidePanelRow) {
+                      if(row.original === sidePanelRow || row.original === mouseOverRow) {
                         highlight = true
                       }
 
@@ -211,7 +213,7 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
                             <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
                               style={{ paddingTop: '10px' }}
                             >
-                              <PanelIcon color={"#00d374"} width="30" />
+                              {row.original === mouseOverRow ? <PanelIcon color={"#00d374"} width="30" /> : null}
                             </div> 
                           </TD>
                         )

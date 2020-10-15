@@ -91,11 +91,20 @@ export const Dropdown = ({ items, children, underlined, primary, text, ...props 
     };
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
+        if(items) {
+            document.addEventListener("mousedown", handleClick);
 
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
+            return () => {
+                document.removeEventListener("mousedown", handleClick);
+            };
+        }
+        if(children){
+            document.addEventListener("mouseout", handleClick);
+
+            return () => {
+                document.removeEventListener("mouseout", handleClick);
+            };
+        }
     }, []);
 
     return (
