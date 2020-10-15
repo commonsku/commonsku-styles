@@ -201,9 +201,12 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
               return (
                 <tr key={r} {...row.getRowProps()} onMouseEnter={() => setMouseOverRow(row.original)} onMouseLeave={() => setMouseOverRow(null)}>
                   {row.cells.map((cell: any, c: any) => {
-                    let highlight = false
+                    let highlight = false 
+                    if(row.original === mouseOverRow) {
+                      highlight = true
+                    }
                     if(setSidePanelRow) {
-                      if(row.original === sidePanelRow || row.original === mouseOverRow) {
+                      if(row.original === sidePanelRow) {
                         highlight = true
                       }
 
