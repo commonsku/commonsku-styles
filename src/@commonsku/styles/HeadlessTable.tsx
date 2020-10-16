@@ -10,7 +10,6 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 const Styles = styled.div`
   padding: 1rem;
   overflow-x: scroll;
-
   .th,
   .td {
     padding: 5px;
@@ -18,13 +17,11 @@ const Styles = styled.div`
     overflow: hidden;
     border: none !important;
   }
-
   .react-table {
     .th,
     .td {
       background: '#fff'
     }
-
     &.react-table-sticky {
       overflow: scroll;
       .header,
@@ -33,42 +30,35 @@ const Styles = styled.div`
         z-index: 1;
         width: fit-content;
       }
-
       .header {
         top: 0;
         //box-shadow: 0px 3px 3px #ccc;
       }
-
       .footer {
         bottom: 0;
         box-shadow: 0px -3px 3px #ccc;
       }
-
       .body {
         position: relative;
         z-index: 0;
       }
-
       [data-sticky-td] {
         position: sticky;
       }
-
       [data-sticky-last-left-td] {
         box-shadow: 2px 0px 0px #ccc;
       }
-
       [data-sticky-first-right-td] {
         box-shadow: -2px 0px 0px #ccc;
       }
     }
   }
-
   .react-table-pagination {
     padding: 0.5rem;
   }
 `
 
-const TD= styled.td<{clickable?: boolean, backgroundColor?: String, key?: any}&SharedStyleTypes|SizerTypes>`
+const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleTypes|SizerTypes>`
   &&& {
     border: 0 !important;
     color: #52585c;
@@ -139,15 +129,6 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
     setColumnOrder(currentCols);
   };
 
-  const headers = headerGroups[0].headers
-  const headersJSON = JSON.stringify(headers)
-  useEffect(() => {
-    const info = headers.map((h: any) => { return { accessor: h.id, isSorted: h.isSorted, isSortedDesc: h.isSortedDesc } })
-    if(setTableHeaderInfo) {
-      setTableHeaderInfo(info)
-    }
-  }, [headersJSON])
-
   return (
     <Styles>
       <>
@@ -199,23 +180,23 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
               return (
                 <tr key={r} {...row.getRowProps()}>
                   {row.cells.map((cell: any, c: any) => {
-                    let highlight = false 
+                    let highlight = false
                     if(setSidePanelRow) {
                       if(row.original === sidePanelRow) {
                         highlight = true
                       }
+                    }
 
-                      if(cell.column.isRowId) {
-                        return (
-                          <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
-                            <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
-                              style={{ paddingTop: '10px' }}
-                            >
-                              <PanelIcon color={"#00d374"} width="30" />
-                            </div> 
-                          </TD>
-                        )
-                      }
+                    if(cell.column.isRowId) {
+                      return (
+                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
+                          <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
+                            style={{ paddingTop: '10px' }}
+                          >
+                            <PanelIcon color={"#00d374"} width="30" />
+                          </div> 
+                        </TD>
+                      )
                     }
 
                     return (
