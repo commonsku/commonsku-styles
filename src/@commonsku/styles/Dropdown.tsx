@@ -102,8 +102,8 @@ export const Dropdown = ({ items, children, underlined, primary, text, ...props 
 
     return (
         // @ts-ignore
-        <div ref={node} onMouseLeave={() => setShowMenu(false)}>
-            <StyledDropdown {...props}>
+        <span ref={node} {...props} onMouseLeave={() => setShowMenu(false)}>
+            <StyledDropdown>
                 <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
                     {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
                 </Button>
@@ -122,6 +122,6 @@ export const Dropdown = ({ items, children, underlined, primary, text, ...props 
                     {children ? children : null}
                 </DropDownContent>}
             </StyledDropdown>
-        </div>
+        </span>
     );
 }

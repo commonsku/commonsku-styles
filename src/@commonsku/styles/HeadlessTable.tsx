@@ -68,7 +68,7 @@ const Styles = styled.div`
   }
 `
 
-const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleTypes|SizerTypes>`
+const TD= styled.td<{clickable?: boolean, backgroundColor?: String, key?: any}&SharedStyleTypes|SizerTypes>`
   &&& {
     border: 0 !important;
     color: #52585c;
@@ -148,8 +148,6 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
     }
   }, [headersJSON])
 
-  const [mouseOverRow, setMouseOverRow] = useState(null)
-
   return (
     <Styles>
       <>
@@ -199,12 +197,9 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
             {page.map((row: any, r: any) => {
               prepareRow(row)
               return (
-                <tr key={r} {...row.getRowProps()} onMouseEnter={() => setMouseOverRow(row.original)} onMouseLeave={() => setMouseOverRow(null)}>
+                <tr key={r} {...row.getRowProps()}>
                   {row.cells.map((cell: any, c: any) => {
                     let highlight = false 
-                    if(row.original === mouseOverRow) {
-                      highlight = true
-                    }
                     if(setSidePanelRow) {
                       if(row.original === sidePanelRow) {
                         highlight = true
@@ -216,7 +211,7 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
                             <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
                               style={{ paddingTop: '10px' }}
                             >
-                              {row.original === mouseOverRow ? <PanelIcon color={"#00d374"} width="30" /> : null}
+                              <PanelIcon color={"#00d374"} width="30" />
                             </div> 
                           </TD>
                         )
