@@ -76,17 +76,31 @@ const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleT
   }
 `;
 
-type HeadlessTableProps = React.PropsWithChildren<{columns: any, data: any, sidePanelRow?: any, setSidePanelRow?: any, setTableHeaderInfo?: any} & SharedStyleTypes>;
+type HeadlessTableProps = React.PropsWithChildren<{
+  columns: any,
+  data: object[], 
+  defaultSort?: { id: string, desc: boolean }, 
+  sidePanelRow?: object|null, 
+  setSidePanelRow?: any, 
+  sortDirectionDivRef?: any, 
+  currentColumnsDivRef?: any
+} & SharedStyleTypes>;
 
-export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, setTableHeaderInfo }: HeadlessTableProps) {
+export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef }: HeadlessTableProps) {
   //@ts-ignore
-  const partials: any = { pageIndex: 0, pageSize: 50 }
+  const initialState: any = { 
+    pageIndex: 0, 
+    pageSize: 50
+  }
+  if(defaultSort) {
+    initialState.sortBy = [defaultSort]
+  }
 
   const table: any = useTable(
     {
       columns,
       data,
-      initialState: partials,
+      initialState,
     },
     useSortBy,
     usePagination,
@@ -114,6 +128,13 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
     state: { pageIndex, pageSize },
   } = table
 
+  const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
+  const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
+
+  useEffect(() => {
+    setCurrentColumns(visibleColumns.map((c: any) => c.id))
+  }, [visibleColumns])
+
   let columnBeingDragged: any = null;
 
   const onDragStart = (e: any) => {
@@ -126,6 +147,7 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
     const currentCols = visibleColumns.map((c: any) => c.id);
     const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
+    setCurrentColumns(currentCols);
     setColumnOrder(currentCols);
   };
 
@@ -147,6 +169,9 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
             )}
           </code>
             </pre> */}
+        
+        {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
+        {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
         <table {...getTableProps()} className="react-table react-table-sticky">
           <thead className="header">
             {headerGroups.map((headerGroup: any, h: any) => (
@@ -160,6 +185,30 @@ export function HeadlessTable({ columns, data, sidePanelRow, setSidePanelRow, se
                     onDrop={column.noDrag ? undefined : onDrop}
                     className="th"
                     width={column.width}
+                    onClick={() => {
+                      column.isSorted
+                        ? column.isSortedDesc
+                          ? column.clearSortBy()
+                          : column.toggleSortBy(true)
+                        : column.toggleSortBy(false)
+                      let direction
+                      if(column.isSorted) {
+                        if(column.isSortedDesc) {
+                          direction = ''
+                        }else{
+                          direction = 'DESC'
+                        }
+                      }else{
+                        direction = 'ASC'
+                      }
+                      let sortDirectionState
+                      if(direction === '') {
+                        sortDirectionState = {}
+                      }else{
+                        sortDirectionState = { accessor: column.id, direction }
+                      }
+                      setSortDirection(sortDirectionState)
+                    }}
                   >
                     {column.render('Header')}
                     <span>

@@ -183,7 +183,6 @@ const App = () => {
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
-  const [tableHeaderInfo, setTableHeaderInfo] = useState(null);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -197,7 +196,7 @@ const App = () => {
       isRowId: true
     },
     {
-      Header: () => <div style={{ textAlign: "left" }}>First Name</div>,
+      Header: () => <span style={{ textAlign: "left" }}>First Name</span>,
       accessor: 'firstName',
       sticky: 'left',
       noDrag: true,
@@ -278,9 +277,8 @@ const App = () => {
     }
   }, [sidePanelRow])
 
-  useEffect(() => {
-    console.log(tableHeaderInfo)
-  }, [tableHeaderInfo])
+  const sortDirectionDivRef = useRef(null)
+  const currentColumnsDivRef = useRef(null)
 
   return <Theme><Page>
     <SidePanel title="Panel Title"
@@ -564,10 +562,19 @@ const App = () => {
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 
+          defaultSort={{ id: 'firstName', desc: true }}
           sidePanelRow={sidePanelRow} 
           setSidePanelRow={setSidePanelRow}
-          setTableHeaderInfo={setTableHeaderInfo} 
+          sortDirectionDivRef={sortDirectionDivRef}
+          currentColumnsDivRef={currentColumnsDivRef}
         />
+
+        <Button onClick={() => { 
+          // @ts-ignore
+          console.log(sortDirectionDivRef.current.innerText)
+          // @ts-ignore
+          console.log(currentColumnsDivRef.current.innerText)
+        }}>Get Table Info</Button>
       </Box>
     </Background>
   </Page></Theme>
