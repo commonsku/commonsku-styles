@@ -15,4 +15,6 @@ export * from './ProofingCompleteIcon';
 export * from './InfoIcon';
 export * from './LockIcon';
 export * from './PanelIcon';
+export * from './NoteIcon';
+export * from './TaskIcon';
 export { default as Loading } from './Loading';
