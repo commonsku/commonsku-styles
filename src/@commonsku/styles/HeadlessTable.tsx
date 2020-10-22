@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
 import { PanelIcon } from './icons/PanelIcon'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+import { Button } from './Button'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -242,7 +243,7 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
                           <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
                             style={{ paddingTop: '10px' }}
                           >
-                            <PanelIcon color={"#00d374"} width="30" />
+                           <Button secondary size="tiny">&#65291;</Button>
                           </div> 
                         </TD>
                       )
