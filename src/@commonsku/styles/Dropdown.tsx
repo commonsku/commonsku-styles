@@ -44,6 +44,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
     padding: 8px 8px;
     border-radius: 5px;
     text-align: left;
+    z-index: 105;
 /*
     a {
         color: ${p => getColor(p.primary ? 'primary' : 'cta')};
