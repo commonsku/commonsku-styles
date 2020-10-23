@@ -17,7 +17,7 @@ import user_pic5 from './users/5.jpeg';
 
 import makeData from './makeData';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -368,8 +368,9 @@ const App = () => {
             <ProofReceivedIcon width={"1.5rem"}/>
             <PendingApprovalIcon width={"1.5rem"}/>
             <ChangeRequestedIcon width={"1.5rem"}/>
-
-            <PanelIcon color={"#00d374"} width={".9rem"}/>
+            <PanelIcon color={"#00d374"} width={"1.5rem"}/>
+            <TaskIcon color={"black"} width={"1.5rem"}/>
+            <NoteIcon color={"black"} width={"1.5rem"}/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
