@@ -42,7 +42,6 @@ export const DropDownContent = styled.div<DropdownContentProps>`
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 8px 8px;
-    z-index: 105;
     border-radius: 5px;
     text-align: left;
 /*

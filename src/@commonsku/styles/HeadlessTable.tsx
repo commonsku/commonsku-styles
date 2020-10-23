@@ -240,9 +240,7 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
                     if(cell.column.isRowId) {
                       return (
                         <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
-                          <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }} 
-                            style={{ paddingTop: '10px' }}
-                          >
+                          <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }}>
                            <Button secondary size="tiny">&#65291;</Button>
                           </div> 
                         </TD>

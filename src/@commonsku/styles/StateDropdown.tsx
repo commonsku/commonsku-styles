@@ -73,10 +73,11 @@ const Circles = ({val, max}:{val: number, max: number}) => {
     </StyledCircles>
 }
 
-export const StateDropdown = ({ items, text, value, row, ...props }: {
+export const StateDropdown = ({ items, text, value, row, showCircles=true, ...props }: {
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
     value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number},
-    row: any
+    row: any,
+    showCircles: boolean
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -107,7 +108,7 @@ export const StateDropdown = ({ items, text, value, row, ...props }: {
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
             <DropdownItem rounded active={showMenu} onClick={e => { e.stopPropagation(); setShowMenu(!showMenu) }}>
-              <Circles max={items.length} val={value2.order}/>
+              {showCircles && <Circles max={items.length} val={value2.order}/>}
               {value2.content}
             </DropdownItem>
             {showMenu && <DropDownContent>
@@ -120,7 +121,7 @@ export const StateDropdown = ({ items, text, value, row, ...props }: {
                             setValue(item)
                             item.onClick && item.onClick(item, row)
                         }}
-                    ><Circles max={items.length} val={item.order}/> {item.content} </DropdownItem> 
+                    >{showCircles && <Circles max={items.length} val={item.order}/>} {item.content} </DropdownItem> 
                 })}
             </DropDownContent>}
         </StyledDropdown>
