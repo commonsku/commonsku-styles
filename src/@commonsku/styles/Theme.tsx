@@ -29,7 +29,7 @@ export const colors = {
   transparent: 'transparent',
   error: '#B21154',
 };
-export const fonts = ['skufont-demibold', 'sans-serif', 'Roboto'];
+export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {
   tiny: '.8em',
   small: '1em',
@@ -40,7 +40,7 @@ export const fontSizes = {
 export const themeOptions = {
   colors,
   fonts,
-  fontFamily: `'${fonts.join("','")}'`,
+  fontFamily: `${fonts.join(",")}`,
   fontSizes,
 }
 
