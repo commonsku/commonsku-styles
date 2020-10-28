@@ -7,8 +7,10 @@ import { useSticky } from 'react-table-sticky';
 import { PanelIcon } from './icons/PanelIcon'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
+import { UpArrowIcon } from './icons';
+import { getColor } from './Theme';
 
-const Styles = styled.div`
+const Styles = styled.div` 
   padding: 1rem;
   overflow-x: scroll;
   .th,
@@ -152,6 +154,20 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
     setColumnOrder(currentCols);
   };
 
+  const iconProps = {
+    width: '10px',
+    fill: getColor('primary100')
+  }
+
+  const iconStyle = (up: boolean) => {
+    return {
+      verticalAlign: 'middle', 
+      transitionDuration: '.3s', 
+      transform: 'rotate(' + ( up ? 0 : 180 ) + 'deg)',
+      marginLeft: '5px'
+    }
+  }
+
   return (
     <Styles>
       <>
@@ -215,8 +231,8 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
+                          ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
+                          : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
                         : ''}
                     </span>
                   </th>
@@ -240,7 +256,7 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
                     if(cell.column.isRowId) {
                       return (
                         <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
-                          <div onClick={() => { sidePanelRow ? setSidePanelRow(null) : setSidePanelRow(row.original) }}>
+                          <div onClick={() => setSidePanelRow(row.original)}>
                            <Button secondary size="tiny">&#65291;</Button>
                           </div> 
                         </TD>

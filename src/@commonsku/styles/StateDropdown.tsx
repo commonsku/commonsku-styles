@@ -77,7 +77,7 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, ...pr
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
     value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number},
     row: any,
-    showCircles: boolean
+    showCircles?: boolean
 } & DropdownContentProps) => {
 
     const node = useRef();
