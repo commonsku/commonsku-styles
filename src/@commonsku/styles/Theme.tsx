@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
+import _ from 'lodash'
 
 
 export const colors = {
@@ -61,14 +62,14 @@ export function getThemeFontSize(props: {[key: string]: any}, value: string, fal
   return getThemeProperty(props, 'fontSizes', value, fallbackValue);
 }
 
-export function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = themeOptions.fontFamily): string {
+export function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = ""): string {
   return getThemeProperty(props, 'fontFamily', fallbackValue);
 }
 
 export function getThemeProperty(props: {[key: string]: any}, prop: string, value?: string, fallbackValue?: string): string {
-  if (props.theme && props.theme[prop]) {
-    if (typeof props.theme[prop] === "object" && props.theme[prop]?.value) {
-      return props.theme[prop]?.value;
+  if (_.get(props, `theme.${prop}`, null)) {
+    if (_.isObject(props.theme[prop]) && _.get(props.theme, `${prop}.${value}`, null)) {
+      return _.get(props.theme, `${prop}.${value}`, null);
     } else {
       return props.theme[prop];
     }
@@ -83,8 +84,8 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
     : null;
 }
 
-const Theme = ({ theme={}, children, globalStyles=true }: React.PropsWithChildren<{
-  theme: object, globalStyles: boolean
+const Theme = ({ theme={}, globalStyles=true, children }: React.PropsWithChildren<{
+  theme?: object, globalStyles?: boolean
 }>) => (
   <ThemeProvider theme={{
     ...themeOptions,
