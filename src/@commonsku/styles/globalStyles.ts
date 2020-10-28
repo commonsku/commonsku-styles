@@ -1,10 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
-import { fonts } from './Theme';
- 
+import { getThemeProperty } from './Theme';
+
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: ${"'" + fonts.join("','") + "'"};
+    font-family: ${props => getThemeProperty(props, 'fontFamily')};
   }
 `;
- 
+
 export default GlobalStyle;
