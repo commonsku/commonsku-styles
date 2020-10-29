@@ -1,5 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./globalStyles";
+import _ from 'lodash'
 
 
 export const colors = {
@@ -27,7 +29,7 @@ export const colors = {
   transparent: 'transparent',
   error: '#B21154',
 };
-export const fonts = ['skufont-demibold', 'sans-serif', 'Roboto'];
+export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {
   tiny: '.8em',
   small: '1em',
@@ -38,7 +40,8 @@ export const fontSizes = {
 export const themeOptions = {
   colors,
   fonts,
-  fontSizes
+  fontFamily: `${fonts.join(",")}`,
+  fontSizes,
 }
 
 export function getColor(color?: string, def?: string): string {
@@ -51,20 +54,6 @@ export function getFontSize(value?: string, def?: string): string {
   return value && fontSizes[value] ? fontSizes[value] : fontSizes[def];
 }
 
-export function getFonts(value?: string): string {
-  let result = fonts;
-  // @ts-ignore
-  if (value?.toLowerCase() !== 'all') {
-    result = fonts.filter((v: string) => v===value);
-  }
-
-  let _result = result.join("','");
-  if (_result.charAt(0) !== "'") { _result = "'" + _result }
-  if (_result.charAt(_result.length-1) !== "'") { _result = _result + "'" };
-
-  return _result;
-}
-
 export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
   return getThemeProperty(props, 'colors', color, fallbackColor);
 }
@@ -73,26 +62,38 @@ export function getThemeFontSize(props: {[key: string]: any}, value: string, fal
   return getThemeProperty(props, 'fontSizes', value, fallbackValue);
 }
 
-export function getThemeFonts(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
-  return getThemeProperty(props, 'fonts', value, fallbackValue);
+export function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = ""): string {
+  return getThemeProperty(props, 'fontFamily', fallbackValue);
 }
 
-export function getThemeProperty(props: {[key: string]: any}, prop: string, value: string, fallbackValue?: string): string {
-  if (props.theme && props.theme[prop] && props.theme[prop][value]) {
-    return props.theme[prop][value];
+export function getThemeProperty(props: {[key: string]: any}, prop: string, value?: string, fallbackValue?: string): string {
+  if (_.get(props, `theme.${prop}`, null)) {
+    if (_.isObject(props.theme[prop]) && _.get(props.theme, `${prop}.${value}`, null)) {
+      return _.get(props.theme, `${prop}.${value}`, null);
+    } else {
+      return props.theme[prop];
+    }
   }
   // @ts-ignore
   return prop === 'fontSizes' 
     ? getFontSize(fallbackValue, value)
     : prop === 'colors'
     ? getColor(fallbackValue, value)
-    : prop === 'fonts'
-    ? getColor(fallbackValue, value)
+    : prop === 'fontFamily'
+    ? themeOptions.fontFamily
     : null;
 }
 
-const Theme = ({ children }: React.PropsWithChildren<{}>) => (
-  <ThemeProvider theme={themeOptions}>{children}</ThemeProvider>
+const Theme = ({ theme={}, globalStyles=true, children }: React.PropsWithChildren<{
+  theme?: object, globalStyles?: boolean
+}>) => (
+  <ThemeProvider theme={{
+    ...themeOptions,
+    ...theme,
+  }}>
+    {globalStyles ? <GlobalStyle /> : null}
+    {children}
+  </ThemeProvider>
 );
 
 export default Theme;
