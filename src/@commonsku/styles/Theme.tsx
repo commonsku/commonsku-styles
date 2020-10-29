@@ -84,7 +84,9 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
     : null;
 }
 
-const Theme = ({ theme={}, globalStyles=true, children }: React.PropsWithChildren<{
+
+//use globalStyles with care, currently anchored to body
+const Theme = ({ theme={}, globalStyles=false, children }: React.PropsWithChildren<{
   theme?: object, globalStyles?: boolean
 }>) => (
   <ThemeProvider theme={{
