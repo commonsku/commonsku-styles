@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
-import { UpArrowIcon } from './icons';
+import { NoteIcon, UpArrowIcon } from './icons';
 import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
@@ -69,9 +69,10 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export const Dropdown = ({ items, children, underlined, primary, text, ...props }: {
+export const Dropdown = ({ items, children, underlined, primary, text, icon, ...props }: {
     items?: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
     children?: any
+    icon?: ReactNode
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -104,9 +105,15 @@ export const Dropdown = ({ items, children, underlined, primary, text, ...props 
         // @ts-ignore
         <span ref={node} {...props} onMouseLeave={() => setShowMenu(false)}>
             <StyledDropdown>
-                <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
-                    {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
-                </Button>
+                {icon ?
+                    <span onClick={() => setShowMenu(!showMenu)}>
+                        {icon}
+                    </span>
+                :
+                    <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
+                        {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
+                    </Button>
+                }
                 {showMenu && <DropDownContent underlined={underlined} primary={primary}>
                     {items && items.map((item, i) => {
                         return item && <DropdownItem key={'dropdown-item-'+i}

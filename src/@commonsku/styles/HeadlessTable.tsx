@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
@@ -168,6 +168,8 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
     }
   }
 
+  const tableRef = useRef(null)
+
   return (
     <Styles>
       <>
@@ -189,7 +191,7 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
         
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
-        <table {...getTableProps()} className="react-table react-table-sticky">
+        <table ref={tableRef} {...getTableProps()} className="react-table react-table-sticky">
           <thead className="header">
             {headerGroups.map((headerGroup: any, h: any) => (
               <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
@@ -198,7 +200,16 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
                     data-column-index={i}
                     draggable={column.noDrag ? false : true}
                     onDragStart={column.noDrag ? undefined : onDragStart}
-                    onDragOver={e => e.preventDefault()}
+                    onDragOver={e => {
+                      e.preventDefault()
+                      /* const draggable = e.currentTarget.getAttribute('draggable')
+                      if(draggable === 'false') {
+                        _.throttle(() => {
+                          //@ts-ignore
+                          tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
+                        }, 1000, { 'trailing': true })
+                      } */
+                    }}
                     onDrop={column.noDrag ? undefined : onDrop}
                     className="th"
                     width={column.width}

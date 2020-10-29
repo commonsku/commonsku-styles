@@ -211,8 +211,6 @@ const App = () => {
     {
       Header: 'Status',
       accessor: 'status',
-      sticky: 'left',
-      noDrag: true,
       Cell: (row) => {
         const po = row.row.original
         const wrapper = useRef(null)
@@ -334,7 +332,7 @@ const App = () => {
                   {onClick: () => null, content: 'New Address'},
                 ]
                }/>
-              <Dropdown text="Dropdown Panel">
+              <Dropdown text="Dropdown Panel" icon={<NoteIcon width="40" />}>
                 <Row>
                   <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
                   <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
