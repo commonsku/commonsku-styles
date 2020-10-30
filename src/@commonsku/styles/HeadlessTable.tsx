@@ -133,6 +133,7 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
 
   const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
   const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
+  const [hover, setHover] = useState({})
 
   useEffect(() => {
     setCurrentColumns(visibleColumns.map((c: any) => c.id))
@@ -254,28 +255,24 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
           <tbody {...getTableBodyProps()} className="body">
             {page.map((row: any, r: any) => {
               prepareRow(row)
-              return (
-                <tr key={r} {...row.getRowProps()}>
-                  {row.cells.map((cell: any, c: any) => {
-                    let highlight = false
-                    if(setSidePanelRow) {
-                      if(row.original === sidePanelRow) {
-                        highlight = true
-                      }
-                    }
 
+              return (
+                <tr key={r} {...row.getRowProps()} onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}>
+                  {row.cells.map((cell: any, c: any) => {
                     if(cell.column.isRowId) {
                       return (
-                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
-                          <div onClick={() => setSidePanelRow(row.original)}>
-                           <Button secondary size="tiny">&#65291;</Button>
-                          </div> 
+                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} style={{ backgroundColor: row.original === sidePanelRow ? '#F4F7FF' : '#fff' }}>
+                          {hover === row.original || row.original === sidePanelRow ?
+                            <div onClick={() => setSidePanelRow(row.original)}>
+                              <Button secondary size="tiny">&#65291;</Button>
+                            </div> 
+                          : null}
                         </TD>
                       )
                     }
 
                     return (
-                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={highlight ? '#F4F7FF' : '#fff'}>
+                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} style={{ backgroundColor: row.original === sidePanelRow ? '#F4F7FF' : '#fff' }}>
                         {cell.render('Cell')}
                       </TD>
                     )
