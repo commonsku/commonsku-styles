@@ -69,14 +69,16 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export const Dropdown = ({ items, children, underlined, primary, text, icon, ...props }: {
+export const Dropdown = ({ items, children, underlined, primary, text, icon, openMenu=false, mouseLeaveCallback, ...props }: {
     items?: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
     children?: any
     icon?: ReactNode
+    openMenu?: boolean
+    mouseLeaveCallback?: any
 } & DropdownContentProps) => {
 
     const node = useRef();
-    const [showMenu, setShowMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
         width: '10px',
         fill: getColor(primary ? 'primary100' : 'white'),
@@ -103,7 +105,12 @@ export const Dropdown = ({ items, children, underlined, primary, text, icon, ...
 
     return (
         // @ts-ignore
-        <span ref={node} {...props} onMouseLeave={() => setShowMenu(false)}>
+        <span ref={node} {...props} onMouseLeave={() => { 
+            setShowMenu(false); 
+            if(mouseLeaveCallback) { 
+                mouseLeaveCallback()
+            }
+        }}>
             <StyledDropdown>
                 {icon ?
                     <span onClick={() => setShowMenu(!showMenu)}>
