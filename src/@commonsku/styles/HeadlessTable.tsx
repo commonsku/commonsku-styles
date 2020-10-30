@@ -86,10 +86,15 @@ type HeadlessTableProps = React.PropsWithChildren<{
   sidePanelRow?: object|null, 
   setSidePanelRow?: any, 
   sortDirectionDivRef?: any, 
-  currentColumnsDivRef?: any
+  currentColumnsDivRef?: any,
+  onChangeSortOrColumns?: any,
 } & SharedStyleTypes>;
 
-export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef }: HeadlessTableProps) {
+export function HeadlessTable({ 
+  columns, data, defaultSort, sidePanelRow, 
+  setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef,
+  onChangeSortOrColumns
+}: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
     pageIndex: 0, 
@@ -138,6 +143,10 @@ export function HeadlessTable({ columns, data, defaultSort, sidePanelRow, setSid
   useEffect(() => {
     setCurrentColumns(visibleColumns.map((c: any) => c.id))
   }, [visibleColumns])
+
+  useEffect(() => {
+    onChangeSortOrColumns(sortDirection, currentColumns)
+  }, [sortDirection, currentColumns])
 
   let columnBeingDragged: any = null;
 

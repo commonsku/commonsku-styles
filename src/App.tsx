@@ -278,6 +278,10 @@ const App = () => {
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
 
+  function onChangeSortOrColumns(e) {
+    console.log(e)
+  }
+
   return <Theme><Page>
     <SidePanel title="Panel Title"
       // fullWidthTitle
@@ -566,6 +570,7 @@ const App = () => {
           setSidePanelRow={setSidePanelRow}
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
+          onChangeSortOrColumns={onChangeSortOrColumns}
         />
 
         <Button onClick={() => { 
