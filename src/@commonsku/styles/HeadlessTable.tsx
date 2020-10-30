@@ -60,7 +60,6 @@ const Styles = styled.div`
     padding: 0.5rem;
   }
 `
-
 const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleTypes|SizerTypes>`
   &&& {
     border: 0 !important;
@@ -270,7 +269,7 @@ export function HeadlessTable({
                   {row.cells.map((cell: any, c: any) => {
                     if(cell.column.isRowId) {
                       return (
-                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} style={{ backgroundColor: row.original === sidePanelRow ? '#F4F7FF' : '#fff' }}>
+                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
                           {hover === row.original || row.original === sidePanelRow ?
                             <div onClick={() => setSidePanelRow(row.original)}>
                               <Button secondary size="tiny">&#65291;</Button>
@@ -281,7 +280,7 @@ export function HeadlessTable({
                     }
 
                     return (
-                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} style={{ backgroundColor: row.original === sidePanelRow ? '#F4F7FF' : '#fff' }}>
+                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
                         {cell.render('Cell')}
                       </TD>
                     )
