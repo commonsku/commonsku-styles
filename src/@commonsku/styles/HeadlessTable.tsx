@@ -4,6 +4,9 @@ import styled, { css } from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
+import { FixedSizeList } from 'react-window';
+import scrollbarWidth from './scrollbarWidth'
+
 import { PanelIcon } from './icons/PanelIcon'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
@@ -50,6 +53,7 @@ const Styles = styled.div`
       }
       [data-sticky-last-left-td] {
         box-shadow: 2px 0px 0px #ccc;
+        z-index: 5 !important;
       }
       [data-sticky-first-right-td] {
         box-shadow: -2px 0px 0px #ccc;
@@ -78,10 +82,29 @@ const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleT
   }
 `;
 
+const TABLEDIV = styled.div<{clickable?: boolean, backgroundColor?: String}&SharedStyleTypes|SizerTypes>`
+  &&& {
+    border: 0 !important;
+    color: #52585c;
+    font-size: .875rem;
+    line-height: 1.75rem;
+    display: table-cell;
+    padding: 0.5625rem 0.625rem;
+    overflow: visible !important;
+    background-color: ${props => props.backgroundColor ? props.backgroundColor : "#fff"};
+    &:hover {
+      cursor: ${props => props.clickable ? "pointer" : "normal"};
+    }
+    ${SizerCss}
+    ${SharedStyles}
+  }
+`;
+
 type HeadlessTableProps = React.PropsWithChildren<{
   columns: any,
   data: object[], 
-  defaultSort?: { id: string, desc: boolean }, 
+  defaultSort?: { id: string, desc: boolean },
+  pagination?: boolean,
   sidePanelRow?: object|null, 
   setSidePanelRow?: any, 
   sortDirectionDivRef?: any, 
@@ -90,7 +113,7 @@ type HeadlessTableProps = React.PropsWithChildren<{
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, defaultSort, sidePanelRow, 
+  columns, data, pagination=false, defaultSort, sidePanelRow, 
   setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef,
   onChangeSortOrColumns
 }: HeadlessTableProps) {
@@ -120,6 +143,8 @@ export function HeadlessTable({
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
+    totalColumnsWidth,
     visibleColumns,
     prepareRow,
     setColumnOrder,
@@ -179,6 +204,36 @@ export function HeadlessTable({
 
   const tableRef = useRef(null)
 
+  const RenderDivRow = ({ index, style }) => {
+    const row = rows[index]
+    prepareRow(row)
+    return (
+      <div {...row.getRowProps({ style })} className="tr" onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}>
+        {row.cells.map((cell: any, c: any) => {
+          if(cell.column.isRowId) {
+            return (
+              <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
+                {hover === row.original || row.original === sidePanelRow ?
+                  <div onClick={() => setSidePanelRow(row.original)}>
+                    <Button secondary size="tiny">&#65291;</Button>
+                  </div> 
+                : null}
+              </TABLEDIV>
+            )
+          }
+
+          return (
+            <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
+              {cell.render('Cell')}
+            </TABLEDIV>
+          )
+        })}
+      </div>
+    )
+  }
+
+  const scrollBarSize = React.useMemo(() => scrollbarWidth(), [])
+
   return (
     <Styles>
       <>
@@ -200,140 +255,216 @@ export function HeadlessTable({
         
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
-        <table ref={tableRef} {...getTableProps()} className="react-table react-table-sticky">
-          <thead className="header">
-            {headerGroups.map((headerGroup: any, h: any) => (
-              <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-                {headerGroup.headers.map((column: any, i: any) => (
-                  <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
-                    data-column-index={i}
-                    draggable={column.noDrag ? false : true}
-                    onDragStart={column.noDrag ? undefined : onDragStart}
-                    onDragOver={e => {
-                      e.preventDefault()
-                      /* const draggable = e.currentTarget.getAttribute('draggable')
-                      if(draggable === 'false') {
-                        _.throttle(() => {
-                          //@ts-ignore
-                          tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
-                        }, 1000, { 'trailing': true })
-                      } */
-                    }}
-                    onDrop={column.noDrag ? undefined : onDrop}
-                    className="th"
-                    width={column.width}
-                    onClick={() => {
-                      column.isSorted
-                        ? column.isSortedDesc
-                          ? column.clearSortBy()
-                          : column.toggleSortBy(true)
-                        : column.toggleSortBy(false)
-                      let direction
-                      if(column.isSorted) {
-                        if(column.isSortedDesc) {
-                          direction = ''
+        {pagination ? 
+          <table ref={tableRef} {...getTableProps()} className="react-table react-table-sticky">
+            <thead className="header">
+              {headerGroups.map((headerGroup: any, h: any) => (
+                <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+                  {headerGroup.headers.map((column: any, i: any) => (
+                    <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+                      data-column-index={i}
+                      draggable={column.noDrag ? false : true}
+                      onDragStart={column.noDrag ? undefined : onDragStart}
+                      onDragOver={e => {
+                        e.preventDefault()
+                        /* const draggable = e.currentTarget.getAttribute('draggable')
+                        if(draggable === 'false') {
+                          _.throttle(() => {
+                            //@ts-ignore
+                            tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
+                          }, 1000, { 'trailing': true })
+                        } */
+                      }}
+                      onDrop={column.noDrag ? undefined : onDrop}
+                      className="th"
+                      width={column.width}
+                      onClick={() => {
+                        column.isSorted
+                          ? column.isSortedDesc
+                            ? column.clearSortBy()
+                            : column.toggleSortBy(true)
+                          : column.toggleSortBy(false)
+                        let direction
+                        if(column.isSorted) {
+                          if(column.isSortedDesc) {
+                            direction = ''
+                          }else{
+                            direction = 'DESC'
+                          }
                         }else{
-                          direction = 'DESC'
+                          direction = 'ASC'
                         }
-                      }else{
-                        direction = 'ASC'
-                      }
-                      let sortDirectionState
-                      if(direction === '') {
-                        sortDirectionState = {}
-                      }else{
-                        sortDirectionState = { accessor: column.id, direction }
-                      }
-                      setSortDirection(sortDirectionState)
-                    }}
-                  >
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
-                          : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
-                        : ''}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()} className="body">
-            {page.map((row: any, r: any) => {
-              prepareRow(row)
+                        let sortDirectionState
+                        if(direction === '') {
+                          sortDirectionState = {}
+                        }else{
+                          sortDirectionState = { accessor: column.id, direction }
+                        }
+                        setSortDirection(sortDirectionState)
+                      }}
+                    >
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
+                            : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
+                          : ''}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()} className="body">
+              {page.map((row: any, r: any) => {
+                prepareRow(row)
 
-              return (
-                <tr key={r} {...row.getRowProps()} onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}>
-                  {row.cells.map((cell: any, c: any) => {
-                    if(cell.column.isRowId) {
+                return (
+                  <tr key={r} {...row.getRowProps()} onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}>
+                    {row.cells.map((cell: any, c: any) => {
+                      if(cell.column.isRowId) {
+                        return (
+                          <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
+                            {hover === row.original || row.original === sidePanelRow ?
+                              <div onClick={() => setSidePanelRow(row.original)}>
+                                <Button secondary size="tiny">&#65291;</Button>
+                              </div> 
+                            : null}
+                          </TD>
+                        )
+                      }
+
                       return (
                         <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
-                          {hover === row.original || row.original === sidePanelRow ?
-                            <div onClick={() => setSidePanelRow(row.original)}>
-                              <Button secondary size="tiny">&#65291;</Button>
-                            </div> 
-                          : null}
+                          {cell.render('Cell')}
                         </TD>
                       )
-                    }
-
-                    return (
-                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
-                        {cell.render('Cell')}
-                      </TD>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        <div className="react-table-pagination">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {'<<'}
-          </button>{' '}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {'<'}
-          </button>{' '}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {'>'}
-          </button>{' '}
-          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-            {'>>'}
-          </button>{' '}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-          </span>
-          <span>
-            | Go to page:{' '}
-            <input
-              type="number"
-              defaultValue={pageIndex + 1}
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        : 
+          <div ref={tableRef} {...getTableProps()} className="react-table react-table-sticky" style={{ overflowY: 'hidden'}}>
+            <div className="header">
+              {headerGroups.map((headerGroup: any, h: any) => (
+                <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+                  {headerGroup.headers.map((column: any, i: any) => (
+                    <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+                      data-column-index={i}
+                      draggable={column.noDrag ? false : true}
+                      onDragStart={column.noDrag ? undefined : onDragStart}
+                      onDragOver={e => {
+                        e.preventDefault()
+                        /* const draggable = e.currentTarget.getAttribute('draggable')
+                        if(draggable === 'false') {
+                          _.throttle(() => {
+                            //@ts-ignore
+                            tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
+                          }, 1000, { 'trailing': true })
+                        } */
+                      }}
+                      onDrop={column.noDrag ? undefined : onDrop}
+                      className="th"
+                      width={column.width}
+                      onClick={() => {
+                        column.isSorted
+                          ? column.isSortedDesc
+                            ? column.clearSortBy()
+                            : column.toggleSortBy(true)
+                          : column.toggleSortBy(false)
+                        let direction
+                        if(column.isSorted) {
+                          if(column.isSortedDesc) {
+                            direction = ''
+                          }else{
+                            direction = 'DESC'
+                          }
+                        }else{
+                          direction = 'ASC'
+                        }
+                        let sortDirectionState
+                        if(direction === '') {
+                          sortDirectionState = {}
+                        }else{
+                          sortDirectionState = { accessor: column.id, direction }
+                        }
+                        setSortDirection(sortDirectionState)
+                      }}
+                    >
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
+                            : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
+                          : ''}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div {...getTableBodyProps()} className="body">
+              <FixedSizeList
+                height={400}
+                itemCount={rows.length}
+                itemSize={70}
+                width={totalColumnsWidth + scrollBarSize}
+              >
+                {RenderDivRow}
+              </FixedSizeList>
+            </div>
+          </div>
+        }
+        {pagination ? 
+          <div className="react-table-pagination">
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              {'<<'}
+            </button>{' '}
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {'<'}
+            </button>{' '}
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {'>'}
+            </button>{' '}
+            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+              {'>>'}
+            </button>{' '}
+            <span>
+              Page{' '}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>{' '}
+            </span>
+            <span>
+              | Go to page:{' '}
+              <input
+                type="number"
+                defaultValue={pageIndex + 1}
+                onChange={(e: any) => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0
+                  gotoPage(page)
+                }}
+                style={{ width: '100px' }}
+              />
+            </span>{' '}
+            <select
+              value={pageSize}
               onChange={(e: any) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0
-                gotoPage(page)
+                setPageSize(Number(e.target.value))
               }}
-              style={{ width: '100px' }}
-            />
-          </span>{' '}
-          <select
-            value={pageSize}
-            onChange={(e: any) => {
-              setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
+            >
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
+        : null}
       </>
     </Styles>
   )
