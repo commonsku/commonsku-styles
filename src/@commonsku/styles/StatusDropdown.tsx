@@ -24,11 +24,8 @@ const DropdownItem = styled.div<DropdownContentProps>`
     display: block;
     text-align: center;
     background-color: ${p => p.color ? p.color : "#F4F7FF"};
-
     border-radius: ${p => p.rounded ? "100px" : 0};
-    
     opacity: ${p => p.active ? 0.85 : 1};
-
     &:hover {
         opacity: .85;
         cursor: pointer;
@@ -47,11 +44,12 @@ const DropDownContent = styled.div<DropdownContentProps>`
     overflow: hidden;
 `;
 
-export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, ...props }: {
+export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, disabled=false, ...props }: {
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string}>,
     value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, color: string},
     row: any,
-    setMenuIsOpen ?: any
+    setMenuIsOpen?: any,
+    disabled?: boolean
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -87,7 +85,7 @@ export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, ...prop
     return (
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
-            <DropdownItem rounded color={value2.color} active={showMenu} onClick={() => setShowMenu(!showMenu)}>{value2.content}</DropdownItem>
+            <DropdownItem rounded color={value2.color} active={showMenu} onClick={() => disabled ? setShowMenu(!showMenu) : null}>{value2.content}</DropdownItem>
             {showMenu && <DropDownContent>
                 {items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i} color={item.color}

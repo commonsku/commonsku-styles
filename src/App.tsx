@@ -649,7 +649,7 @@ const App = () => {
           // @ts-ignore
           console.log(currentColumnsDivRef.current.innerText)
         }}>Get Table Info</Button>
-
+        <br/><br/>
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 

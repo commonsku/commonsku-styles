@@ -1,21 +1,21 @@
+// @ts-nocheck
+
 import _ from 'lodash';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, createContext, useContext, forwardRef } from 'react';
 import styled, { css } from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
-import { FixedSizeList } from 'react-window';
-import scrollbarWidth from './scrollbarWidth'
+import { FixedSizeList as List } from 'react-window';
 
-import { PanelIcon } from './icons/PanelIcon'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
 import { UpArrowIcon } from './icons';
 import { getColor } from './Theme';
+import scrollbarWidth from './scrollbarWidth';
 
-const Styles = styled.div` 
-  padding: 1rem;
-  overflow-x: scroll;
+const Styles = styled.div<{pagination?: boolean}>`
+  overflow-x: ${props => props.pagination ? 'scroll' : 'hidden'};
   .th,
   .td {
     padding: 5px;
@@ -58,6 +58,21 @@ const Styles = styled.div`
       [data-sticky-first-right-td] {
         box-shadow: -2px 0px 0px #ccc;
       }
+    }
+
+    .sticky {
+      position: sticky !important;
+      position: -webkit-sticky !important;
+      z-index: 100 !important;
+    }
+
+    .row,
+    .sticky {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-bottom: 1px solid #eee;
+      box-sizing: border-box;
     }
   }
   .react-table-pagination {
@@ -163,6 +178,12 @@ export function HeadlessTable({
   const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
   const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
   const [hover, setHover] = useState({})
+  const value = { hover, setHover };
+
+  const HoverContext = React.createContext({
+    hover: {},
+    setHover: () => {}
+  });
 
   useEffect(() => {
     setCurrentColumns(visibleColumns.map((c: any) => c.id))
@@ -204,11 +225,29 @@ export function HeadlessTable({
 
   const tableRef = useRef(null)
 
+  const scrollBarSize = React.useMemo(() => scrollbarWidth(), [])
+
   const RenderDivRow = ({ index, style }) => {
     const row = rows[index]
     prepareRow(row)
     return (
-      <div {...row.getRowProps({ style })} className="tr" onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}>
+      <HoverContext.Provider value={value}>
+        <DivRow row={row} index={index} style={style}></DivRow>
+      </HoverContext.Provider>
+    )
+  }
+
+  const DivRow = ({ row, index, style }) => {
+    const { hover, setHover } = useContext(HoverContext);
+
+    return (
+      <div {...row.getRowProps({
+        style: {
+          ...style,
+          position: "absolute",
+          width: totalColumnsWidth + scrollBarSize,
+        }
+      })} className="tr" onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}> 
         {row.cells.map((cell: any, c: any) => {
           if(cell.column.isRowId) {
             return (
@@ -232,7 +271,97 @@ export function HeadlessTable({
     )
   }
 
-  const scrollBarSize = React.useMemo(() => scrollbarWidth(), [])
+  const StickyListContext = createContext()
+  StickyListContext.displayName = "StickyListContext"
+
+  const ItemWrapper = ({ data, index, style }) => {
+    const { ItemRenderer, stickyIndices } = data
+    if (stickyIndices && stickyIndices.includes(index)) {
+      return null
+    }
+    return <ItemRenderer index={index} style={style} />
+  }
+
+  const StickyRow = ({ index, style }) => (
+    <div className="row sticky" style={style}>
+      {headerGroups.map((headerGroup: any, h: any) => (
+        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+          {headerGroup.headers.map((column: any, i: any) => (
+            <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+              data-column-index={i}
+              draggable={column.noDrag ? false : true}
+              onDragStart={column.noDrag ? undefined : onDragStart}
+              onDragOver={e => {
+                e.preventDefault()
+              }}
+              onDrop={column.noDrag ? undefined : onDrop}
+              className="th"
+              width={column.width}
+              onClick={() => {
+                column.isSorted
+                  ? column.isSortedDesc
+                    ? column.clearSortBy()
+                    : column.toggleSortBy(true)
+                  : column.toggleSortBy(false)
+                let direction
+                if(column.isSorted) {
+                  if(column.isSortedDesc) {
+                    direction = ''
+                  }else{
+                    direction = 'DESC'
+                  }
+                }else{
+                  direction = 'ASC'
+                }
+                let sortDirectionState
+                if(direction === '') {
+                  sortDirectionState = {}
+                }else{
+                  sortDirectionState = { accessor: column.id, direction }
+                }
+                setSortDirection(sortDirectionState)
+              }}
+            >
+              {column.render('Header')}
+              <span>
+                {column.isSorted
+                  ? column.isSortedDesc
+                    ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
+                    : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
+                  : ''}
+              </span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+
+  const innerElementType = forwardRef(({ children, ...rest }, ref) => (
+    <StickyListContext.Consumer>
+      {({ stickyIndices }) => (
+        <div ref={ref} {...rest}>
+          {stickyIndices.map(index => (
+            <StickyRow
+              index={index}
+              key={index}
+              style={{ top: index * 60, left: 0, width: "100%", height: '60px' }}
+            />
+          ))}
+  
+          {children}
+        </div>
+      )}
+    </StickyListContext.Consumer>
+  ));
+
+  const StickyList = ({ children, stickyIndices, ...rest }) => (
+    <StickyListContext.Provider value={{ ItemRenderer: children, stickyIndices }}>
+      <List itemData={{ ItemRenderer: children, stickyIndices }} {...rest}>
+        {ItemWrapper}
+      </List>
+    </StickyListContext.Provider>
+  )
 
   return (
     <Styles>
@@ -347,75 +476,17 @@ export function HeadlessTable({
             </tbody>
           </table>
         : 
-          <div ref={tableRef} {...getTableProps()} className="react-table react-table-sticky" style={{ overflowY: 'hidden'}}>
-            <div className="header">
-              {headerGroups.map((headerGroup: any, h: any) => (
-                <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-                  {headerGroup.headers.map((column: any, i: any) => (
-                    <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
-                      data-column-index={i}
-                      draggable={column.noDrag ? false : true}
-                      onDragStart={column.noDrag ? undefined : onDragStart}
-                      onDragOver={e => {
-                        e.preventDefault()
-                        /* const draggable = e.currentTarget.getAttribute('draggable')
-                        if(draggable === 'false') {
-                          _.throttle(() => {
-                            //@ts-ignore
-                            tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
-                          }, 1000, { 'trailing': true })
-                        } */
-                      }}
-                      onDrop={column.noDrag ? undefined : onDrop}
-                      className="th"
-                      width={column.width}
-                      onClick={() => {
-                        column.isSorted
-                          ? column.isSortedDesc
-                            ? column.clearSortBy()
-                            : column.toggleSortBy(true)
-                          : column.toggleSortBy(false)
-                        let direction
-                        if(column.isSorted) {
-                          if(column.isSortedDesc) {
-                            direction = ''
-                          }else{
-                            direction = 'DESC'
-                          }
-                        }else{
-                          direction = 'ASC'
-                        }
-                        let sortDirectionState
-                        if(direction === '') {
-                          sortDirectionState = {}
-                        }else{
-                          sortDirectionState = { accessor: column.id, direction }
-                        }
-                        setSortDirection(sortDirectionState)
-                      }}
-                    >
-                      {column.render('Header')}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
-                            : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
-                          : ''}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div {...getTableBodyProps()} className="body">
-              <FixedSizeList
+          <div ref={tableRef} {...getTableProps()} className="react-table react-table-sticky" style={{ overflow: 'hidden'}}>
+            <div {...getTableBodyProps()} className="body"> 
+              <StickyList
                 height={400}
+                innerElementType={innerElementType}
                 itemCount={rows.length}
                 itemSize={70}
-                width={totalColumnsWidth + scrollBarSize}
+                stickyIndices={[0]}
               >
                 {RenderDivRow}
-              </FixedSizeList>
+              </StickyList>
             </div>
           </div>
         }
