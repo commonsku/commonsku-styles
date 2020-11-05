@@ -13,6 +13,7 @@ import { Button } from './Button'
 import { UpArrowIcon } from './icons';
 import { getColor } from './Theme';
 import scrollbarWidth from './scrollbarWidth';
+import { containerCSS } from 'react-select/src/components/containers';
 
 const Styles = styled.div<{pagination?: boolean}>`
   overflow-x: ${props => props.pagination ? 'scroll' : 'hidden'};
@@ -118,6 +119,7 @@ const TABLEDIV = styled.div<{clickable?: boolean, backgroundColor?: String}&Shar
 type HeadlessTableProps = React.PropsWithChildren<{
   columns: any,
   data: object[], 
+  containerHeight?: number,
   defaultSort?: { id: string, desc: boolean },
   pagination?: boolean,
   sidePanelRow?: object|null, 
@@ -128,7 +130,7 @@ type HeadlessTableProps = React.PropsWithChildren<{
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, pagination=false, defaultSort, sidePanelRow, 
+  columns, data, containerHeight, pagination=false, defaultSort, sidePanelRow, 
   setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef,
   onChangeSortOrColumns
 }: HeadlessTableProps) {
@@ -479,7 +481,7 @@ export function HeadlessTable({
           <div ref={tableRef} {...getTableProps()} className="react-table react-table-sticky" style={{ overflow: 'hidden'}}>
             <div {...getTableBodyProps()} className="body"> 
               <StickyList
-                height={400}
+                height={containerHeight}
                 innerElementType={innerElementType}
                 itemCount={rows.length}
                 itemSize={70}

@@ -653,6 +653,7 @@ const App = () => {
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 
+          containerHeight={600}
           defaultSort={{ id: 'firstName', desc: true }}
           sidePanelRow={sidePanelRow} 
           setSidePanelRow={setSidePanelRow}
