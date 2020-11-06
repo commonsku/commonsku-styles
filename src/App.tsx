@@ -348,16 +348,19 @@ const App = () => {
     },
   ]
 
-  useEffect(() => {
-    if(sidePanelRow) {
+  const sortDirectionDivRef = useRef(null)
+  const currentColumnsDivRef = useRef(null)
+  const selectedRowRef = useRef(null)
+
+  function onSelectRow(index) {
+    //@ts-ignore
+    console.log(index)
+    if(index) {
       setShowPanel(true)
     }else{
       setShowPanel(false)
     }
-  }, [sidePanelRow])
-
-  const sortDirectionDivRef = useRef(null)
-  const currentColumnsDivRef = useRef(null)
+  }
 
   function onChangeSortOrColumns(e) {
     console.log(e)
@@ -653,10 +656,10 @@ const App = () => {
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 
-          containerHeight={600}
+          containerHeight={400}
           defaultSort={{ id: 'firstName', desc: true }}
-          sidePanelRow={sidePanelRow} 
-          setSidePanelRow={setSidePanelRow}
+          selectedRowRef={selectedRowRef}
+          onSelectRow={onSelectRow}
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
           onChangeSortOrColumns={onChangeSortOrColumns}

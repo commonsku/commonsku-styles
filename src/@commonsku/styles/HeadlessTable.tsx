@@ -122,16 +122,15 @@ type HeadlessTableProps = React.PropsWithChildren<{
   containerHeight?: number,
   defaultSort?: { id: string, desc: boolean },
   pagination?: boolean,
-  sidePanelRow?: object|null, 
-  setSidePanelRow?: any, 
+  onSelectRow?:any, 
   sortDirectionDivRef?: any, 
   currentColumnsDivRef?: any,
   onChangeSortOrColumns?: any,
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, containerHeight, pagination=false, defaultSort, sidePanelRow, 
-  setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef,
+  columns, data, containerHeight=400, pagination=false, defaultSort,
+  onSelectRow, sortDirectionDivRef, currentColumnsDivRef,
   onChangeSortOrColumns
 }: HeadlessTableProps) {
   //@ts-ignore
@@ -179,13 +178,12 @@ export function HeadlessTable({
 
   const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
   const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
-  const [hover, setHover] = useState({})
-  const value = { hover, setHover };
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null)
+  const [hover, setHover] = useState({}) //for pagination hover
 
-  const HoverContext = React.createContext({
-    hover: {},
-    setHover: () => {}
-  });
+  useEffect(() => {
+    onSelectRow(selectedRowIndex)
+  }, [selectedRowIndex])
 
   useEffect(() => {
     setCurrentColumns(visibleColumns.map((c: any) => c.id))
@@ -233,14 +231,12 @@ export function HeadlessTable({
     const row = rows[index]
     prepareRow(row)
     return (
-      <HoverContext.Provider value={value}>
-        <DivRow row={row} index={index} style={style}></DivRow>
-      </HoverContext.Provider>
+      <DivRow row={row} index={index} style={style}></DivRow>
     )
   }
 
   const DivRow = ({ row, index, style }) => {
-    const { hover, setHover } = useContext(HoverContext);
+    const [isHover, setIsHover] = useState(false)
 
     return (
       <div {...row.getRowProps({
@@ -249,13 +245,13 @@ export function HeadlessTable({
           position: "absolute",
           width: totalColumnsWidth + scrollBarSize,
         }
-      })} className="tr" onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}> 
+      })} className="tr" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}> 
         {row.cells.map((cell: any, c: any) => {
           if(cell.column.isRowId) {
             return (
-              <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
-                {hover === row.original || row.original === sidePanelRow ?
-                  <div onClick={() => setSidePanelRow(row.original)}>
+              <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={index === selectedRowIndex ? '#F4F7FF' : '#fff' }>
+                {isHover || index === selectedRowIndex ?
+                  <div onClick={() => setSelectedRowIndex(index)}>
                     <Button secondary size="tiny">&#65291;</Button>
                   </div> 
                 : null}
@@ -264,7 +260,7 @@ export function HeadlessTable({
           }
 
           return (
-            <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
+            <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={index === selectedRowIndex ? '#F4F7FF' : '#fff' }>
               {cell.render('Cell')}
             </TABLEDIV>
           )
@@ -287,7 +283,7 @@ export function HeadlessTable({
   const StickyRow = ({ index, style }) => (
     <div className="row sticky" style={style}>
       {headerGroups.map((headerGroup: any, h: any) => (
-        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr" style={{ textAlign: 'center' }}>
           {headerGroup.headers.map((column: any, i: any) => (
             <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
               data-column-index={i}
@@ -357,9 +353,18 @@ export function HeadlessTable({
     </StickyListContext.Consumer>
   ));
 
+  const listRef = React.createRef();
+  useEffect(() => {
+    if(listRef) {
+      if(selectedRowIndex) {
+        listRef.current.scrollToItem(selectedRowIndex, 'smart')
+      }
+    }
+  }, [listRef])
+
   const StickyList = ({ children, stickyIndices, ...rest }) => (
     <StickyListContext.Provider value={{ ItemRenderer: children, stickyIndices }}>
-      <List itemData={{ ItemRenderer: children, stickyIndices }} {...rest}>
+      <List itemData={{ ItemRenderer: children, stickyIndices }} {...rest} ref={listRef}>
         {ItemWrapper}
       </List>
     </StickyListContext.Provider>
@@ -456,9 +461,9 @@ export function HeadlessTable({
                     {row.cells.map((cell: any, c: any) => {
                       if(cell.column.isRowId) {
                         return (
-                          <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
-                            {hover === row.original || row.original === sidePanelRow ?
-                              <div onClick={() => setSidePanelRow(row.original)}>
+                          <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={r === selectedRowIndex ? '#F4F7FF' : '#fff' }>
+                            {hover === row.original || r === selectedRowIndex ?
+                              <div onClick={() => setSelectedRowIndex(r)}>
                                 <Button secondary size="tiny">&#65291;</Button>
                               </div> 
                             : null}
@@ -467,7 +472,7 @@ export function HeadlessTable({
                       }
 
                       return (
-                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
+                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={r === selectedRowIndex ? '#F4F7FF' : '#fff' }>
                           {cell.render('Cell')}
                         </TD>
                       )
