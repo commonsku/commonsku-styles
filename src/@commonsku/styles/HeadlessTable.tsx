@@ -283,7 +283,7 @@ export function HeadlessTable({
   const StickyRow = ({ index, style }) => (
     <div className="row sticky" style={style}>
       {headerGroups.map((headerGroup: any, h: any) => (
-        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr" style={{ textAlign: 'center' }}>
+        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
           {headerGroup.headers.map((column: any, i: any) => (
             <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
               data-column-index={i}
