@@ -290,7 +290,7 @@ const App = () => {
       noDrag: true
     },
     {
-      Header: 'Status',
+      Header: <span style={{ textAlign: "left" }}>Status</span>,
       accessor: 'status',
       Cell: (row) => {
         const po = row.row.original
@@ -328,7 +328,7 @@ const App = () => {
       accessor: 'age',
     },
     {
-      Header: 'Visits',
+      Header: <span style={{ display: 'inline-block', marginLeft: '50px' }}>Visits</span>,
       accessor: 'state',
       Cell: (row) => {
         const po = row.row.original
@@ -656,6 +656,7 @@ const App = () => {
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 
+          //pagination={true}
           containerHeight={400}
           defaultSort={{ id: 'firstName', desc: true }}
           selectedRowRef={selectedRowRef}
