@@ -287,7 +287,26 @@ const App = () => {
       Header: 'Last Name',
       accessor: 'lastName',
       sticky: 'left',
-      noDrag: true
+      noDrag: true,
+      hasTooltip: true,
+      tooltipContent: (row) => {
+        if(row.lastName.length <= 5) {
+          return null
+        }
+
+        return (
+          <span style={{
+            width: '120px',
+            backgroundColor: 'black',
+            color: '#fff',
+            textAlign: 'center',
+            borderRadius: '6px',
+            padding: '5px 0',
+            position: 'absolute',
+            zIndex: 100
+          }}>{row.lastName}</span>
+        )
+      }
     },
     {
       Header: <span style={{ textAlign: "left" }}>Status</span>,

@@ -249,23 +249,42 @@ export function HeadlessTable({
         {row.cells.map((cell: any, c: any) => {
           if(cell.column.isRowId) {
             return (
-              <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={index === selectedRowIndex ? '#F4F7FF' : '#fff' }>
-                {isHover || index === selectedRowIndex ?
-                  <div onClick={() => setSelectedRowIndex(index)}>
-                    <Button secondary size="tiny">&#65291;</Button>
-                  </div> 
-                : null}
-              </TABLEDIV>
+              <DivCell row={row} cell={cell} c={c} index={index} selectedRowIndex={selectedRowIndex} setSelectedRowIndex={setSelectedRowIndex} isHover={isHover} />
             )
           }
 
-          return (
-            <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={index === selectedRowIndex ? '#F4F7FF' : '#fff' }>
-              {cell.render('Cell')}
-            </TABLEDIV>
-          )
+          return <DivCell row={row} cell={cell} c={c} index={index} selectedRowIndex={selectedRowIndex} setSelectedRowIndex={setSelectedRowIndex} isHover={isHover} />
         })}
       </div>
+    )
+  }
+
+  const DivCell = ({ row, cell, c, index, selectedRowIndex, setSelectedRowIndex, isHover }) => {
+    const [isHoverCell, setIsHoverCell] = useState(false)
+
+    if(cell.column.isRowId) {
+      return (
+        <TABLEDIV {...cell.getCellProps()} className="td" key={c} {...cell.getCellProps()} width={cell.column.width} backgroundColor={index === selectedRowIndex ? '#F4F7FF' : '#fff' }>
+          {isHover || index === selectedRowIndex ?
+            <div onClick={() => setSelectedRowIndex(index)}>
+              <Button secondary size="tiny">&#65291;</Button>
+            </div> 
+          : null}
+        </TABLEDIV>
+      )
+    }
+
+    return (
+      <TABLEDIV {...cell.getCellProps()} 
+        className="td" key={c} {...cell.getCellProps()} 
+        width={cell.column.width} 
+        backgroundColor={index === selectedRowIndex ? '#F4F7FF' : '#fff' }
+        onMouseEnter={() => setIsHoverCell(true)}
+        onMouseLeave={() => setIsHoverCell(false)}
+      >
+        {cell.render('Cell')}
+        {cell.column.hasTooltip && isHoverCell ? cell.column.tooltipContent(row.original) : null}
+      </TABLEDIV>
     )
   }
 
