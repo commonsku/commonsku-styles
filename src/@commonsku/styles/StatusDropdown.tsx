@@ -85,7 +85,7 @@ export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, disable
     return (
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
-            <DropdownItem rounded color={value2.color} active={showMenu} onClick={() => disabled ? setShowMenu(!showMenu) : null}>{value2.content}</DropdownItem>
+            <DropdownItem rounded color={value2.color} active={showMenu} onClick={() => !disabled ? setShowMenu(!showMenu) : null}>{value2.content}</DropdownItem>
             {showMenu && <DropDownContent>
                 {items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i} color={item.color}
