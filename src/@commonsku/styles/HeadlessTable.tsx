@@ -354,23 +354,30 @@ export function HeadlessTable({
     </div>
   )
 
-  const innerElementType = forwardRef(({ children, ...rest }, ref) => (
-    <StickyListContext.Consumer>
-      {({ stickyIndices }) => (
-        <div ref={ref} {...rest}>
-          {stickyIndices.map(index => (
-            <StickyRow
-              index={index}
-              key={index}
-              style={{ top: index * 60, left: 0, width: "100%", height: '60px' }}
-            />
-          ))}
-  
-          {children}
-        </div>
-      )}
-    </StickyListContext.Consumer>
-  ));
+  const innerElementType = forwardRef(({ children, ...rest }, ref) => {
+    let style = {...rest.style}
+    style.width = totalColumnsWidth + scrollBarSize
+    let props = {...rest}
+    delete props.style
+
+    return (
+      <StickyListContext.Consumer>
+        {({ stickyIndices }) => (
+          <div ref={ref} style={style} {...props}>
+            {stickyIndices.map(index => (
+              <StickyRow
+                index={index}
+                key={index}
+                style={{ top: index * 60, left: 0, width: "100%", height: '60px' }}
+              />
+            ))}
+    
+            {children}
+          </div>
+        )}
+      </StickyListContext.Consumer>
+    )
+  });
 
   const listRef = React.createRef();
   useEffect(() => {
