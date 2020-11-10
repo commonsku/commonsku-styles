@@ -16,6 +16,7 @@ export function ColumnSelectIcon({
     clipRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit={2}
+    width={width}
   >
     <path fill="none" d="M0 0h115v115H0z" />
     <path
