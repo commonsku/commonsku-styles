@@ -1,6 +1,7 @@
 // @ts-nocheck
 
-import _ from 'lodash';
+import _, { initial } from 'lodash';
+import ReactDOM from 'react-dom';
 import React, { useRef, useState, useEffect, createContext, useContext, forwardRef } from 'react';
 import styled, { css } from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
@@ -126,12 +127,13 @@ type HeadlessTableProps = React.PropsWithChildren<{
   sortDirectionDivRef?: any, 
   currentColumnsDivRef?: any,
   onChangeSortOrColumns?: any,
+  initialScrollIndex?: number
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
   columns, data, containerHeight=400, pagination=false, defaultSort,
   onSelectRow, sortDirectionDivRef, currentColumnsDivRef,
-  onChangeSortOrColumns
+  onChangeSortOrColumns, initialScrollIndex=0
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
@@ -202,11 +204,13 @@ export function HeadlessTable({
   const onDrop = (e: any) => {
     e.preventDefault();
     const newPosition = e.target.dataset.columnIndex;
-    const currentCols = visibleColumns.map((c: any) => c.id);
-    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
-    currentCols.splice(newPosition, 0, colToBeMoved[0]);
-    setCurrentColumns(currentCols);
-    setColumnOrder(currentCols);
+    if(newPosition) {
+      const currentCols = visibleColumns.map((c: any) => c.id);
+      const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+      currentCols.splice(newPosition, 0, colToBeMoved[0]);
+      setCurrentColumns(currentCols);
+      setColumnOrder(currentCols);
+    }
   };
 
   const iconProps = {
@@ -379,18 +383,46 @@ export function HeadlessTable({
     )
   });
 
-  const listRef = React.createRef();
+  const listRef = React.createRef()
   useEffect(() => {
+    const tableDiv = document.getElementsByClassName('headless-table-list')[0]
+    const leftScroll = leftScrollRef.current.innerText
     if(listRef) {
       if(selectedRowIndex) {
-        listRef.current.scrollToItem(selectedRowIndex, 'smart')
+        listRef.current?.scrollToItem(selectedRowIndex, 'smart')
+        tableDiv.scroll(leftScroll, 0)
+      }
+      if(initialScrollIndex) {
+        listRef.current?.scrollToItem(initialScrollIndex, 'smart')
+        tableDiv?.scroll(leftScroll, 0)
       }
     }
-  }, [listRef])
+  }, [listRef, selectedRowIndex, initialScrollIndex])
+
+  const listContainerRef = useRef()
+  const leftScrollRef = useRef(null)
+  useEffect(() => {
+    function handleListScroll(e) {
+      if(listContainerRef.current.scrollLeft) {
+        leftScrollRef.current.innerText = listContainerRef.current.scrollLeft
+      }
+    }
+
+    listContainerRef.current?.addEventListener("scroll", handleListScroll)
+    return function cleanup() {
+      listContainerRef.current?.removeEventListener("scroll", handleListScroll)
+    }
+  });
 
   const StickyList = ({ children, stickyIndices, ...rest }) => (
     <StickyListContext.Provider value={{ ItemRenderer: children, stickyIndices }}>
-      <List itemData={{ ItemRenderer: children, stickyIndices }} {...rest} ref={listRef}>
+      <List 
+        itemData={{ ItemRenderer: children, stickyIndices }}
+        ref={listRef}
+        outerRef={listContainerRef}
+        className="headless-table-list"
+        {...rest}
+      >
         {ItemWrapper}
       </List>
     </StickyListContext.Provider>
@@ -415,6 +447,7 @@ export function HeadlessTable({
           </code>
             </pre> */}
         
+        <div ref={leftScrollRef} style={{ display: 'none' }}>0</div>
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
         {pagination ? 

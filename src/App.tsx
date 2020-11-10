@@ -685,6 +685,7 @@ const App = () => {
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
           onChangeSortOrColumns={onChangeSortOrColumns}
+          initialScrollIndex={30}
         />
       </Box>
     </Background>
