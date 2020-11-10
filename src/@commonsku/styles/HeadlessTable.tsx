@@ -391,7 +391,8 @@ export function HeadlessTable({
       if(selectedRowIndex) {
         listRef.current?.scrollToItem(selectedRowIndex, 'smart')
         tableDiv.scroll(leftScroll, 0)
-      }else if(initialScrollIndex) {
+      }
+      if(initialScrollIndex) {
         listRef.current?.scrollToItem(initialScrollIndex, 'smart')
         tableDiv?.scroll(leftScroll, 0)
       }
