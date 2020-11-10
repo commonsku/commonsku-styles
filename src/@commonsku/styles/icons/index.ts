@@ -17,4 +17,5 @@ export * from './LockIcon';
 export * from './PanelIcon';
 export * from './NoteIcon';
 export * from './TaskIcon';
+export * from './ColumnSelectIcon';
 export { default as Loading } from './Loading';

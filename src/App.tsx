@@ -64,6 +64,7 @@ import {
     PendingApprovalIcon,
     ChangeRequestedIcon,
     ClientApprovedIcon,
+    ColumnSelectIcon,
     ProofingCompleteIcon,
 } from '@commonsku/styles';
 import { useFilters } from 'react-table';
@@ -469,6 +470,7 @@ const App = () => {
 
             <ProofingCompleteIcon width={"1.5rem"}/>
             <ClientApprovedIcon width={"1.5rem"}/>
+            <ColumnSelectIcon width={"1.5rem"}/>
             <AwaitingProofIcon width={"1.5rem"}/>
             <ProofReceivedIcon width={"1.5rem"}/>
             <PendingApprovalIcon width={"1.5rem"}/>
