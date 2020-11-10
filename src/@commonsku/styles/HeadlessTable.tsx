@@ -204,11 +204,13 @@ export function HeadlessTable({
   const onDrop = (e: any) => {
     e.preventDefault();
     const newPosition = e.target.dataset.columnIndex;
-    const currentCols = visibleColumns.map((c: any) => c.id);
-    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
-    currentCols.splice(newPosition, 0, colToBeMoved[0]);
-    setCurrentColumns(currentCols);
-    setColumnOrder(currentCols);
+    if(newPosition) {
+      const currentCols = visibleColumns.map((c: any) => c.id);
+      const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+      currentCols.splice(newPosition, 0, colToBeMoved[0]);
+      setCurrentColumns(currentCols);
+      setColumnOrder(currentCols);
+    }
   };
 
   const iconProps = {
@@ -387,11 +389,11 @@ export function HeadlessTable({
     const leftScroll = leftScrollRef.current.innerText
     if(listRef) {
       if(selectedRowIndex) {
-        listRef.current.scrollToItem(selectedRowIndex, 'smart')
+        listRef.current?.scrollToItem(selectedRowIndex, 'smart')
         tableDiv.scroll(leftScroll, 0)
       }else if(initialScrollIndex) {
-        listRef.current.scrollToItem(initialScrollIndex, 'smart')
-        tableDiv.scroll(leftScroll, 0)
+        listRef.current?.scrollToItem(initialScrollIndex, 'smart')
+        tableDiv?.scroll(leftScroll, 0)
       }
     }
   }, [listRef, selectedRowIndex, initialScrollIndex])
@@ -405,9 +407,9 @@ export function HeadlessTable({
       }
     }
 
-    listContainerRef.current.addEventListener("scroll", handleListScroll)
+    listContainerRef.current?.addEventListener("scroll", handleListScroll)
     return function cleanup() {
-      listContainerRef.current.removeEventListener("scroll", handleListScroll)
+      listContainerRef.current?.removeEventListener("scroll", handleListScroll)
     }
   });
 
