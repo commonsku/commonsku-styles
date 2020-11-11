@@ -97,7 +97,7 @@ export function HeadlessTable({
   //@ts-ignore
   const initialState: any = { 
     pageIndex: 0, 
-    pageSize: 50
+    pageSize: 25
   }
   if(defaultSort) {
     initialState.sortBy = [defaultSort]
@@ -323,7 +323,7 @@ export function HeadlessTable({
               style={{ width: '100px' }}
             />
           </span>{' '}
-          <select
+          {/* <select
             value={pageSize}
             onChange={(e: any) => {
               setPageSize(Number(e.target.value))
@@ -334,7 +334,7 @@ export function HeadlessTable({
                 Show {pageSize}
               </option>
             ))}
-          </select>
+            </select> */}
         </div>
       </>
     </Styles>
