@@ -266,6 +266,14 @@ const App = () => {
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
 
+  useEffect(() => {
+    if(sidePanelRow) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  }, [sidePanelRow])
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const tableColumns = [
@@ -677,15 +685,12 @@ const App = () => {
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 
-          //pagination={true}
-          containerHeight={400}
           defaultSort={{ id: 'firstName', desc: true }}
-          selectedRowRef={selectedRowRef}
-          onSelectRow={onSelectRow}
+          sidePanelRow={sidePanelRow}
+          setSidePanelRow={setSidePanelRow}
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
           onChangeSortOrColumns={onChangeSortOrColumns}
-          initialScrollIndex={30}
         />
       </Box>
     </Background>
