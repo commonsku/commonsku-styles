@@ -1,3 +1,4 @@
+//@ts-nocheck
 import _ from 'lodash';
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components'
@@ -81,18 +82,19 @@ const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleT
 type HeadlessTableProps = React.PropsWithChildren<{
   columns: any,
   data: object[], 
-  defaultSort?: { id: string, desc: boolean }, 
-  sidePanelRow?: object|null, 
-  setSidePanelRow?: any, 
+  rowIdField: string,
+  defaultSort?: { id: string, desc: boolean },
+  selectedInputRef?:any,
+  onChangeSelected?:any,
   sortDirectionDivRef?: any, 
   currentColumnsDivRef?: any,
   onChangeSortOrColumns?: any,
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, defaultSort, sidePanelRow, 
-  setSidePanelRow, sortDirectionDivRef, currentColumnsDivRef,
-  onChangeSortOrColumns
+  columns, data, rowIdField, defaultSort, 
+  sortDirectionDivRef, currentColumnsDivRef,
+  selectedInputRef, onChangeSelected, onChangeSortOrColumns
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
@@ -137,7 +139,12 @@ export function HeadlessTable({
 
   const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
   const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
-  const [hover, setHover] = useState({})
+  const [hoverId, setHoverId] = useState(null)
+  const [selectedId, setSelectedId] = useState(null)
+
+  useEffect(() => {
+    onChangeSelected(selectedId)
+  }, [selectedId])
 
   useEffect(() => {
     setCurrentColumns(visibleColumns.map((c: any) => c.id))
@@ -199,7 +206,8 @@ export function HeadlessTable({
             )}
           </code>
             </pre> */}
-        
+            
+        {selectedInputRef && <input ref={selectedInputRef} style={{ display: 'none' }} value={selectedId} />}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
         <table ref={tableRef} {...getTableProps()} className="react-table react-table-sticky">
@@ -267,13 +275,13 @@ export function HeadlessTable({
               prepareRow(row)
 
               return (
-                <tr key={r} {...row.getRowProps()} onMouseEnter={() => setHover(row.original)} onMouseLeave={() => setHover({})}>
+                <tr key={r} {...row.getRowProps()} onMouseEnter={() => setHoverId(row.original[rowIdField])} onMouseLeave={() => setHoverId(null)}>
                   {row.cells.map((cell: any, c: any) => {
                     if(cell.column.isRowId) {
                       return (
-                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
-                          {hover === row.original || row.original === sidePanelRow ?
-                            <div onClick={() => setSidePanelRow(row.original)}>
+                        <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original[rowIdField] === selectedId ? '#F4F7FF' : '#fff' }>
+                          {(hoverId === row.original[rowIdField]) || (row.original[rowIdField] === selectedId) ?
+                            <div onClick={() => setSelectedId(row.original[rowIdField])}>
                               <Button secondary size="tiny">&#65291;</Button>
                             </div> 
                           : null}
@@ -282,7 +290,7 @@ export function HeadlessTable({
                     }
 
                     return (
-                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original === sidePanelRow ? '#F4F7FF' : '#fff' }>
+                      <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original[rowIdField] === selectedId ? '#F4F7FF' : '#fff' }>
                         {cell.render('Cell')}
                       </TD>
                     )

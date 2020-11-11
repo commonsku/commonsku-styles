@@ -376,14 +376,22 @@ const App = () => {
     },
   ]
 
+  const selectedInputRef = useRef(null)
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
-  const selectedRowRef = useRef(null)
 
-  function onSelectRow(index) {
+  /* function onSelectRow(index) {
     //@ts-ignore
     console.log(index)
     if(index) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  } */
+
+  function onChangeSelected(id) {
+    if(id) {
       setShowPanel(true)
     }else{
       setShowPanel(false)
@@ -685,9 +693,10 @@ const App = () => {
         <HeadlessTable 
           columns={tableColumns} 
           data={tableData} 
+          rowIdField="rowId"
           defaultSort={{ id: 'firstName', desc: true }}
-          sidePanelRow={sidePanelRow}
-          setSidePanelRow={setSidePanelRow}
+          selectedInputRef={selectedInputRef}
+          onChangeSelected={onChangeSelected}
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
           onChangeSortOrColumns={onChangeSortOrColumns}
