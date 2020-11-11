@@ -156,11 +156,13 @@ export function HeadlessTable({
   const onDrop = (e: any) => {
     e.preventDefault();
     const newPosition = e.target.dataset.columnIndex;
-    const currentCols = visibleColumns.map((c: any) => c.id);
-    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
-    currentCols.splice(newPosition, 0, colToBeMoved[0]);
-    setCurrentColumns(currentCols);
-    setColumnOrder(currentCols);
+    if(newPosition) {
+      const currentCols = visibleColumns.map((c: any) => c.id);
+      const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+      currentCols.splice(newPosition, 0, colToBeMoved[0]);
+      setCurrentColumns(currentCols);
+      setColumnOrder(currentCols);
+    }
   };
 
   const iconProps = {
