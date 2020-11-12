@@ -87,7 +87,6 @@ type HeadlessTableProps = React.PropsWithChildren<{
   defaultSort?: { id: string, desc: boolean },
   defaultPageIndex?: number,
   pageIndexRef?:any,
-  selectedInputRef?:any,
   onChangeSelected?:any,
   sortDirectionDivRef?: any, 
   currentColumnsDivRef?: any,
@@ -98,8 +97,7 @@ type HeadlessTableProps = React.PropsWithChildren<{
 export function HeadlessTable({ 
   columns, data, rowIdField, defaultSort, defaultPageIndex=0,
   pageIndexRef, sortDirectionDivRef, currentColumnsDivRef,
-  selectedInputRef, onChangeSelected, onChangeSortOrColumns,
-  minHeight
+  onChangeSelected, onChangeSortOrColumns, minHeight
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
@@ -213,7 +211,6 @@ export function HeadlessTable({
             </pre> */}
         
         {pageIndexRef && <div ref={pageIndexRef} style={{ display: 'none' }}>{pageIndex}</div>}
-        {selectedInputRef && <input ref={selectedInputRef} style={{ display: 'none' }} value={selectedId} />}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
         <table ref={tableRef} {...getTableProps()} className="react-table react-table-sticky">
@@ -287,7 +284,7 @@ export function HeadlessTable({
                       return (
                         <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original[rowIdField] === selectedId ? '#F4F7FF' : '#fff' }>
                           {(hoverId === row.original[rowIdField]) || (row.original[rowIdField] === selectedId) ?
-                            <div onClick={() => setSelectedId(row.original[rowIdField])}>
+                            <div onClick={() => !selectedId ? setSelectedId(row.original[rowIdField]) : setSelectedId(null)}>
                               <Button secondary size="tiny">&#65291;</Button>
                             </div> 
                           : null}
