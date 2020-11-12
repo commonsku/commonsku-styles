@@ -84,6 +84,8 @@ type HeadlessTableProps = React.PropsWithChildren<{
   data: object[], 
   rowIdField: string,
   defaultSort?: { id: string, desc: boolean },
+  defaultPageIndex?: number,
+  pageIndexRef?:any,
   selectedInputRef?:any,
   onChangeSelected?:any,
   sortDirectionDivRef?: any, 
@@ -92,13 +94,13 @@ type HeadlessTableProps = React.PropsWithChildren<{
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, rowIdField, defaultSort, 
-  sortDirectionDivRef, currentColumnsDivRef,
+  columns, data, rowIdField, defaultSort, defaultPageIndex=0,
+  pageIndexRef, sortDirectionDivRef, currentColumnsDivRef,
   selectedInputRef, onChangeSelected, onChangeSortOrColumns
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
-    pageIndex: 0, 
+    pageIndex: defaultPageIndex, 
     pageSize: 25
   }
   if(defaultSort) {
@@ -206,7 +208,8 @@ export function HeadlessTable({
             )}
           </code>
             </pre> */}
-            
+        
+        {pageIndexRef && <div ref={pageIndexRef} style={{ display: 'none' }}>{pageIndex}</div>}
         {selectedInputRef && <input ref={selectedInputRef} style={{ display: 'none' }} value={selectedId} />}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}

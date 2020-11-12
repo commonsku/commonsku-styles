@@ -376,7 +376,7 @@ const App = () => {
     },
   ]
 
-  const selectedInputRef = useRef(null)
+  const pageIndexRef = useRef(null)
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
 
@@ -695,7 +695,7 @@ const App = () => {
           data={tableData} 
           rowIdField="rowId"
           defaultSort={{ id: 'firstName', desc: true }}
-          selectedInputRef={selectedInputRef}
+          pageIndexRef={pageIndexRef}
           onChangeSelected={onChangeSelected}
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
