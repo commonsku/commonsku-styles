@@ -10,8 +10,9 @@ import { Button } from './Button'
 import { UpArrowIcon } from './icons';
 import { getColor } from './Theme';
 
-const Styles = styled.div`
+const Styles = styled.div<{minHeight?: number}>`
   overflow-x: scroll;
+  min-height: ${props => props.minHeight ? props.minHeight : "600"}px;
   .th,
   .td {
     padding: 5px;
@@ -91,12 +92,14 @@ type HeadlessTableProps = React.PropsWithChildren<{
   sortDirectionDivRef?: any, 
   currentColumnsDivRef?: any,
   onChangeSortOrColumns?: any,
+  minHeight?:any
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
   columns, data, rowIdField, defaultSort, defaultPageIndex=0,
   pageIndexRef, sortDirectionDivRef, currentColumnsDivRef,
-  selectedInputRef, onChangeSelected, onChangeSortOrColumns
+  selectedInputRef, onChangeSelected, onChangeSortOrColumns,
+  minHeight
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
@@ -191,7 +194,7 @@ export function HeadlessTable({
   const tableRef = useRef(null)
 
   return (
-    <Styles>
+    <Styles minHeight={minHeight}>
       <>
         {/* <pre>
           <code>
