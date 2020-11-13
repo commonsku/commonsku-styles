@@ -284,7 +284,7 @@ export function HeadlessTable({
                       return (
                         <TD key={c} {...cell.getCellProps()} className="td" width={cell.column.width} backgroundColor={row.original[rowIdField] === selectedId ? '#F4F7FF' : '#fff' }>
                           {(hoverId === row.original[rowIdField]) || (row.original[rowIdField] === selectedId) ?
-                            <div onClick={() => !selectedId ? setSelectedId(row.original[rowIdField]) : setSelectedId(null)}>
+                            <div onClick={() => row.original[rowIdField] !== selectedId ? setSelectedId(row.original[rowIdField]) : setSelectedId(null)}>
                               <Button secondary size="tiny">&#65291;</Button>
                             </div> 
                           : null}

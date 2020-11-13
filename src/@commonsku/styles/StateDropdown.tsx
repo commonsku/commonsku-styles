@@ -29,7 +29,28 @@ type DropdownContentProps = {
     text?: string,
     active?: boolean,
     rounded?: boolean,
+    showCircles?: boolean,
 }
+
+const DropdownDisplay = styled.div<DropdownContentProps>`
+    color: black;
+    padding: 8px 8px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    background-color: #F4F7FF;
+    line-height: 1em;
+    min-height: 28px;
+    display: ${p => p.showCircles ? "inherit" : "flex"};
+    justify-content: center;
+    align-items: center;
+    border-radius: ${p => p.rounded ? "100px" : 0};
+    opacity: ${p => p.active ? 0.85 : 1};
+    &:hover {
+        opacity: .85;
+        cursor: pointer;
+    }
+`;
 
 const DropdownItem = styled.div<DropdownContentProps>`
     color: black;
@@ -39,11 +60,9 @@ const DropdownItem = styled.div<DropdownContentProps>`
     text-align: center;
     background-color: #F4F7FF;
     line-height: 1em;
-
+    min-height: 30px;
     border-radius: ${p => p.rounded ? "100px" : 0};
-    
     opacity: ${p => p.active ? 0.85 : 1};
-
     &:hover {
         opacity: .85;
         cursor: pointer;
@@ -107,10 +126,15 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, ...pr
     return (
         // @ts-ignore
         <StyledDropdown ref={node} {...props}>
-            <DropdownItem rounded active={showMenu} onClick={e => { e.stopPropagation(); setShowMenu(!showMenu) }}>
+            <DropdownDisplay
+                rounded 
+                active={showMenu} 
+                onClick={e => { e.stopPropagation(); setShowMenu(!showMenu) }}
+                showCircles={showCircles}
+            >
               {showCircles && <Circles max={items.length} val={value2.order}/>}
               {value2.content}
-            </DropdownItem>
+            </DropdownDisplay>
             {showMenu && <DropDownContent>
                 {items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i} 

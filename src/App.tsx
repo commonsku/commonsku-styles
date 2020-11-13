@@ -366,6 +366,7 @@ const App = () => {
             items={states} 
             value={states[0]} 
             row={po}
+            showCircles={false}
           />
         )
       }
