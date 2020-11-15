@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
-import { UpArrowIcon } from './icons';
+import { NoteIcon, UpArrowIcon } from './icons';
 import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
@@ -42,9 +42,9 @@ export const DropDownContent = styled.div<DropdownContentProps>`
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 8px 8px;
-    z-index: 1;
     border-radius: 5px;
     text-align: left;
+    z-index: 105;
 /*
     a {
         color: ${p => getColor(p.primary ? 'primary' : 'cta')};
@@ -69,12 +69,16 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export const Dropdown = ({ items, underlined, primary, text, ...props }: {
-    items: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
+export const Dropdown = ({ items, children, underlined, primary, text, icon, openMenu=false, mouseLeaveCallback, ...props }: {
+    items?: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
+    children?: any
+    icon?: ReactNode
+    openMenu?: boolean
+    mouseLeaveCallback?: any
 } & DropdownContentProps) => {
 
     const node = useRef();
-    const [showMenu, setShowMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
         width: '10px',
         fill: getColor(primary ? 'primary100' : 'white'),
@@ -90,32 +94,48 @@ export const Dropdown = ({ items, underlined, primary, text, ...props }: {
     };
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
+        if(items) {
+            document.addEventListener("mousedown", handleClick);
 
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
+            return () => {
+                document.removeEventListener("mousedown", handleClick);
+            };
+        }
     }, []);
 
     return (
         // @ts-ignore
-        <StyledDropdown ref={node} {...props}>
-            <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
-                {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
-            </Button>
-            {showMenu && <DropDownContent underlined={underlined} primary={primary}>
-                {items.map((item, i) => {
-                    return item && <DropdownItem key={'dropdown-item-'+i}
-                        {...item.props}
-                        primary={primary}
-                        underlined={item.props && item.props.underlined ? item.props.underlined : underlined}
-                        onClick={() => {
-                            setShowMenu(false);
-                            item.onClick && item.onClick()
-                        }}
-                    >{item.content}</DropdownItem>
-                })}
-            </DropDownContent>}
-        </StyledDropdown>
+        <span ref={node} {...props} onMouseLeave={() => { 
+            setShowMenu(false); 
+            if(mouseLeaveCallback) { 
+                mouseLeaveCallback()
+            }
+        }}>
+            <StyledDropdown>
+                {icon ?
+                    <span onClick={() => setShowMenu(!showMenu)}>
+                        {icon}
+                    </span>
+                :
+                    <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
+                        {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
+                    </Button>
+                }
+                {showMenu && <DropDownContent underlined={underlined} primary={primary}>
+                    {items && items.map((item, i) => {
+                        return item && <DropdownItem key={'dropdown-item-'+i}
+                            {...item.props}
+                            primary={primary}
+                            underlined={item.props && item.props.underlined ? item.props.underlined : underlined}
+                            onClick={() => {
+                                setShowMenu(false);
+                                item.onClick && item.onClick()
+                            }}
+                        >{item.content}</DropdownItem>
+                    })}
+                    {children ? children : null}
+                </DropDownContent>}
+            </StyledDropdown>
+        </span>
     );
 }

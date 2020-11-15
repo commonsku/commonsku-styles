@@ -1,0 +1,1 @@
+A headless table with extra features as compared to Table. Should use this if you want to drag columns and pin columns

@@ -1,4 +1,5 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect, useRef } from 'react';
+import styled from 'styled-components'
 
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
@@ -14,7 +15,9 @@ import user_pic3 from './users/3.jpeg';
 import user_pic4 from './users/4.jpeg';
 import user_pic5 from './users/5.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon } from './@commonsku/styles/icons';
+import makeData from './makeData';
+
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -53,7 +56,18 @@ import {
     Theme,
     Dropdown,
     CreatableSelect,
+    HeadlessTable,
+    StatusDropdown,
+    StateDropdown,
+    AwaitingProofIcon,
+    ProofReceivedIcon,
+    PendingApprovalIcon,
+    ChangeRequestedIcon,
+    ClientApprovedIcon,
+    ColumnSelectIcon,
+    ProofingCompleteIcon,
 } from '@commonsku/styles';
+import { useFilters } from 'react-table';
 
 const initialState = {
   date: new Date(),
@@ -72,6 +86,163 @@ const options = [
   { value: 'others 4', label: 'Others 4' },
   { value: 'others 5', label: 'Others 5' },
 ]
+
+const statuses = [
+  { 
+    value: 'OK', 
+    content: 'OK', 
+    color: "#00D374", 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'PROBLEM', 
+    content: 'Problem', 
+    color: "#FF2674", 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'FOLLOWUP', 
+    content: 'Followup', 
+    color: "#FFAE00", 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  }
+]
+
+const states = [
+  { 
+    value: 'new', 
+    content: 'New', 
+    order: 1, 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'submitted', 
+    content: 'Submitted', 
+    order: 2, 
+    oonClick: (item, row) => {
+      console.log(item, row)
+    } 
+  },
+  { 
+    value: 'reviewed', 
+    content: 'Reviewed', 
+    order: 3, 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  },
+  { 
+    value: 'attempted', 
+    content: 'Attempted', 
+    order: 4, 
+    oonClick: (item, row) => {
+      console.log(item, row)
+    } 
+  },
+  { 
+    value: 'abandoned', 
+    content: 'Abandoned', 
+    order: 5, 
+    oonClick: (item, row) => {
+      console.log(item, row)
+    } 
+  },
+]
+
+const tableData = [
+  {"rowId":1,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":2,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":3,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":4,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":5,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":6,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":7,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":8,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":9,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":10,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":11,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":12,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":13,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":14,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":15,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":16,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":17,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":18,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":19,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":20,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":21,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":22,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":23,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":24,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":25,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":26,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":27,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":28,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":29,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":30,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":31,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":32,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":33,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":34,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":35,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":36,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":37,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":38,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":39,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":40,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":41,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":42,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":43,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":44,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":45,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":46,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":47,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":48,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":49,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":50,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":51,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":52,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":53,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":54,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":55,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":56,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":57,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":58,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":59,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":60,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":61,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":62,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":63,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":64,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":65,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":66,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":67,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":68,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":69,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":70,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":71,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":72,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":73,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":74,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":75,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":76,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":77,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":78,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":79,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":80,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":81,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value},
+  {"rowId":82,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
+  {"rowId":83,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
+  {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
+] 
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
   console.log(action);
@@ -93,18 +264,154 @@ const App = () => {
   const [ketchup, toggleKetchup] = useState(false);
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
+  const [sidePanelRow, setSidePanelRow] = useState(null);
+
+  useEffect(() => {
+    if(sidePanelRow) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  }, [sidePanelRow])
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const tableColumns = [
+    {
+      Header: () => <div>&nbsp;</div>, 
+      accessor: 'rowId', 
+      sticky: 'left',
+      noDrag: true,
+      width: 50,
+      isRowId: true
+    },
+    {
+      Header: () => <span style={{ textAlign: "left" }}>First Name</span>,
+      accessor: 'firstName',
+      sticky: 'left',
+      noDrag: true,
+      width: 100
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'lastName',
+      sticky: 'left',
+      noDrag: true,
+      hasTooltip: true,
+      tooltipContent: (row) => {
+        if(row.lastName.length <= 5) {
+          return null
+        }
+
+        return (
+          <span style={{
+            width: '120px',
+            backgroundColor: 'black',
+            color: '#fff',
+            textAlign: 'center',
+            borderRadius: '6px',
+            padding: '5px 0',
+            position: 'absolute',
+            zIndex: 100
+          }}>{row.lastName}</span>
+        )
+      }
+    },
+    {
+      Header: <span style={{ textAlign: "left" }}>Status</span>,
+      accessor: 'status',
+      Cell: (row) => {
+        const po = row.row.original
+        const wrapper = useRef(null)
+        const [menuIsOpen, setMenuIsOpen] = useState(false)
+
+        useEffect(() => {
+          setZIndex()
+        }, [menuIsOpen])
+
+        function setZIndex() {
+          if(menuIsOpen) {
+            // @ts-ignore
+            wrapper.current.parentNode.style.zIndex = 4
+          }else{
+            // @ts-ignore
+            wrapper.current.parentNode.style.zIndex = 3
+          }
+        }
+
+        return (
+          <div ref={wrapper}>
+            <StatusDropdown
+              items={statuses} 
+              value={statuses[0]} 
+              row={po}
+              setMenuIsOpen={setMenuIsOpen}
+            />
+          </div>
+        )
+      }
+    },
+    {
+      Header: 'Age',
+      accessor: 'age',
+    },
+    {
+      Header: <span style={{ display: 'inline-block', marginLeft: '50px' }}>Visits</span>,
+      accessor: 'state',
+      Cell: (row) => {
+        const po = row.row.original
+  
+        return (
+          <StateDropdown
+            items={states} 
+            value={states[0]} 
+            row={po}
+            showCircles={false}
+          />
+        )
+      }
+    },
+    {
+      Header: 'Profile Progress',
+      accessor: 'progress',
+    },
+  ]
+
+  const pageIndexRef = useRef(null)
+  const sortDirectionDivRef = useRef(null)
+  const currentColumnsDivRef = useRef(null)
+
+  /* function onSelectRow(index) {
+    //@ts-ignore
+    console.log(index)
+    if(index) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  } */
+
+  function onChangeSelected(id) {
+    if(id) {
+      setShowPanel(true)
+    }else{
+      setShowPanel(false)
+    }
+  }
+
+  function onChangeSortOrColumns(e) {
+    console.log(e)
+  }
 
   return <Theme><Page>
     <SidePanel title="Panel Title"
       // fullWidthTitle
-      controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>}
+      controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}
       visible={showPanel}
       animationDuration={300}
       from="right"
       height={100}
-      backdrop
+      //backdrop
       bodyScrollable={false}
     >
       <Tabs padded tabs={[
@@ -150,9 +457,22 @@ const App = () => {
                   {onClick: () => null, content: 'New Address'},
                 ]
                }/>
+              <Dropdown text="Dropdown Panel" icon={<NoteIcon width="40" />}>
+                <Row>
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                </Row>
+              </Dropdown>
               <Link block mt={20}>Link</Link>
             </div>
-
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>
@@ -165,12 +485,28 @@ const App = () => {
               <Loading mb={10} colorful={colorfulBars} />
             </div>
 
+            <ProofingCompleteIcon width={"1.5rem"}/>
+            <ClientApprovedIcon width={"1.5rem"}/>
+            <ColumnSelectIcon width={"1.5rem"}/>
+            <AwaitingProofIcon width={"1.5rem"}/>
+            <ProofReceivedIcon width={"1.5rem"}/>
+            <PendingApprovalIcon width={"1.5rem"}/>
+            <ChangeRequestedIcon width={"1.5rem"}/>
+            <PanelIcon color={"#00d374"} width={"1.5rem"}/>
+            <TaskIcon color={"black"} width={"1.5rem"}/>
+            <NoteIcon color={"black"} width={"1.5rem"}/>
+
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
+
+
+
 
             <Link onClick={() => setLock(!lock)}>
               <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
+
+
 
 
             <H5>Number formatting</H5>
@@ -347,6 +683,26 @@ const App = () => {
           <Col xs />
         </Row>
         <ErrorBoundary>this is an error boundary</ErrorBoundary>
+        <br />
+        <Button onClick={() => { 
+          // @ts-ignore
+          console.log(sortDirectionDivRef.current.innerText)
+          // @ts-ignore
+          console.log(currentColumnsDivRef.current.innerText)
+        }}>Get Table Info</Button>
+        <br/><br/>
+        <HeadlessTable 
+          columns={tableColumns} 
+          data={tableData} 
+          rowIdField="rowId"
+          defaultSort={{ id: 'firstName', desc: true }}
+          pageIndexRef={pageIndexRef}
+          onChangeSelected={onChangeSelected}
+          sortDirectionDivRef={sortDirectionDivRef}
+          currentColumnsDivRef={currentColumnsDivRef}
+          onChangeSortOrColumns={onChangeSortOrColumns}
+          minHeight={400}
+        />
       </Box>
     </Background>
   </Page></Theme>
