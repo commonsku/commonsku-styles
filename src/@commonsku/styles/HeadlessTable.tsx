@@ -56,10 +56,54 @@ const Styles = styled.div<{minHeight?: number}>`
       }
     }
   }
+  .react-table-wrapper {
+    margin-top: 15px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;
+  }
   .react-table-pagination {
     padding: 0.5rem;
-    position: absolute;
-    margin-top: 15px;
+    margin: auto;
+    button {
+      font-family: 'skufont-regular', sans-serif;
+      font-size: 18px;
+      padding: 5px 15px;
+      border-radius: 4px;
+      background: transparent; 
+      text-align: center;
+      border: 2px solid #02c0da;
+      color: #02c0da;
+      cursor: pointer;
+    }
+    button:hover {
+      color: #02c0da;
+      background: #E6EFF2;
+    }
+    button:focus {
+      border: 2px solid #02c0da;
+      outline-color: #02c0da;
+    }
+    input {
+      border: 1px solid #ABC7D1;
+      border-radius: 5px;
+      font-family: 'skufont-regular', sans-serif;
+      font-size: 18px;
+      padding: 5px 15px;
+      color: #52585c;
+      background-color: white;
+      width: 40px;
+      text-align: center;
+      margin-right: 5px;
+    }
+    input:focus{
+      border: 2px solid #02c0da;
+      outline-color: #02c0da;
+    }
+    .page-select {
+      margin: 0 20px;
+    }
   }
 `
 const TD= styled.td<{clickable?: boolean, backgroundColor?: String}&SharedStyleTypes|SizerTypes>`
@@ -304,37 +348,31 @@ export function HeadlessTable({
           </tbody>
         </table>
         {pageOptions.length > 1 ?
+          <div className="react-table-wrapper">
           <div className="react-table-pagination">
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-              {'<<'}
+            <button style={{opacity: pageIndex === 0 ? 0 : 1}} onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              {'◀◀'}
             </button>{' '}
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-              {'<'}
+            <button style={{opacity: pageIndex === 0 ? 0 : 1}} onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {'◀'}
             </button>{' '}
-            <button onClick={() => nextPage()} disabled={!canNextPage}>
-              {'>'}
-            </button>{' '}
-            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-              {'>>'}
-            </button>{' '}
-            <span>
-              Page{' '}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>{' '}
+            <span className="page-select">
+                <input
+                  defaultValue={pageIndex + 1}
+                  value={pageIndex + 1}
+                  onChange={(e: any) => {
+                    const page = e.target.value ? Number(e.target.value) - 1 : 0
+                    gotoPage(page)
+                  }}
+                />
+                 of {pageOptions.length}
             </span>
-            <span>
-              | Go to page:{' '}
-              <input
-                type="number"
-                defaultValue={pageIndex + 1}
-                onChange={(e: any) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0
-                  gotoPage(page)
-                }}
-                style={{ width: '100px' }}
-              />
-            </span>{' '}
+            <button style={{opacity: !canNextPage ? 0 : 1}} onClick={() => nextPage()} disabled={!canNextPage}>
+              {'▶'}
+            </button>{' '}
+            <button style={{opacity: !canNextPage ? 0 : 1}} onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+              {'▶▶'}
+            </button>{' '}
             {/* <select
               value={pageSize}
               onChange={(e: any) => {
@@ -347,6 +385,7 @@ export function HeadlessTable({
                 </option>
               ))}
               </select> */}
+          </div>
           </div>
         : null}
       </>
