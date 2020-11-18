@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { colors } from './Theme';
 import { Transition } from 'react-transition-group';
 
-
-export type WrapperProps = {
+export type CollapseStyledProps = {
     duration?: number;
+    height?: null|number;
 }
-export type PanelTitleProps = {}
-export type CollapsibleProps = WrapperProps & PanelTitleProps & {
+export type CollapseWrapperProps = CollapseStyledProps
+export type CollapsiblePanelTitleProps = {}
+export type CollapsibleProps = CollapseWrapperProps & CollapsiblePanelTitleProps & {
     style?: React.CSSProperties,
     isOpen?: boolean;
     padded?: boolean;
@@ -21,20 +22,18 @@ export type CollapsibleProps = WrapperProps & PanelTitleProps & {
 }
 
 export type CollapsiblePanelProps = Omit<CollapsibleProps, "isOpen"> & {
-    title: string;
+    title?: string;
     isDefaultOpen?: boolean;
+    components?: { [key in string]: any };
 }
 
 
-const Wrapper = styled.div<WrapperProps>`
-    border: 1px solid ${colors.primary0};
-    border-radius: 5px;
-
-    .entered:not(.show) {
+export const CollapseStyled = styled.div<CollapseStyledProps>`
+    .collapsed:not(.show) {
         display: none;
     }
 
-    .entering {
+    .collapsing {
         position: relative;
         height: 0;
         overflow: hidden;
@@ -42,13 +41,18 @@ const Wrapper = styled.div<WrapperProps>`
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .entering {
+        .collapsing {
             transition: none;
         }
     }
 `;
 
-export const PanelTitle = styled.div<PanelTitleProps>`
+export const CollapseWrapper = styled.div<CollapseWrapperProps>`
+    border: 1px solid ${colors.primary0};
+    border-radius: 5px;
+`;
+
+export const CollapsiblePanelTitle = styled.div<CollapsiblePanelTitleProps>`
     background: #f3f6f7;
     border-bottom: 1px solid ${colors.primary0};
     color: ${colors.primary};
@@ -57,11 +61,11 @@ export const PanelTitle = styled.div<PanelTitleProps>`
 `
 
 const transitionStatusToClass = {
-    entering: 'entering',
-    entered: 'entered show',
-    exiting: 'entering',
-    exited: 'entered',
-    unmounted: 'entered',
+    entering: 'collapsing',
+    entered: 'collapsed show',
+    exiting: 'collapsing',
+    exited: 'collapsed',
+    unmounted: 'collapsed',
 };
 
 function getTransitionClass(status: "entering" | "entered" | "exiting" | "exited" | "unmounted") {
@@ -114,7 +118,8 @@ export function Collapsible({
     }
 
     const bodyStyles = _.omit(style, ['padding', 'paddingTop', 'paddingBottom']);
-    return (<Transition in={isOpen} timeout={duration}
+    return (<CollapseStyled duration={duration}>
+        <Transition in={isOpen} timeout={duration}
             onEntering={onHandleEnters('onEntering')}
             onEntered={onHandleEnters('onEntered')}
             onExit={onHandleExits('onExit')}
@@ -125,28 +130,26 @@ export function Collapsible({
                 <div {...props}
                     className={getTransitionClass(status)}
                     style={{
-                        background: '#fff',
-                        borderTop: `1px solid ${colors.primary0}`,
                         ...(height !== null ? { height } : {}),
-                        ...(padded ? {padding: 20} : {}),
                         ...bodyStyles,
                     }}>{children}</div>
             )}
-        </Transition>);
+        </Transition>
+    </CollapseStyled>);
 }
 
 
 export function CollapsiblePanel({
-    title, duration=300, isDefaultOpen=false, children, ...props
+    title, duration=300, isDefaultOpen=false, components, children, ...props
 }: React.PropsWithChildren<CollapsiblePanelProps>) {
     const [open, setOpen] = React.useState(isDefaultOpen);
     const togglePanel = () => setOpen(!open);
-
-    return (<Wrapper duration={duration}>
-        <PanelTitle onClick={e => togglePanel()}>{title}</PanelTitle>
+    const TitleComponent = components?.Title;
+    return (<CollapseWrapper duration={duration}>
+        {TitleComponent ? <TitleComponent isOpen={open} onClick={e => togglePanel()} /> : <CollapsiblePanelTitle onClick={e => togglePanel()}>{title}</CollapsiblePanelTitle>}
         <Collapsible {...props}
             duration={duration}
             isOpen={open}
         >{children}</Collapsible>
-    </Wrapper>);
+    </CollapseWrapper>);
 }

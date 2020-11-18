@@ -66,8 +66,10 @@ import {
     ClientApprovedIcon,
     ColumnSelectIcon,
     ProofingCompleteIcon,
+    Text,
     Collapsible,
     CollapsiblePanel,
+    colors,
 } from '@commonsku/styles';
 import { useFilters } from 'react-table';
 
@@ -267,6 +269,7 @@ const App = () => {
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
+  const [collapse, setCollapse] = useState(false);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -542,7 +545,22 @@ const App = () => {
             </ButtonsGroup>
 
             <H5>Collapsible</H5>
-            <CollapsiblePanel title="Collapsible Panel Title">
+            <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}
+                onClick={e => setCollapse(!collapse)}
+              >Click Me</Text>
+              <Collapsible isOpen={collapse} style={{background: colors.primary}}>
+               <Row>
+                 <Col xs padded>
+                  <Text style={{color: '#fff'}}>Collapsible body</Text>
+                 </Col>
+               </Row>
+              </Collapsible>
+            </div>
+            <CollapsiblePanel title="Collapsible Panel Title" components={{
+              Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
+            }}>
               <Row>
                 <Col xs padded>
                   Testttttt
