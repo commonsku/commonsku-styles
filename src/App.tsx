@@ -66,6 +66,8 @@ import {
     ClientApprovedIcon,
     ColumnSelectIcon,
     ProofingCompleteIcon,
+    Collapsible,
+    CollapsiblePanel,
 } from '@commonsku/styles';
 import { useFilters } from 'react-table';
 
@@ -538,6 +540,37 @@ const App = () => {
               <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
               <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
             </ButtonsGroup>
+
+            <H5>Collapsible</H5>
+            <CollapsiblePanel title="Collapsible Panel Title">
+              <Row>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+              </Row>
+            </CollapsiblePanel>
+            <CollapsiblePanel title="Collapsible Panel Title 2">
+              <Row>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+              </Row>
+            </CollapsiblePanel>
+            <CollapsiblePanel title="Collapsible Panel Title 3">
+              Testttttt
+            </CollapsiblePanel>
 
             <H5>Checkbox</H5>
             <ButtonsGroup>
