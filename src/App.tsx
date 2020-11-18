@@ -69,6 +69,7 @@ import {
     Text,
     Collapsible,
     CollapsiblePanel,
+    CollapsiblePanels,
     colors,
 } from '@commonsku/styles';
 import { useFilters } from 'react-table';
@@ -589,6 +590,12 @@ const App = () => {
             <CollapsiblePanel title="Collapsible Panel Title 3">
               Testttttt
             </CollapsiblePanel>
+
+            <H5>Collapsible Panels</H5>
+            <CollapsiblePanels panels={[
+              {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
+              {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
+            ]} />
 
             <H5>Checkbox</H5>
             <ButtonsGroup>

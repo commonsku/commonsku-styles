@@ -20,12 +20,15 @@ export type CollapsibleProps = CollapseWrapperProps & CollapsiblePanelTitleProps
     onExiting?: Function;
     onExited?: Function;
 }
-export type CollapsiblePanelProps = Omit<CollapsibleProps, "isOpen"> & {
+export type CollapsiblePanelProps = React.PropsWithChildren<Omit<CollapsibleProps, "isOpen"> & {
     title?: string;
     isDefaultOpen?: boolean;
     components?: { [key in string]: any };
-}
+}>
 
+export type CollapsiblePanelsProps = {
+    panels?: Array<CollapsiblePanelProps>;
+}
 
 export const CollapseStyled = styled.div<CollapseStyledProps>`
     .collapsed:not(.show) {
@@ -156,4 +159,43 @@ export function CollapsiblePanel({
             : <CollapsiblePanelTitle {...titleProps}>{title}</CollapsiblePanelTitle>}
         <Collapsible {...props} duration={duration} isOpen={open}>{children}</Collapsible>
     </CollapseWrapper>);
+}
+
+export function CollapsiblePanels({panels=[]}: CollapsiblePanelsProps) {
+    const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+    const updatePanelIndex = (i: number | null) => {
+        if (i === openIndex) {
+            setOpenIndex(null);
+        } else {
+            setOpenIndex(i);
+        }
+    }
+
+    return (<>
+        {panels.map((v, i) => {
+            const {
+                duration=300,
+                components={},
+                title="",
+                children,
+                ...panelProps
+            } = v;
+            const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                e && e.preventDefault();
+                updatePanelIndex(i);
+            }
+            const titleProps = {
+                isOpen: i === openIndex,
+                onClick: togglePanel,
+            }
+            return (
+                <CollapseWrapper duration={duration}>
+                    {components && components.Title
+                        ? <components.Title {...titleProps} />
+                        : <CollapsiblePanelTitle {...titleProps}>{title}</CollapsiblePanelTitle>}
+                    <Collapsible {...panelProps} duration={duration} isOpen={titleProps.isOpen}>{children}</Collapsible>
+                </CollapseWrapper>
+            );
+        })}
+    </>);
 }
