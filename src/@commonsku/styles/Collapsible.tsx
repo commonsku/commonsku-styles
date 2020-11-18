@@ -32,6 +32,7 @@ export type CollapsiblePanelsProps = {
 }
 
 export const CollapseStyled = styled.div<CollapseStyledProps>`
+&&& {
     .collapsed:not(.show) {
         display: none;
     }
@@ -48,19 +49,24 @@ export const CollapseStyled = styled.div<CollapseStyledProps>`
             transition: none;
         }
     }
+}
 `;
 
 export const CollapseWrapper = styled.div<CollapseWrapperProps>`
+&&& {
     border: 1px solid ${colors.primary0};
     border-radius: 5px;
+}
 `;
 
 export const CollapsiblePanelTitle = styled.div<CollapsiblePanelTitleProps>`
+&&& {
     background: #f3f6f7;
     border-bottom: 1px solid ${colors.primary0};
     color: ${colors.primary};
     padding: 20px;
     cursor: pointer;
+}
 `
 
 const transitionStatusToClass = {
