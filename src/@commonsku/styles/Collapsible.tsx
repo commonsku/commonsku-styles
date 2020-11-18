@@ -140,10 +140,10 @@ export function CollapsiblePanel({
     title, duration=300, isDefaultOpen=false, children, ...props
 }: React.PropsWithChildren<CollapsiblePanelProps>) {
     const [open, setOpen] = React.useState(isDefaultOpen);
-    const togglePanel = (e) => setOpen(!open);
+    const togglePanel = () => setOpen(!open);
 
     return (<Wrapper duration={duration}>
-        <PanelTitle onClick={e => togglePanel(e)}>{title}</PanelTitle>
+        <PanelTitle onClick={e => togglePanel()}>{title}</PanelTitle>
         <Collapsible {...props}
             duration={duration}
             isOpen={open}
