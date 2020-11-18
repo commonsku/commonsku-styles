@@ -20,7 +20,6 @@ export type CollapsibleProps = CollapseWrapperProps & CollapsiblePanelTitleProps
     onExiting?: Function;
     onExited?: Function;
 }
-
 export type CollapsiblePanelProps = Omit<CollapsibleProps, "isOpen"> & {
     title?: string;
     isDefaultOpen?: boolean;
@@ -143,14 +142,18 @@ export function CollapsiblePanel({
     title, duration=300, isDefaultOpen=false, components, children, ...props
 }: React.PropsWithChildren<CollapsiblePanelProps>) {
     const [open, setOpen] = React.useState(isDefaultOpen);
-    const togglePanel = () => setOpen(!open);
+    const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e && e.preventDefault();
+        setOpen(!open);
+    }
+    const titleProps = {
+        isOpen: open,
+        onClick: togglePanel,
+    }
     return (<CollapseWrapper duration={duration}>
         {components && components.Title
-            ? <components.Title isOpen={open} onClick={e => togglePanel()} />
-            : <CollapsiblePanelTitle onClick={e => togglePanel()}>{title}</CollapsiblePanelTitle>}
-        <Collapsible {...props}
-            duration={duration}
-            isOpen={open}
-        >{children}</Collapsible>
+            ? <components.Title {...titleProps} />
+            : <CollapsiblePanelTitle {...titleProps}>{title}</CollapsiblePanelTitle>}
+        <Collapsible {...props} duration={duration} isOpen={open}>{children}</Collapsible>
     </CollapseWrapper>);
 }
