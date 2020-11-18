@@ -24,6 +24,7 @@ export type CollapsiblePanelProps = React.PropsWithChildren<Omit<CollapsibleProp
     title?: string;
     isDefaultOpen?: boolean;
     components?: { [key in string]: any };
+    titleProps?: { [key in string]: any };
 }>
 
 export type CollapsiblePanelsProps = {
@@ -142,21 +143,22 @@ export function Collapsible({
 
 
 export function CollapsiblePanel({
-    title, duration=300, isDefaultOpen=false, components, children, ...props
+    title, duration=300, isDefaultOpen=false, components, children, titleProps={}, ...props
 }: React.PropsWithChildren<CollapsiblePanelProps>) {
     const [open, setOpen] = React.useState(isDefaultOpen);
     const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e && e.preventDefault();
         setOpen(!open);
     }
-    const titleProps = {
+    const _titleProps = {
         isOpen: open,
         onClick: togglePanel,
+        ...titleProps
     }
     return (<CollapseWrapper duration={duration}>
         {components && components.Title
-            ? <components.Title {...titleProps} />
-            : <CollapsiblePanelTitle {...titleProps}>{title}</CollapsiblePanelTitle>}
+            ? <components.Title {..._titleProps} />
+            : <CollapsiblePanelTitle {..._titleProps}>{title}</CollapsiblePanelTitle>}
         <Collapsible {...props} duration={duration} isOpen={open}>{children}</Collapsible>
     </CollapseWrapper>);
 }
@@ -178,22 +180,24 @@ export function CollapsiblePanels({panels=[]}: CollapsiblePanelsProps) {
                 components={},
                 title="",
                 children,
+                titleProps={},
                 ...panelProps
             } = v;
             const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                 e && e.preventDefault();
                 updatePanelIndex(i);
             }
-            const titleProps = {
+            const _titleProps = {
                 isOpen: i === openIndex,
                 onClick: togglePanel,
+                ...titleProps,
             }
             return (
                 <CollapseWrapper duration={duration}>
                     {components && components.Title
-                        ? <components.Title {...titleProps} />
-                        : <CollapsiblePanelTitle {...titleProps}>{title}</CollapsiblePanelTitle>}
-                    <Collapsible {...panelProps} duration={duration} isOpen={titleProps.isOpen}>{children}</Collapsible>
+                        ? <components.Title {..._titleProps} />
+                        : <CollapsiblePanelTitle {..._titleProps}>{title}</CollapsiblePanelTitle>}
+                    <Collapsible {...panelProps} duration={duration} isOpen={_titleProps.isOpen}>{children}</Collapsible>
                 </CollapseWrapper>
             );
         })}
