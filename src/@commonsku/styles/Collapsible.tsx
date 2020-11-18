@@ -61,9 +61,10 @@ const transitionStatusToClass = {
     entered: 'entered show',
     exiting: 'entering',
     exited: 'entered',
+    unmounted: 'entered',
 };
 
-function getTransitionClass(status: string) {
+function getTransitionClass(status: "entering" | "entered" | "exiting" | "exited" | "unmounted") {
     return transitionStatusToClass[status];
 }
 
