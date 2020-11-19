@@ -20,7 +20,8 @@ export type CollapsibleProps = CollapseWrapperProps & CollapsiblePanelTitleProps
     onExiting?: Function;
     onExited?: Function;
 }
-export type CollapsiblePanelProps = React.PropsWithChildren<Omit<CollapsibleProps, "isOpen"> & {
+export type CollapsiblePanelProps = React.PropsWithChildren<Omit<
+CollapsibleProps & {onClick?: null | ((i?: number|null) => void);}, "isOpen"> & {
     title?: string;
     isDefaultOpen?: boolean;
     components?: { [key in string]: any };
@@ -174,13 +175,13 @@ export function CollapsiblePanel({
 export function CollapsiblePanels({panels=[], spaceBetween=false, onClickPanel=null}: CollapsiblePanelsProps) {
     const [openIndex, setOpenIndex] = React.useState<number | null>(null);
     const updatePanelIndex = (i: number | null) => {
-        if (i === openIndex) {
-            setOpenIndex(null);
-            onClickPanel && onClickPanel(null);
-        } else {
-            setOpenIndex(i);
-            onClickPanel && onClickPanel(i);
+        let idx: number|null = null;
+        if (i !== openIndex) {
+            idx = i;
         }
+        setOpenIndex(idx);
+        onClickPanel && onClickPanel(idx);
+        return idx;
     }
 
     return (<>
@@ -192,11 +193,13 @@ export function CollapsiblePanels({panels=[], spaceBetween=false, onClickPanel=n
                 children,
                 titleProps={},
                 wrapperProps={},
+                onClick=null,
                 ...panelProps
             } = v;
             const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                 e && e.preventDefault();
-                updatePanelIndex(i);
+                const idx = updatePanelIndex(i);
+                onClick && onClick(idx);
             }
             const _titleProps = {
                 isOpen: i === openIndex,
