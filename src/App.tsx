@@ -592,7 +592,7 @@ const App = () => {
             </CollapsiblePanel>
 
             <H5>Collapsible Panels</H5>
-            <CollapsiblePanels spaceBetween panels={[
+            <CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
               {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
               {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
             ]} />

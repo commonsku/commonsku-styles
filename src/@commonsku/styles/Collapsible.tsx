@@ -30,6 +30,7 @@ export type CollapsiblePanelProps = React.PropsWithChildren<Omit<CollapsibleProp
 export type CollapsiblePanelsProps = {
     panels?: Array<CollapsiblePanelProps & {wrapperProps?: { [key in string]: any }}>;
     spaceBetween?: boolean; // space between panels
+    onClickPanel?: null | ((i?: number|null) => void);
 }
 
 export const CollapseStyled = styled.div<CollapseStyledProps>`
@@ -170,13 +171,15 @@ export function CollapsiblePanel({
     </CollapseWrapper>);
 }
 
-export function CollapsiblePanels({panels=[], spaceBetween=false}: CollapsiblePanelsProps) {
+export function CollapsiblePanels({panels=[], spaceBetween=false, onClickPanel=null}: CollapsiblePanelsProps) {
     const [openIndex, setOpenIndex] = React.useState<number | null>(null);
     const updatePanelIndex = (i: number | null) => {
         if (i === openIndex) {
             setOpenIndex(null);
+            onClickPanel && onClickPanel(null);
         } else {
             setOpenIndex(i);
+            onClickPanel && onClickPanel(i);
         }
     }
 
