@@ -28,7 +28,8 @@ export type CollapsiblePanelProps = React.PropsWithChildren<Omit<CollapsibleProp
 }>
 
 export type CollapsiblePanelsProps = {
-    panels?: Array<CollapsiblePanelProps>;
+    panels?: Array<CollapsiblePanelProps & {wrapperProps?: { [key in string]: any }}>;
+    spaceBetween?: boolean; // space between panels
 }
 
 export const CollapseStyled = styled.div<CollapseStyledProps>`
@@ -169,7 +170,7 @@ export function CollapsiblePanel({
     </CollapseWrapper>);
 }
 
-export function CollapsiblePanels({panels=[]}: CollapsiblePanelsProps) {
+export function CollapsiblePanels({panels=[], spaceBetween=false}: CollapsiblePanelsProps) {
     const [openIndex, setOpenIndex] = React.useState<number | null>(null);
     const updatePanelIndex = (i: number | null) => {
         if (i === openIndex) {
@@ -187,6 +188,7 @@ export function CollapsiblePanels({panels=[]}: CollapsiblePanelsProps) {
                 title="",
                 children,
                 titleProps={},
+                wrapperProps={},
                 ...panelProps
             } = v;
             const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -198,8 +200,12 @@ export function CollapsiblePanels({panels=[]}: CollapsiblePanelsProps) {
                 onClick: togglePanel,
                 ...titleProps,
             }
+            const { style={}, ..._wrapperProps } = wrapperProps;
             return (
-                <CollapseWrapper key={`CSKU_CollapsiblePanels_${i}`} duration={duration}>
+                <CollapseWrapper key={`CSKU_CollapsiblePanels_${i}`} duration={duration} style={{
+                    ...(spaceBetween ? {marginBottom: 10} : {}),
+                    ...style,
+                }} {..._wrapperProps}>
                     {components && components.Title
                         ? <components.Title {..._titleProps} />
                         : <CollapsiblePanelTitle {..._titleProps}>{title}</CollapsiblePanelTitle>}
