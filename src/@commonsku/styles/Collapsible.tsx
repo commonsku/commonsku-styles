@@ -199,7 +199,7 @@ export function CollapsiblePanels({panels=[]}: CollapsiblePanelsProps) {
                 ...titleProps,
             }
             return (
-                <CollapseWrapper duration={duration}>
+                <CollapseWrapper key={`CSKU_CollapsiblePanels_${i}`} duration={duration}>
                     {components && components.Title
                         ? <components.Title {..._titleProps} />
                         : <CollapsiblePanelTitle {..._titleProps}>{title}</CollapsiblePanelTitle>}
