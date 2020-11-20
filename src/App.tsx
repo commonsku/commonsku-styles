@@ -377,19 +377,9 @@ const App = () => {
     },
   ]
 
-  const pageIndexRef = useRef(null)
+  const pageIndexDivRef = useRef(null)
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
-
-  /* function onSelectRow(index) {
-    //@ts-ignore
-    console.log(index)
-    if(index) {
-      setShowPanel(true)
-    }else{
-      setShowPanel(false)
-    }
-  } */
 
   function onChangeSelected(id) {
     if(id) {
@@ -696,11 +686,11 @@ const App = () => {
           data={tableData} 
           rowIdField="rowId"
           defaultSort={{ id: 'firstName', desc: true }}
-          pageIndexRef={pageIndexRef}
           onChangeSelected={onChangeSelected}
+          onChangeSortOrColumns={onChangeSortOrColumns}
+          pageIndexDivRef={pageIndexDivRef}
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
-          onChangeSortOrColumns={onChangeSortOrColumns}
           minHeight={400}
         />
       </Box>
