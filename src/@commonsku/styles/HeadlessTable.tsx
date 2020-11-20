@@ -270,13 +270,13 @@ export function HeadlessTable({
 
   useEffect(() => {
     if(tableRef) {
-      setScrollbarWidth(tableRef.current.offsetWidth)
+      setScrollbarWidth(tableRef.current.offsetWidth + 200)
     }
   }, [tableRef])
 
   useEffect(() => {
     if(tableRef) {
-      setScrollbarWidth(tableRef.current.offsetWidth)
+      setScrollbarWidth(tableRef.current.offsetWidth + 200)
     }
   }, [columns])
 
