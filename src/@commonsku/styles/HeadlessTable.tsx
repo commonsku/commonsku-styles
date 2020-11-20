@@ -274,6 +274,12 @@ export function HeadlessTable({
     }
   }, [tableRef])
 
+  useEffect(() => {
+    if(tableRef) {
+      setScrollbarWidth(tableRef.current.offsetWidth)
+    }
+  }, [columns])
+
   useLayoutEffect(() => {
     if(tableRef) {
       tableRef.current.parentNode.addEventListener('scroll', function() {
