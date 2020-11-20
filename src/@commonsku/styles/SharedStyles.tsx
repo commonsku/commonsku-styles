@@ -2,7 +2,7 @@ import { map, pick, keys, isUndefined, get } from 'lodash';
 import styled, { css } from 'styled-components';
 import { parseMeasurement } from '../utils';
 import { SizerTypes, getSizerStyles } from './Sizer'
-import { themeOptions, ThemeProps } from './Theme'
+import { themeOptions, ThemeProps, colors } from './Theme'
 
 export type SharedStyleTypes = {
   [key: string]: any,
@@ -28,6 +28,7 @@ export type SharedStyleTypes = {
   grid?: boolean,
   custom?: string,
   bg?: string,
+  color?: string,
   float?: string,
   sizer?: SizerTypes,
   row?: {justify: string, wrap: string, align: string, padded: boolean, start: boolean, end: boolean},
@@ -74,18 +75,18 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
     margin-bottom: ${parseMeasurement(val)};
   `,
   // Background
-  bg: (val: string) => `background: ${val};`,
+  bg: (val: string) => `background: ${get(colors, val, val)};`,
+  // Color
+  color: (val: string) => `color: ${get(colors, val, val)};`,
   // Display
   hidden: () => `visibility: hidden;`,
-  hide: () => `visibility: hidden;`,
+  hide: (val: boolean) => val ? "display: none;" : "",
   show: (val: boolean) => val === false ? "display: none;" : "",
-  none: () => `display: none;`,
+  none: (val: boolean) => val ? "display: none;" : "",
   block: () => `display: block;`,
   inlineBlock: () => `display: inline-block;`,
-  'inline-block': () => `display: inline-block;`,
   inline: () => `display: inline;`,
   flex: () => `display: flex;`,
-  'inline-flex': () => `display: inline-flex;`,
   inlineFlex: () => `display: inline-flex;`,
   grid: () => `display: grid;`,
   // Float

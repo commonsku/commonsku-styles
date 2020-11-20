@@ -14,7 +14,7 @@ export const getUnit = (measurement: string|number) => {
     return "px";
   }
   const matchedMeasurement = measurement.match(/^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/);
-  return matchedMeasurement ? matchedMeasurement[2] : null;
+  return matchedMeasurement ? matchedMeasurement[2] : "px";
 };
 
 export const stripUnit = (measurement: string|number) =>
