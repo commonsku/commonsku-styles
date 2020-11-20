@@ -1,6 +1,6 @@
 //@ts-nocheck
 import _ from 'lodash';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import styled, { css } from 'styled-components'
 import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
@@ -129,24 +129,25 @@ type HeadlessTableProps = React.PropsWithChildren<{
   data: object[], 
   rowIdField: string,
   defaultSort?: { id: string, desc: boolean },
+  defaultPageSize?: number,
   defaultPageIndex?: number,
-  pageIndexRef?:any,
+  pageIndexDivRef?:any,
   onChangeSelected?:any,
-  sortDirectionDivRef?: any, 
-  currentColumnsDivRef?: any,
   onChangeSortOrColumns?: any,
-  minHeight?:any
+  sortDirectionDivRef?: any, 
+  currentColumnsDivRef?: any
+  minHeight?: any
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, rowIdField, defaultSort, defaultPageIndex=0,
-  pageIndexRef, sortDirectionDivRef, currentColumnsDivRef,
-  onChangeSelected, onChangeSortOrColumns, minHeight
+  columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0,
+  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, 
+  sortDirectionDivRef, currentColumnsDivRef, minHeight
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
     pageIndex: defaultPageIndex, 
-    pageSize: 25
+    pageSize: defaultPageSize
   }
   if(defaultSort) {
     initialState.sortBy = [defaultSort]
@@ -188,6 +189,7 @@ export function HeadlessTable({
   const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
   const [hoverId, setHoverId] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
+  const [scrollbarWidth, setScrollbarWidth]= useState(0)
 
   useEffect(() => {
     onChangeSelected(selectedId)
@@ -234,6 +236,49 @@ export function HeadlessTable({
   }
 
   const tableRef = useRef(null)
+  const topScrollRef = useRef(null)
+
+  function handleHorizontalScroll(placement) {
+    if(placement === 'top') {
+      tableRef.current.parentNode.scrollLeft = topScrollRef.current.scrollLeft
+      return
+    }
+
+    if(placement === 'bottom' && topScrollRef.current) {
+      topScrollRef.current.scrollLeft = tableRef.current.parentNode.scrollLeft
+      return
+    }
+  }
+
+  useEffect(() => {
+    if(topScrollRef) {
+      topScrollRef.current.addEventListener('scroll', function() {
+        handleHorizontalScroll('top')
+      })
+    
+      return () => topScrollRef.current.removeEventListener('scroll', function() {
+        handleHorizontalScroll('top')
+      })
+    }
+  }, [topScrollRef])
+
+  useEffect(() => {
+    if(tableRef) {
+      setScrollbarWidth(tableRef.current.offsetWidth)
+    }
+  }, [tableRef])
+
+  useLayoutEffect(() => {
+    if(tableRef) {
+      tableRef.current.parentNode.addEventListener('scroll', function() {
+        handleHorizontalScroll('bottom')
+      })
+    
+      return () => tableRef.current.parentNode.removeEventListener('scroll', function() {
+        handleHorizontalScroll('bottom')
+      })
+    }
+  }, [tableRef])
 
   return (
     <Styles minHeight={minHeight}>
@@ -254,7 +299,10 @@ export function HeadlessTable({
           </code>
             </pre> */}
         
-        {pageIndexRef && <div ref={pageIndexRef} style={{ display: 'none' }}>{pageIndex}</div>}
+        <div ref={topScrollRef} style={{ position:'sticky', height: '20px', left: 0, width: '100%', overflowX: 'scroll', overflowY: 'hidden' }}>
+          <div style={{ height: '20px', width: scrollbarWidth }}></div>
+        </div>
+        {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
         <table ref={tableRef} {...getTableProps()} className="react-table react-table-sticky">
