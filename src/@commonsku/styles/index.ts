@@ -34,6 +34,7 @@ export * from './Backdrop'
 export * from './HeadlessTable'
 export * from './StatusDropdown'
 export * from './StateDropdown'
+export * from './Collapsible'
 
 export * from './icons'
 export * from './Theme'
