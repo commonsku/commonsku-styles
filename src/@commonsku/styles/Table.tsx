@@ -76,11 +76,12 @@ const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
   }
 `;
 
-const TR= styled.tr<SizerTypes&{selected?: boolean}>`
+const TR= styled.tr<SizerTypes&{selected?: boolean, clickable?: boolean}>`
   &&& {
     ${SizerCss}
     &:hover {
       background: #EDF2F4;
+      cursor: ${props => props.clickable ? "pointer" : "normal"};
     }
     ${p => p.selected && 'background: #EDF2F4;'}
   }
