@@ -78,7 +78,7 @@ export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
   // Display
   hidden: () => `visibility: hidden;`,
   hide: () => `visibility: hidden;`,
-  show: (val: boolean) => val === true ? "visibility: visible;" : val === false ? "visibility: hidden;" : "",
+  show: (val: boolean) => val === false ? "display: none;" : "",
   none: () => `display: none;`,
   block: () => `display: block;`,
   inlineBlock: () => `display: inline-block;`,
