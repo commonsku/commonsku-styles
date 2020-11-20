@@ -13,6 +13,12 @@ import { getColor } from './Theme';
 const Styles = styled.div<{minHeight?: number}>`
   overflow-x: scroll;
   min-height: ${props => props.minHeight ? props.minHeight : "600"}px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   .th,
   .td {
     padding: 5px;
@@ -299,7 +305,11 @@ export function HeadlessTable({
           </code>
             </pre> */}
         
-        <div ref={topScrollRef} style={{ position:'sticky', height: '20px', left: 0, width: '100%', overflowX: 'scroll', overflowY: 'hidden' }}>
+        <div ref={topScrollRef} style={{ 
+          position:'fixed', height: '20px', 
+          width: '100%', bottom: 0, zIndex: 100,
+          overflowX: 'scroll', overflowY: 'hidden' 
+        }}>
           <div style={{ height: '20px', width: scrollbarWidth }}></div>
         </div>
         {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
