@@ -66,6 +66,11 @@ import {
     ClientApprovedIcon,
     ColumnSelectIcon,
     ProofingCompleteIcon,
+    Text,
+    Collapsible,
+    CollapsiblePanel,
+    CollapsiblePanels,
+    colors,
 } from '@commonsku/styles';
 import { useFilters } from 'react-table';
 
@@ -265,6 +270,7 @@ const App = () => {
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
+  const [collapse, setCollapse] = useState(false);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -528,6 +534,58 @@ const App = () => {
               <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
               <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
             </ButtonsGroup>
+
+            <H5>Collapsible</H5>
+            <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}
+                onClick={e => setCollapse(!collapse)}
+              >Click Me</Text>
+              <Collapsible isOpen={collapse} style={{background: colors.primary}}>
+               <Row>
+                 <Col xs padded>
+                  <Text style={{color: '#fff'}}>Collapsible body</Text>
+                 </Col>
+               </Row>
+              </Collapsible>
+            </div>
+            <CollapsiblePanel title="Collapsible Panel Title" components={{
+              Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
+            }}>
+              <Row>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+              </Row>
+            </CollapsiblePanel>
+            <CollapsiblePanel title="Collapsible Panel Title 2">
+              <Row>
+                <Col xs padded>
+                  Testttttt
+                </Col>
+              </Row>
+            </CollapsiblePanel>
+            <CollapsiblePanel title="Collapsible Panel Title 3">
+              Testttttt
+            </CollapsiblePanel>
+
+            <H5>Collapsible Panels</H5>
+            <CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
+              {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
+              {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
+            ]} />
 
             <H5>Checkbox</H5>
             <ButtonsGroup>
