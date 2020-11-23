@@ -198,6 +198,14 @@ export function HeadlessTable({
   const [scrollbarWidth, setScrollbarWidth]= useState(0)
 
   useEffect(() => {
+    if(defaultSort) {
+      setSortDirection({ accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' })
+    }else{
+      setSortDirection({})
+    }
+  }, [defaultSort])
+
+  useEffect(() => {
     onChangeSelected(selectedId)
   }, [selectedId])
 
