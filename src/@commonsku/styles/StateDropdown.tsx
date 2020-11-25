@@ -93,12 +93,13 @@ const Circles = ({val, max}:{val: number, max: number}) => {
     </StyledCircles>
 }
 
-export const StateDropdown = ({ items, text, value, row, showCircles=true, dataTip=false, ...props }: {
+export const StateDropdown = ({ items, text, value, row, showCircles=true, dataTip=false, dataFor='', ...props }: {
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
     value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number},
     row: any,
     showCircles?: boolean
     dataTip?: any
+    dataFor?: string
 } & DropdownContentProps) => {
 
     const node = useRef();
@@ -135,7 +136,7 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, dataT
                 showCircles={showCircles}
             >
               {showCircles && <Circles max={items.length} val={value2.order}/>}
-              {dataTip ? <span data-tip={dataTip}>{truncate(value2.content, 20)}</span> : truncate(value2.content, 20)}
+              {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(value2.content, 20)}</span> : value2.content}
             </DropdownDisplay>
             {showMenu && <DropDownContent>
                 {items.map((item, i) => {
