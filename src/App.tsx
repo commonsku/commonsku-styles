@@ -160,6 +160,14 @@ const states = [
       console.log(item, row)
     } 
   },
+  { 
+    value: 'long', 
+    content: 'Super Loooooooooooooooooooooooog Description', 
+    order: 6, 
+    onClick: (item, row) => {
+      console.log(item, row)
+    }
+  }
 ]
 
 const tableData = [
