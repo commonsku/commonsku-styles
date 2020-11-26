@@ -247,7 +247,9 @@ export function HeadlessTable({
           if (mutation.type === 'childList') {
             const lastSelectedId = (mutation.addedNodes[0].data || '')
             setLastViewId(lastSelectedId)
-            setSelectedId(null)
+            if(lastSelectedId === '') {
+              setSelectedId(null)
+            }
           }
         }
       }
