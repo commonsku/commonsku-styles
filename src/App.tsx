@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect, useRef } from 'react';
+import React, { useState, useReducer, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components'
 
 import product_pic1 from './products/1.png';
@@ -391,6 +391,7 @@ const App = () => {
     },
   ]
 
+  const selectedDivRef = useRef(null)
   const pageIndexDivRef = useRef(null)
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
@@ -758,6 +759,8 @@ const App = () => {
           sortDirectionDivRef={sortDirectionDivRef}
           currentColumnsDivRef={currentColumnsDivRef}
           minHeight={400}
+          pagination={false}
+          selectedDivRef={selectedDivRef}
         />
       </Box>
     </Background>
