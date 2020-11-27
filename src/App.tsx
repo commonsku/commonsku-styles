@@ -279,6 +279,7 @@ const App = () => {
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
   const [collapse, setCollapse] = useState(false);
+  const [defaultScrollOffset, setDefaultScrollOffset] = useState(0)
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -391,12 +392,14 @@ const App = () => {
     },
   ]
 
-  const selectedDivRef = useRef(null)
+  const scrollOffsetDivRef = useRef(null)
   const pageIndexDivRef = useRef(null)
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
 
   function onChangeSelected(id) {
+    //@ts-ignore
+    setDefaultScrollOffset(parseInt(scrollOffsetDivRef.current.innerText) || 0)
     if(id) {
       setShowPanel(true)
     }else{
@@ -753,6 +756,7 @@ const App = () => {
           data={tableData} 
           rowIdField="rowId"
           defaultSort={{ id: 'firstName', desc: true }}
+          defaultScrollOffset={defaultScrollOffset}
           onChangeSelected={onChangeSelected}
           onChangeSortOrColumns={onChangeSortOrColumns}
           pageIndexDivRef={pageIndexDivRef}
@@ -760,7 +764,7 @@ const App = () => {
           currentColumnsDivRef={currentColumnsDivRef}
           minHeight={400}
           pagination={false}
-          selectedDivRef={selectedDivRef}
+          scrollOffsetDivRef={scrollOffsetDivRef}
         />
       </Box>
     </Background>

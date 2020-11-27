@@ -173,7 +173,8 @@ type HeadlessTableProps = React.PropsWithChildren<{
   defaultSort?: { id: string, desc: boolean },
   defaultPageSize?: number,
   defaultPageIndex?: number,
-  selectedDivRef?: any,
+  defaultScrollOffset?: number,
+  scrollOffsetDivRef?: any,
   pageIndexDivRef?:any,
   onChangeSelected?:any,
   onChangeSortOrColumns?: any,
@@ -184,8 +185,8 @@ type HeadlessTableProps = React.PropsWithChildren<{
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0,
-  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, selectedDivRef,
+  columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0, defaultScrollOffset=0,
+  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef,
   sortDirectionDivRef, currentColumnsDivRef, minHeight, pagination=true
 }: HeadlessTableProps) {
   //@ts-ignore
@@ -236,31 +237,13 @@ export function HeadlessTable({
   const [hoverId, setHoverId] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
   const [scrollbarWidth, setScrollbarWidth] = useState(0)
-  const [lastViewId, setLastViewId] = useState(null)
+  const [scrollOffset, setScrollOffset] = useState(defaultScrollOffset)
 
   useEffect(() => {
-    if(selectedDivRef.current) {
-      const targetNode = selectedDivRef.current
-      const config = { attributes: true, childList: true, subtree: true }
-      const callback = function(mutationsList, observer) {
-        for(const mutation of mutationsList) {
-          if (mutation.type === 'childList') {
-            const lastSelectedId = (mutation.addedNodes[0].data || '')
-            setLastViewId(lastSelectedId)
-            if(lastSelectedId === '') {
-              setSelectedId(null)
-            }
-          }
-        }
-      }
-      const observer = new MutationObserver(callback)
-      observer.observe(targetNode, config)
-
-      return () => {
-        observer.disconnect()
-      }
+    if(defaultScrollOffset !== 0) {
+      setScrollOffset(defaultScrollOffset)
     }
-  }, [selectedDivRef])
+  }, [defaultScrollOffset])
 
   useEffect(() => {
     if(defaultSort) {
@@ -272,9 +255,6 @@ export function HeadlessTable({
 
   useEffect(() => {
     onChangeSelected(selectedId)
-    if(selectedId) {
-      selectedDivRef.current.innerText = selectedId
-    }
   }, [selectedId])
 
   useEffect(() => {
@@ -406,7 +386,12 @@ export function HeadlessTable({
 
   const DivCell = ({ row, cell, c, index }) => {
     const [isHover, setIsHover] = useState(false)
-    const backgroundColor = (row.original[rowIdField] === selectedId) || (row.original[rowIdField] === lastViewId) ? '#F4F7FF' : '#FFF';
+    const backgroundColor = (row.original[rowIdField] === selectedId) ? '#F4F7FF' : '#FFF';
+
+    function onSelectRow(id) {
+      setScrollOffset(parseInt(scrollOffsetDivRef.current.innerText) || 0)
+      setSelectedId(id)
+    }
 
     if(cell.column.isRowId) {
       return (
@@ -419,7 +404,7 @@ export function HeadlessTable({
           onMouseLeave={() => setIsHover(false)}
         >
           {isHover || (row.original[rowIdField] === selectedId) ?
-            <div onClick={() => row.original[rowIdField] !== selectedId ? setSelectedId(row.original[rowIdField]) : setSelectedId(null)}>
+            <div onClick={() => row.original[rowIdField] !== selectedId ? onSelectRow(row.original[rowIdField]) : onSelectRow(null)}>
               <Button secondary size="tiny">&#65291;</Button>
             </div> 
           : null}
@@ -533,27 +518,6 @@ export function HeadlessTable({
   });
 
   const listRef = React.createRef()
-  useEffect(() => {
-    //const tableDiv = document.getElementsByClassName('headless-table-list')[0]
-    if(listRef.current) {
-      let position = 0
-
-      if(selectedId) {
-        position = rows.map(r => r.original[rowIdField]).indexOf(selectedId)
-      }else{
-        const lastSelectedId = (selectedDivRef.current.innerText || '')
-        position = rows.map(r => r.original[rowIdField]).indexOf(lastSelectedId)
-      }
-
-      if(lastViewId) {
-        console.log(lastViewId)
-        position = rows.map(r => r.original[rowIdField]).indexOf(lastViewId)
-        listRef.current.scrollToItem(position, 'smart')
-      }
-      listRef.current.scrollToItem(position, 'smart')
-    }
-  }, [listRef])
-
   const listContainerRef = useRef()
 
   const StickyList = ({ children, stickyIndices, ...rest }) => (
@@ -563,6 +527,17 @@ export function HeadlessTable({
         ref={listRef}
         outerRef={listContainerRef}
         className="headless-table-list"
+        initialScrollOffset={scrollOffset}
+        onScroll={({
+          scrollDirection,
+          scrollOffset,
+          scrollUpdateWasRequested
+        }) => {
+          console.log(scrollDirection, scrollOffset)
+          if(scrollOffset !== 0) {
+            scrollOffsetDivRef.current.innerText = scrollOffset
+          }
+        }}
         {...rest}
       >
         {ItemWrapper}
@@ -598,7 +573,7 @@ export function HeadlessTable({
             <div style={{ height: '20px', width: scrollbarWidth }}></div>
           </div>
         : null}
-        {selectedDivRef && <div ref={selectedDivRef} style={{ display: 'none' }}></div>}
+        {scrollOffsetDivRef && <div ref={scrollOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
         {currentColumnsDivRef && <div ref={currentColumnsDivRef} style={{ display: 'none' }}>{JSON.stringify(currentColumns)}</div>}
