@@ -1,4 +1,4 @@
-const scrollbarWidth = () => {
+const verticalScrollbarWidth = () => {
   // thanks too https://davidwalsh.name/detect-scrollbar-width
   const scrollDiv = document.createElement('div')
   scrollDiv.setAttribute('style', 'width: 100px; height: 100px; overflow: scroll; position:absolute; top:-9999px;')
@@ -8,4 +8,4 @@ const scrollbarWidth = () => {
   return scrollbarWidth
 }
 
-export default scrollbarWidth
+export default verticalScrollbarWidth

@@ -6,7 +6,7 @@ import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
 import { FixedSizeList as List } from 'react-window';
-import verticalScrollbarWidth from './scrollbarWidth';
+import verticalScrollbarWidth from './verticalScrollbarWidth';
 
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
@@ -16,11 +16,13 @@ import { getColor } from './Theme';
 const Styles = styled.div<{minHeight?: number, pagination?: boolean}>`
   overflow-x: ${props => props.pagination ? 'scroll' : 'hidden'};
   min-height: ${props => props.minHeight ? props.minHeight : "600"}px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  /* -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }
+  .headless-table-list::-webkit-scrollbar {
+    display: none;
+  } */
 
   .th,
   .td {
@@ -298,18 +300,24 @@ export function HeadlessTable({
   }
 
   const tableRef = useRef(null)
+  const listContainerRef = useRef(null)
 
   //Extra horizontal scrollbar on the bottom of the page
   const topScrollRef = useRef(null)
 
-  function handleHorizontalScroll(placement) {
+  function handleHorizontalScroll(placement) {  
+    let scrollNode = listContainerRef.current
+    if(pagination) {
+      scrollNode = tableRef.current.parentNode
+    }
+
     if(placement === 'top') {
-      tableRef.current.parentNode.scrollLeft = topScrollRef.current.scrollLeft
+      scrollNode.scrollLeft = topScrollRef.current.scrollLeft
       return
     }
 
     if(placement === 'bottom' && topScrollRef.current) {
-      topScrollRef.current.scrollLeft = tableRef.current.parentNode.scrollLeft
+      topScrollRef.current.scrollLeft = scrollNode.scrollLeft
       return
     }
   }
@@ -327,14 +335,26 @@ export function HeadlessTable({
   }, [topScrollRef])
 
   useEffect(() => {
-    if(tableRef) {
-      setScrollbarWidth(tableRef.current.offsetWidth + 200)
+    if(pagination) {
+      if(tableRef) {
+        setScrollbarWidth(tableRef.current.offsetWidth + 200)
+      }
+    }else{
+      if(listContainerRef) {
+        setScrollbarWidth(listContainerRef.current.firstChild.offsetWidth + 200)
+      }
     }
-  }, [tableRef])
+  }, [tableRef, listContainerRef])
 
   useEffect(() => {
-    if(tableRef) {
-      setScrollbarWidth(tableRef.current.offsetWidth + 200)
+    if(pagination) {
+      if(tableRef) {
+        setScrollbarWidth(tableRef.current.offsetWidth + 200)
+      }
+    }else{
+      if(listContainerRef) {
+        setScrollbarWidth(listContainerRef.current.firstChild.offsetWidth + 200)
+      }
     }
   }, [columns])
 
@@ -349,6 +369,20 @@ export function HeadlessTable({
       })
     }
   }, [tableRef])
+
+  const listScroll = (e) => { 
+    if(e.target.className === 'headless-table-list') {
+      handleHorizontalScroll('bottom')
+    }
+  }
+
+  useLayoutEffect(() => {
+    if(listContainerRef) {
+      document.addEventListener('scroll', listScroll, true);
+    
+      return () => document.removeEventListener('scroll', listScroll)
+    }
+  }, [listContainerRef])
 
 
   //infinite scroll
@@ -518,7 +552,6 @@ export function HeadlessTable({
   });
 
   const listRef = React.createRef()
-  const listContainerRef = useRef()
 
   const StickyList = ({ children, stickyIndices, ...rest }) => (
     <StickyListContext.Provider value={{ ItemRenderer: children, stickyIndices }}>
@@ -531,9 +564,9 @@ export function HeadlessTable({
         onScroll={({
           scrollDirection,
           scrollOffset,
-          scrollUpdateWasRequested
+          scrollUpdateWasRequested,
+          ...props
         }) => {
-          console.log(scrollDirection, scrollOffset)
           if(scrollOffset !== 0) {
             scrollOffsetDivRef.current.innerText = scrollOffset
           }
@@ -563,8 +596,7 @@ export function HeadlessTable({
             )}
           </code>
             </pre> */}
-        
-        {pagination ? 
+        {pagination ?
           <div ref={topScrollRef} style={{ 
             position:'fixed', height: '20px', 
             width: '100%', bottom: 0, zIndex: 100,
@@ -572,7 +604,7 @@ export function HeadlessTable({
           }}>
             <div style={{ height: '20px', width: scrollbarWidth }}></div>
           </div>
-        : null}
+        : null} 
         {scrollOffsetDivRef && <div ref={scrollOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
