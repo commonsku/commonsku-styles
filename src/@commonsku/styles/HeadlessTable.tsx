@@ -30,6 +30,7 @@ const Styles = styled.div<{minHeight?: number, pagination?: boolean}>`
     background-color: #fff;
     overflow: hidden;
     border: none !important;
+    text-align: center;
   }
   .react-table {
     .th,
