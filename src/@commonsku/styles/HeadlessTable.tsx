@@ -403,6 +403,7 @@ export function HeadlessTable({
           ...style,
           position: "absolute",
           width: totalColumnsWidth + scrollBarSize,
+          paddingTop: index === 0 ? '60px' : 0 //Adds padding to the first row so it will show
         }
       })} className="tr"> 
         {row.cells.map((cell: any, c: any) => {
@@ -465,9 +466,10 @@ export function HeadlessTable({
 
   const ItemWrapper = ({ data, index, style }) => {
     const { ItemRenderer, stickyIndices } = data
-    if (stickyIndices && stickyIndices.includes(index)) {
+    //sticky indices are used for the sticky header
+    /* if (stickyIndices && stickyIndices.includes(index)) {
       return null
-    }
+    } */
     return <ItemRenderer index={index} style={style} />
   }
 
@@ -708,7 +710,7 @@ export function HeadlessTable({
                 innerElementType={innerElementType}
                 itemCount={rows.length}
                 itemSize={70}
-                stickyIndices={[0]}
+                stickyIndices={[0]} //sticky header
               >
                 {RenderDivRow}
               </StickyList>
