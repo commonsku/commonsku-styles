@@ -404,7 +404,7 @@ export function HeadlessTable({
           ...style,
           position: "absolute",
           width: totalColumnsWidth + scrollBarSize,
-          paddingTop: index === 0 ? '61px' : 0 //Adds padding to the first row so it will show
+          paddingTop: '60px'
         }
       })} className="tr"> 
         {row.cells.map((cell: any, c: any) => {
