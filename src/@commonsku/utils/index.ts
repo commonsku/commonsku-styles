@@ -8,5 +8,16 @@ export const aeval = (obj:{[key: string]: any}, key: string, def: any) => {
     return obj && obj[key] ? obj[key] : def;
 }
 
+export const truncate = (value: string, length: number) => {
+    if(typeof value !== 'string') {
+      return value
+    }
+    if(value.length < length) {
+      return value
+    }
+  
+    return `${value.slice(0, length)}...`
+}
+
 export const window = ssr.window;
 export const document = ssr.document;
