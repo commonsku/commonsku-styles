@@ -19,4 +19,5 @@ export * from './NoteIcon';
 export * from './TaskIcon';
 export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';
+export * from './YesMarketingIcon';
 export { default as Loading } from './Loading';

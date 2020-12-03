@@ -67,6 +67,7 @@ import {
     ColumnSelectIcon,
     ProofingCompleteIcon,
     NoMarketingIcon,
+    YesMarketingIcon,
     Text,
     Collapsible,
     CollapsiblePanel,
@@ -501,6 +502,7 @@ const App = () => {
             <TaskIcon color={"black"} width={"1.5rem"}/>
             <NoteIcon color={"black"} width={"1.5rem"}/>
             <NoMarketingIcon width={"1.5rem"}/>
+            <YesMarketingIcon width={"1.5rem"}/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
