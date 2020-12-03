@@ -403,8 +403,7 @@ export function HeadlessTable({
         style: {
           ...style,
           position: "absolute",
-          width: totalColumnsWidth + scrollBarSize,
-          paddingTop: '60px'
+          width: totalColumnsWidth + scrollBarSize
         }
       })} className="tr"> 
         {row.cells.map((cell: any, c: any) => {
@@ -546,7 +545,6 @@ export function HeadlessTable({
                 style={{ top: index * 60, left: 0, width: "100%", height: '60px' }}
               />
             ))}
-    
             {children}
           </div>
         )}
