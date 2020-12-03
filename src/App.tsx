@@ -66,6 +66,7 @@ import {
     ClientApprovedIcon,
     ColumnSelectIcon,
     ProofingCompleteIcon,
+    NoMarketingIcon,
     Text,
     Collapsible,
     CollapsiblePanel,
@@ -499,6 +500,7 @@ const App = () => {
             <PanelIcon color={"#00d374"} width={"1.5rem"}/>
             <TaskIcon color={"black"} width={"1.5rem"}/>
             <NoteIcon color={"black"} width={"1.5rem"}/>
+            <NoMarketingIcon width={"1.5rem"}/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
