@@ -13,6 +13,8 @@ import { Button } from './Button'
 import { UpArrowIcon } from './icons';
 import { getColor } from './Theme';
 
+const PADDING_SIZE = 60
+
 const Styles = styled.div<{minHeight?: number, pagination?: boolean}>`
   overflow-x: ${props => props.pagination ? 'scroll' : 'hidden'};
   min-height: ${props => props.minHeight ? props.minHeight : "600"}px;
@@ -403,7 +405,8 @@ export function HeadlessTable({
         style: {
           ...style,
           position: "absolute",
-          width: totalColumnsWidth + scrollBarSize
+          width: totalColumnsWidth + scrollBarSize,
+          top: `${parseFloat(style.top) + PADDING_SIZE}px`
         }
       })} className="tr"> 
         {row.cells.map((cell: any, c: any) => {
@@ -531,6 +534,7 @@ export function HeadlessTable({
   const innerElementType = forwardRef(({ children, ...rest }, ref) => {
     let style = {...rest.style}
     style.width = totalColumnsWidth + scrollBarSize
+    style.height = `${parseFloat(style.height) + PADDING_SIZE * 2}px`
     let props = {...rest}
     delete props.style
 
