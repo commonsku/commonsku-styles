@@ -396,6 +396,7 @@ const App = () => {
   const pageIndexDivRef = useRef(null)
   const sortDirectionDivRef = useRef(null)
   const currentColumnsDivRef = useRef(null)
+  const horizontalOffsetDivRef = useRef(null)
 
   function onChangeSelected(id) {
     //@ts-ignore
@@ -757,6 +758,7 @@ const App = () => {
           rowIdField="rowId"
           defaultSort={{ id: 'firstName', desc: true }}
           defaultScrollOffset={defaultScrollOffset}
+          defaultHorizontalOffset={0}
           onChangeSelected={onChangeSelected}
           onChangeSortOrColumns={onChangeSortOrColumns}
           pageIndexDivRef={pageIndexDivRef}
@@ -765,6 +767,7 @@ const App = () => {
           minHeight={400}
           pagination={false}
           scrollOffsetDivRef={scrollOffsetDivRef}
+          horizontalOffsetDivRef={horizontalOffsetDivRef}
         />
       </Box>
     </Background>

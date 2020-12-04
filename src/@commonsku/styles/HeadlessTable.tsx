@@ -179,7 +179,9 @@ type HeadlessTableProps = React.PropsWithChildren<{
   defaultPageSize?: number,
   defaultPageIndex?: number,
   defaultScrollOffset?: number,
+  defaultHorizontalOffset ?: number,
   scrollOffsetDivRef?: any,
+  horizontalOffsetDivRef?: any,
   pageIndexDivRef?:any,
   onChangeSelected?:any,
   onChangeSortOrColumns?: any,
@@ -190,8 +192,8 @@ type HeadlessTableProps = React.PropsWithChildren<{
 } & SharedStyleTypes>;
 
 export function HeadlessTable({ 
-  columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0, defaultScrollOffset=0,
-  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef,
+  columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0, defaultScrollOffset=0, defaultHorizontalOffset=0,
+  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef, horizontalOffsetDivRef,
   sortDirectionDivRef, currentColumnsDivRef, minHeight, pagination=true
 }: HeadlessTableProps) {
   //@ts-ignore
@@ -243,12 +245,19 @@ export function HeadlessTable({
   const [selectedId, setSelectedId] = useState(null)
   const [scrollbarWidth, setScrollbarWidth] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(defaultScrollOffset)
+  const [horizontalOffset, setHorizontalOffset] = useState(defaultHorizontalOffset)
 
   useEffect(() => {
     if(defaultScrollOffset !== 0) {
       setScrollOffset(defaultScrollOffset)
     }
   }, [defaultScrollOffset])
+
+  useEffect(() => {
+    if(defaultHorizontalOffset !== 0) {
+      setHorizontalOffset(defaultHorizontalOffset)
+    }
+  }, [defaultHorizontalOffset])
 
   useEffect(() => {
     if(defaultSort) {
@@ -304,6 +313,15 @@ export function HeadlessTable({
 
   const tableRef = useRef(null)
   const listContainerRef = useRef(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      if(listContainerRef.current) {
+        console.log(horizontalOffset)
+        listContainerRef.current.scrollLeft = horizontalOffset
+      }
+    }, 0);
+  }, [listContainerRef, horizontalOffset])
 
   //Extra horizontal scrollbar on the bottom of the page
   const topScrollRef = useRef(null)
@@ -376,6 +394,20 @@ export function HeadlessTable({
   const listScroll = (e) => { 
     if(e.target.className === 'headless-table-list') {
       handleHorizontalScroll('bottom')
+      if(horizontalOffsetDivRef && listContainerRef.current && listContainerRef.current.scrollLeft !== 0) {
+        horizontalOffsetDivRef.current.innerText = listContainerRef.current.scrollLeft
+        //Probably there is a better way to lock the list from resetting to the left
+        console.log('hit here')
+        setTimeout(() => {
+          listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
+        }, 0)
+        setTimeout(() => {
+          listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
+        }, 1000)
+        setTimeout(() => {
+          listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
+        }, 2000)
+      }
     }
   }
 
@@ -514,6 +546,12 @@ export function HeadlessTable({
                   sortDirectionState = { accessor: column.id, direction }
                 }
                 setSortDirection(sortDirectionState)
+                setHorizontalOffset(horizontalOffsetDivRef.current.innerText)
+                if(listContainerRef.current) {
+                  setTimeout(() => {
+                    listContainerRef.current.scrollLeft = horizontalOffset
+                  }, 0);
+                }
               }}
             >
               {column.render('Header')}
@@ -609,7 +647,8 @@ export function HeadlessTable({
           }}>
             <div style={{ height: '20px', width: scrollbarWidth }}></div>
           </div>
-        : null} 
+        : null}
+        {horizontalOffsetDivRef && <div ref={horizontalOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {scrollOffsetDivRef && <div ref={scrollOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
         {sortDirectionDivRef && <div ref={sortDirectionDivRef} style={{ display: 'none' }}>{JSON.stringify(sortDirection)}</div>}
