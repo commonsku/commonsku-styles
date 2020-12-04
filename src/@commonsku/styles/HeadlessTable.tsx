@@ -397,7 +397,6 @@ export function HeadlessTable({
       if(horizontalOffsetDivRef && listContainerRef.current && listContainerRef.current.scrollLeft !== 0) {
         horizontalOffsetDivRef.current.innerText = listContainerRef.current.scrollLeft
         //Probably there is a better way to lock the list from resetting to the left
-        console.log('hit here')
         setTimeout(() => {
           listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
         }, 0)
