@@ -317,15 +317,15 @@ export function HeadlessTable({
   useEffect(() => {
     setTimeout(() => {
       if(listContainerRef.current) {
-        console.log(horizontalOffset)
         listContainerRef.current.scrollLeft = horizontalOffset
       }
-    }, 0);
-  }, [listContainerRef, horizontalOffset])
+    }, 0)
+  }, [listContainerRef, horizontalOffset, rows])
 
   //Extra horizontal scrollbar on the bottom of the page
   const topScrollRef = useRef(null)
 
+  //Method for syncing horizontal scrollbar movements when we need one at the bottom of the page
   function handleHorizontalScroll(placement) {  
     let scrollNode = listContainerRef.current
     if(pagination) {
@@ -393,26 +393,16 @@ export function HeadlessTable({
 
   const listScroll = (e) => { 
     if(e.target.className === 'headless-table-list') {
-      handleHorizontalScroll('bottom')
+      //handleHorizontalScroll('bottom')
       if(horizontalOffsetDivRef && listContainerRef.current && listContainerRef.current.scrollLeft !== 0) {
         horizontalOffsetDivRef.current.innerText = listContainerRef.current.scrollLeft
-        //Probably there is a better way to lock the list from resetting to the left
-        setTimeout(() => {
-          listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
-        }, 0)
-        setTimeout(() => {
-          listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
-        }, 1000)
-        setTimeout(() => {
-          listContainerRef.current.scrollLeft = parseInt(horizontalOffsetDivRef.current.innerText)
-        }, 2000)
       }
     }
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if(listContainerRef) {
-      document.addEventListener('scroll', listScroll, true);
+      document.addEventListener('scroll', listScroll, true)
     
       return () => document.removeEventListener('scroll', listScroll)
     }
