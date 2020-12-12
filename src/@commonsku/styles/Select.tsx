@@ -16,7 +16,7 @@ type AdditionalSKUSelectProps = {
 
 type SKUSelectProps = AdditionalSKUSelectProps & SelectProps
 
-type SKUSelectStylesProps = SKUSelectProps | AsyncSelectProps<{[key: string]: any}> | CreatableSelectProps<{[key: string]: any}>
+type SKUSelectStylesProps = SKUSelectProps | AsyncSelectProps<{[key: string]: any}, boolean> | CreatableSelectProps<{[key: string]: any}, boolean>
 
 const popupStyles: SelectProps = {
   menuPlacement: 'auto',
@@ -153,7 +153,7 @@ const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?
   )
 }
 
-const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}>) =>
+const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}, boolean>) =>
   // @ts-ignore
   <BaseCreatableSelect 
     {...(inPopup ? popupStyles : {})}
@@ -162,7 +162,7 @@ const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: Additio
     {...props}
   />;
 
-const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
+const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}, boolean> & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
       <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
@@ -172,7 +172,7 @@ const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectPr
 }
 
 
-const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}>) =>
+const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}, boolean>) =>
   // @ts-ignore
   <BaseAsyncSelect 
     {...(inPopup ? popupStyles : {})}
@@ -181,7 +181,7 @@ const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalS
     {...props}
   />;
 
-const LabeledAsyncSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
+const LabeledAsyncSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}, boolean> & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
       <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
