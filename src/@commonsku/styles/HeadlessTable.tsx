@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useRef, useState, useEffect, useLayoutEffect, createContext, forwardRef } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useLayoutEffect, createContext, forwardRef } from 'react';
 import styled from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
