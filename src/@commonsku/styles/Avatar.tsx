@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import React from 'react'
 import placeholder from './img/avatar-placeholder.png'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';

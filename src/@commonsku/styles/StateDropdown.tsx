@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
-import { Button } from './Button';
 import { document, truncate } from '../utils';
 
 const StyledCircles = styled.div`

@@ -1,8 +1,7 @@
 //@ts-nocheck
-import _ from 'lodash';
 import React, { useRef, useState, useEffect, useLayoutEffect, createContext, forwardRef } from 'react';
-import styled, { css } from 'styled-components'
-import { SizerCss, SizerTypes, SizerWrapper } from './Sizer';
+import styled from 'styled-components'
+import { SizerCss, SizerTypes } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
 import { FixedSizeList as List } from 'react-window';
@@ -235,8 +234,7 @@ export function HeadlessTable({
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = table
 
   const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
@@ -269,7 +267,7 @@ export function HeadlessTable({
 
   useEffect(() => {
     onChangeSelected(selectedId)
-  }, [selectedId])
+  }, [selectedId, onChangeSelected])
 
   useEffect(() => {
     setCurrentColumns(visibleColumns.map((c: any) => c.id))
@@ -277,7 +275,7 @@ export function HeadlessTable({
 
   useEffect(() => {
     onChangeSortOrColumns(sortDirection, currentColumns)
-  }, [sortDirection, currentColumns])
+  }, [sortDirection, currentColumns, onChangeSortOrColumns])
 
   let columnBeingDragged: any = null;
 
@@ -326,34 +324,51 @@ export function HeadlessTable({
   const topScrollRef = useRef(null)
 
   //Method for syncing horizontal scrollbar movements when we need one at the bottom of the page
-  function handleHorizontalScroll(placement) {  
-    let scrollNode = listContainerRef.current
-    if(pagination) {
-      scrollNode = tableRef.current.parentNode
-    }
+  const handleHorizontalScroll = useCallback(
+    placement => {
+      let scrollNode = listContainerRef.current
+      if (pagination) {
+        scrollNode = tableRef.current.parentNode
+      }
 
-    if(placement === 'top') {
-      scrollNode.scrollLeft = topScrollRef.current.scrollLeft
-      return
-    }
+      if(placement === 'top') {
+        scrollNode.scrollLeft = topScrollRef.current.scrollLeft
+        return
+      }
 
-    if(placement === 'bottom' && topScrollRef.current) {
-      topScrollRef.current.scrollLeft = scrollNode.scrollLeft
-      return
-    }
-  }
+      if(placement === 'bottom' && topScrollRef.current) {
+        topScrollRef.current.scrollLeft = scrollNode.scrollLeft
+        return
+      }
+    },
+    [listContainerRef, tableRef, pagination]
+  );
 
   useEffect(() => {
-    if(topScrollRef.current) {
-      topScrollRef.current.addEventListener('scroll', function() {
+    const ref = topScrollRef.current;
+    if(ref) {
+      ref.addEventListener('scroll', function() {
         handleHorizontalScroll('top')
       })
     
-      return () => topScrollRef.current.removeEventListener('scroll', function() {
+      return () => ref.removeEventListener('scroll', function() {
         handleHorizontalScroll('top')
       })
     }
-  }, [topScrollRef])
+  }, [topScrollRef, handleHorizontalScroll])
+
+  useEffect(() => {
+    const ref = tableRef.current;
+    if(pagination) {
+      if(ref) {
+        setScrollbarWidth(ref.offsetWidth + 200)
+      }
+    }else{
+      if(listContainerRef) {
+        setScrollbarWidth(listContainerRef.current.firstChild.offsetWidth + 200)
+      }
+    }
+  }, [tableRef, listContainerRef, pagination])
 
   useEffect(() => {
     if(pagination) {
@@ -365,48 +380,37 @@ export function HeadlessTable({
         setScrollbarWidth(listContainerRef.current.firstChild.offsetWidth + 200)
       }
     }
-  }, [tableRef, listContainerRef])
-
-  useEffect(() => {
-    if(pagination) {
-      if(tableRef) {
-        setScrollbarWidth(tableRef.current.offsetWidth + 200)
-      }
-    }else{
-      if(listContainerRef) {
-        setScrollbarWidth(listContainerRef.current.firstChild.offsetWidth + 200)
-      }
-    }
-  }, [columns])
+  }, [columns, pagination])
 
   useLayoutEffect(() => {
-    if(tableRef) {
-      tableRef.current.parentNode.addEventListener('scroll', function() {
+    const ref = tableRef.current;
+    if(ref) {
+      ref.parentNode.addEventListener('scroll', function() {
         handleHorizontalScroll('bottom')
       })
     
-      return () => tableRef.current.parentNode.removeEventListener('scroll', function() {
+      return () => ref.parentNode.removeEventListener('scroll', function() {
         handleHorizontalScroll('bottom')
       })
     }
-  }, [tableRef])
-
-  const listScroll = (e) => { 
-    if(e.target.className === 'headless-table-list') {
-      //handleHorizontalScroll('bottom')
-      if(horizontalOffsetDivRef && listContainerRef.current && listContainerRef.current.scrollLeft !== 0) {
-        horizontalOffsetDivRef.current.innerText = listContainerRef.current.scrollLeft
-      }
-    }
-  }
+  }, [tableRef, handleHorizontalScroll])
 
   useEffect(() => {
+    const listScroll = (e) => { 
+      if(e.target.className === 'headless-table-list') {
+        //handleHorizontalScroll('bottom')
+        if(horizontalOffsetDivRef && listContainerRef.current && listContainerRef.current.scrollLeft !== 0) {
+          horizontalOffsetDivRef.current.innerText = listContainerRef.current.scrollLeft
+        }
+      }
+    }
+
     if(listContainerRef) {
       document.addEventListener('scroll', listScroll, true)
     
       return () => document.removeEventListener('scroll', listScroll)
     }
-  }, [listContainerRef])
+  }, [listContainerRef, horizontalOffsetDivRef])
 
 
   //infinite scroll
@@ -489,11 +493,7 @@ export function HeadlessTable({
   StickyListContext.displayName = "StickyListContext"
 
   const ItemWrapper = ({ data, index, style }) => {
-    const { ItemRenderer, stickyIndices } = data
-    //sticky indices are used for the sticky header
-    /* if (stickyIndices && stickyIndices.includes(index)) {
-      return null
-    } */
+    const { ItemRenderer } = data;
     return <ItemRenderer index={index} style={style} />
   }
 

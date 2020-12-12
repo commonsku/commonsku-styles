@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { media, sizes } from '../utils';
 import { SizerCss, SizerTypes } from './Sizer';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
-import React, { useState, Component } from 'react'
-import { getThemeColor } from './Theme';
+import React, { Component } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const tabSizes = {
@@ -45,9 +44,6 @@ const Tab = styled.li<{selected?: boolean, size?: keyof typeof tabSizes} & Share
     ${props => tabSizes[props.size ?? 'medium']}
   }
 `
-
-const TabContent = styled.div``
-
 
 /* 
 
@@ -99,10 +95,10 @@ class Tabs extends Component<TabsProps, StateType> {
   render () {
     const { tabs, size } = this.props;
     return <div>
-      <TabBar padded={this.props.padded == true}>
+      <TabBar padded={this.props.padded === true}>
         {tabs.map((tab, index) => <Tab 
           key={index} size={size}
-          selected={index == this.state.selectedTabIndex}
+          selected={index === this.state.selectedTabIndex}
           onClick={() => {
             this.setState({ selectedTabIndex: index })
             let callback = tabs[index].onClick;
