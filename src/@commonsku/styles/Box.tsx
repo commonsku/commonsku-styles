@@ -15,7 +15,7 @@ const StyledBox = styled.div<{borderless?: boolean, padded?: boolean}&SharedStyl
 
 const Box = (props: React.PropsWithChildren<{borderless?: boolean,
                                              padded?    : boolean,
-                                             title?     : string,
+                                             title?     : string | React.ReactNode,
                                              controls?  : React.ReactNode } & SharedStyleTypes>) => {
 
   return ( <StyledBox padded={props.padded} borderless={props.borderless} {...props}>

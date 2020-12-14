@@ -1,5 +1,5 @@
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import progress from 'rollup-plugin-progress';
 import filesize from 'rollup-plugin-filesize';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
@@ -9,7 +9,7 @@ import image from '@rollup/plugin-image';
 import svgr from '@svgr/rollup';
 // import typescript from '@rollup/plugin-typescript';
 import typescript from 'rollup-plugin-typescript2';
-import replace from 'rollup-plugin-replace';
+import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 
 import pkg from './package.json';
@@ -64,7 +64,7 @@ export default {
     resolve(),
     babel({
       exclude: 'node_modules/**',
-      runtimeHelpers: true
+      babelHelpers: 'runtime'
     }),
     filesize(),
     typescript({

@@ -1,21 +1,12 @@
-import React, { useState, useReducer, useEffect, useRef, useCallback } from 'react';
-import styled from 'styled-components'
+import React, { useState, useReducer, useEffect, useRef } from 'react';
 
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
-import product_pic3 from './products/3.png';
-import product_pic4 from './products/4.png';
-import product_pic5 from './products/5.png';
 import product_wide from './products/wide.png';
 import product_narrow from './products/narrow.png';
 
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
-import user_pic3 from './users/3.jpeg';
-import user_pic4 from './users/4.jpeg';
-import user_pic5 from './users/5.jpeg';
-
-import makeData from './makeData';
 
 import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon } from './@commonsku/styles/icons';
 
@@ -25,21 +16,17 @@ import {
     Background,
     DropArea, Dropzoned, DropzonedPreviews,
     Button, 
-    H1, H2, H5, 
-    Label,
+    H5, 
     Page,
     Toggle,
     ToggleLink, 
     LabeledInput,
     LabeledTextarea,
-    Input,
-    Spinner,
     SidePanel,
     Tabs,
     Select,
     LabeledSelect,
     LabeledProgress,
-    PanelContact,
     PanelTileContact,
     Product,
     Artwork,
@@ -74,7 +61,6 @@ import {
     CollapsiblePanels,
     colors,
 } from '@commonsku/styles';
-import { useFilters } from 'react-table';
 
 const initialState = {
   date: new Date(),
@@ -343,10 +329,6 @@ const App = () => {
         const [menuIsOpen, setMenuIsOpen] = useState(false)
 
         useEffect(() => {
-          setZIndex()
-        }, [menuIsOpen])
-
-        function setZIndex() {
           if(menuIsOpen) {
             // @ts-ignore
             wrapper.current.parentNode.style.zIndex = 4
@@ -354,7 +336,7 @@ const App = () => {
             // @ts-ignore
             wrapper.current.parentNode.style.zIndex = 3
           }
-        }
+        }, [menuIsOpen])
 
         return (
           <div ref={wrapper}>
@@ -692,12 +674,12 @@ const App = () => {
             <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
-                      body={<div>Samantha Kates added a note to <a href="#">John Doe's</a><br/>PO#15310 flagged as Confirmed. </div>}
+                      body={<div>Samantha Kates added a note to <a href=".">John Doe's</a><br/>PO#15310 flagged as Confirmed. </div>}
                       comments={[ <FeedPost author={{name:"Bob Peterson", avatar: user_pic1}} date="Feb 20" body={<div>Finally!</div>}/>]} />
             <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
-                      body={<div>Joe Jemple added a note to <a href="#">John Doe's</a><br/>PO#15310 flagged as Shipped. </div>}
+                      body={<div>Joe Jemple added a note to <a href=".">John Doe's</a><br/>PO#15310 flagged as Shipped. </div>}
                       comments={[]} />
             <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"

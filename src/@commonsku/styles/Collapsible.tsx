@@ -116,7 +116,6 @@ export function Collapsible({
                 onExit && onExit(node);
                 break;
             case 'onExiting':
-                const _unused = node.offsetHeight;
                 setHeight(0);
                 onExiting && onExiting(node);
                 break;

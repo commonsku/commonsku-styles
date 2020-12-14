@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
-import { Button } from './Button';
 import { document } from '../utils';
 
 const StyledDropdown = styled.div`
@@ -80,7 +79,7 @@ export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, disable
         if(setMenuIsOpen) {
             setMenuIsOpen(showMenu)
         }
-    }, [showMenu])
+    }, [showMenu, setMenuIsOpen])
 
     return (
         // @ts-ignore

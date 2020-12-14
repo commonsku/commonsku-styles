@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
 import { Button } from './Button';
-import { NoteIcon, UpArrowIcon } from './icons';
+import { UpArrowIcon } from './icons';
 import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
@@ -101,7 +101,7 @@ export const Dropdown = ({ items, children, underlined, primary, text, icon, ope
                 document.removeEventListener("mousedown", handleClick);
             };
         }
-    }, []);
+    }, [items]);
 
     return (
         // @ts-ignore

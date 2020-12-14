@@ -83,9 +83,10 @@ const PopupContainer: React.FC<{}> = ({ children }) => {
   const ref = React.useRef(document.createElement('div'));
 
   useEffect(() => {
-    document.body.appendChild(ref.current);
+    const current = ref.current;
+    document.body.appendChild(current);
     return () => {
-      document.body.removeChild(ref.current);
+      document.body.removeChild(current);
     }
   }, []);
 
@@ -104,7 +105,25 @@ export type PopupProps = React.PropsWithChildren<{
 export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=false, ...props }: PopupProps) => {
   const ref = React.useRef();
 
+  /* there is a bug where this closes popup involuntarily
+  const handleClick = (e: Event) => {
+    // @ts-ignore
+    if (ref.current?.contains(e.target)) {
+      return;
+    }
+    onClose && onClose();
+  };
+  */
+
   useEffect(() => {
+    const handleKeyDown = (e: Event) => {
+      // @ts-ignore
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        onClose && onClose();
+      }
+    };
+
     if(closeOnClickOutside) {
       //document.addEventListener("mousedown", handleClick);
     }
@@ -120,24 +139,7 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
         document.removeEventListener("keyup", handleKeyDown);
       }
     }
-  }, []);
-
-  const handleKeyDown = (e: Event) => {
-    // @ts-ignore
-    if (e.key === "Escape") {
-      e.stopPropagation();
-      onClose && onClose();
-    }
-  };
-
-  //there is a bug where this closes popup involuntarily
-  const handleClick = (e: Event) => {
-    // @ts-ignore
-    if (ref.current?.contains(e.target)) {
-      return;
-    }
-    onClose && onClose();
-  };
+  }, [closeOnClickOutside, closeOnEsc, onClose]);
 
   return <PopupContainer>
     <Overlay>
