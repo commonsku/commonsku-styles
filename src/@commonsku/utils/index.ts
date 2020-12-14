@@ -19,7 +19,7 @@ export const truncate = (value: string, length: number) => {
     return `${value.slice(0, length)}...`
 }
 
-export const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+export const random = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
 
 export const range = (start: number, end?: number, step: number = 1) => {
   let output = [] as number[];

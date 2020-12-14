@@ -12,7 +12,7 @@ import { useRandomInterval } from './hooks';
 
 const DEFAULT_COLOR = '#FFC700';
 
-const generateSparkle = color => {
+const generateSparkle = (color: string) => {
   const sparkle = {
     id: String(random(10000, 99999)),
     createdAt: Date.now(),
@@ -25,7 +25,8 @@ const generateSparkle = color => {
   };
   return sparkle;
 };
-export const Sparkles = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
+
+export const Sparkles: React.FC<{ color: string }> = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
   const [sparkles, setSparkles] = React.useState(() => {
     return range(3).map(() => generateSparkle(color));
   });
@@ -41,8 +42,8 @@ export const Sparkles = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
       nextSparkles.push(sparkle);
       setSparkles(nextSparkles);
     },
-    prefersReducedMotion ? null : 50,
-    prefersReducedMotion ? null : 450
+    prefersReducedMotion ? undefined : 50,
+    prefersReducedMotion ? undefined : 450
   );
   return (
     <Wrapper {...delegated}>
@@ -58,7 +59,7 @@ export const Sparkles = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
     </Wrapper>
   );
 };
-const Sparkle = ({ size, color, style }) => {
+const Sparkle: React.FC<{ size: number, color: string, style: React.CSSProperties }> = ({ size, color, style }) => {
   const path =
     'M26.5 25.5C19.0043 33.3697 0 34 0 34C0 34 19.1013 35.3684 26.5 43.5C33.234 50.901 34 68 34 68C34 68 36.9884 50.7065 44.5 43.5C51.6431 36.647 68 34 68 34C68 34 51.6947 32.0939 44.5 25.5C36.5605 18.2235 34 0 34 0C34 0 33.6591 17.9837 26.5 25.5Z';
   return (
