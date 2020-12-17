@@ -29,6 +29,7 @@ type DropdownContentProps = {
     active?: boolean,
     rounded?: boolean,
     showCircles?: boolean,
+    scrollContentHeight?: string,
 }
 
 const DropdownDisplay = styled.div<DropdownContentProps>`
@@ -79,6 +80,7 @@ const DropDownContent = styled.div<DropdownContentProps>`
     border-radius: 10px;
     text-align: left;
     overflow: hidden;
+    ${p => p.scrollContentHeight ? `height: ${p.scrollContentHeight}; overflow-y: auto;` : ''}
 `;
 
 const Circles = ({val, max}:{val: number, max: number}) => {
@@ -137,7 +139,7 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, dataT
               {showCircles && <Circles max={items.length} val={value2.order}/>}
               {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(value2.content, 20)}</span> : value2.content}
             </DropdownDisplay>
-            {showMenu && <DropDownContent>
+            {showMenu && <DropDownContent scrollContentHeight={props.scrollContentHeight}>
                 {items.map((item, i) => {
                     return item && <DropdownItem key={'dropdown-item-'+i} 
                         {...item.props}

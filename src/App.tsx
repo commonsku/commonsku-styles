@@ -366,6 +366,7 @@ const App = () => {
             value={states[0]} 
             row={po}
             showCircles={false}
+            scrollContentHeight="200px"
           />
         )
       }
@@ -516,7 +517,7 @@ const App = () => {
                 <H5>Single Datepicker</H5>
                 <Datepicker
                   value={state.date}
-                  onChange={(data: any) => dispatch({type: "dateChange", payload: data })}
+                  onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
                 />
               </Col>
             </Row>
