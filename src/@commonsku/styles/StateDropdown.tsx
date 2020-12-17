@@ -29,6 +29,7 @@ type DropdownContentProps = {
     active?: boolean,
     rounded?: boolean,
     showCircles?: boolean,
+    scrollContentHeight?: number | string,
 }
 
 const DropdownDisplay = styled.div<DropdownContentProps>`
@@ -79,6 +80,7 @@ const DropDownContent = styled.div<DropdownContentProps>`
     border-radius: 10px;
     text-align: left;
     overflow: hidden;
+    ${p => p.scrollContentHeight ? `height: ${p.scrollContentHeight};` : ''}
 `;
 
 const Circles = ({val, max}:{val: number, max: number}) => {
