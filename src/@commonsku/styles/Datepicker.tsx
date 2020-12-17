@@ -36,6 +36,10 @@ export function Datepicker({
   showMonthDropdown=true,
   showYearDropdown=true,
   dropdownMode="select",
+  nextMonthButtonLabel="",
+  nextYearButtonLabel="",
+  previousMonthButtonLabel="",
+  previousYearButtonLabel="",
   ...props
 }: ReactDatePickerProps & InputProps & { value?: Date | null }) {
   return (
@@ -50,6 +54,10 @@ export function Datepicker({
         isClearable={isClearable}
         showMonthDropdown={showMonthDropdown}
         showYearDropdown={showYearDropdown}
+        nextMonthButtonLabel={nextMonthButtonLabel}
+        nextYearButtonLabel={nextYearButtonLabel}
+        previousMonthButtonLabel={previousMonthButtonLabel}
+        previousYearButtonLabel={previousYearButtonLabel}
         dropdownMode={dropdownMode}
         {...props}
       />
