@@ -366,6 +366,7 @@ const App = () => {
             value={states[0]} 
             row={po}
             showCircles={false}
+            scrollContentHeight="200px"
           />
         )
       }
