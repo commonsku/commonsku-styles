@@ -33,6 +33,7 @@ export function Datepicker({
   placeholder='yyyy-MM-dd',
   dateFormat='yyyy-MM-dd',
   isClearable=false,
+  peekNextMonth=true,
   showMonthDropdown=true,
   showYearDropdown=true,
   dropdownMode="select",
@@ -59,6 +60,7 @@ export function Datepicker({
         previousMonthButtonLabel={previousMonthButtonLabel}
         previousYearButtonLabel={previousYearButtonLabel}
         dropdownMode={dropdownMode}
+        peekNextMonth={peekNextMonth}
         {...props}
       />
   )
