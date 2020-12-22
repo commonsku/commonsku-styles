@@ -5,8 +5,9 @@ import { Input, InputProps } from './Input';
 import "react-datepicker/dist/react-datepicker.css";
 import { CalendarIcon } from './icons';
 
-export const CustomDateInput = ({ error, noMargin, onClick, ...props }: InputProps) => {
-
+export const CustomDateInput = (
+  { error, noMargin, onClick, isClearable, ...props }: InputProps & {isClearable?: boolean}
+) => {
   return (<>
     <Input
       noMargin={noMargin}
@@ -18,13 +19,12 @@ export const CustomDateInput = ({ error, noMargin, onClick, ...props }: InputPro
       {...props}
     />
     <span style={{ fontStyle: 'normal', cursor: 'pointer', position: 'absolute', top: '8px', right: '5px' }} onClick={onClick}>
-      <CalendarIcon style={{ width: '1.9rem', verticalAlign: 'middle', }} />
+    {!isClearable ? <CalendarIcon style={{ width: '1.9rem', verticalAlign: 'middle', }} /> : null}
     </span>
   </>);
 }
 
 export function Datepicker({
-  noMargin,
   error,
   value,
   customInput,
@@ -49,7 +49,7 @@ export function Datepicker({
         locale={locale}
         selected={value || props.selected}
         todayButton={todayButton}
-        customInput={customInput || <CustomDateInput noMargin={noMargin} error={error} />}
+        customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
         dateFormat={dateFormat}
         placeholderText={placeholder}
         isClearable={isClearable}
