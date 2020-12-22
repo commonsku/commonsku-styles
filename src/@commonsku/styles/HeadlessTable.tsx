@@ -238,13 +238,27 @@ export function HeadlessTable({
     state: { pageIndex },
   } = table
 
-  const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
-  const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
+  const [sortDirection, _setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
+  const [currentColumns, _setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
   const [hoverId, setHoverId] = useState(null)
-  const [selectedId, setSelectedId] = useState(null)
+  const [selectedId, _setSelectedId] = useState(null)
   const [scrollbarWidth, setScrollbarWidth] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(defaultScrollOffset)
   const [horizontalOffset, setHorizontalOffset] = useState(defaultHorizontalOffset)
+  const setSelectedId = (selectedId) => {
+    _setSelectedId(selectedId);
+    onChangeSelected(selectedId)
+  };
+
+  const setSortDirection = (sortDirection) => {
+    _setSortDirection(sortDirection);
+    onChangeSortOrColumns(sortDirection, currentColumns);
+  };
+
+  const setCurrentColumns = (currentColumns) => {
+    _setCurrentColumns(currentColumns);
+    onChangeSortOrColumns(sortDirection, currentColumns);
+  };
 
   useEffect(() => {
     if(defaultScrollOffset !== 0) {
@@ -260,23 +274,15 @@ export function HeadlessTable({
 
   useEffect(() => {
     if(defaultSort) {
-      setSortDirection({ accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' })
+      _setSortDirection({ accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' });
     }else{
-      setSortDirection({})
+      _setSortDirection({});
     }
   }, [defaultSort])
 
   useEffect(() => {
-    onChangeSelected(selectedId)
-  }, [selectedId, onChangeSelected])
-
-  useEffect(() => {
-    setCurrentColumns(visibleColumns.map((c: any) => c.id))
+    _setCurrentColumns(visibleColumns.map((c: any) => c.id))
   }, [visibleColumns])
-
-  useEffect(() => {
-    onChangeSortOrColumns(sortDirection, currentColumns)
-  }, [sortDirection, currentColumns, onChangeSortOrColumns])
 
   let columnBeingDragged: any = null;
 
