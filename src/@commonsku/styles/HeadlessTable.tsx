@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { useRef, useState, useEffect, useCallback, useLayoutEffect, createContext, forwardRef } from 'react';
+import { partial } from 'lodash';
 import styled from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
@@ -346,14 +347,11 @@ export function HeadlessTable({
 
   useEffect(() => {
     const ref = topScrollRef.current;
+    const handleHorizontalScrollTop = partial(handleHorizontalScroll, 'top');
     if(ref) {
-      ref.addEventListener('scroll', function() {
-        handleHorizontalScroll('top')
-      })
+      ref.addEventListener('scroll', handleHorizontalScrollTop);
     
-      return () => ref.removeEventListener('scroll', function() {
-        handleHorizontalScroll('top')
-      })
+      return () => ref.removeEventListener('scroll', handleHorizontalScrollTop);
     }
   }, [topScrollRef, handleHorizontalScroll])
 
@@ -384,14 +382,11 @@ export function HeadlessTable({
 
   useLayoutEffect(() => {
     const ref = tableRef.current;
+    const handleHorizontalScrollBottom = partial(handleHorizontalScroll, 'bottom');
     if(ref) {
-      ref.parentNode.addEventListener('scroll', function() {
-        handleHorizontalScroll('bottom')
-      })
+      ref.parentNode.addEventListener('scroll', handleHorizontalScrollBottom);
     
-      return () => ref.parentNode.removeEventListener('scroll', function() {
-        handleHorizontalScroll('bottom')
-      })
+      return () => ref.parentNode.removeEventListener('scroll', handleHorizontalScrollBottom)
     }
   }, [tableRef, handleHorizontalScroll])
 
