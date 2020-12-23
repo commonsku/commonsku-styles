@@ -80,7 +80,7 @@ const DropDownContent = styled.div<DropdownContentProps>`
     border-radius: 10px;
     text-align: left;
     overflow: hidden;
-    ${p => p.scrollContentHeight ? `height: ${p.scrollContentHeight}; overflow-y: auto;` : ''}
+    ${p => p.scrollContentHeight ? `max-height: ${p.scrollContentHeight}; overflow-y: auto;` : ''}
 `;
 
 const Circles = ({val, max}:{val: number, max: number}) => {
