@@ -6,6 +6,7 @@ import { valIsValid } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerTypes, SizerCss } from './Sizer'
 import { Backdrop } from './Backdrop'
+import { document } from '../utils';
 
 
 type SidePanelType = {

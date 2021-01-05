@@ -12,6 +12,7 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
 import { UpArrowIcon } from './icons';
 import { getColor } from './Theme';
+import { document } from '../utils';
 
 const PADDING_SIZE = 60
 

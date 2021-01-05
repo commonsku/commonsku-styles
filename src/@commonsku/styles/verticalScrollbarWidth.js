@@ -1,3 +1,5 @@
+import { document } from '../utils';
+
 const verticalScrollbarWidth = () => {
   // thanks too https://davidwalsh.name/detect-scrollbar-width
   const scrollDiv = document.createElement('div')

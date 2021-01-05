@@ -1,4 +1,5 @@
 import React from 'react';
+import { window } from '../../utils';
 
 const QUERY = '(prefers-reduced-motion: no-preference)';
 const isRenderingOnServer = typeof window === 'undefined';
