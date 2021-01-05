@@ -108,10 +108,17 @@ const win = typeof window !== 'undefined' ? window : {
   Image() {},
   Date() {},
   screen: {},
-  setTimeout() {},
-  clearTimeout() {},
+  setTimeout: setTimeout,
+  clearTimeout: clearTimeout,
   matchMedia() {
-    return {};
+    return {
+      matches: false, media: '',
+      onchange: () => null,
+      addListener: () => null,
+      removeListener: () => null,
+      addEventListener: () => null,
+      removeEventListener: () => null,
+    };
   },
 };
 
