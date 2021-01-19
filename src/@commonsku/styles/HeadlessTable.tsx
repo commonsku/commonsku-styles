@@ -198,7 +198,7 @@ type HeadlessTableProps = React.PropsWithChildren<{
 const StickyListContext = createContext({});
 StickyListContext.displayName = "StickyListContext"
 
-const DivCell = ({ row, cell, rowIdField, selectedId, onSelectRow }) => {
+const DivCell = ({ row, cell, rowIdField, selectedId, onSelectRow, isHoverRow }) => {
   const [isHover, setIsHover] = useState(false);
   const backgroundColor = (row.original[rowIdField] === selectedId) ? '#F4F7FF' : '#FFF';
 
@@ -210,7 +210,7 @@ const DivCell = ({ row, cell, rowIdField, selectedId, onSelectRow }) => {
     onMouseLeave={() => setIsHover(false)}
   >
     {cell.column.isRowId 
-    ? ((isHover || (row.original[rowIdField] === selectedId)) && <div 
+    ? ((isHoverRow || isHover || (row.original[rowIdField] === selectedId)) && <div 
       onClick={() => onSelectRow(row.original[rowIdField] !== selectedId ? row.original[rowIdField] : null)}>
       <Button secondary size="tiny">&#65291;</Button>
     </div>)
@@ -222,21 +222,27 @@ const DivCell = ({ row, cell, rowIdField, selectedId, onSelectRow }) => {
 }
 
 const RenderDivRow = memo(({ data, index, style }) => {
+  const [isHover, setIsHover] = useState(false);
   const row = data[index];
   return <StickyListContext.Consumer>
     {({ width, prepareRow, rowIdField, selectedId, onSelectRow }) => {
       prepareRow(row);
-      return <div {...row.getRowProps({
-        style: {
-          ...style,
-          position: "absolute",
-          width,
-          top: `${parseFloat(style.top) + PADDING_SIZE}px`,
-        }
-      })} className="tr"> 
+      return <div 
+        {...row.getRowProps({
+          style: {
+            ...style,
+            position: "absolute",
+            width,
+            top: `${parseFloat(style.top) + PADDING_SIZE}px`,
+          }
+        })} 
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        className="tr"
+      > 
         {row.cells.map((cell: any, c: any) => {
           return <DivCell key={c} row={row} cell={cell} c={c} 
-            rowIdField={rowIdField} selectedId={selectedId} onSelectRow={onSelectRow}
+            rowIdField={rowIdField} selectedId={selectedId} onSelectRow={onSelectRow} isHoverRow={isHover}
           />
         })}
       </div>
