@@ -94,6 +94,7 @@ export type ArtworkProps = {
   cssHeight?:number,
   date?:string,
   edit?:boolean,
+  noTruncate?:boolean,
   onClick?:Function|VoidFunction,
   onEdit?:Function|VoidFunction,
   onDelete?:Function|VoidFunction,
@@ -133,7 +134,7 @@ export const Artwork = ({
             />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
        </div> : props.name ?
-       <ArtworkName>{truncate(props.name, 20)}</ArtworkName> : null}
+       <ArtworkName>{props.noTruncate ? props.name : truncate(props.name, 20)}</ArtworkName> : null}
        {!props.edit && props.date ?
        <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>
