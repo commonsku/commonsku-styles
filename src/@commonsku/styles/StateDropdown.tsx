@@ -80,7 +80,7 @@ const DropDownContent = styled.div<DropdownContentProps>`
     border-radius: 10px;
     text-align: left;
     overflow: hidden;
-    ${p => p.scrollContentHeight ? `height: ${p.scrollContentHeight}; overflow-y: auto;` : ''}
+    ${p => p.scrollContentHeight ? `max-height: ${p.scrollContentHeight}; overflow-y: auto;` : ''}
 `;
 
 const Circles = ({val, max}:{val: number, max: number}) => {
@@ -94,11 +94,12 @@ const Circles = ({val, max}:{val: number, max: number}) => {
     </StyledCircles>
 }
 
-export const StateDropdown = ({ items, text, value, row, showCircles=true, dataTip=false, dataFor='', ...props }: {
+export const StateDropdown = ({ items, text, value, row, showCircles=true, maxCircles, dataTip=false, dataFor='', ...props }: {
     items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
     value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number},
     row: any,
     showCircles?: boolean
+    maxCircles?: number
     dataTip?: any
     dataFor?: string
 } & DropdownContentProps) => {
@@ -136,7 +137,7 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, dataT
                 onClick={e => { e.stopPropagation(); setShowMenu(!showMenu) }}
                 showCircles={showCircles}
             >
-              {showCircles && <Circles max={items.length} val={value2.order}/>}
+              {showCircles && <Circles max={maxCircles || items.length} val={value2.order}/>}
               {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(value2.content, 20)}</span> : value2.content}
             </DropdownDisplay>
             {showMenu && <DropDownContent scrollContentHeight={props.scrollContentHeight}>
@@ -149,7 +150,7 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, dataT
                             setValue(item)
                             item.onClick && item.onClick(item, row)
                         }}
-                    >{showCircles && <Circles max={items.length} val={item.order}/>} {item.content} </DropdownItem> 
+                    >{showCircles && <Circles max={maxCircles || items.length} val={item.order}/>} {item.content} </DropdownItem> 
                 })}
             </DropDownContent>}
         </StyledDropdown>

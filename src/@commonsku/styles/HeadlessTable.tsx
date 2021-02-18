@@ -1,16 +1,20 @@
 //@ts-nocheck
-import React, { useRef, useState, useEffect, useCallback, useLayoutEffect, createContext, forwardRef } from 'react';
+import React, { 
+  memo, useRef, useState, useEffect, useCallback, useLayoutEffect, createContext, forwardRef, useMemo 
+} from 'react';
+import { partial } from 'lodash';
 import styled from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
 import { useTable, useSortBy, useBlockLayout, usePagination, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky';
-import { FixedSizeList as List } from 'react-window';
+import { FixedSizeList as List, areEqual } from 'react-window';
 import verticalScrollbarWidth from './verticalScrollbarWidth';
 
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
 import { UpArrowIcon } from './icons';
 import { getColor } from './Theme';
+import { document } from '../utils';
 
 const PADDING_SIZE = 60
 
@@ -174,6 +178,7 @@ type HeadlessTableProps = React.PropsWithChildren<{
   columns: any,
   data: object[],
   rowIdField: string,
+  selectedRowId?: string | null,
   defaultSort?: { id: string, desc: boolean },
   defaultPageSize?: number,
   defaultPageIndex?: number,
@@ -190,9 +195,150 @@ type HeadlessTableProps = React.PropsWithChildren<{
   pagination?: boolean
 } & SharedStyleTypes>;
 
+const StickyListContext = createContext({});
+StickyListContext.displayName = "StickyListContext"
+
+const DivCell = ({ row, cell, rowIdField, selectedId, onSelectRow, isHoverRow }) => {
+  const [isHover, setIsHover] = useState(false);
+  const backgroundColor = (row.original[rowIdField] === selectedId) ? '#F4F7FF' : '#FFF';
+
+  return <TABLEDIV
+    className="td" {...cell.getCellProps()} 
+    width={cell.column.width} 
+    backgroundColor={backgroundColor}
+    onMouseEnter={() => setIsHover(true)}
+    onMouseLeave={() => setIsHover(false)}
+  >
+    {cell.column.isRowId 
+    ? ((isHoverRow || isHover || (row.original[rowIdField] === selectedId)) && <div 
+      onClick={() => onSelectRow(row.original[rowIdField] !== selectedId ? row.original[rowIdField] : null)}>
+      <Button secondary size="tiny">&#65291;</Button>
+    </div>)
+    : <>
+      {cell.render('Cell')}
+      {cell.column.hasTooltip && isHover && cell.column.tooltipContent(row.original)}
+    </>}
+  </TABLEDIV>
+}
+
+const RenderDivRow = memo(({ data, index, style }) => {
+  const [isHover, setIsHover] = useState(false);
+  const row = data[index];
+  return <StickyListContext.Consumer>
+    {({ width, prepareRow, rowIdField, selectedId, onSelectRow }) => {
+      prepareRow(row);
+      return <div 
+        {...row.getRowProps({
+          style: {
+            ...style,
+            position: "absolute",
+            width,
+            top: `${parseFloat(style.top) + PADDING_SIZE}px`,
+          }
+        })} 
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        className="tr"
+      > 
+        {row.cells.map((cell: any, c: any) => {
+          return <DivCell key={c} row={row} cell={cell} c={c} 
+            rowIdField={rowIdField} selectedId={selectedId} onSelectRow={onSelectRow} isHoverRow={isHover}
+          />
+        })}
+      </div>
+    }}
+  </StickyListContext.Consumer>
+}, areEqual);
+
+const iconProps = {
+  width: '10px',
+  fill: getColor('primary100')
+}
+
+const iconStyle = (up: boolean) => {
+  return {
+    verticalAlign: 'middle', 
+    transitionDuration: '.3s', 
+    transform: 'rotate(' + ( up ? 0 : 180 ) + 'deg)',
+    marginLeft: '5px'
+  }
+}
+
+const StickyRow = ({ style, headerGroups, onColumnClick, onDragStart, onDrop }) => (
+  <div className="row sticky" style={style}>
+    {headerGroups.map((headerGroup: any, h: any) => (
+      <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+        {headerGroup.headers.map((column: any, i: any) => (
+          <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+            data-column-index={i}
+            draggable={column.noDrag ? false : true}
+            onDragStart={column.noDrag ? undefined : onDragStart}
+            onDragOver={e => {
+              e.preventDefault()
+            }}
+            onDrop={column.noDrag ? undefined : onDrop}
+            className="th"
+            width={column.width}
+            onClick={() => {
+              onColumnClick(column);
+            }}
+          >
+            {column.render('Header')}
+            <span>
+              {column.isSorted
+                ? column.isSortedDesc
+                  ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
+                  : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
+                : ''}
+            </span>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+)
+
+const StickyContainer = forwardRef(({ children, style, ...props }, ref) => {
+  return <StickyListContext.Consumer>
+    {({ stickyIndices, width, onHeaderColumnClick, headerGroups, onDragStart, onDrop }) => (
+      <div ref={ref} 
+        style={{
+          ...style,
+          width, height: `${parseFloat(style.height) + PADDING_SIZE * 2}px`,
+        }} 
+        {...props}
+      >
+        {stickyIndices.map(index => (
+          <StickyRow key={index}
+            style={{ top: index * 60, left: 0, width: "100%", height: '60px' }}
+            headerGroups={headerGroups}
+            onColumnClick={onHeaderColumnClick}
+            onDragStart={onDragStart} onDrop={onDrop}
+          />
+        ))}
+        {children}
+      </div>
+    )}
+  </StickyListContext.Consumer>
+});
+
+const StickyList = ({ 
+  children, itemData, rowIdField, selectedId, onSelectRow, headerGroups, onDragStart, onDrop,
+  prepareRow, stickyIndices, width, onHeaderColumnClick, ...rest 
+}) => {
+  return <StickyListContext.Provider value={{ 
+    stickyIndices, onHeaderColumnClick, width, rowIdField, selectedId, onSelectRow, prepareRow, headerGroups, 
+    onDragStart, onDrop
+  }}>
+    <List itemData={itemData} className="headless-table-list" {...rest}>
+      {children}
+    </List>
+  </StickyListContext.Provider>
+}
+
 export function HeadlessTable({ 
   columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0, defaultScrollOffset=0, defaultHorizontalOffset=0,
-  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef, horizontalOffsetDivRef,
+  pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef, horizontalOffsetDivRef, selectedRowId,
   sortDirectionDivRef, currentColumnsDivRef, minHeight, pagination=true
 }: HeadlessTableProps) {
   //@ts-ignore
@@ -237,13 +383,31 @@ export function HeadlessTable({
     state: { pageIndex },
   } = table
 
-  const [sortDirection, setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
-  const [currentColumns, setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
+  const [sortDirection, _setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
+  const [currentColumns, _setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
   const [hoverId, setHoverId] = useState(null)
-  const [selectedId, setSelectedId] = useState(null)
+  const [selectedId, _setSelectedId] = useState(selectedRowId)
   const [scrollbarWidth, setScrollbarWidth] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(defaultScrollOffset)
   const [horizontalOffset, setHorizontalOffset] = useState(defaultHorizontalOffset)
+  const setSelectedId = (selectedId) => {
+    _setSelectedId(selectedId);
+    onChangeSelected(selectedId)
+  };
+
+  const setSortDirection = (sortDirection) => {
+    _setSortDirection(sortDirection);
+    onChangeSortOrColumns(sortDirection, currentColumns);
+  };
+
+  const setCurrentColumns = (currentColumns) => {
+    _setCurrentColumns(currentColumns);
+    onChangeSortOrColumns(sortDirection, currentColumns);
+  };
+
+  useEffect(() => {
+    setSelectedId(selectedRowId);
+  }, [selectedRowId]);
 
   useEffect(() => {
     if(defaultScrollOffset !== 0) {
@@ -259,23 +423,15 @@ export function HeadlessTable({
 
   useEffect(() => {
     if(defaultSort) {
-      setSortDirection({ accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' })
+      _setSortDirection({ accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' });
     }else{
-      setSortDirection({})
+      _setSortDirection({});
     }
   }, [defaultSort])
 
   useEffect(() => {
-    onChangeSelected(selectedId)
-  }, [selectedId, onChangeSelected])
-
-  useEffect(() => {
-    setCurrentColumns(visibleColumns.map((c: any) => c.id))
+    _setCurrentColumns(visibleColumns.map((c: any) => c.id))
   }, [visibleColumns])
-
-  useEffect(() => {
-    onChangeSortOrColumns(sortDirection, currentColumns)
-  }, [sortDirection, currentColumns, onChangeSortOrColumns])
 
   let columnBeingDragged: any = null;
 
@@ -295,29 +451,13 @@ export function HeadlessTable({
     }
   };
 
-  const iconProps = {
-    width: '10px',
-    fill: getColor('primary100')
-  }
-
-  const iconStyle = (up: boolean) => {
-    return {
-      verticalAlign: 'middle', 
-      transitionDuration: '.3s', 
-      transform: 'rotate(' + ( up ? 0 : 180 ) + 'deg)',
-      marginLeft: '5px'
-    }
-  }
-
-  const tableRef = useRef(null)
-  const listContainerRef = useRef(null)
+  const tableRef = useRef(null);
+  const listContainerRef = useRef(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      if(listContainerRef.current) {
-        listContainerRef.current.scrollLeft = horizontalOffset
-      }
-    }, 0)
+    if (listContainerRef.current) {
+      listContainerRef.current.scrollLeft = horizontalOffset;
+    }
   }, [listContainerRef, horizontalOffset, rows])
 
   //Extra horizontal scrollbar on the bottom of the page
@@ -328,7 +468,7 @@ export function HeadlessTable({
     placement => {
       let scrollNode = listContainerRef.current
       if (pagination) {
-        scrollNode = tableRef.current.parentNode
+        scrollNode = tableRef.current?.parentNode
       }
 
       if(placement === 'top') {
@@ -346,14 +486,11 @@ export function HeadlessTable({
 
   useEffect(() => {
     const ref = topScrollRef.current;
+    const handleHorizontalScrollTop = partial(handleHorizontalScroll, 'top');
     if(ref) {
-      ref.addEventListener('scroll', function() {
-        handleHorizontalScroll('top')
-      })
+      ref.addEventListener('scroll', handleHorizontalScrollTop);
     
-      return () => ref.removeEventListener('scroll', function() {
-        handleHorizontalScroll('top')
-      })
+      return () => ref.removeEventListener('scroll', handleHorizontalScrollTop);
     }
   }, [topScrollRef, handleHorizontalScroll])
 
@@ -384,14 +521,11 @@ export function HeadlessTable({
 
   useLayoutEffect(() => {
     const ref = tableRef.current;
+    const handleHorizontalScrollBottom = partial(handleHorizontalScroll, 'bottom');
     if(ref) {
-      ref.parentNode.addEventListener('scroll', function() {
-        handleHorizontalScroll('bottom')
-      })
+      ref.parentNode.addEventListener('scroll', handleHorizontalScrollBottom);
     
-      return () => ref.parentNode.removeEventListener('scroll', function() {
-        handleHorizontalScroll('bottom')
-      })
+      return () => ref.parentNode.removeEventListener('scroll', handleHorizontalScrollBottom)
     }
   }, [tableRef, handleHorizontalScroll])
 
@@ -414,220 +548,10 @@ export function HeadlessTable({
 
 
   //infinite scroll
-  const scrollBarSize = React.useMemo(() => verticalScrollbarWidth(), [])
-
-  const RenderDivRow = ({ index, style }) => {
-    const row = rows[index]
-    prepareRow(row)
-    return (
-      <DivRow row={row} index={index} style={style}></DivRow>
-    )
-  }
-
-  const DivRow = ({ row, index, style }) => {
-    return (
-      <div {...row.getRowProps({
-        style: {
-          ...style,
-          position: "absolute",
-          width: totalColumnsWidth + scrollBarSize,
-          top: `${parseFloat(style.top) + PADDING_SIZE}px`
-        }
-      })} className="tr"> 
-        {row.cells.map((cell: any, c: any) => {
-          if(cell.column.isRowId) {
-            return (
-              <DivCell row={row} cell={cell} c={c} index={index} />
-            )
-          }
-
-          return <DivCell row={row} cell={cell} c={c} index={index} />
-        })}
-      </div>
-    )
-  }
-
-  const DivCell = ({ row, cell, c, index }) => {
-    const [isHover, setIsHover] = useState(false)
-    const backgroundColor = (row.original[rowIdField] === selectedId) ? '#F4F7FF' : '#FFF';
-
-    function onSelectRow(id) {
-      setScrollOffset(parseInt(scrollOffsetDivRef.current.innerText) || 0)
-      setSelectedId(id)
-    }
-
-    if(cell.column.isRowId) {
-      return (
-        <TABLEDIV {...cell.getCellProps()} 
-          className="td" 
-          key={c} {...cell.getCellProps()} 
-          width={cell.column.width} 
-          backgroundColor={backgroundColor}
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-        >
-          {isHover || (row.original[rowIdField] === selectedId) ?
-            <div onClick={() => row.original[rowIdField] !== selectedId ? onSelectRow(row.original[rowIdField]) : onSelectRow(null)}>
-              <Button secondary size="tiny">&#65291;</Button>
-            </div> 
-          : null}
-        </TABLEDIV>
-      )
-    }
-
-    return (
-      <TABLEDIV {...cell.getCellProps()} 
-        className="td" key={c} {...cell.getCellProps()} 
-        width={cell.column.width} 
-        backgroundColor={backgroundColor}
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        {cell.render('Cell')}
-        {cell.column.hasTooltip && isHover ? cell.column.tooltipContent(row.original) : null}
-      </TABLEDIV>
-    )
-  }
-
-  const StickyListContext = createContext()
-  StickyListContext.displayName = "StickyListContext"
-
-  const ItemWrapper = ({ data, index, style }) => {
-    const { ItemRenderer } = data;
-    return <ItemRenderer index={index} style={style} />
-  }
-
-  const StickyRow = ({ index, style }) => (
-    <div className="row sticky" style={style}>
-      {headerGroups.map((headerGroup: any, h: any) => (
-        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-          {headerGroup.headers.map((column: any, i: any) => (
-            <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
-              data-column-index={i}
-              draggable={column.noDrag ? false : true}
-              onDragStart={column.noDrag ? undefined : onDragStart}
-              onDragOver={e => {
-                e.preventDefault()
-              }}
-              onDrop={column.noDrag ? undefined : onDrop}
-              className="th"
-              width={column.width}
-              onClick={() => {
-                column.isSorted
-                  ? column.isSortedDesc
-                    ? column.clearSortBy()
-                    : column.toggleSortBy(true)
-                  : column.toggleSortBy(false)
-                let direction
-                if(column.isSorted) {
-                  if(column.isSortedDesc) {
-                    direction = ''
-                  }else{
-                    direction = 'DESC'
-                  }
-                }else{
-                  direction = 'ASC'
-                }
-                let sortDirectionState
-                if(direction === '') {
-                  sortDirectionState = {}
-                }else{
-                  sortDirectionState = { accessor: column.id, direction }
-                }
-                setSortDirection(sortDirectionState)
-                setHorizontalOffset(horizontalOffsetDivRef.current.innerText)
-                if(listContainerRef.current) {
-                  setTimeout(() => {
-                    listContainerRef.current.scrollLeft = horizontalOffset
-                  }, 0);
-                }
-              }}
-            >
-              {column.render('Header')}
-              <span>
-                {column.isSorted
-                  ? column.isSortedDesc
-                    ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
-                    : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
-                  : ''}
-              </span>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  )
-
-  const innerElementType = forwardRef(({ children, ...rest }, ref) => {
-    let style = {...rest.style}
-    style.width = totalColumnsWidth + scrollBarSize
-    style.height = `${parseFloat(style.height) + PADDING_SIZE * 2}px`
-    let props = {...rest}
-    delete props.style
-
-    return (
-      <StickyListContext.Consumer>
-        {({ stickyIndices }) => (
-          <div ref={ref} style={style} {...props}>
-            {stickyIndices.map(index => (
-              <StickyRow
-                index={index}
-                key={index}
-                style={{ top: index * 60, left: 0, width: "100%", height: '60px' }}
-              />
-            ))}
-            {children}
-          </div>
-        )}
-      </StickyListContext.Consumer>
-    )
-  });
-
-  const listRef = React.createRef()
-
-  const StickyList = ({ children, stickyIndices, ...rest }) => (
-    <StickyListContext.Provider value={{ ItemRenderer: children, stickyIndices }}>
-      <List 
-        itemData={{ ItemRenderer: children, stickyIndices }}
-        ref={listRef}
-        outerRef={listContainerRef}
-        className="headless-table-list"
-        initialScrollOffset={scrollOffset}
-        onScroll={({
-          scrollDirection,
-          scrollOffset,
-          scrollUpdateWasRequested,
-          ...props
-        }) => {
-          if(scrollOffset !== 0) {
-            scrollOffsetDivRef.current.innerText = scrollOffset
-          }
-        }}
-        {...rest}
-      >
-        {ItemWrapper}
-      </List>
-    </StickyListContext.Provider>
-  )
-
+  const scrollBarSize = useMemo(() => verticalScrollbarWidth(), [])
   return (
     <Styles minHeight={minHeight}>
       <>
-        {/* <pre>
-          <code>
-            {JSON.stringify(
-              {
-                pageIndex,
-                pageSize,
-                pageCount,
-                canNextPage,
-                canPreviousPage,
-              },
-              null,
-              2
-            )}
-          </code>
-            </pre> */}
         {pagination ?
           <div ref={topScrollRef} style={{ 
             position:'fixed', height: '20px', 
@@ -737,11 +661,49 @@ export function HeadlessTable({
           <div ref={tableRef} {...getTableProps()} className="react-table react-table-sticky" style={{ overflow: 'hidden'}}>
             <div {...getTableBodyProps()} className="body"> 
               <StickyList
+                width={totalColumnsWidth + scrollBarSize}
                 height={minHeight}
-                innerElementType={innerElementType}
+                innerElementType={StickyContainer}
                 itemCount={rows.length}
                 itemSize={70}
+                itemData={rows}
+                headerGroups={headerGroups}
+                rowIdField={rowIdField}
+                selectedId={selectedId}
+                prepareRow={prepareRow}
+                onSelectRow={(id) => {
+                  setScrollOffset(parseInt(scrollOffsetDivRef.current.innerText) || 0);
+                  setSelectedId(id);
+                }}
                 stickyIndices={[0]} //sticky header
+                outerRef={listContainerRef}
+                initialScrollOffset={scrollOffset}
+                onScroll={({ scrollOffset, }) => {
+                  if(scrollOffset !== 0) {
+                    scrollOffsetDivRef.current.innerText = scrollOffset
+                  }
+                }}
+                onDragStart={onDragStart}
+                onDrop={onDrop}
+                onHeaderColumnClick={(column) => {
+                  let sortDirectionState = {};
+                  if (column.isSorted) {
+                    if (column.isSortedDesc) {
+                      column.clearSortBy();
+                    } else {
+                      column.toggleSortBy(true);
+                      sortDirectionState = { accessor: column.id, direction: 'DESC' };
+                    }
+                  } else {
+                    column.toggleSortBy(false);
+                    sortDirectionState = { accessor: column.id, direction: 'ASC' };
+                  }
+                  setSortDirection(sortDirectionState);
+                  setHorizontalOffset(horizontalOffsetDivRef.current.innerText);
+                  if(listContainerRef.current) {
+                    listContainerRef.current.scrollLeft = horizontalOffset
+                  }
+                }}
               >
                 {RenderDivRow}
               </StickyList>

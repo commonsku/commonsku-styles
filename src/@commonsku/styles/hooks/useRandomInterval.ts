@@ -13,7 +13,7 @@ export const useRandomInterval = (callback: () => void, minDelay?: number, maxDe
     if (isEnabled) {
       const handleTick = () => {
         const nextTickAt = random(minDelay!, maxDelay!);
-        timeoutId.current = window.setTimeout(() => {
+        timeoutId.current = setTimeout(() => {
           savedCallback.current();
           handleTick();
         }, nextTickAt);
@@ -22,13 +22,13 @@ export const useRandomInterval = (callback: () => void, minDelay?: number, maxDe
     }
     return () => {
       if (!!timeoutId.current) {
-        window.clearTimeout(timeoutId.current);
+        clearTimeout(timeoutId.current);
       }
     }
   }, [minDelay, maxDelay]);
   const cancel = React.useCallback(function () {
     if (!!timeoutId.current) {
-      window.clearTimeout(timeoutId.current);
+      clearTimeout(timeoutId.current);
     }
   }, []);
   return cancel;
