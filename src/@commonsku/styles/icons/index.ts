@@ -17,6 +17,7 @@ export * from './LockIcon';
 export * from './PanelIcon';
 export * from './NoteIcon';
 export * from './TaskIcon';
+export * from './ChatIcon';
 export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';
 export * from './YesMarketingIcon';

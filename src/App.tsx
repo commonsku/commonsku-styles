@@ -8,7 +8,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -491,6 +491,7 @@ const App = () => {
             <NoteIcon color={"black"} width={"1.5rem"}/>
             <NoMarketingIcon width={"1.5rem"}/>
             <YesMarketingIcon width={"1.5rem"}/>
+            <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={122}/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
@@ -646,7 +647,7 @@ const App = () => {
                 <Artwork date="Jan 3 2020" name="squirrel.png" picture={product_wide} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
               </Col>
               <Col padded xs={3}>
-                <Artwork date="Jan 3 2020" name="long name very long name really e very long name really e such a very very long namelong name such a very very long name squirrel.png" picture={product_narrow} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
+                <Artwork noTruncate date="Jan 3 2020" name="long name very long name really e very long name really e such a very very long namelong name such a very very long name squirrel.png" picture={product_narrow} onEdit={() => alert("hi")} onDelete={() => alert("deleting")}/>
               </Col>
             </Row>
        	    <Row>
