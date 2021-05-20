@@ -491,7 +491,7 @@ const App = () => {
             <NoteIcon color={"black"} width={"1.5rem"}/>
             <NoMarketingIcon width={"1.5rem"}/>
             <YesMarketingIcon width={"1.5rem"}/>
-            <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={122}/>
+            <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 

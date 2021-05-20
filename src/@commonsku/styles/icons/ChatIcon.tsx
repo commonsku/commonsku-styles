@@ -41,7 +41,6 @@ export function ChatIcon({
         fill={color}
         dominant-baseline="middle"
         text-anchor="middle"
-        transform="translate(50% 50%)"
       >
         {notifs ? (notifs > 99 ? "99+" : notifs) : ""}
       </text>
