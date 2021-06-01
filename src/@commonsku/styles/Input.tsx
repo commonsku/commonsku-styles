@@ -53,16 +53,19 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
 `;
 
 
-export const LabeledInput = ({ label, name, required, ...props}: InputProps & {label: string, name?: string, isPercent?: boolean} & SharedStyleTypes) => {
-  return <div>
-    <Label htmlFor={name}>{label} {required && '*'}</Label>
-    {props.isPercent ? <IconLabelContainer>
-                         <IconLabel {...props}>%</IconLabel>
-                         <Input name={name} required={required} {...props}/>
-                       </IconLabelContainer>
-                     : <Input name={name} required={required} {...props}></Input>}
-  </div>
-}
+type LabeledInputPropType = InputProps & {label: string, name?: string, isPercent?: boolean} & SharedStyleTypes;
+export const LabeledInput = React.forwardRef(
+  ({label, name, required, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
+    <div>
+      <Label htmlFor={name}>{label} {required && '*'}</Label>
+      {props.isPercent ? <IconLabelContainer>
+                           <IconLabel {...props}>%</IconLabel>
+                           <Input name={name} required={required} {...props}/>
+                         </IconLabelContainer>
+                       : <Input ref={ref} name={name} required={required} {...props}></Input>}
+    </div>
+  )
+)
 
 export const RadioLabel = styled.label<{disabled?: boolean}>`
   &&& {
