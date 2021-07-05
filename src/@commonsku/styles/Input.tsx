@@ -60,7 +60,7 @@ export const LabeledInput = React.forwardRef(
       <Label htmlFor={name}>{label} {required && '*'}</Label>
       {props.isPercent ? <IconLabelContainer>
                            <IconLabel {...props}>%</IconLabel>
-                           <Input name={name} required={required} {...props}/>
+                           <Input ref={ref} name={name} required={required} {...props}/>
                          </IconLabelContainer>
                        : <Input ref={ref} name={name} required={required} {...props}></Input>}
     </div>
