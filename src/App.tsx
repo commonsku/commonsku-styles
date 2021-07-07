@@ -8,7 +8,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -492,6 +492,7 @@ const App = () => {
             <NoMarketingIcon width={"1.5rem"}/>
             <YesMarketingIcon width={"1.5rem"}/>
             <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
+            <PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 

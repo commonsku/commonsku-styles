@@ -21,4 +21,5 @@ export * from './ChatIcon';
 export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';
 export * from './YesMarketingIcon';
+export * from './PinIcon';
 export { default as Loading } from './Loading';
