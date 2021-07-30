@@ -22,4 +22,5 @@ export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';
 export * from './YesMarketingIcon';
 export * from './PinIcon';
+export * from './TrashIcon';
 export { default as Loading } from './Loading';

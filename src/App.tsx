@@ -55,6 +55,7 @@ import {
     ProofingCompleteIcon,
     NoMarketingIcon,
     YesMarketingIcon,
+    TrashIcon,
     Text,
     Collapsible,
     CollapsiblePanel,
@@ -493,6 +494,7 @@ const App = () => {
             <YesMarketingIcon width={"1.5rem"}/>
             <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
             <PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
+            <TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
 
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
