@@ -63,6 +63,7 @@ import {
     colors,
     Calendar,
 } from '@commonsku/styles';
+import { CalendarTasks } from '@commonsku/styles/calendar/CalTask';
 
 const initialState = {
   date: new Date(),
@@ -258,6 +259,18 @@ function reducer(state: {[key: string]: any} = initialState, action: {type: stri
       throw new Error();
   }
 }
+
+const today = new Date();
+const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate()-1);
+const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+
+const caltasks = [
+    {date: yesterday, title: 'Megacorm', description: 'Reach out to Jake', colorType: 'light-green'},
+    {date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client', colorType: 'light-red'},
+    {date: today, title: 'ABS Client', description: 'Put together a presentation for this client', colorType: 'light-red'},
+    {date: today, title: 'Vandelay 2', description: 'Reach out to Jake', colorType: 'light-green'},
+    {date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake', colorType: 'light-green'},
+];
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -471,7 +484,8 @@ const App = () => {
             </div>
 
             <H5>Calendar</H5>
-            <Calendar />
+            {/* <Calendar /> */}
+            <CalendarTasks tasks={caltasks} />
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>
