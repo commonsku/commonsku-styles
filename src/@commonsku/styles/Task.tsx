@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
+import { isDate } from 'lodash'
+import { format } from 'date-fns'
 import {LabeledCheckbox} from './Input'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
@@ -31,10 +33,48 @@ const Task = (props: React.PropsWithChildren<{
   );
 }
 
+const StyledCalendarTask = styled(Task)<{ colorType?: string; }>`
+    border-radius: 5px;
+    background: ${p => p.colorType === 'light-red' ? '#ffebf2' : '#01d37417'};
+    padding: 5px;
+    margin-bottom: 0;
+    height: 100%;
+`;
+
+const StyledCalendarTaskBody = styled.span`
+    font-size: 15px;
+    font-family: 'skufont-regular',sans-serif,Roboto;
+    font-weight: normal;
+`;
+
+export type CalendarTaskProps = {
+  title: string,
+  description?: string | React.ReactNode,
+  completed?: boolean,
+  date?: Date | string,
+  colorType?: string,
+  overdue?: boolean,
+};
+
+const CalendarTask = ({ title, description, completed = false, date, colorType='light-green', overdue = false, ...props }: CalendarTaskProps) => {
+    return (
+        <StyledCalendarTask
+            taskName="Vandelay 3"
+            taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
+            date={isDate(date) ? format(date, 'yyyy-mm-dd') : date}
+            colorType={colorType}
+            {...props}
+        />
+    );
+}
+
 export {
   Task,
   StyledTask,
   TaskLabel,
   TaskName,
   TaskBody,
+  StyledCalendarTask,
+  StyledCalendarTaskBody,
+  CalendarTask,
 };
