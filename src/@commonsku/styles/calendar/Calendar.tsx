@@ -21,6 +21,7 @@ const Calendar = ({ components = {}, ...props }: {
     components?: {
         Header?: (props: React.PropsWithChildren<HeaderComponentProps>) => React.ReactElement;
         Footer?: (props: React.PropsWithChildren<HeaderComponentProps>) => React.ReactElement;
+        DayBody?: (props: React.PropsWithChildren<{[key: string]: any}>) => React.ReactElement;
     };
     showHeader?: boolean;
     showFooter?: boolean;
@@ -83,7 +84,12 @@ const Calendar = ({ components = {}, ...props }: {
         <CalendarWrapper>
             {renderHeader()}
             <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
-            <CalendarDaysBody currentMonth={currentMonth} selectedDate={selectedDate} onClickDay={onClickDay} />
+            <CalendarDaysBody
+                currentMonth={currentMonth}
+                selectedDate={selectedDate}
+                onClickDay={onClickDay}
+                components={{ DayBody: components?.DayBody, }}
+            />
             {renderFooter()}
         </CalendarWrapper>
     );
