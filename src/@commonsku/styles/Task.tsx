@@ -8,18 +8,33 @@ const TaskName   = styled.div`flex-grow: 1;`
 const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
 const TaskBody   = styled.div`margin-left:34px;`
 
-const Task = (props: React.PropsWithChildren<{taskName:string, date:string, done?:boolean, assignee?: string, taskBody: string} & SharedStyleTypes>) => {
-  return <StyledTask {...props}>
-           <LabeledCheckbox label={<TaskLabel>
-                                     <TaskName>{props.taskName}</TaskName>
-                                     <div>{props.date}</div>
-                                   </TaskLabel>} checked={false}/>
-           <TaskBody>{props.taskBody}</TaskBody>
-           <div className="task-metadata">
-             {typeof props.assignee !== "undefined" ? "for " + props.assignee! : null}
-             {typeof props.assignee !== "undefined" ? "on " : null} 
-           </div>
-         </StyledTask>
+const Task = (props: React.PropsWithChildren<{
+  taskName: string,
+  date?: string,
+  done?: boolean,
+  assignee?: string,
+  taskBody: string | React.ReactNode
+} & SharedStyleTypes>) => {
+  return (
+    <StyledTask {...props}>
+      <LabeledCheckbox checked={false} label={
+      <TaskLabel>
+        <TaskName>{props.taskName}</TaskName>
+        {props.date ? <div>{props.date}</div> : null}
+      </TaskLabel>} />
+      <TaskBody>{props.taskBody}</TaskBody>
+      <div className="task-metadata">
+        {typeof props.assignee !== "undefined" ? "for " + props.assignee! : null}
+        {typeof props.assignee !== "undefined" ? "on " : null} 
+      </div>
+    </StyledTask>
+  );
 }
 
-export {Task};
+export {
+  Task,
+  StyledTask,
+  TaskLabel,
+  TaskName,
+  TaskBody,
+};

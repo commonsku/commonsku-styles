@@ -41,3 +41,5 @@ export * from './icons'
 export * from './Theme'
 export {default as Theme} from './Theme'
 export {default as GlobalStyle} from './globalStyles'
+
+export * from './calendar';

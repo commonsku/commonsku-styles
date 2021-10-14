@@ -28,10 +28,30 @@ export type SizerTypes = {
     mdStyle?: string,
     lgStyle?: string,
     xlStyle?: string,
+
+    start?: boolean,
+    end?: boolean,
+    center?: boolean,
+    totalCols?: number;
 };
 
+const getTotalCols = (p: SizerTypes) => p.totalCols || 12;
+
 export const SizerCss = css<SizerTypes>`
-    ${(props) => props.offset && `margin-left: ${props.offset/12 * 100}%;`}
+    ${(props) => props.start ? `
+        justify-content: flex-start;
+        text-align: left;
+    ` : ''}
+    ${(props) => props.center ? `
+        justify-content: center;
+        text-align: center;
+    ` : ''}
+    ${(props) => props.end ? `
+        justify-content: flex-end;
+        text-align: right;
+    ` : ''}
+
+    ${(props) => props.offset && `margin-left: ${props.offset/getTotalCols(props) * 100}%;`}
     ${(props) => props.collapse && typeof(props.collapse) === 'string' && media[props.collapse](`
         display: none;
     `)};
@@ -55,8 +75,8 @@ export const SizerCss = css<SizerTypes>`
                         res += media[s]('display: none;');
                     } else {
                         res += media[s](`
-                            flex-basis: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
-                            max-width: ${(typeof(props[s]) === 'boolean' ? 12 : props[s])/12 * 100}%;
+                            flex-basis: ${(typeof(props[s]) === 'boolean' ? getTotalCols(props) : props[s])/getTotalCols(props) * 100}%;
+                            max-width: ${(typeof(props[s]) === 'boolean' ? getTotalCols(props) : props[s])/getTotalCols(props) * 100}%;
                             display: initial;
                         `);
                     }
@@ -67,10 +87,10 @@ export const SizerCss = css<SizerTypes>`
             }
 
             if(props[`${s}Offset`]) {
-                res += media[s](`margin-left: ${(props[`${s}Offset`]/12 * 100)}%;`);
+                res += media[s](`margin-left: ${(props[`${s}Offset`]/getTotalCols(props) * 100)}%;`);
             }
             if(props[`${s}OffsetRight`]) {
-                res += media[s](`margin-right: ${(props[`${s}OffsetRight`]/12 * 100)}%;`);
+                res += media[s](`margin-right: ${(props[`${s}OffsetRight`]/getTotalCols(props) * 100)}%;`);
             }
 
             if(props[`${s}Style`]) {

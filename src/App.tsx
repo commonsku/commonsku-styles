@@ -61,6 +61,7 @@ import {
     CollapsiblePanel,
     CollapsiblePanels,
     colors,
+    Calendar,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -468,6 +469,9 @@ const App = () => {
               </Dropdown>
               <Link block mt={20}>Link</Link>
             </div>
+
+            <H5>Calendar</H5>
+            <Calendar />
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>
