@@ -1,13 +1,14 @@
-import React from 'react';
-import { isSameDay, isSameWeek, format, getWeek, } from 'date-fns';
+import React, { useState } from 'react';
+import { isSameDay, format, getWeek, startOfWeek, lastDayOfWeek } from 'date-fns';
 import { colors, } from '../Theme';
 import { CalendarTask, CalendarTaskProps, } from '../Task';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
-import Calendar, { CalendarProps } from './Calendar';
+import { CalendarProps } from './Calendar';
 import { Tabs, TabType } from '..';
 import { useCalendar } from '../hooks';
-import { CalendarDaysBody, CalendarDaysHeader, CalendarWrapper, DefaultCalendarFooter } from '.';
+import { CalendarDaysBody, CalendarDaysHeader, CalendarWrapper } from '.';
+import { getDatesBetween } from '../hooks/useCalendar';
 
 
 export type CalendarTasksHeaderProps = {
@@ -90,10 +91,23 @@ export const CalendarTaskDayBody = ({day, tasks=[]}: {[key: string]: any}) => {
     );
 };
 
+function convertTasksToDays({ currentMonth, currentWeek, tasks, }) {
+    return getDatesBetween(
+        startOfWeek(currentMonth, { weekStartsOn: 1 }),
+        lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
+    ).map((day, i) => ({
+        id: 'day-'+i,
+        day,
+        tasks: tasks
+            .filter(t => t.date ? currentWeek === getWeek(typeof t.date !== 'string' ? t.date : new Date(t.date)) : true)
+            .map((t, j) => ({...t, coordinates: [i, j],  id: `day-${i}-task-${j}`})),
+    }));
+}
+
 type CalendarTasksProps = CalendarProps & {
     tasks: Array<CalendarTaskProps>;
     headerTabs?: Array<TabType>;
-    headerTasks?: Array<CalendarTaskProps>;
+    footerTasks?: Array<CalendarTaskProps>;
     components?: {
         Header?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
         Footer?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
@@ -103,7 +117,7 @@ type CalendarTasksProps = CalendarProps & {
 export const CalendarTasks = ({
     tasks,
     headerTabs=[],
-    headerTasks=[],
+    footerTasks=[],
     components={},
     ...props
 }: CalendarTasksProps) => {
@@ -117,6 +131,10 @@ export const CalendarTasks = ({
         onPrevMonth,
         onClickDay,
     } = useCalendar();
+
+    const [days, setDays] = useState(
+        convertTasksToDays({currentMonth, currentWeek, tasks,})
+    );
 
     const headerProps = {
         onNextWeek,
@@ -138,8 +156,9 @@ export const CalendarTasks = ({
                 onClickDay={onClickDay}
                 dayBodyProps={{ tasks }}
                 components={{ DayBody: CalendarTaskDayBody, }}
+                days={days}
             />
-            <CalendarTasksFooter {...headerProps} tasks={headerTasks} />
+            <CalendarTasksFooter {...headerProps} tasks={footerTasks} />
         </CalendarWrapper>
     );
 }

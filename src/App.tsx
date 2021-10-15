@@ -62,7 +62,7 @@ import {
     colors,
     Calendar,
 } from '@commonsku/styles';
-import CalendarTasks from '@commonsku/styles/calendar/CalTask';
+import { CalendarTasks } from '@commonsku/styles/calendar/CalTask';
 
 const initialState = {
   date: new Date(),
