@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { useState } from 'react'
 import { isDate } from 'lodash'
 import { format } from 'date-fns'
 import {LabeledCheckbox} from './Input'
@@ -10,24 +10,42 @@ const TaskName   = styled.div`flex-grow: 1;`
 const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
 const TaskBody   = styled.div`margin-left:34px;`
 
-const Task = (props: React.PropsWithChildren<{
+export type TaskProps = {
   taskName: string,
   date?: string,
   done?: boolean,
   assignee?: string,
-  taskBody: string | React.ReactNode
-} & SharedStyleTypes>) => {
+  taskBody: string | React.ReactNode,
+  checked?: boolean,
+  onClickCheckbox?: (val: any) => any,
+};
+const Task = ({
+  taskName,
+  date,
+  done,
+  assignee,
+  taskBody,
+  initialChecked,
+  onClickCheckbox,
+  ...props
+}: React.PropsWithChildren<TaskProps & SharedStyleTypes>) => {
+  const [checked, setChecked] = useState(initialChecked);
   return (
     <StyledTask {...props}>
-      <LabeledCheckbox checked={false} label={
-      <TaskLabel>
-        <TaskName>{props.taskName}</TaskName>
-        {props.date ? <div>{props.date}</div> : null}
-      </TaskLabel>} />
-      <TaskBody>{props.taskBody}</TaskBody>
+      <LabeledCheckbox checked={checked} label={
+        <TaskLabel>
+          <TaskName>{taskName}</TaskName>
+          {date ? <div>{date}</div> : null}
+        </TaskLabel>} onChange={() => {
+          setChecked(s => {
+            onClickCheckbox && onClickCheckbox(!s);
+            return !s;
+          });
+        }} />
+      <TaskBody>{taskBody}</TaskBody>
       <div className="task-metadata">
-        {typeof props.assignee !== "undefined" ? "for " + props.assignee! : null}
-        {typeof props.assignee !== "undefined" ? "on " : null} 
+        {typeof assignee !== "undefined" ? "for " + assignee! : null}
+        {typeof assignee !== "undefined" ? "on " : null} 
       </div>
     </StyledTask>
   );
@@ -54,15 +72,17 @@ export type CalendarTaskProps = {
   date?: Date | string,
   colorType?: string,
   overdue?: boolean,
+  onClickCheckbox?: Function|VoidFunction,
 };
 
 const CalendarTask = ({ title, description, completed = false, date, colorType='light-green', overdue = false, ...props }: CalendarTaskProps) => {
     return (
         <StyledCalendarTask
-            taskName="Vandelay 3"
+            taskName={title}
             taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
             date={isDate(date) ? format(date, 'yyyy-mm-dd') : date}
             colorType={colorType}
+            initialChecked={completed}
             {...props}
         />
     );

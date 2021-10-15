@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
-
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
 import product_wide from './products/wide.png';
@@ -63,7 +62,7 @@ import {
     colors,
     Calendar,
 } from '@commonsku/styles';
-import { CalendarTasks } from '@commonsku/styles/calendar/CalTask';
+import { CalendarTaskDayBody, CalendarTasksFooter, CalendarTasksHeader } from '@commonsku/styles/calendar/CalTask';
 
 const initialState = {
   date: new Date(),
@@ -264,13 +263,31 @@ const today = new Date();
 const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate()-1);
 const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
 
-const caltasks = [
-    {date: yesterday, title: 'Megacorm', description: 'Reach out to Jake', colorType: 'light-green'},
-    {date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client', colorType: 'light-red'},
-    {date: today, title: 'ABS Client', description: 'Put together a presentation for this client', colorType: 'light-red'},
-    {date: today, title: 'Vandelay 2', description: 'Reach out to Jake', colorType: 'light-green'},
-    {date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake', colorType: 'light-green'},
-];
+const calTasks = {
+  client: [
+    {date: yesterday, title: 'Megacorm', description: 'Reach out to Jake Client', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
+    {date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
+    {date: today, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
+    {date: today, title: 'Vandelay 2', description: 'Reach out to Jake Client', colorType: 'light-green', completed: true,},
+    {date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake Client', colorType: 'light-green'},
+  ],
+  project: [
+    {date: yesterday, title: 'ABS Client', description: 'Reach out to Jake Project', colorType: 'light-green', completed: true,},
+    {date: yesterday, title: 'Megacorm', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
+    {date: today, title: 'Vandelay 1', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
+    {date: today, title: 'Vandelay 2', description: 'Reach out to Jake Project', colorType: 'light-green'},
+    {date: tomorrow, title: 'Megacorm', description: 'Reach out to Jake Project', colorType: 'light-green'},
+  ],
+  other: [
+    {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red', completed: true,},
+    {date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+  ],
+};
+
+const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]), []);
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -282,7 +299,10 @@ const App = () => {
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
   const [collapse, setCollapse] = useState(false);
-  const [defaultScrollOffset, setDefaultScrollOffset] = useState(0)
+  const [defaultScrollOffset, setDefaultScrollOffset] = useState(0);
+  const [calendarState, setCalendarState] = useState({
+    type: 'all',
+  });
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -483,9 +503,59 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
-            <H5>Calendar</H5>
-            {/* <Calendar /> */}
-            <CalendarTasks tasks={caltasks} />
+            <H5>Calendar with tasks</H5>
+            <Calendar
+              components={{
+                DayBody: CalendarTaskDayBody,
+                Header: CalendarTasksHeader,
+                Footer: CalendarTasksFooter,
+              }}
+              extraProps={{
+                dayBody: { tasks: calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type] },
+                header: {
+                  tabs: [
+                    {content: '', label: 'All Tasks',
+                      onClick: () => { setCalendarState(s => ({...s, type: 'all'})); console.log('all tasks'); }
+                    },
+                    {content: '', label: 'Client Tasks',
+                      onClick: () => { setCalendarState(s => ({...s, type: 'client'})); console.log('client tasks'); }
+                    },
+                    {content: '', label: 'Project Tasks',
+                      onClick: () => { setCalendarState(s => ({...s, type: 'project'})); console.log('project tasks'); }
+                    },
+                    {content: '', label: 'Other Tasks',
+                      onClick: () => { setCalendarState(s => ({...s, type: 'other'})); console.log('other tasks'); }
+                    },
+                  ],
+                },
+                footer: { tasks: [
+                  {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+                  {date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+                  {date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+                  {date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+                  {date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+                ] },
+              }}
+            />
+
+            {/* <H5>Calendar Tasks</H5>
+            <CalendarTasks
+              tasks={calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type]}
+              headerTabs={[
+                {content: '', label: 'All Tasks',
+                  onClick: () => { setCalendarState(s => ({...s, type: 'all'})); console.log('all tasks'); }
+                },
+                {content: '', label: 'Client Tasks',
+                  onClick: () => { setCalendarState(s => ({...s, type: 'client'})); console.log('client tasks'); }
+                },
+                {content: '', label: 'Project Tasks',
+                  onClick: () => { setCalendarState(s => ({...s, type: 'project'})); console.log('project tasks'); }
+                },
+                {content: '', label: 'Other Tasks',
+                  onClick: () => { setCalendarState(s => ({...s, type: 'other'})); console.log('other tasks'); }
+                },
+              ]}
+            /> */}
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>

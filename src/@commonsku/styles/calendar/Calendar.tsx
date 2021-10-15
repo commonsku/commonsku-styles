@@ -5,27 +5,34 @@ import DefaultCalendarHeader from './DefaultCalendarHeader';
 import DefaultCalendarFooter from './DefaultCalendarFooter';
 import CalendarDaysHeader from './CalendarDaysHeader';
 import CalendarDaysBody from './CalendarDaysBody';
+import { CSSObject } from 'styled-components';
 
-type HeaderComponentProps = {
-    onNextWeek?: VoidFunction;
-    onPrevWeek?: VoidFunction;
-    onNextMonth?: VoidFunction;
-    onPrevMonth?: VoidFunction;
-    currentMonth?: Date;
-    currentWeek?: number;
-    selectedDate?: Date;
+export type CalendarHeaderComponentProps = {
+    onNextWeek: VoidFunction;
+    onPrevWeek: VoidFunction;
+    onNextMonth: VoidFunction;
+    onPrevMonth: VoidFunction;
+    currentMonth: Date;
+    currentWeek: number;
+    selectedDate: Date;
     [key: string]: any;
 };
 
-const Calendar = ({ components = {}, ...props }: {
+export type CalendarProps = {
     components?: {
-        Header?: (props: React.PropsWithChildren<HeaderComponentProps>) => React.ReactElement;
-        Footer?: (props: React.PropsWithChildren<HeaderComponentProps>) => React.ReactElement;
+        Header?: (props: React.PropsWithChildren<CalendarHeaderComponentProps>) => React.ReactElement;
+        Footer?: (props: React.PropsWithChildren<CalendarHeaderComponentProps>) => React.ReactElement;
         DayBody?: (props: React.PropsWithChildren<{[key: string]: any}>) => React.ReactElement;
     };
     showHeader?: boolean;
     showFooter?: boolean;
-}) => {
+    extraProps?: {
+        dayBody?: CSSObject | {[key: string]: any};
+        header?: CSSObject | {[key: string]: any};
+        footer?: CSSObject | {[key: string]: any};
+    };
+};
+const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
     const {
         currentMonth,
         currentWeek,
@@ -37,27 +44,31 @@ const Calendar = ({ components = {}, ...props }: {
         onClickDay,
     } = useCalendar();
 
+    const headerProps = {
+        onNextWeek,
+        onPrevWeek,
+        onNextMonth,
+        onPrevMonth,
+        currentMonth,
+        currentWeek,
+        selectedDate,
+    };
+
     const renderHeader = () => {
         if (props.showHeader === false) {
             return;
         }
         if (components.Header) {
             return <components.Header
-                onNextWeek={onNextWeek}
-                onPrevWeek={onPrevWeek}
-                onNextMonth={onNextMonth}
-                onPrevMonth={onPrevMonth}
-                currentMonth={currentMonth}
-                currentWeek={currentWeek}
-                selectedDate={selectedDate}
+                {...headerProps}
+                {...extraProps?.header}
             />
         }
-
         return (
             <DefaultCalendarHeader
-                onPrevWeek={onPrevWeek}
-                onNextWeek={onNextWeek}
-                currentMonth={currentMonth} />
+                {...headerProps}
+                {...extraProps?.header}
+            />
         );
     }
 
@@ -67,17 +78,11 @@ const Calendar = ({ components = {}, ...props }: {
         }
         if (components.Footer) {
             return <components.Footer
-                onNextWeek={onNextWeek}
-                onPrevWeek={onPrevWeek}
-                onNextMonth={onNextMonth}
-                onPrevMonth={onPrevMonth}
-                currentMonth={currentMonth}
-                currentWeek={currentWeek}
-                selectedDate={selectedDate}
+                {...headerProps}
+                {...extraProps?.footer}
             />
         }
-
-        return <DefaultCalendarFooter currentWeek={currentWeek} />;
+        return <DefaultCalendarFooter {...headerProps} {...extraProps?.footer} />;
     };
 
     return (
@@ -88,6 +93,7 @@ const Calendar = ({ components = {}, ...props }: {
                 currentMonth={currentMonth}
                 selectedDate={selectedDate}
                 onClickDay={onClickDay}
+                dayBodyProps={extraProps?.dayBody}
                 components={{ DayBody: components?.DayBody, }}
             />
             {renderFooter()}
