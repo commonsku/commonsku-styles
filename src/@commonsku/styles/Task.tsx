@@ -75,18 +75,27 @@ export type CalendarTaskProps = {
   onClickCheckbox?: Function|VoidFunction,
 };
 
-const CalendarTask = ({ title, description, completed = false, date, colorType='light-green', overdue = false, ...props }: CalendarTaskProps) => {
-    return (
-        <StyledCalendarTask
-            taskName={title}
-            taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
-            date={isDate(date) ? format(date, 'yyyy-mm-dd') : date}
-            colorType={colorType}
-            initialChecked={completed}
-            {...props}
-        />
-    );
-}
+const CalendarTask = React.forwardRef(({
+  title,
+  description,
+  date,
+  colorType='light-green',
+  completed = false,
+  overdue = false,
+  ...props
+}: CalendarTaskProps, ref) => {
+  return (
+      <StyledCalendarTask
+          taskName={title}
+          taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
+          date={isDate(date) ? format(date, 'yyyy-mm-dd') : date}
+          colorType={colorType}
+          initialChecked={completed}
+          ref={ref}
+          {...props}
+      />
+  );
+});
 
 export {
   Task,
