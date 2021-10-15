@@ -9,5 +9,9 @@ export { default as DefaultCalendarHeader } from './DefaultCalendarHeader';
 export { default as HeaderWrapper } from './HeaderWrapper';
 export { default as StyledDayBody } from './StyledDayBody';
 export { default as StyledDayText } from './StyledDayText';
+export {default as CalendarTaskDayBody} from './CalendarTaskDayBody';
+export {default as CalendarTasksHeader} from './CalendarTasksHeader';
+export {default as CalendarTasksFooter} from './CalendarTasksFooter';
 
 export {default as Calendar} from './Calendar';
+export {default as CalendarTasks} from './CalendarTasks';

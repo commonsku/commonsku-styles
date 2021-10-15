@@ -61,8 +61,8 @@ import {
     CollapsiblePanels,
     colors,
     Calendar,
+    CalendarTasks,
 } from '@commonsku/styles';
-import { CalendarTasks } from '@commonsku/styles/calendar/CalTask';
 
 const initialState = {
   date: new Date(),
