@@ -1,14 +1,14 @@
+import _ from 'lodash'
 import styled from 'styled-components'
 import React, { useState } from 'react'
-import { isDate } from 'lodash'
 import { format } from 'date-fns'
-import {LabeledCheckbox} from './Input'
+import { LabeledCheckbox } from './Input'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const TaskLabel  = styled.div`display: flex;`
-const TaskName   = styled.div`flex-grow: 1;`
+const TaskLabel = styled.div`display: flex;`
+const TaskName = styled.div`flex-grow: 1;`
 const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
-const TaskBody   = styled.div`margin-left:34px;`
+const TaskBody = styled.div`margin-left:34px;`
 
 export type TaskProps = {
   taskName: string,
@@ -45,13 +45,13 @@ const Task = ({
       <TaskBody>{taskBody}</TaskBody>
       <div className="task-metadata">
         {typeof assignee !== "undefined" ? "for " + assignee! : null}
-        {typeof assignee !== "undefined" ? "on " : null} 
+        {typeof assignee !== "undefined" ? "on " : null}
       </div>
     </StyledTask>
   );
 }
 
-const StyledCalendarTask = styled(Task)<{ colorType?: string; }>`
+const StyledCalendarTask = styled(Task) <{ colorType?: string; }>`
     border-radius: 5px;
     background: ${p => p.colorType === 'light-red' ? '#ffebf2' : '#01d37417'};
     padding: 5px;
@@ -72,28 +72,28 @@ export type CalendarTaskProps = {
   date?: Date | string,
   colorType?: string,
   overdue?: boolean,
-  onClickCheckbox?: Function|VoidFunction,
+  onClickCheckbox?: Function | VoidFunction,
 };
 
 const CalendarTask = React.forwardRef(({
   title,
   description,
   date,
-  colorType='light-green',
+  colorType = 'light-green',
   completed = false,
   overdue = false,
   ...props
 }: CalendarTaskProps, ref) => {
   return (
-      <StyledCalendarTask
-          taskName={title}
-          taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
-          date={isDate(date) ? format(date, 'yyyy-mm-dd') : date}
-          colorType={colorType}
-          initialChecked={completed}
-          ref={ref}
-          {...props}
-      />
+    <StyledCalendarTask
+      taskName={title}
+      taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
+      date={_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}
+      colorType={colorType}
+      initialChecked={completed}
+      ref={ref}
+      {...props}
+    />
   );
 });
 
