@@ -62,7 +62,7 @@ import {
     colors,
     Calendar,
 } from '@commonsku/styles';
-import { CalendarTaskDayBody, CalendarTasksFooter, CalendarTasksHeader } from '@commonsku/styles/calendar/CalTask';
+import CalendarTasks from '@commonsku/styles/calendar/CalTask';
 
 const initialState = {
   date: new Date(),
@@ -504,43 +504,19 @@ const App = () => {
             </div>
 
             <H5>Calendar with tasks</H5>
-            <Calendar
-              components={{
-                DayBody: CalendarTaskDayBody,
-                Header: CalendarTasksHeader,
-                Footer: CalendarTasksFooter,
-              }}
-              extraProps={{
-                dayBody: { tasks: calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type] },
-                header: {
-                  tabs: [
-                    {content: '', label: 'All Tasks',
-                      onClick: () => { setCalendarState(s => ({...s, type: 'all'})); console.log('all tasks'); }
-                    },
-                    {content: '', label: 'Client Tasks',
-                      onClick: () => { setCalendarState(s => ({...s, type: 'client'})); console.log('client tasks'); }
-                    },
-                    {content: '', label: 'Project Tasks',
-                      onClick: () => { setCalendarState(s => ({...s, type: 'project'})); console.log('project tasks'); }
-                    },
-                    {content: '', label: 'Other Tasks',
-                      onClick: () => { setCalendarState(s => ({...s, type: 'other'})); console.log('other tasks'); }
-                    },
-                  ],
-                },
-                footer: { tasks: [
-                  {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
-                  {date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-                  {date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-                  {date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
-                  {date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
-                ] },
-              }}
-            />
+            <Calendar />
 
-            {/* <H5>Calendar Tasks</H5>
+            <H5>Calendar Tasks</H5>
             <CalendarTasks
               tasks={calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type]}
+              // updateTasks={(tasks) => setTas}
+              footerTasks={[
+                {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+                {date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+                {date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+                {date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+                {date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+              ]}
               headerTabs={[
                 {content: '', label: 'All Tasks',
                   onClick: () => { setCalendarState(s => ({...s, type: 'all'})); console.log('all tasks'); }
@@ -555,7 +531,7 @@ const App = () => {
                   onClick: () => { setCalendarState(s => ({...s, type: 'other'})); console.log('other tasks'); }
                 },
               ]}
-            /> */}
+            />
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>

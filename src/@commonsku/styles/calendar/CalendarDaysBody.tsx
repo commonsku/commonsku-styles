@@ -1,12 +1,11 @@
 import React from 'react';
-import { startOfWeek, lastDayOfWeek } from "date-fns";
-import { getDatesBetween } from '../hooks/useCalendar';
+import { CSSObject } from 'styled-components';
 import { Row } from '../FlexboxGrid';
 import CalendarDayBody from './CalendarDayBody';
 import DaysBodyWrapper from './DaysBodyWrapper';
-import { CSSObject } from 'styled-components';
 
 type CalendarDaysBodyProps = {
+    days: Array<{id: string, day: Date}>;
     currentMonth: Date,
     selectedDate: Date,
     onClickDay?: (day: Date) => any,
@@ -16,15 +15,11 @@ type CalendarDaysBodyProps = {
     },
 };
 
-const CalendarDaysBody = ({ currentMonth, selectedDate, onClickDay, components, dayBodyProps={}, ...props }: CalendarDaysBodyProps) => {
-    const days = getDatesBetween(
-        startOfWeek(currentMonth, { weekStartsOn: 1 }),
-        lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
-    );
+const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, components, dayBodyProps={}, ...props }: CalendarDaysBodyProps) => {
     return (
         <DaysBodyWrapper className="days-body-wrapper" {...props}>
             <Row className="day-body-wrapper-row">
-                {days.map((day, i) => (
+                {days.map(({day, id}, i) => (
                     <CalendarDayBody
                         key={'day-body-' + i}
                         day={day}
@@ -36,6 +31,7 @@ const CalendarDaysBody = ({ currentMonth, selectedDate, onClickDay, components, 
                                 day={day}
                                 selectedDate={selectedDate}
                                 onClick={() => {onClickDay && onClickDay(day);}}
+                                id={id}
                                 {...dayBodyProps}
                             /> : null}
                     />
