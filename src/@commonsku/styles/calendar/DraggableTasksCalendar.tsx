@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { getWeek, } from 'date-fns'
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
@@ -16,7 +16,7 @@ import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles
 
 const DraggableTaskBody = ({
   index, task,
-}) => {
+}: { index: number; task: CalendarTaskProps & { __id__: string } }) => {
   return (
     <Draggable
       key={task.__id__}
@@ -25,7 +25,7 @@ const DraggableTaskBody = ({
     >
       {(provided, snapshot) => (
         <div {...draggableChildWrapperProps(provided, snapshot)}>
-          <Col xs padded><CalendarTask {...task} date="" /></Col>
+          <Col xs padded><CalendarTask {...task} date={undefined} /></Col>
         </div>
       )}
     </Draggable>
@@ -151,7 +151,7 @@ const DraggableTasksCalendar = ({
     selectedDate,
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const { draggableId, source, destination, reason } = result;
     if (reason === 'DROP' && destination.droppableId === 'footer-droppable') {

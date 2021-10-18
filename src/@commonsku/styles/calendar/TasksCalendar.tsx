@@ -11,7 +11,7 @@ import TasksCalendarHeader from './TasksCalendarHeader';
 import TasksCalendarFooter from './TasksCalendarFooter';
 
 
-export function convertTasksToDays({ currentMonth, currentWeek, tasks, }) {
+export function convertTasksToDays({ currentMonth, currentWeek, tasks, }: { currentMonth: Date, currentWeek?: number, tasks: CalendarTaskProps[], }) {
     return getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }),
         lastDayOfWeek(currentMonth, { weekStartsOn: 1 })

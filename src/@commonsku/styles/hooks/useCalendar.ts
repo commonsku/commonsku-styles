@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 
 const today = new Date();
-export const getDatesBetween = (startDt, endDt) => {
+export const getDatesBetween = (startDt: Date, endDt: Date) => {
     const result: Array<Date> = [];
     let currentDt = startDt;
     while (currentDt <= endDt) {
