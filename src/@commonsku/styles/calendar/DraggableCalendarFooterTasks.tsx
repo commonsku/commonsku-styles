@@ -1,10 +1,10 @@
 import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
-import { getWeek } from 'date-fns';
 import { Row, Col, } from '../FlexboxGrid';
 import { CalendarTask } from '../Task';
 import HeaderWrapper from './HeaderWrapper';
 import { draggableChildWrapperProps } from './styles';
+import { CalendarTaskProps } from '..';
 
 export type DraggableCalendarFooterTasksProps = {
     onNextWeek: VoidFunction;
@@ -27,14 +27,14 @@ export const DraggableCalendarFooterTasks = ({
                 <span style={{display: 'inline-flex'}}>
                 <Row>
                     {tasks
-                        .map((t, j) => (
+                        .map((t: CalendarTaskProps, j: number) => (
                             <Draggable key={'footer-task-' + j}
                                 draggableId={'footer-task-' + j}
                                 index={j}
                             >
                                 {(provided, snapshot) => (
                                     <Col xs md={3} padded {...draggableChildWrapperProps(provided, snapshot)}>
-                                        <CalendarTask {...t} date="" />
+                                        <CalendarTask {...t} date={undefined} />
                                     </Col>
                                 )}
                             </Draggable>

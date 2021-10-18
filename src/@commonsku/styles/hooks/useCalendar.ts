@@ -24,7 +24,7 @@ const useCalendar = () => {
     const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
     const [selectedDate, setSelectedDate] = useState(today);
 
-    const changeMonth = (action) => {
+    const changeMonth = (action: string) => {
         if (action === "prev") {
             setCurrentMonth(subMonths(currentMonth, 1));
         } else if (action === "next") {
@@ -32,7 +32,7 @@ const useCalendar = () => {
         }
     }
 
-    const changeWeek = (action) => {
+    const changeWeek = (action: string) => {
         let dt = currentMonth;
         if (action === "prev") {
             dt = subWeeks(currentMonth, 1);
@@ -44,7 +44,7 @@ const useCalendar = () => {
         setCurrentWeek(getWeek(dt));
     }
 
-    const onClickDay = (day) => {
+    const onClickDay = (day: Date) => {
         if (isSameDay(day, selectedDate)) {
             setSelectedDate(today);
         } else {
