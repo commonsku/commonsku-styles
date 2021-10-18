@@ -77,7 +77,7 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
   return (
     <Droppable droppableId={'footer-droppable'} key={'footer-droppable'} isDropDisabled>
       {(provided, snapshot) => (
-        <div {...droppableChildWrapperProps(provided, snapshot)}>
+        <div {...droppableChildWrapperProps(provided, snapshot, { style: !tasks.length ? {minHeight: 0} : {} })}>
           <DraggableCalendarFooterTasks {...props} tasks={tasks} />
         </div>
       )}
@@ -100,7 +100,6 @@ type Day = { __id__: string; day: Date; tasks: Array<{ __id__: string; } & Calen
 type DaysObject = { [key: string]: Day };
 type State = {
   days: DaysObject,
-  footerDays: DaysObject,
   footerTasks: Array<CalendarTaskProps>,
 };
 
@@ -127,23 +126,23 @@ const DraggableTasksCalendar = ({
     days: convertTasksToDays({ currentMonth, currentWeek, tasks, }).reduce(
       (acc, v) => ({ ...acc, [v.__id__]: v }), {}
     ),
-    footerTasks: footerTasks.filter(t => t.date ? currentWeek < getWeek(t.date) : false),
-    footerDays: convertTasksToDays({ currentMonth, currentWeek, tasks: footerTasks, }).reduce(
-      (acc, v) => ({ ...acc, [v.__id__]: v }), {}
-    ),
+    footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false),
   });
 
   useEffect(() => {
     setState(s => ({
-      ...s, days: convertTasksToDays({ currentMonth, currentWeek, tasks, }).reduce(
-        (acc, v) => ({ ...acc, [v.__id__]: v }), {}
-      )
+      ...s,
+      days: convertTasksToDays({ currentMonth, currentWeek, tasks, })
+            .reduce((acc, v) => ({ ...acc, [v.__id__]: v }), {}),
     }));
   }, [currentMonth, currentWeek, tasks]);
 
   useEffect(() => {
-    setState(s => ({...s, footerTasks, }));
-  }, [footerTasks]);
+    setState(s => ({...s, footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false), }));
+  }, [footerTasks, currentWeek]);
+
+  useEffect(() => {
+  }, [state.days]);
 
   const headerProps = {
     onNextWeek,
@@ -195,11 +194,12 @@ const DraggableTasksCalendar = ({
         const sourceItems = [...sourceColumn.tasks];
         const destItems = [...destColumn.tasks];
         const [removed] = sourceItems.splice(source.index, 1);
-        removed.date?.setDate(destColumn.day.getDate());
-        removed.date?.setMonth(destColumn.day.getMonth());
+        const newTask = {...removed};
+        newTask.date?.setDate(destColumn.day.getDate());
+        newTask.date?.setMonth(destColumn.day.getMonth());
 
-        destItems.splice(destination.index, 0, removed);
-        onUpdateTask(removed);
+        destItems.splice(destination.index, 0, newTask);
+        onUpdateTask(newTask);
         return { ...s,
           days: { ...days,
             [source.droppableId]: { ...sourceColumn, tasks: sourceItems, },
