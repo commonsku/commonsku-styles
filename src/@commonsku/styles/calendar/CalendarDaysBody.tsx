@@ -1,5 +1,6 @@
 import React from 'react';
 import { CSSObject } from 'styled-components';
+import { getWeek } from 'date-fns';
 import { Row } from '../FlexboxGrid';
 import CalendarDayBody from './CalendarDayBody';
 import DaysBodyWrapper from './DaysBodyWrapper';
@@ -21,13 +22,13 @@ const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, com
             <Row className="day-body-wrapper-row">
                 {days.map(({day, __id__}, i) => (
                     <CalendarDayBody
-                        key={'day-body-' + i}
+                        key={`day-body-${getWeek(day)}-${i}`}
                         day={day}
                         selectedDate={selectedDate}
                         onClick={() => {onClickDay && onClickDay(day);}}
                         children={components?.DayBody
                             ? <components.DayBody
-                                key={'day-body-' + i}
+                                key={`day-body-${getWeek(day)}-${i}`}
                                 day={day}
                                 selectedDate={selectedDate}
                                 onClick={() => {onClickDay && onClickDay(day);}}

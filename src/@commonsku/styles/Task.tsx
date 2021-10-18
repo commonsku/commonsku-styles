@@ -29,7 +29,7 @@ const Task = ({
   onClickCheckbox,
   ...props
 }: React.PropsWithChildren<TaskProps & SharedStyleTypes>) => {
-  const [checked, setChecked] = useState(initialChecked);
+  const [checked, setChecked] = useState<boolean>(initialChecked);
   return (
     <StyledTask {...props}>
       <LabeledCheckbox checked={checked} label={
@@ -37,7 +37,7 @@ const Task = ({
           <TaskName>{taskName}</TaskName>
           {date ? <div>{date}</div> : null}
         </TaskLabel>} onChange={() => {
-          setChecked(s => {
+          setChecked((s: boolean) => {
             onClickCheckbox && onClickCheckbox(!s);
             return !s;
           });

@@ -166,14 +166,14 @@ const DraggableTasksCalendar = ({
         const sourceTasks = s.footerTasks;
         const [removed] = sourceTasks.splice(source.index, 1);
         const newTask = {...removed,
-          __id__: `day-${parseFloat(destination.droppableId.replace('day-'))}-task-${destination.index}`,
+          __id__: `day-${getWeek(destColumn.day)}-${destColumn.day.getDate()}-task-${destination.index}`,
         };
         newTask.date?.setDate(destColumn.day.getDate());
         newTask.date?.setMonth(destColumn.day.getMonth());
 
         const destItems = [...destColumn.tasks];
         destItems.splice(destination.index, 0, newTask);
-        onUpdateTask(newTask);
+        onUpdateTask(newTask, { oldTask: removed, });
         return { ...s,
           days: { ...days, [destination.droppableId]: { ...destColumn, tasks: destItems, } },
           footerTasks: [ ...sourceTasks ],
@@ -196,7 +196,7 @@ const DraggableTasksCalendar = ({
         newTask.date?.setMonth(destColumn.day.getMonth());
 
         destItems.splice(destination.index, 0, newTask);
-        onUpdateTask(newTask);
+        onUpdateTask(newTask, { oldTask: removed, });
         return { ...s,
           days: { ...days,
             [source.droppableId]: { ...sourceColumn, tasks: sourceItems, },
@@ -211,7 +211,7 @@ const DraggableTasksCalendar = ({
         const copiedItems = [...column.tasks];
         const [removed] = copiedItems.splice(source.index, 1);
         copiedItems.splice(destination.index, 0, removed);
-        onUpdateTask(removed);
+        onUpdateTask(removed, { oldTask: removed, });
         return { ...s,
           days: { ...days, [source.droppableId]: { ...column, tasks: copiedItems, }}
         };

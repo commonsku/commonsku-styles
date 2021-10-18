@@ -63,6 +63,7 @@ import {
     Calendar,
     DraggableTasksCalendar,
 } from '@commonsku/styles';
+import { uniqueId } from 'lodash';
 
 const initialState = {
   date: new Date(),
@@ -263,29 +264,29 @@ const today = new Date();
 const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate()-1);
 const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
 
-const calTasks = {
+const calTasks = Object.freeze({
   client: [
-    {date: yesterday, title: 'Megacorm', description: 'Reach out to Jake Client', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
-    {date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
-    {date: today, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
-    {date: today, title: 'Vandelay 2', description: 'Reach out to Jake Client', colorType: 'light-green', completed: true,},
-    {date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake Client', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Reach out to Jake Client', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
+    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Client', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-'), date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake Client', colorType: 'light-green'},
   ],
   project: [
-    {date: yesterday, title: 'ABS Client', description: 'Reach out to Jake Project', colorType: 'light-green', completed: true,},
-    {date: yesterday, title: 'Megacorm', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
-    {date: today, title: 'Vandelay 1', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
-    {date: today, title: 'Vandelay 2', description: 'Reach out to Jake Project', colorType: 'light-green'},
-    {date: tomorrow, title: 'Megacorm', description: 'Reach out to Jake Project', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Reach out to Jake Project', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay 1', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Project', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm', description: 'Reach out to Jake Project', colorType: 'light-green'},
   ],
   other: [
-    {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red', completed: true,},
-    {date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-    {date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red', completed: true,},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ],
-};
+});
 
 const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]), []);
 
@@ -302,12 +303,11 @@ const App = () => {
   const [defaultScrollOffset, setDefaultScrollOffset] = useState(0);
   const [calendarState, setCalendarState] = useState({
     type: 'all',
+    tasks: {
+      all: allCalTasks,
+      ...calTasks,
+    },
   });
-  const [tasks, setTasks] = useState(allCalTasks);
-
-  useEffect(() => {
-    setTasks(calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type]);
-  }, [calendarState.type]);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -513,9 +513,26 @@ const App = () => {
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
-              tasks={tasks}
-              onUpdateTask={(task) => {
-                console.log('task updated', task);
+              tasks={calendarState.tasks[calendarState.type]}
+              onUpdateTask={(task, { oldTask }) => {
+                const foundIdx = calendarState.tasks[calendarState.type].findIndex(v => v.date == oldTask.date && v.title == oldTask.title && oldTask.id == v.id);
+
+                if (foundIdx === -1) {
+                  setCalendarState(s => ({...s, tasks: { ...s.tasks, [calendarState.type]: [ ...s.tasks[calendarState.type],  task, ], }}));
+                  return;
+                }
+
+                setCalendarState(s => ({
+                  ...s,
+                  tasks: {
+                    ...s.tasks,
+                    [calendarState.type]: [
+                      ...s.tasks[calendarState.type].slice(0, foundIdx),
+                      task,
+                      ...s.tasks[calendarState.type].slice(foundIdx+1),
+                    ],
+                  }
+                }));
               }}
               footerTasks={[
                 {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},

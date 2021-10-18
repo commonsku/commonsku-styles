@@ -8,6 +8,10 @@ const DefaultCalendarHeader = ({
     onPrevWeek,
     onNextWeek,
     currentMonth,
+}: {
+    onPrevWeek: React.MouseEventHandler,
+    onNextWeek: React.MouseEventHandler,
+    currentMonth: Date,
 }) => {
     return (
         <HeaderWrapper middle>

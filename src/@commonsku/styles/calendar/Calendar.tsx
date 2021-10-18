@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CSSObject } from 'styled-components';
-import { startOfWeek, lastDayOfWeek } from  'date-fns';
+import { startOfWeek, lastDayOfWeek, getWeek, } from  'date-fns';
 import { useCalendar } from '../hooks';
 import CalendarWrapper from './CalendarWrapper';
 import DefaultCalendarHeader from './DefaultCalendarHeader';
@@ -49,7 +49,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
     const [days, setDays] = useState(getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }),
         lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
-    ).map((day, i) => ({ __id__: 'day-'+i, day, })));
+    ).map((day, i) => ({ __id__: `day-${getWeek(day)}-${i}`, day, })));
 
     const headerProps = {
         onNextWeek,
