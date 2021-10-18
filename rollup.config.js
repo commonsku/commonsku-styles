@@ -55,7 +55,8 @@ export default {
           'useBlockLayout', 
           'usePagination', 
           'useColumnOrder'
-        ]
+        ],
+        'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer']
       },
     }),
     postcss({
