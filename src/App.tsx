@@ -517,22 +517,22 @@ const App = () => {
               onUpdateTask={(task, { oldTask }) => {
                 const foundIdx = calendarState.tasks[calendarState.type].findIndex(v => v.date == oldTask.date && v.title == oldTask.title && oldTask.id == v.id);
 
-                if (foundIdx === -1) {
-                  setCalendarState(s => ({...s, tasks: { ...s.tasks, [calendarState.type]: [ ...s.tasks[calendarState.type],  task, ], }}));
-                  return;
-                }
+                // if (foundIdx === -1) {
+                //   setCalendarState(s => ({...s, tasks: { ...s.tasks, [calendarState.type]: [ ...s.tasks[calendarState.type],  task, ], }}));
+                //   return;
+                // }
 
-                setCalendarState(s => ({
-                  ...s,
-                  tasks: {
-                    ...s.tasks,
-                    [calendarState.type]: [
-                      ...s.tasks[calendarState.type].slice(0, foundIdx),
-                      task,
-                      ...s.tasks[calendarState.type].slice(foundIdx+1),
-                    ],
-                  }
-                }));
+                // setCalendarState(s => ({
+                //   ...s,
+                //   tasks: {
+                //     ...s.tasks,
+                //     [calendarState.type]: [
+                //       ...s.tasks[calendarState.type].slice(0, foundIdx),
+                //       task,
+                //       ...s.tasks[calendarState.type].slice(foundIdx+1),
+                //     ],
+                //   }
+                // }));
               }}
               footerTasks={[
                 {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
