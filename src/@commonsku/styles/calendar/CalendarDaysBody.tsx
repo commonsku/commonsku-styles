@@ -5,7 +5,7 @@ import CalendarDayBody from './CalendarDayBody';
 import DaysBodyWrapper from './DaysBodyWrapper';
 
 type CalendarDaysBodyProps = {
-    days: Array<{id: string, day: Date}>;
+    days: Array<{__id__: string, day: Date}>;
     currentMonth: Date,
     selectedDate: Date,
     onClickDay?: (day: Date) => any,
@@ -19,7 +19,7 @@ const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, com
     return (
         <DaysBodyWrapper className="days-body-wrapper" {...props}>
             <Row className="day-body-wrapper-row">
-                {days.map(({day, id}, i) => (
+                {days.map(({day, __id__}, i) => (
                     <CalendarDayBody
                         key={'day-body-' + i}
                         day={day}
@@ -31,7 +31,7 @@ const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, com
                                 day={day}
                                 selectedDate={selectedDate}
                                 onClick={() => {onClickDay && onClickDay(day);}}
-                                id={id}
+                                id={__id__}
                                 {...dayBodyProps}
                             /> : null}
                     />

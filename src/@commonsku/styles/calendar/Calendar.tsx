@@ -49,7 +49,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
     const [days, setDays] = useState(getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }),
         lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
-    ).map((day, i) => ({ id: 'day-'+i, day, })));
+    ).map((day, i) => ({ __id__: 'day-'+i, day, })));
 
     const headerProps = {
         onNextWeek,

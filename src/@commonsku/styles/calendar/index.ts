@@ -15,3 +15,4 @@ export {default as CalendarTasksFooter} from './CalendarTasksFooter';
 
 export {default as Calendar} from './Calendar';
 export {default as CalendarTasks} from './CalendarTasks';
+export {default as DraggableCalendarTasks} from './DraggableCalendarTasks';

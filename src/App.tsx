@@ -62,6 +62,7 @@ import {
     colors,
     Calendar,
     CalendarTasks,
+    DraggableCalendarTasks,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -303,6 +304,11 @@ const App = () => {
   const [calendarState, setCalendarState] = useState({
     type: 'all',
   });
+  const [tasks, setTasks] = useState(allCalTasks);
+
+  useEffect(() => {
+    setTasks(calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type]);
+  }, [calendarState.type]);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -507,9 +513,11 @@ const App = () => {
             <Calendar />
 
             <H5>Calendar Tasks</H5>
-            <CalendarTasks
-              tasks={calendarState.type === 'all' ? allCalTasks : calTasks[calendarState.type]}
-              // updateTasks={(tasks) => setTas}
+            <DraggableCalendarTasks
+              tasks={tasks}
+              onUpdateTask={(task) => {
+                console.log('task updated', task);
+              }}
               footerTasks={[
                 {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
                 {date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},

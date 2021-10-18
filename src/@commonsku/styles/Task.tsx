@@ -56,7 +56,7 @@ const StyledCalendarTask = styled(Task) <{ colorType?: string; }>`
     background: ${p => p.colorType === 'light-red' ? '#ffebf2' : '#01d37417'};
     padding: 5px;
     margin-bottom: 0;
-    height: 100%;
+    /* height: 100%; */
 `;
 
 const StyledCalendarTaskBody = styled.span`
@@ -69,7 +69,7 @@ export type CalendarTaskProps = {
   title: string,
   description?: string | React.ReactNode,
   completed?: boolean,
-  date?: Date | string,
+  date?: Date,
   colorType?: string,
   overdue?: boolean,
   onClickCheckbox?: Function | VoidFunction,

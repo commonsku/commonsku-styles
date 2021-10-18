@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getWeek, startOfWeek, lastDayOfWeek } from 'date-fns';
+import { isSameDay, startOfWeek, lastDayOfWeek } from 'date-fns';
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
 import { TabType } from '../Tabs';
@@ -11,16 +11,16 @@ import CalendarTasksHeader from './CalendarTasksHeader';
 import CalendarTasksFooter from './CalendarTasksFooter';
 
 
-function convertTasksToDays({ currentMonth, currentWeek, tasks, }) {
+export function convertTasksToDays({ currentMonth, currentWeek, tasks, }) {
     return getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }),
         lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
     ).map((day, i) => ({
-        id: 'day-'+i,
+        __id__: 'day-'+i,
         day,
         tasks: tasks
-            .filter(t => t.date ? currentWeek === getWeek(typeof t.date !== 'string' ? t.date : new Date(t.date)) : true)
-            .map((t, j) => ({...t, coordinates: [i, j],  id: `day-${i}-task-${j}`})),
+            .filter(t => t.date ? isSameDay(day, t.date) : false)
+            .map((t, j) => ({...t, coordinates: [i, j],  __id__: `day-${i}-task-${j}`})),
     }));
 }
 
