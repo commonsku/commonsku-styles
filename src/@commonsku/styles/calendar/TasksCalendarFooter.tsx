@@ -3,6 +3,7 @@ import { getWeek } from 'date-fns';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
 import { CalendarTask } from '../Task';
+import { CalendarTaskProps } from '..';
 
 export type TasksCalendarFooterProps = {
     onNextWeek: VoidFunction;
@@ -25,8 +26,8 @@ export const TasksCalendarFooter = ({
             <span style={{display: 'inline-flex'}}>
                 <Row>
                     {tasks
-                        .filter(t => t.date ? currentWeek == getWeek(typeof t.date !== 'string' ? t.date : new Date(t.date)) : true)
-                        .map(t => (<Col xs md={3} padded><CalendarTask {...t} date="" /></Col>))}
+                        .filter((t: CalendarTaskProps) => t.date ? currentWeek == getWeek(t.date) : true)
+                        .map((t: CalendarTaskProps) => (<Col xs md={3} padded><CalendarTask {...t} date={undefined} /></Col>))}
                 </Row>  
             </span>
             </Col>
