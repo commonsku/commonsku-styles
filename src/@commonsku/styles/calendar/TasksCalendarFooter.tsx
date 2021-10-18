@@ -4,7 +4,7 @@ import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
 import { CalendarTask } from '../Task';
 
-export type CalendarTasksFooterProps = {
+export type TasksCalendarFooterProps = {
     onNextWeek: VoidFunction;
     onPrevWeek: VoidFunction;
     onNextMonth: VoidFunction;
@@ -14,10 +14,10 @@ export type CalendarTasksFooterProps = {
     selectedDate: Date;
     [key: string]: any;
 };
-export const CalendarTasksFooter = ({
+export const TasksCalendarFooter = ({
     currentWeek,
     tasks=[],
-}: React.PropsWithChildren<CalendarTasksFooterProps>) => {
+}: React.PropsWithChildren<TasksCalendarFooterProps>) => {
     return (
         <HeaderWrapper>
             <Col start xs>
@@ -34,4 +34,4 @@ export const CalendarTasksFooter = ({
     );
 };
 
-export default CalendarTasksFooter;
+export default TasksCalendarFooter;

@@ -6,9 +6,9 @@ import { TabType } from '../Tabs';
 import { useCalendar } from '../hooks';
 import { CalendarDaysBody, CalendarDaysHeader, CalendarWrapper } from '.';
 import { getDatesBetween } from '../hooks/useCalendar';
-import CalendarTaskDayBody from './CalendarTaskDayBody';
+import TasksCalendarDayBody from './TasksCalendarDayBody';
 import TasksCalendarHeader from './TasksCalendarHeader';
-import CalendarTasksFooter from './CalendarTasksFooter';
+import TasksCalendarFooter from './TasksCalendarFooter';
 
 
 export function convertTasksToDays({ currentMonth, currentWeek, tasks, }) {
@@ -75,10 +75,10 @@ const TasksCalendar = ({
                 selectedDate={selectedDate}
                 onClickDay={onClickDay}
                 dayBodyProps={{ tasks }}
-                components={{ DayBody: CalendarTaskDayBody, }}
+                components={{ DayBody: TasksCalendarDayBody, }}
                 days={days}
             />
-            <CalendarTasksFooter {...headerProps} tasks={footerTasks} />
+            <TasksCalendarFooter {...headerProps} tasks={footerTasks} />
         </CalendarWrapper>
     );
 }

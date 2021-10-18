@@ -3,7 +3,7 @@ import { isSameDay } from 'date-fns';
 import { Row, Col, } from '../FlexboxGrid';
 import { CalendarTask } from '../Task';
 
-export const CalendarTaskDayBody = ({day, tasks=[]}: {[key: string]: any}) => {
+export const TasksCalendarDayBody = ({day, tasks=[]}: {[key: string]: any}) => {
     return (
         <Row>
             {tasks
@@ -14,4 +14,4 @@ export const CalendarTaskDayBody = ({day, tasks=[]}: {[key: string]: any}) => {
 };
 
 
-export default CalendarTaskDayBody;
+export default TasksCalendarDayBody;
