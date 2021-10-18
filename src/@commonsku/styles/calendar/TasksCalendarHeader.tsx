@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { colors, } from '../Theme';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
-import { Tabs } from '..';
+import { Tabs } from '../Tabs';
 
 
 export type TasksCalendarHeaderProps = {

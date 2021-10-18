@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { getWeek, } from 'date-fns'
-import { CalendarTaskProps, } from '../Task';
+import { CalendarTask, CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
 import { TabType } from '../Tabs';
 import { useCalendar } from '../hooks';
 import { Row, Col } from '../FlexboxGrid';
-import { CalendarDayBody, CalendarDaysHeader, CalendarWrapper, DaysBodyWrapper } from '.';
+import CalendarDayBody from './CalendarDayBody';
+import CalendarDaysHeader from './CalendarDaysHeader';
+import CalendarWrapper from './CalendarWrapper';
+import DaysBodyWrapper from './DaysBodyWrapper';
 import TasksCalendarHeader from './TasksCalendarHeader';
 import DraggableCalendarFooterTasks from './DraggableCalendarFooterTasks';
 import { convertTasksToDays } from './TasksCalendar';
-import { CalendarTask } from '..';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
 
 

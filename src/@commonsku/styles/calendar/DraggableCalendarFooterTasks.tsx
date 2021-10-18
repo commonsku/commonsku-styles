@@ -1,10 +1,9 @@
 import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { Row, Col, } from '../FlexboxGrid';
-import { CalendarTask } from '../Task';
+import { CalendarTask, CalendarTaskProps } from '../Task';
 import HeaderWrapper from './HeaderWrapper';
 import { draggableChildWrapperProps } from './styles';
-import { CalendarTaskProps } from '..';
 
 export type DraggableCalendarFooterTasksProps = {
     onNextWeek: VoidFunction;

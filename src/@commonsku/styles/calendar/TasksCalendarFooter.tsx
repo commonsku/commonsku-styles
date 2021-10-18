@@ -2,8 +2,7 @@ import React from 'react';
 import { getWeek } from 'date-fns';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
-import { CalendarTask } from '../Task';
-import { CalendarTaskProps } from '..';
+import { CalendarTask, CalendarTaskProps } from '../Task';
 
 export type TasksCalendarFooterProps = {
     onNextWeek: VoidFunction;
