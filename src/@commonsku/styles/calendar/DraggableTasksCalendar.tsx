@@ -141,9 +141,6 @@ const DraggableTasksCalendar = ({
     setState(s => ({...s, footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false), }));
   }, [footerTasks, currentWeek]);
 
-  useEffect(() => {
-  }, [state.days]);
-
   const headerProps = {
     onNextWeek,
     onPrevWeek,
