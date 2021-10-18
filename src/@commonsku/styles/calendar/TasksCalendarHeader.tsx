@@ -6,7 +6,7 @@ import HeaderWrapper from './HeaderWrapper';
 import { Tabs } from '..';
 
 
-export type CalendarTasksHeaderProps = {
+export type TasksCalendarHeaderProps = {
     onNextWeek: VoidFunction;
     onPrevWeek: VoidFunction;
     onNextMonth: VoidFunction;
@@ -16,12 +16,12 @@ export type CalendarTasksHeaderProps = {
     selectedDate: Date;
     [key: string]: any;
 };
-export const CalendarTasksHeader = ({
+export const TasksCalendarHeader = ({
     onPrevWeek,
     onNextWeek,
     currentMonth,
     tabs,
-}: React.PropsWithChildren<CalendarTasksHeaderProps>) => {
+}: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     return (
         <HeaderWrapper>
             <Col start xs md={7}>
@@ -46,4 +46,4 @@ export const CalendarTasksHeader = ({
     );
 };
 
-export default CalendarTasksHeader;
+export default TasksCalendarHeader;

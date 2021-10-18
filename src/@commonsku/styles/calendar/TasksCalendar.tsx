@@ -7,7 +7,7 @@ import { useCalendar } from '../hooks';
 import { CalendarDaysBody, CalendarDaysHeader, CalendarWrapper } from '.';
 import { getDatesBetween } from '../hooks/useCalendar';
 import CalendarTaskDayBody from './CalendarTaskDayBody';
-import CalendarTasksHeader from './CalendarTasksHeader';
+import TasksCalendarHeader from './TasksCalendarHeader';
 import CalendarTasksFooter from './CalendarTasksFooter';
 
 
@@ -24,7 +24,7 @@ export function convertTasksToDays({ currentMonth, currentWeek, tasks, }) {
     }));
 }
 
-type CalendarTasksProps = CalendarProps & {
+type TasksCalendarProps = CalendarProps & {
     tasks: Array<CalendarTaskProps>;
     headerTabs?: Array<TabType>;
     footerTasks?: Array<CalendarTaskProps>;
@@ -34,13 +34,13 @@ type CalendarTasksProps = CalendarProps & {
     },
 };
 
-const CalendarTasks = ({
+const TasksCalendar = ({
     tasks,
     headerTabs=[],
     footerTasks=[],
     components={},
     ...props
-}: CalendarTasksProps) => {
+}: TasksCalendarProps) => {
     const {
         currentMonth,
         currentWeek,
@@ -68,7 +68,7 @@ const CalendarTasks = ({
 
     return (
         <CalendarWrapper>
-            <CalendarTasksHeader {...headerProps} tabs={headerTabs} />
+            <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
             <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
             <CalendarDaysBody
                 currentMonth={currentMonth}
@@ -83,4 +83,4 @@ const CalendarTasks = ({
     );
 }
 
-export default CalendarTasks;
+export default TasksCalendar;

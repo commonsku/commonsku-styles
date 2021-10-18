@@ -61,8 +61,7 @@ import {
     CollapsiblePanels,
     colors,
     Calendar,
-    CalendarTasks,
-    DraggableCalendarTasks,
+    DraggableTasksCalendar,
 } from '@commonsku/styles';
 
 const initialState = {
@@ -513,7 +512,7 @@ const App = () => {
             <Calendar />
 
             <H5>Calendar Tasks</H5>
-            <DraggableCalendarTasks
+            <DraggableTasksCalendar
               tasks={tasks}
               onUpdateTask={(task) => {
                 console.log('task updated', task);

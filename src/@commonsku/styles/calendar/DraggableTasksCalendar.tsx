@@ -7,9 +7,9 @@ import { TabType } from '../Tabs';
 import { useCalendar } from '../hooks';
 import { Row, Col } from '../FlexboxGrid';
 import { CalendarDayBody, CalendarDaysHeader, CalendarWrapper, DaysBodyWrapper } from '.';
-import CalendarTasksHeader from './CalendarTasksHeader';
-import DraggableCalendarTasksFooter from './DraggableCalendarTasksFooter';
-import { convertTasksToDays } from './CalendarTasks';
+import TasksCalendarHeader from './TasksCalendarHeader';
+import DraggableCalendarFooterTasks from './DraggableCalendarFooterTasks';
+import { convertTasksToDays } from './TasksCalendar';
 import { CalendarTask } from '..';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
 
@@ -78,14 +78,14 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
     <Droppable droppableId={'footer-droppable'} key={'footer-droppable'} isDropDisabled>
       {(provided, snapshot) => (
         <div {...droppableChildWrapperProps(provided, snapshot)}>
-          <DraggableCalendarTasksFooter {...props} tasks={tasks} />
+          <DraggableCalendarFooterTasks {...props} tasks={tasks} />
         </div>
       )}
     </Droppable>
   );
 };
 
-type DraggableCalendarTasksProps = CalendarProps & {
+type DraggableTasksCalendarProps = CalendarProps & {
   tasks: Array<CalendarTaskProps>;
   onUpdateTask: Function;
   headerTabs?: Array<TabType>;
@@ -104,14 +104,14 @@ type State = {
   footerTasks: Array<CalendarTaskProps>,
 };
 
-const DraggableCalendarTasks = ({
+const DraggableTasksCalendar = ({
   tasks = [],
   onUpdateTask,
   headerTabs = [],
   footerTasks = [],
   components = {},
   ...props
-}: DraggableCalendarTasksProps) => {
+}: DraggableTasksCalendarProps) => {
   const {
     currentMonth,
     currentWeek,
@@ -227,7 +227,7 @@ const DraggableCalendarTasks = ({
       onDragEnd={result => onDragEnd(result)}
     >
       <CalendarWrapper>
-        <CalendarTasksHeader {...headerProps} tabs={headerTabs} />
+        <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
         <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
         <DroppableDays days={state.days} selectedDate={selectedDate} onClickDay={onClickDay} />
         <DroppableFooter tasks={state.footerTasks} {...headerProps} />
@@ -236,4 +236,4 @@ const DraggableCalendarTasks = ({
   );
 }
 
-export default DraggableCalendarTasks;
+export default DraggableTasksCalendar;

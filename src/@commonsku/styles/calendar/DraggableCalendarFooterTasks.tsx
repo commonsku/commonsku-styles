@@ -6,7 +6,7 @@ import { CalendarTask } from '../Task';
 import HeaderWrapper from './HeaderWrapper';
 import { draggableChildWrapperProps } from './styles';
 
-export type DraggableCalendarTasksFooterProps = {
+export type DraggableCalendarFooterTasksProps = {
     onNextWeek: VoidFunction;
     onPrevWeek: VoidFunction;
     onNextMonth: VoidFunction;
@@ -16,15 +16,15 @@ export type DraggableCalendarTasksFooterProps = {
     selectedDate: Date;
     [key: string]: any;
 };
-export const DraggableCalendarTasksFooter = ({
+export const DraggableCalendarFooterTasks = ({
     currentWeek,
     tasks=[],
-}: React.PropsWithChildren<DraggableCalendarTasksFooterProps>) => {
+}: React.PropsWithChildren<DraggableCalendarFooterTasksProps>) => {
     return (
         <HeaderWrapper>
             <Col start xs>
-            <span style={{display: 'inline-flex'}}>Past Weeks: </span>
-            <span style={{display: 'inline-flex'}}>
+                <span style={{display: 'inline-flex'}}>Past Weeks: </span>
+                <span style={{display: 'inline-flex'}}>
                 <Row>
                     {tasks
                         .map((t, j) => (
@@ -46,4 +46,4 @@ export const DraggableCalendarTasksFooter = ({
     );
 };
 
-export default DraggableCalendarTasksFooter;
+export default DraggableCalendarFooterTasks;
