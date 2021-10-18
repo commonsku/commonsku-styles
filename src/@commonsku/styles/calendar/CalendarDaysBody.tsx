@@ -12,7 +12,7 @@ type CalendarDaysBodyProps = {
     onClickDay?: (day: Date) => any,
     dayBodyProps?: CSSObject | { [key: string]: any },
     components?: {
-        DayBody?: (props: React.PropsWithChildren<{[key: string]: any}>) => React.ReactElement;
+        DayBody?: (props: React.PropsWithChildren<{day: Date; selectedDate: Date; onClick: React.MouseEventHandler; [key: string]: any}>) => React.ReactElement;
     },
 };
 
