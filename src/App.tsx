@@ -260,9 +260,9 @@ function reducer(state: {[key: string]: any} = initialState, action: {type: stri
   }
 }
 
-const today = new Date();
-const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate()-1);
-const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+const today = new Date(2021, 9, 19);
+const yesterday = new Date(2021, 9, 18);
+const tomorrow = new Date(2021, 9, 20);
 
 const calTasks = Object.freeze({
   client: [
@@ -301,12 +301,10 @@ const App = () => {
   const [sidePanelRow, setSidePanelRow] = useState(null);
   const [collapse, setCollapse] = useState(false);
   const [defaultScrollOffset, setDefaultScrollOffset] = useState(0);
-  const [calendarState, setCalendarState] = useState({
-    type: 'all',
-    tasks: {
-      all: allCalTasks,
-      ...calTasks,
-    },
+  const [calendarTab, setCalendarTab] = useState('all');
+  const [tasks, setTasks] = useState({
+    all: allCalTasks,
+    ...calTasks,
   });
 
   useEffect(() => {
@@ -508,31 +506,29 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
-            <H5>Calendar with tasks</H5>
-            <Calendar />
+            {/* <H5>Calendar</H5>
+            <Calendar /> */}
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
-              tasks={calendarState.tasks[calendarState.type]}
+              tasks={tasks[calendarTab]}
               onUpdateTask={(task, { oldTask }) => {
-                const foundIdx = calendarState.tasks[calendarState.type].findIndex(v => v.date == oldTask.date && v.title == oldTask.title && oldTask.id == v.id);
+                const foundIdx = tasks[calendarTab].findIndex(v => v.date === oldTask.date && v.title === oldTask.title && oldTask.id === v.id);
 
-                // if (foundIdx === -1) {
-                //   setCalendarState(s => ({...s, tasks: { ...s.tasks, [calendarState.type]: [ ...s.tasks[calendarState.type],  task, ], }}));
-                //   return;
-                // }
+                if (foundIdx === -1) {
+                  setTasks(s => ({...s, [calendarTab]: [ ...s[calendarTab],  task, ], }));
+                  return;
+                }
 
-                // setCalendarState(s => ({
-                //   ...s,
-                //   tasks: {
-                //     ...s.tasks,
-                //     [calendarState.type]: [
-                //       ...s.tasks[calendarState.type].slice(0, foundIdx),
-                //       task,
-                //       ...s.tasks[calendarState.type].slice(foundIdx+1),
-                //     ],
-                //   }
-                // }));
+                setTasks(s => ({
+                  ...s,
+                    [calendarTab]: [
+                      ...s[calendarTab].slice(0, foundIdx),
+                      task,
+                      ...s[calendarTab].slice(foundIdx+1),
+                    ],
+                  }
+                ));
               }}
               footerTasks={[
                 {date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
@@ -543,16 +539,16 @@ const App = () => {
               ]}
               headerTabs={[
                 {content: '', label: 'All Tasks',
-                  onClick: () => { setCalendarState(s => ({...s, type: 'all'})); console.log('all tasks'); }
+                  onClick: () => { setCalendarTab('all'); console.log('all tasks'); }
                 },
                 {content: '', label: 'Client Tasks',
-                  onClick: () => { setCalendarState(s => ({...s, type: 'client'})); console.log('client tasks'); }
+                  onClick: () => { setCalendarTab('client'); console.log('client tasks'); }
                 },
                 {content: '', label: 'Project Tasks',
-                  onClick: () => { setCalendarState(s => ({...s, type: 'project'})); console.log('project tasks'); }
+                  onClick: () => { setCalendarTab('project'); console.log('project tasks'); }
                 },
                 {content: '', label: 'Other Tasks',
-                  onClick: () => { setCalendarState(s => ({...s, type: 'other'})); console.log('other tasks'); }
+                  onClick: () => { setCalendarTab('other'); console.log('other tasks'); }
                 },
               ]}
             />

@@ -169,9 +169,16 @@ const DraggableTasksCalendar = ({
         const [removed] = sourceTasks.splice(source.index, 1);
         const newTask = {...removed,
           __id__: `day-${getWeek(destColumn.day)}-${destColumn.day.getDate()}-task-${destination.index}`,
+          date: new Date(
+            destColumn.day.getFullYear(),
+            destColumn.day.getMonth(),
+            destColumn.day.getDate(),
+            removed.date?.getHours(),
+            removed.date?.getMinutes(),
+            removed.date?.getSeconds(),
+            removed.date?.getMilliseconds(),
+          ),
         };
-        newTask.date?.setDate(destColumn.day.getDate());
-        newTask.date?.setMonth(destColumn.day.getMonth());
 
         const destItems = [...destColumn.tasks];
         destItems.splice(destination.index, 0, newTask);
@@ -193,9 +200,18 @@ const DraggableTasksCalendar = ({
         const sourceItems = [...sourceColumn.tasks];
         const destItems = [...destColumn.tasks];
         const [removed] = sourceItems.splice(source.index, 1);
-        const newTask = {...removed};
-        newTask.date?.setDate(destColumn.day.getDate());
-        newTask.date?.setMonth(destColumn.day.getMonth());
+        const newTask = {
+          ...removed,
+          date: new Date(
+            destColumn.day.getFullYear(),
+            destColumn.day.getMonth(),
+            destColumn.day.getDate(),
+            removed.date?.getHours(),
+            removed.date?.getMinutes(),
+            removed.date?.getSeconds(),
+            removed.date?.getMilliseconds(),
+          ),
+        };
 
         destItems.splice(destination.index, 0, newTask);
         onUpdateTask(newTask, { oldTask: removed, });
