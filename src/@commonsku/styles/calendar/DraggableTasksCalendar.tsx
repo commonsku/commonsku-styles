@@ -182,7 +182,7 @@ const DraggableTasksCalendar = ({
 
         const destItems = [...destColumn.tasks];
         destItems.splice(destination.index, 0, newTask);
-        onUpdateTask(newTask, { oldTask: removed, });
+        onUpdateTask(newTask, { oldTask: removed, sourceType: 'FOOTER', });
         return { ...s,
           days: { ...days, [destination.droppableId]: { ...destColumn, tasks: destItems, } },
           footerTasks: [ ...sourceTasks ],
@@ -214,7 +214,7 @@ const DraggableTasksCalendar = ({
         };
 
         destItems.splice(destination.index, 0, newTask);
-        onUpdateTask(newTask, { oldTask: removed, });
+        onUpdateTask(newTask, { oldTask: removed, sourceType: 'COLUMN', });
         return { ...s,
           days: { ...days,
             [source.droppableId]: { ...sourceColumn, tasks: sourceItems, },
@@ -229,7 +229,7 @@ const DraggableTasksCalendar = ({
         const copiedItems = [...column.tasks];
         const [removed] = copiedItems.splice(source.index, 1);
         copiedItems.splice(destination.index, 0, removed);
-        onUpdateTask(removed, { oldTask: removed, });
+        onUpdateTask(removed, { oldTask: removed, sourceType: 'COLUMN', });
         return { ...s,
           days: { ...days, [source.droppableId]: { ...column, tasks: copiedItems, }}
         };
