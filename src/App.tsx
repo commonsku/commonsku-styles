@@ -62,6 +62,11 @@ import {
     colors,
     Calendar,
     DraggableTasksCalendar,
+    NavConnectIcon,
+    NavSalesIcon,
+    NavProdIcon,
+    NavFinanceIcon,
+    NavManagementIcon,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 
@@ -579,16 +584,23 @@ const App = () => {
             <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
             <PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
             <TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
-
             <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
             <InfoIcon ml={5}/> 
-
-
-
-
             <Link onClick={() => setLock(!lock)}>
               <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
+
+            <br/>
+            <h2>Nav Icons</h2>
+            <NavConnectIcon color={"#00d374"} width={"3rem"}/>
+            <NavSalesIcon color={"#00d374"} width={"3rem"}/>
+            <NavProdIcon color={"#00d374"} width={"3rem"}/>
+            <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
+            <NavManagementIcon color={"#00d374"} width={"3rem"}/>
+
+
+
+
 
 
 
