@@ -27,7 +27,7 @@ const DraggableTaskBody = ({
     >
       {(provided, snapshot) => (
         <div {...draggableChildWrapperProps(provided, snapshot)}>
-          <Col xs><CalendarTask {...task} date={undefined} /></Col>
+          <Col><CalendarTask {...task} date={undefined} /></Col>
         </div>
       )}
     </Draggable>
