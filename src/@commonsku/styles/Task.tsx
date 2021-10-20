@@ -5,8 +5,8 @@ import { format } from 'date-fns'
 import { LabeledCheckbox } from './Input'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const TaskLabel = styled.div`display: flex;`
-const TaskName = styled.div`flex-grow: 1;`
+const TaskLabel = styled.div`display: flex; min-height: 25px; padding-right: 25px;`
+const TaskName = styled.div`flex-grow: 1; font-size:13px;`
 const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
 const TaskBody = styled.div`margin-left:34px;`
 
@@ -52,7 +52,7 @@ const Task = ({
 }
 
 const StyledCalendarTaskBody = styled.span`
-    font-size: 15px;
+    font-size: 13px;
     font-family: 'skufont-regular',sans-serif,Roboto;
     font-weight: normal;
 `;
@@ -63,6 +63,7 @@ ${p => p.backgroundColor ? `background-color: ${p.backgroundColor};` : ''}
 padding: 5px;
 margin: 0;
 height: 100%;
+margin-bottom: 7px;
 `;
 
 export type CalendarTaskProps = {

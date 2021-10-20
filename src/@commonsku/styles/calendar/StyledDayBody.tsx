@@ -3,13 +3,13 @@ import { Col } from '../FlexboxGrid';
 
 const StyledDayBody = styled(Col) <{ selected?: boolean; today?: boolean; row?: boolean; disabled?: boolean; }>`
     position: relative;
-    height: 15em;
+    height: auto;
     border-right: 1px solid #eee;
     overflow: hidden;
     cursor: pointer;
     background: #fff;
     transition: 0.25s ease-out;
-    font-size: 1.5em;
+    font-size: 1em;
     overflow-y: auto;
 
     &:last-child {
