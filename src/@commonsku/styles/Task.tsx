@@ -51,49 +51,82 @@ const Task = ({
   );
 }
 
-const StyledCalendarTask = styled(Task) <{ colorType?: string; }>`
-    border-radius: 5px;
-    background: ${p => p.colorType === 'light-red' ? '#ffebf2' : '#01d37417'};
-    padding: 5px;
-    margin-bottom: 0;
-    /* height: 100%; */
-`;
-
 const StyledCalendarTaskBody = styled.span`
     font-size: 15px;
     font-family: 'skufont-regular',sans-serif,Roboto;
     font-weight: normal;
 `;
 
+const StyledCalendarTaskWrapper = styled(StyledTask)<{backgroundColor?: string;}>`
+border-radius: 5px;
+${p => p.backgroundColor ? `background-color: ${p.backgroundColor};` : ''}
+padding: 5px;
+margin: 0;
+height: 100%;
+`;
+
 export type CalendarTaskProps = {
   title: string,
-  description?: string | React.ReactNode,
-  completed?: boolean,
+  description: string | React.ReactNode,
   date?: Date,
+  completed?: boolean,
   colorType?: string,
+  assignee?: string,
+  checked?: boolean,
   overdue?: boolean,
-  onClickCheckbox?: Function | VoidFunction,
+  wordLength?: number | null;
+  onClickCheckbox?: (val: any) => any,
 };
 
 const CalendarTask = React.forwardRef(({
   title,
   description,
   date,
-  colorType = 'light-green',
-  completed = false,
-  overdue = false,
+  completed=false,
+  assignee,
+  onClickCheckbox,
+  descriptionLength=null,
+  colorType='light-green',
   ...props
-}: CalendarTaskProps, ref) => {
+}: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
+  const [checked, setChecked] = useState<boolean>(completed);
   return (
-    <StyledCalendarTask
-      taskName={title}
-      taskBody={<StyledCalendarTaskBody>{description}</StyledCalendarTaskBody>}
-      date={_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}
-      colorType={colorType}
-      initialChecked={completed}
-      ref={ref}
+    <StyledCalendarTaskWrapper
+      backgroundColor={colorType === 'light-red' ? '#ffebf2' : '#01d37417'}
       {...props}
-    />
+    >
+      <LabeledCheckbox ref={ref}
+        checked={checked}
+        checkboxPosition="top-right"
+        checkboxStyle={{
+          borderColor: checked
+            ? undefined : (
+              colorType === 'light-red' ? 'rgba(209, 69, 121, 0.24)' : '#BEF1DA'
+            ),
+        }}
+        labelStyle={{width: '100%', paddingLeft: 0, paddingRight: 0, marginRight: 0, marginLeft: 0, margin: 0,}}
+        label={
+          <TaskLabel style={{fontWeight: 'bold' }}>
+            <TaskName>{title}</TaskName>
+            {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
+          </TaskLabel>
+        }
+        onChange={() => {
+          setChecked((s: boolean) => {
+            onClickCheckbox && onClickCheckbox(!s);
+            return !s;
+          });
+        }}
+      />
+      <StyledCalendarTaskBody>
+        {descriptionLength && typeof description === 'string' ?
+          description.slice(0, descriptionLength) : description}
+      </StyledCalendarTaskBody>
+      <div className="task-metadata">
+        {typeof assignee !== "undefined" ? "for " + assignee! : null}
+        {typeof assignee !== "undefined" ? "on " : null}
+      </div>
+    </StyledCalendarTaskWrapper>
   );
 });
 
@@ -103,7 +136,6 @@ export {
   TaskLabel,
   TaskName,
   TaskBody,
-  StyledCalendarTask,
   StyledCalendarTaskBody,
   CalendarTask,
 };
