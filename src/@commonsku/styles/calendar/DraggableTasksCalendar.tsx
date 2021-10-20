@@ -27,7 +27,7 @@ const DraggableTaskBody = ({
     >
       {(provided, snapshot) => (
         <div {...draggableChildWrapperProps(provided, snapshot)}>
-          <Col xs padded><CalendarTask {...task} date={undefined} /></Col>
+          <Col style={{padding: `5px 1px`}}><CalendarTask {...task} date={undefined} /></Col>
         </div>
       )}
     </Draggable>
