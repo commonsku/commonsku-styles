@@ -496,16 +496,16 @@ const App = () => {
                }/>
               <Dropdown text="Dropdown Panel" icon={<NoteIcon width="40" />}>
                 <Row>
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
                 </Row>
               </Dropdown>
               <Link block mt={20}>Link</Link>
