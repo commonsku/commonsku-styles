@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { getWeek, } from 'date-fns'
@@ -16,9 +17,19 @@ import { convertTasksToDays } from './TasksCalendar';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
 
 
+export type onUpdateTaskFunc = (newData: CalendarTaskProps, otherData: {
+  index: number,
+  action: string,
+  oldTask: CalendarTaskProps,
+  sourceType?: string,
+  updatedFields?: string[],
+  day__id?: string;
+  task__id?: string;
+}) => void | any;
+
 const DraggableTaskBody = ({
-  index, task,
-}: { index: number; task: CalendarTaskProps & { __id__: string } }) => {
+  index, task, onUpdateTask,
+}: { index: number; onUpdateTask?: onUpdateTaskFunc; task: CalendarTaskProps & { __id__: string } }) => {
   return (
     <Draggable
       key={task.__id__}
@@ -27,15 +38,29 @@ const DraggableTaskBody = ({
     >
       {(provided, snapshot) => (
         <div {...draggableChildWrapperProps(provided, snapshot)}>
-          <Col><CalendarTask {...task} date={undefined} /></Col>
+          <Col><CalendarTask {...task}
+            date={undefined}
+            onClickCheckbox={(completed: boolean) => {
+              if (onUpdateTask) {
+                onUpdateTask({ ...task, completed, }, {
+                  index,
+                  action: 'TOGGLE_CHECKBOX',
+                  oldTask: task,
+                  updatedFields: ['completed'],
+                });
+              } else if (task.onClickCheckbox) {
+                task.onClickCheckbox(completed);
+              }
+            }}
+          /></Col>
         </div>
       )}
     </Draggable>
   );
 };
 
-type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onClickDay: (day: any) => void; [key: string]: any; };
-const DroppableDays = ({days, selectedDate, onClickDay, ...props}: DroppableDaysProps) => {
+type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onUpdateTask?: onUpdateTaskFunc; onClickDay: (day: any) => void; [key: string]: any; };
+const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, ...props}: DroppableDaysProps) => {
   return (
     <DaysBodyWrapper className="days-body-wrapper" {...props}>
       <Row className="day-body-wrapper-row">
@@ -51,7 +76,9 @@ const DroppableDays = ({days, selectedDate, onClickDay, ...props}: DroppableDays
               {(provided, snapshot) => (
                   <div {...droppableChildWrapperProps(provided, snapshot)}>
                     {d.tasks.map((t, j) => (
-                      <DraggableTaskBody key={t.__id__} index={j} task={t} />
+                      <DraggableTaskBody key={t.__id__} index={j} task={t} onUpdateTask={onUpdateTask ? (newData, otherData) => {
+                        onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
+                      } : undefined} />
                     ))}
                   </div>
                 )}
@@ -79,7 +106,7 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
   return (
     <Droppable droppableId={'footer-droppable'} key={'footer-droppable'} isDropDisabled>
       {(provided, snapshot) => (
-        <div {...droppableChildWrapperProps(provided, snapshot, { style: !tasks.length ? {minHeight: 0} : {} })}>
+        <div {...droppableChildWrapperProps(provided, snapshot, { style: !tasks.length ? {minHeight: 0} : {minHeight: 0} })}>
           <DraggableCalendarFooterTasks {...props} tasks={tasks} />
         </div>
       )}
@@ -89,7 +116,7 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
 
 type DraggableTasksCalendarProps = CalendarProps & {
   tasks: Array<CalendarTaskProps>;
-  onUpdateTask: Function;
+  onUpdateTask: onUpdateTaskFunc;
   headerTabs?: Array<TabType>;
   footerTasks?: Array<CalendarTaskProps>;
   components?: {
@@ -182,7 +209,13 @@ const DraggableTasksCalendar = ({
 
         const destItems = [...destColumn.tasks];
         destItems.splice(destination.index, 0, newTask);
-        onUpdateTask(newTask, { oldTask: removed, sourceType: 'FOOTER', });
+        onUpdateTask(newTask, {
+          action: 'DROP',
+          oldTask: removed,
+          sourceType: 'FOOTER',
+          index: destination.index,
+          updatedFields: ['date'],
+        });
         return { ...s,
           days: { ...days, [destination.droppableId]: { ...destColumn, tasks: destItems, } },
           footerTasks: [ ...sourceTasks ],
@@ -214,7 +247,13 @@ const DraggableTasksCalendar = ({
         };
 
         destItems.splice(destination.index, 0, newTask);
-        onUpdateTask(newTask, { oldTask: removed, sourceType: 'COLUMN', });
+        onUpdateTask(newTask, {
+          action: 'DROP',
+          oldTask: removed,
+          sourceType: 'COLUMN',
+          index: destination.index,
+          updatedFields: ['date'],
+        });
         return { ...s,
           days: { ...days,
             [source.droppableId]: { ...sourceColumn, tasks: sourceItems, },
@@ -229,7 +268,12 @@ const DraggableTasksCalendar = ({
         const copiedItems = [...column.tasks];
         const [removed] = copiedItems.splice(source.index, 1);
         copiedItems.splice(destination.index, 0, removed);
-        onUpdateTask(removed, { oldTask: removed, sourceType: 'COLUMN', });
+        onUpdateTask(removed, {
+          action: 'DROP',
+          oldTask: removed,
+          sourceType: 'COLUMN',
+          index: destination.index,
+        });
         return { ...s,
           days: { ...days, [source.droppableId]: { ...column, tasks: copiedItems, }}
         };
@@ -244,7 +288,34 @@ const DraggableTasksCalendar = ({
       <CalendarWrapper>
         <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
         <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
-        <DroppableDays days={state.days} selectedDate={selectedDate} onClickDay={onClickDay} />
+        <DroppableDays
+          days={state.days}
+          selectedDate={selectedDate}
+          onClickDay={onClickDay}
+          onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
+            if (!day__id) {return;}
+            _.flowRight(() => {
+              onUpdateTask(newData, otherData);
+            }, () => {
+              setState(s => {
+                return {
+                  ...s,
+                  days: {
+                    ...s.days,
+                    [day__id]: {
+                      ...s.days[day__id],
+                      tasks: [
+                        ...s.days[day__id].tasks.slice(0, otherData.index),
+                        {...s.days[day__id].tasks[otherData.index], ...newData},
+                        ...s.days[day__id].tasks.slice(otherData.index+1),
+                      ],
+                    }
+                  },
+                };
+              });
+            })();
+          }}
+        />
         <DroppableFooter tasks={state.footerTasks} {...headerProps} />
       </CalendarWrapper>
     </DragDropContext>

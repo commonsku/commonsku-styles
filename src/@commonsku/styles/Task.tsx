@@ -17,7 +17,7 @@ export type TaskProps = {
   assignee?: string,
   taskBody: string | React.ReactNode,
   checked?: boolean,
-  onClickCheckbox?: (val: any) => any,
+  onClickCheckbox?: (checked?: boolean) => any,
 };
 const Task = ({
   taskName,
@@ -67,16 +67,16 @@ margin-bottom: 7px;
 `;
 
 export type CalendarTaskProps = {
-  title: string,
-  description: string | React.ReactNode,
-  date?: Date,
-  completed?: boolean,
-  colorType?: string,
-  assignee?: string,
-  checked?: boolean,
-  overdue?: boolean,
+  title: string;
+  description: string | React.ReactNode;
+  date?: Date;
+  completed?: boolean;
+  colorType?: string;
+  assignee?: string;
+  checked?: boolean;
+  overdue?: boolean;
   wordLength?: number | null;
-  onClickCheckbox?: (val: any) => any,
+  onClickCheckbox?: (checked?: boolean) => any;
 };
 
 const CalendarTask = React.forwardRef(({
