@@ -517,6 +517,10 @@ const App = () => {
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
               tasks={tasks[calendarTab]}
+              onClickTask={(task) => {
+                setShowPanel(!showPanel);
+                console.log('clicked', task);
+              }}
               onUpdateTask={(task, { oldTask }) => {
                 const foundIdx = tasks[calendarTab].findIndex(v => v.date === oldTask.date && v.title === oldTask.title && oldTask.id === v.id);
 

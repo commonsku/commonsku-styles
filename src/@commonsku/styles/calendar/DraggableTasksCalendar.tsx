@@ -17,19 +17,28 @@ import { convertTasksToDays } from './TasksCalendar';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
 
 
+type ACTIONS = 'TOGGLE_CHECKBOX' | 'DROP';
 export type onUpdateTaskFunc = (newData: CalendarTaskProps, otherData: {
   index: number,
-  action: string,
+  action: ACTIONS,
   oldTask: CalendarTaskProps,
   sourceType?: string,
   updatedFields?: string[],
   day__id?: string;
   task__id?: string;
 }) => void | any;
+export type onClickTaskFunc = (task: CalendarTaskProps) => void | any;
 
+type NewCalendarTaskProps = CalendarTaskProps & {__id__: string};
+export type DraggableTaskBodyProps = {
+  index: number;
+  onClickTask?: onClickTaskFunc;
+  onUpdateTask?: onUpdateTaskFunc;
+  task: NewCalendarTaskProps;
+};
 const DraggableTaskBody = ({
-  index, task, onUpdateTask,
-}: { index: number; onUpdateTask?: onUpdateTaskFunc; task: CalendarTaskProps & { __id__: string } }) => {
+  index, task, onUpdateTask, onClickTask,
+}: DraggableTaskBodyProps) => {
   return (
     <Draggable
       key={task.__id__}
@@ -38,29 +47,31 @@ const DraggableTaskBody = ({
     >
       {(provided, snapshot) => (
         <div {...draggableChildWrapperProps(provided, snapshot)}>
-          <Col><CalendarTask {...task}
-            date={undefined}
-            onClickCheckbox={(completed: boolean) => {
-              if (onUpdateTask) {
-                onUpdateTask({ ...task, completed, }, {
-                  index,
-                  action: 'TOGGLE_CHECKBOX',
-                  oldTask: task,
-                  updatedFields: ['completed'],
-                });
-              } else if (task.onClickCheckbox) {
-                task.onClickCheckbox(completed);
-              }
-            }}
-          /></Col>
+          <Col onClick={(e: React.MouseEvent) => { onClickTask && onClickTask(task); }}>
+            <CalendarTask {...task}
+              date={undefined}
+              onClickCheckbox={(completed: boolean) => {
+                if (onUpdateTask) {
+                  onUpdateTask({ ...task, completed, }, {
+                    index,
+                    action: 'TOGGLE_CHECKBOX',
+                    oldTask: task,
+                    updatedFields: ['completed'],
+                  });
+                } else if (task.onClickCheckbox) {
+                  task.onClickCheckbox(completed);
+                }
+              }}
+            />
+          </Col>
         </div>
       )}
     </Draggable>
   );
 };
 
-type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onUpdateTask?: onUpdateTaskFunc; onClickDay: (day: any) => void; [key: string]: any; };
-const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, ...props}: DroppableDaysProps) => {
+type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onClickTask?: onClickTaskFunc; onUpdateTask?: onUpdateTaskFunc; onClickDay: (day: any) => void; [key: string]: any; };
+const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTask, ...props}: DroppableDaysProps) => {
   return (
     <DaysBodyWrapper className="days-body-wrapper" {...props}>
       <Row className="day-body-wrapper-row">
@@ -76,7 +87,7 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, ...props}:
               {(provided, snapshot) => (
                   <div {...droppableChildWrapperProps(provided, snapshot)}>
                     {d.tasks.map((t, j) => (
-                      <DraggableTaskBody key={t.__id__} index={j} task={t} onUpdateTask={onUpdateTask ? (newData, otherData) => {
+                      <DraggableTaskBody key={t.__id__} index={j} task={t} onClickTask={onClickTask} onUpdateTask={onUpdateTask ? (newData, otherData) => {
                         onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
                       } : undefined} />
                     ))}
@@ -117,6 +128,7 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
 type DraggableTasksCalendarProps = CalendarProps & {
   tasks: Array<CalendarTaskProps>;
   onUpdateTask: onUpdateTaskFunc;
+  onClickTask?: onClickTaskFunc;
   headerTabs?: Array<TabType>;
   footerTasks?: Array<CalendarTaskProps>;
   components?: {
@@ -125,7 +137,7 @@ type DraggableTasksCalendarProps = CalendarProps & {
   },
 };
 
-type Day = { __id__: string; day: Date; tasks: Array<{ __id__: string; } & CalendarTaskProps>; };
+type Day = { __id__: string; day: Date; tasks: Array<NewCalendarTaskProps>; };
 type DaysObject = { [key: string]: Day };
 type State = {
   days: DaysObject,
@@ -135,6 +147,7 @@ type State = {
 const DraggableTasksCalendar = ({
   tasks = [],
   onUpdateTask,
+  onClickTask,
   headerTabs = [],
   footerTasks = [],
   components = {},
@@ -292,18 +305,16 @@ const DraggableTasksCalendar = ({
           days={state.days}
           selectedDate={selectedDate}
           onClickDay={onClickDay}
+          onClickTask={onClickTask}
           onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
             if (!day__id) {return;}
             _.flowRight(() => {
               onUpdateTask(newData, otherData);
             }, () => {
               setState(s => {
-                return {
-                  ...s,
-                  days: {
-                    ...s.days,
-                    [day__id]: {
-                      ...s.days[day__id],
+                return { ...s,
+                  days: { ...s.days,
+                    [day__id]: { ...s.days[day__id],
                       tasks: [
                         ...s.days[day__id].tasks.slice(0, otherData.index),
                         {...s.days[day__id].tasks[otherData.index], ...newData},

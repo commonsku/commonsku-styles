@@ -113,7 +113,13 @@ const CalendarTask = React.forwardRef(({
             {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
           </TaskLabel>
         }
-        onChange={() => {
+        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+          e && e.preventDefault();
+          e && e.stopPropagation();
+        }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          e && e.preventDefault();
+          e && e.stopPropagation();
           setChecked((s: boolean) => {
             onClickCheckbox && onClickCheckbox(!s);
             return !s;
