@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import styled from 'styled-components'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { LabeledCheckbox } from './Input'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
@@ -92,6 +92,11 @@ const CalendarTask = React.forwardRef(({
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
+
+  useEffect(() => {
+    setChecked(completed);
+  }, [completed]);
+
   return (
     <StyledCalendarTaskWrapper
       backgroundColor={colorType === 'light-red' ? '#ffebf2' : '#01d37417'}
