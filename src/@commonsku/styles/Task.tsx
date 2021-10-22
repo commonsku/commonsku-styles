@@ -67,6 +67,7 @@ margin-bottom: 7px;
 `;
 
 export type CalendarTaskProps = {
+  id?: string;
   title: string;
   description: string | React.ReactNode;
   date?: Date;
