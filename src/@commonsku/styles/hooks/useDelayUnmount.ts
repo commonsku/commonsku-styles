@@ -8,8 +8,10 @@ function useDelayUnmount(isMounted: boolean, delayTime: number) {
         if (isMounted && !shouldRender) {
             setShouldRender(true);
         } else if (!isMounted && shouldRender) {
+            // @ts-ignore
             timeoutId = setTimeout(() => setShouldRender(false), delayTime);
         }
+        // @ts-ignore
         return () => clearTimeout(timeoutId);
     }, [isMounted, delayTime, shouldRender]);
     return shouldRender;
