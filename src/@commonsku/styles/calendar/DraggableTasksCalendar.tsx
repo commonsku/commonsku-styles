@@ -300,33 +300,35 @@ const DraggableTasksCalendar = ({
     >
       <CalendarWrapper>
         <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
-        <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
-        <DroppableDays
-          days={state.days}
-          selectedDate={selectedDate}
-          onClickDay={onClickDay}
-          onClickTask={onClickTask}
-          onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
-            if (!day__id) {return;}
-            _.flowRight(() => {
-              onUpdateTask(newData, otherData);
-            }, () => {
-              setState(s => {
-                return { ...s,
-                  days: { ...s.days,
-                    [day__id]: { ...s.days[day__id],
-                      tasks: [
-                        ...s.days[day__id].tasks.slice(0, otherData.index),
-                        {...s.days[day__id].tasks[otherData.index], ...newData},
-                        ...s.days[day__id].tasks.slice(otherData.index+1),
-                      ],
-                    }
-                  },
-                };
-              });
-            })();
-          }}
-        />
+        <div className="calendar-scroll">
+          <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
+          <DroppableDays
+            days={state.days}
+            selectedDate={selectedDate}
+            onClickDay={onClickDay}
+            onClickTask={onClickTask}
+            onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
+              if (!day__id) {return;}
+              _.flowRight(() => {
+                onUpdateTask(newData, otherData);
+              }, () => {
+                setState(s => {
+                  return { ...s,
+                    days: { ...s.days,
+                      [day__id]: { ...s.days[day__id],
+                        tasks: [
+                          ...s.days[day__id].tasks.slice(0, otherData.index),
+                          {...s.days[day__id].tasks[otherData.index], ...newData},
+                          ...s.days[day__id].tasks.slice(otherData.index+1),
+                        ],
+                      }
+                    },
+                  };
+                });
+              })();
+            }}
+          />
+        </div>
         <DroppableFooter tasks={state.footerTasks} {...headerProps} />
       </CalendarWrapper>
     </DragDropContext>
