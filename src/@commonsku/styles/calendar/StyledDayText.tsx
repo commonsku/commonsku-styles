@@ -8,7 +8,7 @@ const StyledDayText = styled(Text) <{ selected?: boolean; }>`
         background: ${colors.cta};
         color: white;
         font-weight: bold;
-        padding: 5px;
+        padding: 0 5px;
     ` : ''}
 `;
 
