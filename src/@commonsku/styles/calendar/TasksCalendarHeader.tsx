@@ -24,11 +24,11 @@ export const TasksCalendarHeader = ({
 }: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     return (
         <HeaderWrapper>
-            <Col start xs md={7}>
-                <Tabs tabs={tabs} />
+            <Col start xs md={7} padded>
+                <Tabs size="small" tabs={tabs} />
             </Col>
             <Col end xs md={5}>
-                <Row>
+                <Row style={{fontSize: '0.8em'}}>
                     <Col start padded>
                         <div style={{cursor: 'pointer', color: colors.primary, }} onClick={onPrevWeek}>&lt; Prev Week</div>
                     </Col>
