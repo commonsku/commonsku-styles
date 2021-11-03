@@ -28,7 +28,7 @@ export default {
     sourcemap: true
   }],
   plugins: [
-    peerDepsExternal(),
+    peerDepsExternal({ includeDependencies: true }),
     progress(),
     image(),
     url({ 
