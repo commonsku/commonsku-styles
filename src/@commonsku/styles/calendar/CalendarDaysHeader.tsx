@@ -11,7 +11,7 @@ const CalendarDaysHeader = ({
 }: { currentMonth: Date; selectedDate: Date; [key: string]: any }) => {
     const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     return (
-        <DaysHeaderWrapper style={{ fontSize: '1rem' }}>
+        <DaysHeaderWrapper className="days-header-wrapper" style={{ fontSize: '1rem' }}>
             {Array.from(Array(7).keys()).map(i => {
                 const day = addDays(startDate, i);
                 const isToday = isSameDay(day, new Date());

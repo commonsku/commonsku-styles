@@ -5,7 +5,12 @@ const CalendarWrapper = styled.div`
     position: relative;
     width: 100%;
     background: #fff;
-    border: 1px solid #eee;
+    .calendar-scroll {
+      overflow-x: scroll;
+     }
+    .days-body-wrapper, .days-header-wrapper {
+      min-width: 900px;
+    }
 `;
 
 export default CalendarWrapper;
