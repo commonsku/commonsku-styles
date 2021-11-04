@@ -4,7 +4,13 @@ import { colors, } from '../Theme';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
 import { Tabs } from '../Tabs';
+import styled from 'styled-components';
+import { Text } from '../Text';
 
+const WeekNav = styled(Text)`
+  display: inline-block;
+  padding: .9rem .5rem;
+`;
 
 export type TasksCalendarHeaderProps = {
     onNextWeek: VoidFunction;
@@ -23,24 +29,16 @@ export const TasksCalendarHeader = ({
     tabs,
 }: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     return (
-        <HeaderWrapper>
-            <Col start xs md={7} padded>
+        <HeaderWrapper style={{padding: "0.5rem"}}>
+            <Col start xs md={9} padded>
                 <Tabs size="small" tabs={tabs} />
             </Col>
-            <Col end xs md={5}>
-                <Row style={{fontSize: '0.8em'}}>
-                    <Col start padded>
-                        <div style={{cursor: 'pointer', color: colors.primary, }} onClick={onPrevWeek}>&lt; Prev Week</div>
-                    </Col>
-                    <Col center padded>
-                        <span style={{ color: colors.disabledButton }}>
+            <Col end xs md={3} style={{fontSize: '0.8em'}}>
+                        <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onPrevWeek}>‹ Previous</WeekNav>
+                        <WeekNav style={{ color: colors.disabledButton }}>
                             {currentMonth ? format(currentMonth, "MMM yyyy") : ''}
-                        </span>
-                    </Col>
-                    <Col end padded>
-                        <div style={{cursor: 'pointer', color: colors.primary, }} onClick={onNextWeek}>Next Week &gt;</div>
-                    </Col>
-                </Row>
+                        </WeekNav>
+                        <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onNextWeek}>Next ›</WeekNav>
             </Col>
         </HeaderWrapper>
     );

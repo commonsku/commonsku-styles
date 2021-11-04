@@ -6,9 +6,8 @@ const HeaderWrapper = styled(Row)`
     padding: 1.75em 0 !important;
     border-bottom: 1px solid #eee;
     background: #fff;
-    text-transform: uppercase;
     font-weight: 700;
-    font-size: 115%;
+    font-size: 100%;
 `;
 
 export default HeaderWrapper;

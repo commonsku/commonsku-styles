@@ -22,7 +22,7 @@ export const DraggableCalendarFooterTasks = ({
     return (
         <HeaderWrapper>
             <Col start xs>
-                <span style={{display: 'inline-flex'}}>Past Weeks: </span>
+                <span style={{display: 'inline-flex'}}>Overdue: </span>
                 <span style={{display: 'inline-flex'}}>
                 <Row>
                     {tasks
