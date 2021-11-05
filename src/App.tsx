@@ -67,6 +67,7 @@ import {
     NavFinanceIcon,
     NavManagementIcon,
 } from '@commonsku/styles';
+import Csku from '@commonsku/styles/Csku';
 
 const initialState = {
   date: new Date(),
@@ -475,6 +476,15 @@ const App = () => {
             </div>
 
             <H5>Bars Loading</H5>
+            <Csku textAlign="right" bg="red">
+              Hello
+            </Csku>
+            <Csku flexRow={{middle: true}} background="blue">
+              <Csku flexCol={{xs: true}}>In Flexgrid</Csku>
+              <Csku flexCol={{xs: true}}>In Flexgrid</Csku>
+              <Csku flexCol={{xs: true}}>In Flexgrid</Csku>
+              <Csku flexCol={{xs: true}}>In Flexgrid</Csku>
+            </Csku>
             <div style={{maxWidth: 150}}>
               <Toggle stretch mb={10} onClick={() => setColorfulBars(!colorfulBars)}>
                 <ToggleLink selected={!colorfulBars} stretch pr pl>Regular</ToggleLink>

@@ -1,4 +1,4 @@
-import styled, { css, CSSObject, CSSProperties } from 'styled-components';
+import styled, { css, CSSObject, CSSPseudos, CSSProperties } from 'styled-components';
 import { sizes, media } from '../utils';
 import { pseudoSelectors } from './pseudos';
 
@@ -145,14 +145,33 @@ export const mediaQueriesStyles = (p: Array<MediaQueryProps>): string => {
     return results.reduce((acc: string, v: string) => acc + '  ' + v, '');
 }
 
-export type CskuProps = CSSObject & {
+export type CskuProps = {
     flexRow?: FlexRowProps;
     flexCol?: FlexColProps;
-    flex?: boolean;
     bg?: string;
     mediaQueries?: Array<MediaQueryProps>;
     sx?: CSSObject | string;
-};
+
+    // aliases
+    h?: string | number;
+    w?: string | number;
+    pt?: string | number;
+    pr?: string | number;
+    pb?: string | number;
+    pl?: string | number;
+    px?: string | number;
+    py?: string | number;
+    mt?: string | number;
+    mr?: string | number;
+    mb?: string | number;
+    ml?: string | number;
+    mx?: string | number;
+    my?: string | number;
+    grid?: boolean;
+    float?: 'left' | 'right' | 'none' | 'clearfix';
+    pos?: string;
+    z?: string;
+} | CSSProperties | CSSPseudos;
 
 const sizeStyleFunc = (keys: string | Array<string>) => (v: string | number) => (
     typeof keys === 'string' ? ({[keys]: v}) : keys.reduce(
@@ -165,9 +184,7 @@ const config = {
     flexRow: flexRowStyles,
     flexCol: flexColStyles,
     mediaQueries: mediaQueriesStyles,
-    flex: () => ({display: 'flex'}),
     bg: (v: string) => ({background: v}),
-    // textAlign: (v: string) => ({textAlign: v}),
     h: sizeStyleFunc('height'),
     w: sizeStyleFunc('width'),
     pt: sizeStyleFunc('paddingTop'),
@@ -195,12 +212,11 @@ const config = {
     sx: (styles: CSSObject | string) => styles,
 };
 
-const Csku = styled.div.attrs<CskuProps>({})(
+const Csku = styled.div.attrs<CskuProps>({})<CskuProps>(
     {boxSizing: 'border-box'},
     (props: CskuProps) => {
         let styles: CSSObject = {};
         let stringStyles = '';
-        let cssStyles = {};
         for(const k in props) {
             if (pseudoSelectors[k]) {
                 styles[pseudoSelectors[k]] = props[k];
@@ -211,12 +227,12 @@ const Csku = styled.div.attrs<CskuProps>({})(
                 } else {
                     stringStyles += "  " + sx;
                 }
-            } else if(props[k] !== undefined) {
-                cssStyles = css({ [k]: props[k] });
+            } else {
+                styles[k] = props[k];
             }
         }
 
-        return [styles, stringStyles, cssStyles];
+        return [css(styles), stringStyles];
     }
 );
 
