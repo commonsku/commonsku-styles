@@ -15,6 +15,7 @@ import TasksCalendarHeader from './TasksCalendarHeader';
 import DraggableCalendarFooterTasks from './DraggableCalendarFooterTasks';
 import { convertTasksToDays } from './TasksCalendar';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
+import {LabeledCheckbox} from '../Input';
 
 
 type ACTIONS = 'TOGGLE_CHECKBOX' | 'DROP';
@@ -70,16 +71,18 @@ const DraggableTaskBody = ({
   );
 };
 
-type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onClickTask?: onClickTaskFunc; onUpdateTask?: onUpdateTaskFunc; onClickDay: (day: any) => void; [key: string]: any; };
+type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onClickTask?: onClickTaskFunc; onUpdateTask?: onUpdateTaskFunc; onClickDay: (day: any) => void; [key: string]: any; weekend: boolean; };
 const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTask, ...props}: DroppableDaysProps) => {
   return (
     <DaysBodyWrapper className="days-body-wrapper" {...props}>
       <Row className="day-body-wrapper-row">
         {Object.entries(days).map(([__id__, d], i) => (
+          (!(!props.weekend && (d.day.getDay() === 6 || d.day.getDay() === 0)) ? 
           <CalendarDayBody
             key={__id__}
             day={d.day}
             selectedDate={selectedDate}
+            weekend={props.weekend}
             onClick={() => { onClickDay && onClickDay(d.day); }}
           >
             <Row>
@@ -95,7 +98,7 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTas
                 )}
               </Droppable>
             </Row>
-          </CalendarDayBody>
+          </CalendarDayBody> : "")
         ))}
       </Row>
     </DaysBodyWrapper>
@@ -170,6 +173,9 @@ const DraggableTasksCalendar = ({
     ),
     footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false),
   });
+
+  const [weekend, toggleWeekend] = useState(false);
+
 
   useEffect(() => {
     setState(s => ({
@@ -299,14 +305,16 @@ const DraggableTasksCalendar = ({
       onDragEnd={result => onDragEnd(result)}
     >
       <CalendarWrapper>
+        <LabeledCheckbox label="Weekends" checked={weekend} onChange={(e: Event) => toggleWeekend(!weekend)} /> 
         <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
         <div className="calendar-scroll">
-          <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
+          <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekend={weekend} />
           <DroppableDays
             days={state.days}
             selectedDate={selectedDate}
             onClickDay={onClickDay}
             onClickTask={onClickTask}
+            weekend={weekend}
             onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
               if (!day__id) {return;}
               _.flowRight(() => {

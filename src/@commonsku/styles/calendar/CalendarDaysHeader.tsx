@@ -8,11 +8,12 @@ import StyledDayText from './StyledDayText';
 const CalendarDaysHeader = ({
     currentMonth,
     selectedDate,
-}: { currentMonth: Date; selectedDate: Date; [key: string]: any }) => {
+    weekend
+}: { currentMonth: Date; selectedDate: Date; weekend: boolean; [key: string]: any }) => {
     const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     return (
         <DaysHeaderWrapper className="days-header-wrapper" style={{ fontSize: '1rem' }}>
-            {Array.from(Array(7).keys()).map(i => {
+            {Array.from(Array(weekend ? 7 : 5).keys()).map(i => {
                 const day = addDays(startDate, i);
                 const isToday = isSameDay(day, new Date());
                 const className = isToday ? 'day-today' : (

@@ -26,6 +26,7 @@ const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, com
                         day={day}
                         selectedDate={selectedDate}
                         onClick={() => {onClickDay && onClickDay(day);}}
+                        weekend={true}
                         children={components?.DayBody
                             ? <components.DayBody
                                 key={`day-body-${getWeek(day)}-${i}`}
