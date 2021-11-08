@@ -47,8 +47,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
     } = useCalendar();
 
     const [days, setDays] = useState(getDatesBetween(
-        startOfWeek(currentMonth, { weekStartsOn: 1 }),
-        lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
+        startOfWeek(currentMonth, { weekStartsOn: 1 }), lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
     ).map((day, i) => ({ __id__: `day-${getWeek(day)}-${i}`, day, })));
 
     const headerProps = {
@@ -94,8 +93,8 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
 
     return (
         <CalendarWrapper>
+            <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekend={true} />
             {renderHeader()}
-            <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} />
             <CalendarDaysBody
                 currentMonth={currentMonth}
                 selectedDate={selectedDate}

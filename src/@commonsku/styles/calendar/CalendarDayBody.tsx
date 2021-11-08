@@ -2,7 +2,7 @@ import React from 'react';
 import { format, isSameDay } from "date-fns";
 import StyledDayBody from './StyledDayBody';
 
-type CalendarDayBodyProps = React.PropsWithChildren<{ day: Date, selectedDate: Date, onClick: Function }>;
+type CalendarDayBodyProps = React.PropsWithChildren<{ day: Date, selectedDate: Date, onClick: Function, weekend: boolean }>;
 
 const CalendarDayBody = ({ day, selectedDate, onClick, children, ...props }: CalendarDayBodyProps) => {
     const formattedDay = format(day, "d");
@@ -16,7 +16,7 @@ const CalendarDayBody = ({ day, selectedDate, onClick, children, ...props }: Cal
     return (
         <StyledDayBody
             padded
-            totalCols={7}
+            totalCols={props.weekend ? 7 : 5}
             xs={1}
             selected={isSelected}
             today={isToday}
