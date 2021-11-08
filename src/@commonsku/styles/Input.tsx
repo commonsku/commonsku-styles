@@ -8,7 +8,7 @@ import {Label} from './Label'
 
 export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, isPercent?:boolean};
 
-const InputIconLabel = styled.div<InputProps>`
+export const InputIconLabel = styled.div<InputProps>`
   box-sizing: border-box;
   width: 40px;
   height: ${p => p.error ? 38 : 36}px;
@@ -22,7 +22,7 @@ const InputIconLabel = styled.div<InputProps>`
   line-height: 1.5rem;
 `
 
-const InputIconLabelContainer = styled.div`
+export const InputIconLabelContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
