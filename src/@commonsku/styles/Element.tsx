@@ -58,7 +58,7 @@ export const flexRowStyles = (p: FlexRowProps): CSSObject => {
         padding: p.padded ? '0.5rem' : 'initial',
         ...(p.start ? {placeContent: 'flex-start'} : {}),
         ...(p.end ? {placeContent: 'flex-end'} : {}),
-        ...(p.middle ? {placeContent: 'center'} : {}),
+        ...(p.middle ? {alignItems: 'center'} : {}),
     };
 };
 export const flexColStyles = (p: FlexColProps): string => {

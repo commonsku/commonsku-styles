@@ -37,6 +37,7 @@ export * from './StatusDropdown'
 export * from './StateDropdown'
 export * from './Collapsible'
 
+export {default as Element} from './Element'
 export * from './icons'
 export * from './Theme'
 export {default as Theme} from './Theme'
