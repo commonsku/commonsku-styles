@@ -45,6 +45,7 @@ export const themeOptions = {
 }
 
 export function getColor(color?: string, def?: string): string {
+  return getVal(colors, color, def);
 }
 
 export function getFontSize(value?: string, def?: string): string {
