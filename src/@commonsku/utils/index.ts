@@ -33,5 +33,20 @@ export const range = (start: number, end?: number, step: number = 1) => {
   return output;
 };
 
+// (+|-)100(px|em|rem|...) => px|em|rem|...
+export const getUnit = (measurement: string|number, def: string = 'px') => {
+  if (typeof measurement !== "string") {
+    return def;
+  }
+  const matchedMeasurement = measurement.match(/^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/);
+  return matchedMeasurement ? matchedMeasurement[2] : def;
+};
+
+export const stripUnit = (measurement: string|number) =>
+  (typeof measurement === "number") ? measurement : parseFloat(measurement);
+
+export const parseMeasurement = (measurement: string|number, def: string = 'px') =>
+  stripUnit(measurement) + getUnit(measurement, def);
+
 export const window = ssr.window;
 export const document = ssr.document;

@@ -45,13 +45,10 @@ export const themeOptions = {
 }
 
 export function getColor(color?: string, def?: string): string {
-  // @ts-ignore
-  return color && colors[color] ? colors[color] : colors[def];
 }
 
 export function getFontSize(value?: string, def?: string): string {
-  // @ts-ignore
-  return value && fontSizes[value] ? fontSizes[value] : fontSizes[def];
+  return getVal(fontSizes, value, def);
 }
 
 export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
@@ -64,6 +61,12 @@ export function getThemeFontSize(props: {[key: string]: any}, value: string, fal
 
 export function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = ""): string {
   return getThemeProperty(props, 'fontFamily', fallbackValue);
+}
+
+export function getVal(data: object, key?: string, def?: string): string {
+  return key && data[key] ? data[key] : (
+    !def ? def : data[def] || def
+  );
 }
 
 export function getThemeProperty(props: {[key: string]: any}, prop: string, value?: string, fallbackValue?: string): string {
