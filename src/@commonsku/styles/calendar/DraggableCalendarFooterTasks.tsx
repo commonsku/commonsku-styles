@@ -21,9 +21,8 @@ export const DraggableCalendarFooterTasks = ({
 }: React.PropsWithChildren<DraggableCalendarFooterTasksProps>) => {
     return (
         <HeaderWrapper>
-            <Col start xs>
-                <span style={{display: 'inline-flex'}}>Overdue: </span>
-                <span style={{display: 'inline-flex'}}>
+            <Col start xs>Overdue: </Col>
+            <Col xs>
                 <Row>
                     {tasks
                         .map((t: CalendarTaskProps, j: number) => (
@@ -38,8 +37,7 @@ export const DraggableCalendarFooterTasks = ({
                                 )}
                             </Draggable>
                         ))}
-                </Row>  
-            </span>
+                </Row>
             </Col>
         </HeaderWrapper>
     );
