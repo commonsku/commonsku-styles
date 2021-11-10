@@ -16,6 +16,7 @@ import DraggableCalendarFooterTasks from './DraggableCalendarFooterTasks';
 import { convertTasksToDays } from './TasksCalendar';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
 import {LabeledCheckbox} from '../Input';
+import { useCalendarProps } from '../hooks/useCalendar';
 
 
 type ACTIONS = 'TOGGLE_CHECKBOX' | 'DROP';
@@ -139,7 +140,7 @@ type DraggableTasksCalendarProps = CalendarProps & {
     Header?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
     Footer?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   },
-};
+} & useCalendarProps;
 
 type Day = { __id__: string; day: Date; tasks: Array<NewCalendarTaskProps>; };
 type DaysObject = { [key: string]: Day };
@@ -156,6 +157,8 @@ const DraggableTasksCalendar = ({
   footerTasks = [],
   components = {},
   weekend=false,
+  onChangeWeek,
+  onChangeMonth,
   ...props
 }: DraggableTasksCalendarProps) => {
   const {
@@ -167,7 +170,7 @@ const DraggableTasksCalendar = ({
     onNextMonth,
     onPrevMonth,
     onClickDay,
-  } = useCalendar();
+  } = useCalendar({onChangeWeek, onChangeMonth});
 
   const [state, setState] = useState<State>({
     days: convertTasksToDays({ currentMonth, currentWeek, tasks, }).reduce(

@@ -6,7 +6,9 @@ import {
     isSameDay,
     getWeek,
     addWeeks,
-    subWeeks
+    subWeeks,
+    getMonth,
+    getYear
 } from "date-fns";
 
 const today = new Date();
@@ -19,17 +21,33 @@ export const getDatesBetween = (startDt: Date, endDt: Date) => {
     }
     return result;
 };
-const useCalendar = () => {
+export type onChangeWeekFunc = (obj: {week: number, month: number, year: number, action: string}) => void;
+export type onChangeMonthFunc = (obj: {month: number, year: number, action: string}) => void;
+export type useCalendarProps = {
+    onChangeWeek?: onChangeWeekFunc,
+    onChangeMonth?: onChangeMonthFunc,
+};
+const useCalendar = ({
+    onChangeWeek,
+    onChangeMonth,
+}: useCalendarProps) => {
     const [currentMonth, setCurrentMonth] = useState(today);
     const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
     const [selectedDate, setSelectedDate] = useState(today);
 
     const changeMonth = (action: string) => {
+        let dt = currentMonth;
         if (action === "prev") {
-            setCurrentMonth(subMonths(currentMonth, 1));
+            dt = subMonths(currentMonth, 1);
         } else if (action === "next") {
-            setCurrentMonth(addMonths(currentMonth, 1));
+            dt = addMonths(currentMonth, 1);
         }
+        setCurrentMonth(dt);
+        onChangeMonth && onChangeMonth({
+            action,
+            month: getMonth(dt),
+            year: getYear(dt),
+        });
     }
 
     const changeWeek = (action: string) => {
@@ -41,7 +59,14 @@ const useCalendar = () => {
             dt = addWeeks(currentMonth, 1);
         }
         setCurrentMonth(dt);
-        setCurrentWeek(getWeek(dt));
+        const week = getWeek(dt);
+        setCurrentWeek(week);
+        onChangeWeek && onChangeWeek({
+            action,
+            week: week,
+            month: getMonth(dt),
+            year: getYear(dt),
+        });
     }
 
     const onClickDay = (day: Date) => {
