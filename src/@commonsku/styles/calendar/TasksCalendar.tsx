@@ -52,7 +52,7 @@ const TasksCalendar = ({
         onNextMonth,
         onPrevMonth,
         onClickDay,
-    } = useCalendar();
+    } = useCalendar({});
 
     const [days, setDays] = useState(
         convertTasksToDays({currentMonth, currentWeek, tasks,})

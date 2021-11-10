@@ -44,7 +44,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
         onNextMonth,
         onPrevMonth,
         onClickDay,
-    } = useCalendar();
+    } = useCalendar({});
 
     const [days, setDays] = useState(getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }), lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
