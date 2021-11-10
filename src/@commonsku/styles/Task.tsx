@@ -51,10 +51,11 @@ const Task = ({
   );
 }
 
-const StyledCalendarTaskBody = styled.span`
+const StyledCalendarTaskBody = styled.span<{preWrap?: boolean}>`
     font-size: 13px;
     font-family: 'skufont-regular',sans-serif,Roboto;
     font-weight: normal;
+    white-space: pre-wrap;
 `;
 
 const StyledCalendarTaskWrapper = styled(StyledTask)<{backgroundColor?: string;}>`
@@ -131,9 +132,10 @@ const CalendarTask = React.forwardRef(({
           });
         }}
       />
-      <StyledCalendarTaskBody>
-        {descriptionLength && typeof description === 'string' ?
-          description.slice(0, descriptionLength) : description}
+      <StyledCalendarTaskBody preWrap={typeof description === 'string'}>
+        {typeof description === 'string' && descriptionLength ?
+            description.slice(0, descriptionLength)
+           : description}
       </StyledCalendarTaskBody>
       <div className="task-metadata">
         {typeof assignee !== "undefined" ? "for " + assignee! : null}
