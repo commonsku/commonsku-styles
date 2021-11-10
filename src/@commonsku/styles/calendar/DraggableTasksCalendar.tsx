@@ -140,6 +140,7 @@ type DraggableTasksCalendarProps = CalendarProps & {
     Header?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
     Footer?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   },
+  onToggleWeekend?: (weekend: boolean) => void;
 } & useCalendarProps;
 
 type Day = { __id__: string; day: Date; tasks: Array<NewCalendarTaskProps>; };
@@ -159,6 +160,7 @@ const DraggableTasksCalendar = ({
   weekend=false,
   onChangeWeek,
   onChangeMonth,
+  onToggleWeekend,
   ...props
 }: DraggableTasksCalendarProps) => {
   const {
@@ -314,7 +316,10 @@ const DraggableTasksCalendar = ({
       <CalendarWrapper>
         <LabeledCheckbox label="Weekends"
           checked={showWeekend}
-          onChange={(e: Event) => setShowWeekend(s => !s)}
+          onChange={(e: Event) => setShowWeekend(s => {
+            onToggleWeekend && onToggleWeekend(!s);
+            return !s;
+          })}
         />
         <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
         <div className="calendar-scroll">
