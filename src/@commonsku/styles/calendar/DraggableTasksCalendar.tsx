@@ -90,6 +90,7 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTas
               <Droppable droppableId={__id__} key={__id__}>
               {(provided, snapshot) => (
                   <div {...droppableChildWrapperProps(provided, snapshot)}>
+                    {provided.placeholder}
                     {d.tasks.map((t, j) => (
                       <DraggableTaskBody key={t.__id__} index={j} task={t} onClickTask={onClickTask} onUpdateTask={onUpdateTask ? (newData, otherData) => {
                         onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
@@ -122,6 +123,7 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
     <Droppable droppableId={'footer-droppable'} key={'footer-droppable'} isDropDisabled>
       {(provided, snapshot) => (
         <div {...droppableChildWrapperProps(provided, snapshot, { style: !tasks.length ? {minHeight: 0} : {minHeight: 0} })}>
+          {provided.placeholder}
           <DraggableCalendarFooterTasks {...props} tasks={tasks} />
         </div>
       )}
