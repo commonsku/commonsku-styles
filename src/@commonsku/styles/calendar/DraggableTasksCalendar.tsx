@@ -146,7 +146,6 @@ type DaysObject = { [key: string]: Day };
 type State = {
   days: DaysObject,
   footerTasks: Array<CalendarTaskProps>,
-  weekend: boolean,
 };
 
 const DraggableTasksCalendar = ({
@@ -175,7 +174,6 @@ const DraggableTasksCalendar = ({
       (acc, v) => ({ ...acc, [v.__id__]: v }), {}
     ),
     footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false),
-    weekend: weekend,
   });
   const [showWeekend, setShowWeekend] = useState(weekend);
 
