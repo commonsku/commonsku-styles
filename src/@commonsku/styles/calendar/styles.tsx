@@ -32,6 +32,7 @@ export const droppableChildWrapperProps = (provided: DroppableProvided, snapshot
       padding: 4,
       width: '100%',
       minHeight: 500,
+      maxHeight: 500,
       ...style,
     },
     ref: provided.innerRef,
