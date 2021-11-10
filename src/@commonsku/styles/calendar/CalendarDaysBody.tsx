@@ -11,12 +11,13 @@ type CalendarDaysBodyProps = {
     selectedDate: Date,
     onClickDay?: (day: Date) => any,
     dayBodyProps?: CSSObject | { [key: string]: any },
+    weekend?: boolean,
     components?: {
         DayBody?: (props: React.PropsWithChildren<{day: Date; selectedDate: Date; onClick: React.MouseEventHandler; [key: string]: any}>) => React.ReactElement;
     },
 };
 
-const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, components, dayBodyProps={}, ...props }: CalendarDaysBodyProps) => {
+const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, components, dayBodyProps={}, weekend=true, ...props }: CalendarDaysBodyProps) => {
     return (
         <DaysBodyWrapper className="days-body-wrapper" {...props}>
             <Row className="day-body-wrapper-row">
@@ -26,7 +27,7 @@ const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, com
                         day={day}
                         selectedDate={selectedDate}
                         onClick={() => {onClickDay && onClickDay(day);}}
-                        weekend={true}
+                        weekend={weekend}
                         children={components?.DayBody
                             ? <components.DayBody
                                 key={`day-body-${getWeek(day)}-${i}`}
