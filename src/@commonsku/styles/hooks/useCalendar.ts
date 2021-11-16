@@ -21,8 +21,8 @@ export const getDatesBetween = (startDt: Date, endDt: Date) => {
     }
     return result;
 };
-export type onChangeWeekFunc = (obj: {week: number, month: number, year: number, action: string}) => void;
-export type onChangeMonthFunc = (obj: {month: number, year: number, action: string}) => void;
+export type onChangeWeekFunc = (obj: {date: Date, week: number, month: number, year: number, action: string}) => void;
+export type onChangeMonthFunc = (obj: {date: Date, month: number, year: number, action: string}) => void;
 export type useCalendarProps = {
     onChangeWeek?: onChangeWeekFunc,
     onChangeMonth?: onChangeMonthFunc,
@@ -45,6 +45,7 @@ const useCalendar = ({
         setCurrentMonth(dt);
         onChangeMonth && onChangeMonth({
             action,
+            date: dt,
             month: getMonth(dt),
             year: getYear(dt),
         });
@@ -63,6 +64,7 @@ const useCalendar = ({
         setCurrentWeek(week);
         onChangeWeek && onChangeWeek({
             action,
+            date: dt,
             week: week,
             month: getMonth(dt),
             year: getYear(dt),
