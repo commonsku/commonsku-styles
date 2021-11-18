@@ -7,7 +7,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -602,6 +602,9 @@ const App = () => {
             <Link onClick={() => setLock(!lock)}>
               <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
+            <GearIcon color={"#00d374"} width={"1.5rem"}/>
+            <NextPrevIcon color={"#00d374"} width={".8rem"}/>
+            <NextPrevIcon color={"#00d374"} width={".8rem"} next/>
 
             <br/>
             <h2>Nav Icons</h2>
@@ -610,12 +613,6 @@ const App = () => {
             <NavProdIcon color={"#00d374"} width={"3rem"}/>
             <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
             <NavManagementIcon color={"#00d374"} width={"3rem"}/>
-
-
-
-
-
-
 
 
             <H5>Number formatting</H5>

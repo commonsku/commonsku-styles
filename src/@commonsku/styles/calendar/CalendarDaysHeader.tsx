@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactHTMLElement, ReactNode } from 'react';
 import { format, isSameDay, addDays, startOfWeek, getWeek, } from "date-fns";
 import { Text } from '../Text';
 import { Col } from '../FlexboxGrid';

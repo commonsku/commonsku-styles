@@ -311,21 +311,23 @@ const DraggableTasksCalendar = ({
     }
   };
 
+  var weekendsCheckbox = <LabeledCheckbox label="Weekends"
+                           checked={showWeekend}
+                           mb={0}
+                           onChange={(e: Event) => setShowWeekend(s => {
+                             onToggleWeekend && onToggleWeekend(!s);
+                             return !s;
+                           })}
+                         />
+
   return (
     <DragDropContext
       onDragEnd={result => onDragEnd(result)}
     >
       <CalendarWrapper>
-        <LabeledCheckbox label="Weekends"
-          checked={showWeekend}
-          onChange={(e: Event) => setShowWeekend(s => {
-            onToggleWeekend && onToggleWeekend(!s);
-            return !s;
-          })}
-        />
-        <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
+        <TasksCalendarHeader {...headerProps} tabs={headerTabs} weekendsCheckbox={weekendsCheckbox} />
         <div className="calendar-scroll">
-          <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekend={showWeekend} />
+          <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={weekendsCheckbox} weekend={showWeekend} />
           <DroppableDays
             days={state.days}
             selectedDate={selectedDate}

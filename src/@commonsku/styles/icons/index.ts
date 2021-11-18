@@ -28,4 +28,6 @@ export * from './NavSalesIcon';
 export * from './NavProdIcon';
 export * from './NavFinanceIcon';
 export * from './NavManagementIcon';
+export * from './GearIcon';
+export * from './NextPrevIcon';
 export { default as Loading } from './Loading';

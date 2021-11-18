@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { format } from 'date-fns';
 import { colors, } from '../Theme';
 import { Row, Col, } from '../FlexboxGrid';
@@ -6,6 +6,9 @@ import HeaderWrapper from './HeaderWrapper';
 import { Tabs } from '../Tabs';
 import styled from 'styled-components';
 import { Text } from '../Text';
+import {GearIcon, NextPrevIcon} from '../icons';
+import {LabeledCheckbox} from '../Input';
+import {Dropdown} from '../Dropdown';
 
 const WeekNav = styled(Text)`
   display: inline-block;
@@ -20,6 +23,7 @@ export type TasksCalendarHeaderProps = {
     currentMonth: Date;
     currentWeek: number;
     selectedDate: Date;
+    weekendsCheckbox: ReactNode;
     [key: string]: any;
 };
 export const TasksCalendarHeader = ({
@@ -27,6 +31,7 @@ export const TasksCalendarHeader = ({
     onNextWeek,
     currentMonth,
     tabs,
+    weekendsCheckbox
 }: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
@@ -34,11 +39,16 @@ export const TasksCalendarHeader = ({
                 <Tabs size="small" tabs={tabs} />
             </Col>
             <Col end xs md={3} style={{fontSize: '0.8em'}}>
-                        <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onPrevWeek}>‹ Previous</WeekNav>
-                        <WeekNav style={{ color: colors.disabledButton }}>
+                        <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
+                            <Row>
+                                {weekendsCheckbox}
+                            </Row>
+                        </Dropdown>
+                        <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onPrevWeek}><NextPrevIcon color={"#02C0DA"} width={".8rem"}/></WeekNav>
+                        <WeekNav style={{ color: colors.disabledButton, verticalAlign: "middle"}}>
                             {currentMonth ? format(currentMonth, "MMM yyyy") : ''}
                         </WeekNav>
-                        <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onNextWeek}>Next ›</WeekNav>
+                        <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onNextWeek}><NextPrevIcon color={"#02C0DA"} width={".8rem"} next/></WeekNav>
             </Col>
         </HeaderWrapper>
     );

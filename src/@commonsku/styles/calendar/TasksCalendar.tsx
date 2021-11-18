@@ -70,8 +70,8 @@ const TasksCalendar = ({
 
     return (
         <CalendarWrapper>
-            <TasksCalendarHeader {...headerProps} tabs={headerTabs} />
-            <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekend={true} />
+            <TasksCalendarHeader {...headerProps} tabs={headerTabs} weekendsCheckbox={<div></div>} />
+            <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={<div></div>} weekend={true} />
             <CalendarDaysBody
                 currentMonth={currentMonth}
                 selectedDate={selectedDate}

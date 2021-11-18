@@ -93,7 +93,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
 
     return (
         <CalendarWrapper>
-            <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekend={true} />
+            <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={<div></div>} weekend={true} />
             {renderHeader()}
             <CalendarDaysBody
                 currentMonth={currentMonth}
