@@ -236,27 +236,39 @@ export type LabeledCheckboxProps = {
   checkboxStyle?: CSSProperties;
   labelStyle?: CSSProperties;
   checkboxPosition?: string;
+  hoverByLabel?: boolean;
   [key: string]: any;
 };
 export const LabeledCheckbox = React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
-  {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, ...props}: LabeledCheckboxProps,
+  {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, ...props}: LabeledCheckboxProps,
   ref: React.Ref<HTMLInputElement>
 ) => {
   const [isHovering, updateHover] = useState(false);
+
+  const onMouseOver = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(true);
+  const onMouseLeave = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(false);
+
   return (
     <RadioLabel
       htmlFor={name}
-      onMouseOver={(e) => updateHover(true)}
-      onMouseLeave={(e) => updateHover(false)}
+      onMouseOver={hoverByLabel ? onMouseOver : undefined}
+      onMouseLeave={hoverByLabel ? onMouseLeave : undefined}
       disabled={disabled}
       style={labelStyle}
     >
       {label}
       <Radio ref={ref} name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
-      <CheckMark checked={checked} isHovering={isHovering} disabled={disabled} style={{
-        ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
-        ...checkboxStyle,
-      }} />
+      <CheckMark
+        onMouseOver={!hoverByLabel ? onMouseOver : undefined}
+        onMouseLeave={!hoverByLabel ? onMouseLeave : undefined}
+        checked={checked}
+        isHovering={isHovering}
+        disabled={disabled}
+        style={{
+          ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
+          ...checkboxStyle,
+        }}
+      />
     </RadioLabel>
   );
 });

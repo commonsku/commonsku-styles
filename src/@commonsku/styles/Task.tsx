@@ -112,9 +112,10 @@ const CalendarTask = React.forwardRef(({
               colorType === 'light-red' ? 'rgba(209, 69, 121, 0.24)' : '#BEF1DA'
             ),
         }}
+        hoverByLabel={false}
         labelStyle={{width: '100%', paddingLeft: 0, paddingRight: 0, marginRight: 0, marginLeft: 0, margin: 0,}}
         label={
-          <TaskLabel style={{fontWeight: 'bold' }}>
+          <TaskLabel onClick={e => { e.preventDefault(); }} style={{fontWeight: 'bold' }}>
             <TaskName>{title}</TaskName>
             {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
           </TaskLabel>
