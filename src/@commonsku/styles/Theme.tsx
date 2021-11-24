@@ -28,6 +28,10 @@ export const colors = {
   special2Bg: '#E7FFE9',
   transparent: 'transparent',
   error: '#B21154',
+
+  primary2: '#00A0B6',
+  primary20: '#00788A',
+  primary200: '#004D59',
 };
 export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {
@@ -42,6 +46,19 @@ export const themeOptions = {
   fonts,
   fontFamily: `${fonts.join(",")}`,
   fontSizes,
+  space: {
+    '0': '0px',
+    '1': '8px',
+    '2': '16px',
+    '3': '24px',
+    '4': '32px',
+    '5': '40px',
+    '6': '48px',
+    '7': '56px',
+    '8': '64px',
+    '9': '72px',
+    '10': '80px',
+  },
 }
 
 export function getColor(color?: string, def?: string): string {
