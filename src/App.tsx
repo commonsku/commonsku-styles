@@ -67,6 +67,7 @@ import {
     NavProdIcon,
     NavFinanceIcon,
     NavManagementIcon,
+    LabeledMultiProgress,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 
@@ -718,6 +719,12 @@ const App = () => {
 
             <H5>Progress</H5>
             <LabeledProgress max={4389.99} value={8434.44}/>
+
+            <H5>Multi Progress</H5>
+            <LabeledMultiProgress title="Invoices this month" values={[
+              {value: 64.44, text: v => 'Projection: $' + v},
+              {value: 2.44, text: v => '$' + v},
+            ]} max={100} />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
