@@ -15,11 +15,13 @@ const ProgressWrapper = styled.div<SharedStyleTypes>`
   
   ${SharedStyles}
 `
+
+type ProgressBarValue = {
+  value: number,
+  text?: (v) => string | number,
+};
 type ProgressBarsProps = React.PropsWithChildren<{
-  values: {
-    value: number,
-    text?: (v) => string | number,
-  }[],
+  values: ProgressBarValue[],
   max: number,
   color?: string,
   error?: string,
@@ -81,7 +83,7 @@ const MultiProgress = (props: ProgressBarsProps & {labeled?: boolean}) => {
 
   return <ProgressWrapper {...props}>
     {props.title ? <StyledProgressTitle>{props.title}</StyledProgressTitle> : null}
-    {props.values.map((v, i) => {
+    {props.values.map((v: ProgressBarValue, i) => {
       const color = i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374';
       const val = typeof v.value === 'number' ? v.value : !isNaN(v.value) ? parseInt(v.value) : 0;
       return (
