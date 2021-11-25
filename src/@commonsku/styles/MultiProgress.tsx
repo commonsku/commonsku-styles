@@ -69,8 +69,7 @@ const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
       <Text style={{
         position: 'absolute',
         display: 'inline-block',
-        float: 'right',
-        textAlign: 'right',
+        textAlign: width >= 990 ? 'right' : 'center',
         zIndex: 10,
         marginTop: -25,
         color: '#00d374',
