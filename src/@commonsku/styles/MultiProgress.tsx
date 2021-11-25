@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import {Text, Number} from './Text'
 import { useWindowSize } from './hooks'
@@ -57,8 +57,11 @@ const StyledProgressTitle = styled(Text)`
 
 
 const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const rect = ref.current?.getBoundingClientRect() || {left: 0, width: 0};
+  const [width,] = useWindowSize();
+  const [size, setSize] = useState({left: 0, width: 0});
+  const measureRef = useCallback(node => {
+      setSize(node?.getBoundingClientRect())
+  }, [width, props.text, props.value]);
   const text = (props.text || '') + '';
 
   return (
@@ -66,12 +69,12 @@ const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
       <Text style={{
         position: 'absolute',
         display: 'inline-block',
-        paddingLeft: rect.width-30 - (text.length > 0 ? text.length+30 : 0),
+        paddingLeft: size.width-30 - (text.length > 0 ? text.length+60 : 0),
         zIndex: 10,
-        marginTop: -16,
+        marginTop: -25,
         color: '#00d374',
       }}>{text}</Text>
-      <ProgressBar ref={ref} {...props} />
+      <ProgressBar ref={measureRef} {...props} />
     </>
   );
 }
@@ -106,10 +109,10 @@ const MultiProgress = (props: ProgressBarsProps & {labeled?: boolean}) => {
 }
 
 const LabeledMultiProgress = (props: ProgressBarsProps) => {
-  const [width] = useWindowSize();
   return <div>
     <span style={{
-      paddingLeft: (width - 80)* ((90-2)/100),
+      float: 'right',
+      paddingRight: 8,
     }}>Target $<Number commas decimalPoints={0} num={props.max}/></span>
     <br />
     <MultiProgress values={props.values} max={props.max} error={props.error} title={props.title} labeled />
