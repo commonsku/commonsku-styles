@@ -69,10 +69,11 @@ const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
       <Text style={{
         position: 'absolute',
         display: 'inline-block',
-        paddingLeft: size.width-30 - (text.length > 0 ? text.length+60 : 0),
+        float: 'right',
         zIndex: 10,
         marginTop: -25,
         color: '#00d374',
+        width: size.width-10,
       }}>{text}</Text>
       <ProgressBar ref={measureRef} {...props} />
     </>
