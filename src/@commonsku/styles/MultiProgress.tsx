@@ -70,6 +70,7 @@ const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
         position: 'absolute',
         display: 'inline-block',
         float: 'right',
+        textAlign: 'right',
         zIndex: 10,
         marginTop: -25,
         color: '#00d374',
