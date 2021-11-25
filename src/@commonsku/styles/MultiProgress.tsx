@@ -49,7 +49,7 @@ const StyledProgressTitle = styled(Text)`
   position: absolute;
   z-index: 9;
   vertical-align: middle;
-  padding: ${48/4}px;
+  padding: 12px;
   color: #FFFFFF;
   font-size: 18px;
   text-shadow: 0px 1px 2px #40B07E;
