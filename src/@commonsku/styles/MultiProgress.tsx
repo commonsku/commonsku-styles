@@ -18,7 +18,7 @@ const ProgressWrapper = styled.div<SharedStyleTypes>`
 
 type ProgressBarValue = {
   value: number,
-  text?: (v?: string | number) => string | number,
+  text?: (v?: string | number | Object) => string | number,
 };
 type ProgressBarsProps = React.PropsWithChildren<{
   values: ProgressBarValue[],
