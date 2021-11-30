@@ -495,7 +495,7 @@ const App = () => {
             <Element flexRow={{middle: true}} background="colors.special2" my="20px">
               <Element flexCol={{xs: true}}>In Flexgrid</Element>
               <Element flexCol={{xs: true}}>In Flexgrid</Element>
-              <Element borderRadius="5px" flexCol={{xs: true, md: 6, padded: true}}>In Flexgrid</Element>
+              <Element borderRadius="5px" bg="#e74c3c" flexCol={{xs: true, md: 6, padded: true}}>In Flexgrid</Element>
               <Element borderRadius="5px" bg="colors.special1" flexCol={{xs: true, md: 6, padded: true}}>In Flexgrid</Element>
             </Element>
             <div style={{maxWidth: 150}}>
