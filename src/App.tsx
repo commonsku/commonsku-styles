@@ -476,6 +476,11 @@ const App = () => {
             </div>
 
             <H5>Bars Loading</H5>
+            <div style={{maxWidth: 90}}>
+              <Loading mb={10} colorful={colorfulBars} />
+            </div>
+
+            <H5>New Element Component</H5>
             <Element textAlign="right" bg="red" sx={`width: 150px; background-color: colors.special3; color: colors.special1; font-size: fontSize.medium;`}>
               Hello
             </Element>
@@ -487,20 +492,17 @@ const App = () => {
             }}>
               Hello 2
             </Element>
-            <Element flexRow={{middle: true}} background="colors.special2" borderRadius="5px">
+            <Element flexRow={{middle: true}} background="colors.special2" my="20px">
               <Element flexCol={{xs: true}}>In Flexgrid</Element>
               <Element flexCol={{xs: true}}>In Flexgrid</Element>
-              <Element flexCol={{xs: true}}>In Flexgrid</Element>
-              <Element flexCol={{xs: true}}>In Flexgrid</Element>
+              <Element borderRadius="5px" flexCol={{xs: true, md: 6, padded: true}}>In Flexgrid</Element>
+              <Element borderRadius="5px" bg="colors.special1" flexCol={{xs: true, md: 6, padded: true}}>In Flexgrid</Element>
             </Element>
             <div style={{maxWidth: 150}}>
               <Toggle stretch mb={10} onClick={() => setColorfulBars(!colorfulBars)}>
                 <ToggleLink selected={!colorfulBars} stretch pr pl>Regular</ToggleLink>
                 <ToggleLink selected={colorfulBars} stretch>Colorful</ToggleLink>
               </Toggle>
-            </div>
-            <div style={{maxWidth: 90}}>
-              <Loading mb={10} colorful={colorfulBars} />
             </div>
 
             <ProofingCompleteIcon width={"1.5rem"}/>
