@@ -484,7 +484,9 @@ const App = () => {
             <Element textAlign="right" bg="red" sx={`width: 150px; background-color: colors.special3; color: colors.special1; font-size: fontSize.medium;`}>
               Hello
             </Element>
-            <Element textAlign="right" bg="red" sx={{
+            <Element textAlign="right" bg="red" _hover={{
+              backgroundColor: 'colors.special2',
+            }} sx={{
               width: 350,
               backgroundColor: 'colors.special1',
               color: 'colors.cta',

@@ -22,7 +22,7 @@ export const pseudoSelectors = {
   _even: '&:nth-of-type(even)',
 };
 
-type PseudoSelectors = typeof pseudoSelectors;
+export type PseudoSelectors = typeof pseudoSelectors;
 
 // Allow "content" prop within _before or _after
 export type PseudoProps<P> = {
