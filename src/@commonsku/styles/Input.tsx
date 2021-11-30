@@ -8,7 +8,7 @@ import {Label} from './Label'
 
 export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, isPercent?:boolean};
 
-const IconLabel = styled.div<InputProps>`
+export const InputIconLabel = styled.div<InputProps>`
   box-sizing: border-box;
   width: 40px;
   height: ${p => p.error ? 38 : 36}px;
@@ -22,7 +22,7 @@ const IconLabel = styled.div<InputProps>`
   line-height: 1.5rem;
 `
 
-const IconLabelContainer = styled.div`
+export const InputIconLabelContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -58,10 +58,10 @@ export const LabeledInput = React.forwardRef(
   ({label, name, required, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
     <div>
       <Label htmlFor={name}>{label} {required && '*'}</Label>
-      {props.isPercent ? <IconLabelContainer>
-                           <IconLabel {...props}>%</IconLabel>
+      {props.isPercent ? <InputIconLabelContainer>
+                           <InputIconLabel {...props}>%</InputIconLabel>
                            <Input ref={ref} name={name} required={required} {...props}/>
-                         </IconLabelContainer>
+                         </InputIconLabelContainer>
                        : <Input ref={ref} name={name} required={required} {...props}></Input>}
     </div>
   )

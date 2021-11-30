@@ -1,10 +1,10 @@
+import _ from 'lodash';
 import { createGlobalStyle } from 'styled-components';
-import { getThemeProperty } from './Theme';
 
 //This should be on a class instead of body?
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: ${props => getThemeProperty(props, 'fontFamily')};
+    font-family: ${props => _.get(props, ['theme', 'fontFamily'], '"museo-sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif')};
   }
 `;
 
