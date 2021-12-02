@@ -13,6 +13,7 @@ export type RowPropTypes = {
     padded ?: boolean,
     start ?: boolean,
     end ?: boolean,
+    middle?: boolean,
 } & SharedStyleTypes;
 
 export const Row = styled.div<RowPropTypes>`
@@ -27,6 +28,7 @@ export const Row = styled.div<RowPropTypes>`
         padding: ${(props) => props.padded ? '0.5rem' : 'initial'};
         ${props => props.start ? 'place-content: flex-start;' : ''}
         ${props => props.end ? 'place-content: flex-end;' : ''}
+        ${props => props.middle ? 'align-items: center;' : ''}
         ${SharedStyles}
     }
 `;

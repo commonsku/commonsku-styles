@@ -39,8 +39,8 @@ export function ChatIcon({
         fontWeight={700}
         fontSize={notifs && notifs > 99 ? 8 : 11}
         fill={color}
-        dominant-baseline="middle"
-        text-anchor="middle"
+        dominantBaseline="middle"
+        textAnchor="middle"
       >
         {notifs ? (notifs > 99 ? "99+" : notifs) : ""}
       </text>

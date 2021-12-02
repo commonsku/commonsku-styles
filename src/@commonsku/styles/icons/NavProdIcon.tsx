@@ -4,13 +4,16 @@ export function NavProdIcon({
   color="#000000", 
   width, 
   mr,
-  mt
+  mt,
+  style,
+  ...props
 }: React.PropsWithChildren<{
   color?:string, 
   width?:string, 
   mr?:number,
   mt?:number,
-  pinned?:boolean
+  pinned?:boolean,
+  style?: React.CSSProperties,
 }>) {
   return (
       <svg
@@ -20,7 +23,8 @@ export function NavProdIcon({
       strokeLinejoin="round"
       strokeMiterlimit={2}
       width={width}
-      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
+      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt, ...style }}
+      {...props}
     >
       <path fill="none" d="M0 0h180v180H0z" />
       <path
