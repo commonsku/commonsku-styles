@@ -1,7 +1,7 @@
 import React from 'react';
 import { colors } from '../Theme';
 
-const CircleProgress = ({
+const CircleProgressIcon = ({
   sqSize = 50,
   strokeWidth = 5,
   percentage = 0,
@@ -73,4 +73,4 @@ const CircleProgress = ({
   );
 };
 
-export default CircleProgress;
+export default CircleProgressIcon;
