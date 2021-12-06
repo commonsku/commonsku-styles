@@ -67,6 +67,7 @@ import {
     NavProdIcon,
     NavFinanceIcon,
     NavManagementIcon,
+    NavResourcesIcon,
     LabeledMultiProgress,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
@@ -614,6 +615,7 @@ const App = () => {
             <NavProdIcon color={"#00d374"} width={"3rem"}/>
             <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
             <NavManagementIcon color={"#00d374"} width={"3rem"}/>
+            <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
 
 
             <H5>Number formatting</H5>

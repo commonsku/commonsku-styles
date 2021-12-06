@@ -10,7 +10,7 @@ export function NavResourcesIcon({
 }: React.PropsWithChildren<{
   fill?: string,
   color?: string,
-  width?: number,
+  width?: number | string,
   outline?: boolean,
   style?: React.CSSProperties,
 }>) {
