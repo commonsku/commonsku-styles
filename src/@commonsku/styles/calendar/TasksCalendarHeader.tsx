@@ -44,7 +44,7 @@ export const TasksCalendarHeader = ({
                 <Tabs size="small" tabs={tabs} />
             </Col>
             <Col end xs md={5} style={{fontSize: '0.8em'}}>
-                {showAddTaskBtn ? <Button onClick={onClickAddTask} style={{marginRight: 10,}}>+ Add Task</Button> : null}
+                {showAddTaskBtn ? <Button onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>
                 </Dropdown>
