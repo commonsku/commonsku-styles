@@ -143,6 +143,8 @@ type DraggableTasksCalendarProps = CalendarProps & {
     Footer?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   },
   onToggleWeekend?: (weekend: boolean) => void;
+  showAddTaskBtn?: boolean;
+  onClickAddTask?: VoidFunction;
 } & useCalendarProps;
 
 type Day = { __id__: string; day: Date; tasks: Array<NewCalendarTaskProps>; };
@@ -163,6 +165,8 @@ const DraggableTasksCalendar = ({
   onChangeWeek,
   onChangeMonth,
   onToggleWeekend,
+  showAddTaskBtn=true,
+  onClickAddTask,
   ...props
 }: DraggableTasksCalendarProps) => {
   const {
@@ -208,6 +212,8 @@ const DraggableTasksCalendar = ({
     currentMonth,
     currentWeek,
     selectedDate,
+    showAddTaskBtn,
+    onClickAddTask,
   };
 
   const onDragEnd = (result: DropResult) => {

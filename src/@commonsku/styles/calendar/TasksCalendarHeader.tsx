@@ -40,10 +40,10 @@ export const TasksCalendarHeader = ({
 }: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
-            <Col start xs md={9} padded>
+            <Col start xs md={7} padded>
                 <Tabs size="small" tabs={tabs} />
             </Col>
-            <Col end xs md={3} style={{fontSize: '0.8em'}}>
+            <Col end xs md={5} style={{fontSize: '0.8em'}}>
                 {showAddTaskBtn ? <Button onClick={onClickAddTask} style={{marginRight: 10,}}>+ Add Task</Button> : null}
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>
