@@ -7,9 +7,9 @@ import { Tabs } from '../Tabs';
 import styled from 'styled-components';
 import { Text } from '../Text';
 import {GearIcon, NextPrevIcon} from '../icons';
-import {LabeledCheckbox} from '../Input';
 import {Dropdown} from '../Dropdown';
-import { Button, TabType } from '..';
+import { Button } from '../Button';
+import { TabType } from '../Tabs';
 
 const WeekNav = styled(Text)`
   display: inline-block;
