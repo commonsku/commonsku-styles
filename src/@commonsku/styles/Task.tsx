@@ -104,6 +104,7 @@ const CalendarTask = React.forwardRef(({
       {...props}
     >
       <LabeledCheckbox ref={ref}
+        stopPropagation
         checked={checked}
         checkboxPosition="top-right"
         checkboxStyle={{

@@ -237,10 +237,11 @@ export type LabeledCheckboxProps = {
   labelStyle?: CSSProperties;
   checkboxPosition?: string;
   hoverByLabel?: boolean;
+  stopPropagation?: boolean;
   [key: string]: any;
 };
 export const LabeledCheckbox = React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
-  {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, ...props}: LabeledCheckboxProps,
+  {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, stopPropagation=false, ...props}: LabeledCheckboxProps,
   ref: React.Ref<HTMLInputElement>
 ) => {
   const [isHovering, updateHover] = useState(false);
@@ -267,6 +268,9 @@ export const LabeledCheckbox = React.forwardRef<HTMLInputElement, LabeledCheckbo
         style={{
           ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
           ...checkboxStyle,
+        }}
+        onClick={(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+          stopPropagation && e && e.stopPropagation();
         }}
       />
     </RadioLabel>
