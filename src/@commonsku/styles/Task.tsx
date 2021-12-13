@@ -101,7 +101,7 @@ const CalendarTask = React.forwardRef(({
   }, [completed]);
 
   const desc = typeof description === 'string'
-             ? !descriptionLength ? description : description.slice(0, descriptionLength - 4) + '...'
+             ? !descriptionLength ? description : description.slice(0, descriptionLength) + '...'
              : '';
 
   return (
