@@ -79,6 +79,7 @@ export type CalendarTaskProps = {
   overdue?: boolean;
   wordLength?: number | null;
   onClickCheckbox?: (checked?: boolean) => any;
+  descHasHtml?: boolean;
 };
 
 const CalendarTask = React.forwardRef(({
@@ -90,6 +91,7 @@ const CalendarTask = React.forwardRef(({
   onClickCheckbox,
   descriptionLength=null,
   colorType='light-green',
+  descHasHtml=false,
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
@@ -97,6 +99,10 @@ const CalendarTask = React.forwardRef(({
   useEffect(() => {
     setChecked(completed);
   }, [completed]);
+
+  const desc = typeof description === 'string'
+             ? !descriptionLength ? description : description.slice(0, descriptionLength - 4) + '...'
+             : '';
 
   return (
     <StyledCalendarTaskWrapper
@@ -135,9 +141,9 @@ const CalendarTask = React.forwardRef(({
         }}
       />
       <StyledCalendarTaskBody preWrap={typeof description === 'string'}>
-        {typeof description === 'string' && descriptionLength ?
-            description.slice(0, descriptionLength)
-           : description}
+        {typeof description !== 'string' ? description : (
+          descHasHtml ? <span dangerouslySetInnerHTML={{ __html: desc }} /> : desc
+        )}
       </StyledCalendarTaskBody>
       <div className="task-metadata">
         {typeof assignee !== "undefined" ? "for " + assignee! : null}
