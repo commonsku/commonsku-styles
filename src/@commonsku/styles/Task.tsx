@@ -51,11 +51,9 @@ const Task = ({
   );
 }
 
-const StyledCalendarTaskBody = styled.span<{preWrap?: boolean}>`
+const StyledCalendarTaskBody = styled.span`
     font-size: 13px;
     font-family: 'skufont-regular',sans-serif,Roboto;
-    font-weight: normal;
-    white-space: pre-wrap;
 `;
 
 const StyledCalendarTaskWrapper = styled(StyledTask)<{backgroundColor?: string;}>`
@@ -78,6 +76,7 @@ export type CalendarTaskProps = {
   checked?: boolean;
   overdue?: boolean;
   onClickCheckbox?: (checked?: boolean) => any;
+  isDescriptionHtml?: boolean;
 };
 
 const CalendarTask = React.forwardRef(({
@@ -88,6 +87,7 @@ const CalendarTask = React.forwardRef(({
   assignee,
   onClickCheckbox,
   colorType='light-green',
+  isDescriptionHtml=false,
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
@@ -132,9 +132,11 @@ const CalendarTask = React.forwardRef(({
           });
         }}
       />
-      <StyledCalendarTaskBody preWrap={typeof description === 'string'}>
-        {description}
-      </StyledCalendarTaskBody>
+      <StyledCalendarTaskBody
+        {...(isDescriptionHtml && typeof description === 'string'
+            ? { dangerouslySetInnerHTML: { __html: description } }
+            : { children: description })}
+      />
       <div className="task-metadata">
         {typeof assignee !== "undefined" ? "for " + assignee! : null}
         {typeof assignee !== "undefined" ? "on " : null}
