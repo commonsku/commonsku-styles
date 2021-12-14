@@ -77,9 +77,10 @@ export type CalendarTaskProps = {
   assignee?: string;
   checked?: boolean;
   overdue?: boolean;
-  wordLength?: number | null;
+  descriptionMaxLength?: number | null;
+  descriptionMaxLines?: number | null;
+  isDescriptionHtml?: boolean; // if description string contains html code
   onClickCheckbox?: (checked?: boolean) => any;
-  descHasHtml?: boolean;
 };
 
 const CalendarTask = React.forwardRef(({
@@ -89,9 +90,10 @@ const CalendarTask = React.forwardRef(({
   completed=false,
   assignee,
   onClickCheckbox,
-  descriptionLength=null,
+  descriptionMaxLength=null,
+  descriptionMaxLines=null,
   colorType='light-green',
-  descHasHtml=false,
+  isDescriptionHtml=false,
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
@@ -100,9 +102,20 @@ const CalendarTask = React.forwardRef(({
     setChecked(completed);
   }, [completed]);
 
-  const desc = typeof description === 'string'
-             ? !descriptionLength ? description : description.slice(0, descriptionLength) + '...'
-             : '';
+  const descStr = React.useMemo(() => {
+    if (typeof description !== 'string') {
+      return '';
+    }
+
+    if (!descriptionMaxLength && !descriptionMaxLines) {
+      return description;
+    }
+
+    const result = descriptionMaxLength ? description.slice(0, descriptionMaxLength) : description;
+    return descriptionMaxLines
+      ? result.split('\n').slice(0, descriptionMaxLines).join('\n') + '...'
+      : result + '...';
+  }, [description, descriptionMaxLength, descriptionMaxLines]);
 
   return (
     <StyledCalendarTaskWrapper
@@ -142,7 +155,7 @@ const CalendarTask = React.forwardRef(({
       />
       <StyledCalendarTaskBody preWrap={typeof description === 'string'}>
         {typeof description !== 'string' ? description : (
-          descHasHtml ? <span dangerouslySetInnerHTML={{ __html: desc }} /> : desc
+          isDescriptionHtml ? <span dangerouslySetInnerHTML={{ __html: descStr }} /> : descStr
         )}
       </StyledCalendarTaskBody>
       <div className="task-metadata">
