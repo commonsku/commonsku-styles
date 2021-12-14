@@ -77,9 +77,6 @@ export type CalendarTaskProps = {
   assignee?: string;
   checked?: boolean;
   overdue?: boolean;
-  descriptionMaxLength?: number | null;
-  descriptionMaxLines?: number | null;
-  isDescriptionHtml?: boolean; // if description string contains html code
   onClickCheckbox?: (checked?: boolean) => any;
 };
 
@@ -90,10 +87,7 @@ const CalendarTask = React.forwardRef(({
   completed=false,
   assignee,
   onClickCheckbox,
-  descriptionMaxLength=null,
-  descriptionMaxLines=null,
   colorType='light-green',
-  isDescriptionHtml=false,
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
@@ -101,21 +95,6 @@ const CalendarTask = React.forwardRef(({
   useEffect(() => {
     setChecked(completed);
   }, [completed]);
-
-  const descStr = React.useMemo(() => {
-    if (typeof description !== 'string') {
-      return '';
-    }
-
-    if (!descriptionMaxLength && !descriptionMaxLines) {
-      return description;
-    }
-
-    const result = descriptionMaxLength ? description.slice(0, descriptionMaxLength) : description;
-    return descriptionMaxLines
-      ? result.split('\n').slice(0, descriptionMaxLines).join('\n') + '...'
-      : result + '...';
-  }, [description, descriptionMaxLength, descriptionMaxLines]);
 
   return (
     <StyledCalendarTaskWrapper
@@ -154,9 +133,7 @@ const CalendarTask = React.forwardRef(({
         }}
       />
       <StyledCalendarTaskBody preWrap={typeof description === 'string'}>
-        {typeof description !== 'string' ? description : (
-          isDescriptionHtml ? <span dangerouslySetInnerHTML={{ __html: descStr }} /> : descStr
-        )}
+        {description}
       </StyledCalendarTaskBody>
       <div className="task-metadata">
         {typeof assignee !== "undefined" ? "for " + assignee! : null}
