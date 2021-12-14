@@ -1,38 +1,36 @@
 import React from "react"
 
 export function NavConnectIcon({
-  color="#000000", 
-  width, 
-  mr,
-  mt,
-  style,
+  width=24,
+  style={},
+  fill="none",
+  color="#fff",
+  outline=true, // outline/completely filled in
   ...props
 }: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number,
-  pinned?:boolean,
+  fill?: string,
+  color?: string,
+  width?: number | string,
+  outline?: boolean,
   style?: React.CSSProperties,
 }>) {
   return (
-      <svg
-      viewBox="0 0 180 180"
-      fillRule="evenodd"
-      clipRule="evenodd"
-      strokeLinejoin="round"
-      strokeMiterlimit={2}
+    <svg
+      fill={fill}
       width={width}
-      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt, ...style }}
+      height={width}
+      style={style}
       {...props}
     >
-      <path fill="none" d="M0 0h180v180H0z" />
-      <path
-        d="M99.53 103.144H30.762c-10.782 0-19.605 8.822-19.605 19.605 0 9.944 7.505 18.213 17.129 19.442.706 1.155 5.036 8.91-2.248 14.87 0 0 11.194-4.702 16.353-14.707H99.53c10.782 0 19.605-8.823 19.605-19.605 0-10.783-8.823-19.605-19.605-19.605zm42.487-80.21H38.463c-19.973 0-36.316 16.343-36.316 36.316 0 19.974 16.343 36.316 36.316 36.316h91.308c10.926 14.742 31.977 16.093 31.977 16.093-10.79-3.966-10.476-13.812-9.958-17.449 15.265-4.296 26.543-18.37 26.543-34.96 0-19.973-16.341-36.316-36.316-36.316z"
+      {outline ? <path
+        d="M16.67 13.13C18.04 14.06 19 15.32 19 17v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2c0-2.18-3.57-3.47-6.33-3.87ZM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24ZM9 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2ZM9 13c-2.67 0-8 1.34-8 4v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2c0-2.66-5.33-4-8-4Zm6 5H3v-.99C3.2 16.29 6.3 15 9 15s5.8 1.29 6 2v1Z"
         fill={color}
-      />
+      /> : <path
+        d="M16.67 13.13C18.04 14.06 19 15.32 19 17v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2c0-2.18-3.57-3.47-6.33-3.87ZM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24ZM9 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4ZM9 13c-2.67 0-8 1.34-8 4v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2c0-2.66-5.33-4-8-4Z"
+        fill={color}
+      />}
     </svg>
-  )
+  );
 }
 
 export default NavConnectIcon

@@ -30,4 +30,7 @@ export * from './NavFinanceIcon';
 export * from './NavManagementIcon';
 export * from './GearIcon';
 export * from './NextPrevIcon';
+export { default as NavResourcesIcon } from './NavResourcesIcon';
+export { default as WarningIcon } from './WarningIcon';
+export { default as CircleProgressIcon } from './CircleProgressIcon';
 export { default as Loading } from './Loading';

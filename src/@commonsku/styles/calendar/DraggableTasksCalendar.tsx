@@ -17,6 +17,7 @@ import { convertTasksToDays } from './TasksCalendar';
 import { draggableChildWrapperProps, droppableChildWrapperProps } from './styles';
 import {LabeledCheckbox} from '../Input';
 import { useCalendarProps } from '../hooks/useCalendar';
+import Loading from '../icons/Loading';
 
 
 type ACTIONS = 'TOGGLE_CHECKBOX' | 'DROP';
@@ -143,6 +144,9 @@ type DraggableTasksCalendarProps = CalendarProps & {
     Footer?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   },
   onToggleWeekend?: (weekend: boolean) => void;
+  showAddTaskBtn?: boolean;
+  onClickAddTask?: VoidFunction;
+  loading?: boolean;
 } & useCalendarProps;
 
 type Day = { __id__: string; day: Date; tasks: Array<NewCalendarTaskProps>; };
@@ -163,6 +167,9 @@ const DraggableTasksCalendar = ({
   onChangeWeek,
   onChangeMonth,
   onToggleWeekend,
+  showAddTaskBtn=true,
+  onClickAddTask,
+  loading=false,
   ...props
 }: DraggableTasksCalendarProps) => {
   const {
@@ -208,6 +215,8 @@ const DraggableTasksCalendar = ({
     currentMonth,
     currentWeek,
     selectedDate,
+    showAddTaskBtn,
+    onClickAddTask,
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -328,7 +337,9 @@ const DraggableTasksCalendar = ({
         <TasksCalendarHeader {...headerProps} tabs={headerTabs} weekendsCheckbox={weekendsCheckbox} />
         <div className="calendar-scroll">
           <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={weekendsCheckbox} weekend={showWeekend} />
-          <DroppableDays
+          {loading ? <div style={{height: 400, paddingTop: 30,}}>
+            <Loading />
+          </div> : <DroppableDays
             days={state.days}
             selectedDate={selectedDate}
             onClickDay={onClickDay}
@@ -354,7 +365,7 @@ const DraggableTasksCalendar = ({
                 });
               })();
             }}
-          />
+          />}
         </div>
         <DroppableFooter tasks={state.footerTasks} {...headerProps} />
       </CalendarWrapper>
