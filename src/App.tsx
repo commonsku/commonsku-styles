@@ -583,16 +583,15 @@ const App = () => {
             <Element textAlign="right" bg="red" sx={`width: 150px; background-color: colors.special3; color: colors.special1; font-size: fontSize.medium;`}>
               Hello
             </Element>
-            <Element textAlign="right" bg="red" _hover={{
-              backgroundColor: 'colors.special2',
-            }} sx={{
-              width: 350,
-              backgroundColor: 'colors.special1',
-              color: 'colors.cta',
-              fontSize: 'fontSize.large',
-            }}>
-              Hello 2
-            </Element>
+            <Element textAlign="right" bg="red"
+              _hover={{ backgroundColor: 'colors.special2',}}
+              sx={{
+                width: 350,
+                backgroundColor: 'colors.special1',
+                color: 'colors.cta',
+                fontSize: 'fontSize.large',
+              }}
+            >Hello 2</Element>
             <Element flexRow={{middle: true}} background="colors.special2" my="20px">
               <Element flexCol={{xs: true}}>In Flexgrid</Element>
               <Element flexCol={{xs: true}}>In Flexgrid</Element>

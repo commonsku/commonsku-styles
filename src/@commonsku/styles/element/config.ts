@@ -9,9 +9,9 @@ import {
     flexRowStyles,
 } from './flexboxGridStyles';
 import { allowedStyles } from './allowedStyles';
-import { pseudoSelectors, PseudoSelectors } from '../pseudos';
+import { pseudoSelectors, PseudoProps } from '../pseudos';
 
-export type ElementProps = {
+export interface BaseElementProps extends CSSProperties, CSSPseudos {
     theme?: ThemeProps;
     flexRow?: FlexRowProps;
     flexCol?: FlexColProps;
@@ -37,7 +37,12 @@ export type ElementProps = {
     clearfix?: boolean;
     pos?: string;
     z?: string;
-} & CSSProperties & CSSPseudos & PseudoSelectors;
+};
+
+export interface ElementProps extends
+    BaseElementProps,
+    PseudoProps<BaseElementProps> {};
+
 
 export const sizeStyleFunc = (keys: string | Array<string>) => (v: string | number) => (
     typeof keys === 'string' ? ({[keys]: v}) : keys.reduce(
