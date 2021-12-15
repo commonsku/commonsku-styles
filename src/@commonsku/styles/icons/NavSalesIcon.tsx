@@ -1,32 +1,72 @@
 import React from "react"
 
 export function NavSalesIcon({
-  color="#000000", 
-  width, 
-  mr,
-  mt
+  width=24,
+  style={},
+  fill="none",
+  color="#fff",
+  outline=true, // outline/completely filled in
+  ...props
 }: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number,
-  pinned?:boolean
+  fill?: string,
+  color?: string,
+  width?: number | string,
+  outline?: boolean,
+  style?: React.CSSProperties,
 }>) {
   return (
-      <svg
-      viewBox="0 0 180 180"
-      fillRule="evenodd"
-      clipRule="evenodd"
-      strokeLinejoin="round"
-      strokeMiterlimit={2}
+    <svg
+      fill={fill}
       width={width}
-      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
+      height={width}
+      style={style}
+      {...props}
     >
-      <path fill="none" d="M0 0h180v180H0z" />
-      <path
-        d="M162.381 43.007c-14.21 6.232-33.594 12.154-48.42 12.914l18.373 8.997-38.41 37.12-20.643-22.363-53.962 48.38a5.124 5.124 0 006.84 7.629l46.443-41.637 20.903 22.645 45.951-44.406 8.367 18.675C149.09 76.169 155.67 57 162.381 43.007"
-        fill={color}
-      />
+      {outline ? <>
+        <mask id="nav-sales-icon-a" fill={color}>
+          <rect x={1} y={12} width={6} height={9} rx={1} />
+        </mask>
+        <rect
+          x={1}
+          y={12}
+          width={6}
+          height={9}
+          rx={1}
+          stroke={color}
+          strokeWidth={4}
+          mask="url(#nav-sales-icon-a)"
+        />
+        <mask id="nav-sales-icon-b" fill={color}>
+          <rect x={9} y={3} width={6} height={18} rx={1} />
+        </mask>
+        <rect
+          x={9}
+          y={3}
+          width={6}
+          height={18}
+          rx={1}
+          stroke={color}
+          strokeWidth={4}
+          mask="url(#nav-sales-icon-b)"
+        />
+        <mask id="nav-sales-icon-c" fill={color}>
+          <rect x={17} y={9} width={6} height={12} rx={1} />
+        </mask>
+        <rect
+          x={17}
+          y={9}
+          width={6}
+          height={12}
+          rx={1}
+          stroke={color}
+          strokeWidth={4}
+          mask="url(#nav-sales-icon-c)"
+        />
+      </> : <>
+        <rect x={1} y={12} width={6} height={9} rx={1} fill={color} />
+        <rect x={9} y={3} width={6} height={18} rx={1} fill={color} />
+        <rect x={17} y={9} width={6} height={12} rx={1} fill={color} />
+      </>}
     </svg>
   )
 }

@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
-
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
 import product_wide from './products/wide.png';
@@ -8,7 +7,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -61,13 +60,18 @@ import {
     CollapsiblePanel,
     CollapsiblePanels,
     colors,
+    Calendar,
+    DraggableTasksCalendar,
     NavConnectIcon,
     NavSalesIcon,
     NavProdIcon,
     NavFinanceIcon,
     NavManagementIcon,
+    NavResourcesIcon,
+    LabeledMultiProgress,
     Element,
 } from '@commonsku/styles';
+import { uniqueId } from 'lodash';
 
 const initialState = {
   date: new Date(),
@@ -264,6 +268,36 @@ function reducer(state: {[key: string]: any} = initialState, action: {type: stri
   }
 }
 
+const today = new Date(2021, 9, 19);
+const yesterday = new Date(2021, 9, 18);
+const tomorrow = new Date(2021, 9, 20);
+
+const calTasks = Object.freeze({
+  client: [
+    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Reach out to Jake Client', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
+    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Client', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-'), date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake Client', colorType: 'light-green'},
+  ],
+  project: [
+    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Reach out to Jake Project', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay 1', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Project', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm', description: 'Reach out to Jake Project', colorType: 'light-green'},
+  ],
+  other: [
+    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red', completed: true,},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+  ],
+});
+
+const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]), []);
+
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -274,7 +308,19 @@ const App = () => {
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
   const [collapse, setCollapse] = useState(false);
-  const [defaultScrollOffset, setDefaultScrollOffset] = useState(0)
+  const [defaultScrollOffset, setDefaultScrollOffset] = useState(0);
+  const [calendarTab, setCalendarTab] = useState('all');
+  const [tasks, setTasks] = useState({
+    all: allCalTasks,
+    ...calTasks,
+  });
+  const [footerTasks, setFooterTasks] = useState([
+    {id: uniqueId('footer-day-'), date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('footer-day-'), date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {id: uniqueId('footer-day-'), date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {id: uniqueId('footer-day-'), date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('footer-day-'), date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+  ]);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -460,20 +506,73 @@ const App = () => {
                }/>
               <Dropdown text="Dropdown Panel" icon={<NoteIcon width="40" />}>
                 <Row>
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
                 </Row>
               </Dropdown>
               <Link block mt={20}>Link</Link>
             </div>
+
+            {/* <H5>Calendar</H5>
+            <Calendar /> */}
+
+            <H5>Calendar Tasks</H5>
+            <DraggableTasksCalendar
+              tasks={tasks[calendarTab]}
+              onClickTask={(task) => {
+                setShowPanel(!showPanel);
+                console.log('clicked', task);
+              }}
+              onUpdateTask={(task, { oldTask, action, sourceType }) => {
+                if (action === 'DROP' && sourceType === 'FOOTER') {
+                  const foundFooterIdx = footerTasks.findIndex(v => v.date === oldTask.date && v.title === oldTask.title && oldTask.id === v.id);
+                  if (foundFooterIdx === -1) { return; }
+                  setFooterTasks(s => ([
+                    ...s.slice(0, foundFooterIdx),
+                    ...s.slice(foundFooterIdx+1),
+                  ]));
+                }
+
+                const foundIdx = tasks[calendarTab].findIndex(v => v.date === oldTask.date && v.title === oldTask.title && oldTask.id === v.id);
+                if (foundIdx === -1) {
+                  setTasks(s => ({...s, [calendarTab]: [ ...s[calendarTab],  task, ], }));
+                  return;
+                }
+
+                setTasks(s => ({
+                  ...s,
+                    [calendarTab]: [
+                      ...s[calendarTab].slice(0, foundIdx),
+                      task,
+                      ...s[calendarTab].slice(foundIdx+1),
+                    ],
+                  }
+                ));
+              }}
+              footerTasks={footerTasks}
+              headerTabs={[
+                {content: '', label: 'All Tasks',
+                  onClick: () => { setCalendarTab('all'); console.log('all tasks'); }
+                },
+                {content: '', label: 'Client Tasks',
+                  onClick: () => { setCalendarTab('client'); console.log('client tasks'); }
+                },
+                {content: '', label: 'Project Tasks',
+                  onClick: () => { setCalendarTab('project'); console.log('project tasks'); }
+                },
+                {content: '', label: 'Other Tasks',
+                  onClick: () => { setCalendarTab('other'); console.log('other tasks'); }
+                },
+              ]}
+            />
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 90}}>
@@ -527,6 +626,9 @@ const App = () => {
             <Link onClick={() => setLock(!lock)}>
               <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
+            <GearIcon color={"#00d374"} width={"1.5rem"}/>
+            <NextPrevIcon color={"#00d374"} width={".8rem"}/>
+            <NextPrevIcon color={"#00d374"} width={".8rem"} next/>
 
             <br/>
             <h2>Nav Icons</h2>
@@ -535,12 +637,7 @@ const App = () => {
             <NavProdIcon color={"#00d374"} width={"3rem"}/>
             <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
             <NavManagementIcon color={"#00d374"} width={"3rem"}/>
-
-
-
-
-
-
+            <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
 
 
             <H5>Number formatting</H5>
@@ -646,6 +743,12 @@ const App = () => {
 
             <H5>Progress</H5>
             <LabeledProgress max={4389.99} value={8434.44}/>
+
+            <H5>Multi Progress</H5>
+            <LabeledMultiProgress title="Invoices this month" values={[
+              {value: 64.44, text: v => 'Projection: $' + v},
+              {value: 2.44, text: v => '$' + v},
+            ]} max={100} />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>

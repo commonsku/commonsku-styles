@@ -28,7 +28,7 @@ export default {
     sourcemap: true
   }],
   plugins: [
-    peerDepsExternal(),
+    peerDepsExternal({ includeDependencies: true }),
     progress(),
     image(),
     url({ 
@@ -55,7 +55,8 @@ export default {
           'useBlockLayout', 
           'usePagination', 
           'useColumnOrder'
-        ]
+        ],
+        'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer']
       },
     }),
     postcss({

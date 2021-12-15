@@ -1,33 +1,50 @@
 import React from "react"
 
 export function NavProdIcon({
-  color="#000000", 
-  width, 
-  mr,
-  mt
+  width=24,
+  style={},
+  fill="none",
+  color="#fff",
+  outline=true, // outline/completely filled in
+  ...props
 }: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number,
-  pinned?:boolean
+  fill?: string,
+  color?: string,
+  width?: number | string,
+  outline?: boolean,
+  style?: React.CSSProperties,
 }>) {
   return (
-      <svg
-      viewBox="0 0 180 180"
-      fillRule="evenodd"
-      clipRule="evenodd"
-      strokeLinejoin="round"
-      strokeMiterlimit={2}
+    <svg
+      fill={fill}
       width={width}
-      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
+      height={width}
+      style={style}
+      {...props}
     >
-      <path fill="none" d="M0 0h180v180H0z" />
-      <path
-        d="M124.649 78.96h-46.03V65.335h46.03c3.747 0 6.812 3.066 6.812 6.813s-3.065 6.812-6.812 6.812m6.812 25.625c0 3.746-3.065 6.812-6.812 6.812h-46.03V97.772h46.03c3.747 0 6.812 3.065 6.812 6.813m0 32.364c0 3.747-3.065 6.812-6.812 6.812h-46.03v-13.624h46.03c3.747 0 6.812 3.065 6.812 6.812M61.275 79.81a7.662 7.662 0 11.002-15.322 7.662 7.662 0 01-.002 15.322m0 32.437a7.662 7.662 0 11.001-15.323 7.662 7.662 0 01-.001 15.323m0 31.913a7.661 7.661 0 110-15.322 7.661 7.661 0 010 15.322M90 26.862a7.662 7.662 0 11-.002 15.322A7.662 7.662 0 0190 26.862m38.802 15.514h-7.661v-6.409c0-.75-.613-1.363-1.363-1.363-7.62 0-14.375-3.704-18.563-9.411-2.613-3.561-6.798-5.625-11.215-5.625s-8.604 2.064-11.216 5.625C74.596 30.9 67.84 34.604 60.22 34.604c-.75 0-1.363.613-1.363 1.363v6.41h-7.66c-5.47 0-9.904 4.433-9.904 9.902v98.248c0 5.47 4.434 9.904 9.904 9.904h77.605c5.47 0 9.904-4.434 9.904-9.904V52.28c0-5.469-4.434-9.903-9.904-9.903"
-
+      {outline ? <>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H4V5h16v14Z"
+          fill={color}
+        />
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M18.701 11.127a1.003 1.003 0 0 0-1.418-1.42L14.82 12.17l-.705-.71a.997.997 0 0 0-1.415 1.405L14.82 15l3.881-3.873Z"
+          fill={color}
+        />
+        <path
+          d="M10 8a1 1 0 0 0-1-1H6a1 1 0 0 0 0 2h3a1 1 0 0 0 1-1ZM10 12a1 1 0 0 0-1-1H6a1 1 0 1 0 0 2h3a1 1 0 0 0 1-1ZM10 16a1 1 0 0 0-1-1H6a1 1 0 1 0 0 2h3a1 1 0 0 0 1-1Z"
+          fill={color}
+        />
+      </> : <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2ZM9 17H6c-.55 0-1-.45-1-1s.45-1 1-1h3c.55 0 1 .45 1 1s-.45 1-1 1Zm0-4H6c-.55 0-1-.45-1-1s.45-1 1-1h3c.55 0 1 .45 1 1s-.45 1-1 1Zm0-4H6c-.55 0-1-.45-1-1s.45-1 1-1h3c.55 0 1 .45 1 1s-.45 1-1 1Zm9.7 2.12-3.17 3.17c-.39.39-1.03.39-1.42 0l-1.41-1.42a.996.996 0 1 1 1.41-1.41l.71.71 2.47-2.47a.996.996 0 0 1 1.41 0l.01.01c.38.39.38 1.03-.01 1.41Z"
         fill={color}
-      />
+      />}
     </svg>
   )
 }

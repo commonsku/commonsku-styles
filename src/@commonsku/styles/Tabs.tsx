@@ -75,9 +75,9 @@ Here's how you use this:
 //   </div>
 // }
 
-type TabType = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
+export type TabType = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
 type StateType = {selectedTabIndex: number, selectedTab: TabType};
-type TabsProps = { tabs: TabType[], selectedTabIndex?: number, padded?: boolean, size?: keyof typeof tabSizes };
+export type TabsProps = { tabs: TabType[], selectedTabIndex?: number, padded?: boolean, size?: keyof typeof tabSizes };
 class Tabs extends Component<TabsProps, StateType> {
   constructor(props: TabsProps) {
     super(props);

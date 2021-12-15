@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, CSSProperties } from 'react'
 import styled, { StyledComponentProps } from 'styled-components'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
@@ -227,22 +227,52 @@ export const LabeledRadioGroup: React.FC<RadioProps & {name: string, radios: [{l
   </>
 }
 
-export const LabeledCheckbox = (
-  {label, name, checked, disabled, onChange, ...props}: {label: string|React.ReactNode, name?: string, [key: string]: any}
+export type LabeledCheckboxProps = {
+  checked?: boolean;
+  disabled?: boolean;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>,
+  label: string|React.ReactNode;
+  name?: string;
+  checkboxStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  checkboxPosition?: string;
+  hoverByLabel?: boolean;
+  stopPropagation?: boolean;
+  [key: string]: any;
+};
+export const LabeledCheckbox = React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
+  {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, stopPropagation=false, ...props}: LabeledCheckboxProps,
+  ref: React.Ref<HTMLInputElement>
 ) => {
+  const [isHovering, updateHover] = useState(false);
 
-  const [ isHovering, updateHover ] = useState(false);
+  const onMouseOver = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(true);
+  const onMouseLeave = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(false);
 
   return (
     <RadioLabel
       htmlFor={name}
-      onMouseOver={(e) => updateHover(true)}
-      onMouseLeave={(e) => updateHover(false)}
+      onMouseOver={hoverByLabel ? onMouseOver : undefined}
+      onMouseLeave={hoverByLabel ? onMouseLeave : undefined}
       disabled={disabled}
+      style={labelStyle}
     >
       {label}
-      <Radio name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? null : onChange} {...props} />
-      <CheckMark checked={checked} isHovering={isHovering} disabled={disabled} />
+      <Radio ref={ref} name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
+      <CheckMark
+        onMouseOver={!hoverByLabel ? onMouseOver : undefined}
+        onMouseLeave={!hoverByLabel ? onMouseLeave : undefined}
+        checked={checked}
+        isHovering={isHovering}
+        disabled={disabled}
+        style={{
+          ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
+          ...checkboxStyle,
+        }}
+        onClick={(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+          stopPropagation && e && e.stopPropagation();
+        }}
+      />
     </RadioLabel>
   );
-}
+});
