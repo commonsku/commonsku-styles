@@ -4,6 +4,7 @@ import { Row, Col, } from '../FlexboxGrid';
 import { CalendarTask, CalendarTaskProps } from '../Task';
 import HeaderWrapper from './HeaderWrapper';
 import { draggableChildWrapperProps } from './styles';
+import { onUpdateTaskFunc, onClickTaskFunc } from './types';
 
 export type DraggableCalendarFooterTasksProps = {
     onNextWeek: VoidFunction;
@@ -13,11 +14,14 @@ export type DraggableCalendarFooterTasksProps = {
     currentMonth: Date;
     currentWeek: number;
     selectedDate: Date;
-    [key: string]: any;
+    onClickTask?: onClickTaskFunc;
+    onUpdateTask?: onUpdateTaskFunc;
+    tasks: Array<CalendarTaskProps>;
 };
 export const DraggableCalendarFooterTasks = ({
-    currentWeek,
-    tasks=[],
+    onClickTask,
+    onUpdateTask,
+    tasks = [],
 }: React.PropsWithChildren<DraggableCalendarFooterTasksProps>) => {
     return (
         <HeaderWrapper>
@@ -31,8 +35,26 @@ export const DraggableCalendarFooterTasks = ({
                                 index={j}
                             >
                                 {(provided, snapshot) => (
-                                    <Col xs md={3} padded {...draggableChildWrapperProps(provided, snapshot)}>
-                                        <CalendarTask {...t} date={undefined} />
+                                    <Col xs md={3} padded
+                                        {...draggableChildWrapperProps(provided, snapshot)}
+                                       onClick={(e: React.MouseEvent) => { onClickTask && onClickTask(t); }}
+                                    >
+                                        <CalendarTask
+                                            {...t}
+                                            date={undefined}
+                                            onClickCheckbox={(completed: boolean) => {
+                                                if (onUpdateTask) {
+                                                    onUpdateTask({ ...t, completed, }, {
+                                                        index: j,
+                                                        action: 'TOGGLE_CHECKBOX',
+                                                        oldTask: t,
+                                                        updatedFields: ['completed'],
+                                                    });
+                                                } else if (t.onClickCheckbox) {
+                                                    t.onClickCheckbox(completed);
+                                                }
+                                            }}
+                                        />
                                     </Col>
                                 )}
                             </Draggable>
