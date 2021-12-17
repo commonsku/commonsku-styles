@@ -89,8 +89,8 @@ const MultiProgress = ({
   ...props
 }: ProgressBarsProps & {labeled?: boolean}) => {
   const max = typeof maxVal === 'number'
-                ? maxVal
-                : !isNaN(maxVal) ? parseInt(maxVal) : 0;
+            ? maxVal
+            : !isNaN(maxVal) ? parseInt(maxVal) : 0;
 
   return <ProgressWrapper {...props}>
     {title ? <StyledProgressTitle>{title}</StyledProgressTitle> : null}
@@ -104,11 +104,13 @@ const MultiProgress = ({
           error={error}
           color={color}
           text={v.text ? v.text(val) : val}
+          key={`multiprogress-bar-${val}-${i}`}
         /> : <ProgressBar
           value={val < max ? val : max}
           max={max}
           error={error}
           color={color}
+          key={`multiprogress-bar-${val}-${i}`}
         />
       );
     })}
