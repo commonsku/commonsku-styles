@@ -314,11 +314,11 @@ const App = () => {
     ...calTasks,
   });
   const [footerTasks, setFooterTasks] = useState([
-    {id: uniqueId('footer-day-'), date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {id: uniqueId('footer-day-'), date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-    {id: uniqueId('footer-day-'), date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-    {id: uniqueId('footer-day-'), date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {id: uniqueId('footer-day-'), date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('footer-day-'), completed: false, date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('footer-day-'), completed: false, date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {id: uniqueId('footer-day-'), completed: false, date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
+    {id: uniqueId('footer-day-'), completed: false, date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
 
   useEffect(() => {
@@ -531,6 +531,15 @@ const App = () => {
                 console.log('clicked', task);
               }}
               onUpdateTask={(task, { oldTask, action, sourceType }) => {
+                if (action === 'TOGGLE_CHECKBOX') {
+                  const foundFooterIdx = footerTasks.findIndex(v => v.date === oldTask.date && v.title === oldTask.title && oldTask.id === v.id);
+                  if (foundFooterIdx === -1) { return; }
+                  setFooterTasks(s => ([
+                    ...s.slice(0, foundFooterIdx),
+                    ...s.slice(foundFooterIdx+1),
+                  ]));
+                  return;
+                }
                 if (action === 'DROP' && sourceType === 'FOOTER') {
                   const foundFooterIdx = footerTasks.findIndex(v => v.date === oldTask.date && v.title === oldTask.title && oldTask.id === v.id);
                   if (foundFooterIdx === -1) { return; }
@@ -556,7 +565,7 @@ const App = () => {
                   }
                 ));
               }}
-              footerTasks={footerTasks}
+              footerTasks={footerTasks.filter(v => !v.completed)}
               headerTabs={[
                 {content: '', label: 'All Tasks',
                   onClick: () => { setCalendarTab('all'); console.log('all tasks'); }

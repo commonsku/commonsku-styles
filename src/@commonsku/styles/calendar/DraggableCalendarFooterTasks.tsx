@@ -54,7 +54,6 @@ export const DraggableCalendarFooterTasks = ({
                                                     t.onClickCheckbox(completed);
                                                 }
                                             }}
-                                            onClickTask={onClickTask}
                                         />
                                     </Col>
                                 )}

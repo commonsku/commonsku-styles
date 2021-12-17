@@ -94,7 +94,7 @@ const CalendarTask = React.forwardRef(({
 
   useEffect(() => {
     setChecked(completed);
-  }, [completed]);
+  }, [completed, title, date]);
 
   return (
     <StyledCalendarTaskWrapper

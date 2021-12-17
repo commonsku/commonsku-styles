@@ -250,7 +250,31 @@ const DraggableTasksCalendar = ({
             }}
           />}
         </div>
-        <DroppableFooter tasks={state.footerTasks} {...headerProps} />
+        <DroppableFooter
+          tasks={state.footerTasks}
+          onClickTask={onClickTask}
+          onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
+            _.flowRight(() => {
+              onUpdateTask(newData, otherData);
+            }, () => {
+              if (!day__id) { return; }
+              setState(s => {
+                return { ...s,
+                  days: { ...s.days,
+                    [day__id]: { ...s.days[day__id],
+                      tasks: [
+                        ...s.days[day__id].tasks.slice(0, otherData.index),
+                        {...s.days[day__id].tasks[otherData.index], ...newData},
+                        ...s.days[day__id].tasks.slice(otherData.index+1),
+                      ],
+                    }
+                  },
+                };
+              });
+            })();
+          }}
+          {...headerProps}
+        />
       </CalendarWrapper>
     </DragDropContext>
   );
