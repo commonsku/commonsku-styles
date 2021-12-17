@@ -80,32 +80,39 @@ const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
   );
 }
 
-const MultiProgress = (props: ProgressBarsProps & {labeled?: boolean}) => {
-  const max = typeof props.max === 'number'
-                ? props.max
-                : !isNaN(props.max) ? parseInt(props.max) : 0;
+const MultiProgress = ({
+  labeled,
+  error,
+  title,
+  values,
+  max: maxVal,
+  ...props
+}: ProgressBarsProps & {labeled?: boolean}) => {
+  const max = typeof maxVal === 'number'
+                ? maxVal
+                : !isNaN(maxVal) ? parseInt(maxVal) : 0;
 
   return <ProgressWrapper {...props}>
-    {props.title ? <StyledProgressTitle>{props.title}</StyledProgressTitle> : null}
-    {props.values.map((v: ProgressBarValue, i) => {
+    {title ? <StyledProgressTitle>{title}</StyledProgressTitle> : null}
+    {values.map((v: ProgressBarValue, i) => {
       const color = i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374';
       const val = typeof v.value === 'number' ? v.value : !isNaN(v.value) ? parseInt(v.value) : 0;
       return (
-        props.labeled ? <LabeledBar
+        labeled ? <LabeledBar
           value={val < max ? val : max}
           max={max}
-          error={props.error}
+          error={error}
           color={color}
           text={v.text ? v.text(val) : val}
         /> : <ProgressBar
           value={val < max ? val : max}
           max={max}
-          error={props.error}
+          error={error}
           color={color}
         />
       );
     })}
-    {props.error ? <Text color="error" bold>{props.error}</Text> : null}
+    {error ? <Text color="error" bold>{error}</Text> : null}
   </ProgressWrapper>
 }
 
