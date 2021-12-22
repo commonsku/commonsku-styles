@@ -69,21 +69,29 @@ padding: 1rem;
 export type SimpleWindowedTableProps = {
     columns: Column<object>[];
     data: object[];
+    itemSize?: number;
+    height?: number;
     minWidth?: number;
     maxWidth?: number;
     defaultSort?: SortingRule<string>;
     onClickRow?: (row?: object) => void;
     onScroll?: ((props: ListOnScrollProps) => any);
+    onUpdateData?: (...args: any) => void;
+    useTableProps?: object;
 };
 
 function SimpleWindowedTable({
     columns,
     data,
+    itemSize=80,
+    height=500,
     minWidth = 140,
     maxWidth = 500,
     defaultSort,
     onClickRow,
     onScroll,
+    onUpdateData,
+    useTableProps={},
 }: SimpleWindowedTableProps) {
     const defaultColumn = React.useMemo(
         () => ({
@@ -110,6 +118,8 @@ function SimpleWindowedTable({
             initialState: {
                 ...(defaultSort ? { sortBy: [defaultSort] } : {}),
             },
+            onUpdateData,
+            ...useTableProps,
         } as SortByTableOptions,
         useSortBy,
         useFlexLayout
@@ -177,9 +187,9 @@ function SimpleWindowedTable({
 
             <div {...getTableBodyProps()}>
                 <FixedSizeList
-                    height={500}
+                    height={height}
                     itemCount={rows.length}
-                    itemSize={80}
+                    itemSize={itemSize}
                     width={totalColumnsWidth + scrollBarSize}
                     className="project-table-list-rows"
                     outerRef={rowsRef}
