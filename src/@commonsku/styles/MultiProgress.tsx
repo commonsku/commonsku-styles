@@ -17,8 +17,10 @@ const ProgressWrapper = styled.div<SharedStyleTypes>`
 `
 
 type ProgressBarValue = {
-  value: number,
-  text?: (v?: string | number | Object) => string | number,
+  value: number;
+  text?: (v?: string | number | Object) => string | number;
+  color?: string;
+  textColor?: string;
 };
 type ProgressBarsProps = React.PropsWithChildren<{
   values: ProgressBarValue[],
@@ -55,8 +57,11 @@ const StyledProgressTitle = styled(Text)`
   text-shadow: 0px 1px 2px #40B07E;
 `;
 
-
-const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
+type LabeledBarprops = ProgressBarProps & {
+  text?: string | number,
+  textColor?: string,
+};
+const LabeledBar = (props: LabeledBarprops) => {
   const [width,] = useWindowSize();
   const [size, setSize] = useState({left: 0, width: 0});
   const measureRef = useCallback(node => {
@@ -95,7 +100,7 @@ const MultiProgress = ({
   return <ProgressWrapper {...props}>
     {title ? <StyledProgressTitle>{title}</StyledProgressTitle> : null}
     {values.map((v: ProgressBarValue, i) => {
-      const color = i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374';
+      const color = v.color || (i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374');
       const val = typeof v.value === 'number' ? v.value : !isNaN(v.value) ? parseInt(v.value) : 0;
       return (
         labeled ? <LabeledBar
@@ -105,6 +110,7 @@ const MultiProgress = ({
           color={color}
           text={v.text ? v.text(val) : val}
           key={`multiprogress-bar-${val}-${i}`}
+          textColor={v.textColor}
         /> : <ProgressBar
           value={val < max ? val : max}
           max={max}
@@ -125,7 +131,7 @@ const LabeledMultiProgress = (props: ProgressBarsProps) => {
       paddingRight: 8,
     }}>Target $<Number commas decimalPoints={0} num={props.max}/></span>
     <br />
-    <MultiProgress values={props.values} max={props.max} error={props.error} title={props.title} labeled />
+    <MultiProgress {...props} labeled />
   </div>
 }
 
