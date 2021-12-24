@@ -67,7 +67,7 @@ export const TasksCalendarHeader = ({
                         borderRadius: 5,
                         background: '#02c0da',
                         color: '#fff',
-                        padding: 5,
+                        padding: 4,
                         cursor: 'pointer',
                     }} onClick={() => onResetDate()}>Today</span> : null}
                 </WeekNav>
