@@ -41,6 +41,8 @@ const useCalendar = ({
             dt = subMonths(currentMonth, 1);
         } else if (action === "next") {
             dt = addMonths(currentMonth, 1);
+        } else if (action === "reset") {
+            dt = today;
         }
         setCurrentMonth(dt);
         onChangeMonth && onChangeMonth({
@@ -58,6 +60,8 @@ const useCalendar = ({
 
         } else if (action === "next") {
             dt = addWeeks(currentMonth, 1);
+        } else if (action === "reset") {
+            dt = today;
         }
         setCurrentMonth(dt);
         const week = getWeek(dt);
@@ -77,6 +81,12 @@ const useCalendar = ({
         } else {
             setSelectedDate(day);
         }
+    };
+
+    // reset to today's date
+    const resetToToday = () => {
+        setSelectedDate(today);
+        changeWeek('reset');
     };
 
     const onNextWeek = () => changeWeek("next");
@@ -100,6 +110,7 @@ const useCalendar = ({
         onPrevMonth,
 
         getDatesBetween,
+        onReset: resetToToday,
     };
 }
 
