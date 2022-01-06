@@ -1,9 +1,9 @@
+import _ from 'lodash';
 import styled from 'styled-components'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import {Text, Number} from './Text'
 import { useWindowSize } from './hooks'
-
 
 const ProgressWrapper = styled.div<SharedStyleTypes>`
   max-width: 100%;
@@ -17,8 +17,10 @@ const ProgressWrapper = styled.div<SharedStyleTypes>`
 `
 
 type ProgressBarValue = {
-  value: number,
-  text?: (v?: string | number | Object) => string | number,
+  value: number;
+  text?: (v?: string | number | Object) => string | number;
+  color?: string;
+  textColor?: string;
 };
 type ProgressBarsProps = React.PropsWithChildren<{
   values: ProgressBarValue[],
@@ -29,12 +31,13 @@ type ProgressBarsProps = React.PropsWithChildren<{
 } & SharedStyleTypes>;
 
 type ProgressBarProps = Omit<ProgressBarsProps, 'values'> & {
-  value: number,
+  value: number;
+  left?: number;
 };
 
 const ProgressBar = styled.div<ProgressBarProps>`
   max-width: 100%;
-  width: ${props => 100 * props.value / props.max}%;
+  width: calc(${props => 100 * props.value / props.max}% - ${p => p.left || 0}px);
   height: 48px;
   background: ${props => props.error ? "#B21154" : (
     props.color || "#00d374"
@@ -55,12 +58,22 @@ const StyledProgressTitle = styled(Text)`
   text-shadow: 0px 1px 2px #40B07E;
 `;
 
-
-const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
+type LabeledBarprops = ProgressBarProps & {
+  text?: string | number,
+  textColor?: string,
+};
+const LabeledBar = (props: LabeledBarprops) => {
   const [width,] = useWindowSize();
-  const [size, setSize] = useState({left: 0, width: 0});
+  const [size, setSize] = useState({height: 0, width: 0, x: 0, y: 0,});
   const measureRef = useCallback(node => {
-      setSize(node?.getBoundingClientRect())
+    const rect: DOMRect | undefined = node?.getBoundingClientRect() as DOMRect;
+    setSize(s => (rect ? {
+      ...s,
+      height: rect.height,
+      x: rect.x,
+      y: rect.y,
+      width: (rect.width > width ? width : rect.width)-rect.x,
+    } : {...s, height: 0, width: 0, x: 0, y: 0,}));
   }, [width, props.text, props.value]);
   const text = (props.text || '') + '';
 
@@ -73,9 +86,9 @@ const LabeledBar = (props: ProgressBarProps & {text?: string | number}) => {
         zIndex: 9,
         marginTop: -25,
         color: '#00d374',
-        width: size.width-10,
+        width: `calc(${100 * props.value / props.max}% - (${size.x || 0}px + 30px))`,
       }}>{text}</Text>
-      <ProgressBar ref={measureRef} {...props} />
+      <ProgressBar ref={measureRef} {...props} left={size.x} />
     </>
   );
 }
@@ -95,7 +108,7 @@ const MultiProgress = ({
   return <ProgressWrapper {...props}>
     {title ? <StyledProgressTitle>{title}</StyledProgressTitle> : null}
     {values.map((v: ProgressBarValue, i) => {
-      const color = i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374';
+      const color = v.color || (i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374');
       const val = typeof v.value === 'number' ? v.value : !isNaN(v.value) ? parseInt(v.value) : 0;
       return (
         labeled ? <LabeledBar
@@ -105,6 +118,7 @@ const MultiProgress = ({
           color={color}
           text={v.text ? v.text(val) : val}
           key={`multiprogress-bar-${val}-${i}`}
+          textColor={v.textColor}
         /> : <ProgressBar
           value={val < max ? val : max}
           max={max}
@@ -120,12 +134,11 @@ const MultiProgress = ({
 
 const LabeledMultiProgress = (props: ProgressBarsProps) => {
   return <div>
+    <MultiProgress {...props} labeled />
     <span style={{
       float: 'right',
       paddingRight: 8,
     }}>Target $<Number commas decimalPoints={0} num={props.max}/></span>
-    <br />
-    <MultiProgress values={props.values} max={props.max} error={props.error} title={props.title} labeled />
   </div>
 }
 

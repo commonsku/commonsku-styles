@@ -64,6 +64,7 @@ const DraggableTasksCalendar = ({
     onNextMonth,
     onPrevMonth,
     onClickDay,
+    onReset,
   } = useCalendar({onChangeWeek, onChangeMonth});
 
   const [state, setState] = useState<State>({
@@ -217,7 +218,12 @@ const DraggableTasksCalendar = ({
       onDragEnd={result => onDragEnd(result)}
     >
       <CalendarWrapper>
-        <TasksCalendarHeader {...headerProps} tabs={headerTabs} weekendsCheckbox={weekendsCheckbox} />
+        <TasksCalendarHeader
+          {...headerProps}
+          onResetDate={onReset}
+          tabs={headerTabs}
+          weekendsCheckbox={weekendsCheckbox}
+        />
         <div className="calendar-scroll">
           <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={weekendsCheckbox} weekend={showWeekend} />
           {loading ? <div style={{height: 400, paddingTop: 30,}}>

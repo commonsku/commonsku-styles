@@ -52,6 +52,7 @@ const TasksCalendar = ({
         onNextMonth,
         onPrevMonth,
         onClickDay,
+        onReset
     } = useCalendar({});
 
     const [days, setDays] = useState(
@@ -70,7 +71,7 @@ const TasksCalendar = ({
 
     return (
         <CalendarWrapper>
-            <TasksCalendarHeader {...headerProps} tabs={headerTabs} weekendsCheckbox={<div></div>} />
+            <TasksCalendarHeader {...headerProps} onResetDate={onReset} tabs={headerTabs} weekendsCheckbox={<div></div>} />
             <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={<div></div>} weekend={true} />
             <CalendarDaysBody
                 currentMonth={currentMonth}
