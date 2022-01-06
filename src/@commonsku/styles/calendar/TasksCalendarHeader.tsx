@@ -43,11 +43,6 @@ export const TasksCalendarHeader = ({
     onClickAddTask,
 }: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     const isCurrentWeek = currentWeek === getWeek(selectedDate);
-    console.log({
-        currentWeek,
-        selectedDate,
-        isCurrentWeek
-    });
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
             <Col start xs md={7} padded>
