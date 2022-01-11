@@ -37,7 +37,7 @@ type ProgressBarProps = Omit<ProgressBarsProps, 'values'> & {
 
 const ProgressBar = styled.div<ProgressBarProps>`
   max-width: 100%;
-  width: calc(${props => 100 * props.value / props.max}% - ${p => p.left || 0}px);
+  width: ${p => `calc(${100 * (!p.max ? 1 : (p.value / p.max))}% - (${p.left || 0}px + 17px))`};
   height: 48px;
   background: ${props => props.error ? "#B21154" : (
     props.color || "#00d374"
@@ -86,7 +86,7 @@ const LabeledBar = (props: LabeledBarprops) => {
         zIndex: 9,
         marginTop: -25,
         color: '#00d374',
-        width: `calc(${100 * props.value / props.max}% - (${size.x || 0}px + 30px))`,
+        width: `calc(${100 * props.value / props.max}% - (${size.x || 0}px + 17px))`,
       }}>{text}</Text>
       <ProgressBar ref={measureRef} {...props} left={size.x} />
     </>
