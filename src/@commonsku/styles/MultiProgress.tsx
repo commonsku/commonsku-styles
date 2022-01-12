@@ -86,7 +86,7 @@ const LabeledBar = (props: LabeledBarprops) => {
         zIndex: 9,
         marginTop: -25,
         color: '#00d374',
-        width: `calc(${100 * props.value / props.max}% - (${size.x || 0}px + 17px))`,
+        // width: `calc(${100 * props.value / props.max}% - (${size.x || 0}px + 17px))`,
       }}>{text}</Text>
       <ProgressBar ref={measureRef} {...props} left={size.x} />
     </>
