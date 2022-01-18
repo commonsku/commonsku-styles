@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css, CSSObject } from 'styled-components';
 import React, { useRef, useLayoutEffect } from 'react';
 import {
     useTable,
@@ -8,15 +8,21 @@ import {
     Column,
 } from 'react-table';
 import { FixedSizeList, ListOnScrollProps } from 'react-window';
-import { SortByTableInstance, SortByTableOptions } from './types';
+import { BaseSortByHeaderGroup, SortByHeaderGroup, SortByTableInstance, SortByTableOptions } from './types';
 import { colors } from '../Theme';
 import { DownArrowIcon, UpArrowIcon, UpDownArrowsIcon } from '../icons';
 import scrollbarWidth from './scrollbarWidth';
+import { getThemeColor } from '..';
 
-export const SimpleWindowedTableStyles = styled.div<{ rowClickable?: boolean; }>`
+export const SimpleWindowedTableStyles = styled.div<{
+    rowClickable?: boolean;
+    hoverRowBg?: string | boolean;
+    selectedRowIndex?: number;
+    selectedRowStyle?: boolean | CSSObject; // if true, then set bg same as hoverRowBg
+}>`
 padding: 1rem;
 
-.project-table-list-rows {
+.table-list-rows {
   width: 100% !important;
 
   ${p => p.rowClickable ? `
@@ -58,6 +64,24 @@ padding: 1rem;
     border-bottom: 1px solid ${colors.disabledButtonBorder};
   }
 
+  /* set hover styles */
+  ${p => p.hoverRowBg ?
+    `.tr:not(.header.tr):hover {
+        background: ${typeof p.hoverRowBg === 'string'
+            ? p.hoverRowBg
+            : getThemeColor(p, 'tableHeaderBg', '#F6FEFF')
+        };
+    }` : ''}
+
+    /* row selected => if selectedRowStyle === true then set background color else set given styles */
+    ${p => p.selectedRowIndex && p.selectedRowStyle ?
+        `.tr:nth-child(${p.selectedRowIndex}) {
+            ${typeof p.selectedRowStyle === 'boolean'
+                ? `background: ${getThemeColor(p, 'tableHeaderBg', '#F6FEFF')};`
+                : css(p.selectedRowStyle)
+            }
+        }` : ''}
+
   .th,
   .td {
     margin: 0;
@@ -74,10 +98,15 @@ export type SimpleWindowedTableProps = {
     minWidth?: number;
     maxWidth?: number;
     defaultSort?: SortingRule<string>;
-    onClickRow?: (row?: object) => void;
+    onClickRow?: (row?: object, index?: number) => void;
     onScroll?: ((props: ListOnScrollProps) => any);
     onUpdateData?: (...args: any) => void;
     useTableProps?: object;
+    tableHeaderProps?: {
+        className?: string;
+        style?: React.CSSProperties;
+    };
+    className?: string;
 };
 
 function SimpleWindowedTable({
@@ -92,6 +121,8 @@ function SimpleWindowedTable({
     onScroll,
     onUpdateData,
     useTableProps={},
+    tableHeaderProps={},
+    className='',
 }: SimpleWindowedTableProps) {
     const defaultColumn = React.useMemo(
         () => ({
@@ -153,11 +184,12 @@ function SimpleWindowedTable({
                     className="tr"
                 >
                     {row.cells.map((cell) => {
+                        const cellProps = cell.getCellProps();
                         return (
                             <div
-                                onClick={() => onClickRow ? onClickRow(cell.row.original) : null}
-                                {...cell.getCellProps()}
-                                className="td">{cell.render("Cell")}</div>
+                                {...cellProps}
+                                onClick={() => onClickRow ? onClickRow(cell.row.original, index) : null}
+                                className={`td ${cellProps.className || ''}`}>{cell.render("Cell")}</div>
                         );
                     })}
                 </div>
@@ -166,19 +198,64 @@ function SimpleWindowedTable({
         [prepareRow, rows, onClickRow]
     );
 
+    const getHeaderProps = (column: BaseSortByHeaderGroup<object>) => {
+        const headerProps = column.getHeaderProps({
+            ...column.getSortByToggleProps(),
+            ...(column.containerProps || {}),
+        });
+        const headerStyles = {
+            ...(headerProps.style || {}),
+            ...(column.style || {}),
+        };
+        const headerClassNames = [
+            'th',
+            ...(headerProps.className || "").split(' '),
+            ...(column.className || "").split(' '),
+        ].filter(v => v).join(' ');
+
+        return {
+            ...headerProps,
+            style: headerStyles,
+            className: headerClassNames,
+        };
+    };
+
+    const getHeaderGroupProps = (headerGroup: SortByHeaderGroup<object>) => {
+        const headerGroupProps = headerGroup.getHeaderGroupProps({
+            ...(headerGroup.containerProps || {}),
+        });
+        const headerStyles = {
+            ...(headerGroupProps.style || {}),
+            ...(headerGroup.style || {}),
+        };
+        const headerClassNames = [
+            'header tr',
+            ...(headerGroupProps.className || "").split(' '),
+            ...(headerGroup.className || "").split(' '),
+        ].filter(v => v).join(' ');
+
+        return {
+            ...headerGroupProps,
+            style: headerStyles,
+            className: headerClassNames,
+        };
+    };
+
     return (
-        <div {...getTableProps()} className="table">
-            <div className="header-wrapper">
+        <div {...getTableProps()} className={`table ${className || ''}`}>
+            <div {...tableHeaderProps}
+                className={`header-wrapper ${tableHeaderProps.className || ''}`}
+            >
                 {headerGroups.map((headerGroup) => (
-                    <div {...headerGroup.getHeaderGroupProps()} className="header tr" ref={headerRef}>
+                    <div {...getHeaderGroupProps(headerGroup)} className="header tr" ref={headerRef}>
                         {headerGroup.headers.map((column) => (
-                            <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
+                            <div {...getHeaderProps(column)}>
                                 {column.render("Header")}
-                                <span style={{ display: 'inline-block', paddingLeft: 5, verticalAlign: 'text-top' }}>
+                                {column.canSort ? <span style={{ display: 'inline-block', paddingLeft: 5, verticalAlign: 'text-top' }}>
                                     {column.isSorted ? (
                                         column.isSortedDesc ? <DownArrowIcon width="15px" /> : <UpArrowIcon width="15px" />
                                     ) : <UpDownArrowsIcon width="15px" />}
-                                </span>
+                                </span> : null}
                             </div>
                         ))}
                     </div>
@@ -191,7 +268,7 @@ function SimpleWindowedTable({
                     itemCount={rows.length}
                     itemSize={itemSize}
                     width={totalColumnsWidth + scrollBarSize}
-                    className="project-table-list-rows"
+                    className="table-list-rows"
                     outerRef={rowsRef}
                     onScroll={onScroll}
                 >{RenderRow}</FixedSizeList>

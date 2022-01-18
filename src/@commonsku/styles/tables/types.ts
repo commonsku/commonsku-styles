@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     HeaderGroup,
     TableInstance,
@@ -7,7 +8,11 @@ import {
     UseSortByColumnProps,
 } from 'react-table';
 
-export interface BaseSortByHeaderGroup<D extends object = {}> extends HeaderGroup<D>, UseSortByColumnProps<D> {}
+export interface BaseSortByHeaderGroup<D extends object = {}> extends HeaderGroup<D>, UseSortByColumnProps<D> {
+    containerProps?: object;
+    style?: React.CSSProperties;
+    className?: string;
+}
 export interface SortByHeaderGroup<D extends object = {}> extends Omit<BaseSortByHeaderGroup, 'headers'> {
     headers: Array<BaseSortByHeaderGroup<D>>;
 }

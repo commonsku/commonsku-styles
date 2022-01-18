@@ -32,6 +32,8 @@ export const colors = {
   primary2: '#00A0B6',
   primary20: '#00788A',
   primary200: '#004D59',
+
+  tableHeaderBg: '#F6FEFF',
 };
 export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {
