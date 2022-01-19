@@ -119,6 +119,7 @@ export type SimpleWindowedTableProps = {
     };
     TableFooter?: React.ReactNode,
     className?: string;
+    hideFooter?: boolean;
 };
 
 function SimpleWindowedTable({
@@ -135,6 +136,7 @@ function SimpleWindowedTable({
     useTableProps={},
     tableHeaderProps={},
     tableFooterProps={},
+    hideFooter=true,
     className='',
 }: SimpleWindowedTableProps) {
     const defaultColumn = React.useMemo(
@@ -305,7 +307,7 @@ function SimpleWindowedTable({
                 >{RenderRow}</FixedSizeList>
             </div>
 
-            <div {...tableFooterProps}
+            {!hideFooter ? <div {...tableFooterProps}
                 className={`table-footer-wrapper ${tableFooterProps.className || ''}`}
             >
                 {footerGroups.map((footerGroup) => (
@@ -317,7 +319,7 @@ function SimpleWindowedTable({
                         ))}
                     </div>
                 ))}
-            </div>
+            </div> : null}
         </div>
     );
 }
