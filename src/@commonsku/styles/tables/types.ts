@@ -21,8 +21,9 @@ export interface TableInitialStateStateWithSortBy<D extends object = {}> extends
     sortBy?: Array<SortingRule<string>>;
 }
 
-export interface SortByTableInstance<D extends object = {}> extends Omit<TableInstance<D>, 'headerGroups'> {
+export interface SortByTableInstance<D extends object = {}> extends Omit<Omit<TableInstance<D>, 'headerGroups'>, 'footerGroups'> {
     headerGroups: SortByHeaderGroup<object>[];
+    footerGroups: SortByHeaderGroup<object>[];
 };
 
 export interface SortByTableOptions<D extends object = {}> extends Omit<TableOptions<D>, 'initialState'> {
