@@ -1,5 +1,5 @@
 import styled, { css, CSSObject } from 'styled-components';
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, ReactNode } from 'react';
 import {
     useTable,
     useSortBy,
@@ -116,9 +116,10 @@ export type SimpleWindowedTableProps = {
         className?: string;
         style?: React.CSSProperties;
     };
-    TableFooter?: React.ReactNode,
+    TableFooter?: React.ReactNode;
     className?: string;
     hideFooter?: boolean;
+    NoRowsFound?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
 };
 
 function SimpleWindowedTable({
@@ -137,6 +138,7 @@ function SimpleWindowedTable({
     tableFooterProps={},
     hideFooter=true,
     className='',
+    NoRowsFound,
 }: SimpleWindowedTableProps) {
     const defaultColumn = React.useMemo(
         () => ({
@@ -295,7 +297,7 @@ function SimpleWindowedTable({
             </div>
 
             <div {...getTableBodyProps()}>
-                <FixedSizeList
+                {rows.length === 0 && NoRowsFound ? <NoRowsFound /> :<FixedSizeList
                     height={height}
                     itemCount={rows.length}
                     itemSize={itemSize}
@@ -303,7 +305,7 @@ function SimpleWindowedTable({
                     className="table-list-rows"
                     outerRef={rowsRef}
                     onScroll={onScroll}
-                >{RenderRow}</FixedSizeList>
+                >{RenderRow}</FixedSizeList>}
             </div>
 
             {!hideFooter ? <div {...tableFooterProps}
