@@ -9,10 +9,9 @@ import {
 } from 'react-table';
 import { FixedSizeList, ListOnScrollProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup, SortByTableInstance, SortByTableOptions } from './types';
-import { colors } from '../Theme';
+import { colors, getThemeColor } from '../Theme';
 import { DownArrowIcon, UpArrowIcon, UpDownArrowsIcon } from '../icons';
 import scrollbarWidth from './scrollbarWidth';
-import { getThemeColor } from '..';
 
 export const SimpleWindowedTableStyles = styled.div<{
     bordered?: boolean | string;
@@ -42,7 +41,7 @@ padding: 1rem;
   ${p => p.bordered ?
         `border: ${typeof p.bordered === 'string'
             ? p.bordered
-            : `1px solid ${getThemeColor(p, 'tableBorder', '#F6FEFF')}`};`
+            : `1px solid ${getThemeColor(p, 'tableBorder', '#edf2f5')}`};`
     : ''}
 
   .header.tr, .table-footer.tr {

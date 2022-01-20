@@ -34,7 +34,7 @@ export const colors = {
   primary200: '#004D59',
 
   tableHeaderBg: '#F6FEFF',
-  tableBorder: '#F6FEFF',
+  tableBorder: '#edf2f5',
 };
 export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {

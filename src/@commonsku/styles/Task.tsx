@@ -88,6 +88,7 @@ const CalendarTask = React.forwardRef(({
   onClickCheckbox,
   colorType='light-green',
   isDescriptionHtml=false,
+  hideCheckbox=false,
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
@@ -101,7 +102,7 @@ const CalendarTask = React.forwardRef(({
       backgroundColor={colorType === 'light-red' ? '#ffebf2' : '#01d37417'}
       {...props}
     >
-      <LabeledCheckbox ref={ref}
+      {!hideCheckbox ? <LabeledCheckbox ref={ref}
         stopPropagation
         checked={checked}
         checkboxPosition="top-right"
@@ -131,7 +132,12 @@ const CalendarTask = React.forwardRef(({
             return !s;
           });
         }}
-      />
+      /> : <>
+        <TaskLabel onClick={e => { e.preventDefault(); }} style={{fontWeight: 'bold' }}>
+          <TaskName>{title}</TaskName>
+          {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
+        </TaskLabel>
+      </>}
       <StyledCalendarTaskBody
         {...(isDescriptionHtml && typeof description === 'string'
             ? { dangerouslySetInnerHTML: { __html: description } }
