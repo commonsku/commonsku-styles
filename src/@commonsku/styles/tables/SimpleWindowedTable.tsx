@@ -42,7 +42,7 @@ padding: 1rem;
   ${p => p.bordered ?
         `border: ${typeof p.bordered === 'string'
             ? p.bordered
-            : `1px solid ${getThemeColor(p, 'tableBorder', '#F6FEFF')}`}`
+            : `1px solid ${getThemeColor(p, 'tableBorder', '#F6FEFF')}`};`
     : ''}
 
   .header.tr, .table-footer.tr {
