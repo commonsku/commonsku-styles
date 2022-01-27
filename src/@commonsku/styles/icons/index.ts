@@ -34,3 +34,5 @@ export { default as NavResourcesIcon } from './NavResourcesIcon';
 export { default as WarningIcon } from './WarningIcon';
 export { default as CircleProgressIcon } from './CircleProgressIcon';
 export { default as Loading } from './Loading';
+export { default as SalesUpArrowIcon } from './SalesUpArrowIcon';
+export { default as SalesDownArrowIcon } from './SalesDownArrowIcon';

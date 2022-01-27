@@ -28,6 +28,13 @@ primary1['dark'] = primary1['80'];
 primary1['dark-hover'] = primary1['85'];
 primary1['darkest'] = primary1['90'];
 
+export const primary2 = {
+  main: '#FFFFFF',
+  border: {
+    main: '#0C5A88',
+  },
+};
+
 export const secondary1 = {
   '10': '#FFEDF4',
   '20': '#FDC5DB',
@@ -163,6 +170,7 @@ errors['darkest'] = errors['90'];
 
 const colors = {
   primary1,
+  primary2,
   secondary1,
   secondary2,
   secondary3,
@@ -200,6 +208,19 @@ const colors = {
   },
   meetings: {
     main: secondary4['80'],
+  },
+  left_nav: {
+    main: primary1['70'],
+    sub_menu: {
+      bg: primary1['80'],
+      link: {
+        bg: primary1['90'],
+        text: primary2.main,
+      },
+    },
+    link: {
+      text: primary2.main,
+    },
   },
 };
 
