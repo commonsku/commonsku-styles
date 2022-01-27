@@ -196,7 +196,7 @@ function SimpleWindowedTable({
     }, [rowsRef]);
 
     const RenderRow = React.useCallback(
-        ({ index, style }) => {
+        ({ index, isScrolling, style }) => {
             const row = rows[index];
             prepareRow(row);
             return (
@@ -212,7 +212,8 @@ function SimpleWindowedTable({
                             <div
                                 {...cellProps}
                                 onClick={() => onClickRow ? onClickRow(cell.row.original, index) : null}
-                                className={`td ${cellProps.className || ''}`}>{cell.render("Cell")}</div>
+                                className={`td ${cellProps.className || ''}`}
+                            >{cell.render("Cell", { isScrolling })}</div>
                         );
                     })}
                 </div>
@@ -305,6 +306,7 @@ function SimpleWindowedTable({
                     className="table-list-rows"
                     outerRef={rowsRef}
                     onScroll={onScroll}
+                    useIsScrolling
                 >{RenderRow}</FixedSizeList>}
             </div>
 
