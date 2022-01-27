@@ -170,7 +170,6 @@ errors['darkest'] = errors['90'];
 
 const colors = {
   primary1,
-  primary2,
   secondary1,
   secondary2,
   secondary3,
