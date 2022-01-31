@@ -174,6 +174,12 @@ const colors = {
   secondary2,
   secondary3,
   secondary4,
+
+  pink: secondary1,
+  yellow: secondary2,
+  green: secondary3,
+  navy: secondary4,
+
   neutrals,
   errors,
   orders: {

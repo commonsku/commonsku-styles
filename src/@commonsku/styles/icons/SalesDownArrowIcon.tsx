@@ -4,7 +4,7 @@ import { themeOptions } from '../Theme';
 export default function Icon({
     width=19,
     height=16,
-    fill=themeOptions.colors.errors['60'],
+    fill=themeOptions.colors.errors.main,
     style={},
     ...props
 }: React.PropsWithChildren<{

@@ -36,3 +36,5 @@ export { default as CircleProgressIcon } from './CircleProgressIcon';
 export { default as Loading } from './Loading';
 export { default as SalesUpArrowIcon } from './SalesUpArrowIcon';
 export { default as SalesDownArrowIcon } from './SalesDownArrowIcon';
+export { default as ErrorIcon } from './ErrorIcon';
+export { default as CheckmarkIcon } from './CheckmarkIcon';
