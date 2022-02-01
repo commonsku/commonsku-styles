@@ -227,6 +227,14 @@ const colors = {
       text: primary2.main,
     },
   },
+  text: {
+    main: neutrals['90'],
+    bold: neutrals['100'],
+    body: neutrals['90'],
+    title: neutrals['100'],
+    label: neutrals['100'],
+    placeholder: '#A4ABAE',
+  },
 };
 
 export default colors;

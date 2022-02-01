@@ -6,19 +6,19 @@ const tabSizes = {
   small: css`
     font-size: 0.9rem;
     padding: 0.5rem 5px;
-    maring: 0;
+    margin: 0;
   `,
   medium: css`
     font-size: inherit;
     padding: 1rem 12px;
-    maring: 0 15px 0 0;
+    margin: 0 15px 0 0;
   `,
 };
 
 const TabBar = styled.ul<{padded?: boolean} & SharedStyleTypes>`
   &&& {
     display: block;
-    font-size: 1.125rem;
+    font-size: 16px;
     font-family: 'skufont-demibold', sans-serif;
     margin: 0;
     margin-bottom: ${props => props.padded ? "20px" : 0};
