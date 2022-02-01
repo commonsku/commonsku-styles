@@ -3,13 +3,12 @@ import { format, getWeek } from 'date-fns';
 import { colors, } from '../Theme';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
-import { Tabs } from '../Tabs';
+import { Tabs, TabType } from '../Tabs';
 import styled from 'styled-components';
 import { Text } from '../Text';
 import {GearIcon, NextPrevIcon} from '../icons';
 import {Dropdown} from '../Dropdown';
 import { Button } from '../Button';
-import { TabType } from '../Tabs';
 
 const WeekNav = styled(Text)`
   display: inline-block;
@@ -46,7 +45,7 @@ export const TasksCalendarHeader = ({
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
             <Col start xs md={7} padded>
-                <Tabs size="small" tabs={tabs} />
+                <Tabs size="medium" tabs={tabs} />
             </Col>
             <Col end xs md={5} style={{fontSize: '0.8em'}}>
                 {showAddTaskBtn ? <Button onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
