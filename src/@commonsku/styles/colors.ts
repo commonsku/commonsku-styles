@@ -202,7 +202,7 @@ const colors = {
       main: secondary3['60'],
     },
     'TARGET': {
-      main: primary1['60'],
+      main: secondary1['50'],
     },
   },
   notes: {
