@@ -21,7 +21,9 @@ const DroppableFooter = ({tasks, ...props}: DroppableFooterProps) => {
   return (
     <Droppable droppableId={'footer-droppable'} key={'footer-droppable'} isDropDisabled>
       {(provided, snapshot) => (
-        <div {...droppableChildWrapperProps(provided, snapshot, { style: !tasks.length ? {minHeight: 0} : {minHeight: 0} })}>
+        <div {...droppableChildWrapperProps(provided, snapshot, {
+          style: { minHeight: 0, maxHeight: 300, overflow: 'auto' }
+        })}>
           {provided.placeholder}
           <DraggableCalendarFooterTasks {...props} tasks={tasks} />
         </div>
