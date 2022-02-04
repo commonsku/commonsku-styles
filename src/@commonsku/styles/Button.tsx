@@ -24,7 +24,7 @@ import { SizerCss, SizerTypes } from './Sizer';
 
 */
 
-const sizes = {
+export const sizes = {
   tiny: {
     'font-size': '.8em',
     'font-family': "'skufont-regular', sans-serif",
@@ -41,9 +41,10 @@ const sizes = {
     padding: '17px 50px',
   },
 };
+export type TSize = keyof typeof sizes;
 
 type ButtonProps = {
-  secondary?: boolean, cta?: boolean, size?: keyof typeof sizes
+  secondary?: boolean, cta?: boolean, size?: TSize
 } & SharedStyleTypes & SizerTypes;
 
 const getSizeStyle = (style: string, defaults: string) => {
