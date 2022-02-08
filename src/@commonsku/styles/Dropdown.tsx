@@ -69,7 +69,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export type DropdownItem = {
+export type TDropdownItem = {
     onClick?: Function|VoidFunction|null;
     props?: {
         [key: string]: any;
@@ -78,7 +78,7 @@ export type DropdownItem = {
     content: ReactNode|string|any;
 };
 export type DropdownProps = {
-    items?: Array<DropdownItem>;
+    items?: Array<TDropdownItem>;
     icon?: ReactNode;
     openMenu?: boolean;
     mouseLeaveCallback?: any;
