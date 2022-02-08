@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
-import { Button } from './Button';
+import { Button, TSize } from './Button';
 import { UpArrowIcon } from './icons';
 import { document } from '../utils';
 
@@ -69,13 +69,34 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 */
 `;
 
-export const Dropdown = ({ items, children, underlined, primary, text, icon, openMenu=false, mouseLeaveCallback, ...props }: {
-    items?: Array<{onClick?: Function|VoidFunction|null, props?:{[key: string]: any, underlined?:boolean}, content: ReactNode|string|any}>
-    children?: any
-    icon?: ReactNode
-    openMenu?: boolean
-    mouseLeaveCallback?: any
-} & DropdownContentProps) => {
+export type TDropdownItem = {
+    onClick?: Function|VoidFunction|null;
+    props?: {
+        [key: string]: any;
+        underlined?:boolean;
+    };
+    content: ReactNode|string|any;
+};
+export type DropdownProps = {
+    items?: Array<TDropdownItem>;
+    icon?: ReactNode;
+    openMenu?: boolean;
+    mouseLeaveCallback?: any;
+    size?: TSize;
+};
+
+export const Dropdown = ({
+    items,
+    children=undefined,
+    underlined,
+    primary,
+    text,
+    icon,
+    openMenu=false,
+    mouseLeaveCallback,
+    size,
+    ...props
+}: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
 
     const node = useRef();
     const [showMenu, setShowMenu] = useState(openMenu);
@@ -117,7 +138,7 @@ export const Dropdown = ({ items, children, underlined, primary, text, icon, ope
                         {icon}
                     </span>
                 :
-                    <Button cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
+                    <Button size={size} cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
                         {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
                     </Button>
                 }

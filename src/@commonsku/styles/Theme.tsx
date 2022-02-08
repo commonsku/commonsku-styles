@@ -2,6 +2,7 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
 import _ from 'lodash'
+import colorPalettes from "./colors";
 
 
 export const colors = {
@@ -32,6 +33,11 @@ export const colors = {
   primary2: '#00A0B6',
   primary20: '#00788A',
   primary200: '#004D59',
+
+  tableHeaderBg: '#F6FEFF',
+  tableBorder: '#edf2f5',
+
+  ...colorPalettes,
 };
 export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {

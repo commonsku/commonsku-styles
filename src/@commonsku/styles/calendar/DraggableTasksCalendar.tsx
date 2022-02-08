@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { getWeek, } from 'date-fns'
+import { getWeek, getYear } from 'date-fns'
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
 import { TabType } from '../Tabs';
@@ -71,7 +71,12 @@ const DraggableTasksCalendar = ({
     days: convertTasksToDays({ currentMonth, currentWeek, tasks, }).reduce(
       (acc, v) => ({ ...acc, [v.__id__]: v }), {}
     ),
-    footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false),
+    footerTasks: footerTasks.filter(
+      t => t.date
+        ? (getWeek(t.date) < currentWeek && getYear(t.date) === getYear(currentMonth))
+          || getYear(t.date) < getYear(currentMonth)
+        : false
+    ),
   });
   const [showWeekend, setShowWeekend] = useState(weekend);
 
@@ -88,8 +93,16 @@ const DraggableTasksCalendar = ({
   }, [currentMonth, currentWeek, tasks]);
 
   useEffect(() => {
-    setState(s => ({...s, footerTasks: footerTasks.filter(t => t.date ? getWeek(t.date) < currentWeek : false), }));
-  }, [footerTasks, currentWeek]);
+    setState(s => ({
+      ...s,
+      footerTasks: footerTasks.filter(
+        t => t.date
+          ? (getWeek(t.date) < currentWeek && getYear(t.date) === getYear(currentMonth))
+            || getYear(t.date) < getYear(currentMonth)
+          : false
+      ),
+    }));
+  }, [footerTasks, currentWeek, currentMonth]);
 
   const headerProps = {
     onNextWeek,
