@@ -9,6 +9,8 @@ import { Text } from '../Text';
 import {GearIcon, NextPrevIcon} from '../icons';
 import {Dropdown} from '../Dropdown';
 import { Button } from '../Button';
+import { TCalendarView, onClickViewFunc } from './types';
+import { H5 } from '..';
 
 const WeekNav = styled(Text)`
   display: inline-block;
@@ -28,6 +30,8 @@ export type TasksCalendarHeaderProps = {
     showAddTaskBtn?: boolean;
     onClickAddTask?: VoidFunction;
     tabs?: TabType[],
+    views?: TCalendarView[],
+    onClickView?: onClickViewFunc;
 };
 export const TasksCalendarHeader = ({
     onPrevWeek,
@@ -37,17 +41,40 @@ export const TasksCalendarHeader = ({
     onResetDate,
     selectedDate,
     tabs=[],
+    views=[],
     weekendsCheckbox,
     showAddTaskBtn=true,
     onClickAddTask,
+    onClickView,
 }: React.PropsWithChildren<TasksCalendarHeaderProps>) => {
     const isCurrentWeek = currentWeek === getWeek(selectedDate);
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
-            <Col start xs md={7} padded>
-                <Tabs size="medium" tabs={tabs} />
+            <Col start xs md={3} padded>
+                <H5>Calendar</H5>
             </Col>
-            <Col end xs md={5} style={{fontSize: '0.8em'}}>
+            <Col end xs md={9} padded>
+                {views && views.length ? <div style={{ display: 'inline-block', paddingLeft: 10, }}>
+                    {views.map((v, i) => (
+                        <div key={'view-'+i+v.type}
+                            onClick={() => {
+                                onClickView && onClickView(v.type, v);
+                            }}
+                            style={{
+                                display: 'inline-block',
+                                background: v.selected ? '#ffffff' : '#E1F7FA',
+                                color: '#00A0B6',
+                                border: `3px solid ${v.selected ? '#00A0B6' : '#E1F7FA'}`,
+                                borderRadius: '10px',
+                                width: 113,
+                                height: 41,
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                marginRight: 10,
+                            }}
+                        ><span style={{fontWeight: 'bold',}}>{v.title}</span></div>
+                    ))}
+                </div> : null}
                 {showAddTaskBtn ? <Button onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>
@@ -66,6 +93,9 @@ export const TasksCalendarHeader = ({
                     }} onClick={() => onResetDate()}>Today</span> : null}
                 </WeekNav>
                 <WeekNav style={{cursor: 'pointer', color: colors.primary, }} onClick={onNextWeek}><NextPrevIcon color={"#02C0DA"} width={".8rem"} next/></WeekNav>
+            </Col>
+            <Col start xs padded>
+                <Tabs size="medium" tabs={tabs} />
             </Col>
         </HeaderWrapper>
     );

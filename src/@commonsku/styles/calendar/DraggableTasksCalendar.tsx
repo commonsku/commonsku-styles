@@ -15,7 +15,7 @@ import { convertTasksToDays } from './TasksCalendar';
 import {LabeledCheckbox} from '../Input';
 import { useCalendarProps } from '../hooks/useCalendar';
 import Loading from '../icons/Loading';
-import { DaysObject, onClickTaskFunc, onUpdateTaskFunc } from './types';
+import { DaysObject, onClickTaskFunc, onUpdateTaskFunc, TCalendarView, onClickViewFunc } from './types';
 
 export type DraggableTasksCalendarProps = CalendarProps & {
   tasks: Array<CalendarTaskProps>;
@@ -32,6 +32,9 @@ export type DraggableTasksCalendarProps = CalendarProps & {
   showAddTaskBtn?: boolean;
   onClickAddTask?: VoidFunction;
   loading?: boolean;
+  views?: Array<TCalendarView>;
+  onClickView?: onClickViewFunc;
+  showFooterTasks?: boolean;
 } & useCalendarProps;
 
 type State = {
@@ -40,6 +43,7 @@ type State = {
 };
 
 const DraggableTasksCalendar = ({
+  views = [],
   tasks = [],
   onUpdateTask,
   onClickTask,
@@ -52,7 +56,9 @@ const DraggableTasksCalendar = ({
   onToggleWeekend,
   showAddTaskBtn=true,
   onClickAddTask,
+  onClickView,
   loading=false,
+  showFooterTasks=true,
   ...props
 }: DraggableTasksCalendarProps) => {
   const {
@@ -236,6 +242,8 @@ const DraggableTasksCalendar = ({
           onResetDate={onReset}
           tabs={headerTabs}
           weekendsCheckbox={weekendsCheckbox}
+          views={views}
+          onClickView={onClickView}
         />
         <div className="calendar-scroll">
           <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={weekendsCheckbox} weekend={showWeekend} />
@@ -269,7 +277,7 @@ const DraggableTasksCalendar = ({
             }}
           />}
         </div>
-        <DroppableFooter
+        {showFooterTasks ? <DroppableFooter
           tasks={state.footerTasks}
           onClickTask={onClickTask}
           onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
@@ -293,7 +301,7 @@ const DraggableTasksCalendar = ({
             })();
           }}
           {...headerProps}
-        />
+        /> : null}
       </CalendarWrapper>
     </DragDropContext>
   );
