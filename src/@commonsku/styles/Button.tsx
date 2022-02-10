@@ -48,14 +48,13 @@ type ButtonVariant = 'primary'
   | 'secondary'
   | 'cta'
   | 'error'
-  | 'locked'
+  | 'disabled'
   | 'text'
   | 'primary-outline'
   | 'secondary-outline'
   | 'cta-outline'
   | 'error-outline'
-  | 'locked-outline'
-  | 'text-outline';
+  | 'disabled-outline';
 
 type ButtonProps = {
   secondary?: boolean;
@@ -75,70 +74,143 @@ const getSizeStyle = (style: string, defaults: string) => {
 
 const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject => {
   const white = getThemeColor(props, 'neutrals.white', colors.neutrals.white);
+  const disabled = getThemeColor(props, 'neutrals.50', colors.errors['50']);
+  const disabledText = getThemeColor(props, 'neutrals.70', colors.errors['70']);
+
   const primary = getThemeColor(props, 'primary1.main', colors.primary1.main);
+  const primaryDark = getThemeColor(props, 'primary1.75', colors.primary1['75']);
+  const primaryLight = getThemeColor(props, 'primary1.20', colors.primary1['20']);
+
   const secondary = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
+  const secondaryDark = getThemeColor(props, 'secondary1.80', colors.secondary1['80']);
+  const secondaryLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
+
+  const error = getThemeColor(props, 'errors.main', colors.errors.main);
+  const errorDark = getThemeColor(props, 'errors.80', colors.errors['80']);
+  const errorLight = getThemeColor(props, 'errors.20', colors.errors['20']);
 
   switch (variant) {
     case 'primary':
       return {
-        background: primary,
         borderWidth: 3,
         borderStyle: 'solid',
         borderColor: primary,
+        background: primary,
         color: white,
         ':hover': {
-          color: primary,
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: primary,
-          background: white,
-        },
-      };
-    case 'secondary':
-      return {
-        background: secondary,
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: secondary,
-        color: white,
-        ':hover': {
-          color: secondary,
-          borderWidth: 3,
-          borderStyle: 'solid',
-          borderColor: secondary,
-          background: white,
+          borderColor: primaryDark,
+          background: primaryDark,
+          color: white,
         },
       };
     case 'primary-outline':
       return {
-        background: white,
         borderWidth: 3,
         borderStyle: 'solid',
         borderColor: primary,
+        background: white,
         color: primary,
         ':hover': {
           borderWidth: 3,
           borderStyle: 'solid',
           borderColor: primary,
-          background: primary,
+          background: primaryLight,
+          color: primary,
+        },
+      };
+    case 'secondary':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: secondary,
+        background: secondary,
+        color: white,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: secondaryDark,
+          background: secondaryDark,
           color: white,
         },
       };
     case 'secondary-outline':
       return {
-        background: white,
         borderWidth: 3,
         borderStyle: 'solid',
         borderColor: secondary,
+        background: white,
         color: secondary,
         ':hover': {
           borderWidth: 3,
           borderStyle: 'solid',
           borderColor: secondary,
-          background: secondary,
+          background: secondaryLight,
+          color: secondary,
+        },
+      };
+    case 'error':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: error,
+        background: error,
+        color: white,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: errorDark,
+          background: errorDark,
           color: white,
         },
       };
+    case 'error-outline':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: error,
+        background: white,
+        color: error,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: error,
+          background: errorLight,
+          color: error,
+        },
+      };
+    case 'disabled':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: disabled,
+        background: disabled,
+        color: disabledText,
+      };
+    case 'disabled-outline':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: disabled,
+        background: white,
+        color: disabledText,
+      };
+      case 'text':
+        return {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: white,
+          background: white,
+          color: primary,
+          ':hover': {
+            borderWidth: 3,
+            borderStyle: 'solid',
+            borderColor: primaryLight,
+            background: primaryLight,
+            color: primary,
+          },
+        };
     default:
       return {};
   }

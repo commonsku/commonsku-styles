@@ -525,6 +525,11 @@ const App = () => {
             <Button mr={10} variant="primary-outline">Primary Outline</Button>
             <Button mr={10} variant="secondary" hoverType="full">Secondary</Button>
             <Button mr={10} variant="secondary-outline">Secondary Outline</Button>
+            <Button mr={10} variant="error">Error</Button>
+            <Button mr={10} variant="error-outline">Error Outline</Button>
+            <Button mr={10} variant="disabled">Disabled</Button>
+            <Button mr={10} variant="disabled-outline">Disabled Outline</Button>
+            <Button mr={10} variant="text">Text</Button>
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
