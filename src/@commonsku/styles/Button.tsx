@@ -37,7 +37,6 @@ export const sizes = {
     padding: '7px 15px',
   },
   medium: {
-    'font-family': "'skufont-regular', sans-serif",
     padding: '9px 24px',
   },
   large: {
