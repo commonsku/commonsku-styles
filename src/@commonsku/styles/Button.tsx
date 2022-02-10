@@ -268,12 +268,12 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
 type IconFuncProps = { fill: string; [key: string]: any };
 export type IconButtonProps = ButtonProps & {
   Icon: React.ReactNode | ((props: IconFuncProps) => React.ReactElement);
-  iconRight?: boolean;
+  iconPosition?: 'left' | 'right';
 };
 export function IconButton({
   Icon,
   children,
-  iconRight=false,
+  iconPosition='left',
   ...props
 }: IconButtonProps) {
   const variantStyles = props.variant
@@ -284,21 +284,21 @@ export function IconButton({
     const BtnIcon = typeof Icon === 'function'
       ? <Icon fill={variantStyles.color || '#fff'} />
       : Icon;
-    
+
     return (
       <span style={{
-        paddingLeft: children && iconRight ? 5 : 0,
-        paddingRight: children && !iconRight ? 5 : 0,
+        paddingLeft: children && iconPosition === 'right' ? 5 : 0,
+        paddingRight: children && iconPosition !== 'right' ? 5 : 0,
         display: 'inline-block',
       }}>{BtnIcon}</span>
     );
-  }, [variantStyles.color, Icon, children, iconRight]);
+  }, [variantStyles.color, Icon, children, iconPosition]);
 
   return (
     <Button {...props}>
-      {!iconRight ? RenderIcon : null}
+      {iconPosition !== 'right' ? RenderIcon : null}
       {children}
-      {iconRight ? RenderIcon : null}
+      {iconPosition === 'right' ? RenderIcon : null}
     </Button>
   );
 }

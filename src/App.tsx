@@ -527,9 +527,9 @@ const App = () => {
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta">CTA</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta-outline">CTA Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
+            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled">Disabled</IconButton>
-            <IconButton iconRight Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
+            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" />
 
