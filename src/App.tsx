@@ -525,12 +525,6 @@ const App = () => {
             <Button mr={10} variant="primary-outline">Primary Outline</Button>
             <Button mr={10} variant="secondary" hoverType="full">Secondary</Button>
             <Button mr={10} variant="secondary-outline">Secondary Outline</Button>
-            <br />
-            <br />
-            <Button mr={10} variant="primary" hoverVariant="secondary">Primary:Hover secondary</Button>
-            <Button mr={10} variant="primary-outline" hoverVariant="secondary">Primary Outline:Hover secondary</Button>
-            <Button mr={10} variant="secondary" hoverVariant="primary">Secondary:Hover primary</Button>
-            <Button mr={10} variant="secondary-outline" hoverVariant="primary">Secondary Outline:Hover primary</Button>
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
