@@ -41,3 +41,4 @@ export { default as CheckmarkIcon } from './CheckmarkIcon';
 export { default as LeftArrowIcon } from './LeftArrowIcon';
 export { default as RightArrowIcon } from './RightArrowIcon';
 export { default as BulletIcon } from './BulletIcon';
+export { default as UserIcon } from './UserIcon';

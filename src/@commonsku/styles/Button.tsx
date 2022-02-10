@@ -1,3 +1,4 @@
+import React from 'react';
 import { get } from 'lodash';
 import styled, { css, CSSObject } from 'styled-components'
 import { getThemeColor } from './Theme';
@@ -51,7 +52,6 @@ type ButtonVariant = 'primary'
   | 'disabled'
   | 'text'
   | 'primary-outline'
-  | 'secondary-outline'
   | 'cta-outline'
   | 'error-outline'
   | 'disabled-outline';
@@ -81,9 +81,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
   const primaryDark = getThemeColor(props, 'primary1.75', colors.primary1['75']);
   const primaryLight = getThemeColor(props, 'primary1.20', colors.primary1['20']);
 
-  const secondary = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
-  const secondaryDark = getThemeColor(props, 'secondary1.80', colors.secondary1['80']);
-  const secondaryLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
+  const cta = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
+  const ctaDark = getThemeColor(props, 'secondary1.80', colors.secondary1['80']);
+  const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
 
   const error = getThemeColor(props, 'errors.main', colors.errors.main);
   const errorDark = getThemeColor(props, 'errors.80', colors.errors['80']);
@@ -105,6 +105,7 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           color: white,
         },
       };
+    case 'secondary':
     case 'primary-outline':
       return {
         borderWidth: 3,
@@ -120,34 +121,34 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           color: primary,
         },
       };
-    case 'secondary':
+    case 'cta':
       return {
         borderWidth: 3,
         borderStyle: 'solid',
-        borderColor: secondary,
-        background: secondary,
+        borderColor: cta,
+        background: cta,
         color: white,
         ':hover': {
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: secondaryDark,
-          background: secondaryDark,
+          borderColor: ctaDark,
+          background: ctaDark,
           color: white,
         },
       };
-    case 'secondary-outline':
+    case 'cta-outline':
       return {
         borderWidth: 3,
         borderStyle: 'solid',
-        borderColor: secondary,
+        borderColor: cta,
         background: white,
-        color: secondary,
+        color: cta,
         ':hover': {
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: secondary,
-          background: secondaryLight,
-          color: secondary,
+          borderColor: cta,
+          background: ctaLight,
+          color: cta,
         },
       };
     case 'error':
@@ -263,5 +264,27 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
     ${SizerCss}
   }
 `;
+
+export type IconButtonProps = ButtonProps & {
+  Icon: (props: { fill: string; [key: string]: any }) => React.ReactElement;
+};
+export function IconButton({
+  Icon,
+  children,
+  ...props
+}: IconButtonProps) {
+  const variantStyles = props.variant
+    ? getVariantStyles(props, props.variant)
+    : { color: '#fff' };
+  
+  return (
+    <Button {...props}>
+      <span style={{ paddingRight: 5, display: 'inline-block' }}>
+        <Icon fill={variantStyles.color || '#fff'} />
+      </span>
+      {children}
+    </Button>
+  );
+}
 
 export {Button};

@@ -69,12 +69,12 @@ export const themeOptions = {
 
 export function getColor(color?: string, def?: string): string {
   // @ts-ignore
-  return color && colors[color] ? colors[color] : colors[def];
+  return _.get(colors, color, _.get(colors, def, ''));
 }
 
 export function getFontSize(value?: string, def?: string): string {
   // @ts-ignore
-  return value && fontSizes[value] ? fontSizes[value] : fontSizes[def];
+  return _.get(fontSizes, value, _.get(fontSizes, def, ''));
 }
 
 export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {

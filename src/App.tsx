@@ -7,7 +7,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -69,6 +69,7 @@ import {
     NavManagementIcon,
     NavResourcesIcon,
     LabeledMultiProgress,
+    IconButton,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 
@@ -521,15 +522,15 @@ const App = () => {
             </div>
 
             <H5>Button Variants</H5>
-            <Button mr={10} variant="primary">Primary</Button>
-            <Button mr={10} variant="primary-outline">Primary Outline</Button>
-            <Button mr={10} variant="secondary" hoverType="full">Secondary</Button>
-            <Button mr={10} variant="secondary-outline">Secondary Outline</Button>
-            <Button mr={10} variant="error">Error</Button>
-            <Button mr={10} variant="error-outline">Error Outline</Button>
-            <Button mr={10} variant="disabled">Disabled</Button>
-            <Button mr={10} variant="disabled-outline">Disabled Outline</Button>
-            <Button mr={10} variant="text">Text</Button>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary">Primary</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary">Secondary</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta">CTA</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta-outline">CTA Outline</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled">Disabled</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
