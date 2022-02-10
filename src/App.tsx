@@ -529,8 +529,9 @@ const App = () => {
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled">Disabled</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
+            <IconButton iconRight Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" />
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar

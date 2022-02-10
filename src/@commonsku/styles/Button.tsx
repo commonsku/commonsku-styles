@@ -265,24 +265,40 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
+type IconFuncProps = { fill: string; [key: string]: any };
 export type IconButtonProps = ButtonProps & {
-  Icon: (props: { fill: string; [key: string]: any }) => React.ReactElement;
+  Icon: React.ReactNode | ((props: IconFuncProps) => React.ReactElement);
+  iconRight?: boolean;
 };
 export function IconButton({
   Icon,
   children,
+  iconRight=false,
   ...props
 }: IconButtonProps) {
   const variantStyles = props.variant
     ? getVariantStyles(props, props.variant)
     : { color: '#fff' };
-  
+
+  const RenderIcon = React.useMemo(() => {
+    const BtnIcon = typeof Icon === 'function'
+      ? <Icon fill={variantStyles.color || '#fff'} />
+      : Icon;
+    
+    return (
+      <span style={{
+        paddingLeft: children && iconRight ? 5 : 0,
+        paddingRight: children && !iconRight ? 5 : 0,
+        display: 'inline-block',
+      }}>{BtnIcon}</span>
+    );
+  }, [variantStyles.color, Icon, children, iconRight]);
+
   return (
     <Button {...props}>
-      <span style={{ paddingRight: 5, display: 'inline-block' }}>
-        <Icon fill={variantStyles.color || '#fff'} />
-      </span>
+      {!iconRight ? RenderIcon : null}
       {children}
+      {iconRight ? RenderIcon : null}
     </Button>
   );
 }
