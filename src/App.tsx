@@ -592,7 +592,8 @@ const App = () => {
                 },
               ]}
               views={[
-                { type: 'TASK', title: 'Tasks', selected: true },
+                { type: 'TASK', title: 'Tasks', selected: true, Icon: UserIcon },
+                { type: 'PROJECT', title: 'Projects', selected: false },
               ]}
               onClickView={() => {}}
             />

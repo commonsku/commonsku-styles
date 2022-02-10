@@ -6,11 +6,11 @@ import HeaderWrapper from './HeaderWrapper';
 import { Tabs, TabType } from '../Tabs';
 import styled from 'styled-components';
 import { Text } from '../Text';
-import {GearIcon, NextPrevIcon} from '../icons';
+import { GearIcon, NextPrevIcon, UserIcon } from '../icons';
 import {Dropdown} from '../Dropdown';
-import { Button } from '../Button';
+import { Button, IconButton } from '../Button';
+import { H5 } from '../Headings';
 import { TCalendarView, onClickViewFunc } from './types';
-import { H5 } from '..';
 
 const WeekNav = styled(Text)`
   display: inline-block;
@@ -55,27 +55,30 @@ export const TasksCalendarHeader = ({
             </Col>
             <Col end xs md={9} padded>
                 {views && views.length ? <div style={{ display: 'inline-block', paddingLeft: 10, }}>
-                    {views.map((v, i) => (
-                        <div key={'view-'+i+v.type}
-                            onClick={() => {
+                    {views.map((v, i) => {
+                        const btnProps = {
+                            mr: 10,
+                            variant: v.selected ? 'secondary' : 'primary-light',
+                            size: "medium",
+                            onClick: () => {
                                 onClickView && onClickView(v.type, v);
-                            }}
-                            style={{
-                                display: 'inline-block',
-                                background: v.selected ? '#ffffff' : '#E1F7FA',
-                                color: '#00A0B6',
-                                border: `3px solid ${v.selected ? '#00A0B6' : '#E1F7FA'}`,
-                                borderRadius: '10px',
-                                width: 113,
-                                height: 41,
-                                textAlign: 'center',
-                                cursor: 'pointer',
-                                marginRight: 10,
-                            }}
-                        ><span style={{fontWeight: 'bold',}}>{v.title}</span></div>
-                    ))}
+                            },
+                            children: v.title,
+                        };
+                        if (v.Icon) {
+                            return <IconButton
+                                {...btnProps}
+                                Icon={v.Icon}
+                                size="medium"
+                                variant={v.selected ? 'secondary' : 'primary-light'}
+                            />
+                        }
+                        return (
+                            <Button {...btnProps} />
+                        );
+                    })}
                 </div> : null}
-                {showAddTaskBtn ? <Button onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
+                {showAddTaskBtn ? <Button size="medium" onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>
                 </Dropdown>
