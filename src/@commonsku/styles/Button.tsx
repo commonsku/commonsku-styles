@@ -52,6 +52,7 @@ type ButtonVariant = 'primary'
   | 'disabled'
   | 'text'
   | 'primary-outline'
+  | 'primary-light'
   | 'cta-outline'
   | 'error-outline'
   | 'disabled-outline';
@@ -118,6 +119,21 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           borderStyle: 'solid',
           borderColor: primary,
           background: primaryLight,
+          color: primary,
+        },
+      };
+    case 'primary-light':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: primaryLight,
+        background: primaryLight,
+        color: primary,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: primaryLight,
+          background: white,
           color: primary,
         },
       };

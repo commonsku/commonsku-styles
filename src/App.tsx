@@ -524,6 +524,7 @@ const App = () => {
             <H5>Button Variants</H5>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary">Primary</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary">Secondary</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary-light">Primary Light</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta">CTA</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta-outline">CTA Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
@@ -591,7 +592,7 @@ const App = () => {
                 },
               ]}
               views={[
-
+                { type: 'TASK', title: 'Tasks', selected: true },
               ]}
               onClickView={() => {}}
             />
