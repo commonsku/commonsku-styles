@@ -46,16 +46,22 @@ export type TSize = keyof typeof sizes;
 
 type ButtonVariant = 'primary'
   | 'secondary'
+  | 'cta'
+  | 'error'
+  | 'locked'
+  | 'text'
   | 'primary-outline'
-  | 'secondary-outline';
-type ButtonHoverVariant = 'primary' | 'secondary';
+  | 'secondary-outline'
+  | 'cta-outline'
+  | 'error-outline'
+  | 'locked-outline'
+  | 'text-outline';
 
 type ButtonProps = {
   secondary?: boolean;
   cta?: boolean;
   size?: TSize;
-  variant?: ButtonVariant,
-  hoverVariant?: ButtonHoverVariant,
+  variant?: ButtonVariant
 } & SharedStyleTypes & SizerTypes;
 
 const getSizeStyle = (style: string, defaults: string) => {
@@ -67,7 +73,7 @@ const getSizeStyle = (style: string, defaults: string) => {
   };
 }
 
-const getVariantStyles = (props: ButtonProps, variant: ButtonVariant, hoverVariant?: ButtonHoverVariant): CSSObject => {
+const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject => {
   const white = getThemeColor(props, 'neutrals.white', colors.neutrals.white);
   const primary = getThemeColor(props, 'primary1.main', colors.primary1.main);
   const secondary = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
@@ -81,10 +87,10 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant, hoverVaria
         borderColor: primary,
         color: white,
         ':hover': {
-          color: hoverVariant === 'secondary' ? secondary : primary,
+          color: primary,
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: hoverVariant === 'secondary' ? secondary : primary,
+          borderColor: primary,
           background: white,
         },
       };
@@ -96,10 +102,10 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant, hoverVaria
         borderColor: secondary,
         color: white,
         ':hover': {
-          color: hoverVariant === 'primary' ? primary : secondary,
+          color: secondary,
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: hoverVariant === 'primary' ? primary : secondary,
+          borderColor: secondary,
           background: white,
         },
       };
@@ -113,8 +119,8 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant, hoverVaria
         ':hover': {
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: hoverVariant === 'secondary' ? secondary : primary,
-          background: hoverVariant === 'secondary' ? secondary : primary,
+          borderColor: primary,
+          background: primary,
           color: white,
         },
       };
@@ -128,8 +134,8 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant, hoverVaria
         ':hover': {
           borderWidth: 3,
           borderStyle: 'solid',
-          borderColor: hoverVariant === 'primary' ? primary : secondary,
-          background: hoverVariant === 'primary' ? primary : secondary,
+          borderColor: secondary,
+          background: secondary,
           color: white,
         },
       };
@@ -168,7 +174,7 @@ const Button = styled.button<ButtonProps>`
       cursor: default;
       opacity: 0.5;
     }
-    ${p => css(p.variant ? getVariantStyles(p, p.variant, p.hoverVariant): {})}
+    ${p => css(p.variant ? getVariantStyles(p, p.variant): {})}
     ${SharedStyles}
     ${SizerCss}
   }
