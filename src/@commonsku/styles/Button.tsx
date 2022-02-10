@@ -1,8 +1,9 @@
 import { get } from 'lodash';
-import styled from 'styled-components'
+import styled, { css, CSSObject } from 'styled-components'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
+import colors from './colors';
 
 /*
 
@@ -43,8 +44,18 @@ export const sizes = {
 };
 export type TSize = keyof typeof sizes;
 
+type ButtonVariant = 'primary'
+  | 'secondary'
+  | 'primary-outline'
+  | 'secondary-outline';
+type ButtonHoverVariant = 'primary' | 'secondary';
+
 type ButtonProps = {
-  secondary?: boolean, cta?: boolean, size?: TSize
+  secondary?: boolean;
+  cta?: boolean;
+  size?: TSize;
+  variant?: ButtonVariant,
+  hoverVariant?: ButtonHoverVariant,
 } & SharedStyleTypes & SizerTypes;
 
 const getSizeStyle = (style: string, defaults: string) => {
@@ -55,6 +66,77 @@ const getSizeStyle = (style: string, defaults: string) => {
     return defaults;
   };
 }
+
+const getVariantStyles = (props: ButtonProps, variant: ButtonVariant, hoverVariant?: ButtonHoverVariant): CSSObject => {
+  const white = getThemeColor(props, 'neutrals.white', colors.neutrals.white);
+  const primary = getThemeColor(props, 'primary1.main', colors.primary1.main);
+  const secondary = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
+
+  switch (variant) {
+    case 'primary':
+      return {
+        background: primary,
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: primary,
+        color: white,
+        ':hover': {
+          color: hoverVariant === 'secondary' ? secondary : primary,
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: hoverVariant === 'secondary' ? secondary : primary,
+          background: white,
+        },
+      };
+    case 'secondary':
+      return {
+        background: secondary,
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: secondary,
+        color: white,
+        ':hover': {
+          color: hoverVariant === 'primary' ? primary : secondary,
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: hoverVariant === 'primary' ? primary : secondary,
+          background: white,
+        },
+      };
+    case 'primary-outline':
+      return {
+        background: white,
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: primary,
+        color: primary,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: hoverVariant === 'secondary' ? secondary : primary,
+          background: hoverVariant === 'secondary' ? secondary : primary,
+          color: white,
+        },
+      };
+    case 'secondary-outline':
+      return {
+        background: white,
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: secondary,
+        color: secondary,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: hoverVariant === 'primary' ? primary : secondary,
+          background: hoverVariant === 'primary' ? primary : secondary,
+          color: white,
+        },
+      };
+    default:
+      return {};
+  }
+};
 
 const Button = styled.button<ButtonProps>`
   &&& {
@@ -86,6 +168,7 @@ const Button = styled.button<ButtonProps>`
       cursor: default;
       opacity: 0.5;
     }
+    ${p => css(p.variant ? getVariantStyles(p, p.variant, p.hoverVariant): {})}
     ${SharedStyles}
     ${SizerCss}
   }
