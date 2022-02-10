@@ -31,16 +31,25 @@ export const sizes = {
     'font-size': '.8em',
     'font-family': "'skufont-regular', sans-serif",
     padding: '5px 5px',
+    borderedPadding: '4px 5px',
   },
   small: {
     'font-family': "'skufont-regular', sans-serif",
     padding: '7px 15px',
+    borderedPadding: '6px 15px',
+  },
+  medium: {
+    'font-family': "'skufont-regular', sans-serif",
+    padding: '9px 24px',
+    borderedPadding: '8px 24px',
   },
   large: {
     padding: '17px 30px',
+    borderedPadding: '16px 30px',
   },
   xl: {
     padding: '17px 50px',
+    borderedPadding: '16px 50px',
   },
 };
 export type TSize = keyof typeof sizes;
@@ -244,7 +253,7 @@ const Button = styled.button<ButtonProps>`
     color: ${props => props.secondary ? getThemeColor(props, 'primary') : "white"};
     border-color: ${props => props.cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')};
     font-size: ${getSizeStyle('font-size', '1em')};
-    padding: ${getSizeStyle('padding', '12px 25px')};
+    padding: ${p => getSizeStyle(p.variant ? 'borderedPadding' : 'padding', '12px 25px')};
     font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
     cursor: pointer;
     vertical-align: top;
