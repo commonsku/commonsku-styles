@@ -51,34 +51,36 @@ export const TasksCalendarHeader = ({
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
             <Col start xs md={3} padded>
-                <H5>Calendar</H5>
+                <H5 style={{marginTop: 10}}>Calendar</H5>
             </Col>
             <Col end xs md={9} padded>
-                {views && views.length ? <div style={{ display: 'inline-block', paddingLeft: 10, }}>
-                    {views.map((v, i) => {
-                        const btnProps = {
-                            mr: 10,
-                            variant: v.selected ? 'secondary' : 'primary-light',
-                            size: "medium",
-                            onClick: () => {
-                                onClickView && onClickView(v.type, v);
-                            },
-                            children: v.title,
-                        };
-                        if (v.Icon) {
-                            return <IconButton
-                                {...btnProps}
-                                Icon={v.Icon}
-                                size="medium"
-                                variant={v.selected ? 'secondary' : 'primary-light'}
-                            />
-                        }
-                        return (
-                            <Button {...btnProps} />
-                        );
-                    })}
-                </div> : null}
-                {showAddTaskBtn ? <Button size="medium" onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
+                <div style={{ display: 'inline-block', paddingLeft: 10, verticalAlign: 'middle', }}>
+                    {views && views.length ? <>
+                        {views.map((v, i) => {
+                            const btnProps = {
+                                mr: 10,
+                                variant: v.selected ? 'secondary' : 'primary-light',
+                                size: "medium",
+                                onClick: () => {
+                                    onClickView && onClickView(v.type, v);
+                                },
+                                children: v.title,
+                            };
+                            if (v.Icon) {
+                                return <IconButton
+                                    {...btnProps}
+                                    Icon={v.Icon}
+                                    size="medium"
+                                    variant={v.selected ? 'secondary' : 'primary-light'}
+                                />
+                            }
+                            return (
+                                <Button {...btnProps} />
+                            );
+                        })}
+                    </> : null}
+                    {showAddTaskBtn ? <Button size="medium" onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
+                </div>
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>
                 </Dropdown>
