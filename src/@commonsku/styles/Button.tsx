@@ -310,6 +310,7 @@ export function IconButton({
         paddingLeft: children && iconPosition === 'right' ? 5 : 0,
         paddingRight: children && iconPosition !== 'right' ? 5 : 0,
         display: 'inline-block',
+        verticalAlign: 'top',
         maxHeight: 20,
       }}>{BtnIcon}</span>
     );
