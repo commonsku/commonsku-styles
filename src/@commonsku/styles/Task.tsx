@@ -144,7 +144,7 @@ const CalendarTask = React.forwardRef(({
           onClick={e => { e.preventDefault(); }}
           style={{fontWeight: 'bold', }}
         >
-          <TaskName style={{width: '80%'}}>{title}</TaskName>
+          <TaskName style={{width: hideCheckbox && Icon ? '80%' : '100%'}}>{title}</TaskName>
           {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
           {hideCheckbox && Icon ? Icon : null}
         </TaskLabel>
