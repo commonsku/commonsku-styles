@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { isSameDay, getWeek, startOfWeek, lastDayOfWeek } from 'date-fns';
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
-import { TabType } from '../Tabs';
+import { TTab } from '../Tabs';
 import { useCalendar } from '../hooks';
 import { getDatesBetween } from '../hooks/useCalendar';
 import CalendarDaysBody from './CalendarDaysBody';
@@ -28,7 +28,7 @@ export function convertTasksToDays({ currentMonth, currentWeek, tasks, }: { curr
 
 type TasksCalendarProps = CalendarProps & {
     tasks: Array<CalendarTaskProps>;
-    headerTabs?: Array<TabType>;
+    headerTabs?: Array<TTab>;
     footerTasks?: Array<CalendarTaskProps>;
     components?: {
         Header?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;

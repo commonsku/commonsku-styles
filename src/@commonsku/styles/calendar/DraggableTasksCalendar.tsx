@@ -4,7 +4,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { getWeek, getYear } from 'date-fns'
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
-import { TabType } from '../Tabs';
+import { TTab } from '../Tabs';
 import { useCalendar } from '../hooks';
 import CalendarDaysHeader from './CalendarDaysHeader';
 import CalendarWrapper from './CalendarWrapper';
@@ -21,7 +21,7 @@ export type DraggableTasksCalendarProps = CalendarProps & {
   tasks: Array<CalendarTaskProps>;
   onUpdateTask: onUpdateTaskFunc;
   onClickTask?: onClickTaskFunc;
-  headerTabs?: Array<TabType>;
+  headerTabs?: Array<TTab>;
   footerTasks?: Array<CalendarTaskProps>;
   weekend?: boolean;
   components?: {

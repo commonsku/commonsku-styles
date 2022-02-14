@@ -3,7 +3,7 @@ import { format, getWeek } from 'date-fns';
 import { colors, } from '../Theme';
 import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
-import { Tabs, TabType } from '../Tabs';
+import { Tabs, TTab } from '../Tabs';
 import styled from 'styled-components';
 import { Text } from '../Text';
 import { GearIcon, NextPrevIcon, UserIcon } from '../icons';
@@ -29,7 +29,7 @@ export type TasksCalendarHeaderProps = {
     weekendsCheckbox: ReactNode;
     showAddTaskBtn?: boolean;
     onClickAddTask?: VoidFunction;
-    tabs?: TabType[],
+    tabs?: TTab[],
     views?: TCalendarView[],
     onClickView?: onClickViewFunc;
 };
