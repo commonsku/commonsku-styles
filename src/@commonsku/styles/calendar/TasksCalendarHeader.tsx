@@ -79,7 +79,14 @@ export const TasksCalendarHeader = ({
                             );
                         })}
                     </> : null}
-                    {showAddTaskBtn ? <Button size="medium" onClick={onClickAddTask} style={{marginRight: 10, verticalAlign: 'bottom',}}>+ Add Task</Button> : null}
+                    {showAddTaskBtn ?
+                        <Button
+                            variant="primary"
+                            size="medium"
+                            onClick={onClickAddTask}
+                            style={{marginRight: 10, verticalAlign: 'bottom',}}
+                        >+ Add Task</Button>
+                    : null}
                 </div>
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>

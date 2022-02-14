@@ -77,6 +77,7 @@ export type CalendarTaskProps = {
   overdue?: boolean;
   onClickCheckbox?: (checked?: boolean) => any;
   isDescriptionHtml?: boolean;
+  draggable?: boolean;
 };
 
 const CalendarTask = React.forwardRef(({
