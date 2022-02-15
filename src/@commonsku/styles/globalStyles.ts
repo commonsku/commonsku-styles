@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { createGlobalStyle as baseCreateGlobalStyle, CSSObject, DefaultTheme, ThemedStyledProps } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 type ColorObj = {[key: string]: string | ColorObj};
-const parseColorVars = (colors: ColorObj, prefix: string = '') => {
+const parseColorVars = (colors: ColorObj, prefix: string = ''): string => {
   return Object.keys(colors).map(k => {
     const v = colors[k];
     const key = (prefix ? `${prefix}-` : '') + k.replaceAll(' ', '_');
@@ -17,7 +17,7 @@ const parseColorVars = (colors: ColorObj, prefix: string = '') => {
   }).join('\n');
 };
 
-const createGlobalStyle = (styles?: (props?: ThemedStyledProps<object, DefaultTheme>) => string|CSSObject) => baseCreateGlobalStyle`
+const GlobalStyle = createGlobalStyle`
 :root {
   ${p => {
     const fontFamilies = _.get(p, ['theme', 'fontFamilies'], {});
@@ -38,8 +38,6 @@ const createGlobalStyle = (styles?: (props?: ThemedStyledProps<object, DefaultTh
 
   ${p => parseColorVars(_.get(p, ['theme', 'colors'], {}), '')}
 }
-${styles}
-`
+`;
 
-const GlobalStyle = createGlobalStyle();
 export default GlobalStyle;
