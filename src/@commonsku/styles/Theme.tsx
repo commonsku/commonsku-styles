@@ -51,6 +51,20 @@ export const themeOptions = {
   colors,
   fonts,
   fontFamily: `${fonts.join(",")}`,
+  fontFamilies: {
+    regular: "'skufont-regular'",
+    demibold: "'skufont-demibold'",
+    bold: "'skufont-demibold'",
+    medium: "'skufont-medium'",
+    fallbacks: [
+      '"museo-sans"',
+      '"Helvetica Neue"',
+      'Helvetica',
+      'Roboto',
+      'Arial',
+      'sans-serif',
+    ],
+  },
   fontSizes,
   space: {
     '0': '0px',
@@ -108,17 +122,16 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
 }
 
 
-//use globalStyles with care, currently anchored to body
 const Theme = ({ theme={}, globalStyles=false, children }: React.PropsWithChildren<{
   theme?: object, globalStyles?: boolean
-}>) => (
-  <ThemeProvider theme={{
-    ...themeOptions,
-    ...theme,
-  }}>
-    {globalStyles ? <GlobalStyle /> : null}
-    {children}
-  </ThemeProvider>
-);
+}>) => {
+  const mergedTheme = _.merge(themeOptions, theme);
+  return (
+    <ThemeProvider theme={mergedTheme}>
+      {globalStyles ? <GlobalStyle theme={mergedTheme} /> : null}
+      {children}
+    </ThemeProvider>
+  );
+};
 
 export default Theme;
