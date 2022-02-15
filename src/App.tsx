@@ -450,7 +450,7 @@ const App = () => {
     console.log(e)
   }
 
-  return <Theme><Page>
+  return <Theme globalStyles><Page>
     <SidePanel title="Panel Title"
       // fullWidthTitle
       controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}

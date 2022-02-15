@@ -82,13 +82,13 @@ export const themeOptions = {
 }
 
 export function getColor(color?: string, def?: string): string {
-  // @ts-ignore
-  return _.get(colors, color, _.get(colors, def, ''));
+  if (!color) { return ''; }
+  return _.get(colors, color, _.get(colors, def || '', ''));
 }
 
 export function getFontSize(value?: string, def?: string): string {
-  // @ts-ignore
-  return _.get(fontSizes, value, _.get(fontSizes, def, ''));
+  if (!value) { return ''; }
+  return _.get(fontSizes, value, _.get(fontSizes, def || '', ''));
 }
 
 export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
@@ -111,14 +111,17 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
       return props.theme[prop];
     }
   }
-  // @ts-ignore
-  return prop === 'fontSizes' 
-    ? getFontSize(fallbackValue, value)
-    : prop === 'colors'
-    ? getColor(fallbackValue, value)
-    : prop === 'fontFamily'
-    ? themeOptions.fontFamily
-    : null;
+
+  switch (prop) {
+    case 'fontSizes':
+      return getFontSize(fallbackValue, value);
+    case 'colors':
+      return getColor(fallbackValue, value);
+    case 'fontFamily':
+      return themeOptions.fontFamily;
+    default:
+      return '';
+  }
 }
 
 
