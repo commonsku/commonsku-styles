@@ -25,7 +25,7 @@ const DraggableTaskBody = ({
           <Col onClick={(e: React.MouseEvent) => { onClickTask && onClickTask(task); }}>
             <CalendarTask {...task}
               date={undefined}
-              onClickCheckbox={(completed: boolean) => {
+              onClickCheckbox={(completed) => {
                 if (onUpdateTask) {
                   onUpdateTask({ ...task, completed, }, {
                     index,

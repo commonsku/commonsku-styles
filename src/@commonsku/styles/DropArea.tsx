@@ -68,10 +68,13 @@ const ImgPreview = styled.img`
   }
 `;
 
-
-export const DropArea = (props: React.PropsWithChildren<{ placeholder?:string|React.ReactNode} & SharedStyleTypes>) => {
+type DropAreaProps = React.PropsWithChildren<{ placeholder?:string|React.ReactNode } & SharedStyleTypes>;
+export const DropArea = ({
+  placeholder,
+  ...props
+}: DropAreaProps) => {
   return <StyledDropArea {...props}>
-           {props.children ? props.children : <PlaceHolder>{props.placeholder}</PlaceHolder>}
+           {props.children ? props.children : <PlaceHolder>{placeholder}</PlaceHolder>}
          </StyledDropArea>
 }
 

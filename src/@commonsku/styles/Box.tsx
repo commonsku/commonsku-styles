@@ -13,23 +13,25 @@ const StyledBox = styled.div<{borderless?: boolean, padded?: boolean}&SharedStyl
   ${SharedStyles}
 `
 
-const Box = (props: React.PropsWithChildren<{borderless?: boolean,
-                                             padded?    : boolean,
-                                             title?     : string | React.ReactNode,
-                                             controls?  : React.ReactNode } & SharedStyleTypes>) => {
-
-  return ( <StyledBox padded={props.padded} borderless={props.borderless} {...props}>
-           {props.title || props.controls ?
+type BoxProps = React.PropsWithChildren<{
+  borderless?: boolean,
+  padded?    : boolean,
+  title?     : string | React.ReactNode,
+  controls?  : React.ReactNode
+} & SharedStyleTypes>;
+const Box = ({ title, controls, children, padded,borderless,  ...props}: BoxProps) => {
+  return ( <StyledBox padded={padded} borderless={borderless} {...props}>
+           {title || controls ?
 	     <Row>
 	       <Col xs={8}>
-                 { props.title ? <H2>{props.title}</H2> : null} 
+                 { title ? <H2>{title}</H2> : null} 
 	       </Col>
 	       <Col xs style={{ textAlign: "right" }}>
-                 {props.controls ? props.controls : null} 
+                 {controls ? controls : null} 
 	       </Col>
 	     </Row>
 	   : null}
-           {props.children}
+           {children}
 	 </StyledBox>
 	 )
 }

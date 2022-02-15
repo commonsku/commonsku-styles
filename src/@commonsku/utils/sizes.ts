@@ -1,26 +1,34 @@
+export const mediaSizes = {
+    xs: "@media only screen and (min-width: 0px)",
+    sm: "@media only screen and (min-width: 640px)",
+    md: "@media only screen and (min-width: 768px)",
+    lg: "@media only screen and (min-width: 1024px)",
+    xl: "@media only screen and (min-width: 1280px)",
+};
+
 export const media: {[key: string]: Function} = {
     xs: (styles: any) => `
-        @media only screen and (min-width: 0px) {
+        ${mediaSizes.xs} {
             ${styles}
         }
     `,
     sm: (styles: any) => `
-        @media only screen and (min-width: 640px) {
+        ${mediaSizes.sm} {
             ${styles}
         }
     `,
     md: (styles: any) => `
-        @media only screen and (min-width: 768px) {
+        ${mediaSizes.md} {
             ${styles}
         }
     `,
     lg: (styles: any) => `
-        @media only screen and (min-width: 1024px) {
+        ${mediaSizes.lg} {
             ${styles}
         }
     `,
     xl: (styles: any) => `
-        @media only screen and (min-width: 1280px) {
+        ${mediaSizes.xl} {
             ${styles}
         }
     `,

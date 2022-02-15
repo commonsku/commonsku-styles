@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import React from 'react'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
+import { pick } from 'lodash';
+import { SHARED_STYLE_MAPS } from '.';
 
 const Wrapper = styled.div`
   &&& {
@@ -39,7 +41,8 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean}&SharedStyleTy
     ${SharedStyles}
   }`
 
-const Toggle = (props: React.PropsWithChildren<{stretch?:boolean}&SharedStyleTypes>) => {
+type ToggleProps = React.PropsWithChildren<{stretch?:boolean} & React.HTMLAttributes<HTMLDivElement> & SharedStyleTypes>;
+const Toggle = (props: ToggleProps) => {
   return <Wrapper {...props}>
     <Container stretch={props.stretch} {...props}>
       {props.children}

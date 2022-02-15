@@ -70,6 +70,8 @@ import {
     NavResourcesIcon,
     LabeledMultiProgress,
     IconButton,
+    H1,
+    Wrapper,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 
@@ -521,6 +523,11 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
+            <H5>Shared Styles</H5>
+            <Wrapper sx={{ color: 'red', }}>
+              <H1>Hello on small screen</H1>
+            </Wrapper>
+
             <H5>Button Variants</H5>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary">Primary</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary">Secondary</IconButton>
@@ -600,8 +607,8 @@ const App = () => {
 
             <H5>Bars Loading</H5>
             <div style={{maxWidth: 150}}>
-              <Toggle stretch mb={10} onClick={() => setColorfulBars(!colorfulBars)}>
-                <ToggleLink selected={!colorfulBars} stretch pr pl>Regular</ToggleLink>
+              <Toggle stretch mb={10} onClick={() => { setColorfulBars(!colorfulBars); }}>
+                <ToggleLink selected={!colorfulBars} stretch>Regular</ToggleLink>
                 <ToggleLink selected={colorfulBars} stretch>Colorful</ToggleLink>
               </Toggle>
             </div>
@@ -834,7 +841,7 @@ const App = () => {
 
             <H5>Toggle</H5>
             <Toggle stretch mb={10}>
-              <ToggleLink selected stretch pr pl>Active</ToggleLink>
+              <ToggleLink selected stretch>Active</ToggleLink>
               <ToggleLink stretch>Inactive</ToggleLink>
             </Toggle>
             <br/><br/>

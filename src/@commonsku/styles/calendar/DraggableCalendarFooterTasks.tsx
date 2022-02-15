@@ -42,7 +42,7 @@ export const DraggableCalendarFooterTasks = ({
                                         <CalendarTask
                                             {...t}
                                             date={undefined}
-                                            onClickCheckbox={(completed: boolean) => {
+                                            onClickCheckbox={(completed) => {
                                                 if (onUpdateTask) {
                                                     onUpdateTask({ ...t, completed, }, {
                                                         index: j,

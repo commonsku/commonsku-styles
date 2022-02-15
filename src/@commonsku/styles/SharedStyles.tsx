@@ -1,94 +1,129 @@
 import { map, pick, keys, isUndefined } from 'lodash';
-import styled, { css } from 'styled-components';
-import { valIsValid } from '../utils';
+import styled, { css, CSSObject, StyledComponent } from 'styled-components';
+import { mediaSizes, valIsValid } from '../utils';
+import {
+  FloatProperty, PositionProperty, OverflowProperty, ZIndexProperty,
+  PaddingRightProperty,
+  PaddingLeftProperty,
+  PaddingTopProperty,
+  PaddingBottomProperty,
+  MarginRightProperty,
+  MarginLeftProperty,
+  MarginTopProperty,
+  MarginBottomProperty,
+  BackgroundProperty,
+  FontWeightProperty,
+} from 'csstype';
 
 export type SharedStyleTypes = {
-  [key: string]: any,
-  pr?: boolean | number,
-  pl?: boolean | number,
-  pt?: boolean | number,
-  pb?: boolean | number,
-  px?: boolean | number,
-  py?: boolean | number,
-  mr?: boolean | number,
-  ml?: boolean | number,
-  mt?: boolean | number,
-  mb?: boolean | number,
-  mx?: boolean | number,
-  my?: boolean | number,
+  // [key: string]: any,
+  bold?: FontWeightProperty | boolean,
+  pr?: PaddingRightProperty<string | number>,
+  pl?: PaddingLeftProperty<string | number>,
+  pt?: PaddingTopProperty<string | number>,
+  pb?: PaddingBottomProperty<string | number>,
+  px?: boolean | (PaddingLeftProperty<number> & PaddingRightProperty<number>),
+  py?: boolean | (PaddingTopProperty<number> & PaddingBottomProperty<number>),
+  mr?: MarginRightProperty<string | number>,
+  ml?: MarginLeftProperty<string | number>,
+  mt?: MarginTopProperty<string | number>,
+  mb?: MarginBottomProperty<string | number>,
+  mx?: boolean | (MarginLeftProperty<number> & PaddingRightProperty<number>),
+  my?: boolean | (MarginTopProperty<number> & PaddingBottomProperty<number>),
   hidden?: boolean,
   block?: boolean,
   inline_block?: boolean,
   flex?: boolean,
   inline_flex?: boolean,
   grid?: boolean,
-  custom?: string,
-  bg?: string,
-  float?: string,
+  custom?: CSSObject | TemplateStringsArray,
+  bg?: BackgroundProperty<string | 0>,
+  float?: FloatProperty,
+  sx?: CSSObject,
+  mediaXs?: CSSObject,
+  mediaSm?: CSSObject,
+  mediaMd?: CSSObject,
+  mediaLg?: CSSObject,
+  mediaXl?: CSSObject,
 }
 
 export const SharedStyles = css<SharedStyleTypes>`
   box-sizing: border-box;
   ${p => map(pick(p, keys(SHARED_STYLE_MAPS)), (v, k) => {
-    return isUndefined(v) ? '' : SHARED_STYLE_MAPS[k](v);
-  }).join('')}
+    const styleVal = SHARED_STYLE_MAPS[k](v);
+    return css(isUndefined(v) ? {} : styleVal);
+  })}
 `;
 
-export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
+export const SHARED_STYLE_MAPS: { [key: string]: (value?: any) => CSSObject| TemplateStringsArray } = {
   // Padding
-  pr: (val?: string | number) => `padding-right: ${valIsValid(val) ? val : '5'}px;`,
-  pl: (val?: string | number) => `padding-left: ${valIsValid(val) ? val : '5'}px;`,
-  pt: (val?: string | number) => `padding-top: ${valIsValid(val) ? val : '5'}px;`,
-  pb: (val?: string | number) => `padding-bottom: ${valIsValid(val) ? val : '5'}px;`,
-  px: (val?: string | number) => `
-        padding-left: ${valIsValid(val) ? val : '5'}px;
-        padding-right: ${valIsValid(val) ? val : '5'}px;
-    `,
-  py: (val?: string | number) => `
-        padding-top: ${valIsValid(val) ? val : '5'}px;
-        padding-bottom: ${valIsValid(val) ? val : '5'}px;
-    `,
+  pr: (val?: string | number) => ({paddingRight: `${valIsValid(val) ? val : '5'}px`}),
+  pl: (val?: string | number) => ({paddingLeft: `${valIsValid(val) ? val : '5'}px`}),
+  pt: (val?: string | number) => ({paddingTop: `${valIsValid(val) ? val : '5'}px`}),
+  pb: (val?: string | number) => ({paddingBottom: `${valIsValid(val) ? val : '5'}px`}),
+  px: (val?: string | number) => ({
+      paddingLeft: `${valIsValid(val) ? val : '5'}px`,
+      paddingRight: `${valIsValid(val) ? val : '5'}px`,
+  }),
+  py: (val?: string | number) => ({
+      paddingTop: `${valIsValid(val) ? val : '5'}px`,
+      paddingBottom: `${valIsValid(val) ? val : '5'}px`,
+  }),
   // Margin
-  mr: (val?: string | number) => `margin-right: ${valIsValid(val) ? val : '5'}px;`,
-  ml: (val?: string | number) => `margin-left: ${valIsValid(val) ? val : '5'}px;`,
-  mt: (val?: string | number) => `margin-top: ${valIsValid(val) ? val : '5'}px;`,
-  mb: (val?: string | number) => `margin-bottom: ${valIsValid(val) ? val : '5'}px;`,
-  mx: (val?: string | number) => `
-        margin-left: ${valIsValid(val) ? val : '5'}px;
-        margin-right: ${valIsValid(val) ? val : '5'}px;
-    `,
-  my: (val?: string | number) => `
-        margin-top: ${valIsValid(val) ? val : '5'}px;
-        margin-bottom: ${valIsValid(val) ? val : '5'}px;
-    `,
+  mr: (val?: string | number) => ({marginRight: `${valIsValid(val) ? val : '5'}px`}),
+  ml: (val?: string | number) => ({marginLeft: `${valIsValid(val) ? val : '5'}px`}),
+  mt: (val?: string | number) => ({marginTop: `${valIsValid(val) ? val : '5'}px`}),
+  mb: (val?: string | number) => ({marginBottom: `${valIsValid(val) ? val : '5'}px`}),
+  mx: (val?: string | number) => ({
+        marginLeft: `${valIsValid(val) ? val : '5'}px`,
+        marginRight: `${valIsValid(val) ? val : '5'}px`,
+  }),
+  my: (val?: string | number) => ({
+        marginTop: `${valIsValid(val) ? val : '5'}px`,
+        marginBottom: `${valIsValid(val) ? val : '5'}px`,
+  }),
   // Background
-  bg: (val: string) => `background: ${val};`,
+  bg: (val: BackgroundProperty<string | 0>) => ({background: val}),
   // Display
-  hidden: () => `display: none;`,
-  block: () => `display: block;`,
-  inline_block: () => `display: inline-block;`,
-  'inline-block': () => `display: inline-block;`,
-  inline: () => `display: inline;`,
-  flex: () => `display: flex;`,
-  'inline-flex': () => `display: inline-flex;`,
-  inline_flex: () => `display: inline-flex;`,
-  grid: () => `display: grid;`,
+  hidden: () => ({display: 'none'}),
+  block: () => ({display: 'block'}),
+  inline_block: () => ({display: 'inline-block'}),
+  'inline-block': () => ({display: 'inline-block'}),
+  inline: () => ({display: 'inline'}),
+  flex: () => ({display: 'flex'}),
+  'inline-flex': () => ({display: 'inline-flex'}),
+  inline_flex: () => ({display: 'inline-flex'}),
+  grid: () => ({display: 'inline-grid'}),
   // Float
-  float: (val: string) => `${val === 'clearfix' ? `
-        &::after {
-            content: "";
-            display: table;
-            clear: both;
-        }` : `float: ${val}`};`, // left, right, none, clearfix
+  float: (val: FloatProperty | 'clearfix') => (
+    val !== 'clearfix' ? {float: val} : {
+      '::after': {
+          content: '',
+          display: 'table',
+          clear: 'both',
+      } as CSSObject
+    } as CSSObject), // left, right, none, clearfix
   // Position
-  pos: (val: string) => `position: ${val}`,
-  position: (val: string) => `position: ${val}`,
+  pos: (val: PositionProperty) => ({position: val}),
+  position: (val: PositionProperty) => ({position: val}),
   // Overflow
-  overflow: (val: string) => `overflow: ${val}`,
+  overflow: (val: OverflowProperty) => ({overflow: val}),
   // z-index
-  z: (val: string | number) => `z-index: ${val}`,
+  z: (val: ZIndexProperty) => ({zIndex: val}),
   // Custom Styles
-  custom: (val?: string) => `${val}`,
+  custom: (val?: CSSObject | TemplateStringsArray) => val ? val : {},
+
+  bold: (val: FontWeightProperty | boolean) => ({
+    fontWeight: typeof val === 'boolean' ? 'bold' : val,
+  }),
+
+  mediaXs: (styles?: CSSObject) => styles ? ({[`${mediaSizes.xs}`]: styles }) : {},
+  mediaSm: (styles?: CSSObject) => styles ? ({[`${mediaSizes.sm}`]: styles }) : {},
+  mediaMd: (styles?: CSSObject) => styles ? ({[`${mediaSizes.md}`]: styles }) : {},
+  mediaLg: (styles?: CSSObject) => styles ? ({[`${mediaSizes.lg}`]: styles }) : {},
+  mediaXl: (styles?: CSSObject) => styles ? ({[`${mediaSizes.xl}`]: styles }) : {},
+
+  sx: (styles?: CSSObject) => styles ? styles : {}, // custom styles
 };
 
-export const Wrapper = styled.div`${SharedStyles}`;
+export const Wrapper = styled.div<SharedStyleTypes>`${SharedStyles}`;

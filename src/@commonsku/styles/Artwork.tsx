@@ -95,7 +95,7 @@ export type ArtworkProps = {
   date?:string,
   edit?:boolean,
   noTruncate?:boolean,
-  onClick?:Function|VoidFunction,
+  onClick?: React.MouseEventHandler<HTMLDivElement>,
   onEdit?:Function|VoidFunction,
   onDelete?:Function|VoidFunction,
   onSave?:Function|VoidFunction,
@@ -109,9 +109,9 @@ export const Artwork = ({
     ...props
   }: ArtworkProps & SharedStyleTypes) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : null}>
+  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
     {props.picture?
-      <ArtworkPicture onClick={() => props.onClick ? props.onClick!() : null} cssHeight={props.cssHeight ? props.cssHeight : 17}>
+      <ArtworkPicture onClick={(e) => props.onClick ? props.onClick(e) : null} cssHeight={props.cssHeight ? props.cssHeight : 17}>
         <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}}/>
       </ArtworkPicture>
       :
