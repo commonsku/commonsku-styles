@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { Text } from '../Text';
 import { GearIcon, NextPrevIcon, UserIcon } from '../icons';
 import {Dropdown} from '../Dropdown';
-import { Button, IconButton } from '../Button';
+import { Button, IconButton, TSize, ButtonVariant } from '../Button';
 import { H5 } from '../Headings';
 import { TCalendarView, onClickViewFunc } from './types';
 
@@ -55,30 +55,6 @@ export const TasksCalendarHeader = ({
             </Col>
             <Col end xs md={9} padded>
                 <div style={{ display: 'inline-block', paddingLeft: 10, verticalAlign: 'middle', }}>
-                    {views && views.length ? <>
-                        {views.map((v, i) => {
-                            const btnProps = {
-                                mr: 10,
-                                variant: v.selected ? 'secondary' : 'primary-light',
-                                size: "medium",
-                                onClick: () => {
-                                    onClickView && onClickView(v.type, v);
-                                },
-                                children: v.title,
-                            };
-                            if (v.Icon) {
-                                return <IconButton
-                                    {...btnProps}
-                                    Icon={v.Icon}
-                                    size="medium"
-                                    variant={v.selected ? 'secondary' : 'primary-light'}
-                                />
-                            }
-                            return (
-                                <Button {...btnProps} />
-                            );
-                        })}
-                    </> : null}
                     {showAddTaskBtn ?
                         <Button
                             variant="primary"
@@ -87,6 +63,25 @@ export const TasksCalendarHeader = ({
                             style={{marginRight: 10, verticalAlign: 'bottom',}}
                         >+ Add Task</Button>
                     : null}
+                    {views && views.length ? <>
+                        {views.map((v, i) => {
+                            const btnProps = {
+                                mr: 10,
+                                variant: (v.selected ? 'secondary' : 'primary-light') as ButtonVariant,
+                                size: "medium" as TSize,
+                                onClick: () => {
+                                    onClickView && onClickView(v.type, v);
+                                },
+                                children: v.title,
+                            };
+                            if (v.Icon) {
+                                return <IconButton {...btnProps} Icon={v.Icon} />
+                            }
+                            return (
+                                <Button {...btnProps} />
+                            );
+                        })}
+                    </> : null}
                 </div>
                 <Dropdown icon={<GearIcon width="25" color="#02C0DA" />}>
                     <Row>{weekendsCheckbox}</Row>

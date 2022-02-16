@@ -48,7 +48,7 @@ export const sizes = {
 };
 export type TSize = keyof typeof sizes;
 
-type ButtonVariant = 'primary'
+export type ButtonVariant = 'primary'
   | 'secondary'
   | 'cta'
   | 'error'
