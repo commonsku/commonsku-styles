@@ -42,7 +42,7 @@ export function Datepicker({
   previousMonthButtonLabel="",
   previousYearButtonLabel="",
   ...props
-}: ReactDatePickerProps & InputProps & { value?: Date | null }) {
+}: Omit<ReactDatePickerProps, 'value'> & Omit<InputProps, 'value'> & { value?: Date | null }) {
   return (
       //@ts-ignore
       <DatePicker

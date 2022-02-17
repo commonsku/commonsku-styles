@@ -52,7 +52,9 @@ const TasksCalendar = ({
         onNextMonth,
         onPrevMonth,
         onClickDay,
-        onReset
+        onReset,
+        changeDate,
+        changeWeek
     } = useCalendar({});
 
     const [days, setDays] = useState(
@@ -67,6 +69,8 @@ const TasksCalendar = ({
         currentMonth,
         currentWeek,
         selectedDate,
+        changeDate,
+        changeWeek
     };
 
     return (

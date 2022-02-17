@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
-import styled from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
 import { Button, TSize } from './Button';
 import { UpArrowIcon } from './icons';
@@ -83,6 +83,7 @@ export type DropdownProps = {
     openMenu?: boolean;
     mouseLeaveCallback?: any;
     size?: TSize;
+    style?: CSSObject;
 };
 
 export const Dropdown = ({
@@ -95,6 +96,7 @@ export const Dropdown = ({
     openMenu=false,
     mouseLeaveCallback,
     size,
+    style={},
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
 
@@ -126,7 +128,7 @@ export const Dropdown = ({
 
     return (
         // @ts-ignore
-        <span ref={node} {...props} onMouseLeave={() => { 
+        <span ref={node} {...props} style={style} onMouseLeave={() => { 
             setShowMenu(false); 
             if(mouseLeaveCallback) { 
                 mouseLeaveCallback()

@@ -71,6 +71,8 @@ const DraggableTasksCalendar = ({
     onPrevMonth,
     onClickDay,
     onReset,
+    changeDate,
+    changeWeek
   } = useCalendar({onChangeWeek, onChangeMonth});
 
   const [state, setState] = useState<State>({
@@ -120,6 +122,8 @@ const DraggableTasksCalendar = ({
     selectedDate,
     showAddTaskBtn,
     onClickAddTask,
+    changeWeek,
+    changeDate,
   };
 
   const onDragEnd = (result: DropResult) => {

@@ -23,6 +23,8 @@ export const getDatesBetween = (startDt: Date, endDt: Date) => {
 };
 export type onChangeWeekFunc = (obj: {date: Date, week: number, month: number, year: number, action: string}) => void;
 export type onChangeMonthFunc = (obj: {date: Date, month: number, year: number, action: string}) => void;
+export type changeWeekFunc = (action: string, value?: Date | undefined) => void;
+export type changeDateFunc = (value: Date) => void;
 export type useCalendarProps = {
     onChangeWeek?: onChangeWeekFunc,
     onChangeMonth?: onChangeMonthFunc,
@@ -53,7 +55,7 @@ const useCalendar = ({
         });
     }
 
-    const changeWeek = (action: string) => {
+    const changeWeek = (action: string, value?: Date) => {
         let dt = currentMonth;
         if (action === "prev") {
             dt = subWeeks(currentMonth, 1);
@@ -62,6 +64,8 @@ const useCalendar = ({
             dt = addWeeks(currentMonth, 1);
         } else if (action === "reset") {
             dt = today;
+        } else if (action === "custom" && value) {
+            dt = value;
         }
         setCurrentMonth(dt);
         const week = getWeek(dt);
@@ -72,6 +76,19 @@ const useCalendar = ({
             week: week,
             month: getMonth(dt),
             year: getYear(dt),
+        });
+    }
+
+    const changeDate = (value: Date) => {
+        setCurrentMonth(value);
+        const week = getWeek(value);
+        setCurrentWeek(week);
+        onChangeWeek && onChangeWeek({
+            action: 'change-date',
+            date: value,
+            week: week,
+            month: getMonth(value),
+            year: getYear(value),
         });
     }
 
@@ -108,6 +125,9 @@ const useCalendar = ({
         onPrevWeek,
         onNextMonth,
         onPrevMonth,
+
+        changeWeek,
+        changeDate,
 
         getDatesBetween,
         onReset: resetToToday,
