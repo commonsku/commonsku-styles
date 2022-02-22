@@ -39,7 +39,11 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean}&SharedStyleTy
     ${SharedStyles}
   }`
 
-const Toggle = (props: React.PropsWithChildren<{stretch?:boolean}&SharedStyleTypes>) => {
+type ToggleProps = React.PropsWithChildren<{
+  stretch?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+} & SharedStyleTypes>;
+const Toggle = (props: ToggleProps) => {
   return <Wrapper {...props}>
     <Container stretch={props.stretch} {...props}>
       {props.children}

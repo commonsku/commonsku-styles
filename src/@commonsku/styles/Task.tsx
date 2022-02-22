@@ -17,6 +17,7 @@ export type TaskProps = {
   assignee?: string,
   taskBody: string | React.ReactNode,
   checked?: boolean,
+  initialChecked?: boolean;
   onClickCheckbox?: (checked?: boolean) => any,
 };
 const Task = ({
@@ -25,7 +26,7 @@ const Task = ({
   done,
   assignee,
   taskBody,
-  initialChecked,
+  initialChecked=false,
   onClickCheckbox,
   ...props
 }: React.PropsWithChildren<TaskProps & SharedStyleTypes>) => {
@@ -75,9 +76,10 @@ export type CalendarTaskProps = {
   assignee?: string;
   checked?: boolean;
   overdue?: boolean;
-  onClickCheckbox?: (checked?: boolean) => any;
+  onClickCheckbox?: (checked: boolean) => any;
   isDescriptionHtml?: boolean;
   draggable?: boolean;
+  hideCheckbox?: boolean;
   Icon?: React.ReactNode;
 };
 

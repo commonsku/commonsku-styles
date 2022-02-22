@@ -78,12 +78,12 @@ export const TasksCalendarHeader = ({
     const isCurrentWeek = currentWeek === getWeek(selectedDate);
     return (
         <HeaderWrapper style={{padding: "0.5rem"}}>
-            <Col start xs md={3} padded>
+            <Col xs md={3} padded start={1}>
                 <H5 style={{marginTop: 15}}>
                     {format(currentMonth, "MMMM yyyy")}
                 </H5>
             </Col>
-            <Col end xs md={6} lg={6} xl={7}>
+            <Col xs md={6} lg={6} xl={7} end={1}>
                 <div style={{ display: 'inline-block', paddingLeft: 10, verticalAlign: 'middle', }}>
                     {views && views.length ? <>
                         {views.map((v, i) => {
@@ -112,8 +112,8 @@ export const TasksCalendarHeader = ({
                     </> : null}
                 </div>
             </Col>
-            <Col end xs sm md={3} lg={3} xl={2} xsStyle={`
-                @media only screen and (min-width: 380px) and (max-width: 840px) {
+            <Col end={1} xs sm md={3} lg={3} xl={2} xsStyle={`
+                @media only screen and (min-width: 760px) and (max-width: 860px) {
                     width: 100%;
                     max-width: 100%;
                 }
@@ -167,10 +167,10 @@ export const TasksCalendarHeader = ({
                     ><NextPrevIcon color={"#02C0DA"} width={".8rem"} next /></WeekNav>
                 </span>
             </Col>
-            <Col start xs md={8} padded>
+            <Col start={1} xs md={8} padded>
                 <Tabs size="medium" tabs={tabs} />
             </Col>
-            <Col end xs md={4} padded>
+            <Col end={1} xs md={4} padded>
                 {showAddTaskBtn ?
                     <Link
                         as="span"

@@ -32,7 +32,7 @@ const AvatarPic = styled.img<_AvatarProps>`
 
 const Avatar: React.FC<
   Omit<_AvatarProps, 'size'> & {pic?: string, size?: string}
-> = ({ pic, size, ...props }) => {
+> = ({ pic, size='medium', ...props }) => {
   return <AvatarWrapper size={get(avatarSizes, size ?? 'medium', size)} {...props}>
     <AvatarPic src={pic ?? placeholder } size={size}/>
   </AvatarWrapper>

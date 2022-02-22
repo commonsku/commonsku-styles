@@ -33,8 +33,8 @@ export type SizerTypes = {
     lgStyle?: string|CSSObject,
     xlStyle?: string|CSSObject,
 
-    start?: boolean,
-    end?: boolean,
+    start?: boolean|number,
+    end?: boolean|number,
     center?: boolean,
     totalCols?: number;
 };

@@ -103,7 +103,7 @@ export type PopupProps = React.PropsWithChildren<{
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
 export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=false, ...props }: PopupProps) => {
-  const ref = React.useRef();
+  const ref = React.useRef<HTMLDivElement | null>(null);
 
   /* there is a bug where this closes popup involuntarily
   const handleClick = (e: Event) => {

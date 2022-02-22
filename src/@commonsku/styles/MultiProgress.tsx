@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import styled from 'styled-components'
 import React, { useCallback, useState } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'

@@ -25,7 +25,7 @@ export const DraggableCalendarFooterTasks = ({
 }: React.PropsWithChildren<DraggableCalendarFooterTasksProps>) => {
     return (
         <HeaderWrapper>
-            <Col start xs>Overdue: </Col>
+            <Col start={1} xs>Overdue: </Col>
             <Col xs>
                 <Row>
                     {tasks

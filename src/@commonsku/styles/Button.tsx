@@ -286,10 +286,10 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
 
 type IconFuncProps = { fill: string; [key: string]: any };
 export type TButtonIcon = React.ReactNode | ((props: IconFuncProps) => React.ReactElement);
-export type IconButtonProps = ButtonProps & {
+export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon: TButtonIcon;
   iconPosition?: 'left' | 'right';
-};
+}>;
 export function IconButton({
   Icon,
   children,

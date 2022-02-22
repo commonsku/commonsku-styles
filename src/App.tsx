@@ -594,6 +594,7 @@ const App = () => {
               views={[
                 { type: 'TASK', title: 'Tasks', selected: true, Icon: UserIcon },
                 { type: 'PROJECT', title: 'Projects', selected: false },
+                { type: 'PO', title: 'Pos', selected: false },
               ]}
               onClickView={() => {}}
             />
@@ -816,17 +817,17 @@ const App = () => {
             
             <H5>Feed</H5>
             <Publisher/>
-            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+            <FeedPost key="FeedPost1" author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
                       body={<div>Samantha Kates added a note to <a href=".">John Doe's</a><br/>PO#15310 flagged as Confirmed. </div>}
-                      comments={[ <FeedPost author={{name:"Bob Peterson", avatar: user_pic1}} date="Feb 20" body={<div>Finally!</div>}/>]} />
-            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+                      comments={[ <FeedPost key="FeedPost1.1" author={{name:"Bob Peterson", avatar: user_pic1}} date="Feb 20" body={<div>Finally!</div>}/>]} />
+            <FeedPost key="FeedPost2" author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
                       body={<div>Joe Jemple added a note to <a href=".">John Doe's</a><br/>PO#15310 flagged as Shipped. </div>}
                       comments={[]} />
-            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+            <FeedPost key="FeedPost3" author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
                       body={<div>Subject: SALES ORDER #1233 <br/> This is an email about a portal</div>}
