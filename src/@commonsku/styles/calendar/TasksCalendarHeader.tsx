@@ -97,10 +97,16 @@ export const TasksCalendarHeader = ({
                                 children: v.title,
                             };
                             if (v.Icon) {
-                                return <IconButton {...btnProps} Icon={v.Icon} />
+                                return <IconButton
+                                    key={'calendar-header-button-'+i}
+                                    {...btnProps} Icon={v.Icon}
+                                />
                             }
                             return (
-                                <Button {...btnProps} />
+                                <Button
+                                    key={'calendar-header-button-'+i}
+                                    {...btnProps}
+                                />
                             );
                         })}
                     </> : null}
