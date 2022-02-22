@@ -106,7 +106,15 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   componentDidUpdate(prevProps: Readonly<TabsProps>, prevState: Readonly<TabsState>) {
-    if (prevProps.tabs !== this.props.tabs) {
+    const sameTabs = prevProps.tabs.length !== this.props.tabs.length
+    || (
+      prevProps.tabs.length === this.props.tabs.length
+      && prevProps.tabs.every((e, i) =>
+        e.label === this.props.tabs[i].label
+        && (e.onClick || "null").toString() === (this.props.tabs[i].onClick || 'null').toString()
+      )
+    );
+    if (!sameTabs) {
       this.setState({
         selectedTabIndex: 0,
       });
