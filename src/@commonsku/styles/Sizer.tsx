@@ -1,18 +1,22 @@
-import styled, { css } from 'styled-components';
-import { sizes, media } from '../utils';
+import styled, { css, CSSObject } from 'styled-components';
+import { sizes, media, TSize } from '../utils';
+
+export type TSizeOffset = 'xsOffset' | 'smOffset' | 'mdOffset' | 'lgOffset' | 'xlOffset';
+export type TSizeOffsetRight = 'xsOffsetRight' | 'smOffsetRight' | 'mdOffsetRight' | 'lgOffsetRight' | 'xlOffsetRight';
+export type TSizeStyle = 'xsStyle' | 'smStyle' | 'mdStyle' | 'lgStyle' | 'xlStyle';
 
 export type SizerTypes = {
-    [key: string]: any,
-    collapse?: string|Array<string>, // hide for size(s)
+    // [key: string]: any,
+    collapse?: TSize | Array<TSize>, // hide for size(s)
     offset?: number,
     first?: string,
     last?: string,
-    padded ?: boolean,
-    xs?: string|number|boolean,
-    sm?: string|number|boolean,
-    md?: string|number|boolean,
-    lg?: string|number|boolean,
-    xl?: string|number|boolean,
+    padded?: boolean,
+    xs?: string|number|boolean|CSSObject,
+    sm?: string|number|boolean|CSSObject,
+    md?: string|number|boolean|CSSObject,
+    lg?: string|number|boolean|CSSObject,
+    xl?: string|number|boolean|CSSObject,
     xsOffset?: number,
     smOffset?: number,
     mdOffset?: number,
@@ -23,11 +27,11 @@ export type SizerTypes = {
     mdOffsetRight?: number,
     lgOffsetRight?: number,
     xlOffsetRight?: number,
-    xsStyle?: string,
-    smStyle?: string,
-    mdStyle?: string,
-    lgStyle?: string,
-    xlStyle?: string,
+    xsStyle?: string|CSSObject,
+    smStyle?: string|CSSObject,
+    mdStyle?: string|CSSObject,
+    lgStyle?: string|CSSObject,
+    xlStyle?: string|CSSObject,
 
     start?: boolean,
     end?: boolean,
@@ -55,50 +59,52 @@ export const SizerCss = css<SizerTypes>`
     ${(props) => props.collapse && typeof(props.collapse) === 'string' && media[props.collapse](`
         display: none;
     `)};
-    ${(props) => {
-        let res = '';
+    ${(props: SizerTypes) => {
+        let styles = '';
 
         if (props.collapse) {
             if (typeof(props.collapse) === 'string') {
-                res += media[props.collapse]('display: none;');
+                styles += media[props.collapse]('display: none;');
             } else if (typeof(props.collapse) === 'object' && Array.isArray(props.collapse)) {
                 props.collapse.forEach((s: string) => {
-                    res += media[s]('display: none;');
+                    styles += media[s]('display: none;');
                 });
             }
         }
 
-        sizes.forEach((s: string) => {
-            if(props[s] !== null && props[s] !== undefined) {
-                if (typeof(props[s]) === 'boolean' || typeof(props[s]) === 'number' || !isNaN(props[s])) {
-                    if (props[s] === false) {
-                        res += media[s]('display: none;');
+        sizes.forEach((s) => {
+            const val = props[s];
+            if(val !== null && val !== undefined) {
+                if (typeof(val) === 'boolean' || (typeof(val) === 'number' && !isNaN(val))) {
+                    if (val === false) {
+                        styles += media[s]('display: none;');
                     } else {
-                        res += media[s](`
-                            flex-basis: ${(typeof(props[s]) === 'boolean' ? getTotalCols(props) : props[s])/getTotalCols(props) * 100}%;
-                            max-width: ${(typeof(props[s]) === 'boolean' ? getTotalCols(props) : props[s])/getTotalCols(props) * 100}%;
+                        styles += media[s](`
+                            flex-basis: ${(typeof(val) === 'boolean' ? getTotalCols(props) : val)/getTotalCols(props) * 100}%;
+                            max-width: ${(typeof(val) === 'boolean' ? getTotalCols(props) : val)/getTotalCols(props) * 100}%;
                             display: initial;
                         `);
                     }
-                } else if (typeof(props[s]) === 'string') {
-                    // Custom Styles
-                    res += media[s](props[s]);
+                } else if (typeof(val) === 'string') {
+                    styles += media[s](val);
                 }
             }
 
-            if(props[`${s}Offset`]) {
-                res += media[s](`margin-left: ${(props[`${s}Offset`]/getTotalCols(props) * 100)}%;`);
+            const offset = props[`${s}Offset` as TSizeOffset];
+            const offsetRight = props[`${s}OffsetRight` as TSizeOffsetRight];
+            const customStyles = props[`${s}Style` as TSizeStyle];
+            if(offset) {
+                styles += media[s](`margin-left: ${(offset / getTotalCols(props) * 100)}%;`);
             }
-            if(props[`${s}OffsetRight`]) {
-                res += media[s](`margin-right: ${(props[`${s}OffsetRight`]/getTotalCols(props) * 100)}%;`);
+            if(offsetRight) {
+                styles += media[s](`margin-right: ${(offsetRight/getTotalCols(props) * 100)}%;`);
             }
-
-            if(props[`${s}Style`]) {
-                res += media[s](props[`${s}Style`]);
+            if(customStyles) {
+                styles += media[s](customStyles);
             }
         });
 
-        return res;
+        return styles;
     }}
 `;
 

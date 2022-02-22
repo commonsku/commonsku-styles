@@ -16,7 +16,7 @@ import { changeDateFunc, changeWeekFunc } from '../hooks/useCalendar';
 
 const WeekNav = styled(Text)`
   display: inline-block;
-  padding: .9rem .5rem;
+  padding: 0;
 `;
 
 type TextDatePickerProps = {
@@ -124,6 +124,7 @@ export const TasksCalendarHeader = ({
                     display: 'inline-block',
                     fontFamily: [themeOptions.fontFamilies.regular].concat(themeOptions.fontFamilies.fallbacks).join(','),
                     fontWeight: 500,
+                    height: 30,
                 }}>
                     <Datepicker
                         value={currentMonth}

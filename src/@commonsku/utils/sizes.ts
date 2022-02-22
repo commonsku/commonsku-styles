@@ -1,29 +1,32 @@
+import { CSSObject } from "styled-components";
+
 export const media: {[key: string]: Function} = {
-    xs: (styles: any) => `
+    xs: (styles: string | CSSObject) => `
         @media only screen and (min-width: 0px) {
             ${styles}
         }
     `,
-    sm: (styles: any) => `
+    sm: (styles: string | CSSObject) => `
         @media only screen and (min-width: 640px) {
             ${styles}
         }
     `,
-    md: (styles: any) => `
+    md: (styles: string | CSSObject) => `
         @media only screen and (min-width: 768px) {
             ${styles}
         }
     `,
-    lg: (styles: any) => `
+    lg: (styles: string | CSSObject) => `
         @media only screen and (min-width: 1024px) {
             ${styles}
         }
     `,
-    xl: (styles: any) => `
+    xl: (styles: string | CSSObject) => `
         @media only screen and (min-width: 1280px) {
             ${styles}
         }
     `,
 };
 
-export const sizes: Array<string> = Object.keys(media);
+export type TSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export const sizes: TSize[] = Object.keys(media) as TSize[];
