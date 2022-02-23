@@ -86,12 +86,12 @@ const DropDownContent = styled.div<DropdownContentProps>`
 
 const Circles = ({val, max}:{val: number, max: number}) => {
     return <StyledCircles>
-      {[...Array(val <= 0 ? 0 : val)].map((item, i) => {
+      {val > 0 ? [...Array(val)].map((item, i) => {
         return <Circle key={i}/>
-      })}
-      {[...Array(max - val <= 0 ? 0 : max - val)].map((item, i) => {
+      }) : null}
+      {max - val > 0 ? [...Array(max - val)].map((item, i) => {
         return <Circle key={i} disabled/>
-      })}
+      }) : null}
     </StyledCircles>
 }
 
@@ -148,6 +148,8 @@ export const StateDropdown = ({
         setValue(value)
     }, [value])
 
+    const content = value2?.content || '';
+
     return (
         <StyledDropdown ref={node} {...props}>
             <DropdownDisplay
@@ -157,8 +159,8 @@ export const StateDropdown = ({
                 showCircles={showCircles}
                 background={background}
             >
-              {showCircles && <Circles max={maxCircles || items.length} val={value2.order}/>}
-              {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(value2.content, 20)}</span> : value2.content}
+              {showCircles && <Circles max={maxCircles || items.length} val={value2?.order || 0}/>}
+              {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(content, 20)}</span> : content}
             </DropdownDisplay>
             {showMenu && <DropDownContent scrollContentHeight={props.scrollContentHeight}>
                 {items.map((item, i) => {
