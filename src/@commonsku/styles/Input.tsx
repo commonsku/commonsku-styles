@@ -5,21 +5,23 @@ import { getThemeColor, themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
 
-type BaseInputProp = {
+type CommonInputProp = {
   noMargin?: boolean,
   error?:boolean,
   isPercent?:boolean,
 };
 
-export type InputProps = StyledComponentProps<'input', any, {}, never> & BaseInputProp & { hasIcon?: boolean; };
-export type InputIconLabelProps = StyledComponentProps<'div', any, {}, never> & BaseInputProp & {
+type BaseInputProps = CommonInputProp & { hasIcon?: boolean; } & SharedStyleTypes;
+export type InputProps = StyledComponentProps<'input', any, BaseInputProps, never>;
+
+type BaseInputIconLabelProps = CommonInputProp & {
   isActive?: boolean;
   isDisabled?: boolean;
   isHover?: boolean;
   iconPosition?: 'left' | 'right';
 };
 
-export const InputIconLabel = styled.div<InputIconLabelProps>`
+export const InputIconLabel = styled.div<BaseInputIconLabelProps>`
   box-sizing: border-box;
   width: 40px;
   height: ${p => p.error ? 38 : 36}px;
@@ -77,10 +79,10 @@ export const InputIconLabelContainer = styled.div`
   }}
 `
 
-export const Input = styled.input<InputProps & SharedStyleTypes>`
+export const Input = styled.input<BaseInputProps>`
   &&& {
     ${p => {
-      const styles = {
+      const styles: CSSObject = {
         marginBottom: p.noMargin ? 0 : "1rem",
         fontSize: '1rem',
         fontFamily: "'skufont-regular', sans-serif",
@@ -95,7 +97,7 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
         "::placeholder": {
           color: getThemeColor(p, 'input.placeholder'),
         },
-        ':hover': p.disabled ? {} : {
+        ':hover': p.disabled ? undefined : {
           borderColor: getThemeColor(p, 'input.hover.border'),
           "::placeholder": {
             color: getThemeColor(p, 'input.hover.placeholder'),
@@ -117,16 +119,17 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
           color: getThemeColor(p, 'input.disabled.text'),
           backgroundColor: getThemeColor(p, 'input.disabled.background'),
         },
-      } as CSSObject;
+      };
 
       if (p.error) {
         styles['borderColor'] = getThemeColor(p, 'input.error.border');
         styles[':hover'] = {
-          ...styles[':hover'],
+          ...(styles[':hover'] || {}),
           borderColor: getThemeColor(p, 'input.error.border'),
         };
         styles[':focus'] = {
-          ...styles[':focus'],
+          color: getThemeColor(p, 'input.active.text'),
+          outline: 'none',
           borderColor: getThemeColor(p, 'input.error.border'),
           boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.error.border')},
                      -1px -1px 0px ${getThemeColor(p, 'input.error.border')},
@@ -151,12 +154,13 @@ export const Input = styled.input<InputProps & SharedStyleTypes>`
 `;
 
 
-type LabeledInputPropType = InputProps & {
+type BaseLabelInputProps = BaseInputProps & {
   label: string,
   name?: string,
   isPercent?: boolean,
   labelOnTop?: boolean,
 } & SharedStyleTypes;
+type LabeledInputPropType = StyledComponentProps<'input', any, BaseLabelInputProps, never>;
 export const LabeledInput = React.forwardRef(
   ({label, name, required, labelOnTop=false, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
     <div>
@@ -179,7 +183,7 @@ export const LabeledInput = React.forwardRef(
   )
 )
 
-type LabeledIconInputProps = InputProps & {
+type BaseLabeledIconInputProps = BaseInputProps & {
   label: string,
   name?: string,
   isPercent?: boolean,
@@ -187,6 +191,7 @@ type LabeledIconInputProps = InputProps & {
   Icon: React.ReactElement,
   iconPosition?: 'left' | 'right',
 } & SharedStyleTypes;
+type LabeledIconInputProps = StyledComponentProps<'input', any, BaseLabeledIconInputProps, never>;
 export const LabeledIconInput = React.forwardRef(
   (
     {
@@ -363,8 +368,9 @@ export const RadioLabel = styled.label<{disabled?: boolean}>`
   }
 `;
 
-type RadioProps = StyledComponentProps<'input', any, {isHovering?: boolean}, never>;
-export const Radio = styled.input<RadioProps>`
+type BaseRadioProps = {isHovering?: boolean};
+type RadioProps = StyledComponentProps<'input', any, BaseRadioProps, never>;
+export const Radio = styled.input<BaseRadioProps>`
   &&& {
     position: absolute;
     opacity: 0;

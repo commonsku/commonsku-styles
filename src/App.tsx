@@ -24,6 +24,7 @@ import {
     SidePanel,
     Tabs,
     Select,
+    components as selectComponents,
     LabeledSelect,
     LabeledProgress,
     PanelTileContact,
@@ -74,6 +75,7 @@ import {
     LabeledIconInput,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
+import { MenuListComponentProps } from 'react-select';
 
 const initialState = {
   date: new Date(),
@@ -257,6 +259,30 @@ const tableData = [
   {"rowId":83,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ] 
+
+const SelectMenuList = (
+  props: MenuListComponentProps<{[key: string]: any;}>
+) => {
+  return (
+    <selectComponents.MenuList {...props}>
+      {props.children}
+      <div
+        onClick={() => { console.log('New client') }}
+        style={{
+          cursor: 'pointer',
+          paddingTop: '8px',
+          paddingBottom: '8px',
+          background: '#E1F7FA',
+          color: '#00A0B6',
+          bottom: 0,
+          position: 'sticky',
+          textAlign: 'center',
+          marginBottom: 0,
+        }}
+      >+ New Client</div>
+    </selectComponents.MenuList>
+  );
+};
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
   console.log(action);
@@ -638,6 +664,19 @@ const App = () => {
               Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
+            <br />
+
+            <H5>Select</H5>
+            <Select
+              value={{ value: 'value4', label: 'value4', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+            />
+
             <br />
 
             <H5>Calendar Tasks</H5>

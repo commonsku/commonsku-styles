@@ -26,11 +26,18 @@ const popupStyles: SelectProps = {
 
 function skuSelectStyles(props: SKUSelectStylesProps): Styles {
   return {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: 'none',
-      padding: 10
-    }),
+    option: (provided, state) => {
+      let optionStyle = {};
+      if (state.data && state.data.styles) {
+        optionStyle = state.data.styles;
+      }
+      return ({
+        ...provided,
+        ...optionStyle,
+        borderBottom: 'none',
+        padding: 10,
+      });
+    },
     input: (provided, state) => {
       return {
       ...provided,
@@ -44,7 +51,7 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
     }),
     menu: (provided, state) => ({
       ...provided,
-      border: 'none',
+      border: '2px solid red',
       zIndex: 10,
       position: props.menuRelative ? 'relative' : provided.position,
     }),
@@ -111,7 +118,7 @@ const SKUSelect = styled(
 
     .commonsku-styles-select__input {
       height: auto;
-      border-color: ${(props) => getThemeColor(props, 'inputBorder', 'primary')};
+      border-color: ${(props) => getThemeColor(props, 'primary1.main')};
 
       input {
         height: auto;
@@ -122,10 +129,24 @@ const SKUSelect = styled(
       margin-bottom: ${(props) => props.noMargin ? 0 : '1rem'};
     }
 
+    div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused.commonsku-styles-select__control--menu-is-open {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
     .commonsku-styles-select__menu {
-      border: none;
+      border: 2px solid ${p => getThemeColor(p, 'primary1.main')};
+      border-radius: 5px;
       zIndex: 10;
+      margin-top: 1.5px;
+      border-top: none;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
       ${(props) => props.menuRelative ? 'position: relative;' : ''}
+    }
+
+    .commonsku-styles-select__menu-list {
+      padding-bottom: 0px;
     }
 
     .commonsku-styles-select__menuPortal {
