@@ -603,6 +603,43 @@ const App = () => {
             />
             <br />
 
+            <br />
+            <LabeledIconInput
+              labelOnTop
+              iconPosition='right'
+              label='Labeled input'
+              name="basic-input"
+              defaultValue="input value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              iconPosition='right'
+              disabled
+              label='Labeled disabled'
+              name="basic-disabled"
+              defaultValue="disabled value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              iconPosition='right'
+              error
+              label='Labeled error'
+              name="basic-error"
+              defaultValue="error value"
+              placeholder="enter something"
+              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+            <br />
+
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
               tasks={tasks[calendarTab]}

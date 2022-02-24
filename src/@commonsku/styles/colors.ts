@@ -294,7 +294,7 @@ const colors = {
       background: neutrals['40'],
     },
     iconWrapper: {
-      background: neutrals['40'],
+      background: neutrals['50'],
       active: {
         background: neutrals['20'],
       },

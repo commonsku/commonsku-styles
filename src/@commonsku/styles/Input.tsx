@@ -1,11 +1,9 @@
 import { map } from 'lodash';
 import React, { useState, useRef, CSSProperties, useEffect } from 'react'
 import styled, { CSSObject, StyledComponentProps } from 'styled-components'
-import { getThemeColor } from './Theme';
+import { getThemeColor, themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
-
 import {Label} from './Label'
-import { themeOptions } from '.';
 
 type BaseInputProp = {
   noMargin?: boolean,
@@ -18,6 +16,7 @@ export type InputIconLabelProps = StyledComponentProps<'div', any, {}, never> & 
   isActive?: boolean;
   isDisabled?: boolean;
   isHover?: boolean;
+  iconPosition?: 'left' | 'right';
 };
 
 export const InputIconLabel = styled.div<InputIconLabelProps>`
@@ -29,7 +28,7 @@ export const InputIconLabel = styled.div<InputIconLabelProps>`
       ? getThemeColor(p, 'errors.main')
       : getThemeColor(p, 'input.iconWrapper.background')
   };
-  border-radius: 3px 0 0 3px;
+  border-radius: ${p => p.iconPosition === 'right' ? '0 3px 3px 0' : '3px 0 0 3px'};
   margin-bottom: 1rem;
   color: white;
   font-size: 18px;
@@ -186,6 +185,7 @@ type LabeledIconInputProps = InputProps & {
   isPercent?: boolean,
   labelOnTop?: boolean,
   Icon: React.ReactElement,
+  iconPosition?: 'left' | 'right',
 } & SharedStyleTypes;
 export const LabeledIconInput = React.forwardRef(
   (
@@ -193,6 +193,7 @@ export const LabeledIconInput = React.forwardRef(
       label,
       name,
       value,
+      defaultValue,
       placeholder,
       required,
       labelOnTop=false,
@@ -204,6 +205,7 @@ export const LabeledIconInput = React.forwardRef(
       onFocus,
       onChange,
       onBlur,
+      iconPosition = 'left',
       ...props
     }: LabeledIconInputProps,
     ref: React.Ref<HTMLInputElement>
@@ -301,17 +303,18 @@ export const LabeledIconInput = React.forwardRef(
           onMouseOver={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <InputIconLabel
+          {iconPosition !== 'right' ? <InputIconLabel
             style={{ marginBottom: 0, }}
             isActive={isActive}
             isDisabled={disabled}
             isHover={isHovering}
-          >{NewIcon}</InputIconLabel>
+          >{NewIcon}</InputIconLabel> : null}
           <Input
             hasIcon
             ref={ref}
             name={name}
             value={value}
+            defaultValue={defaultValue}
             placeholder={placeholder}
             required={required}
             style={{ marginBottom: 0, }}
@@ -322,6 +325,13 @@ export const LabeledIconInput = React.forwardRef(
             onChange={onChange}
             onBlur={onBlur}
           />
+          {iconPosition === 'right' ? <InputIconLabel
+            style={{ marginBottom: 0, }}
+            isActive={isActive}
+            isDisabled={disabled}
+            isHover={isHovering}
+            iconPosition={iconPosition}
+          >{NewIcon}</InputIconLabel> : null}
         </InputIconLabelContainer>
       </div>
     );
