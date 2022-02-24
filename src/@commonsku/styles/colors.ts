@@ -308,7 +308,7 @@ const colors = {
     icon: {
       fill: '#fff',
       active: {
-        fill: neutrals['60'],
+        fill: primary1['60'],
       },
       hover: {
         fill: primary1['50'],
