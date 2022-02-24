@@ -2,43 +2,9 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
 import _ from 'lodash'
-import colorPalettes from "./colors";
+import colors from "./colors";
 
-
-export const colors = {
-  white: '#fff',
-  black: '#000',
-  primary: '#02c0da',
-  cta: '#fa237c',
-  primary0: '#DAE9EE', // lighter
-  primary10: '#C9E8F2', // light
-  primary100: '#00889B', // dark
-  disabledButton: '#DAE9EE',
-  disabledButtonBorder: '#C9E8F2',
-  texttitle: '#123952', // a dark blue text
-  textlabel: '#123952',
-  textbody: '#52585C',
-  textplaceholder: '#A4ABAE',
-  bggray: '#EDF2F4',
-  bgblue: '#ECF4F7',
-  inputBorder: '#ABC7D1',
-  special1: '#ffd302',        // yellow
-  special2: '#00d374',        // green
-  special3: '#ff297c',        // red
-  primaryBg: '#EAF2F6',
-  special2Bg: '#E7FFE9',
-  transparent: 'transparent',
-  error: '#B21154',
-
-  primary2: '#00A0B6',
-  primary20: '#00788A',
-  primary200: '#004D59',
-
-  tableHeaderBg: '#F6FEFF',
-  tableBorder: '#edf2f5',
-
-  ...colorPalettes,
-};
+export { colors };
 export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {
   tiny: '.8em',

@@ -1,18 +1,26 @@
 import { map } from 'lodash';
-import React, { useState, useRef, CSSProperties } from 'react'
-import styled, { StyledComponentProps } from 'styled-components'
+import React, { useState, useRef, CSSProperties, useEffect } from 'react'
+import styled, { CSSObject, StyledComponentProps } from 'styled-components'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 import {Label} from './Label'
+import { themeOptions } from '.';
 
-export type InputProps = StyledComponentProps<'input', any, {}, never> & {noMargin?: boolean, error?:boolean, isPercent?:boolean};
+type BaseInputProp = {
+  noMargin?: boolean,
+  error?:boolean,
+  isPercent?:boolean,
+};
 
-export const InputIconLabel = styled.div<InputProps>`
+export type InputProps = StyledComponentProps<'input', any, {}, never> & BaseInputProp & { hasIcon?: boolean; };
+export type InputIconLabelProps = StyledComponentProps<'div', any, {}, never> & BaseInputProp;
+
+export const InputIconLabel = styled.div<InputIconLabelProps>`
   box-sizing: border-box;
   width: 40px;
   height: ${p => p.error ? 38 : 36}px;
-  background-color: ${p => p.error ? getThemeColor(p, 'special3') : "#ABC7D1"};
+  background-color: ${p => p.error ? getThemeColor(p, 'errors.main') : "#ABC7D1"};
   border-radius: 5px 0 0 5px;
   margin-bottom: 1rem;
   color: white;
@@ -26,38 +34,145 @@ export const InputIconLabelContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  ${p => {
+    return {
+      fontSize: '1rem',
+      fontFamily: "'skufont-regular', sans-serif",
+      boxSizing: 'border-box',
+      backgroundColor: getThemeColor(p, 'input.background'),
+      boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
+      width: '100%',
+      border: `1px solid ${getThemeColor(p, 'input.border')}`,
+      borderRadius: 5,
+      padding: 0,
+      color: getThemeColor(p, 'input.text'),
+      ':hover': {
+        borderColor: getThemeColor(p, 'input.hover.border'),
+      },
+      ':focus': {
+        borderColor: getThemeColor(p, 'input.active.border'),
+        color: getThemeColor(p, 'input.active.text'),
+        outline: 'none',
+        boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.active.border')},
+                   -1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                    1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                   -1px  1px 0px ${getThemeColor(p, 'input.active.border')};`,
+      },
+      ':active': {
+        borderColor: getThemeColor(p, 'input.active.border'),
+        color: getThemeColor(p, 'input.active.text'),
+        outline: 'none',
+        boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.active.border')},
+                   -1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                    1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                   -1px  1px 0px ${getThemeColor(p, 'input.active.border')};`,
+      },
+      ':disabled': {
+        border: 'none',
+        boxShadow: 'none',
+        outline: 'none',
+        color: getThemeColor(p, 'input.disabled.text'),
+        backgroundColor: getThemeColor(p, 'input.disabled.background'),
+      },
+    };
+  }}
 `
 
 export const Input = styled.input<InputProps & SharedStyleTypes>`
   &&& {
-    padding: .5rem;
-    color: ${props => getThemeColor(props, 'textlabel')};
-    width: 100%;
-    border: ${p => p.error ? 2 : 1}px solid ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder')};
-    border-radius: ${p => p.isPercent ?  "0 5px 5px 0" : "5"}px;
-    box-sizing: border-box;
-    font-family: 'skufont-regular', sans-serif;
-    font-size: 1rem;
-    background-color: white;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    margin-bottom: ${props => props.noMargin ? 0 : "1rem"};
-    &:focus {
-      box-shadow: 1px  1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
-                 -1px -1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
-                  1px -1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
-                 -1px  1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')};
-      outline: none;
-    }
+    ${p => {
+      const styles = {
+        marginBottom: p.noMargin ? 0 : "1rem",
+        fontSize: '1rem',
+        fontFamily: "'skufont-regular', sans-serif",
+        boxSizing: 'border-box',
+        backgroundColor: getThemeColor(p, 'input.background'),
+        boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
+        width: '100%',
+        border: `1px solid ${getThemeColor(p, 'input.border')}`,
+        borderRadius: p.isPercent ?  "0 5px 5px 0" : '5px',
+        padding: '8px 8px 8px 8px',
+        color: getThemeColor(p, 'input.text'),
+        "::placeholder": {
+          color: getThemeColor(p, 'input.placeholder'),
+        },
+        ':hover': p.disabled ? {} : {
+          borderColor: getThemeColor(p, 'input.hover.border'),
+          "::placeholder": {
+            color: getThemeColor(p, 'input.hover.placeholder'),
+          },
+        },
+        ':focus': {
+          borderColor: getThemeColor(p, 'input.active.border'),
+          color: getThemeColor(p, 'input.active.text'),
+          outline: 'none',
+          boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.active.border')},
+                     -1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                      1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                     -1px  1px 0px ${getThemeColor(p, 'input.active.border')};`,
+        },
+        ':disabled': {
+          border: 'none',
+          boxShadow: 'none',
+          outline: 'none',
+          color: getThemeColor(p, 'input.disabled.text'),
+          backgroundColor: getThemeColor(p, 'input.disabled.background'),
+        },
+      } as CSSObject;
+
+      if (p.error) {
+        styles['borderColor'] = getThemeColor(p, 'input.error.border');
+        styles[':hover'] = {
+          ...styles[':hover'],
+          borderColor: getThemeColor(p, 'input.error.border'),
+        };
+        styles[':focus'] = {
+          ...styles[':focus'],
+          borderColor: getThemeColor(p, 'input.error.border'),
+          boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.error.border')},
+                     -1px -1px 0px ${getThemeColor(p, 'input.error.border')},
+                      1px -1px 0px ${getThemeColor(p, 'input.error.border')},
+                     -1px  1px 0px ${getThemeColor(p, 'input.error.border')};`,
+        }
+      }
+
+      if (p.hasIcon) {
+        styles['border'] = 'none';
+        styles['borderColor'] = 'none';
+        styles['boxShadow'] = 'none';
+        styles['outline'] = 'none';
+        styles[':focus'] = undefined;
+        styles[':hover'] = undefined;
+        styles[':disabled'] = undefined;
+      }
+
+      return styles;
+    }}
   }
   ${SharedStyles}
 `;
 
 
-type LabeledInputPropType = InputProps & {label: string, name?: string, isPercent?: boolean} & SharedStyleTypes;
+type LabeledInputPropType = InputProps & {
+  label: string,
+  name?: string,
+  isPercent?: boolean,
+  labelOnTop?: boolean,
+} & SharedStyleTypes;
 export const LabeledInput = React.forwardRef(
-  ({label, name, required, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
+  ({label, name, required, labelOnTop=false, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
     <div>
-      <Label htmlFor={name}>{label} {required && '*'}</Label>
+      <Label
+        htmlFor={name}
+        style={{
+          ...(!labelOnTop ? {} : {display: 'block'}),
+          fontFamily: "'skufont-medium', sans-serif",
+          lineHeight: '24px',
+          fontSize: '16px',
+          color: getThemeColor(props, 'neutrals.100'),
+        }}
+      >{label} {required && '*'}</Label>
       {props.isPercent ? <InputIconLabelContainer>
                            <InputIconLabel {...props}>%</InputIconLabel>
                            <Input ref={ref} name={name} required={required} {...props}/>
@@ -65,6 +180,105 @@ export const LabeledInput = React.forwardRef(
                        : <Input ref={ref} name={name} required={required} {...props}></Input>}
     </div>
   )
+)
+
+type LabeledIconInputProps = InputProps & {
+  label: string,
+  name?: string,
+  isPercent?: boolean,
+  labelOnTop?: boolean,
+  Icon: React.ReactNode,
+} & SharedStyleTypes;
+export const LabeledIconInput = React.forwardRef(
+  (
+    {
+      label,
+      name,
+      required,
+      labelOnTop=false,
+      Icon,
+      noMargin,
+      error,
+      isPercent,
+      disabled,
+      onFocus,
+      onChange,
+      onBlur,
+      ...props
+    }: LabeledIconInputProps,
+    ref: React.Ref<HTMLInputElement>
+  ) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [isActive, setIsActive] = useState(false);
+    const toggleActive = () => setIsActive(!isActive);
+
+    const activeBorderColor = themeOptions.colors.input.active.border;
+    const activeTextColor = themeOptions.colors.input.active.border;
+    const activeStyles = !isActive ? {} : {
+      borderColor: getThemeColor(props, 'input.active.border', activeBorderColor),
+      color: getThemeColor(props, 'input.active.text', activeTextColor),
+      outline: 'none',
+      boxShadow: `1px  1px 0px ${getThemeColor(props, 'input.active.border', activeBorderColor)},
+                  -1px -1px 0px ${getThemeColor(props, 'input.active.border', activeBorderColor)},
+                  1px -1px 0px ${getThemeColor(props, 'input.active.border', activeBorderColor)},
+                  -1px  1px 0px ${getThemeColor(props, 'input.active.border', activeBorderColor)}`,
+    };
+
+    const onClickOutside = (e: Event) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsActive(false);
+      }
+    };
+
+    useEffect(() => {
+      document.addEventListener('click', onClickOutside);
+
+      return () => {
+        document.removeEventListener('click', onClickOutside);
+      };
+    }, []);
+
+    return (
+      <div>
+        <Label
+          htmlFor={name}
+          style={{
+            ...(!labelOnTop ? {} : {display: 'block'}),
+            fontFamily: "'skufont-medium', sans-serif",
+            lineHeight: '24px',
+            fontSize: '16px',
+            color: getThemeColor(props, 'neutrals.100'),
+          }}
+        >{label} {required && '*'}</Label>
+        <InputIconLabelContainer
+          {...props}
+          ref={containerRef}
+          onClick={toggleActive}
+          style={{
+            ...(props.style || {}),
+            ...activeStyles
+          }}
+        >
+          <InputIconLabel
+            style={{ marginBottom: 0, }}
+          >{Icon}</InputIconLabel>
+          <Input
+            hasIcon
+            ref={ref}
+            name={name}
+            required={required}
+            style={{ marginBottom: 0, }}
+            noMargin={noMargin}
+            error={error}
+            disabled={disabled}
+            onFocus={onFocus}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        </InputIconLabelContainer>
+      </div>
+    );
+  }
 )
 
 export const RadioLabel = styled.label<{disabled?: boolean}>`

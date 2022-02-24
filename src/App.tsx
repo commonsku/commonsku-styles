@@ -70,6 +70,8 @@ import {
     NavResourcesIcon,
     LabeledMultiProgress,
     IconButton,
+    Input,
+    LabeledIconInput,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 
@@ -301,6 +303,7 @@ const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showNewProjectPopup, setShowNewProjectPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
@@ -491,6 +494,24 @@ const App = () => {
             console.groupEnd();
           }} />
       </Popup>}
+
+      {showNewProjectPopup && <Popup
+        title={'New Project'}
+        onClose={() => {
+            setShowNewProjectPopup(false);
+        }}
+      >
+        Hello from Popup
+        <br/>
+        <Select inPopup options={options} value={options[0]} />
+        <CreatableSelect inPopup options={options} value={options[0]}
+          onChange={(newValue: any, actionMeta: any) => {
+            console.group('Value Changed');
+            console.log(newValue);
+            console.log(`action: ${actionMeta.action}`);
+            console.groupEnd();
+          }} />
+      </Popup>}
     </div>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
         <Row>
@@ -498,6 +519,7 @@ const App = () => {
             <div>
               <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
               <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+              <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
               <Dropdown text="Drop Down" items={
                 [
                   {onClick: () => null, content: 'New Contact'},
@@ -533,6 +555,31 @@ const App = () => {
             <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
             <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" />
+
+            <H5>Input Fields</H5>
+            <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
+            <Input name="basic-input" value="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input error name="basic-input" value="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+
+            <br />
+            <LabeledInput labelOnTop label='Labeled input' name="basic-input" value="input value" style={{ width: 200 }} placeholder="enter something" />
+            <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" value="disabled value" style={{ width: 200 }} placeholder="enter something" />
+            <LabeledInput labelOnTop error label='Labeled error' name="error-input" value="error value" style={{ width: 200 }} placeholder="enter something" />
+
+            <br />
+            <LabeledIconInput
+              labelOnTop
+              label='Labeled Input'
+              name="basic-input"
+              value="input value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+            <br />
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
