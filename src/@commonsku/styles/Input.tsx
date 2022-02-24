@@ -14,13 +14,21 @@ type BaseInputProp = {
 };
 
 export type InputProps = StyledComponentProps<'input', any, {}, never> & BaseInputProp & { hasIcon?: boolean; };
-export type InputIconLabelProps = StyledComponentProps<'div', any, {}, never> & BaseInputProp;
+export type InputIconLabelProps = StyledComponentProps<'div', any, {}, never> & BaseInputProp & {
+  isActive?: boolean;
+  isDisabled?: boolean;
+  isHover?: boolean;
+};
 
 export const InputIconLabel = styled.div<InputIconLabelProps>`
   box-sizing: border-box;
   width: 40px;
   height: ${p => p.error ? 38 : 36}px;
-  background-color: ${p => p.error ? getThemeColor(p, 'errors.main') : "#ABC7D1"};
+  background-color: ${p =>
+    p.error
+      ? getThemeColor(p, 'errors.main')
+      : getThemeColor(p, 'input.iconWrapper.background')
+  };
   border-radius: 3px 0 0 3px;
   margin-bottom: 1rem;
   color: white;
@@ -28,6 +36,22 @@ export const InputIconLabel = styled.div<InputIconLabelProps>`
   text-align: center;
   line-height: 1.5rem;
   padding: 5px;
+
+  :hover {
+    background: ${p => getThemeColor(p, 'input.iconWrapper.hover.background')};
+  }
+
+  ${p => p.isHover
+    ? `background: ${getThemeColor(p, 'input.iconWrapper.hover.background')};`
+    : ''}
+
+  ${p => p.isActive
+      ? `background: ${getThemeColor(p, 'input.iconWrapper.active.background')};`
+      : ''}
+
+  ${p => p.isDisabled
+    ? `background: ${getThemeColor(p, 'input.iconWrapper.disabled.background')};`
+    : ''}
 `
 
 export const InputIconLabelContainer = styled.div`
@@ -168,6 +192,8 @@ export const LabeledIconInput = React.forwardRef(
     {
       label,
       name,
+      value,
+      placeholder,
       required,
       labelOnTop=false,
       Icon,
@@ -184,6 +210,7 @@ export const LabeledIconInput = React.forwardRef(
   ) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isActive, setIsActive] = useState(false);
+    const [isHovering, setIsHovering] = useState(false);
 
     const activeBorderColor = getThemeColor(props, 'input.active.border', themeOptions.colors.input.active.border);
     const activeTextColor = themeOptions.colors.input.active.text;
@@ -220,11 +247,17 @@ export const LabeledIconInput = React.forwardRef(
         iconProps['fill'] = errorBorderColor;
         iconProps['color'] = errorBorderColor;
       } else if (disabled) {
-        iconProps['fill'] = disabledTextColor;
-        iconProps['color'] = disabledTextColor;
+        iconProps['fill'] = themeOptions.colors.input.icon.disabled.fill;
+        iconProps['color'] = themeOptions.colors.input.icon.disabled.fill;
+      } else if (isHovering) {
+        iconProps['fill'] = themeOptions.colors.input.icon.hover.fill;
+        iconProps['color'] = themeOptions.colors.input.icon.hover.fill;
+      } else if (isActive) {
+        iconProps['fill'] = themeOptions.colors.input.icon.active.fill;
+        iconProps['color'] = themeOptions.colors.input.icon.active.fill;
       }
       return React.cloneElement(Icon, iconProps);
-    }, [Icon, error, disabled, disabledTextColor, errorBorderColor]);
+    }, [Icon, error, disabled, errorBorderColor, isActive, isHovering]);
 
     const onClickOutside = (e: Event) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -265,14 +298,21 @@ export const LabeledIconInput = React.forwardRef(
             ...disabledStyles,
             ...(props.style || {}),
           }}
+          onMouseOver={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
           <InputIconLabel
             style={{ marginBottom: 0, }}
+            isActive={isActive}
+            isDisabled={disabled}
+            isHover={isHovering}
           >{NewIcon}</InputIconLabel>
           <Input
             hasIcon
             ref={ref}
             name={name}
+            value={value}
+            placeholder={placeholder}
             required={required}
             style={{ marginBottom: 0, }}
             noMargin={noMargin}

@@ -293,6 +293,30 @@ const colors = {
       text: neutrals['70'],
       background: neutrals['40'],
     },
+    iconWrapper: {
+      background: neutrals['40'],
+      active: {
+        background: neutrals['20'],
+      },
+      hover: {
+        background: primary1['20'],
+      },
+      disabled: {
+        background: neutrals['50'],
+      },
+    },
+    icon: {
+      fill: '#fff',
+      active: {
+        fill: neutrals['60'],
+      },
+      hover: {
+        fill: primary1['50'],
+      },
+      disabled: {
+        fill: '#fff',
+      },
+    },
   },
 };
 

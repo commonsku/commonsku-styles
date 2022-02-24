@@ -598,7 +598,7 @@ const App = () => {
               name="basic-error"
               value="error value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
             <br />
