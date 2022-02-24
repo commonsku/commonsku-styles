@@ -34,7 +34,7 @@ export const InputIconLabel = styled.div<InputIconLabelProps>`
   font-size: 18px;
   text-align: center;
   line-height: 1.5rem;
-  padding: 5px;
+  padding: 6px;
 
   :hover {
     background: ${p => getThemeColor(p, 'input.iconWrapper.hover.background')};
