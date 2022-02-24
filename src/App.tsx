@@ -572,9 +572,31 @@ const App = () => {
             <br />
             <LabeledIconInput
               labelOnTop
-              label='Labeled Input'
+              label='Labeled input'
               name="basic-input"
               value="input value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              disabled
+              label='Labeled disabled'
+              name="basic-disabled"
+              value="disabled value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              error
+              label='Labeled error'
+              name="basic-error"
+              value="error value"
               placeholder="enter something"
               Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
