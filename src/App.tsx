@@ -675,6 +675,30 @@ const App = () => {
                 ))),
               ]}
               components={{ MenuList: SelectMenuList }}
+              isClearable
+            />
+
+            <Select
+              value={{ value: 'value4', label: 'value4', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              error
+              isClearable
+            />
+
+            <Select
+              value={{ value: 'value4', label: 'value4', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isDisabled
             />
 
             <br />

@@ -52,28 +52,10 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
       };
       if (props.error) {
         controlStyles['borderColor'] = getThemeColor(props, 'select.error.border', colors.select.error.border);
-        controlStyles['boxShadow'] = 'none';
-        const hoverStyles = provided['&:hover'] as React.CSSProperties | undefined;
-        controlStyles['&:hover'] = {
-          ...(hoverStyles || {}),
-          borderColor: getThemeColor(props, 'select.error.border', colors.select.error.border),
-        };
-
       } else if (state.menuIsOpen && state.isFocused) {
-        controlStyles['borderColor'] = getThemeColor(props, 'select.active.border');
-        controlStyles['boxShadow'] = 'none';
-        const hoverStyles = provided['&:hover'] as React.CSSProperties | undefined;
-        controlStyles['&:hover'] = {
-          ...(hoverStyles || {}),
-          borderColor: getThemeColor(props, 'select.active.border'),
-        };
+        controlStyles['borderColor'] = getThemeColor(props, 'select.active.border', colors.select.active.border);
       } else {
-        const hoverStyles = provided['&:hover'] as React.CSSProperties | undefined;
         controlStyles['borderColor'] = provided.borderColor;
-        controlStyles['&:hover'] = {
-          ...(hoverStyles || {}),
-          borderColor: provided.borderColor,
-        };
       }
       return ({
         ...provided,
@@ -172,7 +154,7 @@ const SKUSelect = styled(
         color: ${p => getThemeColor(p, 'select.clearIcon.color')};
       }
 
-      &:hover {
+      :hover {
         border-color: ${p =>
           p.error ? getThemeColor(p, 'select.error.border')
             : getThemeColor(p, 'select.active.border')
