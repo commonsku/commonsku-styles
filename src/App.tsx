@@ -668,7 +668,19 @@ const App = () => {
 
             <H5>Select</H5>
             <Select
-              value={{ value: 'value4', label: 'value4', }}
+              value={{ value: 'value1', label: 'value1', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isClearable
+              inPopup
+            />
+
+            <Select
+              value={{ value: 'value2', label: 'value2', }}
               options={[
                 ...(Array(100).fill(1).map((v, i) => (
                   {value: 'value'+i, label: 'value'+i}
@@ -679,7 +691,7 @@ const App = () => {
             />
 
             <Select
-              value={{ value: 'value4', label: 'value4', }}
+              value={{ value: 'value3', label: 'value3', }}
               options={[
                 ...(Array(100).fill(1).map((v, i) => (
                   {value: 'value'+i, label: 'value'+i}

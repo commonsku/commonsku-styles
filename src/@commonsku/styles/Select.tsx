@@ -6,6 +6,7 @@ import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
 import { document } from '../utils';
+import _ from 'lodash'
 
 type AdditionalSKUSelectProps = {
   noMargin?: boolean,
@@ -26,6 +27,39 @@ const popupStyles: SelectProps = {
 
 function skuSelectStyles(props: SKUSelectStylesProps): Styles {
   return {
+    clearIndicator: (provided, state) => {
+      return {
+        ...provided,
+        color: getThemeColor(props, 'select.clearIcon.color', colors.select.clearIcon.color),
+        ':hover': {
+          color: getThemeColor(props, 'select.clearIcon.color', colors.select.clearIcon.color),
+        },
+      };
+    },
+    dropdownIndicator: (provided, state) => {
+      const styles = {
+        color: props.error
+          ? getThemeColor(props, 'select.dropdownIcon.error.color', colors.select.dropdownIcon.error.color)
+          : getThemeColor(props, 'select.dropdownIcon.color', colors.select.dropdownIcon.color),
+        ':hover': {
+          color: props.error
+            ? getThemeColor(props, 'select.dropdownIcon.error.color', colors.select.dropdownIcon.error.color)
+            : getThemeColor(props, 'select.dropdownIcon.color', colors.select.dropdownIcon.color),
+        },
+      };
+      if (state.isDisabled) {
+        styles['color'] = getThemeColor(props, 'select.dropdownIcon.disabled', colors.select.dropdownIcon.disabled);
+      }
+      return {
+        ...provided,
+        ...styles,
+      };
+    },
+    indicatorSeparator: (provided, state) => ({
+      ...provided,
+      display: 'none'
+    }),
+
     option: (provided, state) => {
       let optionStyle = {};
       if (state.data && state.data.styles) {
@@ -47,44 +81,113 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
         : getThemeColor(props, 'select.border', colors.select.border)
     }},
     control: (provided, state) => {
-      const controlStyles: React.CSSProperties = {
+      const styles: React.CSSProperties = {
         marginBottom: (props.noMargin ? 0 : '1rem'),
       };
-      if (props.error) {
-        controlStyles['borderColor'] = getThemeColor(props, 'select.error.border', colors.select.error.border);
-        controlStyles['boxShadow'] = 'none';
-      } else if (state.menuIsOpen && state.isFocused) {
-        controlStyles['borderColor'] = getThemeColor(props, 'select.active.border', colors.select.active.border);
-        controlStyles['boxShadow'] = 'none';
-      } else {
-        controlStyles['borderColor'] = provided.borderColor;
+
+      if (state.menuIsOpen && state.isFocused) {
+        styles['borderWidth'] = '2px';
+        styles['borderStyle'] = 'solid';
+        styles['borderColor'] = props.error
+          ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+          : getThemeColor(props, 'select.active.border', colors.select.active.border);
+        styles['boxShadow'] = 'none';
+
+        if (state.selectProps.menuPlacement === 'bottom') {
+          styles['borderBottomRightRadius'] = 0;
+          styles['borderBottomLeftRadius'] = 0;
+        } else if (state.selectProps.menuPlacement === 'top') {
+          styles['borderTopRightRadius'] = 0;
+          styles['borderTopLeftRadius'] = 0;
+        }
+      }
+      else if (!state.menuIsOpen && state.isFocused) {
+        styles['borderWidth'] = '1px';
+        styles['borderColor'] = props.error
+          ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+          : getThemeColor(props, 'select.active.border', colors.select.active.border);
+        styles['boxShadow'] = `0 0 0 1px ${
+          props.error
+            ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+            : getThemeColor(props, 'select.active.border', colors.select.active.border)
+        }`;
+      }
+      else if (state.isDisabled) {
+        styles['backgroundColor'] = getThemeColor(props, 'select.disabled.background', colors.select.disabled.background);
+        styles['borderColor'] = getThemeColor(props, 'select.disabled.border', colors.select.disabled.border);
+      }
+      else {
+        styles['borderColor'] = props.error
+          ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+          : provided.borderColor;
       }
       return ({
         ...provided,
-        ...controlStyles,
+        ...styles,
+        ':hover': {
+          borderColor: props.error
+            ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+            : getThemeColor(props, 'select.active.border', colors.select.active.border),
+        },
       });
     },
     menu: (provided, state) => {
-      return ({
-        ...provided,
-        border: 'none',
+      const styles: React.CSSProperties = {
         zIndex: 10,
         position: props.menuRelative ? 'relative' : provided.position,
+        borderRadius: '5px',
+        border: `2px solid ${
+          props.error
+            ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+            : getThemeColor(props, 'select.active.border', colors.select.active.border)
+        }`,
+        boxShadow: 'none'
+      };
+
+      if (state.selectProps.menuPlacement === 'top') {
+        styles['borderBottomRightRadius'] = 0;
+        styles['borderBottomLeftRadius'] = 0;
+        styles['borderBottom'] = 'none';
+        styles['marginBottom'] = '0px';
+      } else if (state.selectProps.menuPlacement === 'bottom') {
+        styles['borderTopRightRadius'] = 0;
+        styles['borderTopLeftRadius'] = 0;
+        styles['borderTop'] = 'none';
+        styles['marginTop'] = '0px';
+      } else {
+        styles['marginTop'] = '0px';
+        styles['marginBottom'] = '0px';
+        styles['borderRadius'] = '3px';
+      }
+
+      return ({
+        ...provided,
+        ...styles,
       });
     },
-    menuPortal: (provided, state) => ({
-      ...provided,
-      zIndex: 9999,
-    }),
-    indicatorSeparator: (provided, state) => ({
-      ...provided,
-      display: 'none'
-    }),
+    menuList: (provided, state) => {
+      return {
+        ...provided,
+        paddingBottom: 0,
+      };
+    },
+    menuPortal: (provided, state) => {
+      return {
+        ...provided,
+        zIndex: 9999,
+      };
+    },
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = 'opacity 300ms';
       return { ...provided, opacity, transition };
-    }
+    },
+    valueContainer: (provided, state) => {
+      return {
+        ...provided,
+        padding: '2px 8px',
+      };
+    },
   };
 }
 
@@ -110,143 +213,35 @@ const SKUSelect = styled(
     {noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps,
     ref: React.Ref<BaseSelect>
   ) => {
-    return <BaseSelect 
+    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
+    const selectStyleProps = {
+      noMargin,
+      menuRelative,
+      inPopup,
+      error,
+      classNamePrefix,
+      theme: skuSelectTheme,
+      ...props
+    };
+    return <BaseSelect
       ref={ref}
-      classNamePrefix="commonsku-styles-select"
+      classNamePrefix={classNamePrefix}
       {...(inPopup ? popupStyles : {})}
       noMargin={noMargin}
       menuRelative={menuRelative}
       error={error}
-      styles={skuSelectStyles(props)}
+      styles={skuSelectStyles(selectStyleProps)}
       theme={skuSelectTheme}
       {...props}
     />
   })
 )`
   &&& {
-    .commonsku-styles-select__option {
-      border-bottom: none;
-      padding: 10px;
-    }
-
-    .commonsku-styles-select__value-container {
-      padding: 2px 8px;
-    }
-
     .commonsku-styles-select__input {
-      height: auto;
-      border-color: ${(props) => getThemeColor(props, 'select.active.border')};
-
       input {
         height: auto;
       }
     }
-
-    .commonsku-styles-select__control {
-      margin-bottom: ${(props) => props.noMargin ? 0 : '1rem'};
-
-      .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
-        color: ${p =>
-          p.error ? getThemeColor(p, 'select.dropdownIcon.error.color')
-            : getThemeColor(p, 'select.dropdownIcon.color')
-        };
-      }
-
-      .commonsku-styles-select__indicator.commonsku-styles-select__clear-indicator {
-        color: ${p => getThemeColor(p, 'select.clearIcon.color')};
-      }
-
-      :hover {
-        border-color: ${p =>
-          p.error ? getThemeColor(p, 'select.error.border')
-            : getThemeColor(p, 'select.active.border')
-        };
-
-        .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
-          color: ${p =>
-            p.error ? getThemeColor(p, 'select.dropdownIcon.error.color')
-              : getThemeColor(p, 'select.dropdownIcon.color')
-          };
-        }
-
-        .commonsku-styles-select__indicator.commonsku-styles-select__clear-indicator {
-          color: ${p => getThemeColor(p, 'select.clearIcon.color')};
-        }
-      }
-
-      &.commonsku-styles-select__control--is-disabled {
-        background-color: ${(props) => getThemeColor(props, 'select.disabled.background')};
-        border-color: ${(props) => getThemeColor(props, 'select.disabled.border')};
-  
-        .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
-          color: ${p => getThemeColor(p, 'select.dropdownIcon.disabled')};
-        }
-      }
-    }
-
-    div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused:not(.commonsku-styles-select__control--menu-is-open) {
-      border-width: 1px;
-      border-color: ${p =>
-        p.error ? getThemeColor(p, 'select.error.border')
-          : getThemeColor(p, 'select.active.border')
-      };
-      box-shadow: 0 0 0 1px ${p =>
-        p.error ? getThemeColor(p, 'select.error.border')
-          : getThemeColor(p, 'select.active.border')
-      };
-    }
-
-    div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused.commonsku-styles-select__control--menu-is-open {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      border: 2px solid ${p =>
-        p.error ? getThemeColor(p, 'select.error.border')
-          : getThemeColor(p, 'select.active.border')
-      };
-
-      .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
-        color: ${p =>
-          p.error ? getThemeColor(p, 'select.dropdownIcon.error.color')
-              : getThemeColor(p, 'select.dropdownIcon.color')
-        };
-      }
-
-      .commonsku-styles-select__indicator.commonsku-styles-select__clear-indicator {
-        color: ${p => getThemeColor(p, 'select.clearIcon.color')};
-      }
-    }
-
-    .commonsku-styles-select__menu {
-      border: 2px solid ${p =>
-        p.error ? getThemeColor(p, 'select.error.border')
-          : getThemeColor(p, 'select.active.border')
-      };
-      border-radius: 5px;
-      z-index: 10;
-      margin-top: 0px;
-      border-top: none;
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-      ${(props) => props.menuRelative ? 'position: relative;' : ''}
-    }
-
-    .commonsku-styles-select__menu-list {
-      padding-bottom: 0px;
-    }
-
-    .commonsku-styles-select__menuPortal {
-      zIndex: 9999;
-    }
-
-    .commonsku-styles-select__indicatorSeparator {
-      display: none;
-    }
-
-    ${props => !props.error ? '' : `
-      .commonsku-styles-select__input, .commonsku-styles-select__control {
-        border-color: ${getThemeColor(props, 'select.error.border', colors.select.error.border)};
-      }
-    `}
   }
 `;
 
