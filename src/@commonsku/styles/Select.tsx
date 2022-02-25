@@ -185,6 +185,7 @@ const SKUSelect = styled(
     }
 
     div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused:not(.commonsku-styles-select__control--menu-is-open) {
+      border-width: 1px;
       border-color: ${p =>
         p.error ? getThemeColor(p, 'select.error.border')
           : getThemeColor(p, 'select.active.border')
