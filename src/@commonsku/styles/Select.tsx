@@ -42,19 +42,52 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
       return {
       ...provided,
       height: 'auto',
-      borderColor: props.error ? getThemeColor(props, 'special3'): getThemeColor(props, 'inputBorder', 'primary')
+      borderColor: props.error
+        ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+        : getThemeColor(props, 'select.border', colors.select.border)
     }},
-    control: (provided, state) => ({
-      ...provided,
-      marginBottom: (props.noMargin ? 0 : '1rem'),
-      borderColor: props.error ? getThemeColor(props, 'special3'): provided.borderColor,
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      border: '2px solid red',
-      zIndex: 10,
-      position: props.menuRelative ? 'relative' : provided.position,
-    }),
+    control: (provided, state) => {
+      const controlStyles: React.CSSProperties = {
+        marginBottom: (props.noMargin ? 0 : '1rem'),
+      };
+      if (props.error) {
+        controlStyles['borderColor'] = getThemeColor(props, 'select.error.border', colors.select.error.border);
+        controlStyles['boxShadow'] = 'none';
+        const hoverStyles = provided['&:hover'] as React.CSSProperties | undefined;
+        controlStyles['&:hover'] = {
+          ...(hoverStyles || {}),
+          borderColor: getThemeColor(props, 'select.error.border', colors.select.error.border),
+        };
+
+      } else if (state.menuIsOpen && state.isFocused) {
+        controlStyles['borderColor'] = getThemeColor(props, 'select.active.border');
+        controlStyles['boxShadow'] = 'none';
+        const hoverStyles = provided['&:hover'] as React.CSSProperties | undefined;
+        controlStyles['&:hover'] = {
+          ...(hoverStyles || {}),
+          borderColor: getThemeColor(props, 'select.active.border'),
+        };
+      } else {
+        const hoverStyles = provided['&:hover'] as React.CSSProperties | undefined;
+        controlStyles['borderColor'] = provided.borderColor;
+        controlStyles['&:hover'] = {
+          ...(hoverStyles || {}),
+          borderColor: provided.borderColor,
+        };
+      }
+      return ({
+        ...provided,
+        ...controlStyles,
+      });
+    },
+    menu: (provided, state) => {
+      return ({
+        ...provided,
+        border: 'none',
+        zIndex: 10,
+        position: props.menuRelative ? 'relative' : provided.position,
+      });
+    },
     menuPortal: (provided, state) => ({
       ...provided,
       zIndex: 9999,
@@ -80,8 +113,8 @@ const skuSelectTheme = (theme: Theme) => ({
     primary75: colors.primary0,
     primary50: colors.primary10,
     primary: colors.primary,
-    neutral20: colors.inputBorder,
-    neutral30: colors.inputBorder,
+    neutral20: colors.select.border,
+    neutral30: colors.select.border,
     neutral80: colors.textbody,
     neutral90: colors.textbody
   },
@@ -118,7 +151,7 @@ const SKUSelect = styled(
 
     .commonsku-styles-select__input {
       height: auto;
-      border-color: ${(props) => getThemeColor(props, 'primary1.main')};
+      border-color: ${(props) => getThemeColor(props, 'select.active.border')};
 
       input {
         height: auto;
@@ -127,18 +160,74 @@ const SKUSelect = styled(
 
     .commonsku-styles-select__control {
       margin-bottom: ${(props) => props.noMargin ? 0 : '1rem'};
+
+      .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
+        color: ${p =>
+          p.error ? getThemeColor(p, 'select.dropdownIcon.error.color')
+            : getThemeColor(p, 'select.dropdownIcon.color')
+        };
+      }
+
+      .commonsku-styles-select__indicator.commonsku-styles-select__clear-indicator {
+        color: ${p => getThemeColor(p, 'select.clearIcon.color')};
+      }
+
+      &:hover {
+        border-color: ${p =>
+          p.error ? getThemeColor(p, 'select.error.border')
+            : getThemeColor(p, 'select.active.border')
+        };
+
+        .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
+          color: ${p =>
+            p.error ? getThemeColor(p, 'select.dropdownIcon.error.color')
+              : getThemeColor(p, 'select.dropdownIcon.color')
+          };
+        }
+
+        .commonsku-styles-select__indicator.commonsku-styles-select__clear-indicator {
+          color: ${p => getThemeColor(p, 'select.clearIcon.color')};
+        }
+      }
+
+      &.commonsku-styles-select__control--is-disabled {
+        background-color: ${(props) => getThemeColor(props, 'select.disabled.background')};
+        border-color: ${(props) => getThemeColor(props, 'select.disabled.border')};
+  
+        .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
+          color: ${p => getThemeColor(p, 'select.dropdownIcon.disabled')};
+        }
+      }
     }
 
     div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused.commonsku-styles-select__control--menu-is-open {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
+      border: 2px solid ${p =>
+        p.error ? getThemeColor(p, 'select.error.border')
+          : getThemeColor(p, 'select.active.border')
+      };
+
+      .commonsku-styles-select__indicator.commonsku-styles-select__dropdown-indicator {
+        color: ${p =>
+          p.error ? getThemeColor(p, 'select.dropdownIcon.error.color')
+              : getThemeColor(p, 'select.dropdownIcon.color')
+        };
+      }
+
+      .commonsku-styles-select__indicator.commonsku-styles-select__clear-indicator {
+        color: ${p => getThemeColor(p, 'select.clearIcon.color')};
+      }
     }
 
     .commonsku-styles-select__menu {
-      border: 2px solid ${p => getThemeColor(p, 'primary1.main')};
+      border: 2px solid ${p =>
+        p.error ? getThemeColor(p, 'select.error.border')
+          : getThemeColor(p, 'select.active.border')
+      };
       border-radius: 5px;
-      zIndex: 10;
-      margin-top: 1.5px;
+      z-index: 10;
+      margin-top: 0px;
       border-top: none;
       border-top-right-radius: 0;
       border-top-left-radius: 0;
@@ -159,7 +248,7 @@ const SKUSelect = styled(
 
     ${props => !props.error ? '' : `
       .commonsku-styles-select__input, .commonsku-styles-select__control {
-        border-color: ${getThemeColor(props, 'special3')};
+        border-color: ${getThemeColor(props, 'select.error.border', colors.select.error.border)};
       }
     `}
   }
