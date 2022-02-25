@@ -242,10 +242,10 @@ const Button = styled.button<ButtonProps>`
     border-radius: 5px;
     background: ${({ secondary, cta, ...props }) => 
       secondary ? "transparent" : 
-      cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')
+      cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)
     };
-    color: ${props => props.secondary ? getThemeColor(props, 'primary') : "white"};
-    border-color: ${props => props.cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')};
+    color: ${props => props.secondary ? getThemeColor(props, 'primary', colors.primary) : "white"};
+    border-color: ${props => props.cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)};
     font-size: ${getSizeStyle('font-size', '1em')};
     padding: ${p => getSizeStyle('padding', '12px 25px')};
     font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
@@ -255,14 +255,14 @@ const Button = styled.button<ButtonProps>`
       outline: none;
       opacity: .9;
       box-shadow: 0 0 8px ${({ secondary, cta, ...props }) => 
-        secondary ? getThemeColor(props, 'primary'): 
-        cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')
+        secondary ? getThemeColor(props, 'primary', colors.primary): 
+        cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)
       };
     }
     &:disabled {
-      background-color: ${props => getThemeColor(props, 'disabledButton')};
-      border-color: ${props => getThemeColor(props, 'disabledButtonBorder')};
-      color: ${props => getThemeColor(props, 'primary')};
+      background-color: ${props => getThemeColor(props, 'disabledButton', colors.disabledButton)};
+      border-color: ${props => getThemeColor(props, 'disabledButtonBorder', colors.disabledButtonBorder)};
+      color: ${props => getThemeColor(props, 'primary', colors.primary)};
       cursor: default;
       opacity: 0.5;
     }

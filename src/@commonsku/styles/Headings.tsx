@@ -1,10 +1,10 @@
 import styled, {css} from 'styled-components'
-import { getThemeColor } from './Theme';
+import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const headingStyle = css`
   font-family: "skufont-demibold", sans-serif;
-  color: ${props => getThemeColor(props, 'texttitle')};
+  color: ${props => getThemeColor(props, 'texttitle', colors.texttitle)};
   font-weight: bold;
 `
 

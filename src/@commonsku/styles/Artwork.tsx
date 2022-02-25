@@ -4,7 +4,7 @@ import {Button} from './Button'
 import {Img} from './Img'
 import {Input, InputProps} from './Input'
 import {IconDoc, DownloadIcon} from './icons'
-import { getThemeColor, getThemeFontSize } from './Theme';
+import { getThemeColor, getThemeFontSize, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 
@@ -15,7 +15,7 @@ const ArtworkName = styled.div`
 
 const UpdateDate = styled.div`
   font-size: ${props => getThemeFontSize(props, 'tiny')};
-  color: ${props => getThemeColor(props, 'textbody')};
+  color: ${props => getThemeColor(props, 'textbody', colors.textbody)};
 `
 
 const ArtworkControls = styled.div`

@@ -1,7 +1,7 @@
 import { map } from 'lodash';
 import React, { useState, useRef, CSSProperties, useEffect } from 'react'
 import styled, { CSSObject, StyledComponentProps } from 'styled-components'
-import { getThemeColor, themeOptions } from './Theme';
+import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
 
@@ -27,8 +27,8 @@ export const InputIconLabel = styled.div<BaseInputIconLabelProps>`
   height: ${p => p.error ? 38 : 36}px;
   background-color: ${p =>
     p.error
-      ? getThemeColor(p, 'errors.main')
-      : getThemeColor(p, 'input.iconWrapper.background')
+      ? getThemeColor(p, 'errors.main', colors.errors.main)
+      : getThemeColor(p, 'input.iconWrapper.background', colors.input.iconWrapper.background)
   };
   border-radius: ${p => p.iconPosition === 'right' ? '0 3px 3px 0' : '3px 0 0 3px'};
   margin-bottom: 1rem;
@@ -219,11 +219,11 @@ export const LabeledIconInput = React.forwardRef(
     const [isActive, setIsActive] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
 
-    const activeBorderColor = getThemeColor(props, 'input.active.border', themeOptions.colors.input.active.border);
-    const activeTextColor = themeOptions.colors.input.active.text;
-    const errorBorderColor = getThemeColor(props, 'input.error.border', themeOptions.colors.input.error.border);
-    const disabledBackground = themeOptions.colors.input.disabled.background;
-    const disabledTextColor = themeOptions.colors.input.disabled.text;
+    const activeBorderColor = getThemeColor(props, 'input.active.border', colors.input.active.border);
+    const activeTextColor = colors.input.active.text;
+    const errorBorderColor = getThemeColor(props, 'input.error.border', colors.input.error.border);
+    const disabledBackground = colors.input.disabled.background;
+    const disabledTextColor = colors.input.disabled.text;
     const activeStyles = !isActive ? {} : {
       borderColor: error ? errorBorderColor : activeBorderColor,
       color: getThemeColor(props, 'input.active.text', activeTextColor),
@@ -254,14 +254,14 @@ export const LabeledIconInput = React.forwardRef(
         iconProps['fill'] = errorBorderColor;
         iconProps['color'] = errorBorderColor;
       } else if (disabled) {
-        iconProps['fill'] = themeOptions.colors.input.icon.disabled.fill;
-        iconProps['color'] = themeOptions.colors.input.icon.disabled.fill;
+        iconProps['fill'] = colors.input.icon.disabled.fill;
+        iconProps['color'] = colors.input.icon.disabled.fill;
       } else if (isHovering) {
-        iconProps['fill'] = themeOptions.colors.input.icon.hover.fill;
-        iconProps['color'] = themeOptions.colors.input.icon.hover.fill;
+        iconProps['fill'] = colors.input.icon.hover.fill;
+        iconProps['color'] = colors.input.icon.hover.fill;
       } else if (isActive) {
-        iconProps['fill'] = themeOptions.colors.input.icon.active.fill;
-        iconProps['color'] = themeOptions.colors.input.icon.active.fill;
+        iconProps['fill'] = colors.input.icon.active.fill;
+        iconProps['color'] = colors.input.icon.active.fill;
       }
       return React.cloneElement(Icon, iconProps);
     }, [Icon, error, disabled, errorBorderColor, isActive, isHovering]);

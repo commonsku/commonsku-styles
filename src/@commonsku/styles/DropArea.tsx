@@ -1,17 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDropzone, DropzoneOptions, DropEvent } from 'react-dropzone';
 import styled from 'styled-components';
-import { getThemeColor } from './Theme';
+import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 export const StyledDropArea = styled.div<{isDragAccept?: boolean, isDragReject?: boolean, isDragActive?: boolean}&SharedStyleTypes>`
   &&& {
     padding: 20px;
-    border: 2px dashed ${props => getThemeColor(props, 'primary')}; 
+    border: 2px dashed ${props => getThemeColor(props, 'primary', colors.primary)}; 
     cursor: pointer;
     border-radius: 5px;
     &:hover {
-      background-color: ${props => getThemeColor(props, 'bgblue')};
+      background-color: ${props => getThemeColor(props, 'bgblue', colors.bgblue)};
     }
     border-color: ${props => getColor(props)};
     outline: none;
@@ -23,7 +23,7 @@ export const StyledDropArea = styled.div<{isDragAccept?: boolean, isDragReject?:
 
 const PlaceHolder = styled.label`
   &&& {
-    color: ${props => getThemeColor(props, 'primary')};
+    color: ${props => getThemeColor(props, 'primary', colors.primary)};
     text-align: center;
     width: 100%;
     display: block;
@@ -42,7 +42,7 @@ const Thumb = styled.div`
   &&& {
     display: inline-flex;
     border-radius: 2px;
-    border: 1px solid #eaeaea ${props => getThemeColor(props, 'bggray')};
+    border: 1px solid #eaeaea ${props => getThemeColor(props, 'bggray', colors.bggray)};
     margin-bottom: 8px;
     margin-right: 8px;
     width: 100px;
