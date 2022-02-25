@@ -6,7 +6,6 @@ import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
 import { document } from '../utils';
-import _ from 'lodash'
 
 type AdditionalSKUSelectProps = {
   noMargin?: boolean,
@@ -16,8 +15,12 @@ type AdditionalSKUSelectProps = {
 }
 
 type SKUSelectProps = AdditionalSKUSelectProps & SelectProps
+type SKUAsyncSelectProps = AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any;}>
+type SKUCreatableSelectProps = AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any;}>
 
-type SKUSelectStylesProps = SKUSelectProps | AsyncSelectProps<{[key: string]: any}> | CreatableSelectProps<{[key: string]: any}>
+type SKUSelectStylesProps = SKUSelectProps
+  | SKUAsyncSelectProps
+  | SKUCreatableSelectProps
 
 const popupStyles: SelectProps = {
   menuPlacement: 'auto',
@@ -157,7 +160,6 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
       } else {
         styles['marginTop'] = '0px';
         styles['marginBottom'] = '0px';
-        styles['borderRadius'] = '3px';
       }
 
       return ({
@@ -215,13 +217,13 @@ const SKUSelect = styled(
   ) => {
     const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
     const selectStyleProps = {
-      noMargin,
-      menuRelative,
-      inPopup,
-      error,
-      classNamePrefix,
+      ...props,
+      noMargin: noMargin,
+      menuRelative: menuRelative,
+      inPopup: inPopup,
+      error: error,
+      classNamePrefix: classNamePrefix,
       theme: skuSelectTheme,
-      ...props
     };
     return <BaseSelect
       ref={ref}
@@ -254,7 +256,7 @@ const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?
   )
 }
 
-const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}>) =>
+const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: SKUCreatableSelectProps) =>
   // @ts-ignore
   <BaseCreatableSelect 
     {...(inPopup ? popupStyles : {})}
@@ -263,7 +265,7 @@ const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: Additio
     {...props}
   />;
 
-const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
+const LabeledCreatableSelect = ({ parentStyle, ...props }: SKUCreatableSelectProps & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
       <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
@@ -273,7 +275,7 @@ const LabeledCreatableSelect = ({ parentStyle, ...props }: AdditionalSKUSelectPr
 }
 
 
-const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}>) =>
+const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: SKUAsyncSelectProps) =>
   // @ts-ignore
   <BaseAsyncSelect 
     {...(inPopup ? popupStyles : {})}
@@ -282,7 +284,7 @@ const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: AdditionalS
     {...props}
   />;
 
-const LabeledAsyncSelect = ({ parentStyle, ...props }: AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any}> & {parentStyle?:object}) => {
+const LabeledAsyncSelect = ({ parentStyle, ...props }: SKUAsyncSelectProps & {parentStyle?:object}) => {
   return (
     <div style={parentStyle}>
       <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
