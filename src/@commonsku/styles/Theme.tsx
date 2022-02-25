@@ -80,9 +80,9 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
 
   switch (prop) {
     case 'fontSizes':
-      return getFontSize(fallbackValue, value);
+      return getFontSize(value, fallbackValue);
     case 'colors':
-      return getColor(fallbackValue, value);
+      return getColor(value, fallbackValue);
     case 'fontFamily':
       return themeOptions.fontFamily;
     default:
