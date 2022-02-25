@@ -52,8 +52,10 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
       };
       if (props.error) {
         controlStyles['borderColor'] = getThemeColor(props, 'select.error.border', colors.select.error.border);
+        controlStyles['boxShadow'] = 'none';
       } else if (state.menuIsOpen && state.isFocused) {
         controlStyles['borderColor'] = getThemeColor(props, 'select.active.border', colors.select.active.border);
+        controlStyles['boxShadow'] = 'none';
       } else {
         controlStyles['borderColor'] = provided.borderColor;
       }
@@ -180,6 +182,17 @@ const SKUSelect = styled(
           color: ${p => getThemeColor(p, 'select.dropdownIcon.disabled')};
         }
       }
+    }
+
+    div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused:not(.commonsku-styles-select__control--menu-is-open) {
+      border-color: ${p =>
+        p.error ? getThemeColor(p, 'select.error.border')
+          : getThemeColor(p, 'select.active.border')
+      };
+      box-shadow: 0 0 0 1px ${p =>
+        p.error ? getThemeColor(p, 'select.error.border')
+          : getThemeColor(p, 'select.active.border')
+      };
     }
 
     div.commonsku-styles-select__control.commonsku-styles-select__control--is-focused.commonsku-styles-select__control--menu-is-open {
