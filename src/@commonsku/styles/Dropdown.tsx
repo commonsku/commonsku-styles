@@ -6,8 +6,10 @@ import { UpArrowIcon } from './icons';
 import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
+&&& {
     position: relative;
     display: inline-block;
+}
 `;
 
 type DropdownContentProps = {
@@ -17,6 +19,7 @@ type DropdownContentProps = {
 }
 
 export const DropdownItem = styled.div<DropdownContentProps>`
+&&& {
     color: ${p => getColor('primary')};
     padding: 8px 8px;
     text-decoration: none;
@@ -33,9 +36,11 @@ export const DropdownItem = styled.div<DropdownContentProps>`
         border-radius: 5px;
         cursor: pointer;
     }
+}
 `;
 
 export const DropDownContent = styled.div<DropdownContentProps>`
+&&& {
     display: block;
     position: absolute;
     background-color: ${p => getColor(p.primary ? 'white' : 'white')};
@@ -67,6 +72,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
         }
     }
 */
+}
 `;
 
 export type TDropdownItem = {
