@@ -7,7 +7,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon, OpportunityCircleIcon, PresentationCircleIcon, EstimateCircleIcon, SalesOrderCircleIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -823,6 +823,38 @@ const App = () => {
             <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
             <NavManagementIcon color={"#00d374"} width={"3rem"}/>
             <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
+
+            <br/>
+            <h2>Order Stage Icons</h2>
+            <Row>
+              <Col xs sm={4} md={2} lg={1}>
+                <OpportunityCircleIcon variant='primary' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <PresentationCircleIcon variant='primary' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='cta' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <SalesOrderCircleIcon variant='cta' />
+              </Col>
+            </Row>
+            <h2>Selected Order Stage Icons</h2>
+            <Row>
+              <Col xs sm={4} md={2} lg={1}>
+                <OpportunityCircleIcon variant='cta-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <PresentationCircleIcon variant='cta-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='primary-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <SalesOrderCircleIcon variant='primary-outline' />
+              </Col>
+            </Row>
 
 
             <H5>Number formatting</H5>
