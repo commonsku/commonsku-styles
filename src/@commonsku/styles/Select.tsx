@@ -89,12 +89,17 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
       };
 
       if (state.menuIsOpen && state.isFocused) {
-        styles['borderWidth'] = '2px';
+        styles['borderWidth'] = '1px';
         styles['borderStyle'] = 'solid';
         styles['borderColor'] = props.error
           ? getThemeColor(props, 'select.error.border', colors.select.error.border)
           : getThemeColor(props, 'select.active.border', colors.select.active.border);
-        styles['boxShadow'] = 'none';
+        styles['boxShadow'] = `
+          1px 1px 0px ${styles['borderColor']},
+          -1px -1px 0px ${styles['borderColor']},
+          1px -1px 0px ${styles['borderColor']},
+          -1px 1px 0px ${styles['borderColor']}
+        `;
 
         if (state.selectProps.menuPlacement === 'bottom') {
           styles['borderBottomRightRadius'] = 0;
@@ -135,31 +140,35 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
       });
     },
     menu: (provided, state) => {
+      const borderColor = props.error
+        ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+        : getThemeColor(props, 'select.active.border', colors.select.active.border);
       const styles: React.CSSProperties = {
         zIndex: 10,
         position: props.menuRelative ? 'relative' : provided.position,
         borderRadius: '5px',
-        border: `2px solid ${
-          props.error
-            ? getThemeColor(props, 'select.error.border', colors.select.error.border)
-            : getThemeColor(props, 'select.active.border', colors.select.active.border)
-        }`,
-        boxShadow: 'none'
+        border: `1px solid ${borderColor}`,
+        boxShadow: `
+          1px 1px 0px ${borderColor},
+          -1px -1px 0px ${borderColor},
+          1px -1px 0px ${borderColor},
+          -1px 1px 0px ${borderColor}
+        `
       };
 
       if (state.selectProps.menuPlacement === 'top') {
         styles['borderBottomRightRadius'] = 0;
         styles['borderBottomLeftRadius'] = 0;
         styles['borderBottom'] = 'none';
-        styles['marginBottom'] = '0px';
+        styles['marginBottom'] = '1px';
       } else if (state.selectProps.menuPlacement === 'bottom') {
         styles['borderTopRightRadius'] = 0;
         styles['borderTopLeftRadius'] = 0;
         styles['borderTop'] = 'none';
-        styles['marginTop'] = '0px';
+        styles['marginTop'] = '1px';
       } else {
-        styles['marginTop'] = '0px';
-        styles['marginBottom'] = '0px';
+        styles['marginTop'] = '1px';
+        styles['marginBottom'] = '1px';
       }
 
       return ({
