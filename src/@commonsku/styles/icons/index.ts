@@ -47,3 +47,5 @@ export { default as ReceiptLongIcon } from './ReceiptLongIcon';
 export { default as FolderIcon } from './FolderIcon';
 export { default as Calendar2Icon } from './Calendar2Icon';
 export { default as PromostandardsIcon } from './PromostandardsIcon';
+export { default as CrossIcon } from './CrossIcon';
+export { default as ArrowRightIcon } from './ArrowRightIcon';
