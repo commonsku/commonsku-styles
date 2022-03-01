@@ -54,3 +54,7 @@ export { default as PresentationCircleIcon } from './PresentationCircleIcon';
 export { default as EstimateCircleIcon } from './EstimateCircleIcon';
 export { default as SalesOrderCircleIcon } from './SalesOrderCircleIcon';
 export { default as DollarIcon } from './DollarIcon';
+export { default as BotIcon } from './BotIcon';
+export { default as GalleryIcon } from './GalleryIcon';
+export { default as ListIcon } from './ListIcon';
+export { default as TilesIcon } from './TilesIcon';
