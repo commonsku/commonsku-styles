@@ -167,8 +167,8 @@ function skuSelectStyles(props: SKUSelectStylesProps): Styles {
         styles['borderTop'] = 'none';
         styles['marginTop'] = '1px';
       } else {
-        styles['marginTop'] = '1px';
-        styles['marginBottom'] = '1px';
+        styles['marginTop'] = '0px';
+        styles['marginBottom'] = '0px';
       }
 
       return ({
