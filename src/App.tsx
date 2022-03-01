@@ -972,7 +972,7 @@ const App = () => {
             <H5>Multi Progress</H5>
             <LabeledMultiProgress title="Invoices this month" values={[
               {value: 64.44, text: v => 'Projection: $' + v},
-              {value: 2.44, text: v => '$' + v},
+              // {value: 2.44, text: v => '$' + v},
             ]} max={100} />
 
             <H5>Drop Area</H5>
