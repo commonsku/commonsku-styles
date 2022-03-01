@@ -73,6 +73,7 @@ import {
     IconButton,
     Input,
     LabeledIconInput,
+    Textarea,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
@@ -664,6 +665,13 @@ const App = () => {
               Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
+            <br />
+
+            <H5>Textarea</H5>
+            <Textarea placeholder="Textarea" defaultValue="basic textarea" />
+            <Textarea disabled defaultValue="diabled textarea" />
+            <Textarea error placeholder="Textarea" defaultValue="error textarea" />
+
             <br />
 
             <H5>Select</H5>
