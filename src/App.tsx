@@ -979,7 +979,7 @@ const App = () => {
             <H5>Thermometer</H5>
             <Thermometer
               title='Invoices this month'
-              target={0}
+              target={10}
               value1={10}
               value1Label={v => `$ ${v}`}
             />

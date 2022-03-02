@@ -49,6 +49,7 @@ export { default as Calendar2Icon } from './Calendar2Icon';
 export { default as PromostandardsIcon } from './PromostandardsIcon';
 export { default as CrossIcon } from './CrossIcon';
 export { default as ArrowRightIcon } from './ArrowRightIcon';
+export { default as ArrowLeftIcon } from './ArrowLeftIcon';
 export { default as OpportunityCircleIcon } from './OpportunityCircleIcon';
 export { default as PresentationCircleIcon } from './PresentationCircleIcon';
 export { default as EstimateCircleIcon } from './EstimateCircleIcon';

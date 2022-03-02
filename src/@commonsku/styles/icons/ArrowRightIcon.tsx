@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function Icon({
-    width=16,
-    height=16,
+    width=24,
+    height=24,
     fill="#fff",
     style={},
     ...props
@@ -21,10 +21,17 @@ export default function Icon({
             style={style}
             {...props}
         >
-            <path
-                d="M1.209 9h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59a.996.996 0 0 0 0-1.41L8.919.7a.996.996 0 1 0-1.41 1.41L12.379 7H1.209c-.55 0-1 .45-1 1s.45 1 1 1Z"
-                fill={fill}
-            />
+            <g clipPath="url(#arrow_right-a)">
+                <path
+                    d="M5.709 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59a.996.996 0 0 0 0-1.41l-6.58-6.6a.996.996 0 1 0-1.41 1.41l4.87 4.89H5.709c-.55 0-1 .45-1 1s.45 1 1 1Z"
+                    fill={fill}
+                />
+            </g>
+            <defs>
+            <clipPath id="arrow_right-a">
+                <path fill={fill} transform="translate(.5)" d="M0 0h24v24H0z" />
+            </clipPath>
+            </defs>
         </svg>
     );
 }

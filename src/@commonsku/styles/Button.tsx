@@ -251,6 +251,7 @@ const Button = styled.button<ButtonProps>`
     font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
     cursor: pointer;
     vertical-align: top;
+    /*
     &:focus {
       outline: none;
       opacity: .9;
@@ -259,6 +260,7 @@ const Button = styled.button<ButtonProps>`
         cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)
       };
     }
+    */
     &:disabled {
       background-color: ${props => getThemeColor(props, 'disabledButton', colors.disabledButton)};
       border-color: ${props => getThemeColor(props, 'disabledButtonBorder', colors.disabledButtonBorder)};
@@ -311,7 +313,7 @@ export function IconButton({
         paddingRight: children && iconPosition !== 'right' ? 5 : 0,
         display: 'inline-block',
         verticalAlign: 'top',
-        maxHeight: 20,
+        maxHeight: 24,
       }}>{BtnIcon}</span>
     );
   }, [variantStyles.color, Icon, children, iconPosition]);
