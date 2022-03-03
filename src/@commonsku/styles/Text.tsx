@@ -4,9 +4,13 @@ import styled from 'styled-components'
 import { colors, fonts } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
-export const Text = styled.span<{color?: keyof typeof colors} & SharedStyleTypes>`
+export type TextProp = {
+  color?: keyof typeof colors;
+  bold?: boolean;
+} & SharedStyleTypes;
+export const Text = styled.span<TextProp>`
   font-family: ${fonts.join(', ')};
-
+  ${p => p.bold ? ({ fontWeight: 'bold' }) : ({})}
   color: ${props => colors[props.color ?? 'textbody']};
   background-color: ${props => props.bg ? get(colors, `${props.color}Bg`, 'transparent') : 'transparent'};
   border-radius: ${props => props.bg ? '5px' : '0px'};

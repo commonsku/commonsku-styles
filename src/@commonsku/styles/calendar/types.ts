@@ -1,3 +1,4 @@
+import { TButtonIcon } from '..';
 import { CalendarTaskProps, } from '../Task';
 
 export type ACTIONS = 'TOGGLE_CHECKBOX' | 'DROP';
@@ -15,3 +16,12 @@ export type onClickTaskFunc = (task: CalendarTaskProps) => void | any;
 export type NewCalendarTaskProps = CalendarTaskProps & {__id__: string};
 export type Day = { __id__: string; day: Date; tasks: Array<NewCalendarTaskProps>; };
 export type DaysObject = { [key: string]: Day };
+
+export type TCalendarView = {
+  type: string;
+  title: string;
+  selected: boolean;
+  Icon?: TButtonIcon;
+};
+
+export type onClickViewFunc = (viewType: string, view?: TCalendarView) => void;

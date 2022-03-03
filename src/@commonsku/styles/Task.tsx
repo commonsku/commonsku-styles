@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { LabeledCheckbox } from './Input'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const TaskLabel = styled.div`display: flex; min-height: 25px; padding-right: 25px;`
+const TaskLabel = styled.div<{hasCheckbox?: boolean;}>`display: flex; min-height: 25px; ${p => p.hasCheckbox ? `padding-right: 25px;` : ''}`
 const TaskName = styled.div`flex-grow: 1; font-size:13px;`
 const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
 const TaskBody = styled.div`margin-left:34px;`
@@ -17,6 +17,7 @@ export type TaskProps = {
   assignee?: string,
   taskBody: string | React.ReactNode,
   checked?: boolean,
+  initialChecked?: boolean;
   onClickCheckbox?: (checked?: boolean) => any,
 };
 const Task = ({
@@ -25,7 +26,7 @@ const Task = ({
   done,
   assignee,
   taskBody,
-  initialChecked,
+  initialChecked=false,
   onClickCheckbox,
   ...props
 }: React.PropsWithChildren<TaskProps & SharedStyleTypes>) => {
@@ -75,8 +76,11 @@ export type CalendarTaskProps = {
   assignee?: string;
   checked?: boolean;
   overdue?: boolean;
-  onClickCheckbox?: (checked?: boolean) => any;
+  onClickCheckbox?: (checked: boolean) => any;
   isDescriptionHtml?: boolean;
+  draggable?: boolean;
+  hideCheckbox?: boolean;
+  Icon?: React.ReactNode;
 };
 
 const CalendarTask = React.forwardRef(({
@@ -89,6 +93,7 @@ const CalendarTask = React.forwardRef(({
   colorType='light-green',
   isDescriptionHtml=false,
   hideCheckbox=false,
+  Icon=null,
   ...props
 }: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(completed);
@@ -115,7 +120,11 @@ const CalendarTask = React.forwardRef(({
         hoverByLabel={false}
         labelStyle={{width: '100%', paddingLeft: 0, paddingRight: 0, marginRight: 0, marginLeft: 0, margin: 0,}}
         label={
-          <TaskLabel onClick={e => { e.preventDefault(); }} style={{fontWeight: 'bold' }}>
+          <TaskLabel
+            onClick={e => { e.preventDefault(); }}
+            style={{fontWeight: 'bold' }}
+            hasCheckbox={!hideCheckbox}
+          >
             <TaskName>{title}</TaskName>
             {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
           </TaskLabel>
@@ -133,9 +142,13 @@ const CalendarTask = React.forwardRef(({
           });
         }}
       /> : <>
-        <TaskLabel onClick={e => { e.preventDefault(); }} style={{fontWeight: 'bold' }}>
-          <TaskName>{title}</TaskName>
+        <TaskLabel
+          onClick={e => { e.preventDefault(); }}
+          style={{fontWeight: 'bold', }}
+        >
+          <TaskName style={{width: hideCheckbox && Icon ? '80%' : '100%'}}>{title}</TaskName>
           {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
+          {hideCheckbox && Icon ? Icon : null}
         </TaskLabel>
       </>}
       <StyledCalendarTaskBody

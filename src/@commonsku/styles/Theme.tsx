@@ -2,43 +2,9 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
 import _ from 'lodash'
-import colorPalettes from "./colors";
+import colors from "./colors";
 
-
-export const colors = {
-  white: '#fff',
-  black: '#000',
-  primary: '#02c0da',
-  cta: '#fa237c',
-  primary0: '#DAE9EE', // lighter
-  primary10: '#C9E8F2', // light
-  primary100: '#00889B', // dark
-  disabledButton: '#DAE9EE',
-  disabledButtonBorder: '#C9E8F2',
-  texttitle: '#123952', // a dark blue text
-  textlabel: '#123952',
-  textbody: '#52585C',
-  textplaceholder: '#A4ABAE',
-  bggray: '#EDF2F4',
-  bgblue: '#ECF4F7',
-  inputBorder: '#ABC7D1',
-  special1: '#ffd302',        // yellow
-  special2: '#00d374',        // green
-  special3: '#ff297c',        // red
-  primaryBg: '#EAF2F6',
-  special2Bg: '#E7FFE9',
-  transparent: 'transparent',
-  error: '#B21154',
-
-  primary2: '#00A0B6',
-  primary20: '#00788A',
-  primary200: '#004D59',
-
-  tableHeaderBg: '#F6FEFF',
-  tableBorder: '#edf2f5',
-
-  ...colorPalettes,
-};
+export { colors };
 export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
 export const fontSizes = {
   tiny: '.8em',
@@ -51,6 +17,20 @@ export const themeOptions = {
   colors,
   fonts,
   fontFamily: `${fonts.join(",")}`,
+  fontFamilies: {
+    regular: "'skufont-regular'",
+    demibold: "'skufont-demibold'",
+    bold: "'skufont-demibold'",
+    medium: "'skufont-medium'",
+    fallbacks: [
+      '"museo-sans"',
+      '"Helvetica Neue"',
+      'Helvetica',
+      'Roboto',
+      'Arial',
+      'sans-serif',
+    ],
+  },
   fontSizes,
   space: {
     '0': '0px',
@@ -68,13 +48,13 @@ export const themeOptions = {
 }
 
 export function getColor(color?: string, def?: string): string {
-  // @ts-ignore
-  return color && colors[color] ? colors[color] : colors[def];
+  if (!color) { return ''; }
+  return _.get(colors, color, _.get(colors, def || '', ''));
 }
 
 export function getFontSize(value?: string, def?: string): string {
-  // @ts-ignore
-  return value && fontSizes[value] ? fontSizes[value] : fontSizes[def];
+  if (!value) { return ''; }
+  return _.get(fontSizes, value, _.get(fontSizes, def || '', ''));
 }
 
 export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
@@ -97,28 +77,30 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
       return props.theme[prop];
     }
   }
-  // @ts-ignore
-  return prop === 'fontSizes' 
-    ? getFontSize(fallbackValue, value)
-    : prop === 'colors'
-    ? getColor(fallbackValue, value)
-    : prop === 'fontFamily'
-    ? themeOptions.fontFamily
-    : null;
+
+  switch (prop) {
+    case 'fontSizes':
+      return getFontSize(value, fallbackValue);
+    case 'colors':
+      return getColor(value, fallbackValue);
+    case 'fontFamily':
+      return themeOptions.fontFamily;
+    default:
+      return '';
+  }
 }
 
 
-//use globalStyles with care, currently anchored to body
 const Theme = ({ theme={}, globalStyles=false, children }: React.PropsWithChildren<{
   theme?: object, globalStyles?: boolean
-}>) => (
-  <ThemeProvider theme={{
-    ...themeOptions,
-    ...theme,
-  }}>
-    {globalStyles ? <GlobalStyle /> : null}
-    {children}
-  </ThemeProvider>
-);
+}>) => {
+  const mergedTheme = _.merge(themeOptions, theme);
+  return (
+    <ThemeProvider theme={mergedTheme}>
+      {globalStyles ? <GlobalStyle theme={mergedTheme} /> : null}
+      {children}
+    </ThemeProvider>
+  );
+};
 
 export default Theme;

@@ -29,6 +29,7 @@ function Loading({
     viewBox?: string,
     startColor?: string,
     endColor?: string,
+    rotate?: boolean,
 } & SharedStyleTypes) {
     const colorGradient = colorful
         ? generateColor(startColor || colors.special1, endColor || colors.primary, bars)

@@ -1,9 +1,9 @@
-import _ from 'lodash';
 import styled from 'styled-components'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import {Text, Number} from './Text'
 import { useWindowSize } from './hooks'
+import { Label } from './Label'
 
 const ProgressWrapper = styled.div<SharedStyleTypes>`
   max-width: 100%;
@@ -84,7 +84,7 @@ const LabeledBar = (props: LabeledBarprops) => {
         display: 'inline-block',
         textAlign: width >= 990 ? 'right' : 'center',
         zIndex: 9,
-        marginTop: -25,
+        marginTop: -24,
         color: '#00d374',
         // width: `calc(${100 * props.value / props.max}% - (${size.x || 0}px + 17px))`,
       }}>{text}</Text>
@@ -96,17 +96,15 @@ const LabeledBar = (props: LabeledBarprops) => {
 const MultiProgress = ({
   labeled,
   error,
-  title,
   values,
   max: maxVal,
   ...props
-}: ProgressBarsProps & {labeled?: boolean}) => {
+}: ProgressBarsProps & {labeled?: boolean, style?: React.CSSProperties}) => {
   const max = typeof maxVal === 'number'
             ? maxVal
             : !isNaN(maxVal) ? parseInt(maxVal) : 0;
 
   return <ProgressWrapper {...props}>
-    {title ? <StyledProgressTitle>{title}</StyledProgressTitle> : null}
     {values.map((v: ProgressBarValue, i) => {
       const color = v.color || (i%2 === 0 ? 'rgba(1, 211, 116, 0.2)' : '#00d374');
       const val = typeof v.value === 'number' ? v.value : !isNaN(v.value) ? parseInt(v.value) : 0;
@@ -132,13 +130,22 @@ const MultiProgress = ({
   </ProgressWrapper>
 }
 
-const LabeledMultiProgress = (props: ProgressBarsProps) => {
+const LabeledMultiProgress = ({
+  title,
+  ...props
+}: ProgressBarsProps & { style?: React.CSSProperties }) => {
   return <div>
-    <MultiProgress {...props} labeled />
+    {title ? <Label style={{fontWeight: 'bold', fontSize: 18, }}>{title}</Label> : null}
     <span style={{
       float: 'right',
       paddingRight: 8,
+      paddingTop: 40,
     }}>Target $<Number commas decimalPoints={0} num={props.max}/></span>
+    <MultiProgress
+      {...props}
+      labeled
+      style={{ marginTop: 40, ...(props.style || {}) }}
+    />
   </div>
 }
 

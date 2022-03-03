@@ -2,7 +2,12 @@ import React from 'react';
 import { format, isSameDay } from "date-fns";
 import StyledDayBody from './StyledDayBody';
 
-type CalendarDayBodyProps = React.PropsWithChildren<{ day: Date, selectedDate: Date, onClick: Function, weekend?: boolean }>;
+type CalendarDayBodyProps = React.PropsWithChildren<{
+    day: Date,
+    selectedDate: Date,
+    onClick: React.MouseEventHandler<HTMLDivElement>,
+    weekend?: boolean
+}>;
 
 const CalendarDayBody = ({ day, selectedDate, onClick, children, weekend, ...props }: CalendarDayBodyProps) => {
     const formattedDay = format(day, "d");

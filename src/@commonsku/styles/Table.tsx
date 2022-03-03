@@ -34,7 +34,7 @@ const Table= styled.table.attrs(() => ({ cellPadding: 0, cellSpacing: 0 }))<Shar
   }
 `;
 
-const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}&SharedStyleTypes|SizerTypes>`
+const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}&SharedStyleTypes&SizerTypes>`
   &&& {
     background-color: #dae9ee;
     border: none;
@@ -57,7 +57,7 @@ const TH= styled.th<{clickable?: boolean, sticky?: boolean, stickyTop?: number}&
   }
 `;
 
-const TD= styled.td<{clickable?: boolean}&SharedStyleTypes|SizerTypes>`
+const TD= styled.td<{clickable?: boolean}&SharedStyleTypes&SizerTypes>`
   &&& {
     border: 0;
     color: #52585c;

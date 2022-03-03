@@ -5,11 +5,20 @@ import { Input, InputProps } from './Input';
 import "react-datepicker/dist/react-datepicker.css";
 import { CalendarIcon } from './icons';
 
-export const CustomDateInput = (
-  { error, noMargin, onClick, isClearable, ...props }: InputProps & {isClearable?: boolean}
+type CustomInputProps = InputProps & {isClearable?: boolean};
+export const CustomDateInput = React.forwardRef((
+  {
+    error,
+    noMargin,
+    onClick,
+    isClearable,
+    ...props
+  }: CustomInputProps,
+  ref?: React.Ref<HTMLInputElement>
 ) => {
   return (<>
     <Input
+      ref={ref}
       noMargin={noMargin}
       error={error}
       style={{ marginRight: '2rem', display: 'inline-block' }}
@@ -22,7 +31,7 @@ export const CustomDateInput = (
     {!isClearable ? <CalendarIcon style={{ width: '1.9rem', verticalAlign: 'middle', }} /> : null}
     </span>
   </>);
-}
+})
 
 export function Datepicker({
   error,
@@ -42,7 +51,7 @@ export function Datepicker({
   previousMonthButtonLabel="",
   previousYearButtonLabel="",
   ...props
-}: ReactDatePickerProps & InputProps & { value?: Date | null }) {
+}: Omit<ReactDatePickerProps, 'value'> & Omit<InputProps, 'value'> & { value?: Date | null }) {
   return (
       //@ts-ignore
       <DatePicker

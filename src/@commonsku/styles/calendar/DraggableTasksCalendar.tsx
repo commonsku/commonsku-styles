@@ -4,7 +4,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { getWeek, getYear } from 'date-fns'
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
-import { TabType } from '../Tabs';
+import { TTab } from '../Tabs';
 import { useCalendar } from '../hooks';
 import CalendarDaysHeader from './CalendarDaysHeader';
 import CalendarWrapper from './CalendarWrapper';
@@ -15,13 +15,13 @@ import { convertTasksToDays } from './TasksCalendar';
 import {LabeledCheckbox} from '../Input';
 import { useCalendarProps } from '../hooks/useCalendar';
 import Loading from '../icons/Loading';
-import { DaysObject, onClickTaskFunc, onUpdateTaskFunc } from './types';
+import { DaysObject, onClickTaskFunc, onUpdateTaskFunc, TCalendarView, onClickViewFunc } from './types';
 
 export type DraggableTasksCalendarProps = CalendarProps & {
   tasks: Array<CalendarTaskProps>;
   onUpdateTask: onUpdateTaskFunc;
   onClickTask?: onClickTaskFunc;
-  headerTabs?: Array<TabType>;
+  headerTabs?: Array<TTab>;
   footerTasks?: Array<CalendarTaskProps>;
   weekend?: boolean;
   components?: {
@@ -32,6 +32,9 @@ export type DraggableTasksCalendarProps = CalendarProps & {
   showAddTaskBtn?: boolean;
   onClickAddTask?: VoidFunction;
   loading?: boolean;
+  views?: Array<TCalendarView>;
+  onClickView?: onClickViewFunc;
+  showFooterTasks?: boolean;
 } & useCalendarProps;
 
 type State = {
@@ -40,6 +43,7 @@ type State = {
 };
 
 const DraggableTasksCalendar = ({
+  views = [],
   tasks = [],
   onUpdateTask,
   onClickTask,
@@ -52,7 +56,9 @@ const DraggableTasksCalendar = ({
   onToggleWeekend,
   showAddTaskBtn=true,
   onClickAddTask,
+  onClickView,
   loading=false,
+  showFooterTasks=true,
   ...props
 }: DraggableTasksCalendarProps) => {
   const {
@@ -65,6 +71,8 @@ const DraggableTasksCalendar = ({
     onPrevMonth,
     onClickDay,
     onReset,
+    changeDate,
+    changeWeek
   } = useCalendar({onChangeWeek, onChangeMonth});
 
   const [state, setState] = useState<State>({
@@ -114,6 +122,8 @@ const DraggableTasksCalendar = ({
     selectedDate,
     showAddTaskBtn,
     onClickAddTask,
+    changeWeek,
+    changeDate,
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -129,6 +139,9 @@ const DraggableTasksCalendar = ({
         const destColumn = days[destination.droppableId];
 
         const sourceTasks = s.footerTasks;
+        if (sourceTasks[source.index].draggable === false) {
+          return s;
+        }
         const [removed] = sourceTasks.splice(source.index, 1);
         const newTask = {...removed,
           __id__: `day-${getWeek(destColumn.day)}-${destColumn.day.getDate()}-task-${destination.index}`,
@@ -166,6 +179,10 @@ const DraggableTasksCalendar = ({
         const sourceColumn = days[source.droppableId];
         const destColumn = days[destination.droppableId];
 
+        if (sourceColumn.tasks[source.index].draggable === false) {
+          return s;
+        }
+
         const sourceItems = [...sourceColumn.tasks];
         const destItems = [...destColumn.tasks];
         const [removed] = sourceItems.splice(source.index, 1);
@@ -201,6 +218,10 @@ const DraggableTasksCalendar = ({
       setState(s => {
         const days = s.days;
         const column = days[source.droppableId];
+        if (column.tasks[source.index].draggable === false) {
+          return s;
+        }
+
         const copiedItems = [...column.tasks];
         const [removed] = copiedItems.splice(source.index, 1);
         copiedItems.splice(destination.index, 0, removed);
@@ -236,6 +257,8 @@ const DraggableTasksCalendar = ({
           onResetDate={onReset}
           tabs={headerTabs}
           weekendsCheckbox={weekendsCheckbox}
+          views={views}
+          onClickView={onClickView}
         />
         <div className="calendar-scroll">
           <CalendarDaysHeader currentMonth={currentMonth} selectedDate={selectedDate} weekendsCheckbox={weekendsCheckbox} weekend={showWeekend} />
@@ -269,7 +292,7 @@ const DraggableTasksCalendar = ({
             }}
           />}
         </div>
-        <DroppableFooter
+        {showFooterTasks ? <DroppableFooter
           tasks={state.footerTasks}
           onClickTask={onClickTask}
           onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
@@ -293,7 +316,7 @@ const DraggableTasksCalendar = ({
             })();
           }}
           {...headerProps}
-        />
+        /> : null}
       </CalendarWrapper>
     </DragDropContext>
   );

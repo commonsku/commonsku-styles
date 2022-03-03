@@ -1,13 +1,15 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
-import styled from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
 import { Button, TSize } from './Button';
 import { UpArrowIcon } from './icons';
 import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
+&&& {
     position: relative;
     display: inline-block;
+}
 `;
 
 type DropdownContentProps = {
@@ -17,6 +19,7 @@ type DropdownContentProps = {
 }
 
 export const DropdownItem = styled.div<DropdownContentProps>`
+&&& {
     color: ${p => getColor('primary')};
     padding: 8px 8px;
     text-decoration: none;
@@ -33,9 +36,11 @@ export const DropdownItem = styled.div<DropdownContentProps>`
         border-radius: 5px;
         cursor: pointer;
     }
+}
 `;
 
 export const DropDownContent = styled.div<DropdownContentProps>`
+&&& {
     display: block;
     position: absolute;
     background-color: ${p => getColor(p.primary ? 'white' : 'white')};
@@ -67,6 +72,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
         }
     }
 */
+}
 `;
 
 export type TDropdownItem = {
@@ -83,6 +89,7 @@ export type DropdownProps = {
     openMenu?: boolean;
     mouseLeaveCallback?: any;
     size?: TSize;
+    style?: CSSObject;
 };
 
 export const Dropdown = ({
@@ -95,6 +102,7 @@ export const Dropdown = ({
     openMenu=false,
     mouseLeaveCallback,
     size,
+    style={},
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
 
@@ -126,7 +134,7 @@ export const Dropdown = ({
 
     return (
         // @ts-ignore
-        <span ref={node} {...props} onMouseLeave={() => { 
+        <span ref={node} {...props} style={style} onMouseLeave={() => { 
             setShowMenu(false); 
             if(mouseLeaveCallback) { 
                 mouseLeaveCallback()

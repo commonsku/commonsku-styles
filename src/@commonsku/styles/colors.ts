@@ -52,10 +52,10 @@ export const secondary1 = {
   'darkest': '',
 };
 secondary1['main'] = secondary1['60'];
-primary1['lightest'] = primary1['10'];
-primary1['light'] = primary1['30'];
-primary1['dark'] = primary1['80'];
-primary1['darkest'] = primary1['90'];
+secondary1['lightest'] = secondary1['10'];
+secondary1['light'] = secondary1['30'];
+secondary1['dark'] = secondary1['80'];
+secondary1['darkest'] = secondary1['90'];
 
 export const secondary2 = {
   '10': '#FFFDF5',
@@ -74,10 +74,10 @@ export const secondary2 = {
   'darkest': '',
 };
 secondary2['main'] = secondary2['50'];
-primary1['lightest'] = primary1['10'];
-primary1['light'] = primary1['30'];
-primary1['dark'] = primary1['70'];
-primary1['darkest'] = primary1['90'];
+secondary2['lightest'] = secondary2['10'];
+secondary2['light'] = secondary2['30'];
+secondary2['dark'] = secondary2['70'];
+secondary2['darkest'] = secondary2['90'];
 
 export const secondary3 = {
   '10': '#F2FFF9',
@@ -96,10 +96,10 @@ export const secondary3 = {
   'darkest': '',
 };
 secondary3['main'] = secondary3['60'];
-primary1['lightest'] = primary1['10'];
-primary1['light'] = primary1['30'];
-primary1['dark'] = primary1['80'];
-primary1['darkest'] = primary1['90'];
+secondary3['lightest'] = secondary3['10'];
+secondary3['light'] = secondary3['30'];
+secondary3['dark'] = secondary3['80'];
+secondary3['darkest'] = secondary3['90'];
 
 export const secondary4 = {
   '10': '#EDF4F7',
@@ -118,10 +118,10 @@ export const secondary4 = {
   'darkest': '',
 };
 secondary4['main'] = secondary4['70'];
-primary1['lightest'] = primary1['10'];
-primary1['light'] = primary1['30'];
-primary1['dark'] = primary1['80'];
-primary1['darkest'] = primary1['90'];
+secondary4['lightest'] = secondary4['10'];
+secondary4['light'] = secondary4['30'];
+secondary4['dark'] = secondary4['80'];
+secondary4['darkest'] = secondary4['90'];
 
 export const neutrals = {
   '10': '#FFFFFF',
@@ -136,6 +136,7 @@ export const neutrals = {
   '100': '#123952',
   'main': '',
   'darkest': '',
+  'dark': '',
   'bodyText': '',
   'bg1': '',
   'white': '',
@@ -144,6 +145,7 @@ neutrals['main'] = neutrals['100'];
 neutrals['white'] = neutrals['10'];
 neutrals['bg1'] = neutrals['20'];
 neutrals['bodyText'] = neutrals['90'];
+neutrals['dark'] = neutrals['90'];
 neutrals['darkest'] = neutrals['100'];
 
 export const errors = {
@@ -175,6 +177,7 @@ const colors = {
   secondary3,
   secondary4,
 
+  teal: primary1,
   pink: secondary1,
   yellow: secondary2,
   green: secondary3,
@@ -197,12 +200,14 @@ const colors = {
     },
     'SALES ORDER': {
       main: secondary2['50'],
+      current: secondary2['50'],
+      previous: neutrals['60']
     },
     'INVOICE': {
       main: secondary3['60'],
     },
     'TARGET': {
-      main: secondary1['50'],
+      main: secondary1['60'],
     },
   },
   notes: {
@@ -233,7 +238,116 @@ const colors = {
     body: neutrals['90'],
     title: neutrals['100'],
     label: neutrals['100'],
-    placeholder: '#A4ABAE',
+    placeholder: {
+      default: neutrals['60'],
+      hover: neutrals['70']
+    }
+  },
+  white: '#fff',
+  black: '#000',
+  primary: '#02c0da',
+  cta: '#fa237c',
+  primary0: '#DAE9EE', // lighter
+  primary10: '#C9E8F2', // light
+  primary100: '#00889B', // dark
+  disabledButton: '#DAE9EE',
+  disabledButtonBorder: '#C9E8F2',
+  texttitle: '#123952', // a dark blue text
+  textlabel: '#123952',
+  textbody: '#52585C',
+  textplaceholder: '#A4ABAE',
+  bggray: '#EDF2F4',
+  bgblue: '#ECF4F7',
+  inputBorder: '#ABC7D1',
+  special1: '#ffd302',        // yellow
+  special2: '#00d374',        // green
+  special3: '#ff297c',        // red
+  primaryBg: '#EAF2F6',
+  special2Bg: '#E7FFE9',
+  transparent: 'transparent',
+  error: '#B21154',
+
+  primary2: '#00A0B6',
+  primary20: '#00788A',
+  primary200: '#004D59',
+
+  tableHeaderBg: '#F6FEFF',
+  tableBorder: '#edf2f5',
+  input: {
+    background: '#fff',
+    border: neutrals['60'],
+    text: neutrals['90'],
+    placeholder: neutrals['60'],
+    active: {
+      border: primary1['60'],
+      text: neutrals['90'],
+    },
+    hover: {
+      border: primary1['50'],
+      placeholder: neutrals['70'],
+    },
+    error: {
+      border: errors['main'],
+    },
+    disabled: {
+      text: neutrals['70'],
+      background: neutrals['40'],
+    },
+    iconWrapper: {
+      background: neutrals['50'],
+      active: {
+        background: neutrals['20'],
+      },
+      hover: {
+        background: primary1['20'],
+      },
+      disabled: {
+        background: neutrals['50'],
+      },
+    },
+    icon: {
+      fill: '#fff',
+      active: {
+        fill: primary1['60'],
+      },
+      hover: {
+        fill: primary1['50'],
+      },
+      disabled: {
+        fill: '#fff',
+      },
+    },
+  },
+  select: {
+    background: '#fff',
+    border: neutrals['60'],
+    text: neutrals['90'],
+    placeholder: neutrals['60'],
+    active: {
+      border: primary1['60'],
+      text: neutrals['90'],
+    },
+    hover: {
+      border: primary1['50'],
+      placeholder: neutrals['70'],
+    },
+    error: {
+      border: errors['main'],
+    },
+    disabled: {
+      background: neutrals['40'],
+      border: neutrals['40'],
+    },
+    dropdownIcon: {
+      color: primary1['60'],
+      error: {
+        color: errors['main'],
+      },
+      disabled: neutrals['60'],
+    },
+    clearIcon: {
+      color: errors['60'],
+    },
   },
 };
 

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import styled, { css } from 'styled-components'
 import React, { Component } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
@@ -75,25 +76,54 @@ Here's how you use this:
 //   </div>
 // }
 
-export type TabType = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
-type StateType = {selectedTabIndex: number, selectedTab: TabType};
-export type TabsProps = { tabs: TabType[], selectedTabIndex?: number, padded?: boolean, size?: keyof typeof tabSizes };
-class Tabs extends Component<TabsProps, StateType> {
+export type TTab = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
+export type TabsProps = { tabs: TTab[], selectedTabIndex?: number, padded?: boolean, size?: keyof typeof tabSizes };
+type TabsState = {selectedTabIndex: number};
+
+class Tabs extends Component<TabsProps, TabsState> {
   constructor(props: TabsProps) {
     super(props);
     this.state = {
       selectedTabIndex: this.props.selectedTabIndex || 0,
-      selectedTab: this.props.tabs[this.props.selectedTabIndex || 0]
     };
   }
 
+  getTab(tabs: TTab[], tabIndex=0): null | TTab {
+    if (!tabs.length || tabs.length-1 < tabIndex) {
+      return null;
+    }
+    return tabs[tabIndex];
+  }
+
   componentDidMount() {
-    let callback = this.props.tabs[this.state.selectedTabIndex].onClick;
+    const selectedTab = this.getTab(this.props.tabs, this.state.selectedTabIndex);
+    if (!selectedTab) {
+      return;
+    }
+
+    const callback = selectedTab.onClick;
     if(callback) { callback(); }
+  }
+
+  componentDidUpdate(prevProps: Readonly<TabsProps>, prevState: Readonly<TabsState>) {
+    const sameTabs = prevProps.tabs.length !== this.props.tabs.length
+    || (
+      prevProps.tabs.length === this.props.tabs.length
+      && prevProps.tabs.every((e, i) =>
+        e.label === this.props.tabs[i].label
+        && (e.onClick || "null").toString() === (this.props.tabs[i].onClick || 'null').toString()
+      )
+    );
+    if (!sameTabs) {
+      this.setState({
+        selectedTabIndex: 0,
+      });
+    }
   }
 
   render () {
     const { tabs, size } = this.props;
+    const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
     return <div>
       <TabBar padded={this.props.padded === true}>
         {tabs.map((tab, index) => <Tab 
@@ -107,7 +137,7 @@ class Tabs extends Component<TabsProps, StateType> {
           {tab.label}
         </Tab>)}
       </TabBar>
-      {tabs[this.state.selectedTabIndex].content}
+      {_.get(selectedTab, ['content'], '')}
     </div>
   }
 }

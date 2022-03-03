@@ -7,7 +7,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon, OpportunityCircleIcon, PresentationCircleIcon, EstimateCircleIcon, SalesOrderCircleIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -24,6 +24,7 @@ import {
     SidePanel,
     Tabs,
     Select,
+    components as selectComponents,
     LabeledSelect,
     LabeledProgress,
     PanelTileContact,
@@ -69,8 +70,14 @@ import {
     NavManagementIcon,
     NavResourcesIcon,
     LabeledMultiProgress,
+    IconButton,
+    Input,
+    LabeledIconInput,
+    Textarea,
+    Thermometer,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
+import { MenuListComponentProps } from 'react-select';
 
 const initialState = {
   date: new Date(),
@@ -255,6 +262,30 @@ const tableData = [
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ] 
 
+const SelectMenuList = (
+  props: MenuListComponentProps<{[key: string]: any;}>
+) => {
+  return (
+    <selectComponents.MenuList {...props}>
+      {props.children}
+      <div
+        onClick={() => { console.log('New client') }}
+        style={{
+          cursor: 'pointer',
+          paddingTop: '8px',
+          paddingBottom: '8px',
+          background: '#E1F7FA',
+          color: '#00A0B6',
+          bottom: 0,
+          position: 'sticky',
+          textAlign: 'center',
+          marginBottom: 0,
+        }}
+      >+ New Client</div>
+    </selectComponents.MenuList>
+  );
+};
+
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
   console.log(action);
   switch (action.type) {
@@ -300,6 +331,7 @@ const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showNewProjectPopup, setShowNewProjectPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
@@ -449,7 +481,7 @@ const App = () => {
     console.log(e)
   }
 
-  return <Theme><Page>
+  return <Theme globalStyles><Page>
     <SidePanel title="Panel Title"
       // fullWidthTitle
       controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}
@@ -462,9 +494,9 @@ const App = () => {
     >
       <Tabs padded tabs={[
         { label: "Contacts", content: <Row>
-                                         <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeffdfsdfsdfsdfs.dfsdfsdfs@sdfsdfsdabc.com" phone="843-443-4432" />
-                                         <PanelTileContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phone="843-443-4432" />
-                                         <PanelTileContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phone="843-443-4432" />
+                                         <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeffdfsdfsdfsdfs.dfsdfsdfs@sdfsdfsdabc.com" phones={[{phone_number: "843-443-4432"}]} />
+                                         <PanelTileContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phones={[{phone_number: "843-443-4432"}]} />
+                                         <PanelTileContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phones={[{phone_number: "843-443-4432"}]} />
                                       </Row>},
         { label: "Addresses", content: <div>This is tab number two</div> },
         { label: "Third Tab", content: <div>This is the last tab</div> },
@@ -490,6 +522,24 @@ const App = () => {
             console.groupEnd();
           }} />
       </Popup>}
+
+      {showNewProjectPopup && <Popup
+        title={'New Project'}
+        onClose={() => {
+            setShowNewProjectPopup(false);
+        }}
+      >
+        Hello from Popup
+        <br/>
+        <Select inPopup options={options} value={options[0]} />
+        <CreatableSelect inPopup options={options} value={options[0]}
+          onChange={(newValue: any, actionMeta: any) => {
+            console.group('Value Changed');
+            console.log(newValue);
+            console.log(`action: ${actionMeta.action}`);
+            console.groupEnd();
+          }} />
+      </Popup>}
     </div>
       <Box padded borderless controls={<Button secondary>Box Controls</Button>} title="Some Commonsku Components">
         <Row>
@@ -497,6 +547,7 @@ const App = () => {
             <div>
               <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
               <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+              <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
               <Dropdown text="Drop Down" items={
                 [
                   {onClick: () => null, content: 'New Contact'},
@@ -520,8 +571,158 @@ const App = () => {
               <Link block mt={20}>Link</Link>
             </div>
 
-            {/* <H5>Calendar</H5>
-            <Calendar /> */}
+            <H5>Button Variants</H5>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary">Primary</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary">Secondary</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary-light">Primary Light</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta">CTA</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta-outline">CTA Outline</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
+            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled">Disabled</IconButton>
+            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
+            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" />
+
+            <H5>Input Fields</H5>
+            <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
+            <Input name="basic-input" value="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input error name="basic-input" value="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+            <Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+
+            <br />
+            <LabeledInput labelOnTop label='Labeled input' name="basic-input" value="input value" style={{ width: 200 }} placeholder="enter something" />
+            <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" value="disabled value" style={{ width: 200 }} placeholder="enter something" />
+            <LabeledInput labelOnTop error label='Labeled error' name="error-input" value="error value" style={{ width: 200 }} placeholder="enter something" />
+
+            <br />
+            <LabeledIconInput
+              labelOnTop
+              label='Labeled input'
+              name="basic-input"
+              value="input value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              disabled
+              label='Labeled disabled'
+              name="basic-disabled"
+              value="disabled value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              error
+              label='Labeled error'
+              name="basic-error"
+              value="error value"
+              placeholder="enter something"
+              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+            <br />
+
+            <br />
+            <LabeledIconInput
+              labelOnTop
+              iconPosition='right'
+              label='Labeled input'
+              name="basic-input"
+              defaultValue="input value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              iconPosition='right'
+              disabled
+              label='Labeled disabled'
+              name="basic-disabled"
+              defaultValue="disabled value"
+              placeholder="enter something"
+              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+
+            <LabeledIconInput
+              labelOnTop
+              iconPosition='right'
+              error
+              label='Labeled error'
+              name="basic-error"
+              defaultValue="error value"
+              placeholder="enter something"
+              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              style={{ width: 200 }}
+            />
+            <br />
+
+            <H5>Textarea</H5>
+            <Textarea placeholder="Textarea" defaultValue="basic textarea" />
+            <Textarea disabled defaultValue="diabled textarea" />
+            <Textarea error placeholder="Textarea" defaultValue="error textarea" />
+
+            <br />
+
+            <H5>Select</H5>
+            <Select
+              value={{ value: 'value1', label: 'value1', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isClearable
+              inPopup
+            />
+
+            <Select
+              value={{ value: 'value2', label: 'value2', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isClearable
+            />
+
+            <Select
+              value={{ value: 'value3', label: 'value3', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              error
+              isClearable
+            />
+
+            <Select
+              value={{ value: 'value4', label: 'value4', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isDisabled
+            />
+
+            <br />
 
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
@@ -580,6 +781,12 @@ const App = () => {
                   onClick: () => { setCalendarTab('other'); console.log('other tasks'); }
                 },
               ]}
+              views={[
+                { type: 'TASK', title: 'Tasks', selected: true, Icon: UserIcon },
+                { type: 'PROJECT', title: 'Projects', selected: false },
+                { type: 'PO', title: 'Pos', selected: false },
+              ]}
+              onClickView={() => {}}
             />
 
             <H5>Bars Loading</H5>
@@ -625,6 +832,38 @@ const App = () => {
             <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
             <NavManagementIcon color={"#00d374"} width={"3rem"}/>
             <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
+
+            <br/>
+            <h2>Order Stage Icons</h2>
+            <Row>
+              <Col xs sm={4} md={2} lg={1}>
+                <OpportunityCircleIcon variant='primary' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <PresentationCircleIcon variant='primary' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='cta' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <SalesOrderCircleIcon variant='cta' />
+              </Col>
+            </Row>
+            <h2>Selected Order Stage Icons</h2>
+            <Row>
+              <Col xs sm={4} md={2} lg={1}>
+                <OpportunityCircleIcon variant='cta-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <PresentationCircleIcon variant='cta-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='primary-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <SalesOrderCircleIcon variant='primary-outline' />
+              </Col>
+            </Row>
 
 
             <H5>Number formatting</H5>
@@ -733,9 +972,17 @@ const App = () => {
 
             <H5>Multi Progress</H5>
             <LabeledMultiProgress title="Invoices this month" values={[
-              {value: 64.44, text: v => 'Projection: $' + v},
-              {value: 2.44, text: v => '$' + v},
+              {value: 94.44, text: v => 'Projection: $' + v},
+              // {value: 2.44, text: v => '$' + v},
             ]} max={100} />
+
+            <H5>Thermometer</H5>
+            <Thermometer
+              title='Invoices this month'
+              target={10}
+              value1={10}
+              value1Label={v => `$ ${v}`}
+            />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
@@ -800,17 +1047,17 @@ const App = () => {
             
             <H5>Feed</H5>
             <Publisher/>
-            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+            <FeedPost key="FeedPost1" author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
                       body={<div>Samantha Kates added a note to <a href=".">John Doe's</a><br/>PO#15310 flagged as Confirmed. </div>}
-                      comments={[ <FeedPost author={{name:"Bob Peterson", avatar: user_pic1}} date="Feb 20" body={<div>Finally!</div>}/>]} />
-            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+                      comments={[ <FeedPost key="FeedPost1.1" author={{name:"Bob Peterson", avatar: user_pic1}} date="Feb 20" body={<div>Finally!</div>}/>]} />
+            <FeedPost key="FeedPost2" author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
                       body={<div>Joe Jemple added a note to <a href=".">John Doe's</a><br/>PO#15310 flagged as Shipped. </div>}
                       comments={[]} />
-            <FeedPost author={{name:"Samantha Kates", avatar: user_pic2}}
+            <FeedPost key="FeedPost3" author={{name:"Samantha Kates", avatar: user_pic2}}
                       subject="SO#1233"
                       date="Feb 20"
                       body={<div>Subject: SALES ORDER #1233 <br/> This is an email about a portal</div>}

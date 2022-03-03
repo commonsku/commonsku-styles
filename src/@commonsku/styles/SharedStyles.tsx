@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { valIsValid } from '../utils';
 
 export type SharedStyleTypes = {
-  [key: string]: any,
+  // [key: string]: any,
   pr?: boolean | number,
   pl?: boolean | number,
   pt?: boolean | number,

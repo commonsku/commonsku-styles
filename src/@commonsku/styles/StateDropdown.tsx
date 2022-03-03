@@ -30,6 +30,7 @@ type DropdownContentProps = {
     rounded?: boolean,
     showCircles?: boolean,
     scrollContentHeight?: string,
+    background?: string,
 }
 
 const DropdownDisplay = styled.div<DropdownContentProps>`
@@ -38,7 +39,7 @@ const DropdownDisplay = styled.div<DropdownContentProps>`
     text-decoration: none;
     display: block;
     text-align: center;
-    background-color: #F4F7FF;
+    background-color: ${p => p.background  || '#F4F7FF'};
     line-height: 1em;
     min-height: 28px;
     display: ${p => p.showCircles ? "inherit" : "flex"};
@@ -58,7 +59,7 @@ const DropdownItem = styled.div<DropdownContentProps>`
     text-decoration: none;
     display: block;
     text-align: center;
-    background-color: #F4F7FF;
+    background-color: ${p => p.background  || '#F4F7FF'};
     line-height: 1em;
     min-height: 30px;
     border-radius: ${p => p.rounded ? "100px" : 0};
@@ -85,32 +86,51 @@ const DropDownContent = styled.div<DropdownContentProps>`
 
 const Circles = ({val, max}:{val: number, max: number}) => {
     return <StyledCircles>
-      {[...Array(val)].map((item, i) => {
+      {val > 0 ? [...Array(val)].map((item, i) => {
         return <Circle key={i}/>
-      })}
-      {[...Array(max - val)].map((item, i) => {
+      }) : null}
+      {max - val > 0 ? [...Array(max - val)].map((item, i) => {
         return <Circle key={i} disabled/>
-      })}
+      }) : null}
     </StyledCircles>
 }
 
-export const StateDropdown = ({ items, text, value, row, showCircles=true, maxCircles, dataTip=false, dataFor='', ...props }: {
-    items: Array<{onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number}>,
-    value: {onClick?: any, props?:{[key: string]: any}, content: ReactNode|string|any, value: string, order: number},
-    row: any,
-    showCircles?: boolean
-    maxCircles?: number
-    dataTip?: any
-    dataFor?: string
-} & DropdownContentProps) => {
+type StateDropdownItemProps = {
+    onClick?: any;
+    props?:{[key: string]: any};
+    content: ReactNode|string|any;
+    value: string;
+    order: number;
+};
+type StateDropdownProps = {
+    items: Array<StateDropdownItemProps>;
+    value: StateDropdownItemProps;
+    row: any;
+    showCircles?: boolean;
+    maxCircles?: number;
+    dataTip?: any;
+    dataFor?: string;
+    background?: string,
+} & DropdownContentProps;
+export const StateDropdown = ({
+    items,
+    text,
+    value,
+    row,
+    showCircles=true,
+    maxCircles,
+    dataTip=false,
+    dataFor='',
+    background = '#F4F7FF',
+    ...props
+}: StateDropdownProps) => {
 
-    const node = useRef();
+    const node = useRef<HTMLDivElement>(null);
     const [showMenu, setShowMenu] = useState(false);
     const [value2, setValue] = useState(value);
 
     const handleClick = (e: Event) => {
-        // @ts-ignore
-        if (node.current?.contains(e.target)) {
+        if (node.current?.contains(e.target as Node)) {
           return;
         }
         setShowMenu(false);
@@ -128,17 +148,19 @@ export const StateDropdown = ({ items, text, value, row, showCircles=true, maxCi
         setValue(value)
     }, [value])
 
+    const content = value2?.content || '';
+
     return (
-        // @ts-ignore
         <StyledDropdown ref={node} {...props}>
             <DropdownDisplay
                 rounded 
                 active={showMenu} 
                 onClick={e => { e.stopPropagation(); setShowMenu(!showMenu) }}
                 showCircles={showCircles}
+                background={background}
             >
-              {showCircles && <Circles max={maxCircles || items.length} val={value2.order}/>}
-              {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(value2.content, 20)}</span> : value2.content}
+              {showCircles && <Circles max={maxCircles || items.length} val={value2?.order || 0}/>}
+              {dataTip ? <span data-tip={dataTip} data-for={dataFor}>{truncate(content, 20)}</span> : content}
             </DropdownDisplay>
             {showMenu && <DropDownContent scrollContentHeight={props.scrollContentHeight}>
                 {items.map((item, i) => {
