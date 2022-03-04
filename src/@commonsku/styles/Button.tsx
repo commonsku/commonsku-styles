@@ -1,10 +1,11 @@
 import React from 'react';
 import { get } from 'lodash';
 import styled, { css, CSSObject } from 'styled-components'
-import { getThemeColor } from './Theme';
+import { getThemeColor, themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import colors from './colors';
+import { Row } from '.';
 
 /*
 
@@ -28,22 +29,47 @@ import colors from './colors';
 
 export const sizes = {
   tiny: {
-    'font-size': '.8em',
-    'font-family': "'skufont-regular', sans-serif",
-    padding: '5px 5px',
+    'font-family': themeOptions.fontStyles.button.tiny.fontFamily,
+    'font-size': themeOptions.fontStyles.button.tiny.fontSize,
+    padding: '6px 12px',
+    iconOnlyPadding: '6px',
+    borderRadius: '3px',
+    iconSize: '16px',
   },
   small: {
-    'font-family': "'skufont-regular', sans-serif",
-    padding: '7px 15px',
+    'font-family': themeOptions.fontStyles.button.small.fontFamily,
+    'font-size': themeOptions.fontStyles.button.small.fontSize,
+    padding: '7px 16px 5px 16px',
+    iconOnlyPadding: '8px',
+    borderRadius: '4px',
+    iconSize: '16px'
+
   },
   medium: {
-    padding: '9px 24px',
+    'font-family': themeOptions.fontStyles.button.medium.fontFamily,
+    'font-size': themeOptions.fontStyles.button.medium.fontSize,
+    padding: '9px 24px 7px 24px',
+    iconOnlyPadding: '8px',
+    borderRadius: '4px',
+    iconSize: '24px'
+
   },
   large: {
-    padding: '17px 30px',
+    'font-family': themeOptions.fontStyles.button.large.fontFamily,
+    'font-size': themeOptions.fontStyles.button.large.fontSize,
+    padding: '13px 24px 11px 24px',
+    iconOnlyPadding: '12px',
+    borderRadius: '4px',
+    iconSize: '32px'
   },
-  xl: {
-    padding: '17px 50px',
+  huge: {
+    'font-family': themeOptions.fontStyles.button.huge.fontFamily,
+    'font-size': themeOptions.fontStyles.button.huge.fontSize,
+    padding: '17px 32px 15px 32px',
+    iconOnlyPadding: '16px',
+    borderRadius: '5px',
+    iconSize: '48px'
+
   },
 };
 export type TSize = keyof typeof sizes;
@@ -54,11 +80,11 @@ export type ButtonVariant = 'primary'
   | 'error'
   | 'disabled'
   | 'text'
-  | 'primary-outline'
-  | 'primary-light'
-  | 'cta-outline'
-  | 'error-outline'
-  | 'disabled-outline';
+  // | 'primary-outline'
+  // | 'primary-light'
+  // | 'cta-outline'
+  // | 'error-outline'
+  // | 'disabled-outline';
 
 type ButtonProps = {
   secondary?: boolean;
@@ -110,7 +136,7 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
         },
       };
     case 'secondary':
-    case 'primary-outline':
+    // case 'primary-outline':
       return {
         borderWidth: 3,
         borderStyle: 'solid',
@@ -125,21 +151,21 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           color: primary,
         },
       };
-    case 'primary-light':
-      return {
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: primaryLight,
-        background: primaryLight,
-        color: primary,
-        ':hover': {
-          borderWidth: 3,
-          borderStyle: 'solid',
-          borderColor: primaryLight,
-          background: white,
-          color: primary,
-        },
-      };
+    // case 'primary-light':
+    //   return {
+    //     borderWidth: 3,
+    //     borderStyle: 'solid',
+    //     borderColor: primaryLight,
+    //     background: primaryLight,
+    //     color: primary,
+    //     ':hover': {
+    //       borderWidth: 3,
+    //       borderStyle: 'solid',
+    //       borderColor: primaryLight,
+    //       background: white,
+    //       color: primary,
+    //     },
+    //   };
     case 'cta':
       return {
         borderWidth: 3,
@@ -155,21 +181,21 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           color: white,
         },
       };
-    case 'cta-outline':
-      return {
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: cta,
-        background: white,
-        color: cta,
-        ':hover': {
-          borderWidth: 3,
-          borderStyle: 'solid',
-          borderColor: cta,
-          background: ctaLight,
-          color: cta,
-        },
-      };
+    // case 'cta-outline':
+    //   return {
+    //     borderWidth: 3,
+    //     borderStyle: 'solid',
+    //     borderColor: cta,
+    //     background: white,
+    //     color: cta,
+    //     ':hover': {
+    //       borderWidth: 3,
+    //       borderStyle: 'solid',
+    //       borderColor: cta,
+    //       background: ctaLight,
+    //       color: cta,
+    //     },
+    //   };
     case 'error':
       return {
         borderWidth: 3,
@@ -185,21 +211,21 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           color: white,
         },
       };
-    case 'error-outline':
-      return {
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: error,
-        background: white,
-        color: error,
-        ':hover': {
-          borderWidth: 3,
-          borderStyle: 'solid',
-          borderColor: error,
-          background: errorLight,
-          color: error,
-        },
-      };
+    // case 'error-outline':
+    //   return {
+    //     borderWidth: 3,
+    //     borderStyle: 'solid',
+    //     borderColor: error,
+    //     background: white,
+    //     color: error,
+    //     ':hover': {
+    //       borderWidth: 3,
+    //       borderStyle: 'solid',
+    //       borderColor: error,
+    //       background: errorLight,
+    //       color: error,
+    //     },
+    //   };
     case 'disabled':
       return {
         borderWidth: 3,
@@ -207,15 +233,16 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
         borderColor: disabled,
         background: disabled,
         color: disabledText,
+        cursor: 'default',
       };
-    case 'disabled-outline':
-      return {
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: disabled,
-        background: white,
-        color: disabledText,
-      };
+    // case 'disabled-outline':
+    //   return {
+    //     borderWidth: 3,
+    //     borderStyle: 'solid',
+    //     borderColor: disabled,
+    //     background: white,
+    //     color: disabledText,
+    //   };
       case 'text':
         return {
           borderWidth: 3,
@@ -239,7 +266,7 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
 const Button = styled.button<ButtonProps>`
   &&& {
     border: 3px solid white;
-    border-radius: 5px;
+    border-radius: ${props => props.size && sizes[props.size] ? sizes[props.size].borderRadius : '4px'};
     background: ${({ secondary, cta, ...props }) => 
       secondary ? "transparent" : 
       cta ? getThemeColor(props, 'cta') : getThemeColor(props, 'primary')
@@ -274,11 +301,10 @@ const Button = styled.button<ButtonProps>`
 
 export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
   &&& {
-    display: inline-flex;
-    max-width: 600px;
+    display: inline-block;
+    max-width: 100%;
     margin-bottom: 10px;
     margin-right: 100px;
-    justify-content: space-around;
     ${SharedStyles}
     ${SizerCss}
   }
@@ -289,20 +315,31 @@ export type TButtonIcon = React.ReactNode | ((props: IconFuncProps) => React.Rea
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon: TButtonIcon;
   iconPosition?: 'left' | 'right';
+  style?: React.CSSProperties;
 }>;
 export function IconButton({
   Icon,
   children,
   iconPosition='left',
+  size,
   ...props
 }: IconButtonProps) {
   const variantStyles = props.variant
     ? getVariantStyles(props, props.variant)
     : { color: '#fff' };
 
+  
   const RenderIcon = React.useMemo(() => {
+    
+    const BtnIconSize = (size?: TSize): "medium" | "small" => {
+      if (size !== "tiny" && size !== "small") {
+        return "medium";
+      }
+      return "small";
+    };
+  
     const BtnIcon = typeof Icon === 'function'
-      ? <Icon fill={variantStyles.color || '#fff'} />
+      ? <Icon size={BtnIconSize(size)} fill={variantStyles.color || '#fff'} />
       : Icon;
 
     return (
@@ -310,14 +347,31 @@ export function IconButton({
         paddingLeft: children && iconPosition === 'right' ? 5 : 0,
         paddingRight: children && iconPosition !== 'right' ? 5 : 0,
         display: 'inline-block',
-        verticalAlign: 'top',
-        maxHeight: 20,
+        flexDirection: 'row',
+        // alignItems: 'flex-start',
+        verticalAlign: 'middle',
+        maxHeight: 24,
       }}>{BtnIcon}</span>
     );
-  }, [variantStyles.color, Icon, children, iconPosition]);
+  }, [variantStyles.color, Icon, children, iconPosition, size]);
+
+  const hasChildren = (
+    (children && children !== null && children !== undefined)
+    || (children && Array.isArray(children) && children.length > 0
+        && children[0] !== null && children[0] !== undefined)
+  );
+
+  const buttonPadding = !hasChildren
+    ? getSizeStyle('iconOnlyPadding', '12px')
+    : getSizeStyle('padding', '12px');
+
+  console.log(buttonPadding);
 
   return (
-    <Button {...props}>
+    <Button size={size} {...props} style={{
+      ...(props.style || {}),
+      padding: buttonPadding({ ...props, size: size }),
+    }}>
       {iconPosition !== 'right' ? RenderIcon : null}
       {children}
       {iconPosition === 'right' ? RenderIcon : null}

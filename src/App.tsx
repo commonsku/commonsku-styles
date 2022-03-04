@@ -1,4 +1,5 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
+import styled, { css, CSSObject } from 'styled-components'
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
 import product_wide from './products/wide.png';
@@ -72,6 +73,7 @@ import {
     IconButton,
     Input,
     LabeledIconInput,
+    // SVG,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 
@@ -544,17 +546,60 @@ const App = () => {
             </div>
 
             <H5>Button Variants</H5>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary">Primary</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary">Secondary</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary-light">Primary Light</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta">CTA</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta-outline">CTA Outline</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
-            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled">Disabled</IconButton>
-            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" />
+            
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="large">Error</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="small">Error</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
+                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+              </ButtonsGroup>
+            </div>
+            
+            
+            
 
             <H5>Input Fields</H5>
             <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />

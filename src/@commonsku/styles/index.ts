@@ -37,6 +37,7 @@ export * from './StatusDropdown'
 export * from './StateDropdown'
 export * from './Collapsible'
 export * from './MultiProgress'
+export * from './SvgIcon'
 
 export * from './icons'
 export * from './Theme'
