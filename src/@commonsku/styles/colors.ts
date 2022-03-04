@@ -318,6 +318,37 @@ const colors = {
       },
     },
   },
+  select: {
+    background: '#fff',
+    border: neutrals['60'],
+    text: neutrals['90'],
+    placeholder: neutrals['60'],
+    active: {
+      border: primary1['60'],
+      text: neutrals['90'],
+    },
+    hover: {
+      border: primary1['50'],
+      placeholder: neutrals['70'],
+    },
+    error: {
+      border: errors['main'],
+    },
+    disabled: {
+      background: neutrals['40'],
+      border: neutrals['40'],
+    },
+    dropdownIcon: {
+      color: primary1['60'],
+      error: {
+        color: errors['main'],
+      },
+      disabled: neutrals['60'],
+    },
+    clearIcon: {
+      color: errors['60'],
+    },
+  },
 };
 
 export default colors;

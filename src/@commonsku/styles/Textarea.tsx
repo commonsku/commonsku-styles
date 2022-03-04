@@ -1,32 +1,88 @@
 import React from 'react'
-import styled, { StyledComponentProps } from 'styled-components'
+import styled, { CSSObject, StyledComponentProps } from 'styled-components'
 import {Label} from './Label'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-export const Textarea = styled.textarea<{noMargin?: boolean, error?:boolean} & SharedStyleTypes>`
-  padding: .5rem;
-  color: #123952;
-  width: 100%;
-  border: 1px solid ${p => p.error ? '#fa237c' : '#ABC7D1'};
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-family: 'skufont-regular', sans-serif;
-  font-size: 1rem;
-  background-color: white;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  margin-bottom: ${props => props.noMargin ? 0 : "1rem"};
-  &:focus {
-    box-shadow: 1px  1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
-               -1px -1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
-                1px -1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')},
-               -1px  1px 0px ${p => p.error ? getThemeColor(p, 'special3') : getThemeColor(p, 'inputBorder', 'primary')};
-    outline: none;
-  }
+type BaseTextareaProps = {
+  noMargin?: boolean;
+  error?: boolean;
+  hasIcon?: boolean;
+} & SharedStyleTypes;
+export const Textarea = styled.textarea<BaseTextareaProps>`
+  ${p => {
+    const styles: CSSObject = {
+      marginBottom: p.noMargin ? 0 : "1rem",
+      fontSize: '1rem',
+      fontFamily: "'skufont-regular', sans-serif",
+      boxSizing: 'border-box',
+      backgroundColor: getThemeColor(p, 'input.background'),
+      boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
+      width: '100%',
+      border: `1px solid ${getThemeColor(p, 'input.border')}`,
+      borderRadius: '5px',
+      padding: '8px 8px 8px 8px',
+      color: getThemeColor(p, 'input.text'),
+      "::placeholder": {
+        color: getThemeColor(p, 'input.placeholder'),
+      },
+      ':hover': p.disabled ? undefined : {
+        borderColor: getThemeColor(p, 'input.hover.border'),
+        "::placeholder": {
+          color: getThemeColor(p, 'input.hover.placeholder'),
+        },
+      },
+      ':focus': {
+        borderColor: getThemeColor(p, 'input.active.border'),
+        color: getThemeColor(p, 'input.active.text'),
+        outline: 'none',
+        boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.active.border')},
+                   -1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                    1px -1px 0px ${getThemeColor(p, 'input.active.border')},
+                   -1px  1px 0px ${getThemeColor(p, 'input.active.border')};`,
+      },
+      ':disabled': {
+        border: 'none',
+        boxShadow: 'none',
+        outline: 'none',
+        color: getThemeColor(p, 'input.disabled.text'),
+        backgroundColor: getThemeColor(p, 'input.disabled.background'),
+      },
+    };
+
+    if (p.error) {
+      styles['borderColor'] = getThemeColor(p, 'input.error.border');
+      styles[':hover'] = {
+        ...(styles[':hover'] || {}),
+        borderColor: getThemeColor(p, 'input.error.border'),
+      };
+      styles[':focus'] = {
+        color: getThemeColor(p, 'input.active.text'),
+        outline: 'none',
+        borderColor: getThemeColor(p, 'input.error.border'),
+        boxShadow: `1px  1px 0px ${getThemeColor(p, 'input.error.border')},
+                   -1px -1px 0px ${getThemeColor(p, 'input.error.border')},
+                    1px -1px 0px ${getThemeColor(p, 'input.error.border')},
+                   -1px  1px 0px ${getThemeColor(p, 'input.error.border')}`,
+      }
+    }
+
+    if (p.hasIcon) {
+      styles['border'] = 'none';
+      styles['borderColor'] = 'none';
+      styles['boxShadow'] = 'none';
+      styles['outline'] = 'none';
+      styles[':focus'] = undefined;
+      styles[':hover'] = undefined;
+    }
+
+    return styles;
+  }}
+
   ${SharedStyles}
 `;
 
-type TextareaProps = StyledComponentProps<'textarea', any, {}, never>;
+type TextareaProps = StyledComponentProps<'textarea', any, BaseTextareaProps, never>;
 
 export const LabeledTextarea = ({ label, name, ...props}: TextareaProps & {label: string, name?: string, noMargin?: boolean} & SharedStyleTypes) => {
   return <div>

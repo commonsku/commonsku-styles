@@ -8,7 +8,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon } from './@commonsku/styles/icons';
+import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon, OpportunityCircleIcon, PresentationCircleIcon, EstimateCircleIcon, SalesOrderCircleIcon } from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
@@ -25,6 +25,7 @@ import {
     SidePanel,
     Tabs,
     Select,
+    components as selectComponents,
     LabeledSelect,
     LabeledProgress,
     PanelTileContact,
@@ -74,8 +75,11 @@ import {
     Input,
     LabeledIconInput,
     // SVG,
+    Textarea,
+    Thermometer,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
+import { MenuListComponentProps } from 'react-select';
 
 const initialState = {
   date: new Date(),
@@ -259,6 +263,30 @@ const tableData = [
   {"rowId":83,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ] 
+
+const SelectMenuList = (
+  props: MenuListComponentProps<{[key: string]: any;}>
+) => {
+  return (
+    <selectComponents.MenuList {...props}>
+      {props.children}
+      <div
+        onClick={() => { console.log('New client') }}
+        style={{
+          cursor: 'pointer',
+          paddingTop: '8px',
+          paddingBottom: '8px',
+          background: '#E1F7FA',
+          color: '#00A0B6',
+          bottom: 0,
+          position: 'sticky',
+          textAlign: 'center',
+          marginBottom: 0,
+        }}
+      >+ New Client</div>
+    </selectComponents.MenuList>
+  );
+};
 
 function reducer(state: {[key: string]: any} = initialState, action: {type: string, payload: any}) {
   console.log(action);
@@ -685,6 +713,62 @@ const App = () => {
             />
             <br />
 
+            <H5>Textarea</H5>
+            <Textarea placeholder="Textarea" defaultValue="basic textarea" />
+            <Textarea disabled defaultValue="diabled textarea" />
+            <Textarea error placeholder="Textarea" defaultValue="error textarea" />
+
+            <br />
+
+            <H5>Select</H5>
+            <Select
+              value={{ value: 'value1', label: 'value1', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isClearable
+              inPopup
+            />
+
+            <Select
+              value={{ value: 'value2', label: 'value2', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isClearable
+            />
+
+            <Select
+              value={{ value: 'value3', label: 'value3', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              error
+              isClearable
+            />
+
+            <Select
+              value={{ value: 'value4', label: 'value4', }}
+              options={[
+                ...(Array(100).fill(1).map((v, i) => (
+                  {value: 'value'+i, label: 'value'+i}
+                ))),
+              ]}
+              components={{ MenuList: SelectMenuList }}
+              isDisabled
+            />
+
+            <br />
+
             <H5>Calendar Tasks</H5>
             <DraggableTasksCalendar
               tasks={tasks[calendarTab]}
@@ -794,6 +878,38 @@ const App = () => {
             <NavManagementIcon color={"#00d374"} width={"3rem"}/>
             <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
 
+            <br/>
+            <h2>Order Stage Icons</h2>
+            <Row>
+              <Col xs sm={4} md={2} lg={1}>
+                <OpportunityCircleIcon variant='primary' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <PresentationCircleIcon variant='primary' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='cta' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <SalesOrderCircleIcon variant='cta' />
+              </Col>
+            </Row>
+            <h2>Selected Order Stage Icons</h2>
+            <Row>
+              <Col xs sm={4} md={2} lg={1}>
+                <OpportunityCircleIcon variant='cta-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <PresentationCircleIcon variant='cta-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='primary-outline' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <SalesOrderCircleIcon variant='primary-outline' />
+              </Col>
+            </Row>
+
 
             <H5>Number formatting</H5>
             <Number commas decimalPoints={4} num={334353434.44334}/>
@@ -901,9 +1017,17 @@ const App = () => {
 
             <H5>Multi Progress</H5>
             <LabeledMultiProgress title="Invoices this month" values={[
-              {value: 64.44, text: v => 'Projection: $' + v},
-              {value: 2.44, text: v => '$' + v},
+              {value: 94.44, text: v => 'Projection: $' + v},
+              // {value: 2.44, text: v => '$' + v},
             ]} max={100} />
+
+            <H5>Thermometer</H5>
+            <Thermometer
+              title='Invoices this month'
+              target={10}
+              value1={10}
+              value1Label={v => `$ ${v}`}
+            />
 
             <H5>Drop Area</H5>
             <DropArea placeholder="Drop Here"></DropArea>
