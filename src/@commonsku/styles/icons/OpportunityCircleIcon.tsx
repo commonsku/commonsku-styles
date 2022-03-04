@@ -1,14 +1,57 @@
 import React from 'react';
 import { colors } from '../Theme';
+import SvgIcon, { SVGIconProps } from './SvgIcon';
+
+type IconProps = React.PropsWithChildren<SVGIconProps & {
+    variant?: 'primary' | 'primary-outline' | 'cta' | 'cta-outline',
+    style?: React.CSSProperties,
+}>;
 
 export default function Icon({
     variant='primary',
     style={},
+    size,
     ...props
-}: React.PropsWithChildren<{
-    variant?: 'primary' | 'primary-outline' | 'cta' | 'cta-outline',
-    style?: React.CSSProperties,
-}>) {
+}: IconProps) {
+    const iconSizes = React.useMemo(() => {
+        let baseSize = 24;
+        if (['cta-outline', 'primary-outline'].includes(variant)) {
+            baseSize = 22;
+        }
+        return {
+            tiny: {
+                width: baseSize,
+                height: baseSize,
+                viewBox: "0 0 74 74",
+            },
+            small: {
+                width: baseSize*2,
+                height: baseSize*2,
+                viewBox: "0 0 74 74",
+            },
+            medium: {
+                width: baseSize*3,
+                height:baseSize*3,
+                viewBox: "0 0 74 74",
+            },
+            large: {
+                width: baseSize*4,
+                height:baseSize*4,
+                viewBox: "0 0 74 74",
+            },
+            huge: {
+                width: baseSize*5,
+                height:baseSize*5,
+                viewBox: "0 0 74 74",
+            },
+            default: {
+                height: baseSize*3,
+                width: baseSize*3,
+                viewBox: "0 0 74 74",
+            },
+        };
+    }, [variant]);
+
     const iconColors = React.useMemo(() => {
         if (variant === 'cta-outline') {
             return {
@@ -49,7 +92,9 @@ export default function Icon({
     }, [variant]);
 
     return (
-        <svg
+        <SvgIcon
+            size={size}
+            iconSizes={iconSizes}
             width={iconColors.width}
             height={iconColors.height}
             viewBox={iconColors.viewBox}
@@ -75,6 +120,6 @@ export default function Icon({
                     fill={iconColors.textColor}
                 />
             </>}
-        </svg>
+        </SvgIcon>
     );
 }

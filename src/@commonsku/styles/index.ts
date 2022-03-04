@@ -37,7 +37,6 @@ export * from './StatusDropdown'
 export * from './StateDropdown'
 export * from './Collapsible'
 export * from './MultiProgress'
-export * from './SvgIcon'
 export { default as Thermometer } from './Thermometer';
 
 export * from './icons'

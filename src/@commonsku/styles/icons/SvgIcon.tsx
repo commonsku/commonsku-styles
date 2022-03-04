@@ -33,36 +33,40 @@ export const iconSize = {
     },
 };
 
+export type TIconSizeObj = typeof iconSize;
 export type TIconSize = keyof typeof iconSize;
 
-export type SVGProps = {
+export type SVGIconProps = {
     size?: TIconSize;
     width?: string | number;
     height?: string | number;
     viewBox?: string;
+    iconSizes?: TIconSizeObj;
 };
-const SVG = styled.svg.attrs<SVGProps>(p => {
-    const size = p.size ? iconSize[p.size] : null;
+const SVG = styled.svg.attrs<SVGIconProps>(p => {
+    const iconSizes = p.iconSizes || iconSize;
+    const size = p.size ? iconSizes[p.size] : null;
     if (size) {
         return {
             viewBox: size.viewBox,
         };
     }
-    const defaultSize = iconSize['default'];
+    const defaultSize = iconSizes['default'];
     return {
         viewBox: p.viewBox || defaultSize.viewBox,
     };
-})<SVGProps>(
+})<SVGIconProps>(
     p => {
         const styles: CSSObject = {};
-        const size = p.size ? iconSize[p.size] : null;
+        const iconSizes = p.iconSizes || iconSize;
+        const size = p.size ? iconSizes[p.size] : null;
         if (size) {
             styles['height'] = size.height;
             styles['width'] = size.width;
         } else {
-            const defaultSize = iconSize['default'];
-            styles['height'] = p.height || defaultSize.height;
-            styles['width'] = p.width || defaultSize.width;
+            const defaultSize = iconSizes['default'];
+            styles['height'] = p.height !== undefined && p.height !== '' ? p.height : defaultSize.height;
+            styles['width'] = p.width !== undefined && p.width !== '' ? p.width : defaultSize.width;
         }
         return styles;
     },
