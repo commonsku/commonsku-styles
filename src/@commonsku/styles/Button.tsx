@@ -367,8 +367,6 @@ export function IconButton({
     ? getSizeStyle('iconOnlyPadding', '12px')
     : getSizeStyle('padding', '12px');
 
-  console.log(buttonPadding);
-
   return (
     <Button size={size} {...props} style={{
       ...(props.style || {}),

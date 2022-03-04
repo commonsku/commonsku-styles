@@ -33,14 +33,31 @@ export const iconSize = {
     },
 };
 
+// type jdfh = React.SVGProps<SVGSVGElement>
+// const sss: jdfh = {};
+// sss.style={{ view }}
+
+export type TIconSize = keyof typeof iconSize;
+
 export type SVGProps = {
-    size?: string;
+    size?: TIconSize;
     width?: string | number;
     height?: string | number;
     viewBox?: string;
 };
-const SVG = styled.svg<SVGProps>`
-    ${p => {
+const SVG = styled.svg.attrs<SVGProps>(p => {
+    const size = p.size ? iconSize[p.size] : null;
+    if (size) {
+        return {
+            viewBox: size.viewBox,
+        };
+    }
+    const defaultSize = iconSize['default'];
+    return {
+        viewBox: p.viewBox || defaultSize.viewBox,
+    };
+})<SVGProps>(
+    p => {
         const styles: CSSObject = {};
         const size = p.size ? iconSize[p.size] : null;
         if (size) {
@@ -52,7 +69,7 @@ const SVG = styled.svg<SVGProps>`
             styles['width'] = p.width || defaultSize.width;
         }
         return styles;
-    }}
-`;
+    },
+);
 
 export default SVG;
