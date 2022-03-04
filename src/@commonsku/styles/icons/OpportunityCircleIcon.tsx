@@ -14,9 +14,9 @@ export default function Icon({
     ...props
 }: IconProps) {
     const iconSizes = React.useMemo(() => {
-        let baseSize = 24;
+        let baseSize = 74/3;
         if (['cta-outline', 'primary-outline'].includes(variant)) {
-            baseSize = 22;
+            baseSize = 64/3;
         }
         return {
             tiny: {
@@ -55,36 +55,24 @@ export default function Icon({
     const iconColors = React.useMemo(() => {
         if (variant === 'cta-outline') {
             return {
-                width: 64,
-                height: 64,
                 fill: 'none',
-                viewBox: '0 0 74 74',
                 stroke: colors.secondary1.main,
                 textColor: colors.secondary1.main,
             };
         } else if (variant === 'primary-outline') {
             return {
-                width: 64,
-                height: 64,
-                viewBox: '0 0 74 74',
                 fill: 'none',
                 stroke: colors.primary1.main,
                 textColor: colors.primary1.main,
             };
         } else if (variant === 'cta') {
             return {
-                width: 74,
-                height: 74,
-                viewBox: '0 0 74 74',
                 fill: colors.secondary1['20'],
                 stroke: 'none',
                 textColor: colors.secondary1.main,
             };
         }
         return {
-            width: 74,
-            height: 74,
-            viewBox: '0 0 74 74',
             fill: colors.primary1['20'],
             stroke: 'none',
             textColor: colors.primary1.main,
@@ -95,9 +83,6 @@ export default function Icon({
         <SvgIcon
             size={size}
             iconSizes={iconSizes}
-            width={iconColors.width}
-            height={iconColors.height}
-            viewBox={iconColors.viewBox}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             style={style}
