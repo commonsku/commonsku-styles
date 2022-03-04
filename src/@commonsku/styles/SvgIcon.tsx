@@ -33,10 +33,6 @@ export const iconSize = {
     },
 };
 
-// type jdfh = React.SVGProps<SVGSVGElement>
-// const sss: jdfh = {};
-// sss.style={{ view }}
-
 export type TIconSize = keyof typeof iconSize;
 
 export type SVGProps = {
