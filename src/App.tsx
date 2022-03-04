@@ -903,6 +903,9 @@ const App = () => {
                 <PresentationCircleIcon variant='cta-outline' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
+                <EstimateCircleIcon variant='cta' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
                 <EstimateCircleIcon variant='primary-outline' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
