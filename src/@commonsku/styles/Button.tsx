@@ -80,8 +80,7 @@ export type ButtonVariant = 'primary'
   | 'error'
   | 'disabled'
   | 'text'
-  // | 'primary-outline'
-  // | 'primary-light'
+  | 'primary-light'
   // | 'cta-outline'
   // | 'error-outline'
   // | 'disabled-outline';
@@ -136,7 +135,6 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
         },
       };
     case 'secondary':
-    // case 'primary-outline':
       return {
         borderWidth: 3,
         borderStyle: 'solid',
@@ -151,21 +149,21 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           color: primary,
         },
       };
-    // case 'primary-light':
-    //   return {
-    //     borderWidth: 3,
-    //     borderStyle: 'solid',
-    //     borderColor: primaryLight,
-    //     background: primaryLight,
-    //     color: primary,
-    //     ':hover': {
-    //       borderWidth: 3,
-    //       borderStyle: 'solid',
-    //       borderColor: primaryLight,
-    //       background: white,
-    //       color: primary,
-    //     },
-    //   };
+    case 'primary-light':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: primaryLight,
+        background: primaryLight,
+        color: primary,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: primaryLight,
+          background: white,
+          color: primary,
+        },
+      };
     case 'cta':
       return {
         borderWidth: 3,
