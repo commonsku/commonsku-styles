@@ -76,6 +76,7 @@ export type CalendarTaskProps = {
   assignee?: string;
   checked?: boolean;
   overdue?: boolean;
+  order?: number;
   onClickCheckbox?: (checked: boolean) => any;
   isDescriptionHtml?: boolean;
   draggable?: boolean;

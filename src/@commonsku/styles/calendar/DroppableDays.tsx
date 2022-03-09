@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { Droppable } from "react-beautiful-dnd";
 import { Row } from '../FlexboxGrid';
@@ -26,7 +27,16 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTas
               {(provided, snapshot) => (
                   <div {...droppableChildWrapperProps(provided, snapshot)}>
                     {provided.placeholder}
-                    {d.tasks.map((t, j) => (
+                    {_.orderBy(
+                      d.tasks,
+                      [v => {
+                        if (v.order === undefined) {
+                          return v.date || (v.checked ? 0 : 1);
+                        }
+                        return v.order;
+                      }],
+                      ['desc']
+                    ).map((t, j) => (
                       <DraggableTaskBody key={t.__id__} index={j} task={t} onClickTask={onClickTask} onUpdateTask={onUpdateTask ? (newData, otherData) => {
                         onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
                       } : undefined} />
