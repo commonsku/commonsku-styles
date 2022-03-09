@@ -31,7 +31,7 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTas
                       d.tasks,
                       [v => {
                         if (v.order === undefined) {
-                          return v.date || (v.checked ? 0 : 1);
+                          return v.checked ? 0 : 1;
                         }
                         return v.order;
                       }],
