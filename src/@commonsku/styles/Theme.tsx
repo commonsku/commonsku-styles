@@ -6,12 +6,16 @@ import colors from "./colors";
 
 export {colors}; 
 
-export const fonts = ["'skufont-demibold'", 'sans-serif', 'Roboto'];
+
 export const fontFamilies =  {
-  regular: "'skufont-regular'",
-  demibold: "'skufont-demibold'",
-  bold: "'skufont-demibold'",
-  medium: "'skufont-medium'",
+  skuFontRegular: "'skufont-regular'",
+  skuFontDemibold: "'skufont-demibold'",
+  skuFontBold: "'skufont-demibold'",
+  skuFontMedium: "'skufont-medium'",
+  regular: '',
+  demibold: '',
+  bold: '',
+  medium: '',
   fallbacks: [
     '"museo-sans"',
     '"Helvetica Neue"',
@@ -21,75 +25,82 @@ export const fontFamilies =  {
     'sans-serif',
   ],
 }
+fontFamilies.regular = [fontFamilies.skuFontRegular, ...fontFamilies.fallbacks].join(',');
+fontFamilies.demibold = [fontFamilies.skuFontDemibold, ...fontFamilies.fallbacks].join(',');
+fontFamilies.bold = [fontFamilies.skuFontBold, ...fontFamilies.fallbacks].join(',');
+fontFamilies.medium = [fontFamilies.skuFontMedium, ...fontFamilies.fallbacks].join(',');
+
+export const fonts = [fontFamilies.skuFontDemibold, ...fontFamilies.fallbacks];
+
 export const fontStyles = {
   h1: {
     fontSize: '2rem',
     lineHeight: '3rem',
-    fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+    fontFamily: fontFamilies.demibold
   },
   h2: {
     fontSize: '1.5rem',
     lineHeight: '2.5rem',
-    fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+    fontFamily: fontFamilies.demibold
   },
   h3: {
     fontSize: '1.25rem',
     lineHeight: '2rem',
-    fontFamily: [fontFamilies.bold, ...fontFamilies.fallbacks].join(',')
+    fontFamily: fontFamilies.bold
   },
   h4: {
     fontSize: '1rem',
     lineHeight: '1.5rem',
-    fontFamily: [fontFamilies.bold, ...fontFamilies.fallbacks].join(',')
+    fontFamily: fontFamilies.bold
   },
   p: {
     large: {
       fontSize: '1.125rem',
       lineHeight: '1.75rem',
-      fontFamily: [fontFamilies.regular, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.regular
     },
     medium: {
       fontSize: '1rem',
       lineHeight: '1.5rem',
-      fontFamily: [fontFamilies.regular, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.regular
     },
     small: {
       fontSize: '0.875rem',
       lineHeight: '1.5rem', 
-      fontFamily: [fontFamilies.regular, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.regular
     }
   }, 
   button: {
     huge: {
       fontSize: '1.125rem',
       lineHeight: '1.5rem',
-      fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.demibold
     },
     large: {
       fontSize: '1rem',
       lineHeight: '1.5rem',
-      fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.demibold
     },
     medium: {
       fontSize: '0.875rem',
       lineHeight: '1.5rem',
-      fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.demibold
     },
     small: {
       fontSize: '0.75rem',
       lineHeight: '1.5rem',
-      fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.demibold
     },
     tiny: {
       fontSize: '0.625rem',
       lineHeight: '1rem',
-      fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
+      fontFamily: fontFamilies.demibold
     }
   },
   label: {
     fontSize: '1rem',
     lineHeight: '1.5rem',
-    fontFamily: [fontFamilies.medium, ...fontFamilies.fallbacks].join(',')
+    fontFamily: fontFamilies.medium
   }
 };
 
@@ -119,7 +130,7 @@ export function getColor(color?: string, def?: string): string {
   return _.get(colors, color, _.get(colors, def || '', def));
 }
 
-export function getFontSize(value?: string, def?: string): string {
+export function getFontStyle(value?: string, def?: string): string {
   if (!value) { return ''; }
   return _.get(fontStyles, value, _.get(fontStyles, def || '', def));
 }
@@ -128,8 +139,12 @@ export function getThemeColor(props: {[key: string]: any}, color: string, fallba
   return getThemeProperty(props, 'colors', color, fallbackColor);
 }
 
-export function getThemeFontSize(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
+export function getThemeFontStyle(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
   return getThemeProperty(props, 'fontStyles', value, fallbackValue);
+}
+
+export function getThemeFontSize(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
+  return getThemeFontStyle(props, `${value}.fontSize`, fallbackValue);
 }
 
 export function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = ""): string {
@@ -143,17 +158,23 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
     } else {
       return props.theme[prop];
     }
+  } else if (_.get(themeOptions, `${prop}.${value}`, null)) {
+    return _.get(themeOptions, `${prop}.${value}`, null);
   }
 
   switch (prop) {
     case 'fontStyles':
-      return getFontSize(fallbackValue, value);
+      return getFontStyle(value, fallbackValue);
     case 'fontSizes':
-      return getFontSize(value, fallbackValue);
+      return getFontStyle(value, fallbackValue);
     case 'colors':
       return getColor(value, fallbackValue);
     case 'fontFamily':
-      return themeOptions.fontFamily;
+      return _.get(
+        themeOptions.fontFamilies,
+        `${value}.fontFamily`,
+        fallbackValue || themeOptions.fontFamily
+      );
     default:
       return '';
   }
