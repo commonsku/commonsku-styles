@@ -1,5 +1,9 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
 import styled, { css, CSSObject } from 'styled-components'
+
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
 import product_wide from './products/wide.png';

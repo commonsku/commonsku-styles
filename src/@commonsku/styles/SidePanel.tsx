@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components';
 import { Row, Col } from './FlexboxGrid';
 import { H2 } from './Headings'
-import { valIsValid } from '../utils';
+import { valIsValid, document } from '../utils';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerTypes, SizerCss } from './Sizer'
 import { Backdrop } from './Backdrop'
-import { document } from '../utils';
 
 
 type SidePanelType = {

@@ -1,8 +1,6 @@
 import React from 'react';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { Input, InputProps } from './Input';
-
-import "react-datepicker/dist/react-datepicker.css";
 import { CalendarIcon } from './icons';
 
 type CustomInputProps = InputProps & {isClearable?: boolean};
