@@ -133,6 +133,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           background: primaryDark,
           color: white,
         },
+        ':focus-visible': {
+          outlineColor: primary,
+        },
       };
     case 'secondary':
       return {
@@ -147,6 +150,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           borderColor: primary,
           background: primaryLight,
           color: primary,
+        },
+        ':focus-visible': {
+          outlineColor: primary,
         },
       };
     case 'primary-light':
@@ -163,6 +169,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           background: white,
           color: primary,
         },
+        ':focus-visible': {
+          outlineColor: primaryLight,
+        },
       };
     case 'cta':
       return {
@@ -177,6 +186,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           borderColor: ctaDark,
           background: ctaDark,
           color: white,
+        },
+        ':focus-visible': {
+          outlineColor: cta,
         },
       };
     // case 'cta-outline':
@@ -208,6 +220,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           background: errorDark,
           color: white,
         },
+        ':focus-visible': {
+          outlineColor: error,
+        },
       };
     // case 'error-outline':
     //   return {
@@ -232,6 +247,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
         background: disabled,
         color: disabledText,
         cursor: 'default',
+        ':focus-visible': {
+          outlineColor: disabled,
+        },
       };
     // case 'disabled-outline':
     //   return {
@@ -254,6 +272,9 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
             borderColor: primaryLight,
             background: primaryLight,
             color: primary,
+          },
+          ':focus-visible': {
+            outlineColor: white,
           },
         };
     default:
