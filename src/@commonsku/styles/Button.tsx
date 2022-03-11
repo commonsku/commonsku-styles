@@ -5,7 +5,6 @@ import { getThemeColor, themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import colors from './colors';
-import { Row } from '.';
 
 /*
 
