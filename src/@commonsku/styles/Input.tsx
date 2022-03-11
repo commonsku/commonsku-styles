@@ -4,6 +4,7 @@ import styled, { CSSObject, StyledComponentProps } from 'styled-components'
 import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
+import { document } from '../utils';
 
 type CommonInputProp = {
   noMargin?: boolean,
