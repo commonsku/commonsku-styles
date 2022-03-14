@@ -18,7 +18,6 @@ import resolve from '@rollup/plugin-node-resolve';
 
 import pkg from './package.json';
 
-// it's important to mark all subpackages of data-fns as externals
 // see https://github.com/Hacker0x01/react-datepicker/issues/1606
 const dateFnsDirs = fs
   .readdirSync(path.join(".", "node_modules", "date-fns"))
