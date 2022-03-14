@@ -42,6 +42,7 @@ export type SVGIconProps = {
     height?: string | number;
     viewBox?: string;
     iconSizes?: TIconSizeObj;
+    style?: CSSObject;
 };
 const SVG = styled.svg.attrs<SVGIconProps>(p => {
     const iconSizes = p.iconSizes || iconSize;
