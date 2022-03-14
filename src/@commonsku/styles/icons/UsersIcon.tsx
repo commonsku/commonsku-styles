@@ -1,7 +1,7 @@
 import React from 'react';
-import SVG, { iconSize, SVGProps } from '../SvgIcon';
+import SVG, { SVGIconProps } from './SvgIcon';
 
-type UsersIconProps = SVGProps & { fill?: string;};
+type UsersIconProps = SVGIconProps & { fill?: string;};
 export default function UsersIcon({
     fill='#fff',
     ...props
