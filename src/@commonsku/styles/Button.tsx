@@ -30,16 +30,18 @@ export const sizes = {
   tiny: {
     'font-family': themeOptions.fontStyles.button.tiny.fontFamily,
     'font-size': themeOptions.fontStyles.button.tiny.fontSize,
-    padding: '6px 12px',
-    iconOnlyPadding: '6px',
+    'line-height': themeOptions.fontStyles.button.tiny.lineHeight,
+    padding: '3px 9px', // 6px 12px minus 3px each for border
+    iconOnlyPadding: '3px', // 6px minus 3px each for border
     borderRadius: '3px',
     iconSize: '16px',
   },
   small: {
     'font-family': themeOptions.fontStyles.button.small.fontFamily,
     'font-size': themeOptions.fontStyles.button.small.fontSize,
-    padding: '7px 16px 5px 16px',
-    iconOnlyPadding: '8px',
+    'line-height': themeOptions.fontStyles.button.small.lineHeight,
+    padding: '5px 13px', //8px 16px minus 3px each for border
+    iconOnlyPadding: '5px', //8px minus 3px each for border
     borderRadius: '4px',
     iconSize: '16px'
 
@@ -47,8 +49,9 @@ export const sizes = {
   medium: {
     'font-family': themeOptions.fontStyles.button.medium.fontFamily,
     'font-size': themeOptions.fontStyles.button.medium.fontSize,
-    padding: '9px 24px 7px 24px',
-    iconOnlyPadding: '8px',
+    'line-height': themeOptions.fontStyles.button.medium.lineHeight,
+    padding: '5px 21px', //8px 24px minus 3px each for border
+    iconOnlyPadding: '5px', //5px minus 3px each for border
     borderRadius: '4px',
     iconSize: '24px'
 
@@ -56,16 +59,18 @@ export const sizes = {
   large: {
     'font-family': themeOptions.fontStyles.button.large.fontFamily,
     'font-size': themeOptions.fontStyles.button.large.fontSize,
-    padding: '13px 24px 11px 24px',
-    iconOnlyPadding: '12px',
+    'line-height': themeOptions.fontStyles.button.large.lineHeight,
+    padding: '9px 21px', //12px 24px minus 3px each for border
+    iconOnlyPadding: '9px', //12px minus 3px each for border
     borderRadius: '4px',
     iconSize: '32px'
   },
   huge: {
     'font-family': themeOptions.fontStyles.button.huge.fontFamily,
     'font-size': themeOptions.fontStyles.button.huge.fontSize,
-    padding: '17px 32px 15px 32px',
-    iconOnlyPadding: '16px',
+    'line-height': themeOptions.fontStyles.button.huge.lineHeight,
+    padding: '13px 29px', // 16px 32px minus 3px each for border
+    iconOnlyPadding: '13px', //16px minus 3px each for border
     borderRadius: '5px',
     iconSize: '48px'
 
@@ -190,21 +195,6 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           outlineColor: cta,
         },
       };
-    // case 'cta-outline':
-    //   return {
-    //     borderWidth: 3,
-    //     borderStyle: 'solid',
-    //     borderColor: cta,
-    //     background: white,
-    //     color: cta,
-    //     ':hover': {
-    //       borderWidth: 3,
-    //       borderStyle: 'solid',
-    //       borderColor: cta,
-    //       background: ctaLight,
-    //       color: cta,
-    //     },
-    //   };
     case 'error':
       return {
         borderWidth: 3,
@@ -223,21 +213,6 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           outlineColor: error,
         },
       };
-    // case 'error-outline':
-    //   return {
-    //     borderWidth: 3,
-    //     borderStyle: 'solid',
-    //     borderColor: error,
-    //     background: white,
-    //     color: error,
-    //     ':hover': {
-    //       borderWidth: 3,
-    //       borderStyle: 'solid',
-    //       borderColor: error,
-    //       background: errorLight,
-    //       color: error,
-    //     },
-    //   };
     case 'disabled':
       return {
         borderWidth: 3,
@@ -250,14 +225,6 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           outlineColor: disabled,
         },
       };
-    // case 'disabled-outline':
-    //   return {
-    //     borderWidth: 3,
-    //     borderStyle: 'solid',
-    //     borderColor: disabled,
-    //     background: white,
-    //     color: disabledText,
-    //   };
       case 'text':
         return {
           borderWidth: 3,
@@ -291,7 +258,8 @@ const Button = styled.button<ButtonProps>`
     };
     color: ${props => props.secondary ? getThemeColor(props, 'primary', colors.primary) : "white"};
     border-color: ${props => props.cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)};
-    font-size: ${getSizeStyle('font-size', '1em')};
+    font-size: ${getSizeStyle('font-size', '1rem')};
+    line-height: ${getSizeStyle('line-height', '1.5rem')};
     padding: ${p => getSizeStyle('padding', '12px 25px')};
     font-family: ${getSizeStyle('font-family', "'skufont-demibold', sans-serif")};
     cursor: pointer;
@@ -331,7 +299,7 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
 `;
 
 type IconFuncProps = { fill: string; [key: string]: any };
-export type TButtonIcon = React.ReactNode | ((props: IconFuncProps) => React.ReactElement);
+export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon: TButtonIcon;
   iconPosition?: 'left' | 'right';
@@ -358,22 +326,11 @@ export function IconButton({
       return "small";
     };
   
-    const BtnIcon = typeof Icon === 'function'
-      ? <Icon size={BtnIconSize(size)} fill={variantStyles.color || '#fff'} />
-      : Icon;
 
     return (
-      <span style={{
-        paddingLeft: children && iconPosition === 'right' ? 5 : 0,
-        paddingRight: children && iconPosition !== 'right' ? 5 : 0,
-        display: 'inline-block',
-        flexDirection: 'row',
-        // alignItems: 'flex-start',
-        verticalAlign: 'middle',
-        maxHeight: 24,
-      }}>{BtnIcon}</span>
+      <Icon size={BtnIconSize(size)} fill={variantStyles.color || '#fff'} style={{verticalAlign: 'top', paddingRight: children ? '5px' : '0px', paddingTop: props => props.size === 'small' ? '10px' : '0px' }} />
     );
-  }, [variantStyles.color, Icon, children, iconPosition, size]);
+  }, [variantStyles.color, Icon, size, children]);
 
   const hasChildren = (
     (children && children !== null && children !== undefined)

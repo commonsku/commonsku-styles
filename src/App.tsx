@@ -12,7 +12,9 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon, OpportunityCircleIcon, PresentationCircleIcon, EstimateCircleIcon, SalesOrderCircleIcon } from './@commonsku/styles/icons';
+import * as icons from './@commonsku/styles/icons';
+
+
 
 import { 
     Avatar, 
@@ -51,16 +53,6 @@ import {
     HeadlessTable,
     StatusDropdown,
     StateDropdown,
-    AwaitingProofIcon,
-    ProofReceivedIcon,
-    PendingApprovalIcon,
-    ChangeRequestedIcon,
-    ClientApprovedIcon,
-    ColumnSelectIcon,
-    ProofingCompleteIcon,
-    NoMarketingIcon,
-    YesMarketingIcon,
-    TrashIcon,
     Text,
     Collapsible,
     CollapsiblePanel,
@@ -68,12 +60,6 @@ import {
     colors,
     Calendar,
     DraggableTasksCalendar,
-    NavConnectIcon,
-    NavSalesIcon,
-    NavProdIcon,
-    NavFinanceIcon,
-    NavManagementIcon,
-    NavResourcesIcon,
     LabeledMultiProgress,
     IconButton,
     Input,
@@ -84,6 +70,7 @@ import {
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
+import { neutrals } from '@commonsku/styles/colors';
 
 const initialState = {
   date: new Date(),
@@ -560,7 +547,7 @@ const App = () => {
                   {onClick: () => null, content: 'New Address'},
                 ]
                }/>
-              <Dropdown text="Dropdown Panel" icon={<NoteIcon width="40" />}>
+              <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon width="40" />}>
                 <Row>
                   <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
                   <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
@@ -581,57 +568,55 @@ const App = () => {
             
             <div style={{display: 'flex', flexDirection: 'column'}}>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="large">Error</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="small">Error</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="large">Error</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="small">Error</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
-                <IconButton Icon={UserIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
+                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
               </ButtonsGroup>
             </div>
-            
-            
-            
 
             <H5>Input Fields</H5>
             <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
@@ -653,7 +638,7 @@ const App = () => {
               name="basic-input"
               value="input value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -664,7 +649,7 @@ const App = () => {
               name="basic-disabled"
               value="disabled value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -675,7 +660,7 @@ const App = () => {
               name="basic-error"
               value="error value"
               placeholder="enter something"
-              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
             <br />
@@ -688,7 +673,7 @@ const App = () => {
               name="basic-input"
               defaultValue="input value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -700,7 +685,7 @@ const App = () => {
               name="basic-disabled"
               defaultValue="disabled value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -712,7 +697,7 @@ const App = () => {
               name="basic-error"
               defaultValue="error value"
               placeholder="enter something"
-              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
             <br />
@@ -831,7 +816,7 @@ const App = () => {
                 },
               ]}
               views={[
-                { type: 'TASK', title: 'Tasks', selected: true, Icon: UserIcon },
+                { type: 'TASK', title: 'Tasks', selected: true, Icon: icons.UsersIcon },
                 { type: 'PROJECT', title: 'Projects', selected: false },
                 { type: 'PO', title: 'Pos', selected: false },
               ]}
@@ -846,74 +831,75 @@ const App = () => {
               </Toggle>
             </div>
             <div style={{maxWidth: 90}}>
-              <Loading mb={10} colorful={colorfulBars} />
+              <icons.Loading mb={10} colorful={colorfulBars} />
             </div>
 
-            <ProofingCompleteIcon width={"1.5rem"}/>
-            <ClientApprovedIcon width={"1.5rem"}/>
-            <ColumnSelectIcon width={"1.5rem"}/>
-            <AwaitingProofIcon width={"1.5rem"}/>
-            <ProofReceivedIcon width={"1.5rem"}/>
-            <PendingApprovalIcon width={"1.5rem"}/>
-            <ChangeRequestedIcon width={"1.5rem"}/>
-            <PanelIcon color={"#00d374"} width={"1.5rem"}/>
-            <TaskIcon color={"black"} width={"1.5rem"}/>
-            <NoteIcon color={"black"} width={"1.5rem"}/>
-            <NoMarketingIcon width={"1.5rem"}/>
-            <YesMarketingIcon width={"1.5rem"}/>
-            <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
-            <PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
-            <TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
-            <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
-            <InfoIcon ml={5}/> 
+            <icons.ProofingCompleteIcon width={"1.5rem"}/>
+            <icons.ClientApprovedIcon width={"1.5rem"}/>
+            <icons.ColumnSelectIcon width={"1.5rem"}/>
+            <icons.AwaitingProofIcon width={"1.5rem"}/>
+            <icons.ProofReceivedIcon width={"1.5rem"}/>
+            <icons.PendingApprovalIcon width={"1.5rem"}/>
+            <icons.ChangeRequestedIcon width={"1.5rem"}/>
+            <icons.PanelIcon color={"#00d374"} width={"1.5rem"}/>
+            <icons.TaskIcon color={"black"} width={"1.5rem"}/>
+            <icons.NoteIcon color={"black"} width={"1.5rem"}/>
+            <icons.NoMarketingIcon width={"1.5rem"}/>
+            <icons.YesMarketingIcon width={"1.5rem"}/>
+            <icons.ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
+            <icons.PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
+            <icons.TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
+            <Link><icons.CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
+            <icons.InfoIcon ml={5}/> 
             <Link onClick={() => setLock(!lock)}>
-              <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
+              <icons.LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
-            <GearIcon color={"#00d374"} width={"1.5rem"}/>
-            <NextPrevIcon color={"#00d374"} width={".8rem"}/>
-            <NextPrevIcon color={"#00d374"} width={".8rem"} next/>
+            <icons.GearIcon color={"#00d374"} width={"1.5rem"}/>
+            <icons.NextPrevIcon color={"#00d374"} width={".8rem"}/>
+            <icons.NextPrevIcon color={"#00d374"} width={".8rem"} next/>
 
             <br/>
             <h2>Nav Icons</h2>
-            <NavConnectIcon color={"#00d374"} width={"3rem"}/>
-            <NavSalesIcon color={"#00d374"} width={"3rem"}/>
-            <NavProdIcon color={"#00d374"} width={"3rem"}/>
-            <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
-            <NavManagementIcon color={"#00d374"} width={"3rem"}/>
-            <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavConnectIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavSalesIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavProdIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavFinanceIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavManagementIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavResourcesIcon color={"#00d374"} width={"3rem"}/>
 
             <br/>
             <h2>Order Stage Icons</h2>
             <Row>
               <Col xs sm={4} md={2} lg={1}>
-                <OpportunityCircleIcon variant='primary' />
+                <icons.OpportunityCircleIcon variant='primary' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <PresentationCircleIcon variant='primary' />
+                <icons.PresentationCircleIcon variant='primary' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <EstimateCircleIcon variant='cta' />
+                <icons.EstimateCircleIcon variant='cta' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <SalesOrderCircleIcon variant='cta' />
+                <icons.SalesOrderCircleIcon variant='cta' />
               </Col>
             </Row>
             <h2>Selected Order Stage Icons</h2>
             <Row>
               <Col xs sm={4} md={2} lg={1}>
-                <OpportunityCircleIcon variant='cta-outline' />
+                <icons.OpportunityCircleIcon variant='cta-outline' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <PresentationCircleIcon variant='cta-outline' />
+                <icons.PresentationCircleIcon variant='cta-outline' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <EstimateCircleIcon variant='cta' />
+                <icons.EstimateCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='cta' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <EstimateCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='primary-outline' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <SalesOrderCircleIcon variant='primary-outline' />
+                <icons.SalesOrderCircleIcon variant='primary-outline' />
               </Col>
             </Row>
 
@@ -1007,8 +993,55 @@ const App = () => {
             </ButtonsGroup>
 
             <H5>Avatar</H5>
-            <Avatar pic="https://commonsku.com/img/brand/icon.png" />
-            <Avatar />
+            <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
+                <Avatar shape="circle" size="tiny" color="navy" mr={10} mb={10}>MS</Avatar>
+                <Avatar shape="circle" size="small" color="teal" initials="MG" mr={10} mb={10}/>
+                <Avatar shape="circle" size="medium" color="yellow" initials="IY" mr={10} mb={10}/>
+                <Avatar shape="circle" size="large" color="green" initials="MA" mr={10} mb={10}/>
+                <Avatar shape="circle" size="huge" color="pink" mr={10} mb={10}>CG</Avatar>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px'}}>
+                <Avatar shape="square" size="tiny" color="navy" mr={10} mb={10}>MS</ Avatar>
+                <Avatar shape="square" size="small" color="teal" initials="MG" mr={10} mb={10}/>
+                <Avatar shape="square" size="medium" color="yellow" initials="IY" mr={10} mb={10}/>
+                <Avatar shape="square" size="large" color="green" initials="MA" mr={10} mb={10}/>
+                <Avatar shape="square" size="huge" color="pink" mr={10} mb={10}>CG</Avatar>
+              </div>
+            </div>
+
+            <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="tiny" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="small" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="medium" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="large" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="huge" mr={10} mb={10}/>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="tiny" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="small" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="medium" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="large" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="huge" mr={10} mb={10}/>
+              </div>
+            </div>
+            <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
+                <Avatar icon shape="circle" size="tiny" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="small" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="medium" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="large" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="huge" color="pink" mr={10} mb={10}></Avatar>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px'}}>
+                <Avatar icon shape="square" size="tiny" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="small" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="medium" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="large" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="huge" color="pink" mr={10} mb={10}></Avatar>
+              </div>
+            </div>
 
             <H5>Select</H5>
             <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
