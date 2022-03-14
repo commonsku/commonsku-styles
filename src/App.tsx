@@ -889,6 +889,10 @@ const App = () => {
               </Col>
               <Col xs sm={4} md={2} lg={1}>
                 <icons.EstimateCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='cta' />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <icons.EstimateCircleIcon variant='primary-outline' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
                 <icons.SalesOrderCircleIcon variant='primary-outline' />

@@ -1,43 +1,78 @@
 import React from 'react';
 import { colors } from '../Theme';
+import SvgIcon, { SVGIconProps } from './SvgIcon';
+
+type IconProps = React.PropsWithChildren<SVGIconProps & {
+    variant?: 'primary' | 'primary-outline' | 'cta' | 'cta-outline',
+    style?: React.CSSProperties,
+}>;
 
 export default function Icon({
     variant='primary',
     style={},
+    size,
     ...props
-}: React.PropsWithChildren<{
-    variant?: 'primary' | 'primary-outline' | 'cta' | 'cta-outline',
-    style?: React.CSSProperties,
-}>) {
+}: IconProps) {
+    const iconSizes = React.useMemo(() => {
+        let baseSize = 74/3;
+        if (['cta-outline', 'primary-outline'].includes(variant)) {
+            baseSize = 64/3;
+        }
+        return {
+            tiny: {
+                width: baseSize,
+                height: baseSize,
+                viewBox: "0 0 74 74",
+            },
+            small: {
+                width: baseSize*2,
+                height: baseSize*2,
+                viewBox: "0 0 74 74",
+            },
+            medium: {
+                width: baseSize*3,
+                height:baseSize*3,
+                viewBox: "0 0 74 74",
+            },
+            large: {
+                width: baseSize*4,
+                height:baseSize*4,
+                viewBox: "0 0 74 74",
+            },
+            huge: {
+                width: baseSize*5,
+                height:baseSize*5,
+                viewBox: "0 0 74 74",
+            },
+            default: {
+                height: baseSize*3,
+                width: baseSize*3,
+                viewBox: "0 0 74 74",
+            },
+        };
+    }, [variant]);
+
     const iconColors = React.useMemo(() => {
         if (variant === 'cta-outline') {
             return {
-                width: 74,
-                height: 74,
                 fill: 'none',
                 stroke: colors.secondary1.main,
                 textColor: colors.secondary1.main,
             };
         } else if (variant === 'primary-outline') {
             return {
-                width: 74,
-                height: 74,
                 fill: 'none',
                 stroke: colors.primary1.main,
                 textColor: colors.primary1.main,
             };
         } else if (variant === 'cta') {
             return {
-                width: 64,
-                height: 64,
                 fill: colors.secondary1['20'],
                 stroke: 'none',
                 textColor: colors.secondary1.main,
             };
         }
         return {
-            width: 64,
-            height: 64,
             fill: colors.primary1['20'],
             stroke: 'none',
             textColor: colors.primary1.main,
@@ -45,9 +80,9 @@ export default function Icon({
     }, [variant]);
 
     return (
-        <svg
-            width={iconColors.width}
-            height={iconColors.height}
+        <SvgIcon
+            size={size}
+            iconSizes={iconSizes}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             style={style}
@@ -70,6 +105,6 @@ export default function Icon({
                     fill={iconColors.textColor}
                 />
             </>}
-        </svg>
+        </SvgIcon>
     );
 }

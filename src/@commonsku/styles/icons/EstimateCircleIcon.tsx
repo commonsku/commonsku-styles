@@ -12,32 +12,36 @@ export default function Icon({
     const iconColors = React.useMemo(() => {
         if (variant === 'cta-outline') {
             return {
-                width: 74,
-                height: 74,
+                width: 64,
+                height: 64,
+                viewBox: '0 0 74 74',
                 fill: 'none',
                 stroke: colors.secondary1.main,
                 textColor: colors.secondary1.main,
             };
         } else if (variant === 'primary-outline') {
             return {
-                width: 74,
-                height: 74,
+                width: 64,
+                height: 64,
+                viewBox: '0 0 74 74',
                 fill: 'none',
                 stroke: colors.primary1.main,
                 textColor: colors.primary1.main,
             };
         } else if (variant === 'cta') {
             return {
-                width: 64,
-                height: 64,
+                width: 74,
+                height: 74,
+                viewBox: '0 0 74 74',
                 fill: colors.secondary1['20'],
                 stroke: colors.secondary1['30'],
                 textColor: colors.secondary1.main,
             };
         }
         return {
-            width: 64,
-            height: 64,
+            width: 74,
+            height: 74,
+            viewBox: '0 0 74 74',
             fill: colors.primary1['20'],
             stroke: colors.primary1['30'],
             textColor: colors.primary1.main,
@@ -48,6 +52,7 @@ export default function Icon({
         <svg
             width={iconColors.width}
             height={iconColors.height}
+            viewBox={iconColors.viewBox}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             style={style}
