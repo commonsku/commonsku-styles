@@ -38,6 +38,7 @@ export type SVGProps = {
     width?: string | number;
     height?: string | number;
     viewBox?: string;
+    style?: CSSObject;
 };
 const SVG = styled.svg<SVGProps>`
     ${p => {

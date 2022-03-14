@@ -77,7 +77,7 @@ export const fontStyles = {
     },
     small: {
       fontSize: '0.75rem',
-      lineHeight: '1.5rem',
+      lineHeight: '1rem',
       fontFamily: [fontFamilies.demibold, ...fontFamilies.fallbacks].join(',')
     },
     tiny: {
