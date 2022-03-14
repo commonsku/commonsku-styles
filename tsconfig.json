@@ -27,8 +27,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
     "declarationMap": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
     "typeRoots": [
       "src/@commonsku/styles/types",
       "node_modules/@types"
