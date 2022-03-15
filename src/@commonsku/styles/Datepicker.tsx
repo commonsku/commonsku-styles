@@ -1,6 +1,5 @@
-// @ts-nocheck
 import React from 'react';
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { default as BaseDatePicker, ReactDatePickerProps } from 'react-datepicker';
 import { Input, InputProps } from './Input';
 import { Calendar2Icon } from './icons';
 import styled from 'styled-components';
@@ -55,6 +54,15 @@ export const StyledDatePickerWrapper = styled.div`
 .react-datepicker__triangle {
   border-bottom-color: background: ${p => getThemeColor(p, 'neutrals.20', colors.neutrals['20'])};
 }
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header,
+.react-datepicker__header {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 
 .react-datepicker__header,
 .react-datepicker__today-button {
@@ -120,29 +128,32 @@ export const StyledDatePickerWrapper = styled.div`
 
 `;
 
-
-export function Datepicker({
-  error,
-  value,
-  customInput,
-  locale='en',
-  todayButton='Today',
-  placeholder='yyyy-MM-dd',
-  dateFormat='yyyy-MM-dd',
-  isClearable=false,
-  peekNextMonth=true,
-  showMonthDropdown=true,
-  showYearDropdown=true,
-  dropdownMode="select",
-  nextMonthButtonLabel="",
-  nextYearButtonLabel="",
-  previousMonthButtonLabel="",
-  previousYearButtonLabel="",
-  ...props
-}: Omit<ReactDatePickerProps, 'value'> & Omit<InputProps, 'value'> & { value?: Date | null }) {
+export type DatepickerPorps = Omit<ReactDatePickerProps, 'value'> & Omit<InputProps, 'value'> & { value?: Date | null };
+export const Datepicker = React.forwardRef((
+  {
+    error,
+    value,
+    customInput,
+    locale='en',
+    todayButton='Today',
+    placeholder='yyyy-MM-dd',
+    dateFormat='yyyy-MM-dd',
+    isClearable=false,
+    peekNextMonth=true,
+    showMonthDropdown=true,
+    showYearDropdown=true,
+    dropdownMode="select",
+    nextMonthButtonLabel="",
+    nextYearButtonLabel="",
+    previousMonthButtonLabel="",
+    previousYearButtonLabel="",
+    ...props
+  }: DatepickerPorps,
+  ref: React.Ref<BaseDatePicker>
+) => {
   return (
-    <StyledDatePickerWrapper>
-        <DatePicker
+    <StyledDatePickerWrapper className='commonsku-styles-datepicker'>
+        <BaseDatePicker
           locale={locale}
           selected={value || props.selected}
           todayButton={todayButton}
@@ -159,8 +170,9 @@ export function Datepicker({
           dropdownMode={dropdownMode}
           peekNextMonth={peekNextMonth}
           {...props}
+          ref={ref}
         />
       </StyledDatePickerWrapper>
   )
-}
+})
 
