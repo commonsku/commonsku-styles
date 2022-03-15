@@ -912,16 +912,24 @@ const App = () => {
             <Number commas num={334353434.44334}/>
 
             <Row>
-              <Col xs={3}>
-                <H5>Single Datepicker</H5>
+              <Col xs={3} padded>
+                <H5>Datepicker</H5>
                 <Datepicker
                   value={state.date}
                   onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
                 />
               </Col>
+              <Col xs={3} padded>
+                <H5>Datepicker disabled</H5>
+                <Datepicker
+                  value={state.date}
+                  onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+                  disabled
+                />
+              </Col>
             </Row>
 
-            <Row>
+            <Row pt={20}>
               <Col xs={3}>
             <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
             </Col>
