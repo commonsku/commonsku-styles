@@ -328,7 +328,15 @@ export function IconButton({
   
 
     return (
-      <Icon size={BtnIconSize(size)} fill={variantStyles.color || '#fff'} style={{verticalAlign: 'top', paddingRight: children ? '5px' : '0px', paddingTop: props => props.size === 'small' ? '10px' : '0px' }} />
+      <Icon
+        size={BtnIconSize(size)}
+        fill={variantStyles.color || '#fff'}
+        style={{
+          verticalAlign: 'top',
+          paddingRight: children ? '5px' : '0px',
+          paddingTop: size === 'small' ? '10px' : '0px'
+        }}
+      />
     );
   }, [variantStyles.color, Icon, size, children]);
 
