@@ -12,7 +12,7 @@ type CommonInputProp = {
   isPercent?:boolean,
 };
 
-type BaseInputProps = CommonInputProp & { hasIcon?: boolean; } & SharedStyleTypes;
+export type BaseInputProps = CommonInputProp & { hasIcon?: boolean; } & SharedStyleTypes;
 export type InputProps = StyledComponentProps<'input', any, BaseInputProps, never>;
 
 type BaseInputIconLabelProps = CommonInputProp & {

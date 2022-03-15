@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { createGlobalStyle } from 'styled-components';
+import { datepickerStyles } from './Datepicker';
 
 type ColorObj = {[key: string]: string | ColorObj};
 const parseColorVars = (colors: ColorObj, prefix: string = ''): string => {
@@ -38,6 +39,8 @@ const GlobalStyle = createGlobalStyle`
 
   ${p => parseColorVars(_.get(p, ['theme', 'colors'], {}), '')}
 }
+
+${datepickerStyles}
 `;
 
 export default GlobalStyle;
