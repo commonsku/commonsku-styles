@@ -153,26 +153,26 @@ export const Datepicker = React.forwardRef((
 ) => {
   return (
     <StyledDatePickerWrapper className='commonsku-styles-datepicker'>
-        <BaseDatePicker
-          locale={locale}
-          selected={value || props.selected}
-          todayButton={todayButton}
-          customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
-          dateFormat={dateFormat}
-          placeholderText={placeholder}
-          isClearable={isClearable}
-          showMonthDropdown={showMonthDropdown}
-          showYearDropdown={showYearDropdown}
-          nextMonthButtonLabel={nextMonthButtonLabel}
-          nextYearButtonLabel={nextYearButtonLabel}
-          previousMonthButtonLabel={previousMonthButtonLabel}
-          previousYearButtonLabel={previousYearButtonLabel}
-          dropdownMode={dropdownMode}
-          peekNextMonth={peekNextMonth}
-          {...props}
-          ref={ref}
-        />
-      </StyledDatePickerWrapper>
+      <BaseDatePicker
+        locale={locale}
+        selected={value || props.selected}
+        todayButton={todayButton}
+        customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
+        dateFormat={dateFormat}
+        placeholderText={placeholder}
+        isClearable={isClearable}
+        showMonthDropdown={showMonthDropdown}
+        showYearDropdown={showYearDropdown}
+        nextMonthButtonLabel={nextMonthButtonLabel}
+        nextYearButtonLabel={nextYearButtonLabel}
+        previousMonthButtonLabel={previousMonthButtonLabel}
+        previousYearButtonLabel={previousYearButtonLabel}
+        dropdownMode={dropdownMode}
+        peekNextMonth={peekNextMonth}
+        {...props}
+        ref={ref}
+      />
+    </StyledDatePickerWrapper>
   )
 })
 
