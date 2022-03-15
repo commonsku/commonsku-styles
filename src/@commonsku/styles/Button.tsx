@@ -318,18 +318,14 @@ export function IconButton({
 
   
   const RenderIcon = React.useMemo(() => {
-    
-    const BtnIconSize = (size?: TSize): "medium" | "small" => {
-      if (size !== "tiny" && size !== "small") {
-        return "medium";
-      }
-      return "small";
-    };
-  
+    let btnSize = "small";
+    if (size !== "tiny" && size !== "small") {
+      btnSize = "medium";
+    }
 
     return (
       <Icon
-        size={BtnIconSize(size)}
+        size={btnSize}
         fill={variantStyles.color || '#fff'}
         style={{
           verticalAlign: 'top',
