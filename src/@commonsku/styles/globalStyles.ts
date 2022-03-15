@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { createGlobalStyle } from 'styled-components';
-import { datepickerStyles } from './Datepicker';
+import datepickerStyles from './datepickerStyles';
 
 type ColorObj = {[key: string]: string | ColorObj};
 const parseColorVars = (colors: ColorObj, prefix: string = ''): string => {
