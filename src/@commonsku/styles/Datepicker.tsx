@@ -51,12 +51,14 @@ export const Datepicker = React.forwardRef((
     peekNextMonth=true,
     showMonthDropdown=true,
     showYearDropdown=true,
+    showPopperArrow=false,
     dropdownMode="select",
     nextMonthButtonLabel="",
     nextYearButtonLabel="",
     previousMonthButtonLabel="",
     previousYearButtonLabel="",
     popperClassName,
+    wrapperClassName,
     ...props
   }: DatepickerPorps,
   ref: React.Ref<BaseDatePicker>
@@ -79,6 +81,8 @@ export const Datepicker = React.forwardRef((
       dropdownMode={dropdownMode}
       peekNextMonth={peekNextMonth}
       popperClassName={`commonsku-styles-datepicker ${popperClassName || ''}`}
+      wrapperClassName={`commonsku-styles-datepicker ${wrapperClassName || ''}`}
+      showPopperArrow={showPopperArrow}
       {...props}
       ref={ref}
     />
