@@ -1,6 +1,10 @@
 const datepickerStyles = `
 .commonsku-styles-datepicker {
-  .react-datepicker-wrapper, .react-datepicker__input-container {
+  &.react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .react-datepicker__input-container {
     display: block;
     width: 100%;
   }
