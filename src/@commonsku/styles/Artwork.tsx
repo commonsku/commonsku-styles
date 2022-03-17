@@ -100,7 +100,7 @@ export type ArtworkProps = {
   onDelete?:Function|VoidFunction,
   onSave?:Function|VoidFunction,
   onDownload?:Function|VoidFunction,
-  inputProps?:InputProps,
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement> & InputProps,
   inputEl?:React.ReactNode,
 };
 
