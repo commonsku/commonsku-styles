@@ -1,8 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import BaseSelect, { Props as SelectProps, Styles, Theme, components, createFilter, mergeStyles } from 'react-select'
-import BaseCreatableSelect, { Props as CreatableSelectProps, makeCreatableSelect } from 'react-select/creatable'
-import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
+import BaseCreatableSelect, { Props as CreatableSelectProps, makeCreatableSelect, Creatable } from 'react-select/creatable'
+import BaseAsyncSelect, { Async, Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
 import { document } from '../utils';
@@ -14,15 +13,16 @@ type AdditionalSKUSelectProps = {
   inPopup?:boolean,
 }
 
+type GenericObject = {[key: string]: any;};
 type SKUSelectProps = AdditionalSKUSelectProps & SelectProps
-type SKUAsyncSelectProps = AdditionalSKUSelectProps & AsyncSelectProps<{[key: string]: any;}>
-type SKUCreatableSelectProps = AdditionalSKUSelectProps & CreatableSelectProps<{[key: string]: any;}>
+type SKUAsyncSelectProps = AdditionalSKUSelectProps & AsyncSelectProps<GenericObject>
+type SKUCreatableSelectProps = AdditionalSKUSelectProps & CreatableSelectProps<GenericObject>
 
 type SKUSelectStylesProps = SKUSelectProps
   | SKUAsyncSelectProps
   | SKUCreatableSelectProps
 
-const popupStyles: SelectProps = {
+const popupStyles = {
   menuPlacement: 'auto',
   menuPosition: 'fixed',
   menuPortalTarget: document.body,
@@ -219,10 +219,51 @@ const skuSelectTheme = (theme: Theme) => ({
 })
 
 // duplicate styles to overide .resku global styles
-const SKUSelect = styled(
-  React.forwardRef((
-    {noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps,
+const SKUSelect = React.forwardRef((
+  {noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps,
+  ref: React.Ref<BaseSelect>
+) => {
+  const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
+  const selectStyleProps = {
+    ...props,
+    noMargin: noMargin,
+    menuRelative: menuRelative,
+    inPopup: inPopup,
+    error: error,
+    classNamePrefix: classNamePrefix,
+    theme: skuSelectTheme,
+  };
+  return <BaseSelect
+    ref={ref}
+    classNamePrefix={classNamePrefix}
+    {...(inPopup ? popupStyles as SelectProps : {})}
+    noMargin={noMargin}
+    menuRelative={menuRelative}
+    error={error}
+    styles={skuSelectStyles(selectStyleProps)}
+    theme={skuSelectTheme}
+    {...props}
+  />
+});
+
+const LabeledSelect = React.forwardRef(
+  (
+    { parentStyle, ...props }: SKUSelectProps & {parentStyle?:object},
     ref: React.Ref<BaseSelect>
+  ) => {
+    return (
+      <div style={parentStyle}>
+        <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+        <SKUSelect {...props} ref={ref} />
+      </div>
+    )
+  }
+);
+
+const SKUCreatableSelect = React.forwardRef(
+  (
+    {noMargin, menuRelative, inPopup, error, ...props}: SKUCreatableSelectProps,
+    ref: React.Ref<Creatable<GenericObject>>
   ) => {
     const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
     const selectStyleProps = {
@@ -234,73 +275,83 @@ const SKUSelect = styled(
       classNamePrefix: classNamePrefix,
       theme: skuSelectTheme,
     };
-    return <BaseSelect
-      ref={ref}
-      classNamePrefix={classNamePrefix}
-      {...(inPopup ? popupStyles : {})}
-      noMargin={noMargin}
-      menuRelative={menuRelative}
-      error={error}
-      styles={skuSelectStyles(selectStyleProps)}
-      theme={skuSelectTheme}
-      {...props}
-    />
-  })
-)`
-  &&& {
-    .commonsku-styles-select__input {
-      input {
-        height: auto;
-      }
-    }
+
+    return (
+      <BaseCreatableSelect
+        ref={ref}
+        classNamePrefix={classNamePrefix}
+        noMargin={noMargin}
+        menuRelative={menuRelative}
+        error={error}
+        styles={skuSelectStyles(selectStyleProps)}
+        theme={skuSelectTheme}
+        {...props}
+        {...(inPopup ? popupStyles as CreatableSelectProps<GenericObject> : {})}
+      />
+    );
   }
-`;
+);
 
-const LabeledSelect = ({ parentStyle, ...props }: SKUSelectProps & {parentStyle?:object}) => {
-  return (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
-      <SKUSelect {...props}/>
-    </div>
-  )
-}
-
-const SKUCreatableSelect = ({noMargin, menuRelative, inPopup, ...props}: SKUCreatableSelectProps) =>
-  // @ts-ignore
-  <BaseCreatableSelect 
-    {...(inPopup ? popupStyles : {})}
-    styles={skuSelectStyles(props)}
-    theme={skuSelectTheme}
-    {...props}
-  />;
-
-const LabeledCreatableSelect = ({ parentStyle, ...props }: SKUCreatableSelectProps & {parentStyle?:object}) => {
-  return (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
-      <SKUCreatableSelect {...props}/>
-    </div>
-  )
-}
+const LabeledCreatableSelect = React.forwardRef(
+  (
+    { parentStyle, ...props }: SKUCreatableSelectProps & {parentStyle?:object},
+    ref: React.Ref<Creatable<GenericObject>>
+    ) => {
+      return (
+        <div style={parentStyle}>
+          <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+          <SKUCreatableSelect {...props} ref={ref} />
+        </div>
+      )
+  }
+);
 
 
-const SKUAsyncSelect = ({noMargin, menuRelative, inPopup, ...props}: SKUAsyncSelectProps) =>
-  // @ts-ignore
-  <BaseAsyncSelect 
-    {...(inPopup ? popupStyles : {})}
-    styles={skuSelectStyles(props)}
-    theme={skuSelectTheme}
-    {...props}
-  />;
+const SKUAsyncSelect = React.forwardRef(
+  (
+    {noMargin, menuRelative, inPopup, error, ...props}: SKUAsyncSelectProps,
+    ref: React.Ref<Async<GenericObject>>
+  ) => {
+    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
+    const selectStyleProps = {
+      ...props,
+      noMargin: noMargin,
+      menuRelative: menuRelative,
+      inPopup: inPopup,
+      error: error,
+      classNamePrefix: classNamePrefix,
+      theme: skuSelectTheme,
+    };
 
-const LabeledAsyncSelect = ({ parentStyle, ...props }: SKUAsyncSelectProps & {parentStyle?:object}) => {
-  return (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
-      <SKUAsyncSelect {...props}/>
-    </div>
-  )
-}
+    return (
+      <BaseAsyncSelect 
+        ref={ref}
+        classNamePrefix={classNamePrefix}
+        noMargin={noMargin}
+        menuRelative={menuRelative}
+        error={error}
+        styles={skuSelectStyles(selectStyleProps)}
+        theme={skuSelectTheme}
+        {...props}
+        {...(inPopup ? popupStyles as AsyncSelectProps<GenericObject> : {})}
+      />
+    );
+  }
+);
+
+const LabeledAsyncSelect = React.forwardRef(
+  (
+    { parentStyle, ...props }: SKUAsyncSelectProps & {parentStyle?:object},
+    ref: React.Ref<Async<GenericObject>>
+  ) => {
+    return (
+      <div style={parentStyle}>
+        <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+        <SKUAsyncSelect {...props} ref={ref} />
+      </div>
+    )
+  }
+);
 
 export {
   SKUSelect as Select,

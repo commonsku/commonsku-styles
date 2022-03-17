@@ -77,16 +77,6 @@ const datepickerStyles = `
     color: #fff;
   }
 
-  .react-datepicker__navigation--next {
-    border-left-color: var(--color-primary1-60);
-    margin-top: 8px;
-  }
-
-  .react-datepicker__navigation--previous {
-    border-right-color: var(--color-primary1-60);
-    margin-top: 8px;
-  }
-
   .react-datepicker__triangle {
     border-bottom-color: var(--color-neutrals-20) !important;
   }
@@ -102,6 +92,20 @@ const datepickerStyles = `
     padding: 3px;
     border-radius: 5px;
     outline: none;
+  }
+
+  .react-datepicker__navigation {
+    border: 0.45rem solid transparent;
+
+    &.react-datepicker__navigation--next {
+      border-left: 7px solid var(--color-primary1-60);
+      margin-top: 8px;
+    }
+  
+    &.react-datepicker__navigation--previous {
+      border-right: 7px solid var(--color-primary1-60);
+      margin-top: 8px;
+    }
   }
 }
 `;

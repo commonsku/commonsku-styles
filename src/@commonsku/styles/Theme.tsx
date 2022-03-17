@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "./globalStyles";
+import GlobalStyle, { AdditionalStyles } from "./globalStyles";
 import _ from 'lodash'
 import colors from "./colors";
 
@@ -181,13 +181,15 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
 }
 
 
-const Theme = ({ theme={}, globalStyles=false, children }: React.PropsWithChildren<{
-  theme?: object, globalStyles?: boolean
+const Theme = ({ theme={}, globalStyles=false, additionalGlobalStyles, children }: React.PropsWithChildren<{
+  theme?: object,
+  globalStyles?: boolean,
+  additionalGlobalStyles?: AdditionalStyles,
 }>) => {
   const mergedTheme = _.merge(themeOptions, theme);
   return (
     <ThemeProvider theme={mergedTheme}>
-      {globalStyles ? <GlobalStyle theme={mergedTheme} /> : null}
+      {globalStyles ? <GlobalStyle theme={mergedTheme} additionalStyles={additionalGlobalStyles} /> : null}
       {children}
     </ThemeProvider>
   );
