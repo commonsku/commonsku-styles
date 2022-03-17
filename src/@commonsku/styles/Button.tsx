@@ -330,7 +330,8 @@ export function IconButton({
         style={{
           verticalAlign: 'top',
           paddingRight: children ? '5px' : '0px',
-          paddingTop: size === 'small' ? '10px' : '0px'
+          paddingTop: size === 'small' ? '10px' : '0px',
+          boxSizing: 'content-box',
         }}
       />
     );

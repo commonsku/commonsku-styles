@@ -22,6 +22,7 @@ type BaseInputIconLabelProps = CommonInputProp & {
 };
 
 export const InputIconLabel = styled.div<BaseInputIconLabelProps>`
+&&& {
   box-sizing: border-box;
   width: 40px;
   height: ${p => p.error ? 38 : 36}px;
@@ -53,6 +54,7 @@ export const InputIconLabel = styled.div<BaseInputIconLabelProps>`
   ${p => p.isDisabled
     ? `background: ${getThemeColor(p, 'input.iconWrapper.disabled.background')};`
     : ''}
+}
 `
 
 export const InputIconLabelContainer = styled.div`
