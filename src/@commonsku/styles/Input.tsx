@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 import React, { useState, useRef, CSSProperties, useEffect } from 'react'
-import styled, { CSSObject, StyledComponentProps } from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
 import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
@@ -12,8 +12,7 @@ type CommonInputProp = {
   isPercent?:boolean,
 };
 
-export type BaseInputProps = CommonInputProp & { hasIcon?: boolean; } & SharedStyleTypes;
-export type InputProps = StyledComponentProps<'input', any, BaseInputProps, never>;
+export type InputProps = CommonInputProp & { hasIcon?: boolean; } & SharedStyleTypes;
 
 type BaseInputIconLabelProps = CommonInputProp & {
   isActive?: boolean;
@@ -80,7 +79,7 @@ export const InputIconLabelContainer = styled.div`
   }}
 `
 
-export const Input = styled.input<BaseInputProps>`
+export const Input = styled.input<InputProps>`
   &&& {
     ${p => {
       const styles: CSSObject = {
@@ -155,14 +154,14 @@ export const Input = styled.input<BaseInputProps>`
 `;
 
 
-type BaseLabelInputProps = BaseInputProps & {
+type BaseLabelInputProps = InputProps & {
   label: string,
   name?: string,
   isPercent?: boolean,
   labelOnTop?: boolean,
 } & SharedStyleTypes;
-type LabeledInputPropType = StyledComponentProps<'input', any, BaseLabelInputProps, never>;
-export const LabeledInput = React.forwardRef(
+type LabeledInputPropType = React.InputHTMLAttributes<HTMLInputElement> & BaseLabelInputProps;
+export const LabeledInput: React.FC<LabeledInputPropType> = React.forwardRef(
   ({label, name, required, labelOnTop=false, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
     <div>
       <Label
@@ -184,7 +183,9 @@ export const LabeledInput = React.forwardRef(
   )
 )
 
-type BaseLabeledIconInputProps = BaseInputProps & {
+const tt = <input type='text' />;
+
+type BaseLabeledIconInputProps = InputProps & {
   label: string,
   name?: string,
   isPercent?: boolean,
@@ -192,8 +193,8 @@ type BaseLabeledIconInputProps = BaseInputProps & {
   Icon: React.ReactElement,
   iconPosition?: 'left' | 'right',
 } & SharedStyleTypes;
-type LabeledIconInputProps = StyledComponentProps<'input', any, BaseLabeledIconInputProps, never>;
-export const LabeledIconInput = React.forwardRef(
+type LabeledIconInputProps = React.InputHTMLAttributes<HTMLInputElement> & BaseLabeledIconInputProps;
+export const LabeledIconInput: React.FC<LabeledIconInputProps> = React.forwardRef(
   (
     {
       label,
@@ -332,7 +333,7 @@ export const LabeledIconInput = React.forwardRef(
             onBlur={onBlur}
           />
           {iconPosition === 'right' ? <InputIconLabel
-            style={{ marginBottom: 0, }}
+            style={{ marginBottom: 0, padding: 6, }}
             isActive={isActive}
             isDisabled={disabled}
             isHover={isHovering}
@@ -370,7 +371,7 @@ export const RadioLabel = styled.label<{disabled?: boolean}>`
 `;
 
 type BaseRadioProps = {isHovering?: boolean};
-type RadioProps = StyledComponentProps<'input', any, BaseRadioProps, never>;
+type RadioProps = React.InputHTMLAttributes<HTMLInputElement> & BaseRadioProps;
 export const Radio = styled.input<BaseRadioProps>`
   &&& {
     position: absolute;

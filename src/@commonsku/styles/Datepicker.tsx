@@ -1,9 +1,11 @@
 import React from 'react';
 import { default as BaseDatePicker, ReactDatePickerProps } from 'react-datepicker';
-import { BaseInputProps, Input, InputProps } from './Input';
+import { Input, InputProps } from './Input';
 import { Calendar2Icon } from './icons';
 
-type CustomInputProps = InputProps & {isClearable?: boolean};
+type CustomInputProps = React.InputHTMLAttributes<HTMLInputElement>
+  & InputProps
+  & {isClearable?: boolean};
 export const CustomDateInput = React.forwardRef((
   {
     error,
@@ -32,7 +34,7 @@ export const CustomDateInput = React.forwardRef((
 });
 
 export type DatepickerPorps = Omit<ReactDatePickerProps, 'value'>
-  & Omit<BaseInputProps, 'value'>
+  & Omit<InputProps, 'value'>
   & {
     value?: Date | null;
     placeholder?: string;
