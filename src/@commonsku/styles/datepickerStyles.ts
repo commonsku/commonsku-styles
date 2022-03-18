@@ -1,3 +1,5 @@
+import { DownArrowIcon } from './icons';
+
 const datepickerStyles = `
 .commonsku-styles-datepicker {
   &.react-datepicker-wrapper {
@@ -88,6 +90,7 @@ const datepickerStyles = `
 
   .react-datepicker__month-select,
   .react-datepicker__year-select {
+    height: 30px;
     border: 2px solid var(--color-primary1-60);
     padding: 3px;
     border-radius: 5px;
