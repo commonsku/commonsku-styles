@@ -256,7 +256,7 @@ const tableData = [
 ] 
 
 const SelectMenuList = (
-  props: MenuListComponentProps<{[key: string]: any;}>
+  props: MenuListComponentProps<{label: string, value: string}>
 ) => {
   return (
     <selectComponents.MenuList {...props}>
