@@ -219,139 +219,127 @@ const skuSelectTheme = (theme: Theme) => ({
 })
 
 // duplicate styles to overide .resku global styles
-const SKUSelect = React.forwardRef((
-  {noMargin, menuRelative, inPopup, error, ...props}: SKUSelectProps,
-  ref: React.Ref<BaseSelect>
-) => {
-  const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
-  const selectStyleProps = {
-    ...props,
-    noMargin: noMargin,
-    menuRelative: menuRelative,
-    inPopup: inPopup,
-    error: error,
-    classNamePrefix: classNamePrefix,
-    theme: skuSelectTheme,
-  };
-  return <BaseSelect
-    ref={ref}
-    classNamePrefix={classNamePrefix}
-    {...(inPopup ? popupStyles as SelectProps : {})}
-    noMargin={noMargin}
-    menuRelative={menuRelative}
-    error={error}
-    styles={skuSelectStyles(selectStyleProps)}
-    theme={skuSelectTheme}
-    {...props}
-  />
-});
-
-const LabeledSelect = React.forwardRef(
-  (
-    { parentStyle, ...props }: SKUSelectProps & {parentStyle?:object},
-    ref: React.Ref<BaseSelect>
+const SKUSelect: React.ForwardRefExoticComponent<SKUSelectProps> =
+  React.forwardRef<BaseSelect, SKUSelectProps>((
+    {noMargin, menuRelative, inPopup, error, ...props},
+    ref
   ) => {
-    return (
+    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
+    const selectStyleProps = {
+      ...props,
+      noMargin: noMargin,
+      menuRelative: menuRelative,
+      inPopup: inPopup,
+      error: error,
+      classNamePrefix: classNamePrefix,
+      theme: skuSelectTheme,
+    };
+    return <BaseSelect
+      ref={ref}
+      classNamePrefix={classNamePrefix}
+      {...(inPopup ? popupStyles as SelectProps : {})}
+      noMargin={noMargin}
+      menuRelative={menuRelative}
+      error={error}
+      styles={skuSelectStyles(selectStyleProps)}
+      theme={skuSelectTheme}
+      {...props}
+    />
+  });
+
+type LabeledSelectProp = SKUSelectProps & {parentStyle?:React.CSSProperties};
+const LabeledSelect: React.ForwardRefExoticComponent<LabeledSelectProp> =
+  React.forwardRef<BaseSelect, LabeledSelectProp>(
+    ({ parentStyle, ...props }, ref) => (
       <div style={parentStyle}>
         <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
         <SKUSelect {...props} ref={ref} />
       </div>
     )
-  }
-);
+  );
 
-const SKUCreatableSelect = React.forwardRef(
-  (
-    {noMargin, menuRelative, inPopup, error, ...props}: SKUCreatableSelectProps,
-    ref: React.Ref<Creatable<GenericObject>>
-  ) => {
-    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
-    const selectStyleProps = {
-      ...props,
-      noMargin: noMargin,
-      menuRelative: menuRelative,
-      inPopup: inPopup,
-      error: error,
-      classNamePrefix: classNamePrefix,
-      theme: skuSelectTheme,
-    };
+const SKUCreatableSelect: React.ForwardRefExoticComponent<SKUCreatableSelectProps> =
+  React.forwardRef<Creatable<GenericObject>, SKUCreatableSelectProps>(
+    ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
+      const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
+      const selectStyleProps = {
+        ...props,
+        noMargin: noMargin,
+        menuRelative: menuRelative,
+        inPopup: inPopup,
+        error: error,
+        classNamePrefix: classNamePrefix,
+        theme: skuSelectTheme,
+      };
 
-    return (
-      <BaseCreatableSelect
-        ref={ref}
-        classNamePrefix={classNamePrefix}
-        noMargin={noMargin}
-        menuRelative={menuRelative}
-        error={error}
-        styles={skuSelectStyles(selectStyleProps)}
-        theme={skuSelectTheme}
-        {...props}
-        {...(inPopup ? popupStyles as CreatableSelectProps<GenericObject> : {})}
-      />
-    );
-  }
-);
-
-const LabeledCreatableSelect = React.forwardRef(
-  (
-    { parentStyle, ...props }: SKUCreatableSelectProps & {parentStyle?:object},
-    ref: React.Ref<Creatable<GenericObject>>
-    ) => {
       return (
-        <div style={parentStyle}>
-          <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
-          <SKUCreatableSelect {...props} ref={ref} />
-        </div>
-      )
-  }
-);
+        <BaseCreatableSelect
+          ref={ref}
+          classNamePrefix={classNamePrefix}
+          noMargin={noMargin}
+          menuRelative={menuRelative}
+          error={error}
+          styles={skuSelectStyles(selectStyleProps)}
+          theme={skuSelectTheme}
+          {...props}
+          {...(inPopup ? popupStyles as CreatableSelectProps<GenericObject> : {})}
+        />
+      );
+    }
+  );
+
+type LabeledCreatableSelectProps = SKUCreatableSelectProps & {parentStyle?:React.CSSProperties};
+const LabeledCreatableSelect: React.ForwardRefExoticComponent<LabeledCreatableSelectProps> =
+  React.forwardRef<Creatable<GenericObject>, LabeledCreatableSelectProps>(
+    ({ parentStyle, ...props }, ref) => (
+      <div style={parentStyle}>
+        <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+        <SKUCreatableSelect {...props} ref={ref} />
+      </div>
+    )
+  );
 
 
-const SKUAsyncSelect = React.forwardRef(
-  (
-    {noMargin, menuRelative, inPopup, error, ...props}: SKUAsyncSelectProps,
-    ref: React.Ref<Async<GenericObject>>
-  ) => {
-    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
-    const selectStyleProps = {
-      ...props,
-      noMargin: noMargin,
-      menuRelative: menuRelative,
-      inPopup: inPopup,
-      error: error,
-      classNamePrefix: classNamePrefix,
-      theme: skuSelectTheme,
-    };
+const SKUAsyncSelect: React.ForwardRefExoticComponent<SKUAsyncSelectProps> =
+  React.forwardRef<Async<GenericObject>, SKUAsyncSelectProps>(
+    ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
+      const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
+      const selectStyleProps = {
+        ...props,
+        noMargin: noMargin,
+        menuRelative: menuRelative,
+        inPopup: inPopup,
+        error: error,
+        classNamePrefix: classNamePrefix,
+        theme: skuSelectTheme,
+      };
 
-    return (
-      <BaseAsyncSelect 
-        ref={ref}
-        classNamePrefix={classNamePrefix}
-        noMargin={noMargin}
-        menuRelative={menuRelative}
-        error={error}
-        styles={skuSelectStyles(selectStyleProps)}
-        theme={skuSelectTheme}
-        {...props}
-        {...(inPopup ? popupStyles as AsyncSelectProps<GenericObject> : {})}
-      />
-    );
-  }
-);
+      return (
+        <BaseAsyncSelect 
+          ref={ref}
+          classNamePrefix={classNamePrefix}
+          noMargin={noMargin}
+          menuRelative={menuRelative}
+          error={error}
+          styles={skuSelectStyles(selectStyleProps)}
+          theme={skuSelectTheme}
+          {...props}
+          {...(inPopup ? popupStyles as AsyncSelectProps<GenericObject> : {})}
+        />
+      );
+    }
+  );
 
-const LabeledAsyncSelect = React.forwardRef(
-  (
-    { parentStyle, ...props }: SKUAsyncSelectProps & {parentStyle?:object},
-    ref: React.Ref<Async<GenericObject>>
-  ) => {
-    return (
+type LabeledAsyncSelectProps = SKUAsyncSelectProps & {parentStyle?:React.CSSProperties};
+const LabeledAsyncSelect: React.ForwardRefExoticComponent<LabeledAsyncSelectProps> =
+  React.forwardRef<Async<GenericObject>, LabeledAsyncSelectProps>(
+    ({ parentStyle, ...props }, ref) => (
       <div style={parentStyle}>
         <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
         <SKUAsyncSelect {...props} ref={ref} />
       </div>
     )
-  }
-);
+  );
 
 export {
   SKUSelect as Select,
