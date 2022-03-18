@@ -46,3 +46,4 @@ export {default as GlobalStyle} from './globalStyles'
 
 export * from './calendar';
 export * from './tables';
+export * from './IconShowcase';
