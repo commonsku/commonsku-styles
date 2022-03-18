@@ -18,11 +18,23 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
+    "baseUrl": "src/@commonsku/styles",
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
     "declarationMap": true,
-    "baseUrl": "src/@commonsku/styles"
+    "typeRoots": [
+      "src/@commonsku/styles/types",
+      "node_modules/@types"
+    ]
   },
   "include": [
-    "src/@commonsku/styles"
+    "src/@commonsku/styles",
+    "src/@commonsku/styles/types/index.d.ts",
+    "src/@commonsku/styles/types/global.d.ts"
   ]
 }

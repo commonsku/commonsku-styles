@@ -301,11 +301,11 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
 type IconFuncProps = { fill: string; [key: string]: any };
 export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
-  Icon: TButtonIcon;
+  Icon: TButtonIcon | React.ReactElement<IconFuncProps>;
   iconProps?: {[key: string]: any};
   iconPosition?: 'left' | 'right';
   style?: React.CSSProperties;
-}>;
+}> & React.ButtonHTMLAttributes<HTMLButtonElement>;
 export function IconButton({
   Icon,
   children,
@@ -318,15 +318,28 @@ export function IconButton({
     ? getVariantStyles(props, props.variant)
     : { color: '#fff' };
 
-  
   const RenderIcon = React.useMemo(() => {
     let btnSize = "small";
     if (size !== "tiny" && size !== "small") {
       btnSize = "medium";
     }
+    const iconNewProps = {
+      ...iconProps,
+      size: btnSize,
+      fill: variantStyles.color || '#fff',
+      style: {
+        verticalAlign: 'top',
+        paddingRight: children && iconPosition === "left" ? '5px' : '0px',
+        paddingLeft: children && iconPosition === "right" ? '5px' : '0px',
+        boxSizing: 'content-box',
+      },
+    };
+    if (typeof Icon !== 'function') {
+      return React.cloneElement(Icon, iconNewProps);
+    }
 
     return (
-      <Icon size={btnSize} fill={variantStyles.color || '#fff'} style={{verticalAlign: 'top', paddingRight: children && iconPosition === "left" ? '5px' : '0px', paddingLeft: children && iconPosition === "right" ? '5px' : '0px'}} {...iconProps} />
+      <Icon {...iconNewProps} />
     );
   }, [variantStyles.color, Icon, size, iconPosition, iconProps, children]);
 

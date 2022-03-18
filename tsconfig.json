@@ -17,12 +17,24 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "baseUrl": "src",
     "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "declaration": true,
+    "declarationMap": true,
+    "typeRoots": [
+      "src/@commonsku/styles/types",
+      "node_modules/@types"
+    ]
   },
   "include": [
-    "src"
+    "src",
+    "src/@commonsku/styles/types/index.d.ts",
+    "src/@commonsku/styles/types/global.d.ts"
   ]
 }

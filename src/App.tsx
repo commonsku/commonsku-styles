@@ -258,7 +258,7 @@ const tableData = [
 ] 
 
 const SelectMenuList = (
-  props: MenuListComponentProps<{[key: string]: any;}>
+  props: MenuListComponentProps<{label: string, value: string}>
 ) => {
   return (
     <selectComponents.MenuList {...props}>
@@ -293,31 +293,31 @@ function reducer(state: {[key: string]: any} = initialState, action: {type: stri
   }
 }
 
-const today = new Date(2021, 9, 19);
-const yesterday = new Date(2021, 9, 18);
-const tomorrow = new Date(2021, 9, 20);
+const today = new Date(2022, 3, 17);
+const yesterday = new Date(2022, 2, 16);
+const tomorrow = new Date(2022, 4, 18);
 
 const calTasks = Object.freeze({
   client: [
-    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Reach out to Jake Client', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
-    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Client', colorType: 'light-green', completed: true,},
-    {id: uniqueId('day-'), date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake Client', colorType: 'light-green'},
+    {id: uniqueId('day-101-'+yesterday), date: yesterday, title: 'Megacorm 101', description: 'Reach out to Jake Client 1', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
+    {id: uniqueId('day-102-'+yesterday), date: yesterday, title: 'ABS Client 102', description: 'Put together a presentation for this client Client 2', colorType: 'light-red'},
+    {id: uniqueId('day-103-'+today), date: today, title: 'ABS Client 103', description: 'Put together a presentation for this client Client 3', colorType: 'light-red'},
+    {id: uniqueId('day-104-'+today), date: today, title: 'Vandelay 104', description: 'Reach out to Jake Client 4', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-105-'+tomorrow), date: tomorrow, title: 'Vandelay 105', description: 'Reach out to Jake Client 5', colorType: 'light-green'},
   ],
   project: [
-    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Reach out to Jake Project', colorType: 'light-green', completed: true,},
-    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay 1', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Project', colorType: 'light-green'},
-    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm', description: 'Reach out to Jake Project', colorType: 'light-green'},
+    {id: uniqueId('day-106-'+yesterday), date: yesterday, title: 'ABS Client 106', description: 'Reach out to Jake Project 6', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-107-'+yesterday), date: yesterday, title: 'Megacorm 107', description: 'Put together a presentation for this client Project 7', colorType: 'light-red'},
+    {id: uniqueId('day-108-'+today), date: today, title: 'Vandelay 108', description: 'Put together a presentation for this client Project 8', colorType: 'light-red'},
+    {id: uniqueId('day-109-'+today), date: today, title: 'Vandelay 109', description: 'Reach out to Jake Project 9', colorType: 'light-green'},
+    {id: uniqueId('day-110-'+tomorrow), date: tomorrow, title: 'Megacorm 110', description: 'Reach out to Jake Project 10', colorType: 'light-green'},
   ],
   other: [
-    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red', completed: true,},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-111-'+yesterday), date: yesterday, title: 'ABS Client Other 111', description: 'Reach out to Jake Other 11', colorType: 'light-green'},
+    {id: uniqueId('day-112-'+yesterday), date: yesterday, title: 'Megacorm Other 112', description: 'Put together a presentation for this client Other 12', colorType: 'light-red', completed: true,},
+    {id: uniqueId('day-113-'+today), date: today, title: 'Vandelay Other 113', description: 'Put together a presentation for this client Other 13', colorType: 'light-red'},
+    {id: uniqueId('day-114-'+today), date: today, title: 'Vandelay Other 114', description: 'Reach out to Jake Other 14', colorType: 'light-green'},
+    {id: uniqueId('day-115-'+tomorrow), date: tomorrow, title: 'Megacorm Other 115', description: 'Reach out to Jake Other 15', colorType: 'light-green'},
   ],
 });
 
@@ -551,16 +551,16 @@ const App = () => {
                }/>
               <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon width="40" />}>
                 <Row>
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
                 </Row>
               </Dropdown>
               <Link block mt={20}>Link</Link>
@@ -998,8 +998,8 @@ const App = () => {
 
             <H5>Checkbox</H5>
             <ButtonsGroup>
-              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-              <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+              <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
             </ButtonsGroup>
 
             <H5>Avatar</H5>
@@ -1057,7 +1057,7 @@ const App = () => {
             <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
             <H5>Input</H5>
-            <LabeledInput label="Labeled Input" placeholder="Input" isPercent />
+            <LabeledInput label="Labeled Input" placeholder="Input" />
 
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
