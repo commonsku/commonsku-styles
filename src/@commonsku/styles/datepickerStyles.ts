@@ -1,5 +1,3 @@
-import { DownArrowIcon } from './icons';
-
 const datepickerStyles = `
 .commonsku-styles-datepicker {
   &.react-datepicker-wrapper {

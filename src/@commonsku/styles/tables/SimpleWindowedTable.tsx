@@ -1,5 +1,5 @@
 import styled, { css, CSSObject } from 'styled-components';
-import React, { useRef, useLayoutEffect, ReactNode } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import {
     useTable,
     useSortBy,

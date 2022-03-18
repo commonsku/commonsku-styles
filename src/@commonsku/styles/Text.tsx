@@ -1,4 +1,4 @@
-import { get, toNumber } from 'lodash';
+import { toNumber } from 'lodash';
 import React from 'react';
 import styled from 'styled-components'
 import { colors, fonts, getThemeColor } from './Theme';

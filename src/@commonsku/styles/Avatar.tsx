@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import React from 'react'
 import placeholder from './img/avatar-placeholder.png'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
-import colors, { neutrals, primary1, secondary1, secondary2, secondary3, secondary4 } from './colors';
+import { neutrals, primary1, secondary1, secondary2, secondary3, secondary4 } from './colors';
 import { UserIcon } from './icons';
 
 

@@ -55,17 +55,15 @@ const GlobalStyle = createGlobalStyle<{ additionalStyles?: AdditionalStyles }>`
         return null;
     }
   }}
-
-  &&& {
-    .commonsku-styles-select__input {
-      input {
-        height: auto;
-      }
+}
+&&& {
+  .commonsku-styles-select__input {
+    input {
+      height: auto;
     }
   }
+  ${datepickerStyles}
 }
-
-${datepickerStyles}
 `;
 
 export default GlobalStyle;

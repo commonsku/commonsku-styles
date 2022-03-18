@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { Droppable } from "react-beautiful-dnd";
 import { Row } from '../FlexboxGrid';
