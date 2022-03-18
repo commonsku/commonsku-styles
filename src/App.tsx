@@ -67,12 +67,11 @@ import {
     // SVG,
     Textarea,
     Thermometer,
-    IconContainer,
-    IconsShowcase
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 import { neutrals, primary1 } from '@commonsku/styles/colors';
+import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 
 const initialState = {
   date: new Date(),

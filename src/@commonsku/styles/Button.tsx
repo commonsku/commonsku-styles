@@ -326,7 +326,7 @@ export function IconButton({
     }
 
     return (
-      <Icon size={BtnIconSize(size)} fill={variantStyles.color || '#fff'} style={{verticalAlign: 'top', paddingRight: children && iconPosition === "left" ? '5px' : '0px', paddingLeft: children && iconPosition === "right" ? '5px' : '0px'}} {...iconProps} />
+      <Icon size={btnSize} fill={variantStyles.color || '#fff'} style={{verticalAlign: 'top', paddingRight: children && iconPosition === "left" ? '5px' : '0px', paddingLeft: children && iconPosition === "right" ? '5px' : '0px'}} {...iconProps} />
     );
   }, [variantStyles.color, Icon, size, iconPosition, iconProps, children]);
 
