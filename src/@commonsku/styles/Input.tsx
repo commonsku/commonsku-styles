@@ -9,10 +9,13 @@ import { document } from '../utils';
 type CommonInputProp = {
   noMargin?: boolean,
   error?:boolean,
-  isPercent?:boolean,
 };
 
-export type InputProps = CommonInputProp & { hasIcon?: boolean; } & SharedStyleTypes;
+type BaseInputProps = CommonInputProp
+  & { hasIcon?: boolean; }
+  & SharedStyleTypes;
+export type InputProps = BaseInputProps
+  & React.InputHTMLAttributes<HTMLInputElement>;
 
 type BaseInputIconLabelProps = CommonInputProp & {
   isActive?: boolean;
@@ -81,7 +84,7 @@ export const InputIconLabelContainer = styled.div`
   }}
 `
 
-export const Input = styled.input<InputProps>`
+export const Input = styled.input<BaseInputProps>`
   &&& {
     ${p => {
       const styles: CSSObject = {
@@ -93,7 +96,7 @@ export const Input = styled.input<InputProps>`
         boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
         width: '100%',
         border: `1px solid ${getThemeColor(p, 'input.border')}`,
-        borderRadius: p.isPercent ?  "0 5px 5px 0" : '5px',
+        borderRadius: 5,
         padding: '8px 8px 8px 8px',
         color: getThemeColor(p, 'input.text'),
         "::placeholder": {
@@ -159,44 +162,37 @@ export const Input = styled.input<InputProps>`
 type BaseLabelInputProps = InputProps & {
   label: string,
   name?: string,
-  isPercent?: boolean,
   labelOnTop?: boolean,
 } & SharedStyleTypes;
 type LabeledInputPropType = React.InputHTMLAttributes<HTMLInputElement> & BaseLabelInputProps;
-export const LabeledInput: React.FC<LabeledInputPropType> = React.forwardRef(
-  ({label, name, required, labelOnTop=false, ...props}: LabeledInputPropType, ref: React.Ref<HTMLInputElement>) => (
-    <div>
-      <Label
-        htmlFor={name}
-        style={{
-          ...(!labelOnTop ? {} : {display: 'block'}),
-          fontFamily: "'skufont-medium', sans-serif",
-          lineHeight: '24px',
-          fontSize: '16px',
-          color: getThemeColor(props, 'neutrals.100'),
-        }}
-      >{label} {required && '*'}</Label>
-      {props.isPercent ? <InputIconLabelContainer>
-                           <InputIconLabel {...props}>%</InputIconLabel>
-                           <Input ref={ref} name={name} required={required} {...props}/>
-                         </InputIconLabelContainer>
-                       : <Input ref={ref} name={name} required={required} {...props}></Input>}
-    </div>
-  )
-)
-
-const tt = <input type='text' />;
+export const LabeledInput =
+  React.forwardRef<HTMLInputElement, LabeledInputPropType>(
+    ({label, name, required, labelOnTop=false, ...props}, ref) => (
+      <div>
+        <Label
+          htmlFor={name}
+          style={{
+            ...(!labelOnTop ? {} : {display: 'block'}),
+            fontFamily: "'skufont-medium', sans-serif",
+            lineHeight: '24px',
+            fontSize: '16px',
+            color: getThemeColor(props, 'neutrals.100'),
+          }}
+        >{label} {required && '*'}</Label>
+        <Input ref={ref} name={name} required={required} {...props}></Input>
+      </div>
+    )
+  );
 
 type BaseLabeledIconInputProps = InputProps & {
   label: string,
   name?: string,
-  isPercent?: boolean,
   labelOnTop?: boolean,
   Icon: React.ReactElement,
   iconPosition?: 'left' | 'right',
 } & SharedStyleTypes;
 type LabeledIconInputProps = React.InputHTMLAttributes<HTMLInputElement> & BaseLabeledIconInputProps;
-export const LabeledIconInput: React.FC<LabeledIconInputProps> = React.forwardRef(
+export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconInputProps>(
   (
     {
       label,
@@ -209,15 +205,14 @@ export const LabeledIconInput: React.FC<LabeledIconInputProps> = React.forwardRe
       Icon,
       noMargin,
       error,
-      isPercent,
       disabled,
       onFocus,
       onChange,
       onBlur,
       iconPosition = 'left',
       ...props
-    }: LabeledIconInputProps,
-    ref: React.Ref<HTMLInputElement>
+    },
+    ref
   ) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isActive, setIsActive] = useState(false);
@@ -345,7 +340,7 @@ export const LabeledIconInput: React.FC<LabeledIconInputProps> = React.forwardRe
       </div>
     );
   }
-)
+);
 
 export const RadioLabel = styled.label<{disabled?: boolean}>`
   &&& {
@@ -511,7 +506,6 @@ export const LabeledRadioGroup: React.FC<RadioProps & {name: string, radios: [{l
 export type LabeledCheckboxProps = {
   checked?: boolean;
   disabled?: boolean;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>,
   label: string|React.ReactNode;
   name?: string;
   checkboxStyle?: CSSProperties;
@@ -520,40 +514,41 @@ export type LabeledCheckboxProps = {
   hoverByLabel?: boolean;
   stopPropagation?: boolean;
   [key: string]: any;
-};
-export const LabeledCheckbox = React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
-  {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, stopPropagation=false, ...props}: LabeledCheckboxProps,
-  ref: React.Ref<HTMLInputElement>
-) => {
-  const [isHovering, updateHover] = useState(false);
+} & React.InputHTMLAttributes<HTMLInputElement>;
+export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxProps> =
+  React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
+    {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, stopPropagation=false, ...props},
+    ref
+  ) => {
+    const [isHovering, updateHover] = useState(false);
 
-  const onMouseOver = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(true);
-  const onMouseLeave = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(false);
+    const onMouseOver = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(true);
+    const onMouseLeave = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(false);
 
-  return (
-    <RadioLabel
-      htmlFor={name}
-      onMouseOver={hoverByLabel ? onMouseOver : undefined}
-      onMouseLeave={hoverByLabel ? onMouseLeave : undefined}
-      disabled={disabled}
-      style={labelStyle}
-    >
-      {label}
-      <Radio ref={ref} name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
-      <CheckMark
-        onMouseOver={!hoverByLabel ? onMouseOver : undefined}
-        onMouseLeave={!hoverByLabel ? onMouseLeave : undefined}
-        checked={checked}
-        isHovering={isHovering}
+    return (
+      <RadioLabel
+        htmlFor={name}
+        onMouseOver={hoverByLabel ? onMouseOver : undefined}
+        onMouseLeave={hoverByLabel ? onMouseLeave : undefined}
         disabled={disabled}
-        style={{
-          ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
-          ...checkboxStyle,
-        }}
-        onClick={(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-          stopPropagation && e && e.stopPropagation();
-        }}
-      />
-    </RadioLabel>
-  );
-});
+        style={labelStyle}
+      >
+        {label}
+        <Radio ref={ref} name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
+        <CheckMark
+          onMouseOver={!hoverByLabel ? onMouseOver : undefined}
+          onMouseLeave={!hoverByLabel ? onMouseLeave : undefined}
+          checked={checked}
+          isHovering={isHovering}
+          disabled={disabled}
+          style={{
+            ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
+            ...checkboxStyle,
+          }}
+          onClick={(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+            stopPropagation && e && e.stopPropagation();
+          }}
+        />
+      </RadioLabel>
+    );
+  });

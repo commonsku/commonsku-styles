@@ -241,7 +241,7 @@ const DraggableTasksCalendar = ({
   var weekendsCheckbox = <LabeledCheckbox label="Weekends"
                            checked={showWeekend}
                            mb={0}
-                           onChange={(e: Event) => setShowWeekend(s => {
+                           onChange={() => setShowWeekend(s => {
                              onToggleWeekend && onToggleWeekend(!s);
                              return !s;
                            })}
