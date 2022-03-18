@@ -27,16 +27,7 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTas
               {(provided, snapshot) => (
                   <div {...droppableChildWrapperProps(provided, snapshot)}>
                     {provided.placeholder}
-                    {_.orderBy(
-                      d.tasks,
-                      [v => {
-                        if (v.order === undefined) {
-                          return v.checked ? 0 : 1;
-                        }
-                        return v.order;
-                      }],
-                      ['desc']
-                    ).map((t, j) => (
+                    {d.tasks.map((t, j) => (
                       <DraggableTaskBody key={t.__id__} index={j} task={t} onClickTask={onClickTask} onUpdateTask={onUpdateTask ? (newData, otherData) => {
                         onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
                       } : undefined} />
