@@ -185,7 +185,7 @@ export const LabeledInput =
   );
 
 type BaseLabeledIconInputProps = InputProps & {
-  label: string,
+  label?: string,
   name?: string,
   labelOnTop?: boolean,
   Icon: React.ReactElement,
@@ -281,7 +281,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
 
     return (
       <div>
-        <Label
+        {label ? <Label
           htmlFor={name}
           style={{
             ...(!labelOnTop ? {} : {display: 'block'}),
@@ -290,7 +290,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
             fontSize: '16px',
             color: getThemeColor(props, 'neutrals.100'),
           }}
-        >{label} {required && '*'}</Label>
+        >{label} {required && '*'}</Label> : null}
         <InputIconLabelContainer
           {...props}
           ref={containerRef}
