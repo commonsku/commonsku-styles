@@ -302,6 +302,7 @@ type IconFuncProps = { fill: string; [key: string]: any };
 export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon: TButtonIcon;
+  iconProps?: {[key: string]: any};
   iconPosition?: 'left' | 'right';
   style?: React.CSSProperties;
 }>;
@@ -310,6 +311,7 @@ export function IconButton({
   children,
   iconPosition='left',
   size,
+  iconProps={},
   ...props
 }: IconButtonProps) {
   const variantStyles = props.variant
@@ -324,17 +326,9 @@ export function IconButton({
     }
 
     return (
-      <Icon
-        size={btnSize}
-        fill={variantStyles.color || '#fff'}
-        style={{
-          verticalAlign: 'top',
-          paddingRight: children ? '5px' : '0px',
-          paddingTop: size === 'small' ? '10px' : '0px'
-        }}
-      />
+      <Icon size={BtnIconSize(size)} fill={variantStyles.color || '#fff'} style={{verticalAlign: 'top', paddingRight: children && iconPosition === "left" ? '5px' : '0px', paddingLeft: children && iconPosition === "right" ? '5px' : '0px'}} {...iconProps} />
     );
-  }, [variantStyles.color, Icon, size, children]);
+  }, [variantStyles.color, Icon, size, iconPosition, iconProps, children]);
 
   const hasChildren = (
     (children && children !== null && children !== undefined)

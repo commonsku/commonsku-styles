@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
-import styled, { css, CSSObject } from 'styled-components'
 
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -58,6 +57,7 @@ import {
     CollapsiblePanel,
     CollapsiblePanels,
     colors,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Calendar,
     DraggableTasksCalendar,
     LabeledMultiProgress,
@@ -67,10 +67,12 @@ import {
     // SVG,
     Textarea,
     Thermometer,
+    IconContainer,
+    IconsShowcase
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
-import { neutrals } from '@commonsku/styles/colors';
+import { neutrals, primary1 } from '@commonsku/styles/colors';
 
 const initialState = {
   date: new Date(),
@@ -167,6 +169,7 @@ const states = [
     }
   }
 ]
+
 
 const tableData = [
   {"rowId":1,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
@@ -568,53 +571,53 @@ const App = () => {
             
             <div style={{display: 'flex', flexDirection: 'column'}}>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="large">Error</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="small">Error</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="large">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="small">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
               </ButtonsGroup>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
-                <IconButton Icon={icons.UsersIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
               </ButtonsGroup>
             </div>
 
@@ -1224,6 +1227,114 @@ const App = () => {
           scrollOffsetDivRef={scrollOffsetDivRef}
           horizontalOffsetDivRef={horizontalOffsetDivRef}
         />
+
+        <H5>All Icons</H5>
+
+        <IconContainer>
+          
+          {/* <IconShowcase Icons={[<icons.UserIcon size="medium" fill={primary1.main}/>]} name="UserIcon" /> */}
+          
+          <IconsShowcase Icons={[
+            <icons.ArrowIcon direction="right" />, 
+            <icons.ArrowIcon direction="down" />, 
+            <icons.ArrowIcon direction="left" />, 
+            <icons.ArrowIcon direction="up" />
+          ]} name="ArrowIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.ChevronIcon direction="right" />, 
+            <icons.ChevronIcon direction="down" />, 
+            <icons.ChevronIcon direction="left" />, 
+            <icons.ChevronIcon direction="up" />
+          ]} name="ChevronIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.FilledChevronIcon direction="right" />, 
+            <icons.FilledChevronIcon direction="down" />, 
+            <icons.FilledChevronIcon direction="left" />, 
+            <icons.FilledChevronIcon direction="up" />
+          ]} name="FilledChevronIcon" />
+
+          <IconsShowcase Icons={[<icons.CheckmarkOnlyIcon />]} name="CheckmarkOnlyIcon" />
+          <IconsShowcase Icons={[<icons.AddIcon />]} name="AddIcon" />
+          <IconsShowcase Icons={[<icons.SubtractIcon />]} name="SubtractIcon" />
+          <IconsShowcase Icons={[<icons.SearchIcon />]} name="SearchIcon" />
+          <IconsShowcase Icons={[<icons.ClockIcon />]} name="ClockIcon" />
+          <IconsShowcase Icons={[<icons.ClipboardIcon />]} name="ClipboardIcon" />
+          <IconsShowcase Icons={[
+          <icons.RadioIcon />,
+          <icons.RadioIcon selected />
+          ]} name="RadioIcon" />
+
+          <IconsShowcase Icons={[<icons.ArrowLeftIcon fill={primary1.main}/>]} name="ArrowLeftIcon"/>
+          <IconsShowcase Icons={[<icons.ArrowRightIcon fill={primary1.main} />]} name="ArrowRightIcon"/>
+          <IconsShowcase Icons={[<icons.AwaitingProofIcon width="24"/>]} name="AwaitingProofIcon"/>
+          <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
+          <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
+          <IconsShowcase Icons={[<icons.Calendar2Icon />]} name="Calendar2Icon"/>
+          <IconsShowcase Icons={[<icons.ChangeRequestedIcon width="24"/>]} name="ChangeRequestedIcon"/>
+          <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
+          <IconsShowcase Icons={[<icons.CheckboxIcon />]} name="CheckboxIcon"/>
+          <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon"/>
+          <IconsShowcase Icons={[<icons.CircleProgressIcon />]} name="CircleProgressIcon"/>
+          <IconsShowcase Icons={[<icons.ClientApprovedIcon width="24" />]} name="ClientApprovedIcon"/>
+          <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>
+          <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
+          <IconsShowcase Icons={[<icons.CrossIcon />]} name="CrossIcon"/>
+          <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
+          <IconsShowcase Icons={[<icons.DownArrowIcon width="24"/>]} name="DownArrowIcon" />
+          <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
+          <IconsShowcase Icons={[<icons.ErrorIcon />]} name="ErrorIcon" />
+          <IconsShowcase Icons={[<icons.IconDoc width="24"/>]} name="IconDoc"/> {/* FileIcon.tsx */}
+          <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
+          <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
+          <IconsShowcase Icons={[<icons.GearIcon width="24"/>]} name="GearIcon" />
+          <IconsShowcase Icons={[<icons.InfoIcon />]} name="InfoIcon" />
+          <IconsShowcase Icons={[<icons.LeftArrowIcon />]} name="LeftArrowIcon" />
+          <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
+          <IconsShowcase Icons={[<icons.Loading width={24}/>]} name="Loading" />
+          <IconsShowcase Icons={[<icons.LockIcon />]} name="LockIcon" />
+          <IconsShowcase Icons={[<icons.NavConnectIcon color={primary1.main} />]} name="NavConnectIcon" />
+          <IconsShowcase Icons={[<icons.NavFinanceIcon color={primary1.main}/>]} name="NavFinanceIcon" />
+          <IconsShowcase Icons={[<icons.NavManagementIcon color={primary1.main}/>]}  name="NavManagementIcon" />
+          <IconsShowcase Icons={[<icons.NavProdIcon color={primary1.main}/>]} name="NavProdIcon" />
+          <IconsShowcase Icons={[<icons.NavResourcesIcon color={primary1.main} />]} name="NavResourcesIcon" />
+          <IconsShowcase Icons={[<icons.NavSalesIcon color={primary1.main} />]} name="NavSalesIcon" />
+          <IconsShowcase Icons={[<icons.NextPrevIcon color={primary1.main} width="24"/>]} name="NextPrevIcon" />
+          <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
+          <IconsShowcase Icons={[<icons.NoteIcon color={primary1.main} width="24"/>]} name="NoteIcon" />
+          <IconsShowcase Icons={[<icons.PanelIcon width="24"/>]} name="PanelIcon" />
+          <IconsShowcase Icons={[<icons.PendingApprovalIcon width="24"/>]} name="PendingApprovalIcon" />
+          <IconsShowcase Icons={[<icons.PinIcon width="24"/>]} name="PinIcon" />
+          <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
+          <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
+          <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
+          <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
+          <IconsShowcase Icons={[<icons.RightArrowIcon />]} name="RightArrowIcon" />
+          <IconsShowcase Icons={[<icons.SalesDownArrowIcon />]} name="SalesDownArrowIcon" />
+          <IconsShowcase Icons={[<icons.SalesUpArrowIcon />]} name="SalesUpArrowIcon" />
+          <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
+          <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
+          <IconsShowcase Icons={[<icons.TaskIcon width="24"/>]} name="TaskIcon" />
+          <IconsShowcase Icons={[<icons.TilesIcon width="24"/>]} name="TilesIcon" />
+          <IconsShowcase Icons={[<icons.TrashIcon width="24"/>]} name="TrashIcon" />
+          <IconsShowcase Icons={[<icons.UpArrowIcon width="24"/>]} name="UpArrowIcon" />
+          <IconsShowcase Icons={[<icons.UpDownArrowsIcon width="24"/>]} name="UpDownArrowsIcon" />
+          <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
+          <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
+          <IconsShowcase Icons={[<icons.WarningIcon width={24}/>]} name="WarningIcon" />
+          <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />
+          <IconsShowcase Icons={[<icons.OpportunityCircleIcon />]} name="OpportunityCircleIcon" />
+          <IconsShowcase Icons={[<icons.PresentationCircleIcon/>]} name="PresentationCircleIcon" />
+          <IconsShowcase Icons={[<icons.EstimateCircleIcon />]} name="EstimateCircleIcon" />
+          <IconsShowcase Icons={[<icons.SalesOrderCircleIcon />]} name="SalesOrderCircleIcon" />
+          
+
+
+
+        </IconContainer>
+        
+
       </Box>
     </Background>
   </Page></Theme>
