@@ -3,7 +3,7 @@ import SVG, { SVGIconProps } from './SvgIcon';
 import { primary1 } from '../colors';
 
 
-type DollarIconProps = SVGIconProps & { fill?: string;};
+type DollarIconProps = SVGIconProps;
 export default function DollarIcon({
     fill=primary1.main,
     ...props

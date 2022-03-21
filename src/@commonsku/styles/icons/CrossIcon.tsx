@@ -2,7 +2,7 @@ import React from 'react';
 import SVG, { SVGIconProps } from './SvgIcon';
 import { primary1 } from '../colors';
 
-type CrossIconProps = SVGIconProps & { fill?: string;};
+type CrossIconProps = SVGIconProps;
 export default function CrossIcon({
     fill=primary1.main,
     ...props

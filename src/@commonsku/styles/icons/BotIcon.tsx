@@ -2,7 +2,7 @@ import React from 'react';
 import SVG, { SVGIconProps } from './SvgIcon';
 import { primary1 } from '../colors';
 
-type BotIconProps = SVGIconProps & { fill?: string;};
+type BotIconProps = SVGIconProps;
 export default function BotIcon({
     fill=primary1.main,
     ...props
