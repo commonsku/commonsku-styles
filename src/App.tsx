@@ -1265,8 +1265,6 @@ const App = () => {
           <icons.RadioIcon selected />
           ]} name="RadioIcon" />
 
-          <IconsShowcase Icons={[<icons.ArrowLeftIcon fill={primary1.main}/>]} name="ArrowLeftIcon"/>
-          <IconsShowcase Icons={[<icons.ArrowRightIcon fill={primary1.main} />]} name="ArrowRightIcon"/>
           <IconsShowcase Icons={[<icons.AwaitingProofIcon width="24"/>]} name="AwaitingProofIcon"/>
           <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>

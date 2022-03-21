@@ -116,11 +116,11 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
 
   const cta = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
   const ctaDark = getThemeColor(props, 'secondary1.80', colors.secondary1['80']);
-  const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
+  // const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
 
   const error = getThemeColor(props, 'errors.main', colors.errors.main);
   const errorDark = getThemeColor(props, 'errors.80', colors.errors['80']);
-  const errorLight = getThemeColor(props, 'errors.20', colors.errors['20']);
+  // const errorLight = getThemeColor(props, 'errors.20', colors.errors['20']);
 
   switch (variant) {
     case 'primary':
