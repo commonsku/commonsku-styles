@@ -1,4 +1,4 @@
-import styled, { StyledComponent, CSSObject } from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 
 export const iconSize = {
     tiny: {

@@ -8,6 +8,7 @@ type FilledChevronIconProps = SVGIconProps & { fill?: string; direction?: Filled
 export default function FilledChevronIcon({
     fill=primary1.main,
     direction="right",
+    size="medium",
     ...props
 }: FilledChevronIconProps) {
 

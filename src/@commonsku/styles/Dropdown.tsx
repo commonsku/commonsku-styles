@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
 import { Button, TSize } from './Button';
-import { UpArrowIcon } from './icons';
+import { ChevronIcon } from './icons';
 import { document } from '../utils';
 
 export const StyledDropdown = styled.div`
@@ -109,7 +109,7 @@ export const Dropdown = ({
     const node = useRef();
     const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
-        width: '10px',
+        // width: '10px',
         fill: getColor(primary ? 'primary100' : 'white'),
         style: {verticalAlign: 'middle', transitionDuration: '.3s', transform: 'rotate(' + ( showMenu ? 0 : 180 ) + 'deg)'},
     };
@@ -147,7 +147,7 @@ export const Dropdown = ({
                     </span>
                 :
                     <Button size={size} cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
-                        {text ? text : "Actions"} <UpArrowIcon {...iconProps} />
+                        {text ? text : "Actions"} <ChevronIcon direction="up"  {...iconProps} />
                     </Button>
                 }
                 {showMenu && <DropDownContent underlined={underlined} primary={primary}>
