@@ -407,7 +407,7 @@ export function HeadlessTable({
 
   useEffect(() => {
     setSelectedId(selectedRowId);
-  }, [selectedRowId, setSelectedId]);
+  }, [selectedRowId]);
 
   useEffect(() => {
     if(defaultScrollOffset !== 0) {
