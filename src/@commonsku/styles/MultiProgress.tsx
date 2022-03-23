@@ -63,7 +63,7 @@ const LabeledBar = (props: LabeledBarprops) => {
       y: rect.y,
       width: (rect.width > width ? width : rect.width)-rect.x,
     } : {...s, height: 0, width: 0, x: 0, y: 0,}));
-    // @ts-ignore
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [width, props.text, props.value]);
   const text = (props.text || '') + '';
 

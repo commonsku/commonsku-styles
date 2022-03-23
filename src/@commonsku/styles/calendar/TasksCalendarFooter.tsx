@@ -25,6 +25,7 @@ export const TasksCalendarFooter = ({
             <span style={{display: 'inline-flex'}}>
                 <Row>
                     {tasks
+                        /* eslint-disable eqeqeq */
                         .filter((t: CalendarTaskProps) => t.date ? currentWeek == getWeek(t.date) : true)
                         .map((t: CalendarTaskProps) => (<Col xs md={3} padded><CalendarTask {...t} date={undefined} /></Col>))}
                 </Row>  

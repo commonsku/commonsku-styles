@@ -74,6 +74,7 @@ const TasksCalendar = ({
         changeWeek
     } = useCalendar({});
 
+    /* eslint-disable  @typescript-eslint/no-unused-vars */
     const [days, setDays] = useState(
         convertTasksToDays({currentMonth, currentWeek, tasks,})
     );

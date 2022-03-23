@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react';
 import { generateColor } from "../../utils";
 import { colors } from "../Theme";
 import { SharedStyleTypes } from "../SharedStyles";
 import SVG from "./SVG";
-
 
 function Loading({
     height = 50,
