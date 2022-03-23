@@ -640,7 +640,7 @@ const App = () => {
               name="basic-input"
               value="input value"
               placeholder="enter something"
-              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.DollarIcon style={{ paddingLeft: 10, paddingRight: 0, }} />}
               style={{ width: 200 }}
             />
 

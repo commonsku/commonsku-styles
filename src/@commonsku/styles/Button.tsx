@@ -332,6 +332,7 @@ export function IconButton({
         paddingRight: children && iconPosition === "left" ? '5px' : '0px',
         paddingLeft: children && iconPosition === "right" ? '5px' : '0px',
         boxSizing: 'content-box',
+        ...(iconProps.style || {}),
       },
     };
     if (typeof Icon !== 'function') {
