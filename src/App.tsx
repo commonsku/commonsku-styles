@@ -857,8 +857,6 @@ const App = () => {
               <icons.LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
             <icons.GearIcon color={"#00d374"} width={"1.5rem"}/>
-            <icons.NextPrevIcon color={"#00d374"} width={".8rem"}/>
-            <icons.NextPrevIcon color={"#00d374"} width={".8rem"} next/>
 
             <br/>
             <h2>Nav Icons</h2>
@@ -1296,7 +1294,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.NavProdIcon color={primary1.main}/>]} name="NavProdIcon" />
           <IconsShowcase Icons={[<icons.NavResourcesIcon color={primary1.main} />]} name="NavResourcesIcon" />
           <IconsShowcase Icons={[<icons.NavSalesIcon color={primary1.main} />]} name="NavSalesIcon" />
-          <IconsShowcase Icons={[<icons.NextPrevIcon color={primary1.main} width="24"/>]} name="NextPrevIcon" />
           <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
           <IconsShowcase Icons={[<icons.NoteIcon color={primary1.main} width="24"/>]} name="NoteIcon" />
           <IconsShowcase Icons={[<icons.PanelIcon width="24"/>]} name="PanelIcon" />
