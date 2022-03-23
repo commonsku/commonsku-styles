@@ -26,7 +26,7 @@ export * from './NavSalesIcon';
 export * from './NavProdIcon';
 export * from './NavFinanceIcon';
 export * from './NavManagementIcon';
-export * from './GearIcon';
+export { default as GearIcon } from './GearIcon';
 export * from './NextPrevIcon';
 export { default as NavResourcesIcon } from './NavResourcesIcon';
 export { default as WarningIcon } from './WarningIcon';
