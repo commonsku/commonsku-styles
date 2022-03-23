@@ -66,7 +66,7 @@ size="medium",
     return (
         <IconBox>
             <IconGroup>
-            <Icon fill={iconColor} size={size} {...iconProps}/>
+            <Icon color={iconColor} size={size} {...iconProps}/>
             </IconGroup>
             <IconLabel>{name}</IconLabel>
         </IconBox>

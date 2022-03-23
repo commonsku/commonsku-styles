@@ -252,7 +252,7 @@ const RenderDivRow = memo(({ data, index, style }) => {
 
 const iconProps = {
   // width: '10px',
-  fill: getColor('primary100')
+  color: getColor('primary100')
 }
 
 const iconStyle = (up: boolean) => {

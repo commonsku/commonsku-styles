@@ -4,9 +4,9 @@ import SVG, { SVGIconProps } from './SvgIcon';
 
 type FilledChevronIconDirection = 'up' | 'right' | 'down' | 'left';
 
-type FilledChevronIconProps = SVGIconProps & { fill?: string; direction?: FilledChevronIconDirection};
+type FilledChevronIconProps = SVGIconProps & {direction?: FilledChevronIconDirection};
 export default function FilledChevronIcon({
-    fill=primary1.main,
+    color=primary1.main,
     direction="right",
     size="medium",
     ...props
@@ -26,11 +26,11 @@ export default function FilledChevronIcon({
     return "m9.5 17 5-5-5-5v10Z";
     }, [direction]);
       
-    return <SVG {...props}>
+    return <SVG size={size} {...props}>
         <path fill="none" d="M0 0h24v24H0z" />
         <path
             d={directionPath}
-            fill={fill}
+            fill={color}
         />
     </SVG>;
 

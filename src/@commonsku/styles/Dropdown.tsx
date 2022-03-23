@@ -110,7 +110,7 @@ export const Dropdown = ({
     const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
         // width: '10px',
-        fill: getColor(primary ? 'primary100' : 'white'),
+        color: getColor(primary ? 'primary100' : 'white'),
         style: {verticalAlign: 'middle', transitionDuration: '.3s', transform: 'rotate(' + ( showMenu ? 0 : 180 ) + 'deg)'},
     };
 

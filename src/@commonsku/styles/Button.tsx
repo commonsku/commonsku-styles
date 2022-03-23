@@ -298,7 +298,7 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
-type IconFuncProps = { fill: string; [key: string]: any };
+type IconFuncProps = { color: string; [key: string]: any };
 export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon: TButtonIcon | React.ReactElement<IconFuncProps>;
@@ -326,7 +326,7 @@ export function IconButton({
     const iconNewProps = {
       ...iconProps,
       size: btnSize,
-      fill: variantStyles.color || '#fff',
+      color: variantStyles.color || '#fff',
       style: {
         verticalAlign: 'top',
         paddingRight: children && iconPosition === "left" ? '5px' : '0px',
