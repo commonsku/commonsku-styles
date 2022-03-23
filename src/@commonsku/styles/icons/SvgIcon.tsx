@@ -1,4 +1,4 @@
-import styled, { StyledComponent, CSSObject } from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 
 export const iconSize = {
     tiny: {
@@ -36,15 +36,16 @@ export const iconSize = {
 export type TIconSizeObj = typeof iconSize;
 export type TIconSize = keyof typeof iconSize;
 
-export type SVGIconProps = {
+type BaseSVGIconProps = {
     size?: TIconSize;
     width?: string | number;
     height?: string | number;
-    viewBox?: string;
     iconSizes?: TIconSizeObj;
-    style?: CSSObject;
 };
-const SVG = styled.svg.attrs<SVGIconProps>(p => {
+
+export type SVGIconProps = React.SVGAttributes<SVGElement> & BaseSVGIconProps;
+
+const SVG = styled.svg.attrs<BaseSVGIconProps>(p => {
     const iconSizes = p.iconSizes || iconSize;
     const size = p.size ? iconSizes[p.size] : null;
     if (size) {
@@ -56,7 +57,7 @@ const SVG = styled.svg.attrs<SVGIconProps>(p => {
     return {
         viewBox: p.viewBox || defaultSize.viewBox,
     };
-})<SVGIconProps>(
+})<BaseSVGIconProps>(
     p => {
         const styles: CSSObject = {};
         const iconSizes = p.iconSizes || iconSize;

@@ -12,7 +12,7 @@ import verticalScrollbarWidth from './verticalScrollbarWidth';
 
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
-import { UpArrowIcon } from './icons';
+import { FilledChevronIcon } from './icons';
 import { getColor } from './Theme';
 import { document } from '../utils';
 
@@ -251,8 +251,8 @@ const RenderDivRow = memo(({ data, index, style }) => {
 }, areEqual);
 
 const iconProps = {
-  width: '10px',
-  fill: getColor('primary100')
+  // width: '10px',
+  color: getColor('primary100')
 }
 
 const iconStyle = (up: boolean) => {
@@ -287,8 +287,8 @@ const StickyRow = ({ style, headerGroups, onColumnClick, onDragStart, onDrop }) 
             <span>
               {column.isSorted
                 ? column.isSortedDesc
-                  ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
-                  : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
+                  ? <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(false)} />
+                  : <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(true)} />
                 : ''}
             </span>
           </div>
@@ -618,8 +618,8 @@ export function HeadlessTable({
                       <span>
                         {column.isSorted
                           ? column.isSortedDesc
-                            ? <UpArrowIcon {...iconProps} style={iconStyle(false)} />
-                            : <UpArrowIcon {...iconProps} style={iconStyle(true)} />
+                            ? <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(false)} />
+                            : <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(true)} />
                           : ''}
                       </span>
                     </th>

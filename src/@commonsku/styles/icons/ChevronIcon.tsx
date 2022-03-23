@@ -4,10 +4,11 @@ import SVG, { SVGIconProps } from './SvgIcon';
 
 type ChevronIconDirection = 'up' | 'right' | 'down' | 'left';
 
-type ChevronIconProps = SVGIconProps & { fill?: string; direction?: ChevronIconDirection};
+type ChevronIconProps = SVGIconProps & {direction?: ChevronIconDirection};
 export default function ChevronIcon({
-    fill=primary1.main,
+    color=primary1.main,
     direction="right",
+    size="medium",
     ...props
 }: ChevronIconProps) {
 
@@ -25,11 +26,11 @@ export default function ChevronIcon({
     return "M9 6.71a.996.996 0 0 0 0 1.41L12.88 12 9 15.88a.996.996 0 1 0 1.41 1.41L15 12.7a.996.996 0 0 0 0-1.41L10.41 6.7c-.38-.38-1.02-.38-1.41.01Z";
     }, [direction]);
       
-    return <SVG {...props}>
+    return <SVG size={size} {...props}>
         <path fill="none" d="M0 0h24v24H0z" />
         <path
             d={directionPath}
-            fill={fill}
+            fill={color}
         />
     </SVG>;
 

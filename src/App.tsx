@@ -857,8 +857,6 @@ const App = () => {
               <icons.LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
             <icons.GearIcon color={"#00d374"} width={"1.5rem"}/>
-            <icons.NextPrevIcon color={"#00d374"} width={".8rem"}/>
-            <icons.NextPrevIcon color={"#00d374"} width={".8rem"} next/>
 
             <br/>
             <h2>Nav Icons</h2>
@@ -1265,8 +1263,6 @@ const App = () => {
           <icons.RadioIcon selected />
           ]} name="RadioIcon" />
 
-          <IconsShowcase Icons={[<icons.ArrowLeftIcon fill={primary1.main}/>]} name="ArrowLeftIcon"/>
-          <IconsShowcase Icons={[<icons.ArrowRightIcon fill={primary1.main} />]} name="ArrowRightIcon"/>
           <IconsShowcase Icons={[<icons.AwaitingProofIcon width="24"/>]} name="AwaitingProofIcon"/>
           <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
@@ -1281,10 +1277,9 @@ const App = () => {
           <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
           <IconsShowcase Icons={[<icons.CrossIcon />]} name="CrossIcon"/>
           <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
-          <IconsShowcase Icons={[<icons.DownArrowIcon width="24"/>]} name="DownArrowIcon" />
           <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
           <IconsShowcase Icons={[<icons.ErrorIcon />]} name="ErrorIcon" />
-          <IconsShowcase Icons={[<icons.IconDoc width="24"/>]} name="IconDoc"/> {/* FileIcon.tsx */}
+          <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
           <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
           <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
           <IconsShowcase Icons={[<icons.GearIcon width="24"/>]} name="GearIcon" />
@@ -1299,7 +1294,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.NavProdIcon color={primary1.main}/>]} name="NavProdIcon" />
           <IconsShowcase Icons={[<icons.NavResourcesIcon color={primary1.main} />]} name="NavResourcesIcon" />
           <IconsShowcase Icons={[<icons.NavSalesIcon color={primary1.main} />]} name="NavSalesIcon" />
-          <IconsShowcase Icons={[<icons.NextPrevIcon color={primary1.main} width="24"/>]} name="NextPrevIcon" />
           <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
           <IconsShowcase Icons={[<icons.NoteIcon color={primary1.main} width="24"/>]} name="NoteIcon" />
           <IconsShowcase Icons={[<icons.PanelIcon width="24"/>]} name="PanelIcon" />
@@ -1317,7 +1311,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.TaskIcon width="24"/>]} name="TaskIcon" />
           <IconsShowcase Icons={[<icons.TilesIcon width="24"/>]} name="TilesIcon" />
           <IconsShowcase Icons={[<icons.TrashIcon width="24"/>]} name="TrashIcon" />
-          <IconsShowcase Icons={[<icons.UpArrowIcon width="24"/>]} name="UpArrowIcon" />
           <IconsShowcase Icons={[<icons.UpDownArrowsIcon width="24"/>]} name="UpDownArrowsIcon" />
           <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
           <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />

@@ -66,7 +66,7 @@ size="medium",
     return (
         <IconBox>
             <IconGroup>
-            <Icon fill={iconColor} size={size} {...iconProps}/>
+            <Icon color={iconColor} size={size} {...iconProps}/>
             </IconGroup>
             <IconLabel>{name}</IconLabel>
         </IconBox>
@@ -83,8 +83,7 @@ export function IconsShowcase({
   name,
   iconColor=primary1.main,
   iconProps,
-  size="medium",
-  ...props
+  size="medium"
 }: IconsShowcaseProps) {
 
     return (
@@ -95,7 +94,7 @@ export function IconsShowcase({
                 //  color: iconColor,
                  size: size, 
                 //  width: "24",
-                 ...iconProps, 
+                 ...iconProps
                  }
                 ))}
             </IconGroup>

@@ -116,11 +116,11 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
 
   const cta = getThemeColor(props, 'secondary1.main', colors.secondary1.main);
   const ctaDark = getThemeColor(props, 'secondary1.80', colors.secondary1['80']);
-  const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
+  // const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
 
   const error = getThemeColor(props, 'errors.main', colors.errors.main);
   const errorDark = getThemeColor(props, 'errors.80', colors.errors['80']);
-  const errorLight = getThemeColor(props, 'errors.20', colors.errors['20']);
+  // const errorLight = getThemeColor(props, 'errors.20', colors.errors['20']);
 
   switch (variant) {
     case 'primary':
@@ -298,7 +298,7 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
-type IconFuncProps = { fill: string; [key: string]: any };
+type IconFuncProps = { color: string; [key: string]: any };
 export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon: TButtonIcon | React.ReactElement<IconFuncProps>;
@@ -326,7 +326,7 @@ export function IconButton({
     const iconNewProps = {
       ...iconProps,
       size: btnSize,
-      fill: variantStyles.color || '#fff',
+      color: variantStyles.color || '#fff',
       style: {
         verticalAlign: 'top',
         paddingRight: children && iconPosition === "left" ? '5px' : '0px',

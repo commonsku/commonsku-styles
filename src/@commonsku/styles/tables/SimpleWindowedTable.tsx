@@ -10,7 +10,7 @@ import {
 import { FixedSizeList, ListOnScrollProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup, SortByTableInstance, SortByTableOptions } from './types';
 import { colors, getThemeColor } from '../Theme';
-import { DownArrowIcon, UpArrowIcon, UpDownArrowsIcon } from '../icons';
+import { FilledChevronIcon, UpDownArrowsIcon } from '../icons';
 import scrollbarWidth from './scrollbarWidth';
 
 export const SimpleWindowedTableStyles = styled.div<{
@@ -289,7 +289,7 @@ function SimpleWindowedTable({
                                 {column.render("Header")}
                                 {column.canSort ? <span style={{ display: 'inline-block', paddingLeft: 5, verticalAlign: 'text-top' }}>
                                     {column.isSorted ? (
-                                        column.isSortedDesc ? <DownArrowIcon width="15px" /> : <UpArrowIcon width="15px" />
+                                        column.isSortedDesc ? <FilledChevronIcon direction="down" width="15px" /> : <FilledChevronIcon direction="up" width="15px" />
                                     ) : <UpDownArrowsIcon width="15px" />}
                                 </span> : null}
                             </div>
