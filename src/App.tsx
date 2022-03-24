@@ -1313,7 +1313,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.UpDownArrowsIcon width="24"/>]} name="UpDownArrowsIcon" />
           <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
           <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
-          <IconsShowcase Icons={[<icons.WarningIcon width={24}/>]} name="WarningIcon" />
           <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />
           <IconsShowcase Icons={[<icons.OpportunityCircleIcon />]} name="OpportunityCircleIcon" />
           <IconsShowcase Icons={[<icons.PresentationCircleIcon/>]} name="PresentationCircleIcon" />
