@@ -885,20 +885,20 @@ const App = () => {
             <h2>Selected Order Stage Icons</h2>
             <Row>
               <Col xs sm={4} md={2} lg={1}>
-                <icons.OpportunityCircleIcon variant='cta-outline' />
+                <icons.OpportunityCircleIcon variant='cta' selected />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <icons.PresentationCircleIcon variant='cta-outline' />
+                <icons.PresentationCircleIcon variant='cta' selected />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <icons.EstimateCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='primary' selected />
                 <icons.EstimateCircleIcon variant='cta' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <icons.EstimateCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='primary' selected />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <icons.SalesOrderCircleIcon variant='primary-outline' />
+                <icons.SalesOrderCircleIcon variant='primary' selected />
               </Col>
             </Row>
 
@@ -1314,10 +1314,30 @@ const App = () => {
           <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
           <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
           <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />
-          <IconsShowcase Icons={[<icons.OpportunityCircleIcon />]} name="OpportunityCircleIcon" />
-          <IconsShowcase Icons={[<icons.PresentationCircleIcon/>]} name="PresentationCircleIcon" />
-          <IconsShowcase Icons={[<icons.EstimateCircleIcon />]} name="EstimateCircleIcon" />
-          <IconsShowcase Icons={[<icons.SalesOrderCircleIcon />]} name="SalesOrderCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.OpportunityCircleIcon variant="primary"/>,
+            <icons.OpportunityCircleIcon variant="primary" selected />,
+            <icons.OpportunityCircleIcon variant="cta" />,
+            <icons.OpportunityCircleIcon variant="cta" selected />
+          ]} name="OpportunityCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.PresentationCircleIcon variant="primary" />,
+            <icons.PresentationCircleIcon variant="primary" selected />,
+            <icons.PresentationCircleIcon variant="cta" />,
+            <icons.PresentationCircleIcon variant="cta" selected/>, 
+            ]} name="PresentationCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.EstimateCircleIcon variant="primary" />,
+            <icons.EstimateCircleIcon variant="primary" selected />,
+            <icons.EstimateCircleIcon variant="cta" />,
+            <icons.EstimateCircleIcon variant="cta" selected />
+            ]} name="EstimateCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.SalesOrderCircleIcon variant="primary" />,
+            <icons.SalesOrderCircleIcon variant="primary" selected />,
+            <icons.SalesOrderCircleIcon variant="cta" />,
+            <icons.SalesOrderCircleIcon variant="cta" selected />
+          ]} name="SalesOrderCircleIcon" />
           
 
 

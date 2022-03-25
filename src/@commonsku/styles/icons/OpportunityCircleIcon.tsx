@@ -1,110 +1,99 @@
 import React from 'react';
-import { colors } from '../Theme';
-import SvgIcon, { SVGIconProps } from './SvgIcon';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { primary1, secondary1 } from '../colors';
 
-type IconProps = React.PropsWithChildren<SVGIconProps & {
-    variant?: 'primary' | 'primary-outline' | 'cta' | 'cta-outline',
-    style?: React.CSSProperties,
-}>;
+type IconVariants = 'primary' | 'cta';
 
-export default function Icon({
-    variant='primary',
-    style={},
+type OpportunityCircleIconProps = SVGIconProps &{variant?: IconVariants, selected?: boolean};
+export default function OpportunityCircleIcon({
+    variant="primary",
+    selected=false,
     size,
+    style={},
     ...props
-}: IconProps) {
-    const iconSizes = React.useMemo(() => {
-        let baseSize = 74/3;
-        if (['cta-outline', 'primary-outline'].includes(variant)) {
-            baseSize = 64/3;
-        }
-        return {
+}: OpportunityCircleIconProps) {
+
+    const iconSizes = {
             tiny: {
-                width: baseSize,
-                height: baseSize,
-                viewBox: "0 0 74 74",
+                width: 24,
+                height: 24,
+                viewBox: "0 0 72 72",
             },
             small: {
-                width: baseSize*2,
-                height: baseSize*2,
-                viewBox: "0 0 74 74",
+                width: 40,
+                height: 40,
+                viewBox: "0 0 72 72",
             },
             medium: {
-                width: baseSize*3,
-                height:baseSize*3,
-                viewBox: "0 0 74 74",
+                width: 72,
+                height:72,
+                viewBox: "0 0 72 72",
             },
             large: {
-                width: baseSize*4,
-                height:baseSize*4,
-                viewBox: "0 0 74 74",
+                width: 96,
+                height: 96,
+                viewBox: "0 0 72 72",
             },
             huge: {
-                width: baseSize*5,
-                height:baseSize*5,
-                viewBox: "0 0 74 74",
+                width: 120,
+                height: 120,
+                viewBox: "0 0 72 72",
             },
             default: {
-                height: baseSize*3,
-                width: baseSize*3,
-                viewBox: "0 0 74 74",
+                height: 72,
+                width: 72,
+                viewBox: "0 0 72 72",
             },
         };
-    }, [variant]);
 
     const iconColors = React.useMemo(() => {
-        if (variant === 'cta-outline') {
+        if (variant === 'cta' && selected) {
             return {
                 fill: 'none',
-                stroke: colors.secondary1.main,
-                textColor: colors.secondary1.main,
+                stroke: secondary1.main,
+                textColor: secondary1.main,
             };
-        } else if (variant === 'primary-outline') {
+        } else if (variant === 'primary' && selected) {
             return {
                 fill: 'none',
-                stroke: colors.primary1.main,
-                textColor: colors.primary1.main,
+                stroke: primary1.main,
+                textColor: primary1.main,
             };
-        } else if (variant === 'cta') {
+        } else if (variant === 'cta' && selected === false ) {
             return {
-                fill: colors.secondary1['20'],
-                stroke: 'none',
-                textColor: colors.secondary1.main,
+                fill: secondary1['20'],
+                stroke: secondary1['30'],
+                textColor: secondary1.main,
             };
         }
         return {
-            fill: colors.primary1['20'],
-            stroke: 'none',
-            textColor: colors.primary1.main,
+            fill: primary1['20'],
+            stroke: primary1['30'],
+            textColor: primary1.main,
         };
-    }, [variant]);
+    }, [variant, selected]);
+    
 
-    return (
-        <SvgIcon
-            size={size}
-            iconSizes={iconSizes}
+    return <SVG 
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
             style={style}
             {...props}
-        >
-            {variant === 'primary-outline' || variant === 'cta-outline' ? <>
+            size = {size}
+            iconSizes={iconSizes}
+            >
+         {selected ? <>
                 <path
-                    d="M29.334 36.1c0-1.96 1.47-3.43 3.43-3.43 1.96 0 3.43 1.47 3.43 3.43 0 1.96-1.47 3.43-3.43 3.43-1.96 0-3.43-1.47-3.43-3.43Zm-1.82 0c0 2.8 2.31 5.11 5.25 5.11s5.25-2.31 5.25-5.11c0-2.8-2.31-5.11-5.25-5.11s-5.25 2.31-5.25 5.11Zm12.175 7.84h1.61v-3.92h.07s.63 1.12 2.24 1.12c1.61 0 3.08-1.47 3.08-3.57 0-2.1-1.47-3.57-3.08-3.57s-2.24 1.12-2.24 1.12h-.07v-.98h-1.61v9.8Zm3.5-4.41c-1.05 0-1.89-.84-1.89-1.96s.84-1.96 1.89-1.96c1.05 0 1.89.84 1.89 1.96s-.84 1.96-1.89 1.96Z"
+                    d="M28.334 35.1c0-1.96 1.47-3.43 3.43-3.43 1.96 0 3.43 1.47 3.43 3.43 0 1.96-1.47 3.43-3.43 3.43-1.96 0-3.43-1.47-3.43-3.43Zm-1.82 0c0 2.8 2.31 5.11 5.25 5.11s5.25-2.31 5.25-5.11c0-2.8-2.31-5.11-5.25-5.11s-5.25 2.31-5.25 5.11Zm12.175 7.84h1.61v-3.92h.07s.63 1.12 2.24 1.12c1.61 0 3.08-1.47 3.08-3.57 0-2.1-1.47-3.57-3.08-3.57s-2.24 1.12-2.24 1.12h-.07v-.98h-1.61v9.8Zm3.5-4.41c-1.05 0-1.89-.84-1.89-1.96s.84-1.96 1.89-1.96c1.05 0 1.89.84 1.89 1.96s-.84 1.96-1.89 1.96Z"
                     fill={iconColors.textColor}
                 />
-                <path
-                    d="M36.5 72.5c19.35 0 35-15.915 35-35.5S55.85 1.5 36.5 1.5 1.5 17.415 1.5 37s15.65 35.5 35 35.5Z"
-                    stroke={iconColors.stroke}
-                    strokeWidth={3}
-                />
+                <circle cx={36} cy={36} r={34} stroke={iconColors.stroke} strokeWidth={4} />
             </> : <>
-                <circle cx={32} cy={32} r={32} fill={iconColors.fill} />
+                <circle cx={36} cy={36} r={32} fill={iconColors.fill} />
                 <path
-                    d="M24.334 31.1c0-1.96 1.47-3.43 3.43-3.43 1.96 0 3.43 1.47 3.43 3.43 0 1.96-1.47 3.43-3.43 3.43-1.96 0-3.43-1.47-3.43-3.43Zm-1.82 0c0 2.8 2.31 5.11 5.25 5.11s5.25-2.31 5.25-5.11c0-2.8-2.31-5.11-5.25-5.11s-5.25 2.31-5.25 5.11Zm12.175 7.84h1.61v-3.92h.07s.63 1.12 2.24 1.12c1.61 0 3.08-1.47 3.08-3.57 0-2.1-1.47-3.57-3.08-3.57s-2.24 1.12-2.24 1.12h-.07v-.98h-1.61v9.8Zm3.5-4.41c-1.05 0-1.89-.84-1.89-1.96s.84-1.96 1.89-1.96c1.05 0 1.89.84 1.89 1.96s-.84 1.96-1.89 1.96Z"
+                    d="M28.334 35.1c0-1.96 1.47-3.43 3.43-3.43 1.96 0 3.43 1.47 3.43 3.43 0 1.96-1.47 3.43-3.43 3.43-1.96 0-3.43-1.47-3.43-3.43Zm-1.82 0c0 2.8 2.31 5.11 5.25 5.11s5.25-2.31 5.25-5.11c0-2.8-2.31-5.11-5.25-5.11s-5.25 2.31-5.25 5.11Zm12.175 7.84h1.61v-3.92h.07s.63 1.12 2.24 1.12c1.61 0 3.08-1.47 3.08-3.57 0-2.1-1.47-3.57-3.08-3.57s-2.24 1.12-2.24 1.12h-.07v-.98h-1.61v9.8Zm3.5-4.41c-1.05 0-1.89-.84-1.89-1.96s.84-1.96 1.89-1.96c1.05 0 1.89.84 1.89 1.96s-.84 1.96-1.89 1.96Z"
                     fill={iconColors.textColor}
                 />
+                
             </>}
-        </SvgIcon>
-    );
+    </SVG>
 }

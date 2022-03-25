@@ -31,6 +31,16 @@ export const iconSize = {
         width: 24,
         viewBox: "0 0 24 24",
     },
+    // orderStageUnselected: {
+    //     width: 64,
+    //     height: 64,
+    //     viewBox: "0 0 64 64"
+    // },
+    // orderStageSelected: {
+    //     width: 72,
+    //     height: 72,
+    //     viewBox: "0 0 80 80"
+    // }
 };
 
 export type TIconSizeObj = typeof iconSize;
