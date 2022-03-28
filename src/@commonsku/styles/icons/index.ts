@@ -28,7 +28,6 @@ export * from './NavFinanceIcon';
 export * from './NavManagementIcon';
 export { default as GearIcon } from './GearIcon';
 export { default as NavResourcesIcon } from './NavResourcesIcon';
-export { default as WarningIcon } from './WarningIcon';
 export { default as CircleProgressIcon } from './CircleProgressIcon';
 export { default as Loading } from './Loading';
 export { default as SalesUpArrowIcon } from './SalesUpArrowIcon';
