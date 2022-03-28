@@ -2,7 +2,7 @@ import React from 'react';
 import { primary1 } from '../colors';
 import SVG, { SVGIconProps } from './SvgIcon';
 
-type FilledChevronIconDirection = 'up' | 'right' | 'down' | 'left';
+type FilledChevronIconDirection = 'up' | 'right' | 'down' | 'left' | 'updown' | 'leftright';
 
 type FilledChevronIconProps = SVGIconProps & {direction?: FilledChevronIconDirection};
 export default function FilledChevronIcon({
@@ -21,7 +21,11 @@ export default function FilledChevronIcon({
            return "m14.5 7-5 5 5 5V7Z";
         } else if (direction === "up") {
            return "m7 14.5 5-5 5 5H7Z";
-          }
+        } else if (direction === "updown") {
+            return "m7 13 5 5 5-5H7ZM7 11l5-5 5 5H7Z";
+        } else if (direction === "leftright") {
+            return "m11 7-5 5 5 5V7ZM13 7l5 5-5 5V7Z";
+        }
     // default to right
     return "m9.5 17 5-5-5-5v10Z";
     }, [direction]);

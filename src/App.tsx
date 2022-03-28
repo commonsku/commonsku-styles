@@ -67,6 +67,7 @@ import {
     // SVG,
     Textarea,
     Thermometer,
+    THSorted,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
@@ -1035,18 +1036,18 @@ const App = () => {
             </div>
             <div style={{display: 'flex'}}>
               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
-                <Avatar icon shape="circle" size="tiny" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="circle" size="small" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="circle" size="medium" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="circle" size="large" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="circle" size="huge" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="tiny" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="small" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="medium" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="large" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="huge" mr={10} mb={10}></Avatar>
               </div>
               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px'}}>
-                <Avatar icon shape="square" size="tiny" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="square" size="small" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="square" size="medium" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="square" size="large" color="pink" mr={10} mb={10}></Avatar>
-                <Avatar icon shape="square" size="huge" color="pink" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="tiny" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="small" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="medium" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="large" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="huge" mr={10} mb={10}></Avatar>
               </div>
             </div>
 
@@ -1241,14 +1242,18 @@ const App = () => {
             <icons.ChevronIcon direction="right" />, 
             <icons.ChevronIcon direction="down" />, 
             <icons.ChevronIcon direction="left" />, 
-            <icons.ChevronIcon direction="up" />
+            <icons.ChevronIcon direction="up" />,
+            <icons.ChevronIcon direction="updown" />,
+            <icons.ChevronIcon direction="leftright" />
           ]} name="ChevronIcon" />
 
           <IconsShowcase Icons={[
             <icons.FilledChevronIcon direction="right" />, 
             <icons.FilledChevronIcon direction="down" />, 
             <icons.FilledChevronIcon direction="left" />, 
-            <icons.FilledChevronIcon direction="up" />
+            <icons.FilledChevronIcon direction="up" />,
+            <icons.FilledChevronIcon direction="updown" />,
+            <icons.FilledChevronIcon direction="leftright" />
           ]} name="FilledChevronIcon" />
 
           <IconsShowcase Icons={[<icons.CheckmarkOnlyIcon />]} name="CheckmarkOnlyIcon" />
@@ -1310,10 +1315,13 @@ const App = () => {
           <IconsShowcase Icons={[<icons.TaskIcon width="24"/>]} name="TaskIcon" />
           <IconsShowcase Icons={[<icons.TilesIcon width="24"/>]} name="TilesIcon" />
           <IconsShowcase Icons={[<icons.TrashIcon width="24"/>]} name="TrashIcon" />
-          <IconsShowcase Icons={[<icons.UpDownArrowsIcon width="24"/>]} name="UpDownArrowsIcon" />
           <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
           <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
           <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />
+          <IconsShowcase Icons={[
+            <icons.MarketingStatusIcon />, 
+            <icons.MarketingStatusIcon approved/>, 
+          ]} name="MarketingStatusIcon" />
           <IconsShowcase Icons={[
             <icons.OpportunityCircleIcon variant="primary"/>,
             <icons.OpportunityCircleIcon variant="primary" selected />,
@@ -1337,9 +1345,7 @@ const App = () => {
             <icons.SalesOrderCircleIcon variant="primary" selected />,
             <icons.SalesOrderCircleIcon variant="cta" />,
             <icons.SalesOrderCircleIcon variant="cta" selected />
-          ]} name="SalesOrderCircleIcon" />
-          
-
+          ]} name="SalesOrderCircleIcon" />          
 
 
         </IconContainer>

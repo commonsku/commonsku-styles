@@ -111,7 +111,7 @@ const Avatar: React.FC<
     <AvatarPic src={pic ?? placeholder } size={size}/>
   </AvatarWrapper>
   } else if (!pic && icon){
-    return <AvatarWrapper size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} style={{backgroundColor: neutrals['50']}} {...props}><UserIcon fill={neutrals[70]} size={size} style={{position:'relative', top: '50%', transform: 'translate(0, -50%)'}}/>
+    return <AvatarWrapper size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} style={{backgroundColor: neutrals['50']}} {...props}><UserIcon color={neutrals[70]} size={size} style={{position:'relative', top: '50%', transform: 'translate(0, -50%)'}}/>
   </AvatarWrapper>
   } else {
     return <AvatarWrapper size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} color={color} initials={initials} {...props}>
