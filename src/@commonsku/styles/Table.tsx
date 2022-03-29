@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
-import { UpDownArrowsIcon, FilledChevronIcon} from './icons';
+import { FilledChevronIcon} from './icons';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const sharedStyle = css`
@@ -121,7 +121,7 @@ const THSorted = ({children, order, iconHeight=15, iconStyles, hideIconOnMobile,
         ? <FilledChevronIcon direction="down" height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
         : order==='asc'
           ? <FilledChevronIcon direction="up" height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
-          : <UpDownArrowsIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+          : <FilledChevronIcon direction="updown" style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
       }</THContentWrapper> {children}
     </TH>
   );
