@@ -1,4 +1,8 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
+
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
 import product_pic1 from './products/1.png';
 import product_pic2 from './products/2.png';
 import product_wide from './products/wide.png';
@@ -7,7 +11,9 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
-import { Loading, LockIcon, InfoIcon, CouponIcon, PanelIcon, NoteIcon, TaskIcon, ChatIcon, PinIcon, GearIcon, NextPrevIcon, TableIcon, UserIcon, OpportunityCircleIcon, PresentationCircleIcon, EstimateCircleIcon, SalesOrderCircleIcon } from './@commonsku/styles/icons';
+import * as icons from './@commonsku/styles/icons';
+
+
 
 import { 
     Avatar, 
@@ -46,38 +52,27 @@ import {
     HeadlessTable,
     StatusDropdown,
     StateDropdown,
-    AwaitingProofIcon,
-    ProofReceivedIcon,
-    PendingApprovalIcon,
-    ChangeRequestedIcon,
-    ClientApprovedIcon,
-    ColumnSelectIcon,
-    ProofingCompleteIcon,
-    NoMarketingIcon,
-    YesMarketingIcon,
-    TrashIcon,
     Text,
     Collapsible,
     CollapsiblePanel,
     CollapsiblePanels,
     colors,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Calendar,
     DraggableTasksCalendar,
-    NavConnectIcon,
-    NavSalesIcon,
-    NavProdIcon,
-    NavFinanceIcon,
-    NavManagementIcon,
-    NavResourcesIcon,
     LabeledMultiProgress,
     IconButton,
     Input,
     LabeledIconInput,
+    // SVG,
     Textarea,
     Thermometer,
+    THSorted,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
+import { neutrals, primary1 } from '@commonsku/styles/colors';
+import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 
 const initialState = {
   date: new Date(),
@@ -175,6 +170,7 @@ const states = [
   }
 ]
 
+
 const tableData = [
   {"rowId":1,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
   {"rowId":2,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
@@ -263,7 +259,7 @@ const tableData = [
 ] 
 
 const SelectMenuList = (
-  props: MenuListComponentProps<{[key: string]: any;}>
+  props: MenuListComponentProps<{label: string, value: string}>
 ) => {
   return (
     <selectComponents.MenuList {...props}>
@@ -298,31 +294,31 @@ function reducer(state: {[key: string]: any} = initialState, action: {type: stri
   }
 }
 
-const today = new Date(2021, 9, 19);
-const yesterday = new Date(2021, 9, 18);
-const tomorrow = new Date(2021, 9, 20);
+const today = new Date(2022, 3, 17);
+const yesterday = new Date(2022, 2, 16);
+const tomorrow = new Date(2022, 4, 18);
 
 const calTasks = Object.freeze({
   client: [
-    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Reach out to Jake Client', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
-    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'ABS Client', description: 'Put together a presentation for this client Client', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Client', colorType: 'light-green', completed: true,},
-    {id: uniqueId('day-'), date: tomorrow, title: 'Vandelay 3', description: 'Reach out to Jake Client', colorType: 'light-green'},
+    {id: uniqueId('day-101-'+yesterday), date: yesterday, title: 'Megacorm 101', description: 'Reach out to Jake Client 1', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
+    {id: uniqueId('day-102-'+yesterday), date: yesterday, title: 'ABS Client 102', description: 'Put together a presentation for this client Client 2', colorType: 'light-red'},
+    {id: uniqueId('day-103-'+today), date: today, title: 'ABS Client 103', description: 'Put together a presentation for this client Client 3', colorType: 'light-red'},
+    {id: uniqueId('day-104-'+today), date: today, title: 'Vandelay 104', description: 'Reach out to Jake Client 4', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-105-'+tomorrow), date: tomorrow, title: 'Vandelay 105', description: 'Reach out to Jake Client 5', colorType: 'light-green'},
   ],
   project: [
-    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client', description: 'Reach out to Jake Project', colorType: 'light-green', completed: true,},
-    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay 1', description: 'Put together a presentation for this client Project', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay 2', description: 'Reach out to Jake Project', colorType: 'light-green'},
-    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm', description: 'Reach out to Jake Project', colorType: 'light-green'},
+    {id: uniqueId('day-106-'+yesterday), date: yesterday, title: 'ABS Client 106', description: 'Reach out to Jake Project 6', colorType: 'light-green', completed: true,},
+    {id: uniqueId('day-107-'+yesterday), date: yesterday, title: 'Megacorm 107', description: 'Put together a presentation for this client Project 7', colorType: 'light-red'},
+    {id: uniqueId('day-108-'+today), date: today, title: 'Vandelay 108', description: 'Put together a presentation for this client Project 8', colorType: 'light-red'},
+    {id: uniqueId('day-109-'+today), date: today, title: 'Vandelay 109', description: 'Reach out to Jake Project 9', colorType: 'light-green'},
+    {id: uniqueId('day-110-'+tomorrow), date: tomorrow, title: 'Megacorm 110', description: 'Reach out to Jake Project 10', colorType: 'light-green'},
   ],
   other: [
-    {id: uniqueId('day-'), date: yesterday, title: 'ABS Client Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {id: uniqueId('day-'), date: yesterday, title: 'Megacorm Other', description: 'Put together a presentation for this client Other', colorType: 'light-red', completed: true,},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 1', description: 'Put together a presentation for this client Other', colorType: 'light-red'},
-    {id: uniqueId('day-'), date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
-    {id: uniqueId('day-'), date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
+    {id: uniqueId('day-111-'+yesterday), date: yesterday, title: 'ABS Client Other 111', description: 'Reach out to Jake Other 11', colorType: 'light-green'},
+    {id: uniqueId('day-112-'+yesterday), date: yesterday, title: 'Megacorm Other 112', description: 'Put together a presentation for this client Other 12', colorType: 'light-red', completed: true,},
+    {id: uniqueId('day-113-'+today), date: today, title: 'Vandelay Other 113', description: 'Put together a presentation for this client Other 13', colorType: 'light-red'},
+    {id: uniqueId('day-114-'+today), date: today, title: 'Vandelay Other 114', description: 'Reach out to Jake Other 14', colorType: 'light-green'},
+    {id: uniqueId('day-115-'+tomorrow), date: tomorrow, title: 'Megacorm Other 115', description: 'Reach out to Jake Other 15', colorType: 'light-green'},
   ],
 });
 
@@ -554,35 +550,75 @@ const App = () => {
                   {onClick: () => null, content: 'New Address'},
                 ]
                }/>
-              <Dropdown text="Dropdown Panel" icon={<NoteIcon width="40" />}>
+              <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon width="40" />}>
                 <Row>
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: HTMLInputElement) => toggleMustard(!mustard)} />
-                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: HTMLInputElement) => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                  <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
                 </Row>
               </Dropdown>
               <Link block mt={20}>Link</Link>
             </div>
 
             <H5>Button Variants</H5>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary">Primary</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="secondary">Secondary</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary-light">Primary Light</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta">CTA</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="cta-outline">CTA Outline</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="error">Error</IconButton>
-            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="error-outline">Error Outline</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="disabled">Disabled</IconButton>
-            <IconButton iconPosition='right' Icon={UserIcon} mr={10} mt={10} variant="disabled-outline">Disabled Outline</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="text">Text</IconButton>
-            <IconButton Icon={UserIcon} mr={10} mt={10} variant="primary" />
+            
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="large">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="small">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+              </ButtonsGroup>
+              <ButtonsGroup mb={30}>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
+                <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+              </ButtonsGroup>
+            </div>
 
             <H5>Input Fields</H5>
             <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
@@ -604,7 +640,7 @@ const App = () => {
               name="basic-input"
               value="input value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.DollarIcon style={{ paddingLeft: 10, paddingRight: 0, }} />}
               style={{ width: 200 }}
             />
 
@@ -615,7 +651,7 @@ const App = () => {
               name="basic-disabled"
               value="disabled value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -626,7 +662,7 @@ const App = () => {
               name="basic-error"
               value="error value"
               placeholder="enter something"
-              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
             <br />
@@ -639,7 +675,7 @@ const App = () => {
               name="basic-input"
               defaultValue="input value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -651,7 +687,7 @@ const App = () => {
               name="basic-disabled"
               defaultValue="disabled value"
               placeholder="enter something"
-              Icon={<TrashIcon color={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
 
@@ -663,7 +699,7 @@ const App = () => {
               name="basic-error"
               defaultValue="error value"
               placeholder="enter something"
-              Icon={<UserIcon fill={"#fff"} width={"1.5rem"} />}
+              Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
               style={{ width: 200 }}
             />
             <br />
@@ -782,7 +818,7 @@ const App = () => {
                 },
               ]}
               views={[
-                { type: 'TASK', title: 'Tasks', selected: true, Icon: UserIcon },
+                { type: 'TASK', title: 'Tasks', selected: true, Icon: icons.UsersIcon },
                 { type: 'PROJECT', title: 'Projects', selected: false },
                 { type: 'PO', title: 'Pos', selected: false },
               ]}
@@ -797,71 +833,73 @@ const App = () => {
               </Toggle>
             </div>
             <div style={{maxWidth: 90}}>
-              <Loading mb={10} colorful={colorfulBars} />
+              <icons.Loading mb={10} colorful={colorfulBars} />
             </div>
 
-            <ProofingCompleteIcon width={"1.5rem"}/>
-            <ClientApprovedIcon width={"1.5rem"}/>
-            <ColumnSelectIcon width={"1.5rem"}/>
-            <AwaitingProofIcon width={"1.5rem"}/>
-            <ProofReceivedIcon width={"1.5rem"}/>
-            <PendingApprovalIcon width={"1.5rem"}/>
-            <ChangeRequestedIcon width={"1.5rem"}/>
-            <PanelIcon color={"#00d374"} width={"1.5rem"}/>
-            <TaskIcon color={"black"} width={"1.5rem"}/>
-            <NoteIcon color={"black"} width={"1.5rem"}/>
-            <NoMarketingIcon width={"1.5rem"}/>
-            <YesMarketingIcon width={"1.5rem"}/>
-            <ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
-            <PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
-            <TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
-            <Link><CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
-            <InfoIcon ml={5}/> 
+            <icons.ProofingCompleteIcon width={"1.5rem"}/>
+            <icons.ClientApprovedIcon width={"1.5rem"}/>
+            <icons.ColumnSelectIcon width={"1.5rem"}/>
+            <icons.AwaitingProofIcon width={"1.5rem"}/>
+            <icons.ProofReceivedIcon width={"1.5rem"}/>
+            <icons.PendingApprovalIcon width={"1.5rem"}/>
+            <icons.ChangeRequestedIcon width={"1.5rem"}/>
+            <icons.PanelIcon color={"#00d374"} width={"1.5rem"}/>
+            <icons.TaskIcon color={"black"} width={"1.5rem"}/>
+            <icons.NoteIcon color={"black"} width={"1.5rem"}/>
+            <icons.NoMarketingIcon width={"1.5rem"}/>
+            <icons.YesMarketingIcon width={"1.5rem"}/>
+            <icons.ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
+            <icons.PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
+            <icons.TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
+            <Link><icons.CouponIcon color={"red"} width={"1.5rem"} mr={5}/>Link</Link>
+            <icons.InfoIcon ml={5}/> 
             <Link onClick={() => setLock(!lock)}>
-              <LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
+              <icons.LockIcon color={"#00d374"} ml={10} width={".9rem"} locked={lock}/>
             </Link>
-            <GearIcon color={"#00d374"} width={"1.5rem"}/>
-            <NextPrevIcon color={"#00d374"} width={".8rem"}/>
-            <NextPrevIcon color={"#00d374"} width={".8rem"} next/>
+            <icons.GearIcon color={"#00d374"} width={"1.5rem"}/>
 
             <br/>
             <h2>Nav Icons</h2>
-            <NavConnectIcon color={"#00d374"} width={"3rem"}/>
-            <NavSalesIcon color={"#00d374"} width={"3rem"}/>
-            <NavProdIcon color={"#00d374"} width={"3rem"}/>
-            <NavFinanceIcon color={"#00d374"} width={"3rem"}/>
-            <NavManagementIcon color={"#00d374"} width={"3rem"}/>
-            <NavResourcesIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavConnectIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavSalesIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavProdIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavFinanceIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavManagementIcon color={"#00d374"} width={"3rem"}/>
+            <icons.NavResourcesIcon color={"#00d374"} width={"3rem"}/>
 
             <br/>
             <h2>Order Stage Icons</h2>
             <Row>
               <Col xs sm={4} md={2} lg={1}>
-                <OpportunityCircleIcon variant='primary' />
+                <icons.OpportunityCircleIcon variant='primary' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <PresentationCircleIcon variant='primary' />
+                <icons.PresentationCircleIcon variant='primary' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <EstimateCircleIcon variant='cta' />
+                <icons.EstimateCircleIcon variant='cta' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <SalesOrderCircleIcon variant='cta' />
+                <icons.SalesOrderCircleIcon variant='cta' />
               </Col>
             </Row>
             <h2>Selected Order Stage Icons</h2>
             <Row>
               <Col xs sm={4} md={2} lg={1}>
-                <OpportunityCircleIcon variant='cta-outline' />
+                <icons.OpportunityCircleIcon variant='cta' selected />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <PresentationCircleIcon variant='cta-outline' />
+                <icons.PresentationCircleIcon variant='cta' selected />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <EstimateCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='primary' selected />
+                <icons.EstimateCircleIcon variant='cta' />
               </Col>
               <Col xs sm={4} md={2} lg={1}>
-                <SalesOrderCircleIcon variant='primary-outline' />
+                <icons.EstimateCircleIcon variant='primary' selected />
+              </Col>
+              <Col xs sm={4} md={2} lg={1}>
+                <icons.SalesOrderCircleIcon variant='primary' selected />
               </Col>
             </Row>
 
@@ -874,16 +912,24 @@ const App = () => {
             <Number commas num={334353434.44334}/>
 
             <Row>
-              <Col xs={3}>
-                <H5>Single Datepicker</H5>
+              <Col xs={3} padded>
+                <H5>Datepicker</H5>
                 <Datepicker
                   value={state.date}
                   onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
                 />
               </Col>
+              <Col xs={3} padded>
+                <H5>Datepicker disabled</H5>
+                <Datepicker
+                  value={state.date}
+                  onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+                  disabled
+                />
+              </Col>
             </Row>
 
-            <Row>
+            <Row pt={20}>
               <Col xs={3}>
             <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
             </Col>
@@ -950,19 +996,66 @@ const App = () => {
 
             <H5>Checkbox</H5>
             <ButtonsGroup>
-              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: Event) => toggleMustard(!mustard)} />
-              <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: Event) => toggleKetchup(!ketchup)} />
+              <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+              <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
             </ButtonsGroup>
 
             <H5>Avatar</H5>
-            <Avatar pic="https://commonsku.com/img/brand/icon.png" />
-            <Avatar />
+            <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
+                <Avatar shape="circle" size="tiny" color="navy" mr={10} mb={10}>MS</Avatar>
+                <Avatar shape="circle" size="small" color="teal" initials="MG" mr={10} mb={10}/>
+                <Avatar shape="circle" size="medium" color="yellow" initials="IY" mr={10} mb={10}/>
+                <Avatar shape="circle" size="large" color="green" initials="MA" mr={10} mb={10}/>
+                <Avatar shape="circle" size="huge" color="pink" mr={10} mb={10}>CG</Avatar>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px'}}>
+                <Avatar shape="square" size="tiny" color="navy" mr={10} mb={10}>MS</ Avatar>
+                <Avatar shape="square" size="small" color="teal" initials="MG" mr={10} mb={10}/>
+                <Avatar shape="square" size="medium" color="yellow" initials="IY" mr={10} mb={10}/>
+                <Avatar shape="square" size="large" color="green" initials="MA" mr={10} mb={10}/>
+                <Avatar shape="square" size="huge" color="pink" mr={10} mb={10}>CG</Avatar>
+              </div>
+            </div>
+
+            <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="tiny" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="small" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="medium" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="large" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="circle" size="huge" mr={10} mb={10}/>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="tiny" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="small" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="medium" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="large" mr={10} mb={10}/>
+                <Avatar pic="https://commonsku.com/img/brand/avatar-teal.png" shape="square" size="huge" mr={10} mb={10}/>
+              </div>
+            </div>
+            <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
+                <Avatar icon shape="circle" size="tiny" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="small" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="medium" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="large" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="circle" size="huge" mr={10} mb={10}></Avatar>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px'}}>
+                <Avatar icon shape="square" size="tiny" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="small" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="medium" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="large" mr={10} mb={10}></Avatar>
+                <Avatar icon shape="square" size="huge" mr={10} mb={10}></Avatar>
+              </div>
+            </div>
 
             <H5>Select</H5>
             <LabeledSelect label="Labeled Select" name="events" noMargin options={[{ value: 'skucon', label: 'Skucon' }, { value: 'skucamp', label: 'Skucamp' }, { value: 'others', label: 'Others' }]} />
 
             <H5>Input</H5>
-            <LabeledInput label="Labeled Input" placeholder="Input" isPercent />
+            <LabeledInput label="Labeled Input" placeholder="Input" />
 
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" />
@@ -1131,6 +1224,133 @@ const App = () => {
           scrollOffsetDivRef={scrollOffsetDivRef}
           horizontalOffsetDivRef={horizontalOffsetDivRef}
         />
+
+        <H5>All Icons</H5>
+
+        <IconContainer>
+          
+          {/* <IconShowcase Icons={[<icons.UserIcon size="medium" fill={primary1.main}/>]} name="UserIcon" /> */}
+          
+          <IconsShowcase Icons={[
+            <icons.ArrowIcon direction="right" />, 
+            <icons.ArrowIcon direction="down" />, 
+            <icons.ArrowIcon direction="left" />, 
+            <icons.ArrowIcon direction="up" />
+          ]} name="ArrowIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.ChevronIcon direction="right" />, 
+            <icons.ChevronIcon direction="down" />, 
+            <icons.ChevronIcon direction="left" />, 
+            <icons.ChevronIcon direction="up" />,
+            <icons.ChevronIcon direction="updown" />,
+            <icons.ChevronIcon direction="leftright" />
+          ]} name="ChevronIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.FilledChevronIcon direction="right" />, 
+            <icons.FilledChevronIcon direction="down" />, 
+            <icons.FilledChevronIcon direction="left" />, 
+            <icons.FilledChevronIcon direction="up" />,
+            <icons.FilledChevronIcon direction="updown" />,
+            <icons.FilledChevronIcon direction="leftright" />
+          ]} name="FilledChevronIcon" />
+
+          <IconsShowcase Icons={[<icons.CheckmarkOnlyIcon />]} name="CheckmarkOnlyIcon" />
+          <IconsShowcase Icons={[<icons.AddIcon />]} name="AddIcon" />
+          <IconsShowcase Icons={[<icons.SubtractIcon />]} name="SubtractIcon" />
+          <IconsShowcase Icons={[<icons.SearchIcon />]} name="SearchIcon" />
+          <IconsShowcase Icons={[<icons.ClockIcon />]} name="ClockIcon" />
+          <IconsShowcase Icons={[<icons.ClipboardIcon />]} name="ClipboardIcon" />
+          <IconsShowcase Icons={[
+          <icons.RadioIcon />,
+          <icons.RadioIcon selected />
+          ]} name="RadioIcon" />
+
+          <IconsShowcase Icons={[<icons.AwaitingProofIcon width="24"/>]} name="AwaitingProofIcon"/>
+          <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
+          <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
+          <IconsShowcase Icons={[<icons.Calendar2Icon />]} name="Calendar2Icon"/>
+          <IconsShowcase Icons={[<icons.ChangeRequestedIcon width="24"/>]} name="ChangeRequestedIcon"/>
+          <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
+          <IconsShowcase Icons={[<icons.CheckboxIcon />]} name="CheckboxIcon"/>
+          <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon"/>
+          <IconsShowcase Icons={[<icons.CircleProgressIcon />]} name="CircleProgressIcon"/>
+          <IconsShowcase Icons={[<icons.ClientApprovedIcon width="24" />]} name="ClientApprovedIcon"/>
+          <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>
+          <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
+          <IconsShowcase Icons={[<icons.CrossIcon />]} name="CrossIcon"/>
+          <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
+          <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
+          <IconsShowcase Icons={[<icons.ErrorIcon />]} name="ErrorIcon" />
+          <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
+          <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
+          <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
+          <IconsShowcase Icons={[<icons.GearIcon width="24"/>]} name="GearIcon" />
+          <IconsShowcase Icons={[<icons.InfoIcon />]} name="InfoIcon" />
+          <IconsShowcase Icons={[<icons.LeftArrowIcon />]} name="LeftArrowIcon" />
+          <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
+          <IconsShowcase Icons={[<icons.Loading width={24}/>]} name="Loading" />
+          <IconsShowcase Icons={[<icons.LockIcon />]} name="LockIcon" />
+          <IconsShowcase Icons={[<icons.NavConnectIcon color={primary1.main} />]} name="NavConnectIcon" />
+          <IconsShowcase Icons={[<icons.NavFinanceIcon color={primary1.main}/>]} name="NavFinanceIcon" />
+          <IconsShowcase Icons={[<icons.NavManagementIcon color={primary1.main}/>]}  name="NavManagementIcon" />
+          <IconsShowcase Icons={[<icons.NavProdIcon color={primary1.main}/>]} name="NavProdIcon" />
+          <IconsShowcase Icons={[<icons.NavResourcesIcon color={primary1.main} />]} name="NavResourcesIcon" />
+          <IconsShowcase Icons={[<icons.NavSalesIcon color={primary1.main} />]} name="NavSalesIcon" />
+          <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
+          <IconsShowcase Icons={[<icons.NoteIcon color={primary1.main} width="24"/>]} name="NoteIcon" />
+          <IconsShowcase Icons={[<icons.PanelIcon width="24"/>]} name="PanelIcon" />
+          <IconsShowcase Icons={[<icons.PendingApprovalIcon width="24"/>]} name="PendingApprovalIcon" />
+          <IconsShowcase Icons={[<icons.PinIcon width="24"/>]} name="PinIcon" />
+          <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
+          <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
+          <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
+          <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
+          <IconsShowcase Icons={[<icons.RightArrowIcon />]} name="RightArrowIcon" />
+          <IconsShowcase Icons={[<icons.SalesDownArrowIcon />]} name="SalesDownArrowIcon" />
+          <IconsShowcase Icons={[<icons.SalesUpArrowIcon />]} name="SalesUpArrowIcon" />
+          <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
+          <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
+          <IconsShowcase Icons={[<icons.TaskIcon width="24"/>]} name="TaskIcon" />
+          <IconsShowcase Icons={[<icons.TilesIcon width="24"/>]} name="TilesIcon" />
+          <IconsShowcase Icons={[<icons.TrashIcon width="24"/>]} name="TrashIcon" />
+          <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
+          <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
+          <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />
+          <IconsShowcase Icons={[
+            <icons.MarketingStatusIcon />, 
+            <icons.MarketingStatusIcon approved/>, 
+          ]} name="MarketingStatusIcon" />
+          <IconsShowcase Icons={[
+            <icons.OpportunityCircleIcon variant="primary"/>,
+            <icons.OpportunityCircleIcon variant="primary" selected />,
+            <icons.OpportunityCircleIcon variant="cta" />,
+            <icons.OpportunityCircleIcon variant="cta" selected />
+          ]} name="OpportunityCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.PresentationCircleIcon variant="primary" />,
+            <icons.PresentationCircleIcon variant="primary" selected />,
+            <icons.PresentationCircleIcon variant="cta" />,
+            <icons.PresentationCircleIcon variant="cta" selected/>, 
+            ]} name="PresentationCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.EstimateCircleIcon variant="primary" />,
+            <icons.EstimateCircleIcon variant="primary" selected />,
+            <icons.EstimateCircleIcon variant="cta" />,
+            <icons.EstimateCircleIcon variant="cta" selected />
+            ]} name="EstimateCircleIcon" />
+          <IconsShowcase Icons={[
+            <icons.SalesOrderCircleIcon variant="primary" />,
+            <icons.SalesOrderCircleIcon variant="primary" selected />,
+            <icons.SalesOrderCircleIcon variant="cta" />,
+            <icons.SalesOrderCircleIcon variant="cta" selected />
+          ]} name="SalesOrderCircleIcon" />          
+
+
+        </IconContainer>
+        
+
       </Box>
     </Background>
   </Page></Theme>

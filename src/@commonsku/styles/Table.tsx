@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {css} from 'styled-components'
 import { SizerCss, SizerTypes } from './Sizer';
-import { UpDownArrowsIcon, UpArrowIcon, DownArrowIcon, } from './icons';
+import { FilledChevronIcon} from './icons';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
 const sharedStyle = css`
@@ -118,10 +118,10 @@ const THSorted = ({children, order, iconHeight=15, iconStyles, hideIconOnMobile,
         xs={`display: ${hideIconOnMobile ? 'none': 'inline-block'};`}
         sm={"display: inline-block;"}
       >{order==='desc' 
-        ? <DownArrowIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+        ? <FilledChevronIcon direction="down" height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
         : order==='asc'
-          ? <UpArrowIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
-          : <UpDownArrowsIcon height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+          ? <FilledChevronIcon direction="up" height={iconHeight} style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
+          : <FilledChevronIcon direction="updown" style={{ width: 'auto', verticalAlign: 'middle', ...iconStyles}} />
       }</THContentWrapper> {children}
     </TH>
   );

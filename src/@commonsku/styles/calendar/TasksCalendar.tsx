@@ -11,19 +11,36 @@ import CalendarWrapper from './CalendarWrapper';
 import TasksCalendarDayBody from './TasksCalendarDayBody';
 import TasksCalendarHeader from './TasksCalendarHeader';
 import TasksCalendarFooter from './TasksCalendarFooter';
+import _ from 'lodash';
 
 
 export function convertTasksToDays({ currentMonth, currentWeek, tasks, }: { currentMonth: Date, currentWeek?: number, tasks: CalendarTaskProps[], }) {
     return getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }),
         lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
-    ).map((day, i) => ({
-        __id__: `day-${i}-${getWeek(day)}`,
-        day,
-        tasks: tasks
+    ).map((day, i) => {
+        const newTasks = tasks
             .filter(t => t.date ? isSameDay(day, t.date) : false)
-            .map((t, j) => ({...t, coordinates: [i, j],  __id__: `day-${i}-${getWeek(day)}-task-${j}`})),
-    }));
+            .map((t, j) => ({
+                ...t,
+                coordinates: [i, j],
+                __id__: `day-${i}-${getWeek(day)}-task-${j}`})
+            );
+        return {
+            __id__: `day-${i}-${getWeek(day)}`,
+            day,
+            tasks: _.orderBy(
+                newTasks,
+                [v => {
+                    if (v.order === undefined) {
+                      return v.checked || v.completed ? 0 : 1;
+                    }
+                    return v.order;
+                }],
+                ['desc']
+            ),
+        };
+    });
 }
 
 type TasksCalendarProps = CalendarProps & {
@@ -57,6 +74,7 @@ const TasksCalendar = ({
         changeWeek
     } = useCalendar({});
 
+    /* eslint-disable  @typescript-eslint/no-unused-vars */
     const [days, setDays] = useState(
         convertTasksToDays({currentMonth, currentWeek, tasks,})
     );

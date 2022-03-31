@@ -43,6 +43,7 @@ export * from './icons'
 export * from './Theme'
 export {default as Theme} from './Theme'
 export {default as GlobalStyle} from './globalStyles'
+export { default as datepickerStyles } from './datepickerStyles';
 
 export * from './calendar';
 export * from './tables';

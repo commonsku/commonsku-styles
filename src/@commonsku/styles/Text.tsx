@@ -1,7 +1,7 @@
-import { get, toNumber } from 'lodash';
+import { toNumber } from 'lodash';
 import React from 'react';
 import styled from 'styled-components'
-import { colors, fonts } from './Theme';
+import { colors, fonts, getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 export type TextProp = {
@@ -11,8 +11,8 @@ export type TextProp = {
 export const Text = styled.span<TextProp>`
   font-family: ${fonts.join(', ')};
   ${p => p.bold ? ({ fontWeight: 'bold' }) : ({})}
-  color: ${props => colors[props.color ?? 'textbody']};
-  background-color: ${props => props.bg ? get(colors, `${props.color}Bg`, 'transparent') : 'transparent'};
+  color: ${props => getThemeColor(props, props.color ?? 'textbody', 'textbody') || 'textbody'};
+  background-color: ${props => props.bg ? getThemeColor(props, `${props.color || 'transparent'}Bg`, 'transparent') : 'transparent'};
   border-radius: ${props => props.bg ? '5px' : '0px'};
   padding: ${props => props.bg ? '5px' : '0px'};
   ${SharedStyles}

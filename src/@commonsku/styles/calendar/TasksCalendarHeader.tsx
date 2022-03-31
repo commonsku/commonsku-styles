@@ -6,7 +6,7 @@ import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
 import { Tabs, TTab } from '../Tabs';
 import { Text, Link } from '../Text';
-import { GearIcon, NextPrevIcon, Calendar2Icon } from '../icons';
+import { GearIcon, ChevronIcon, Calendar2Icon } from '../icons';
 import {Dropdown} from '../Dropdown';
 import { Button, IconButton, TSize, ButtonVariant } from '../Button';
 import { H5 } from '../Headings';
@@ -120,7 +120,7 @@ export const TasksCalendarHeader = ({
             `}>
                 <Dropdown
                     style={{verticalAlign: 'middle'}}
-                    icon={<GearIcon width="25" color={colors.primary1.main} />}
+                    icon={<GearIcon size="large" />}
                 >
                     <Row>{weekendsCheckbox}</Row>
                 </Dropdown>
@@ -147,12 +147,12 @@ export const TasksCalendarHeader = ({
                     <WeekNav
                         style={{cursor: 'pointer', color: colors.primary, verticalAlign: 'middle'}}
                         onClick={onPrevWeek}
-                    ><NextPrevIcon color={"#02C0DA"} width={".8rem"} /></WeekNav>
+                    ><ChevronIcon direction="left" size='large'/></WeekNav>
                     <WeekNav
                         as={Button}
                         variant="text"
                         size="primary-light"
-                        style={{verticalAlign: "middle", padding: 10,}}
+                        style={{verticalAlign: "middle", padding: "10px 0px",}}
                         py={5}
                         onClick={() => {
                             if (isCurrentWeek) {
@@ -164,7 +164,7 @@ export const TasksCalendarHeader = ({
                     <WeekNav
                         style={{cursor: 'pointer', color: colors.primary1.main, verticalAlign: 'middle'}}
                         onClick={onNextWeek}
-                    ><NextPrevIcon color={"#02C0DA"} width={".8rem"} next /></WeekNav>
+                    ><ChevronIcon size="large" /></WeekNav>
                 </span>
             </Col>
             <Col start={1} xs md={8} padded>

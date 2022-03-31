@@ -1,83 +1,108 @@
 import React from 'react';
-import { colors } from '../Theme';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { primary1, secondary1 } from '../colors';
 
-export default function Icon({
-    variant='primary',
+type IconVariants = 'primary' | 'cta';
+
+type EstimateCircleIconProps = SVGIconProps &{variant?: IconVariants, selected?: boolean};
+export default function EstimateCircleIcon({
+    variant="primary",
+    selected=false,
+    size,
     style={},
     ...props
-}: React.PropsWithChildren<{
-    variant?: 'primary' | 'primary-outline' | 'cta' | 'cta-outline',
-    style?: React.CSSProperties,
-}>) {
+}: EstimateCircleIconProps) {
+
+    const iconSizes = {
+            tiny: {
+                width: 24,
+                height: 24,
+                viewBox: "0 0 72 72",
+            },
+            small: {
+                width: 40,
+                height: 40,
+                viewBox: "0 0 72 72",
+            },
+            medium: {
+                width: 72,
+                height:72,
+                viewBox: "0 0 72 72",
+            },
+            large: {
+                width: 96,
+                height: 96,
+                viewBox: "0 0 72 72",
+            },
+            huge: {
+                width: 120,
+                height: 120,
+                viewBox: "0 0 72 72",
+            },
+            default: {
+                height: 72,
+                width: 72,
+                viewBox: "0 0 72 72",
+            },
+        };
+
     const iconColors = React.useMemo(() => {
-        if (variant === 'cta-outline') {
+        if (variant === 'cta' && selected) {
             return {
-                width: 74,
-                height: 74,
                 fill: 'none',
-                stroke: colors.secondary1.main,
-                textColor: colors.secondary1.main,
+                stroke: secondary1.main,
+                textColor: secondary1.main,
             };
-        } else if (variant === 'primary-outline') {
+        } else if (variant === 'primary' && selected) {
             return {
-                width: 74,
-                height: 74,
                 fill: 'none',
-                stroke: colors.primary1.main,
-                textColor: colors.primary1.main,
+                stroke: primary1.main,
+                textColor: primary1.main,
             };
-        } else if (variant === 'cta') {
+        } else if (variant === 'cta' && selected === false ) {
             return {
-                width: 64,
-                height: 64,
-                fill: colors.secondary1['20'],
-                stroke: colors.secondary1['30'],
-                textColor: colors.secondary1.main,
+                fill: secondary1['20'],
+                stroke: secondary1['30'],
+                textColor: secondary1.main,
             };
         }
         return {
-            width: 64,
-            height: 64,
-            fill: colors.primary1['20'],
-            stroke: colors.primary1['30'],
-            textColor: colors.primary1.main,
+            fill: primary1['20'],
+            stroke: primary1['30'],
+            textColor: primary1.main,
         };
-    }, [variant]);
+    }, [variant, selected]);
+    
 
-    return (
-        <svg
-            width={iconColors.width}
-            height={iconColors.height}
+    return <SVG 
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
             style={style}
             {...props}
-        >
-            {variant === 'primary' || variant === 'cta' ? <>
-                <circle cx={32} cy={32} r={32} fill={iconColors.fill} />
+            size = {size}
+            iconSizes={iconSizes}
+            >
+         {selected ? <>
                 <path
-                    d="M32 4.546c0-2.51 2.045-4.58 4.53-4.224A32 32 0 0 1 63.678 27.47c.355 2.485-1.713 4.53-4.224 4.53-2.51 0-4.5-2.055-4.995-4.516A22.911 22.911 0 0 0 36.516 9.541C34.055 9.046 32 7.056 32 4.546Z"
+                    d="M36 10.262c0-2.354 1.917-4.293 4.247-3.96a30 30 0 0 1 25.45 25.45c.334 2.33-1.605 4.248-3.959 4.248-2.353 0-4.219-1.926-4.683-4.234a21.476 21.476 0 0 0-16.821-16.821C37.926 14.48 36 12.615 36 10.262Z"
                     fill={iconColors.stroke}
                 />
+                <circle cx={36} cy={36} r={34} stroke={iconColors.stroke} strokeWidth={4} />
                 <path
-                    d="M28.743 36h7.21v-1.68h-5.46V31.8h4.2v-1.68h-4.2v-2.24h5.32V26.2h-7.07V36Z"
+                    d="M32.743 40h7.21v-1.68h-5.46V35.8h4.2v-1.68h-4.2v-2.24h5.32V30.2h-7.07V40Z"
                     fill={iconColors.textColor}
                 />
             </> : <>
+                
+                <circle cx={36} cy={36} r={32} fill={iconColors.fill} />
                 <path
-                    d="M37 9.546c0-2.51 2.045-4.58 4.53-4.224A32 32 0 0 1 68.678 32.47C69.033 34.955 66.965 37 64.454 37c-2.51 0-4.5-2.055-4.995-4.516a22.911 22.911 0 0 0-17.943-17.943C39.055 14.046 37 12.056 37 9.546Z"
+                    d="M36 10.262c0-2.354 1.917-4.293 4.247-3.96a30 30 0 0 1 25.45 25.45c.334 2.33-1.605 4.248-3.959 4.248-2.353 0-4.219-1.926-4.683-4.234a21.476 21.476 0 0 0-16.821-16.821C37.926 14.48 36 12.615 36 10.262Z"
                     fill={iconColors.stroke}
                 />
                 <path
-                    d="M36.5 72.5c19.35 0 35-15.915 35-35.5S55.85 1.5 36.5 1.5 1.5 17.415 1.5 37s15.65 35.5 35 35.5Z"
-                    stroke={iconColors.stroke}
-                    strokeWidth={3}
-                />
-                <path
-                    d="M33.743 41h7.21v-1.68h-5.46V36.8h4.2v-1.68h-4.2v-2.24h5.32V31.2h-7.07V41Z"
+                    d="M32.743 40h7.21v-1.68h-5.46V35.8h4.2v-1.68h-4.2v-2.24h5.32V30.2h-7.07V40Z"
                     fill={iconColors.textColor}
                 />
+                
             </>}
-        </svg>
-    );
+    </SVG>
 }

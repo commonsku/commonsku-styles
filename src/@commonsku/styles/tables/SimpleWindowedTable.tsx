@@ -1,5 +1,5 @@
 import styled, { css, CSSObject } from 'styled-components';
-import React, { useRef, useLayoutEffect, ReactNode } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import {
     useTable,
     useSortBy,
@@ -10,7 +10,7 @@ import {
 import { FixedSizeList, ListOnScrollProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup, SortByTableInstance, SortByTableOptions } from './types';
 import { colors, getThemeColor } from '../Theme';
-import { DownArrowIcon, UpArrowIcon, UpDownArrowsIcon } from '../icons';
+import { FilledChevronIcon} from '../icons';
 import scrollbarWidth from './scrollbarWidth';
 
 export const SimpleWindowedTableStyles = styled.div<{
@@ -189,9 +189,10 @@ function SimpleWindowedTable({
     };
 
     useLayoutEffect(() => {
-        rowsRef.current && rowsRef.current.addEventListener('scroll', onListScroll);
+        const rowsElem = rowsRef.current;
+        rowsElem && rowsElem.addEventListener('scroll', onListScroll);
         return () => {
-            rowsRef.current && rowsRef.current.removeEventListener('scroll', onListScroll);
+            rowsElem && rowsElem.removeEventListener('scroll', onListScroll);
         };
     }, [rowsRef]);
 
@@ -288,8 +289,8 @@ function SimpleWindowedTable({
                                 {column.render("Header")}
                                 {column.canSort ? <span style={{ display: 'inline-block', paddingLeft: 5, verticalAlign: 'text-top' }}>
                                     {column.isSorted ? (
-                                        column.isSortedDesc ? <DownArrowIcon width="15px" /> : <UpArrowIcon width="15px" />
-                                    ) : <UpDownArrowsIcon width="15px" />}
+                                        column.isSortedDesc ? <FilledChevronIcon direction="down" width="15px" /> : <FilledChevronIcon direction="up" width="15px" />
+                                    ) : <FilledChevronIcon direction="updown" width="15px" />}
                                 </span> : null}
                             </div>
                         ))}

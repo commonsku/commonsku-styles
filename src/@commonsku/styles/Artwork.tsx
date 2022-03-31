@@ -100,7 +100,7 @@ export type ArtworkProps = {
   onDelete?:Function|VoidFunction,
   onSave?:Function|VoidFunction,
   onDownload?:Function|VoidFunction,
-  inputProps?:InputProps,
+  inputProps?: InputProps,
   inputEl?:React.ReactNode,
 };
 
@@ -130,7 +130,8 @@ export const Artwork = ({
          {props.inputEl || <Input // Custom or default Input Element
               style={{flexGrow:1, marginBottom: 0, fontSize: ".8rem", padding: ".3rem"}}
               value={props.name}
-              onChange={inputProps.onChange || ((e) => {})}
+              onChange={inputProps.onChange || (() => {})}
+              
               {...inputProps} // Add onChange/onBlur to update name
             />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>

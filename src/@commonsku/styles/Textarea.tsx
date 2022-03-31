@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { CSSObject, StyledComponentProps } from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
 import {Label} from './Label'
 import { getThemeColor } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
@@ -82,11 +82,18 @@ export const Textarea = styled.textarea<BaseTextareaProps>`
   ${SharedStyles}
 `;
 
-type TextareaProps = StyledComponentProps<'textarea', any, BaseTextareaProps, never>;
-
-export const LabeledTextarea = ({ label, name, ...props}: TextareaProps & {label: string, name?: string, noMargin?: boolean} & SharedStyleTypes) => {
-  return <div>
-    <Label htmlFor={name}>{label}</Label>
-    <Textarea name={name} {...props}></Textarea>
-  </div>
-}
+type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>
+  & BaseTextareaProps
+  & {
+    label: string,
+    name?: string,
+    noMargin?: boolean
+  } & SharedStyleTypes;
+export const LabeledTextarea: React.FC<TextareaProps> = React.forwardRef(
+  ({ label, name, ...props}: TextareaProps, ref: React.Ref<HTMLTextAreaElement>) => {
+    return <div>
+      <Label htmlFor={name}>{label}</Label>
+      <Textarea name={name} {...props}></Textarea>
+    </div>
+  }
+);

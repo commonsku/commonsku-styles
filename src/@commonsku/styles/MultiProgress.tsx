@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import {Text, Number} from './Text'
 import { useWindowSize } from './hooks'
@@ -47,17 +47,6 @@ const ProgressBar = styled.div<ProgressBarProps>`
   position: absolute;
 `
 
-const StyledProgressTitle = styled(Text)`
-  display: inline-block;
-  position: absolute;
-  z-index: 9;
-  vertical-align: middle;
-  padding: 12px;
-  color: #FFFFFF;
-  font-size: 18px;
-  text-shadow: 0px 1px 2px #40B07E;
-`;
-
 type LabeledBarprops = ProgressBarProps & {
   text?: string | number,
   textColor?: string,
@@ -74,6 +63,7 @@ const LabeledBar = (props: LabeledBarprops) => {
       y: rect.y,
       width: (rect.width > width ? width : rect.width)-rect.x,
     } : {...s, height: 0, width: 0, x: 0, y: 0,}));
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [width, props.text, props.value]);
   const text = (props.text || '') + '';
 

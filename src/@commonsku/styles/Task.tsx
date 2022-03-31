@@ -76,6 +76,7 @@ export type CalendarTaskProps = {
   assignee?: string;
   checked?: boolean;
   overdue?: boolean;
+  order?: number;
   onClickCheckbox?: (checked: boolean) => any;
   isDescriptionHtml?: boolean;
   draggable?: boolean;
@@ -83,52 +84,81 @@ export type CalendarTaskProps = {
   Icon?: React.ReactNode;
 };
 
-const CalendarTask = React.forwardRef(({
-  title,
-  description,
-  date,
-  completed=false,
-  assignee,
-  onClickCheckbox,
-  colorType='light-green',
-  isDescriptionHtml=false,
-  hideCheckbox=false,
-  Icon=null,
-  ...props
-}: React.PropsWithChildren<CalendarTaskProps & SharedStyleTypes>, ref: React.Ref<HTMLInputElement>) => {
+type CalendarTaskHtmlProps = CalendarTaskProps
+  & SharedStyleTypes
+  & React.InputHTMLAttributes<HTMLInputElement>;
+const CalendarTask = React.forwardRef<HTMLInputElement, CalendarTaskHtmlProps>((
+  {
+    title,
+    description,
+    date,
+    completed=false,
+    assignee,
+    onClickCheckbox,
+    colorType='light-green',
+    isDescriptionHtml=false,
+    hideCheckbox=false,
+    Icon=null,
+    ...props
+  },
+  ref
+) => {
   const [checked, setChecked] = useState<boolean>(completed);
 
   useEffect(() => {
     setChecked(completed);
   }, [completed, title, date]);
 
+  const checkboxStyles = React.useMemo(() => {
+    const styles: React.CSSProperties = {};
+    if (!checked) {
+      if (colorType === 'light-red') {
+        styles['borderColor'] = 'rgba(209, 69, 121, 0.24)';
+      } else {
+        styles['borderColor'] = '#BEF1DA';
+      }
+    } else {
+      styles['filter'] = 'saturate(0)';
+    }
+    return styles;
+  }, [checked, colorType]);
+
+  const RenderTaskLabel = React.useCallback(() => {
+    let DateElem: React.ReactNode = null;
+    if (date) {
+      DateElem = <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div>;
+    }
+
+    return (
+      <TaskLabel
+        onClick={e => { e.preventDefault(); }}
+        style={{fontWeight: 'bold' }}
+        hasCheckbox={!hideCheckbox}
+      >
+        <TaskName style={{width: hideCheckbox && Icon ? '80%' : '100%'}}>{title}</TaskName>
+        {DateElem}
+        {hideCheckbox && Icon ? Icon : null}
+      </TaskLabel>
+    );
+  }, [date, title, hideCheckbox, Icon]);
+
   return (
     <StyledCalendarTaskWrapper
       backgroundColor={colorType === 'light-red' ? '#ffebf2' : '#01d37417'}
       {...props}
+      style={{
+        ...(props.style || {}),
+        ...(checked ? { filter: 'saturate(0)' } : {}),
+      }}
     >
       {!hideCheckbox ? <LabeledCheckbox ref={ref}
         stopPropagation
         checked={checked}
         checkboxPosition="top-right"
-        checkboxStyle={{
-          borderColor: checked
-            ? undefined : (
-              colorType === 'light-red' ? 'rgba(209, 69, 121, 0.24)' : '#BEF1DA'
-            ),
-        }}
+        checkboxStyle={checkboxStyles}
         hoverByLabel={false}
         labelStyle={{width: '100%', paddingLeft: 0, paddingRight: 0, marginRight: 0, marginLeft: 0, margin: 0,}}
-        label={
-          <TaskLabel
-            onClick={e => { e.preventDefault(); }}
-            style={{fontWeight: 'bold' }}
-            hasCheckbox={!hideCheckbox}
-          >
-            <TaskName>{title}</TaskName>
-            {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
-          </TaskLabel>
-        }
+        label={RenderTaskLabel()}
         onClick={(e: React.MouseEvent<HTMLInputElement>) => {
           e && e.preventDefault();
           e && e.stopPropagation();
@@ -141,24 +171,15 @@ const CalendarTask = React.forwardRef(({
             return !s;
           });
         }}
-      /> : <>
-        <TaskLabel
-          onClick={e => { e.preventDefault(); }}
-          style={{fontWeight: 'bold', }}
-        >
-          <TaskName style={{width: hideCheckbox && Icon ? '80%' : '100%'}}>{title}</TaskName>
-          {date ? <div>{_.isDate(date) ? format(date, 'yyyy-mm-dd') : date}</div> : null}
-          {hideCheckbox && Icon ? Icon : null}
-        </TaskLabel>
-      </>}
+      /> : RenderTaskLabel()}
       <StyledCalendarTaskBody
         {...(isDescriptionHtml && typeof description === 'string'
             ? { dangerouslySetInnerHTML: { __html: description } }
             : { children: description })}
       />
       <div className="task-metadata">
-        {typeof assignee !== "undefined" ? "for " + assignee! : null}
-        {typeof assignee !== "undefined" ? "on " : null}
+        {assignee ? "for " + assignee : null}
+        {assignee ? "on " : null}
       </div>
     </StyledCalendarTaskWrapper>
   );
