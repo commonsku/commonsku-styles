@@ -301,7 +301,7 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
 type IconFuncProps = { color: string; [key: string]: any };
 export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
-  Icon: TButtonIcon | React.ReactElement<IconFuncProps>;
+  Icon?: TButtonIcon | React.ReactElement<IconFuncProps>;
   iconProps?: {[key: string]: any};
   iconPosition?: 'left' | 'right';
   style?: React.CSSProperties;
@@ -319,6 +319,8 @@ export function IconButton({
     : { color: '#fff' };
 
   const RenderIcon = React.useMemo(() => {
+    if (!Icon) { return null; }
+
     let btnSize = "small";
     if (size !== "tiny" && size !== "small") {
       btnSize = "medium";
