@@ -1,7 +1,7 @@
 import React from 'react'
 import BaseSelect, { Props as SelectProps, Styles, Theme, components, createFilter, mergeStyles } from 'react-select'
-import BaseCreatableSelect, { Props as CreatableSelectProps, makeCreatableSelect, Creatable } from 'react-select/creatable'
-import BaseAsyncSelect, { Async, Props as AsyncSelectProps } from 'react-select/async'
+import BaseCreatableSelect, { Props as CreatableSelectProps, makeCreatableSelect } from 'react-select/creatable'
+import BaseAsyncSelect, { Props as AsyncSelectProps } from 'react-select/async'
 import { getThemeColor, colors } from './Theme';
 import {Label} from './Label'
 import { document } from '../utils';
@@ -219,7 +219,7 @@ const skuSelectTheme = (theme: Theme) => ({
 })
 
 // duplicate styles to overide .resku global styles
-const SKUSelect: React.ForwardRefExoticComponent<SKUSelectProps> =
+const SKUSelect: React.ForwardRefExoticComponent<SKUSelectProps & React.RefAttributes<BaseSelect>> =
   React.forwardRef<BaseSelect, SKUSelectProps>((
     {noMargin, menuRelative, inPopup, error, ...props},
     ref
@@ -248,7 +248,8 @@ const SKUSelect: React.ForwardRefExoticComponent<SKUSelectProps> =
   });
 
 type LabeledSelectProp = SKUSelectProps & {parentStyle?:React.CSSProperties};
-const LabeledSelect: React.ForwardRefExoticComponent<LabeledSelectProp> =
+type TLabeledSelect = React.ForwardRefExoticComponent<LabeledSelectProp & React.RefAttributes<BaseSelect>>;
+const LabeledSelect: TLabeledSelect =
   React.forwardRef<BaseSelect, LabeledSelectProp>(
     ({ parentStyle, ...props }, ref) => (
       <div style={parentStyle}>
@@ -258,8 +259,9 @@ const LabeledSelect: React.ForwardRefExoticComponent<LabeledSelectProp> =
     )
   );
 
-const SKUCreatableSelect: React.ForwardRefExoticComponent<SKUCreatableSelectProps> =
-  React.forwardRef<Creatable<GenericObject>, SKUCreatableSelectProps>(
+type TSKUCreatableSelect = React.ForwardRefExoticComponent<SKUCreatableSelectProps & React.RefAttributes<BaseCreatableSelect<GenericObject>>>;
+const SKUCreatableSelect: TSKUCreatableSelect =
+  React.forwardRef<BaseCreatableSelect<GenericObject>, SKUCreatableSelectProps>(
     ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
       const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
       const selectStyleProps = {
@@ -289,8 +291,9 @@ const SKUCreatableSelect: React.ForwardRefExoticComponent<SKUCreatableSelectProp
   );
 
 type LabeledCreatableSelectProps = SKUCreatableSelectProps & {parentStyle?:React.CSSProperties};
-const LabeledCreatableSelect: React.ForwardRefExoticComponent<LabeledCreatableSelectProps> =
-  React.forwardRef<Creatable<GenericObject>, LabeledCreatableSelectProps>(
+type TLabeledCreatableSelect = React.ForwardRefExoticComponent<LabeledCreatableSelectProps & React.RefAttributes<BaseCreatableSelect<GenericObject>>>;
+const LabeledCreatableSelect: TLabeledCreatableSelect =
+  React.forwardRef<BaseCreatableSelect<GenericObject>, LabeledCreatableSelectProps>(
     ({ parentStyle, ...props }, ref) => (
       <div style={parentStyle}>
         <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
@@ -300,8 +303,9 @@ const LabeledCreatableSelect: React.ForwardRefExoticComponent<LabeledCreatableSe
   );
 
 
-const SKUAsyncSelect: React.ForwardRefExoticComponent<SKUAsyncSelectProps> =
-  React.forwardRef<Async<GenericObject>, SKUAsyncSelectProps>(
+type TSKUAsyncSelect = React.ForwardRefExoticComponent<SKUAsyncSelectProps & React.RefAttributes<BaseAsyncSelect<GenericObject>>>;
+const SKUAsyncSelect: TSKUAsyncSelect =
+  React.forwardRef<BaseAsyncSelect<GenericObject>, SKUAsyncSelectProps>(
     ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
       const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
       const selectStyleProps = {
@@ -331,8 +335,9 @@ const SKUAsyncSelect: React.ForwardRefExoticComponent<SKUAsyncSelectProps> =
   );
 
 type LabeledAsyncSelectProps = SKUAsyncSelectProps & {parentStyle?:React.CSSProperties};
-const LabeledAsyncSelect: React.ForwardRefExoticComponent<LabeledAsyncSelectProps> =
-  React.forwardRef<Async<GenericObject>, LabeledAsyncSelectProps>(
+type TLabeledAsyncSelect = React.ForwardRefExoticComponent<LabeledAsyncSelectProps & React.RefAttributes<BaseAsyncSelect<GenericObject>>>;
+const LabeledAsyncSelect: TLabeledAsyncSelect =
+  React.forwardRef<BaseAsyncSelect<GenericObject>, LabeledAsyncSelectProps>(
     ({ parentStyle, ...props }, ref) => (
       <div style={parentStyle}>
         <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>

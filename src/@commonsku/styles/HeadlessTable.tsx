@@ -407,6 +407,7 @@ export function HeadlessTable({
 
   useEffect(() => {
     setSelectedId(selectedRowId);
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [selectedRowId]);
 
   useEffect(() => {

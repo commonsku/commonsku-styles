@@ -46,6 +46,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
         onClickDay,
     } = useCalendar({});
 
+    /* eslint-disable  @typescript-eslint/no-unused-vars */
     const [days, setDays] = useState(getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }), lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
     ).map((day, i) => ({ __id__: `day-${getWeek(day)}-${i}`, day, })));

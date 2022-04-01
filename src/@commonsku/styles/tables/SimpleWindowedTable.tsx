@@ -189,9 +189,10 @@ function SimpleWindowedTable({
     };
 
     useLayoutEffect(() => {
-        rowsRef.current && rowsRef.current.addEventListener('scroll', onListScroll);
+        const rowsElem = rowsRef.current;
+        rowsElem && rowsElem.addEventListener('scroll', onListScroll);
         return () => {
-            rowsRef.current && rowsRef.current.removeEventListener('scroll', onListScroll);
+            rowsElem && rowsElem.removeEventListener('scroll', onListScroll);
         };
     }, [rowsRef]);
 
