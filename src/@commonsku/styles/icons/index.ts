@@ -34,8 +34,6 @@ export { default as SalesUpArrowIcon } from './SalesUpArrowIcon';
 export { default as SalesDownArrowIcon } from './SalesDownArrowIcon';
 export { default as ErrorIcon } from './ErrorIcon';
 export { default as CheckmarkIcon } from './CheckmarkIcon';
-export { default as LeftArrowIcon } from './LeftArrowIcon';
-export { default as RightArrowIcon } from './RightArrowIcon';
 export { default as BulletIcon } from './BulletIcon';
 export { default as UsersIcon } from './UsersIcon';
 export { default as CheckboxIcon } from './CheckboxIcon';
