@@ -1,16 +1,40 @@
 import React from 'react';
-import { primary1 } from '../colors';
+import { teal } from '../colors';
 import SVG, { SVGIconProps } from './SvgIcon';
 
 type ChevronIconDirection = 'up' | 'right' | 'down' | 'left' | 'updown' | 'leftright';
 
 type ChevronIconProps = SVGIconProps & {direction?: ChevronIconDirection};
 export default function ChevronIcon({
-    color=primary1.main,
+    color=teal.main,
     direction="right",
+    altText="Next",
     size="medium",
     ...props
 }: ChevronIconProps) {
+
+    switch (direction) {
+        case "up":
+            altText="Up";
+            break;
+        case "right":
+            altText="Next";
+            break;
+        case "down":
+            altText="Down";
+            break;
+        case "left":
+            altText="Previous";
+            break;
+        case "updown":
+            altText="Up or Down";
+            break;
+        case "leftright":
+            altText="Left or Right";
+            break;
+        default:
+            altText="Next";
+    };
 
     const directionPath = React.useMemo(() => {
         if (direction === "right") {
@@ -30,7 +54,8 @@ export default function ChevronIcon({
     return "M9 6.71a.996.996 0 0 0 0 1.41L12.88 12 9 15.88a.996.996 0 1 0 1.41 1.41L15 12.7a.996.996 0 0 0 0-1.41L10.41 6.7c-.38-.38-1.02-.38-1.41.01Z";
     }, [direction]);
       
-    return <SVG size={size} {...props}>
+    return <SVG size={size} aria-labelledby="ChevronIcon" {...props}>
+        <title id="ChevronIcon">{altText}</title>
         <path fill="none" d="M0 0h24v24H0z" />
         <path
             d={directionPath}
