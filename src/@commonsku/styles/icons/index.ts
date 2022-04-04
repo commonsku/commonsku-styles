@@ -1,6 +1,5 @@
 export * from './TableIcon';
 export * from './FileIcon';
-export * from './DownloadIcon';
 export * from './CalendarIcon';
 export * from './CouponIcon';
 export * from './AwaitingProofIcon';
@@ -25,6 +24,7 @@ export * from './NavProdIcon';
 export * from './NavFinanceIcon';
 export * from './NavManagementIcon';
 export * from './YesMarketingIcon';
+export { default as DownloadIcon} from "./DownloadIcon"
 export { default as MarketingStatusIcon } from './MarketingStatusIcon';
 export { default as GearIcon } from './GearIcon';
 export { default as NavResourcesIcon } from './NavResourcesIcon';

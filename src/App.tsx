@@ -1288,7 +1288,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
           <IconsShowcase Icons={[<icons.GearIcon width="24"/>]} name="GearIcon" />
           <IconsShowcase Icons={[<icons.InfoIcon />]} name="InfoIcon" />
-          <IconsShowcase Icons={[<icons.LeftArrowIcon />]} name="LeftArrowIcon" />
           <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
           <IconsShowcase Icons={[<icons.Loading width={24}/>]} name="Loading" />
           <IconsShowcase Icons={[<icons.LockIcon />]} name="LockIcon" />
@@ -1307,7 +1306,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
           <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
           <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
-          <IconsShowcase Icons={[<icons.RightArrowIcon />]} name="RightArrowIcon" />
           <IconsShowcase Icons={[<icons.SalesDownArrowIcon />]} name="SalesDownArrowIcon" />
           <IconsShowcase Icons={[<icons.SalesUpArrowIcon />]} name="SalesUpArrowIcon" />
           <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
