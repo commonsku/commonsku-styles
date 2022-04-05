@@ -1256,7 +1256,7 @@ const App = () => {
             <icons.FilledChevronIcon direction="leftright" />
           ]} name="FilledChevronIcon" />
 
-          <IconsShowcase Icons={[<icons.CheckmarkOnlyIcon />]} name="CheckmarkOnlyIcon" />
+          <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon" />
           <IconsShowcase Icons={[<icons.AddIcon />]} name="AddIcon" />
           <IconsShowcase Icons={[<icons.SubtractIcon />]} name="SubtractIcon" />
           <IconsShowcase Icons={[<icons.SearchIcon />]} name="SearchIcon" />
@@ -1274,12 +1274,12 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ChangeRequestedIcon width="24"/>]} name="ChangeRequestedIcon"/>
           <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
           <IconsShowcase Icons={[<icons.CheckboxIcon />]} name="CheckboxIcon"/>
-          <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon"/>
+          <IconsShowcase Icons={[<icons.CompletedCheckmarkIcon />]} name="CompletedCheckmarkIcon"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon />]} name="CircleProgressIcon"/>
           <IconsShowcase Icons={[<icons.ClientApprovedIcon width="24" />]} name="ClientApprovedIcon"/>
           <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>
           <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
-          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
+          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>g
           <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
           <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
           <IconsShowcase Icons={[<icons.ErrorIcon />]} name="ErrorIcon" />
