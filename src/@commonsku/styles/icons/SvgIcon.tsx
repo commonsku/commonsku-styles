@@ -51,6 +51,7 @@ type BaseSVGIconProps = {
     width?: string | number;
     height?: string | number;
     altText?: string;
+    pointer?: boolean;
     iconSizes?: TIconSizeObj;
 };
 
@@ -82,6 +83,7 @@ const SVG = styled.svg.attrs<BaseSVGIconProps>(p => {
         
         styles['height'] = p.height !== undefined && p.height !== '' ? p.height : size.height;
         styles['width'] = p.width !== undefined && p.width !== '' ? p.width : size.width;
+        styles['cursor'] = p.pointer ? 'pointer' : undefined;
     
         return styles;
     },

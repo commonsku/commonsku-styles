@@ -6,7 +6,7 @@ type AddIconProps = SVGIconProps;
 export default function AddIcon({
     color=green.main,
     size="medium",
-    altText="Checkmark Icon",
+    altText="Checked checkbox",
     ...props
 }: AddIconProps) {
     return <SVG size={size} aria-labelledby="CheckmarkIcon" {...props}>

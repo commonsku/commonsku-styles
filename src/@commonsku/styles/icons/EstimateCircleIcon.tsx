@@ -1,6 +1,6 @@
 import React from 'react';
 import SVG, { SVGIconProps } from './SvgIcon';
-import { primary1, secondary1 } from '../colors';
+import { teal, pink } from '../colors';
 
 type IconVariants = 'primary' | 'cta';
 
@@ -9,6 +9,7 @@ export default function EstimateCircleIcon({
     variant="primary",
     selected=false,
     size,
+    altText="Estimate order stage",
     style={},
     ...props
 }: EstimateCircleIconProps) {
@@ -50,26 +51,26 @@ export default function EstimateCircleIcon({
         if (variant === 'cta' && selected) {
             return {
                 fill: 'none',
-                stroke: secondary1.main,
-                textColor: secondary1.main,
+                stroke: pink.main,
+                textColor: pink.main,
             };
         } else if (variant === 'primary' && selected) {
             return {
                 fill: 'none',
-                stroke: primary1.main,
-                textColor: primary1.main,
+                stroke: teal.main,
+                textColor: teal.main,
             };
         } else if (variant === 'cta' && selected === false ) {
             return {
-                fill: secondary1['20'],
-                stroke: secondary1['30'],
-                textColor: secondary1.main,
+                fill: pink['20'],
+                stroke: pink['30'],
+                textColor: pink.main,
             };
         }
         return {
-            fill: primary1['20'],
-            stroke: primary1['30'],
-            textColor: primary1.main,
+            fill: teal['20'],
+            stroke: teal['30'],
+            textColor: teal.main,
         };
     }, [variant, selected]);
     
@@ -79,30 +80,32 @@ export default function EstimateCircleIcon({
             style={style}
             {...props}
             size = {size}
+            aria-labelledby="EstimateCircleIcon"
             iconSizes={iconSizes}
             >
-         {selected ? <>
-                <path
-                    d="M36 10.262c0-2.354 1.917-4.293 4.247-3.96a30 30 0 0 1 25.45 25.45c.334 2.33-1.605 4.248-3.959 4.248-2.353 0-4.219-1.926-4.683-4.234a21.476 21.476 0 0 0-16.821-16.821C37.926 14.48 36 12.615 36 10.262Z"
-                    fill={iconColors.stroke}
-                />
-                <circle cx={36} cy={36} r={34} stroke={iconColors.stroke} strokeWidth={4} />
-                <path
-                    d="M32.743 40h7.21v-1.68h-5.46V35.8h4.2v-1.68h-4.2v-2.24h5.32V30.2h-7.07V40Z"
-                    fill={iconColors.textColor}
-                />
-            </> : <>
-                
-                <circle cx={36} cy={36} r={32} fill={iconColors.fill} />
-                <path
-                    d="M36 10.262c0-2.354 1.917-4.293 4.247-3.96a30 30 0 0 1 25.45 25.45c.334 2.33-1.605 4.248-3.959 4.248-2.353 0-4.219-1.926-4.683-4.234a21.476 21.476 0 0 0-16.821-16.821C37.926 14.48 36 12.615 36 10.262Z"
-                    fill={iconColors.stroke}
-                />
-                <path
-                    d="M32.743 40h7.21v-1.68h-5.46V35.8h4.2v-1.68h-4.2v-2.24h5.32V30.2h-7.07V40Z"
-                    fill={iconColors.textColor}
-                />
-                
-            </>}
+                <title id="EstimateCircleIcon">{altText}</title>
+                {selected ? <>
+                        <path
+                            d="M36 10.262c0-2.354 1.917-4.293 4.247-3.96a30 30 0 0 1 25.45 25.45c.334 2.33-1.605 4.248-3.959 4.248-2.353 0-4.219-1.926-4.683-4.234a21.476 21.476 0 0 0-16.821-16.821C37.926 14.48 36 12.615 36 10.262Z"
+                            fill={iconColors.stroke}
+                        />
+                        <circle cx={36} cy={36} r={34} stroke={iconColors.stroke} strokeWidth={4} />
+                        <path
+                            d="M32.743 40h7.21v-1.68h-5.46V35.8h4.2v-1.68h-4.2v-2.24h5.32V30.2h-7.07V40Z"
+                            fill={iconColors.textColor}
+                        />
+                    </> : <>
+                        
+                        <circle cx={36} cy={36} r={32} fill={iconColors.fill} />
+                        <path
+                            d="M36 10.262c0-2.354 1.917-4.293 4.247-3.96a30 30 0 0 1 25.45 25.45c.334 2.33-1.605 4.248-3.959 4.248-2.353 0-4.219-1.926-4.683-4.234a21.476 21.476 0 0 0-16.821-16.821C37.926 14.48 36 12.615 36 10.262Z"
+                            fill={iconColors.stroke}
+                        />
+                        <path
+                            d="M32.743 40h7.21v-1.68h-5.46V35.8h4.2v-1.68h-4.2v-2.24h5.32V30.2h-7.07V40Z"
+                            fill={iconColors.textColor}
+                        />
+                        
+                    </>}
     </SVG>
 }

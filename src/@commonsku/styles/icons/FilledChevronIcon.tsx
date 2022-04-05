@@ -15,22 +15,22 @@ export default function FilledChevronIcon({
 
     switch (direction) {
         case "up":
-            altText="Up";
+            altText="Sort ascending";
             break;
         case "right":
             altText="Next";
             break;
         case "down":
-            altText="Down";
+            altText="Sort descending";
             break;
         case "left":
             altText="Previous";
             break;
         case "updown":
-            altText="Up or Down";
+            altText="Sort by";
             break;
         case "leftright":
-            altText="Left or Right";
+            altText="Next / Previous";
             break;
         default:
             altText="Next";

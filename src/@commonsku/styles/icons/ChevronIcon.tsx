@@ -27,10 +27,10 @@ export default function ChevronIcon({
             altText="Previous";
             break;
         case "updown":
-            altText="Up or Down";
+            altText="Up / Down";
             break;
         case "leftright":
-            altText="Left or Right";
+            altText="Next / Previous";
             break;
         default:
             altText="Next";

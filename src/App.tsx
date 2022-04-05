@@ -1279,7 +1279,7 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ClientApprovedIcon width="24" />]} name="ClientApprovedIcon"/>
           <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>
           <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
-          <IconsShowcase Icons={[<icons.CrossIcon />]} name="CrossIcon"/>
+          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
           <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
           <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
           <IconsShowcase Icons={[<icons.ErrorIcon />]} name="ErrorIcon" />
@@ -1321,28 +1321,28 @@ const App = () => {
             <icons.MarketingStatusIcon approved/>, 
           ]} name="MarketingStatusIcon" />
           <IconsShowcase Icons={[
-            <icons.OpportunityCircleIcon variant="primary"/>,
-            <icons.OpportunityCircleIcon variant="primary" selected />,
-            <icons.OpportunityCircleIcon variant="cta" />,
-            <icons.OpportunityCircleIcon variant="cta" selected />
+            <icons.OpportunityCircleIcon variant="primary" pointer/>,
+            <icons.OpportunityCircleIcon variant="primary" selected pointer/>,
+            <icons.OpportunityCircleIcon variant="cta" pointer/>,
+            <icons.OpportunityCircleIcon variant="cta" selected pointer/>
           ]} name="OpportunityCircleIcon" />
           <IconsShowcase Icons={[
-            <icons.PresentationCircleIcon variant="primary" />,
+            <icons.PresentationCircleIcon variant="primary" pointer/>,
             <icons.PresentationCircleIcon variant="primary" selected />,
-            <icons.PresentationCircleIcon variant="cta" />,
-            <icons.PresentationCircleIcon variant="cta" selected/>, 
+            <icons.PresentationCircleIcon variant="cta" style={{cursor: 'zoom-in'}}/>,
+            <icons.PresentationCircleIcon variant="cta" selected pointer/>, 
             ]} name="PresentationCircleIcon" />
           <IconsShowcase Icons={[
-            <icons.EstimateCircleIcon variant="primary" />,
-            <icons.EstimateCircleIcon variant="primary" selected />,
-            <icons.EstimateCircleIcon variant="cta" />,
-            <icons.EstimateCircleIcon variant="cta" selected />
+            <icons.EstimateCircleIcon variant="primary" pointer/>,
+            <icons.EstimateCircleIcon variant="primary" selected pointer/>,
+            <icons.EstimateCircleIcon variant="cta" pointer/>,
+            <icons.EstimateCircleIcon variant="cta" selected pointer/>
             ]} name="EstimateCircleIcon" />
           <IconsShowcase Icons={[
-            <icons.SalesOrderCircleIcon variant="primary" />,
-            <icons.SalesOrderCircleIcon variant="primary" selected />,
-            <icons.SalesOrderCircleIcon variant="cta" />,
-            <icons.SalesOrderCircleIcon variant="cta" selected />
+            <icons.SalesOrderCircleIcon variant="primary" pointer/>,
+            <icons.SalesOrderCircleIcon variant="primary" selected pointer/>,
+            <icons.SalesOrderCircleIcon variant="cta" pointer/>,
+            <icons.SalesOrderCircleIcon variant="cta" selected pointer/>
           ]} name="SalesOrderCircleIcon" />          
 
 
