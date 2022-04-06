@@ -1282,7 +1282,10 @@ const App = () => {
           <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>g
           <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
           <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
-          <IconsShowcase Icons={[<icons.ErrorIcon />]} name="ErrorIcon" />
+          <IconsShowcase Icons={[
+            <icons.AlertIcon />,
+            <icons.AlertIcon filled/>
+          ]} name="AlertIcon" />
           <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
           <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
           <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />

@@ -32,7 +32,7 @@ export { default as CircleProgressIcon } from './CircleProgressIcon';
 export { default as Loading } from './Loading';
 export { default as SalesUpArrowIcon } from './SalesUpArrowIcon';
 export { default as SalesDownArrowIcon } from './SalesDownArrowIcon';
-export { default as ErrorIcon } from './ErrorIcon';
+export { default as AlertIcon } from './AlertIcon';
 export { default as CompletedCheckmarkIcon } from './CompletedCheckmarkIcon';
 export { default as BulletIcon } from './BulletIcon';
 export { default as UsersIcon } from './UsersIcon';
