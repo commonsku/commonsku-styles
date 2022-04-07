@@ -303,7 +303,7 @@ export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon?: TButtonIcon | React.ReactElement<IconFuncProps>;
   iconProps?: {[key: string]: any};
-  iconPosition?: 'left' | 'right';
+  iconPosition?: 'left' | 'right' | 'top';
   style?: React.CSSProperties;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>;
 export function IconButton({
@@ -360,8 +360,14 @@ export function IconButton({
     <Button size={size} {...props} style={{
       ...(props.style || {}),
       padding: buttonPadding({ ...props, size: size }),
+      ...(iconPosition === "top" ? {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+
+      } : {}),
     }}>
-      {iconPosition !== 'right' ? RenderIcon : null}
+      {['left', 'top'].includes(iconPosition) ? RenderIcon : null}
       {children}
       {iconPosition === 'right' ? RenderIcon : null}
     </Button>

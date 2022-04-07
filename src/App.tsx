@@ -571,7 +571,7 @@ const App = () => {
             
             <div style={{display: 'flex', flexDirection: 'column'}}>
               <ButtonsGroup mb={30}>
-                <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <IconButton Icon={icons.ArrowIcon} iconPosition={"top"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
                 <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
                 <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
                 <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
@@ -1279,7 +1279,7 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ClientApprovedIcon width="24" />]} name="ClientApprovedIcon"/>
           <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>
           <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
-          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>g
+          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
           <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
           <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
           <IconsShowcase Icons={[
@@ -1314,8 +1314,11 @@ const App = () => {
           <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
           <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
           <IconsShowcase Icons={[<icons.TaskIcon width="24"/>]} name="TaskIcon" />
-          <IconsShowcase Icons={[<icons.TilesIcon width="24"/>]} name="TilesIcon" />
-          <IconsShowcase Icons={[<icons.TrashIcon width="24"/>]} name="TrashIcon" />
+          <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />
+          <IconsShowcase Icons={[
+            <icons.TrashIcon />,
+            <icons.TrashIcon filled />,
+          ]} name="TrashIcon" />
           <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
           <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
           <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />

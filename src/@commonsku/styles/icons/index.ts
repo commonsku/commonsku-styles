@@ -17,13 +17,13 @@ export * from './ChatIcon';
 export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';
 export * from './PinIcon';
-export * from './TrashIcon';
 export * from './NavConnectIcon';
 export * from './NavSalesIcon';
 export * from './NavProdIcon';
 export * from './NavFinanceIcon';
 export * from './NavManagementIcon';
 export * from './YesMarketingIcon';
+export { default as TrashIcon } from './TrashIcon';
 export { default as DownloadIcon} from "./DownloadIcon"
 export { default as MarketingStatusIcon } from './MarketingStatusIcon';
 export { default as GearIcon } from './GearIcon';
