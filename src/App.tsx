@@ -1304,7 +1304,14 @@ const App = () => {
           <IconsShowcase Icons={[<icons.NoteIcon color={primary1.main} width="24"/>]} name="NoteIcon" />
           <IconsShowcase Icons={[<icons.PanelIcon width="24"/>]} name="PanelIcon" />
           <IconsShowcase Icons={[<icons.PendingApprovalIcon width="24"/>]} name="PendingApprovalIcon" />
-          <IconsShowcase Icons={[<icons.PinIcon width="24"/>]} name="PinIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.PinIcon />, 
+            <icons.PinIcon filled/>,
+            <icons.PinIcon unpin />, 
+            <icons.PinIcon unpin filled/>
+          ]} name="PinIcon" />
+          
           <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
           <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
           <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
