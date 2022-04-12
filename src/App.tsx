@@ -843,7 +843,6 @@ const App = () => {
             <icons.ProofReceivedIcon width={"1.5rem"}/>
             <icons.PendingApprovalIcon width={"1.5rem"}/>
             <icons.ChangeRequestedIcon width={"1.5rem"}/>
-            <icons.PanelIcon color={"#00d374"} width={"1.5rem"}/>
             <icons.TaskIcon color={"black"} width={"1.5rem"}/>
             <icons.NoteIcon color={"black"} width={"1.5rem"}/>
             <icons.NoMarketingIcon width={"1.5rem"}/>
@@ -1301,8 +1300,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.NavResourcesIcon color={primary1.main} />]} name="NavResourcesIcon" />
           <IconsShowcase Icons={[<icons.NavSalesIcon color={primary1.main} />]} name="NavSalesIcon" />
           <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
-          <IconsShowcase Icons={[<icons.NoteIcon color={primary1.main} width="24"/>]} name="NoteIcon" />
-          <IconsShowcase Icons={[<icons.PanelIcon width="24"/>]} name="PanelIcon" />
           <IconsShowcase Icons={[<icons.PendingApprovalIcon width="24"/>]} name="PendingApprovalIcon" />
 
           <IconsShowcase Icons={[
@@ -1311,7 +1308,7 @@ const App = () => {
             <icons.PinIcon unpin />, 
             <icons.PinIcon unpin filled/>
           ]} name="PinIcon" />
-          
+
           <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
           <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
           <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
@@ -1320,7 +1317,10 @@ const App = () => {
           <IconsShowcase Icons={[<icons.SalesUpArrowIcon />]} name="SalesUpArrowIcon" />
           <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
           <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
-          <IconsShowcase Icons={[<icons.TaskIcon width="24"/>]} name="TaskIcon" />
+          <IconsShowcase Icons={[<icons.TaskIcon />]} name="TaskIcon" />
+          <IconsShowcase Icons={[<icons.AddTaskIcon />]} name="AddTaskIcon" />
+          <IconsShowcase Icons={[<icons.NoteIcon />]} name="NoteIcon" />
+          <IconsShowcase Icons={[<icons.AddNoteIcon />]} name="AddNoteIcon" />
           <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />
           <IconsShowcase Icons={[
             <icons.TrashIcon />,

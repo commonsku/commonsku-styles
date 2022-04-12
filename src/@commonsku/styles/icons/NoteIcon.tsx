@@ -1,32 +1,20 @@
-import React from "react"
+import React from 'react';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { teal } from '../colors';
 
-export function NoteIcon({
-  color="#000000", 
-  width, 
-  mr,
-  mt
-}: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number
-}>) {
-  return (
-    <svg
-    viewBox="0 0 116 116"
-    fillRule="evenodd"
-    clipRule="evenodd"
-    strokeLinejoin="round"
-    strokeMiterlimit={2}
-    fill={color}
-    width={width}
-    style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
-  >
-    <path
-      d="M79.65 1.119A3.5 3.5 0 0077.175.094H18.914A9.413 9.413 0 009.5 9.507V105.7a9.414 9.414 0 009.414 9.414H97.81c5.199 0 9.413-4.215 9.413-9.414V30.142a3.5 3.5 0 00-1.025-2.475L79.65 1.119zm-3.853 6.046l-.072-.071H18.914A2.413 2.413 0 0016.5 9.507V105.7a2.414 2.414 0 002.414 2.414H97.81a2.413 2.413 0 002.413-2.414V34.966H75.797V7.165z"
-    />
-  </svg>
-  )
+type NoteIconProps = SVGIconProps;
+export default function NoteIcon({
+    color=teal.main,
+    size="medium",
+    altText="Notes",
+    ...props
+}: NoteIconProps) {
+    return <SVG size={size} aria-labelledby="NoteIcon" {...props}>
+        <title id="NoteIcon" >{altText}</title>
+        <path
+          d="M8 16h8v2H8v-2Zm0-4h8v2H8v-2Zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6Zm4 18H6V4h7v5h5v11Z"
+          fill={color}
+        />
+    </SVG>
 }
 
-export default NoteIcon
