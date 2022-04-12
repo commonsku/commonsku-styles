@@ -9,7 +9,6 @@ export * from './ChangeRequestedIcon';
 export * from './ClientApprovedIcon';
 export * from './ProofingCompleteIcon';
 export * from './InfoIcon';
-export * from './LockIcon';
 export * from './ChatIcon';
 export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';
@@ -25,6 +24,7 @@ export { default as TaskIcon } from './TaskIcon';
 export { default as AddTaskIcon } from './AddTaskIcon';
 export { default as NoteIcon } from './NoteIcon';
 export { default as AddNoteIcon } from './AddNoteIcon';
+export { default as LockIcon } from './LockIcon';
 export { default as DownloadIcon} from "./DownloadIcon"
 export { default as MarketingStatusIcon } from './MarketingStatusIcon';
 export { default as GearIcon } from './GearIcon';

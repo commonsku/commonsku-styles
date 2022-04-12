@@ -550,7 +550,7 @@ const App = () => {
                   {onClick: () => null, content: 'New Address'},
                 ]
                }/>
-              <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon width="40" />}>
+              <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
                 <Row>
                   <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
                   <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
@@ -1292,7 +1292,10 @@ const App = () => {
           <IconsShowcase Icons={[<icons.InfoIcon />]} name="InfoIcon" />
           <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
           <IconsShowcase Icons={[<icons.Loading width={24}/>]} name="Loading" />
-          <IconsShowcase Icons={[<icons.LockIcon />]} name="LockIcon" />
+          <IconsShowcase Icons={[
+            <icons.LockIcon />,
+            <icons.LockIcon locked />,
+          ]} name="LockIcon" />
           <IconsShowcase Icons={[<icons.NavConnectIcon color={primary1.main} />]} name="NavConnectIcon" />
           <IconsShowcase Icons={[<icons.NavFinanceIcon color={primary1.main}/>]} name="NavFinanceIcon" />
           <IconsShowcase Icons={[<icons.NavManagementIcon color={primary1.main}/>]}  name="NavManagementIcon" />

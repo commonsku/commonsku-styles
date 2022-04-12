@@ -1,14 +1,17 @@
 import React from 'react';
-import {primary1 } from '../colors';
+import { teal } from '../colors';
 import SVG, { SVGIconProps } from './SvgIcon';
 
 type RadioIconProps = SVGIconProps & {selected?: boolean};
 export default function RadioIcon({
-    color=primary1.main,
+    color=teal.main,
     size="medium",
     selected=false,
+    altText="Select",
     ...props
 }: RadioIconProps) {
+
+    selected ? altText="Unselect" : altText="Select";
 
     const selectPath = React.useMemo(() => {
         if (selected === true) {
@@ -18,7 +21,8 @@ export default function RadioIcon({
     return <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8Z" fill={color} />
     }, [selected, color]);
       
-    return <SVG size={size} {...props}>
+    return <SVG size={size} aria-labelledby="RadioIcon" {...props}>
+        <title id="RadioIcon">{altText}</title>
         <path fill="none" d="M0 0h24v24H0z" />
         {selectPath}
     </SVG>;
