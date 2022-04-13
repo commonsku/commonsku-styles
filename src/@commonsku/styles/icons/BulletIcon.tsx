@@ -1,10 +1,10 @@
 import React from 'react';
 import SVG, { SVGIconProps } from './SvgIcon';
-import { primary1 } from '../colors';
+import { teal } from '../colors';
 
 type BulletIconProps = SVGIconProps;
 export default function BulletIcon({
-    color=primary1.main,
+    color=teal.main,
     size="medium",
     ...props
 }: BulletIconProps) {
