@@ -1289,7 +1289,10 @@ const App = () => {
           <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
           <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
           <IconsShowcase Icons={[<icons.GearIcon width="24"/>]} name="GearIcon" />
-          <IconsShowcase Icons={[<icons.InfoIcon />]} name="InfoIcon" />
+          <IconsShowcase Icons={[
+            <icons.InfoIcon />,
+            <icons.InfoIcon filled />
+          ]} name="InfoIcon" />
           <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
           <IconsShowcase Icons={[<icons.Loading width={24}/>]} name="Loading" />
           <IconsShowcase Icons={[
