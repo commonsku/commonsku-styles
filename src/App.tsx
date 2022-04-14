@@ -1319,8 +1319,10 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
           <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
           <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
-          <IconsShowcase Icons={[<icons.SalesDownArrowIcon />]} name="SalesDownArrowIcon" />
-          <IconsShowcase Icons={[<icons.SalesUpArrowIcon />]} name="SalesUpArrowIcon" />
+          <IconsShowcase Icons={[
+            <icons.SalesArrowIcon />,
+            <icons.SalesArrowIcon direction="down" />,
+          ]} name="SalesArrowIcon" />
           <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
           <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
           <IconsShowcase Icons={[<icons.TaskIcon />]} name="TaskIcon" />
