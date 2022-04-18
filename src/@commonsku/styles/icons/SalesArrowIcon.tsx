@@ -45,7 +45,7 @@ export default function SalesArrowIcon({
 
     if(direction === "down") {
         color=errors.main;
-        altText="down";
+        altText="Down";
     } else {
         color = green.main;
         altText="Up"

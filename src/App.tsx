@@ -71,7 +71,7 @@ import {
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
-import { neutrals, primary1 } from '@commonsku/styles/colors';
+import { neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 
 const initialState = {
@@ -845,8 +845,6 @@ const App = () => {
             <icons.ChangeRequestedIcon width={"1.5rem"}/>
             <icons.TaskIcon color={"black"} width={"1.5rem"}/>
             <icons.NoteIcon color={"black"} width={"1.5rem"}/>
-            <icons.NoMarketingIcon width={"1.5rem"}/>
-            <icons.YesMarketingIcon width={"1.5rem"}/>
             <icons.ChatIcon color={"#00d374"} width={"1.5rem"} notifs={15}/>
             <icons.PinIcon color={"#00d374"} width={"1.5rem"} pinned/>
             <icons.TrashIcon color={"#00d374"} width={"1.5rem"} pinned/>
@@ -1299,12 +1297,37 @@ const App = () => {
             <icons.LockIcon />,
             <icons.LockIcon locked />,
           ]} name="LockIcon" />
-          <IconsShowcase Icons={[<icons.NavConnectIcon color={primary1.main} />]} name="NavConnectIcon" />
-          <IconsShowcase Icons={[<icons.NavFinanceIcon color={primary1.main}/>]} name="NavFinanceIcon" />
-          <IconsShowcase Icons={[<icons.NavManagementIcon color={primary1.main}/>]}  name="NavManagementIcon" />
-          <IconsShowcase Icons={[<icons.NavProdIcon color={primary1.main}/>]} name="NavProdIcon" />
-          <IconsShowcase Icons={[<icons.NavResourcesIcon color={primary1.main} />]} name="NavResourcesIcon" />
-          <IconsShowcase Icons={[<icons.NavSalesIcon color={primary1.main} />]} name="NavSalesIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.NavConnectIcon color={teal.main}/>,
+            <icons.NavConnectIcon color={teal.main} filled />
+          ]} name="NavConnectIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.NavFinanceIcon color={primary1.main}/>,
+            <icons.NavFinanceIcon color={primary1.main} filled/>
+          ]} name="NavFinanceIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.NavManagementIcon color={primary1.main}/>,
+            <icons.NavManagementIcon color={primary1.main} filled/>
+          ]}  name="NavManagementIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.NavProdIcon color={primary1.main}/>,
+            <icons.NavProdIcon color={primary1.main} filled/>
+          ]} name="NavProdIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.NavResourcesIcon color={primary1.main} />,
+            <icons.NavResourcesIcon color={primary1.main} filled />
+          ]} name="NavResourcesIcon" />
+          
+          <IconsShowcase Icons={[
+            <icons.NavSalesIcon color={teal.main} />,
+            <icons.NavSalesIcon color={teal.main} filled />
+          ]} name="NavSalesIcon"/>
+
           <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
           <IconsShowcase Icons={[<icons.PendingApprovalIcon width="24"/>]} name="PendingApprovalIcon" />
 
@@ -1336,7 +1359,6 @@ const App = () => {
           ]} name="TrashIcon" />
           <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
           <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
-          <IconsShowcase Icons={[<icons.YesMarketingIcon width="24"/>]} name="YesMarketingIcon" />
           <IconsShowcase Icons={[
             <icons.MarketingStatusIcon />, 
             <icons.MarketingStatusIcon approved/>, 
