@@ -5,7 +5,7 @@ export * from './CouponIcon';
 export { default as AwaitingProofIcon } from './AwaitingProofIcon';
 export * from './ProofReceivedIcon';
 export * from './PendingApprovalIcon';
-export * from './ChangeRequestedIcon';
+export { default as ChangeRequestedIcon } from './ChangeRequestedIcon';
 export * from './ClientApprovedIcon';
 export * from './ProofingCompleteIcon';
 export * from './ChatIcon';
