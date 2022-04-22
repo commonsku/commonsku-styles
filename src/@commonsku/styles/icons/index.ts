@@ -7,7 +7,7 @@ export { default as ProofReceivedIcon } from './ProofReceivedIcon';
 export { default as PendingApprovalIcon } from './PendingApprovalIcon';
 export { default as ChangeRequestedIcon } from './ChangeRequestedIcon';
 export { default as ClientApprovedIcon } from './ClientApprovedIcon';
-export * from './ProofingCompleteIcon';
+export { default as ProofingCompleteIcon } from './ProofingCompleteIcon';
 export * from './ChatIcon';
 export * from './ColumnSelectIcon';
 export * from './NoMarketingIcon';

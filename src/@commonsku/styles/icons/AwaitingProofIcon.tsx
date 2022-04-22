@@ -4,7 +4,7 @@ import { yellow } from '../colors';
 
 type AwaitingProofIconProps = SVGIconProps;
 export default function AwaitingProofIcon({
-    color=yellow.main,
+    color=yellow[60],
     size="medium",
     altText="Awaiting Proof",
     ...props
