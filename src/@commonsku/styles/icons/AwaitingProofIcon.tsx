@@ -1,33 +1,21 @@
-import React from "react"
+import React from 'react';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { yellow } from '../colors';
 
-export function AwaitingProofIcon({
-  color="#ffd302", 
-  width, 
-  mr,
-  mt
-}: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number
-}>) {
-  return (
-    <svg
-    viewBox="0 0 35 35"
-    fillRule="evenodd"
-    clipRule="evenodd"
-    strokeLinejoin="round"
-    strokeMiterlimit={2}
-    fill={color}
-    width={width}
-    style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
-    >
-      <path
-        d="M.59 18.811s.027-.516.1-.787L5.23 1.13c.146-.54.636-.917 1.196-.917h21.92c.553 0 1.039.367 1.19.9 0 0 4.992 17.466 4.992 17.698v11.78a4.204 4.204 0 01-4.204 4.205H4.795A4.205 4.205 0 01.59 30.592v-11.78zm31.465 1.237H25.96l-.059 3.877a1.237 1.237 0 01-1.234 1.218l-13.59.018a1.236 1.236 0 01-1.238-1.237v-3.843c-1.768.043-4.957.11-6.775.077v10.434c0 .955.775 1.731 1.731 1.731h25.529c.956 0 1.731-.776 1.731-1.731V20.048zm-.414-2.473L27.412 2.687H7.374l-4.035 15.01c2.54.038 7.7-.121 7.7-.121a1.239 1.239 0 011.273 1.235v3.876l11.135-.016.058-3.878a1.236 1.236 0 011.237-1.218h6.899z"
-        fill="#ffca00"
-      />
-    </svg>
-  )
+type AwaitingProofIconProps = SVGIconProps;
+export default function AwaitingProofIcon({
+    color=yellow.main,
+    size="medium",
+    altText="Awaiting Proof",
+    ...props
+}: AwaitingProofIconProps) {
+    return <SVG size={size} aria-labelledby="AwaitingProofIcon" {...props}>
+        <title id="AwaitingProofIcon" >{altText}</title>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M3.304 12.674s.014-.265.051-.405L5.69 3.581a.637.637 0 0 1 .615-.471h11.273c.284 0 .534.189.612.462 0 0 2.568 8.983 2.568 9.102v6.059a2.162 2.162 0 0 1-2.163 2.162H5.466a2.163 2.163 0 0 1-2.162-2.162v-6.059Zm16.182.636H16.35l-.03 1.994a.636.636 0 0 1-.635.627l-6.989.009a.636.636 0 0 1-.637-.636v-1.977c-.909.023-2.549.057-3.484.04v5.366c0 .491.398.89.89.89h13.13a.89.89 0 0 0 .89-.89V13.31Zm-.214-1.272-2.174-7.656H6.792L4.717 12.1c1.307.02 3.96-.062 3.96-.062a.637.637 0 0 1 .655.635v1.993l5.726-.008.03-1.994a.636.636 0 0 1 .636-.627h3.548Z"
+          fill={color}
+        />
+    </SVG>
 }
-
-export default AwaitingProofIcon

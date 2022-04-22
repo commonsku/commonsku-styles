@@ -1304,23 +1304,23 @@ const App = () => {
           ]} name="NavConnectIcon" />
 
           <IconsShowcase Icons={[
-            <icons.NavFinanceIcon color={primary1.main}/>,
-            <icons.NavFinanceIcon color={primary1.main} filled/>
+            <icons.NavFinanceIcon color={teal.main}/>,
+            <icons.NavFinanceIcon color={teal.main} filled/>
           ]} name="NavFinanceIcon" />
 
           <IconsShowcase Icons={[
-            <icons.NavManagementIcon color={primary1.main}/>,
-            <icons.NavManagementIcon color={primary1.main} filled/>
+            <icons.NavManagementIcon color={teal.main}/>,
+            <icons.NavManagementIcon color={teal.main} filled/>
           ]}  name="NavManagementIcon" />
 
           <IconsShowcase Icons={[
-            <icons.NavProdIcon color={primary1.main}/>,
-            <icons.NavProdIcon color={primary1.main} filled/>
+            <icons.NavProdIcon color={teal.main}/>,
+            <icons.NavProdIcon color={teal.main} filled/>
           ]} name="NavProdIcon" />
 
           <IconsShowcase Icons={[
-            <icons.NavResourcesIcon color={primary1.main} />,
-            <icons.NavResourcesIcon color={primary1.main} filled />
+            <icons.NavResourcesIcon color={teal.main} />,
+            <icons.NavResourcesIcon color={teal.main} filled />
           ]} name="NavResourcesIcon" />
           
           <IconsShowcase Icons={[

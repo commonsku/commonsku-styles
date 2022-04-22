@@ -2,7 +2,7 @@ export * from './TableIcon';
 export * from './FileIcon';
 export * from './CalendarIcon';
 export * from './CouponIcon';
-export * from './AwaitingProofIcon';
+export { default as AwaitingProofIcon } from './AwaitingProofIcon';
 export * from './ProofReceivedIcon';
 export * from './PendingApprovalIcon';
 export * from './ChangeRequestedIcon';
