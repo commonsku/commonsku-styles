@@ -67,6 +67,7 @@ import {
     // SVG,
     Textarea,
     Thermometer,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     THSorted,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
@@ -1264,16 +1265,22 @@ const App = () => {
           <icons.RadioIcon selected />
           ]} name="RadioIcon" />
 
-          <IconsShowcase Icons={[<icons.AwaitingProofIcon width="24"/>]} name="AwaitingProofIcon"/>
           <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
           <IconsShowcase Icons={[<icons.Calendar2Icon />]} name="Calendar2Icon"/>
-          <IconsShowcase Icons={[<icons.ChangeRequestedIcon width="24"/>]} name="ChangeRequestedIcon"/>
+
+          <IconsShowcase Icons={[<icons.AwaitingProofIcon />]} name="AwaitingProofIcon"/>
+          <IconsShowcase Icons={[<icons.ProofReceivedIcon />]} name="ProofReceivedIcon" />
+          <IconsShowcase Icons={[<icons.ChangeRequestedIcon />]} name="ChangeRequestedIcon"/>
+          <IconsShowcase Icons={[<icons.PendingApprovalIcon />]} name="PendingApprovalIcon" />
+          <IconsShowcase Icons={[<icons.ClientApprovedIcon />]} name="ClientApprovedIcon"/>
+          <IconsShowcase Icons={[<icons.ProofingCompleteIcon />]} name="ProofingCompleteIcon" />
+
+
           <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
           <IconsShowcase Icons={[<icons.CheckboxIcon />]} name="CheckboxIcon"/>
           <IconsShowcase Icons={[<icons.CompletedCheckmarkIcon />]} name="CompletedCheckmarkIcon"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon />]} name="CircleProgressIcon"/>
-          <IconsShowcase Icons={[<icons.ClientApprovedIcon width="24" />]} name="ClientApprovedIcon"/>
           <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>
           <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
           <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
@@ -1329,7 +1336,6 @@ const App = () => {
           ]} name="NavSalesIcon"/>
 
           <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
-          <IconsShowcase Icons={[<icons.PendingApprovalIcon width="24"/>]} name="PendingApprovalIcon" />
 
           <IconsShowcase Icons={[
             <icons.PinIcon />, 
@@ -1339,8 +1345,6 @@ const App = () => {
           ]} name="PinIcon" />
 
           <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
-          <IconsShowcase Icons={[<icons.ProofingCompleteIcon width="24"/>]} name="ProofingCompleteIcon" />
-          <IconsShowcase Icons={[<icons.ProofReceivedIcon width="24"/>]} name="ProofReceivedIcon" />
           <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
           <IconsShowcase Icons={[
             <icons.SalesArrowIcon />,
