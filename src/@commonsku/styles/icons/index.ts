@@ -3,7 +3,7 @@ export * from './FileIcon';
 export * from './CalendarIcon';
 export * from './CouponIcon';
 export { default as AwaitingProofIcon } from './AwaitingProofIcon';
-export * from './ProofReceivedIcon';
+export { default as ProofReceivedIcon } from './ProofReceivedIcon';
 export { default as PendingApprovalIcon } from './PendingApprovalIcon';
 export { default as ChangeRequestedIcon } from './ChangeRequestedIcon';
 export { default as ClientApprovedIcon } from './ClientApprovedIcon';
