@@ -6,7 +6,7 @@ export { default as AwaitingProofIcon } from './AwaitingProofIcon';
 export * from './ProofReceivedIcon';
 export * from './PendingApprovalIcon';
 export { default as ChangeRequestedIcon } from './ChangeRequestedIcon';
-export * from './ClientApprovedIcon';
+export { default as ClientApprovedIcon } from './ClientApprovedIcon';
 export * from './ProofingCompleteIcon';
 export * from './ChatIcon';
 export * from './ColumnSelectIcon';
