@@ -1319,7 +1319,6 @@ const App = () => {
 
 
           <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
-          <IconsShowcase Icons={[<icons.CheckboxIcon />]} name="CheckboxIcon"/>
           <IconsShowcase Icons={[<icons.CompletedCheckmarkIcon />]} name="CompletedCheckmarkIcon"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon />]} name="CircleProgressIcon"/>
           <IconsShowcase Icons={[<icons.ColumnSelectIcon width="24" />]} name="ColumnSelectIcon"/>

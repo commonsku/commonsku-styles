@@ -34,7 +34,6 @@ export { default as AlertIcon } from './AlertIcon';
 export { default as CompletedCheckmarkIcon } from './CompletedCheckmarkIcon';
 export { default as BulletIcon } from './BulletIcon';
 export { default as UsersIcon } from './UsersIcon';
-export { default as CheckboxIcon } from './CheckboxIcon';
 export { default as ReceiptLongIcon } from './ReceiptLongIcon';
 export { default as FolderIcon } from './FolderIcon';
 export { default as Calendar2Icon } from './Calendar2Icon';
