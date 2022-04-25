@@ -1,4 +1,4 @@
-export * from './TableIcon';
+export { default as TableIcon } from './TableIcon';
 export * from './FileIcon';
 export * from './CalendarIcon';
 export * from './CouponIcon';
