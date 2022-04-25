@@ -21,6 +21,10 @@ import {
     Background,
     DropArea, Dropzoned, DropzonedPreviews,
     Button, 
+    H1,
+    // H2,
+    // H3,
+    // H4,
     H5, 
     Page,
     Toggle,
@@ -1223,8 +1227,52 @@ const App = () => {
           horizontalOffsetDivRef={horizontalOffsetDivRef}
         />
 
-        <H5>All Icons</H5>
+        <H1 mt={100} mb={100}>All Icons</H1>
 
+        <H5>NavIcons</H5>
+
+        <IconContainer>
+          <IconsShowcase Icons={[
+              <icons.NavConnectIcon color={teal.main}/>,
+              <icons.NavConnectIcon color={teal.main} filled />
+            ]} name="NavConnectIcon" />
+
+            <IconsShowcase Icons={[
+              <icons.NavFinanceIcon color={teal.main}/>,
+              <icons.NavFinanceIcon color={teal.main} filled/>
+            ]} name="NavFinanceIcon" />
+
+            <IconsShowcase Icons={[
+              <icons.NavManagementIcon color={teal.main}/>,
+              <icons.NavManagementIcon color={teal.main} filled/>
+            ]}  name="NavManagementIcon" />
+
+            <IconsShowcase Icons={[
+              <icons.NavProdIcon color={teal.main}/>,
+              <icons.NavProdIcon color={teal.main} filled/>
+            ]} name="NavProdIcon" />
+
+            <IconsShowcase Icons={[
+              <icons.NavResourcesIcon color={teal.main} />,
+              <icons.NavResourcesIcon color={teal.main} filled />
+            ]} name="NavResourcesIcon" />
+            
+            <IconsShowcase Icons={[
+              <icons.NavSalesIcon color={teal.main} />,
+              <icons.NavSalesIcon color={teal.main} filled />
+            ]} name="NavSalesIcon"/>
+        </IconContainer>
+
+        <H5>Production Report Status Icons</H5>
+        <IconContainer>
+          <IconsShowcase Icons={[<icons.AwaitingProofIcon />]} name="AwaitingProofIcon"/>
+          <IconsShowcase Icons={[<icons.ProofReceivedIcon />]} name="ProofReceivedIcon" />
+          <IconsShowcase Icons={[<icons.ChangeRequestedIcon />]} name="ChangeRequestedIcon"/>
+          <IconsShowcase Icons={[<icons.PendingApprovalIcon />]} name="PendingApprovalIcon" />
+          <IconsShowcase Icons={[<icons.ClientApprovedIcon />]} name="ClientApprovedIcon"/>
+          <IconsShowcase Icons={[<icons.ProofingCompleteIcon />]} name="ProofingCompleteIcon" />
+        </IconContainer>
+          
         <IconContainer>
           
           {/* <IconShowcase Icons={[<icons.UserIcon size="medium" fill={primary1.main}/>]} name="UserIcon" /> */}
@@ -1269,13 +1317,6 @@ const App = () => {
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
           <IconsShowcase Icons={[<icons.Calendar2Icon />]} name="Calendar2Icon"/>
 
-          <IconsShowcase Icons={[<icons.AwaitingProofIcon />]} name="AwaitingProofIcon"/>
-          <IconsShowcase Icons={[<icons.ProofReceivedIcon />]} name="ProofReceivedIcon" />
-          <IconsShowcase Icons={[<icons.ChangeRequestedIcon />]} name="ChangeRequestedIcon"/>
-          <IconsShowcase Icons={[<icons.PendingApprovalIcon />]} name="PendingApprovalIcon" />
-          <IconsShowcase Icons={[<icons.ClientApprovedIcon />]} name="ClientApprovedIcon"/>
-          <IconsShowcase Icons={[<icons.ProofingCompleteIcon />]} name="ProofingCompleteIcon" />
-
 
           <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
           <IconsShowcase Icons={[<icons.CheckboxIcon />]} name="CheckboxIcon"/>
@@ -1304,38 +1345,6 @@ const App = () => {
             <icons.LockIcon />,
             <icons.LockIcon locked />,
           ]} name="LockIcon" />
-
-          <IconsShowcase Icons={[
-            <icons.NavConnectIcon color={teal.main}/>,
-            <icons.NavConnectIcon color={teal.main} filled />
-          ]} name="NavConnectIcon" />
-
-          <IconsShowcase Icons={[
-            <icons.NavFinanceIcon color={teal.main}/>,
-            <icons.NavFinanceIcon color={teal.main} filled/>
-          ]} name="NavFinanceIcon" />
-
-          <IconsShowcase Icons={[
-            <icons.NavManagementIcon color={teal.main}/>,
-            <icons.NavManagementIcon color={teal.main} filled/>
-          ]}  name="NavManagementIcon" />
-
-          <IconsShowcase Icons={[
-            <icons.NavProdIcon color={teal.main}/>,
-            <icons.NavProdIcon color={teal.main} filled/>
-          ]} name="NavProdIcon" />
-
-          <IconsShowcase Icons={[
-            <icons.NavResourcesIcon color={teal.main} />,
-            <icons.NavResourcesIcon color={teal.main} filled />
-          ]} name="NavResourcesIcon" />
-          
-          <IconsShowcase Icons={[
-            <icons.NavSalesIcon color={teal.main} />,
-            <icons.NavSalesIcon color={teal.main} filled />
-          ]} name="NavSalesIcon"/>
-
-          <IconsShowcase Icons={[<icons.NoMarketingIcon color={primary1.main} width="24"/>]} name="NoMarketingIcon" />
 
           <IconsShowcase Icons={[
             <icons.PinIcon />, 

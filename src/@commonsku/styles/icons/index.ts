@@ -10,7 +10,6 @@ export { default as ClientApprovedIcon } from './ClientApprovedIcon';
 export { default as ProofingCompleteIcon } from './ProofingCompleteIcon';
 export * from './ChatIcon';
 export * from './ColumnSelectIcon';
-export * from './NoMarketingIcon';
 export { default as NavConnectIcon } from './NavConnectIcon';
 export { default as NavSalesIcon } from './NavSalesIcon';
 export { default as NavProdIcon } from './NavProdIcon';

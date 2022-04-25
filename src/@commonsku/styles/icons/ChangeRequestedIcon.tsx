@@ -12,10 +12,10 @@ export default function ChangeRequestedIcon({
     return <SVG size={size} aria-labelledby="ChangeRequestedIcon" {...props}>
         <title id="ChangeRequestedIcon" >{altText}</title>
         <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="m12.002 10.588 7.337-7.336a1 1 0 1 1 1.414 1.414l-7.337 7.336 7.337 7.337a1 1 0 0 1-1.414 1.414l-7.337-7.337-7.336 7.337a1 1 0 0 1-1.414-1.414l7.336-7.337-7.336-7.336a1 1 0 0 1 1.414-1.414l7.336 7.336Z"
-          fill={color}
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M10.593 12 3.39 4.797 3.292 4.7A.995.995 0 0 1 4.699 3.29l.099.099L12 10.592l7.203-7.202.098-.099A.995.995 0 1 1 20.71 4.7l-.099.098L13.408 12l7.202 7.203.099.098A.995.995 0 0 1 19.3 20.71l-.098-.099L12 13.407 4.797 20.61l-.098.099A.995.995 0 1 1 3.29 19.3l.099-.098L10.593 12Z"
+            fill={color}
         />
     </SVG>
 }
