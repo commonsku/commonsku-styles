@@ -27,13 +27,10 @@ const CalendarIconDatePicker = React.forwardRef(({ value, onClick }: TextDatePic
     return (
         <span ref={ref} onClick={onClick}>
             <Calendar2Icon
-                height={23}
-                width={25}
                 style={{
                     display: 'block',
                     textAlign: 'center',
                     borderRadius: 5,
-                    padding: 4,
                     cursor: 'pointer',
                     color: colors.disabledButton,
                 }}
@@ -120,7 +117,7 @@ export const TasksCalendarHeader = ({
             `}>
                 <Dropdown
                     style={{verticalAlign: 'middle'}}
-                    icon={<GearIcon size="large" />}
+                    icon={<GearIcon pointer mr={5} />}
                 >
                     <Row>{weekendsCheckbox}</Row>
                 </Dropdown>

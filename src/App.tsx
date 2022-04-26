@@ -77,7 +77,7 @@ import {
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 import { neutrals, primary1, teal } from '@commonsku/styles/colors';
-import { IconContainer, IconsShowcase, IconShowcase } from '@commonsku/styles/IconShowcase';
+import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 
 const initialState = {
   date: new Date(),
@@ -1315,6 +1315,8 @@ const App = () => {
 
           <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
+
+          {/* <IconsShowcase Icons={[<icons.CalendarIcon />]} name="CalendarIcon"/> */}
           <IconsShowcase Icons={[<icons.Calendar2Icon />]} name="Calendar2Icon"/>
 
 
@@ -1326,7 +1328,7 @@ const App = () => {
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="medium"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="large"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="huge"/>
-          <IconsShowcase Icons={[<icons.ColumnSelectIcon />]} name="ColumnSelectIcon" size="large"/>
+          <IconsShowcase Icons={[<icons.ColumnSelectIcon />]} name="ColumnSelectIcon" />
           <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
           <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
           <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
@@ -1363,7 +1365,6 @@ const App = () => {
             <icons.SalesArrowIcon />,
             <icons.SalesArrowIcon direction="down" />,
           ]} name="SalesArrowIcon" />
-          <IconsShowcase Icons={[<icons.SvgIcon />]} name="SvgIcon" />
           <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
           <IconsShowcase Icons={[<icons.TaskIcon />]} name="TaskIcon" />
           <IconsShowcase Icons={[<icons.AddTaskIcon />]} name="AddTaskIcon" />
