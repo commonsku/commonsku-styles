@@ -1316,8 +1316,7 @@ const App = () => {
           <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
 
-          {/* <IconsShowcase Icons={[<icons.CalendarIcon />]} name="CalendarIcon"/> */}
-          <IconsShowcase Icons={[<icons.Calendar2Icon />]} name="Calendar2Icon"/>
+          <IconsShowcase Icons={[<icons.CalendarIcon />]} name="CalendarIcon"/>
 
 
           <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { default as BaseDatePicker, ReactDatePickerProps } from 'react-datepicker';
 import { Input, InputProps } from './Input';
-import { Calendar2Icon } from './icons';
+import { CalendarIcon } from './icons';
 
 type CustomInputProps = InputProps & {isClearable?: boolean};
 export const CustomDateInput = React.forwardRef<HTMLInputElement, CustomInputProps>((
@@ -20,7 +20,7 @@ export const CustomDateInput = React.forwardRef<HTMLInputElement, CustomInputPro
       {...props}
     />
     <span style={{ fontStyle: 'normal', cursor: 'pointer', position: 'absolute', top: '8px', right: '5px' }} onClick={onClick}>
-    {!isClearable ? <Calendar2Icon style={{ width: '1.9rem', verticalAlign: 'middle', }} /> : null}
+    {!isClearable ? <CalendarIcon style={{ width: '1.9rem', verticalAlign: 'middle', }} /> : null}
     </span>
   </>);
 });

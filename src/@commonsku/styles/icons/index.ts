@@ -1,6 +1,5 @@
 export { default as TableIcon } from './TableIcon';
 export * from './FileIcon';
-export * from './CalendarIcon';
 export { default as CouponIcon } from './CouponIcon';
 export { default as AwaitingProofIcon } from './AwaitingProofIcon';
 export { default as ProofReceivedIcon } from './ProofReceivedIcon';
@@ -36,7 +35,7 @@ export { default as BulletIcon } from './BulletIcon';
 export { default as UsersIcon } from './UsersIcon';
 export { default as ReceiptLongIcon } from './ReceiptLongIcon';
 export { default as FolderIcon } from './FolderIcon';
-export { default as Calendar2Icon } from './Calendar2Icon';
+export { default as CalendarIcon } from './CalendarIcon';
 export { default as PromostandardsIcon } from './PromostandardsIcon';
 export { default as XIcon } from './XIcon';
 export { default as OpportunityCircleIcon } from './OpportunityCircleIcon';
