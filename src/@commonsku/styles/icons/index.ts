@@ -1,7 +1,7 @@
 export { default as TableIcon } from './TableIcon';
 export * from './FileIcon';
 export * from './CalendarIcon';
-export * from './CouponIcon';
+export { default as CouponIcon } from './CouponIcon';
 export { default as AwaitingProofIcon } from './AwaitingProofIcon';
 export { default as ProofReceivedIcon } from './ProofReceivedIcon';
 export { default as PendingApprovalIcon } from './PendingApprovalIcon';
