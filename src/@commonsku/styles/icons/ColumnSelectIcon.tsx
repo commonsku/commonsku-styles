@@ -1,39 +1,32 @@
-import React from "react"
+import React from 'react';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { teal } from '../colors';
 
-export function ColumnSelectIcon({
-  width, 
-  mr,
-  mt
-}: React.PropsWithChildren<{
-  width?:string, 
-  mr?:number,
-  mt?:number
-}>) {
-  return (
-    <svg
-    viewBox="0 0 115 115"
-    fillRule="evenodd"
-    clipRule="evenodd"
-    strokeLinejoin="round"
-    strokeMiterlimit={2}
-    width={width}
-  >
-    <path fill="none" d="M0 0h115v115H0z" />
-    <path
-      d="M40.408 114.735V.578h71.117a3 3 0 013 3v108.157a3 3 0 01-3 3H40.408zm31.996-6V23.342H42.408v85.393h29.996zm36.12-85.393H78.53v85.393h29.996V23.342zM42.409 6.578v10.764h29.996V6.578H42.408zm36.12 0v10.764h29.98V6.578h-29.98z"
-      fill="#02c0da"
-    />
-    <path
-      fill="#e91b70"
-      fillOpacity={0.25}
-      d="M3.307 3.612H39.4V111.77H3.307z"
-    />
-    <path
-      d="M.069 21.517c-.154-.361 0-.758 0-1.175V3.578a3 3 0 013-3h39.33v114.19H3.309c-1.657 0-3.24-1.342-3.24-3V21.518zm36.33 1.825H6.309v85.427H36.4V23.342z"
-      fill="#e91b70"
-    />
-  </svg>
-  )
+type ColumnSelectIconProps = SVGIconProps;
+export default function ColumnSelectIcon({
+    color=teal.main,
+    size="medium",
+    altText="Select Columns",
+    ...props
+}: ColumnSelectIconProps) {
+    return <SVG size={size} aria-labelledby="ColumnSelectIcon" {...props}>
+        <title id="ColumnSelectIcon" >{altText}</title>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M9.325 20.959V3.09h11.131c.26 0 .47.21.47.47v16.929c0 .26-.21.47-.47.47H9.325Zm5.008-.94V6.654H9.638v13.365h4.695Zm5.653-13.365h-4.695v13.365h4.695V6.654ZM9.638 4.03v1.684h4.695V4.03H9.638Zm5.653 0v1.684h4.693V4.03h-4.693Z"
+          fill="#02C0DA"
+        />
+        <path
+          d="M9.167 3.565h-5.65v16.93h5.65V3.564Z"
+          fill="#E91B70"
+          fillOpacity={0.25}
+        />
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M3.01 6.368c-.023-.057 0-.119 0-.184V3.56c0-.26.21-.47.47-.47h6.156v17.874H3.518c-.26 0-.507-.21-.507-.47V6.368Zm5.687.286h-4.71v13.37h4.71V6.655Z"
+          fill="#E91B70"
+        />
+    </SVG>
 }
-
-export default ColumnSelectIcon

@@ -9,7 +9,7 @@ export { default as ChangeRequestedIcon } from './ChangeRequestedIcon';
 export { default as ClientApprovedIcon } from './ClientApprovedIcon';
 export { default as ProofingCompleteIcon } from './ProofingCompleteIcon';
 export * from './ChatIcon';
-export * from './ColumnSelectIcon';
+export { default as ColumnSelectIcon } from './ColumnSelectIcon';
 export { default as NavConnectIcon } from './NavConnectIcon';
 export { default as NavSalesIcon } from './NavSalesIcon';
 export { default as NavProdIcon } from './NavProdIcon';
