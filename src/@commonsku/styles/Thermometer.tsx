@@ -99,7 +99,7 @@ export default function Thermometer({
                     position: 'absolute',
                     paddingRight: 5,
                     paddingLeft: `${calcVal1Width() - (Math.abs(targetWidth + value1Width) || 150)}px`,
-                    color: colors.secondary3.main,
+                    color: colors.secondary2.main,
                 }}>
                     $<Number commas decimalPoints={0} num={value1}/>
                 </span>
@@ -109,7 +109,7 @@ export default function Thermometer({
                     <ProgressBar
                         target={target}
                         value={value1}
-                        color={colors.secondary3.main}
+                        color={colors.secondary2.main}
                         offset={calcVal1Width()}
                         elementWidth={value1Width}
                     />
