@@ -1229,7 +1229,7 @@ const App = () => {
 
         <H1 mt={100} mb={100}>All Icons</H1>
 
-        <H5>NavIcons</H5>
+        <H5>Nav Icons</H5>
 
         <IconContainer>
           <IconsShowcase Icons={[
@@ -1272,17 +1272,20 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ClientApprovedIcon />]} name="ClientApprovedIcon"/>
           <IconsShowcase Icons={[<icons.ProofingCompleteIcon />]} name="ProofingCompleteIcon" />
         </IconContainer>
-          
+
+        <H5>Input Icons</H5>
         <IconContainer>
-          
-          {/* <IconShowcase Icons={[<icons.UserIcon size="medium" fill={primary1.main}/>]} name="UserIcon" /> */}
-          
+        <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon" />
+          <IconsShowcase Icons={[<icons.DollarIcon />]} name="DollarIcon"/>
+
           <IconsShowcase Icons={[
-            <icons.ArrowIcon direction="right" />, 
-            <icons.ArrowIcon direction="down" />, 
-            <icons.ArrowIcon direction="left" />, 
-            <icons.ArrowIcon direction="up" />
-          ]} name="ArrowIcon" />
+            <icons.FilledChevronIcon direction="right" />, 
+            <icons.FilledChevronIcon direction="down" />, 
+            <icons.FilledChevronIcon direction="left" />, 
+            <icons.FilledChevronIcon direction="up" />,
+            <icons.FilledChevronIcon direction="updown" />,
+            <icons.FilledChevronIcon direction="leftright" />
+          ]} name="FilledChevronIcon" />
 
           <IconsShowcase Icons={[
             <icons.ChevronIcon direction="right" />, 
@@ -1294,92 +1297,69 @@ const App = () => {
           ]} name="ChevronIcon" />
 
           <IconsShowcase Icons={[
-            <icons.FilledChevronIcon direction="right" />, 
-            <icons.FilledChevronIcon direction="down" />, 
-            <icons.FilledChevronIcon direction="left" />, 
-            <icons.FilledChevronIcon direction="up" />,
-            <icons.FilledChevronIcon direction="updown" />,
-            <icons.FilledChevronIcon direction="leftright" />
-          ]} name="FilledChevronIcon" />
+            <icons.ArrowIcon direction="right" />, 
+            <icons.ArrowIcon direction="down" />, 
+            <icons.ArrowIcon direction="left" />, 
+            <icons.ArrowIcon direction="up" />
+          ]} name="ArrowIcon" />
 
-          <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon" />
           <IconsShowcase Icons={[<icons.AddIcon />]} name="AddIcon" />
           <IconsShowcase Icons={[<icons.SubtractIcon />]} name="SubtractIcon" />
+          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
           <IconsShowcase Icons={[<icons.SearchIcon />]} name="SearchIcon" />
+          <IconsShowcase Icons={[<icons.CalendarIcon />]} name="CalendarIcon"/>
           <IconsShowcase Icons={[<icons.ClockIcon />]} name="ClockIcon" />
+          <IconsShowcase Icons={[<icons.UserIcon />]} name="UserIcon" />
+          <IconsShowcase Icons={[<icons.UsersIcon />]} name="UsersIcon" />
           <IconsShowcase Icons={[<icons.ClipboardIcon />]} name="ClipboardIcon" />
+
           <IconsShowcase Icons={[
           <icons.RadioIcon />,
           <icons.RadioIcon selected />
           ]} name="RadioIcon" />
 
-          <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
           <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
+          <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />
+          <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
+          <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
+          <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
+        </IconContainer>
 
-          <IconsShowcase Icons={[<icons.CalendarIcon />]} name="CalendarIcon"/>
+        <H5>Settings Icons</H5>
+        <IconContainer>
+          <IconsShowcase Icons={[<icons.GearIcon />]} name="GearIcon" />
+        </IconContainer>
 
 
-          <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
+        <H5>Status Icons</H5>
+        <IconContainer>
+          <IconsShowcase Icons={[
+              <icons.MarketingStatusIcon />, 
+              <icons.MarketingStatusIcon approved/>, 
+          ]} name="MarketingStatusIcon" />
+
           <IconsShowcase Icons={[<icons.CompletedCheckmarkIcon />]} name="CompletedCheckmarkIcon"/>
+
+          <IconsShowcase Icons={[
+            <icons.AlertIcon />,
+            <icons.AlertIcon filled/>
+          ]} name="AlertIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.SalesArrowIcon />,
+            <icons.SalesArrowIcon direction="down" />,
+          ]} name="SalesArrowIcon" />
+
+          <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
+
+          <IconsShowcase Icons={[<icons.Loading width={24} />]} name="Loading" />
 
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80} /> ]} name="CircleProgressIcon" size="tiny" />
           <IconsShowcase Icons={[<icons.CircleProgressIcon text="SO"/>]} name="CircleProgressIcon" size="small"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="medium"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="large"/>
           <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="huge"/>
-          <IconsShowcase Icons={[<icons.ColumnSelectIcon />]} name="ColumnSelectIcon" />
-          <IconsShowcase Icons={[<icons.CouponIcon width="24"/>]} name="CouponIcon"/>
-          <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon"/>
-          <IconsShowcase Icons={[<icons.DollarIcon fill={primary1.main}/>]} name="DollarIcon"/>
-          <IconsShowcase Icons={[<icons.DownloadIcon  width="24" fill={neutrals.darkest}/>]} name="DownloadIcon" />
-          <IconsShowcase Icons={[
-            <icons.AlertIcon />,
-            <icons.AlertIcon filled/>
-          ]} name="AlertIcon" />
-          <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
-          <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
-          <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
-          <IconsShowcase Icons={[<icons.GearIcon width="24"/>]} name="GearIcon" />
-          <IconsShowcase Icons={[
-            <icons.InfoIcon />,
-            <icons.InfoIcon filled />
-          ]} name="InfoIcon" />
-          <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
-          <IconsShowcase Icons={[<icons.Loading width={24}/>]} name="Loading" />
-          <IconsShowcase Icons={[
-            <icons.LockIcon />,
-            <icons.LockIcon locked />,
-          ]} name="LockIcon" />
 
-          <IconsShowcase Icons={[
-            <icons.PinIcon />, 
-            <icons.PinIcon filled/>,
-            <icons.PinIcon unpin />, 
-            <icons.PinIcon unpin filled/>
-          ]} name="PinIcon" />
-
-          <IconsShowcase Icons={[<icons.PromostandardsIcon />]} name="PromostandardsIcon" />
-          <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
-          <IconsShowcase Icons={[
-            <icons.SalesArrowIcon />,
-            <icons.SalesArrowIcon direction="down" />,
-          ]} name="SalesArrowIcon" />
-          <IconsShowcase Icons={[<icons.TableIcon width="24"/>]} name="TableIcon" />
-          <IconsShowcase Icons={[<icons.TaskIcon />]} name="TaskIcon" />
-          <IconsShowcase Icons={[<icons.AddTaskIcon />]} name="AddTaskIcon" />
-          <IconsShowcase Icons={[<icons.NoteIcon />]} name="NoteIcon" />
-          <IconsShowcase Icons={[<icons.AddNoteIcon />]} name="AddNoteIcon" />
-          <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />
-          <IconsShowcase Icons={[
-            <icons.TrashIcon />,
-            <icons.TrashIcon filled />,
-          ]} name="TrashIcon" />
-          <IconsShowcase Icons={[<icons.UserIcon fill={primary1.main} width="24"/>]} name="UserIcon" />
-          <IconsShowcase Icons={[<icons.UsersIcon fill={primary1.main} width="24"/>]} name="UsersIcon" />
-          <IconsShowcase Icons={[
-            <icons.MarketingStatusIcon />, 
-            <icons.MarketingStatusIcon approved/>, 
-          ]} name="MarketingStatusIcon" />
           <IconsShowcase Icons={[
             <icons.OpportunityCircleIcon variant="primary" pointer/>,
             <icons.OpportunityCircleIcon variant="primary" selected pointer/>,
@@ -1403,8 +1383,48 @@ const App = () => {
             <icons.SalesOrderCircleIcon variant="primary" selected pointer/>,
             <icons.SalesOrderCircleIcon variant="cta" pointer/>,
             <icons.SalesOrderCircleIcon variant="cta" selected pointer/>
-          ]} name="SalesOrderCircleIcon" />          
+          ]} name="SalesOrderCircleIcon" />  
 
+        </IconContainer>
+
+        <H5>Action Icons</H5>
+        <IconContainer>
+          <IconsShowcase Icons={[<icons.DownloadIcon />]} name="DownloadIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.InfoIcon />,
+            <icons.InfoIcon filled />
+          ]} name="InfoIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.LockIcon />,
+            <icons.LockIcon locked />,
+          ]} name="LockIcon" />
+
+          <IconsShowcase Icons={[<icons.TaskIcon />]} name="TaskIcon" />
+          <IconsShowcase Icons={[<icons.AddTaskIcon />]} name="AddTaskIcon" />
+          <IconsShowcase Icons={[<icons.NoteIcon />]} name="NoteIcon" />
+          <IconsShowcase Icons={[<icons.AddNoteIcon />]} name="AddNoteIcon" />
+          <IconsShowcase Icons={[<icons.ReceiptLongIcon />]} name="ReceiptLongIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.TrashIcon />,
+            <icons.TrashIcon filled />,
+          ]} name="TrashIcon" />
+
+          <IconsShowcase Icons={[
+            <icons.PinIcon />, 
+            <icons.PinIcon filled/>,
+            <icons.PinIcon unpin />, 
+            <icons.PinIcon unpin filled/>
+          ]} name="PinIcon" />
+
+          <IconsShowcase Icons={[<icons.TableIcon />]} name="TableIcon" />
+          <IconsShowcase Icons={[<icons.ColumnSelectIcon />]} name="ColumnSelectIcon" />
+          <IconsShowcase Icons={[<icons.CouponIcon />]} name="CouponIcon"/>
+          <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
+          <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
+          <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
 
         </IconContainer>
         
