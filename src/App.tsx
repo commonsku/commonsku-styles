@@ -76,6 +76,7 @@ import {
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 
@@ -1323,6 +1324,34 @@ const App = () => {
           <IconsShowcase Icons={[<icons.ListIcon />]} name="ListIcon" />
           <IconsShowcase Icons={[<icons.GalleryIcon />]} name="GalleryIcon" />
           <IconsShowcase Icons={[<icons.BotIcon />]} name="BotIcon"/>
+
+          <IconsShowcase Icons={[
+            <icons.EditIcon />,
+            <icons.EditIcon filled/>
+          ]} name="EditIcon"/>
+
+          <IconsShowcase Icons={[<icons.GridIcon />]} name="GridIcon"/>
+
+          <IconsShowcase Icons={[
+            <icons.TemplateIcon />,
+            <icons.TemplateIcon filled/>
+          ]} name="TemplateIcon"/>
+
+          <IconsShowcase Icons={[<icons.PercentIcon />]} name="PercentIcon"/>
+          <IconsShowcase Icons={[<icons.TargetIcon />]} name="TargetIcon"/>
+
+          <IconsShowcase Icons={[
+            <icons.IntegrationsIcon />,
+            <icons.IntegrationsIcon filled/>
+          ]} name="IntegrationsIcon"/>
+
+          <IconsShowcase Icons={[
+            <icons.MailIcon />,
+            <icons.MailIcon filled/>
+          ]} name="MailIcon"/>
+
+          <IconsShowcase Icons={[<icons.EpsIcon />]} name="EpsIcon"/>
+
         </IconContainer>
 
         <H5>Settings Icons</H5>
