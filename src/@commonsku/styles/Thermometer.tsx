@@ -46,6 +46,7 @@ export type ThermometerProps = {
     value1: number,
     value1Label?: string | ((v: number) => string),
 	barColor?: string;
+	labelTextColor?: string;
 	isSecondary?: boolean;
 };
 export default function Thermometer({
@@ -54,6 +55,7 @@ export default function Thermometer({
     value1,
     value1Label,
 	barColor,
+	labelTextColor,
 	isSecondary,
     ...props
 }: ThermometerProps) {
@@ -102,14 +104,13 @@ export default function Thermometer({
                 <span ref={measureValue1Ref} style={{
                     position: 'absolute',
                     paddingRight: 5,
-                    paddingLeft: `${calcVal1Width() - (Math.abs(targetWidth + value1Width) || 150)}px`,
-                    color: barColor || colors.secondary3.main,
+                    color: labelTextColor || colors.secondary3.main,
                 }}>
 				{value1Label+" $"}<Number commas decimalPoints={0} num={value1}/>
                 </span>
             </div>
             <div ref={measureContainerRef}>
-                <ProgressWrapper style={{ marginTop: 10, background : isSecondary ? 'linear-gradient(180deg, rgba(255, 249, 197) 0%, rgba(255, 249, 197, 0.1) 100%)' : 'linear-gradient(180deg, rgba(1, 211, 116, 0.051) 0%, rgba(1, 211, 116, 0.1) 100%)' }}>
+                <ProgressWrapper style={{ marginTop: 10, background : isSecondary ? '#FFF9C5' : '#F2FFF9' }}>
                     <ProgressBar
                         target={target}
                         value={value1}
