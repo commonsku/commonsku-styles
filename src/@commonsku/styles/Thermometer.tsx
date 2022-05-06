@@ -110,7 +110,7 @@ export default function Thermometer({
                 </span>
             </div>
             <div ref={measureContainerRef}>
-                <ProgressWrapper style={{ marginTop: 10, background : isSecondary ? '#FFF9C5' : '#F2FFF9' }}>
+                <ProgressWrapper style={{ marginTop: 10, background : isSecondary ? '#FFF9C5' : '#C9FDE5' }}>
                     <ProgressBar
                         target={target}
                         value={value1}
