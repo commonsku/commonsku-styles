@@ -38,6 +38,7 @@ export * from './StateDropdown'
 export * from './Collapsible'
 export * from './MultiProgress'
 export { default as Thermometer } from './Thermometer';
+export * from './LightIndicator'
 
 export * from './icons'
 export * from './Theme'

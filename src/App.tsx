@@ -73,6 +73,7 @@ import {
     Thermometer,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     THSorted,
+    LightIndicator,
 } from '@commonsku/styles';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
@@ -938,6 +939,28 @@ const App = () => {
             </Col>
             </Row>
 
+            <H5>Light Indicator</H5>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <div style={{marginRight: '24px'}}>
+                <p>Default = Small</p>
+                <LightIndicator name="Marketing integration: Mailchimp " on />
+                <LightIndicator name="Credit card integration: Stripe" on />
+                <LightIndicator name="Accounting integration: QuickBooks online" on/>
+                <LightIndicator name="SAGE not configured" />
+                <LightIndicator name="Avalara not configured" />
+              </div>
+              <div style={{marginRight: '24px'}}>
+                <p>Large</p>
+                <LightIndicator name="Marketing integration: Mailchimp " on large />
+                <LightIndicator name="Credit card integration: Stripe" on large/>
+                <LightIndicator name="Accounting integration: QuickBooks online" on large/>
+                <LightIndicator name="SAGE not configured" large/>
+                <LightIndicator name="Avalara not configured" large/>
+              </div>
+            </div>
+            
+            
+  
             <H5>Radio</H5>
             <ButtonsGroup>
               <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
