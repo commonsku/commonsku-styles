@@ -67,3 +67,5 @@ export { default as TargetIcon} from './TargetIcon';
 export { default as IntegrationsIcon} from './IntegrationsIcon';
 export { default as MailIcon} from './MailIcon';
 export { default as EpsIcon} from './EpsIcon';
+export { default as StarIcon} from './StarIcon';
+export { default as EyeIcon} from './EyeIcon';

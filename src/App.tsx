@@ -1474,6 +1474,16 @@ const App = () => {
           <IconsShowcase Icons={[<icons.TableIcon />]} name="TableIcon" />
           <IconsShowcase Icons={[<icons.ColumnSelectIcon />]} name="ColumnSelectIcon" />
           <IconsShowcase Icons={[<icons.CouponIcon />]} name="CouponIcon"/>
+          
+          <IconsShowcase Icons={[
+            <icons.EyeIcon />,
+            <icons.EyeIcon hide/>
+          ]} name="EyeIcon"/>
+
+          <IconsShowcase Icons={[
+            <icons.StarIcon />,
+            <icons.StarIcon filled/>
+          ]} name="StarIcon"/>
           <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
           <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
           <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
