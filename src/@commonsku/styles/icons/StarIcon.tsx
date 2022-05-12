@@ -2,10 +2,11 @@ import React from 'react';
 import SVG, { SVGIconProps } from './SvgIcon';
 import { teal } from '../colors';
 
-type StarIconProps = SVGIconProps & {filled?: boolean;};
+type StarIconProps = SVGIconProps & {hover?:boolean, filled?: boolean;};
 export default function StarIcon({
     color=teal.main,
     size="medium",
+    hover=false,
     filled=false,
     altText="Star",
     ...props

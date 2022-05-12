@@ -74,11 +74,15 @@ import {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     THSorted,
     LightIndicator,
+    DefaultStar
 } from '@commonsku/styles';
+
+import * as demo from './demo/DemoTextStyles';
+
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { neutrals, primary1, teal } from '@commonsku/styles/colors';
+import { errors, neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 
 const initialState = {
@@ -959,8 +963,53 @@ const App = () => {
               </div>
             </div>
             
+            {/* <demo.container> */}
+              {/* <demo.h1>Default Star</demo.h1>
+              <demo.h2>Default Star</demo.h2>
+              <demo.h3>Default Star</demo.h3> */}
+              <H5>Default Star</H5>
+
+              <div style={{display: 'flex', flexWrap: "wrap"}}>
+                
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>Same hover and<br />selected text (Default)</demo.smallLabel>
+                  <DefaultStar />
+                </div>
+                
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>Different hover and<br />selected text</demo.smallLabel>
+                  <DefaultStar hoverText="Set Default">Default</DefaultStar>
+                </div>
+                
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>Custom<br />width</demo.smallLabel>
+                  <DefaultStar width={"200px"}/>
+                </div>
+
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>Custom<br />color</demo.smallLabel>
+                  <DefaultStar color={colors.green.main}/>
+                </div>
+
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>Initial Selected = <br />true (still clickable)</demo.smallLabel>
+                  <DefaultStar initialSelected={true} />
+                </div>
+
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>Force<br />Selected (not clickable)</demo.smallLabel>
+                  <DefaultStar forceSelected />
+                </div>
+
+                <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                  <demo.smallLabel>No<br />Text</demo.smallLabel>
+                  <DefaultStar noText />
+                </div>
+
+              </div>
+            {/* </demo.container> */}
             
-  
+              
             <H5>Radio</H5>
             <ButtonsGroup>
               <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />

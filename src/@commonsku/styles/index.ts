@@ -39,6 +39,7 @@ export * from './Collapsible'
 export * from './MultiProgress'
 export { default as Thermometer } from './Thermometer';
 export * from './LightIndicator'
+export { default as DefaultStar } from './DefaultStar';
 
 export * from './icons'
 export * from './Theme'
