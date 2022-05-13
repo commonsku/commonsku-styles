@@ -8,7 +8,7 @@ import { Tabs, TTab } from '../Tabs';
 import { Text, Link } from '../Text';
 import { GearIcon, ChevronIcon, Calendar2Icon } from '../icons';
 import {Dropdown} from '../Dropdown';
-import { Button, IconButton, TSize, ButtonVariant } from '../Button';
+import { Button, TSize, ButtonVariant } from '../Button';
 import { H5 } from '../Headings';
 import { TCalendarView, onClickViewFunc } from './types';
 import { Datepicker } from '../Datepicker';
@@ -96,16 +96,10 @@ export const TasksCalendarHeader = ({
                                 },
                                 children: v.title,
                             };
-                            if (v.Icon) {
-                                return <IconButton
-                                    key={'calendar-header-button-'+i}
-                                    {...btnProps} Icon={v.Icon}
-                                />
-                            }
                             return (
                                 <Button
                                     key={'calendar-header-button-'+i}
-                                    {...btnProps}
+                                    {...btnProps} Icon={v.Icon}
                                 />
                             );
                         })}
@@ -151,7 +145,7 @@ export const TasksCalendarHeader = ({
                     <WeekNav
                         as={Button}
                         variant="text"
-                        size="primary-light"
+                        size="tiny"
                         style={{verticalAlign: "middle", padding: "10px 0px",}}
                         py={5}
                         onClick={() => {
