@@ -577,8 +577,10 @@ const App = () => {
               </Dropdown>
               <Link block mt={20}>Link</Link>
             </div>
+          
 
             <H5>Button Variants</H5>
+            
             
             <div style={{display: 'flex', flexDirection: 'column'}}>
               <ButtonsGroup mb={30}>
@@ -629,7 +631,16 @@ const App = () => {
                 <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
                 <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
               </ButtonsGroup>
+
+              
             </div>
+            <H5>Button Presets</H5>
+              <IconButton preset="edit" mr={16}/>
+              <IconButton preset="delete" mr={16}/>
+              <IconButton preset="add" mr={16}/>
+              <IconButton preset="remove" mr={16}/>
+              <IconButton preset="close" mr={16}/>
+            
 
             <H5>Input Fields</H5>
             <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />

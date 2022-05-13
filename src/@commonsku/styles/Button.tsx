@@ -5,6 +5,7 @@ import { getThemeColor, themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import colors from './colors';
+import { EditIcon, TrashIcon, AddIcon, SubtractIcon, XIcon } from './icons';
 
 /*
 
@@ -78,10 +79,18 @@ export const sizes = {
 };
 export type TSize = keyof typeof sizes;
 
+export type ButtonPreset = 'edit'
+| 'delete'
+| 'add' 
+| 'remove'
+| 'close'
+;
+
 export type ButtonVariant = 'primary'
   | 'secondary'
   | 'cta'
   | 'error'
+  | 'error-light'
   | 'disabled'
   | 'text'
   | 'primary-light'
@@ -120,7 +129,7 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
 
   const error = getThemeColor(props, 'errors.main', colors.errors.main);
   const errorDark = getThemeColor(props, 'errors.80', colors.errors['80']);
-  // const errorLight = getThemeColor(props, 'errors.20', colors.errors['20']);
+  const errorLight = getThemeColor(props, 'errors.60', colors.errors['60']);
 
   switch (variant) {
     case 'primary':
@@ -213,6 +222,24 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           outlineColor: error,
         },
       };
+    case 'error-light':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: errorLight,
+        background: errorLight,
+        color: white,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: error,
+          background: error,
+          color: white,
+        },
+        ':focus-visible': {
+          outlineColor: error,
+        },
+      };
     case 'disabled':
       return {
         borderWidth: 3,
@@ -298,24 +325,57 @@ export const ButtonsGroup = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
+const presets: {[key: string]: IconButtonProps} = {
+  edit: {
+    size: "medium",
+    Icon: EditIcon,
+    variant: "primary"
+  },
+  delete: {
+    Icon: TrashIcon, 
+    variant: 'error-light'
+  },
+  add: {
+    Icon: AddIcon,
+    variant: 'secondary'
+  },
+  remove: {
+    Icon: SubtractIcon,
+    variant: 'secondary'
+  },
+  close: {
+    Icon: XIcon,
+    variant: 'secondary'
+  }
+};
+
+function getPropsByPresets(props: IconButtonProps, preset?: ButtonPreset) {
+
+  const presetProps = get(presets, [preset || ""]) || {};
+  return { ...presetProps, ...props }
+}
+
 type IconFuncProps = { color: string; [key: string]: any };
 export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon?: TButtonIcon | React.ReactElement<IconFuncProps>;
   iconProps?: {[key: string]: any};
   iconPosition?: 'left' | 'right' | 'top';
+  preset?: ButtonPreset;
   style?: React.CSSProperties;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>;
-export function IconButton({
-  Icon,
-  children,
-  iconPosition='left',
-  size,
-  iconProps={},
-  ...props
-}: IconButtonProps) {
-  const variantStyles = props.variant
-    ? getVariantStyles(props, props.variant)
+export function IconButton(props: IconButtonProps) {
+  const {
+    Icon,
+    children,
+    iconPosition='left',
+    size="medium",
+    iconProps={},
+    ...newProps
+  } = getPropsByPresets(props, props.preset);
+
+  const variantStyles = newProps.variant
+    ? getVariantStyles(props, newProps.variant)
     : { color: '#fff' };
 
   const RenderIcon = React.useMemo(() => {
@@ -357,9 +417,9 @@ export function IconButton({
     : getSizeStyle('padding', '12px');
 
   return (
-    <Button size={size} {...props} style={{
-      ...(props.style || {}),
-      padding: buttonPadding({ ...props, size: size }),
+    <Button size={size} {...newProps} style={{
+      ...(newProps.style || {}),
+      padding: buttonPadding({ ...newProps, size: size }),
       ...(iconPosition === "top" ? {
         display: 'flex',
         flexDirection: 'column',

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { uniqueId } from 'lodash';
 import styled from 'styled-components'
 import { themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import colors, { teal } from './colors';
-import SVG, { SVGIconProps } from './icons/SvgIcon';
 import StarIcon from './icons/StarIcon';
 
 type DefaultStarTextProps = {
@@ -27,19 +25,6 @@ const DefaultStarText = styled.p<DefaultStarTextProps>`
         margin-bottom:0;
     };
 `;
-
-// type DefaultStarContainerProps = {
-//     hover?: boolean;
-//     clicked?: boolean;
-// };
-
-// export function DefaultStarContainer({
-//         hover=false,
-//         clicked=false,
-//         ...props
-//     }: DefaultStarIconProps) { 
-
-//     };
 
 type DefaultStarContainerProps = {
     noText?: boolean;
