@@ -84,6 +84,7 @@ import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
+import CancelButton from '@commonsku/styles/CancelButton';
 
 const initialState = {
   date: new Date(),
@@ -640,6 +641,8 @@ const App = () => {
               <IconButton preset="add" mr={16}/>
               <IconButton preset="remove" mr={16}/>
               <IconButton preset="close" mr={16}/>
+
+              <CancelButton />
             
 
             <H5>Input Fields</H5>

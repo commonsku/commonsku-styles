@@ -40,6 +40,7 @@ export * from './MultiProgress'
 export { default as Thermometer } from './Thermometer';
 export * from './LightIndicator'
 export { default as DefaultStar } from './DefaultStar';
+export { default as CancelButton } from './CancelButton';
 
 export * from './icons'
 export * from './Theme'
