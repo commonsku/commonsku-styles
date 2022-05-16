@@ -69,3 +69,4 @@ export { default as MailIcon} from './MailIcon';
 export { default as EpsIcon} from './EpsIcon';
 export { default as StarIcon} from './StarIcon';
 export { default as EyeIcon} from './EyeIcon';
+export { default as MenuIcon} from './MenuIcon';
