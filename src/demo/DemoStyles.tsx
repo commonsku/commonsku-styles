@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components'
 import { colors, fontStyles } from '../@commonsku/styles/Theme';
 import { SharedStyles, SharedStyleTypes } from '@commonsku/styles';
+import { isNull } from 'lodash';
 
 export const mainTitle = styled.h1<{ underline?: boolean } & SharedStyleTypes>`
     font-family: ${fontStyles.h1.fontFamily};
@@ -113,9 +114,19 @@ export const SeperationLine = styled.hr`
 
 type ContainerProps = React.PropsWithChildren<{
   title?: string | React.ReactNode,
+  id?: string;
   href?: string;
+  class?: string;
   noBottomLine?: boolean;
 } & SharedStyleTypes>;
+
+let OuterContainerCount = 0;
+
+export let OuterContainerArray: Array<string | undefined> = [];
+
+export let InnerContainerArray: Array<string | undefined> = [];
+
+
 
 export const OuterContainer = ({
     title,
@@ -123,28 +134,81 @@ export const OuterContainer = ({
     children,
     ...props
   }: ContainerProps) => {
-  
-    return (<OuterBox {...props}>
-      {title ? <H1>{title}</H1> : null}
-      {children}
-    </OuterBox>
-    )
-  }
 
-export const InnerContainer = ({
+    // useEffect(() => {
+    //   OuterContainerCount += 1
+    //   console.log({OuterContainerCount})
+    //   return () => {
+    //     OuterContainerCount -= 1
+    //     console.log({OuterContainerCount})
+    //   }
+    // }, [])
+
+   if(props => props.id) {
+      OuterContainerArray.push(props.id)
+    } else {
+
+    };
+  
+    
+    // let testNestedArr: Array<any> = []; 
+
+    // testNestedArr.push(nestedContainer ? nestedContainer.id : null);
+    
+    // console.log(testNestedArr);
+
+    // if(children === nestedContainer) {
+    //   testNestedArr.push(child.title);
+    // }
+    return (
+      <OuterBox className="outer" {...props}>
+        {title ? <H1>{title}</H1> : null}
+        {children}
+      </OuterBox>
+    )
+};
+
+
+
+
+    
+    // var children = OuterContainer.children;
+    
+    // for(var i =0; i < .children.length; i++){
+    //   var testChild = this.children[i];
+    //   testNestedArr.push(testChild.id)
+    // }
+
+export function InnerContainer({
   title,
   noBottomLine,
   children,
   ...props
-}: ContainerProps) => {
+}: ContainerProps) {
+  
 
-  return (<InnerBox {...props}>
+  // useEffect(() => {
+  //   let InnerContainerCount = 0;
+  //   InnerContainerCount += 1;
+  //   console.log({InnerContainerCount});
+  // });
+
+  if(props => props.id !== undefined) {
+    InnerContainerArray.push(props.id);
+  } 
+  
+
+  return (<InnerBox className="inner" {...props}>
     {title ? <H2>{title}</H2> : null}
     {children}
     {noBottomLine ? null : <SeperationLine />}
   </InnerBox>
   )
 };
+
+InnerContainerArray = InnerContainerArray.filter(function( element ) {
+  return element !== undefined;
+});
 
 
 

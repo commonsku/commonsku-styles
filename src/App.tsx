@@ -312,6 +312,7 @@ const today = new Date(2022, 3, 17);
 const yesterday = new Date(2022, 2, 16);
 const tomorrow = new Date(2022, 4, 18);
 
+
 const calTasks = Object.freeze({
   client: [
     {id: uniqueId('day-101-'+yesterday), date: yesterday, title: 'Megacorm 101', description: 'Reach out to Jake Client 1', colorType: 'light-green', onClickCheckbox: (checked) => { console.log('checked', checked) }},
@@ -557,45 +558,9 @@ const App = () => {
         <Row>
           <Col xs>
 
-            <demo.OuterContainer title="Popups and Side Panels">
-              <demo.InnerContainer >
-                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
-                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
-                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
-              </demo.InnerContainer>
+            <demo.OuterContainer title="Buttons" id="buttons">   
 
-              <demo.InnerContainer >
-                <Dropdown text="Drop Down" items={
-                  [
-                    {onClick: () => null, content: 'New Contact'},
-                    {onClick: () => null, content: 'New Address'},
-                  ]
-                }/>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer noBottomLine>
-                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
-                  <Row>
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                  </Row>
-                </Dropdown>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
-          
-
-            <demo.OuterContainer title="Buttons">   
-
-              <demo.InnerContainer title="Button Variants">       
+              <demo.InnerContainer title="Button Variants" id="button-variants">       
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                   <ButtonsGroup mb={30}>
                     <IconButton Icon={icons.ArrowIcon} iconPosition={"top"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
@@ -648,7 +613,7 @@ const App = () => {
                 </div>
               </ demo.InnerContainer>
               
-              <demo.InnerContainer title="Button Presets" >
+              <demo.InnerContainer title="Button Presets" id="button-presets">
                 <ButtonsGroup mb={30}>
                   <IconButton preset="edit" mr={16}/>
                   <IconButton preset="delete" mr={16}/>
@@ -661,11 +626,11 @@ const App = () => {
 
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Links">
+              <demo.InnerContainer title="Links" id="links">
                 <Link block mt={20}>Link</Link>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Radio Button" >
+              <demo.InnerContainer title="Radio Buttons" id="radio-buttons">
                 <ButtonsGroup>
                   <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
                   <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
@@ -673,14 +638,14 @@ const App = () => {
                 </ButtonsGroup>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Checkbox">
+              <demo.InnerContainer title="Checkboxes" id="checkboxes">
                 <ButtonsGroup>
                   <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
                   <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
                 </ButtonsGroup>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Toggle">
+              <demo.InnerContainer title="Toggle" id="toggles">
                 <Toggle stretch mb={10}>
                   <ToggleLink selected stretch pr pl>Active</ToggleLink>
                   <ToggleLink stretch>Inactive</ToggleLink>
@@ -695,8 +660,8 @@ const App = () => {
             </demo.OuterContainer>
             
 
-            <demo.OuterContainer title="Fields" >
-              <demo.InnerContainer title="Input Fields">
+            <demo.OuterContainer title="Fields" id="fields">
+              <demo.InnerContainer title="Input Fields" id="input-fields">
                 <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
                 <Input name="basic-input" value="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
@@ -781,7 +746,7 @@ const App = () => {
                 <br />
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Text Area">
+              <demo.InnerContainer title="Text Area" id="text-area">
                 <Textarea placeholder="Textarea" defaultValue="basic textarea" />
                 <Textarea disabled defaultValue="diabled textarea" />
                 <Textarea error placeholder="Textarea" defaultValue="error textarea" />
@@ -789,7 +754,7 @@ const App = () => {
                 <br />
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Select" noBottomLine>
+              <demo.InnerContainer title="Select" id="select" >
                 <Select
                   value={{ value: 'value1', label: 'value1', }}
                   options={[
@@ -839,7 +804,7 @@ const App = () => {
                 <br />
               </ demo.InnerContainer>
 
-              <demo.InnerContainer title="Datepicker" noBottomLine >
+              <demo.InnerContainer title="Datepicker" id="datepicker" noBottomLine >
                   <Row>
                   <Col xs={3} mr={16}>
                     <Datepicker
@@ -858,7 +823,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
-            <demo.OuterContainer title="Calendar Tasks" >
+            <demo.OuterContainer title="Calendar Tasks" id="calendar-tasks">
               <demo.InnerContainer noBottomLine>
                 <DraggableTasksCalendar
                 tasks={tasks[calendarTab]}
@@ -925,9 +890,43 @@ const App = () => {
               />
               </demo.InnerContainer>
             </demo.OuterContainer>
+
+            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
+              <demo.InnerContainer >
+                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
+                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer >
+                <Dropdown text="Drop Down" items={
+                  [
+                    {onClick: () => null, content: 'New Contact'},
+                    {onClick: () => null, content: 'New Address'},
+                  ]
+                }/>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer noBottomLine>
+                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
+                  <Row>
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  </Row>
+                </Dropdown>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
             
 
-            <demo.OuterContainer title="Loading Bars" >
+            <demo.OuterContainer title="Loading Bars" id="loading-bars">
               <demo.InnerContainer noBottomLine>
                 <div style={{maxWidth: 150}}>
                   <Toggle stretch mb={10} onClick={() => setColorfulBars(!colorfulBars)}>
@@ -943,7 +942,7 @@ const App = () => {
 
             
             
-            <demo.OuterContainer title="Numbers Formatting" >
+            <demo.OuterContainer title="Numbers Formatting" id="numbers-formatting">
               <demo.InnerContainer noBottomLine>
                   <Number commas decimalPoints={4} num={334353434.44334}/>
                   <br/>
@@ -955,7 +954,7 @@ const App = () => {
             
 
 
-            <demo.OuterContainer title="Light Indicator">
+            <demo.OuterContainer title="Light Indicator" id="light-indicator">
               <demo.InnerContainer noBottomLine>
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                   <div style={{marginRight: '24px'}}>
@@ -978,7 +977,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
             
-            <demo.OuterContainer title="DefaultStar">
+            <demo.OuterContainer title="DefaultStar" id="default-star">
               <demo.InnerContainer noBottomLine>
                 <div style={{display: 'flex', flexWrap: "wrap"}}>
                   
@@ -1024,7 +1023,7 @@ const App = () => {
           
             
 
-            <demo.OuterContainer title="Collapsible">
+            <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
                   <Text
@@ -1078,7 +1077,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
             
-            <demo.OuterContainer title="Avatar" noBottomLine>
+            <demo.OuterContainer title="Avatar" id="avatar" noBottomLine>
               <demo.InnerContainer noBottomLine>
                 <div style={{display: 'flex'}}>
                   <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', marginRight: '30px'}}>
@@ -1148,7 +1147,7 @@ const App = () => {
             <H5>Text Area</H5>
             <LabeledTextarea label="Labeled Textarea" placeholder="Input" /> */}
 
-            <demo.OuterContainer title="Progress">
+            <demo.OuterContainer title="Progress" id="progress">
               <demo.InnerContainer title="">
                 <LabeledProgress max={4389.99} value={8434.44} mb={40}/>
               </demo.InnerContainer>
@@ -1171,7 +1170,7 @@ const App = () => {
             </demo.OuterContainer>
             
             
-            <demo.OuterContainer title="Drop Area">
+            <demo.OuterContainer title="Drop Area" id="drop-area">
               <demo.InnerContainer title="Drop Here">
                 <DropArea placeholder="Drop Here"></DropArea>
               </demo.InnerContainer>
@@ -1189,7 +1188,7 @@ const App = () => {
             </demo.OuterContainer>
             
 
-            <demo.OuterContainer title="Product">
+            <demo.OuterContainer title="Product" id="product">
               <demo.InnerContainer noBottomLine>
                 <Row>
                   <Col padded xs={4}>
@@ -1206,7 +1205,7 @@ const App = () => {
             </demo.OuterContainer>
 
 
-            <demo.OuterContainer title="Artwork &amp; Files">
+            <demo.OuterContainer title="Artwork &amp; Files" id="artwork">
               <demo.InnerContainer >
                 <Row>
                   <Col padded xs={3}>
@@ -1243,7 +1242,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
        	       	    
-            <demo.OuterContainer title="Tasks">
+            <demo.OuterContainer title="Tasks" id="tasks">
               <demo.InnerContainer noBottomLine>
                 <Task date="2019-11-06" taskName="Check Status" taskBody="Call the client and check if they are ready to order"/>
                 <Task date="2019-11-06" taskName="Verify Client" taskBody="Verify this client's status"/>
@@ -1253,7 +1252,7 @@ const App = () => {
             </demo.OuterContainer>
 
 
-            <demo.OuterContainer title="Feed">
+            <demo.OuterContainer title="Feed" id="feed">
 
               <demo.InnerContainer >
                 <Publisher/>
@@ -1280,7 +1279,7 @@ const App = () => {
             </demo.OuterContainer>
             
 
-            <demo.OuterContainer title="Tabs">
+            <demo.OuterContainer title="Tabs" id="tabs">
               <demo.InnerContainer noBottomLine>
                 <Tabs tabs={[
                   { label: "First Tab", content: <div>This is the first tab</div> },
@@ -1292,7 +1291,7 @@ const App = () => {
             </demo.OuterContainer>
             
 
-            <demo.OuterContainer title="Table">
+            <demo.OuterContainer title="Table" id="table">
               <demo.InnerContainer >
                 <Table>
                   <THead>
@@ -1351,8 +1350,8 @@ const App = () => {
 
             </demo.OuterContainer>
 
-            <demo.OuterContainer title="All Icons">
-              <demo.InnerContainer title="Nav Icons">
+            <demo.OuterContainer title="All Icons" id="icons">
+              <demo.InnerContainer title="Nav Icons" id="nav-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[
                       <icons.NavConnectIcon color={teal.main}/>,
@@ -1386,7 +1385,7 @@ const App = () => {
                 </IconContainer>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Production Report Status Icons">
+              <demo.InnerContainer title="Production Report Status Icons" id="production-report-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[<icons.AwaitingProofIcon />]} name="AwaitingProofIcon"/>
                   <IconsShowcase Icons={[<icons.ProofReceivedIcon />]} name="ProofReceivedIcon" />
@@ -1397,7 +1396,7 @@ const App = () => {
                 </IconContainer>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Input Icons">
+              <demo.InnerContainer title="Input Icons" id="input-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[<icons.CheckmarkIcon />]} name="CheckmarkIcon" />
                     <IconsShowcase Icons={[<icons.DollarIcon />]} name="DollarIcon"/>
@@ -1478,13 +1477,13 @@ const App = () => {
                   </IconContainer>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Settings Icons">
+              <demo.InnerContainer title="Settings Icons" id="settings-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[<icons.GearIcon />]} name="GearIcon" />
                 </IconContainer>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Status Icons">
+              <demo.InnerContainer title="Status Icons" id="status-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[
                       <icons.MarketingStatusIcon />, 
@@ -1541,7 +1540,7 @@ const App = () => {
                 </IconContainer>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Action Icons">
+              <demo.InnerContainer title="Action Icons" id="action-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[<icons.DownloadIcon />]} name="DownloadIcon" />
 

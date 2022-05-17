@@ -15,6 +15,7 @@ const StyledSideNav = styled.div<{ openNav: boolean }>`
     position:fixed;
     width: ${props => props.openNav ? "184px" : "56px"};
     height: 100vh;
+    overflow: scroll;
 `;
 
 const Background = styled.div<{padded?: boolean, fillWindow?:boolean, openNav:boolean }&SharedStyleTypes>`
@@ -42,13 +43,13 @@ type StylesPageProps = React.PropsWithChildren<RandomProps> & {
     initiallyOpened?: boolean;
 };
 
-export default function StylesPage({
+export default function NavAndPage({
     initiallyOpened=false,
     children,
 }:StylesPageProps ){
-    const [isOpen, setOpen] = useState(initiallyOpened);
 
-    
+
+    const [isOpen, setOpen] = useState(initiallyOpened);
 
     return(
         <StylesPageContainer>
