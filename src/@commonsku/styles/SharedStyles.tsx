@@ -1,21 +1,20 @@
-import { map, pick, keys, isUndefined } from 'lodash';
-import styled, { css } from 'styled-components';
-import { valIsValid } from '../utils';
+import { map, pick, keys, isUndefined, isNull, forEach } from 'lodash';
+import styled, { css, CSSObject, FlattenSimpleInterpolation } from 'styled-components';
 
 export type SharedStyleTypes = {
   // [key: string]: any,
-  pr?: boolean | number,
-  pl?: boolean | number,
-  pt?: boolean | number,
-  pb?: boolean | number,
-  px?: boolean | number,
-  py?: boolean | number,
-  mr?: boolean | number,
-  ml?: boolean | number,
-  mt?: boolean | number,
-  mb?: boolean | number,
-  mx?: boolean | number,
-  my?: boolean | number,
+  pr?: boolean | string | number,
+  pl?: boolean | string | number,
+  pt?: boolean | string | number,
+  pb?: boolean | string | number,
+  px?: boolean | string | number,
+  py?: boolean | string | number,
+  mr?: boolean | string | number,
+  ml?: boolean | string | number,
+  mt?: boolean | string | number,
+  mb?: boolean | string | number,
+  mx?: boolean | string | number,
+  my?: boolean | string | number,
   hidden?: boolean,
   block?: boolean,
   inline_block?: boolean,
@@ -29,66 +28,109 @@ export type SharedStyleTypes = {
 
 export const SharedStyles = css<SharedStyleTypes>`
   box-sizing: border-box;
-  ${p => map(pick(p, keys(SHARED_STYLE_MAPS)), (v, k) => {
-    return isUndefined(v) ? '' : SHARED_STYLE_MAPS[k](v);
-  }).join('')}
-`;
+  ${p => {
+    const styles: FlattenSimpleInterpolation[] = [];
+    forEach(pick(p, keys(SHARED_STYLE_MAPS)), (v, k) => {
+      if (isUndefined(v) || isNull(v) || v === '') { return; }
 
-export const SHARED_STYLE_MAPS: { [key: string]: Function } = {
+      const style = SHARED_STYLE_MAPS[k](v);
+      if (typeof style === 'string') {
+        styles.push(css`${style}`);
+      } else {
+        styles.push(css(style));
+      } 
+    });
+
+    return styles;
+  }}
+`;
+function parseMeasurementStyle(styleKeys: string[], value?: string | number) {
+  if (value === undefined || value === null || value === '') { return {}; }
+
+  const styles = {};
+  styleKeys?.forEach(k => {
+    styles[k] = typeof value === 'string' ? value : `${value}px`;
+  });
+  return styles;
+}
+const measurementStyles = {
+  pr: ['paddingRight'],
+  pl: ['paddingLeft'],
+  pt: ['paddingTop'],
+  pb: ['paddingBottom'],
+  px: ['paddingRight', 'paddingLeft'],
+  py: ['paddingTop', 'paddingBottom'],
+  mr: ['marginRight'],
+  ml: ['marginLeft'],
+  mt: ['marginTop'],
+  mb: ['marginBottom'],
+  mx: ['marginRight', 'marginLeft'],
+  my: ['marginTop', 'marginBottom'],
+};
+
+type MediaQuery = {query: string; styles: CSSObject };
+
+export const SHARED_STYLE_MAPS: { [key: string]: ((value?: any) => string | CSSObject) } = {
   // Padding
-  pr: (val?: string | number) => `padding-right: ${valIsValid(val) ? val : '5'}px;`,
-  pl: (val?: string | number) => `padding-left: ${valIsValid(val) ? val : '5'}px;`,
-  pt: (val?: string | number) => `padding-top: ${valIsValid(val) ? val : '5'}px;`,
-  pb: (val?: string | number) => `padding-bottom: ${valIsValid(val) ? val : '5'}px;`,
-  px: (val?: string | number) => `
-        padding-left: ${valIsValid(val) ? val : '5'}px;
-        padding-right: ${valIsValid(val) ? val : '5'}px;
-    `,
-  py: (val?: string | number) => `
-        padding-top: ${valIsValid(val) ? val : '5'}px;
-        padding-bottom: ${valIsValid(val) ? val : '5'}px;
-    `,
+  pr: (val?: string | number) => parseMeasurementStyle(measurementStyles.pr, val),
+  pl: (val?: string | number) => parseMeasurementStyle(measurementStyles.pl, val),
+  pt: (val?: string | number) => parseMeasurementStyle(measurementStyles.pt, val),
+  pb: (val?: string | number) => parseMeasurementStyle(measurementStyles.pb, val),
+  px: (val?: string | number) => parseMeasurementStyle(measurementStyles.px, val),
+  py: (val?: string | number) => parseMeasurementStyle(measurementStyles.py, val),
   // Margin
-  mr: (val?: string | number) => `margin-right: ${valIsValid(val) ? val : '5'}px;`,
-  ml: (val?: string | number) => `margin-left: ${valIsValid(val) ? val : '5'}px;`,
-  mt: (val?: string | number) => `margin-top: ${valIsValid(val) ? val : '5'}px;`,
-  mb: (val?: string | number) => `margin-bottom: ${valIsValid(val) ? val : '5'}px;`,
-  mx: (val?: string | number) => `
-        margin-left: ${valIsValid(val) ? val : '5'}px;
-        margin-right: ${valIsValid(val) ? val : '5'}px;
-    `,
-  my: (val?: string | number) => `
-        margin-top: ${valIsValid(val) ? val : '5'}px;
-        margin-bottom: ${valIsValid(val) ? val : '5'}px;
-    `,
+  mr: (val?: string | number) => parseMeasurementStyle(measurementStyles.mr, val),
+  ml: (val?: string | number) => parseMeasurementStyle(measurementStyles.ml, val),
+  mt: (val?: string | number) => parseMeasurementStyle(measurementStyles.mt, val),
+  mb: (val?: string | number) => parseMeasurementStyle(measurementStyles.mb, val),
+  mx: (val?: string | number) => parseMeasurementStyle(measurementStyles.mx, val),
+  my: (val?: string | number) => parseMeasurementStyle(measurementStyles.my, val),
   // Background
-  bg: (val: string) => `background: ${val};`,
+  bg: (val: string) => ({background: val}),
   // Display
-  hidden: () => `display: none;`,
-  block: () => `display: block;`,
-  inline_block: () => `display: inline-block;`,
-  'inline-block': () => `display: inline-block;`,
-  inline: () => `display: inline;`,
-  flex: () => `display: flex;`,
-  'inline-flex': () => `display: inline-flex;`,
-  inline_flex: () => `display: inline-flex;`,
-  grid: () => `display: grid;`,
+  hidden: () => ({display: 'none'}),
+  block: () => ({display: 'block'}),
+  inline_block: () => ({display: 'inline-block'}),
+  'inline-block': () => ({display: 'inline-block'}),
+  inline: () => ({display: 'inline'}),
+  flex: () => ({display: 'flex'}),
+  'inline-flex': () => ({display: 'inline-flex'}),
+  inline_flex: () => ({display: 'inline-flex'}),
+  grid: () => ({display: 'grid'}),
   // Float
-  float: (val: string) => `${val === 'clearfix' ? `
-        &::after {
-            content: "";
-            display: table;
-            clear: both;
-        }` : `float: ${val}`};`, // left, right, none, clearfix
+  float: (val?: 'left' | 'right' | 'none' | 'inline-start' | 'inline-end' | 'clearfix') => {
+    if (!val) { return {}; }
+
+    return val === 'clearfix' ? {
+      '::after': {
+        content: "",
+        display: 'table',
+        clear: 'both',
+      },
+    }: {float: val};
+  },
   // Position
-  pos: (val: string) => `position: ${val}`,
-  position: (val: string) => `position: ${val}`,
+  pos: (val?: string) => parseMeasurementStyle(['position'], val),
+  position: (val: string) => parseMeasurementStyle(['position'], val),
   // Overflow
-  overflow: (val: string) => `overflow: ${val}`,
+  overflow: (val: string) => ({overflow: val}),
   // z-index
-  z: (val: string | number) => `z-index: ${val}`,
+  z: (val?: string | number) => parseMeasurementStyle(['zIndex'], val),
+  // media queries
+  mediaQueries: (queries?: MediaQuery[]) => {
+    const styles: string[] = [];
+    queries?.forEach(q => {
+      styles.push(`
+        ${q.query} { ${css(q.styles)} }
+      `);
+    });
+
+    return styles.join('');
+  },
+  // media queries
+  sx: (styles?: CSSObject) => styles || {},
   // Custom Styles
-  custom: (val?: string) => `${val}`,
+  custom: (val?: string) => val || '',
 };
 
 export const Wrapper = styled.div`${SharedStyles}`;
