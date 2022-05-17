@@ -562,8 +562,12 @@ const App = () => {
 
               <demo.InnerContainer title="Button Variants" id="button-variants">       
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                  <ButtonsGroup mb={30}>
+                <ButtonsGroup mb={30} style={{display: 'flex', flexDirection: 'row'}}>
                     <IconButton Icon={icons.ArrowIcon} iconPosition={"top"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                    <IconButton Icon={icons.ArrowIcon} iconPosition={"bottom"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                  </ButtonsGroup>
+                  <ButtonsGroup mb={30}>
+                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
                     <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
                     <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
                     <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
