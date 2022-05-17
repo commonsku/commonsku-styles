@@ -9,12 +9,12 @@ const ProgressWrapper = styled.div<SharedStyleTypes>`
     max-width: 100%;
     width: 100%;
     height: 48px;
-    background: linear-gradient(180deg, rgba(1, 211, 116, 0.051) 0%, rgba(1, 211, 116, 0.1) 100%);
     box-shadow: 0px 4px 5px rgba(72, 78, 86, 0.1);
     border-radius: 50px;
 
     ${SharedStyles}
 `
+
 
 const ProgressBar = styled.div<{
     target: number;
@@ -45,12 +45,18 @@ export type ThermometerProps = {
     target: number;
     value1: number,
     value1Label?: string | ((v: number) => string),
+	barColor?: string;
+	labelTextColor?: string;
+	isSecondary?: boolean;
 };
 export default function Thermometer({
     title,
     target,
     value1,
     value1Label,
+	barColor,
+	labelTextColor,
+	isSecondary,
     ...props
 }: ThermometerProps) {
     const targetRef = useRef<HTMLSpanElement | null>(null);
@@ -98,18 +104,17 @@ export default function Thermometer({
                 <span ref={measureValue1Ref} style={{
                     position: 'absolute',
                     paddingRight: 5,
-                    paddingLeft: `${calcVal1Width() - (Math.abs(targetWidth + value1Width) || 150)}px`,
-                    color: colors.secondary3.main,
+                    color: labelTextColor || colors.secondary3.main,
                 }}>
-                    $<Number commas decimalPoints={0} num={value1}/>
+				{value1Label+" $"}<Number commas decimalPoints={0} num={value1}/>
                 </span>
             </div>
             <div ref={measureContainerRef}>
-                <ProgressWrapper style={{ marginTop: 10, }}>
+                <ProgressWrapper style={{ marginTop: 10, background : isSecondary ? '#FFF9C5' : '#C9FDE5' }}>
                     <ProgressBar
                         target={target}
                         value={value1}
-                        color={colors.secondary3.main}
+                        color={barColor || colors.secondary3.main}
                         offset={calcVal1Width()}
                         elementWidth={value1Width}
                     />
