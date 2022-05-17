@@ -4,19 +4,19 @@ import { SizerTypes } from './Sizer';
 import { Button, IconButton, TSize, ButtonVariant } from './Button';
 
 
-export type CancelButtonProps = {
+export type DoneButtonProps = {
     size?: TSize;
     style?: React.CSSProperties;
     variant?: ButtonVariant;
 } & SharedStyleTypes & SizerTypes;
 
-export default function CancelButton({
+export default function DoneButton({
     size="medium",
-    variant="error",
+    variant="primary",
     style={},
     ...Props
-}: CancelButtonProps){
+}: DoneButtonProps){
     return (
-        <Button variant={variant} size={size} {...Props} >Cancel</Button>
+        <Button variant={variant} size={size} {...Props}>Done</Button>
     )
 };

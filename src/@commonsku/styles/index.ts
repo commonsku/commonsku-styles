@@ -41,6 +41,7 @@ export { default as Thermometer } from './Thermometer';
 export * from './LightIndicator'
 export { default as DefaultStar } from './DefaultStar';
 export { default as CancelButton } from './CancelButton';
+export { default as DoneButton } from './DoneButton';
 
 export * from './icons'
 export * from './Theme'

@@ -74,7 +74,9 @@ import {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     THSorted,
     LightIndicator,
-    DefaultStar
+    DefaultStar,
+    CancelButton,
+    DoneButton,
 } from '@commonsku/styles';
 
 import * as demo from './demo/DemoStyles';
@@ -85,7 +87,6 @@ import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
-import CancelButton from '@commonsku/styles/CancelButton';
 import { de } from 'date-fns/locale';
 
 const initialState = {
@@ -625,7 +626,8 @@ const App = () => {
                   <IconButton preset="remove" mr={16}/>
                   <IconButton preset="close" mr={16}/>
 
-                  <CancelButton />
+                  <CancelButton mr={16}/>
+                  <DoneButton />
                 </ButtonsGroup>
 
               </demo.InnerContainer>
