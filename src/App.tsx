@@ -77,6 +77,7 @@ import {
     DefaultStar,
     CancelButton,
     DoneButton,
+    // PresentationTypeButton,
     AlertNotification,
     LinkWithIcon,
 } from '@commonsku/styles';
@@ -565,60 +566,120 @@ const App = () => {
 
             <demo.OuterContainer title="Buttons" id="buttons">   
 
-              <demo.InnerContainer title="Button Variants" id="button-variants">       
+              <demo.InnerContainer title="Button Variants" id="button-variants">  
+                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.</demo.LargeLabel>     
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                <ButtonsGroup mb={30} style={{display: 'flex', flexDirection: 'row'}}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"top"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"bottom"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
+                <ButtonsGroup  style={{display: 'flex', flexDirection: 'row'}}>
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom" mr={10} mt={10} >Primary</IconButton>
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top">Primary</IconButton>
+<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom">Primary</IconButton>`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArowIcon} />`
+                })}
+                  
+                  <ButtonsGroup >
+                    <IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny" />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArowIcon} />`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="large">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="small">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup>
+                    <IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="tiny"Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup>
+                    <IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup> 
+                  {DemoCodeBlock({code:
+`<IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
                 </div>
               </ demo.InnerContainer>
               
@@ -646,15 +707,19 @@ const App = () => {
 
                 <IconButton Icon={icons.TilesIcon} variant="secondary" size="huge" mr={24}>Tiles</IconButton>
 
+                {/* <PresentationTypeButton presentationType="tiles"></PresentationTypeButton> */}
 
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Links" id="links">
-                <LinkWithIcon href=""  mb={24}>This is a default link</LinkWithIcon>
+                <LinkWithIcon href="" mb={8}>This is a default link</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href="">This is a default link</LinkWithIcon>`})}
 
-                <LinkWithIcon href=""  Icon={icons.InfoIcon} mb={24}>This is a default link with Icon</LinkWithIcon>
+                <LinkWithIcon href=""  mb={8} Icon={icons.InfoIcon}>This is a default link with Icon</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href=""  Icon={InfoIcon}>This is a default link with Icon</LinkWithIcon>`})}
               
-                <LinkWithIcon href="" Icon={icons.InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark} mb={24}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>
+                <LinkWithIcon href="" mb={8} Icon={icons.InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href="" Icon={InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>`})}
 
                 {/* <Link block mt={20}>Link</Link> */}
               </demo.InnerContainer>
@@ -862,17 +927,24 @@ const App = () => {
               <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>
               {DemoCodeBlock({code: `AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
 
-              <AlertNotification mb={24}  href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>
+              <AlertNotification  href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>`})}
 
-              <AlertNotification alertType="error"  mb={24} href="" learnMore>This is a very short error message!</AlertNotification>
+              <AlertNotification alertType="error" href="" learnMore>This is a very short error message!</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification alertType="error" href="" learnMore>This is a very short error message!</AlertNotification>`})}
 
-              <AlertNotification alertType="success" learnMore mb={56}>This is a very short success message!</AlertNotification>
+              <AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>`})}
                 
-                <AlertNotification mb={24} learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>
+                <AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>`})}
 
-                <AlertNotification alertType="error" learnMore mb={24} >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>
+                <AlertNotification alertType="error" href="" learnMore >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification alertType="error" href="" learnMore >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>`})}
 
-                <AlertNotification alertType="success" learnMore mb={24}>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>
+                <AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>`})}
+                
 
               </demo.InnerContainer>
 
@@ -885,7 +957,15 @@ const App = () => {
                       <LightIndicator name="Accounting integration: QuickBooks online" on/>
                       <LightIndicator name="SAGE not configured" />
                       <LightIndicator name="Avalara not configured" />
+
+                      {DemoCodeBlock({code: 
+`<LightIndicator name="Marketing integration: Mailchimp " on />
+<LightIndicator name="Credit card integration: Stripe" on />
+<LightIndicator name="Accounting integration: QuickBooks online" on/>
+<LightIndicator name="SAGE not configured" />
+<LightIndicator name="Avalara not configured" />`})}
                     </div>
+                    
                     <div style={{marginRight: '24px'}}>
                       <demo.LargeLabel underline>Large</demo.LargeLabel>
                       <LightIndicator name="Marketing integration: Mailchimp " on large />
@@ -893,6 +973,13 @@ const App = () => {
                       <LightIndicator name="Accounting integration: QuickBooks online" on large/>
                       <LightIndicator name="SAGE not configured" large/>
                       <LightIndicator name="Avalara not configured" large/>
+                      {DemoCodeBlock({code: 
+`<LightIndicator name="Marketing integration: Mailchimp " on large />
+<LightIndicator name="Credit card integration: Stripe" on large/>
+<LightIndicator name="Accounting integration: QuickBooks online" on large/>
+<LightIndicator name="SAGE not configured" large/>
+<LightIndicator name="Avalara not configured" large/>`})}
+
                     </div>
                   </div>
               </demo.InnerContainer>
@@ -903,36 +990,44 @@ const App = () => {
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
                     <DefaultStar />
+                    {DemoCodeBlock({code: `<DefaultStar />`})}
                   </div>
                   
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
-                    <DefaultStar hoverText="Set Default">Default</DefaultStar>
+                    <DefaultStar hoverText="Set Default">Test</DefaultStar>
+                    {DemoCodeBlock({code: `<DefaultStar hoverText="Set Default">Test</DefaultStar>`})}
                   </div>
                   
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
                     <DefaultStar width={"200px"}/>
+                    {DemoCodeBlock({code: `<DefaultStar width={"200px"}/>`})}
                   </div>
 
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
                     <DefaultStar color={colors.green.main}/>
+                    {DemoCodeBlock({code: `<DefaultStar color={colors.green.main}/>`})}
                   </div>
 
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
                     <DefaultStar initialSelected={true} />
+                    {DemoCodeBlock({code: `<DefaultStar initialSelected={true} />`})}
+                    
                   </div>
 
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
                     <DefaultStar forceSelected />
+                    {DemoCodeBlock({code: `<DefaultStar forceSelected />`})}
                   </div>
 
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>No<br />Text</demo.SmallLabel>
                     <DefaultStar noText />
+                    {DemoCodeBlock({code: `<DefaultStar noText />`})}
                   </div>
 
                 </div>

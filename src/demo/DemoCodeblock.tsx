@@ -1,7 +1,7 @@
 import { Button, IconButton, EyeIcon, ClipboardIcon, SharedStyleTypes, SizerTypes } from "@commonsku/styles";
 import React,  { useState }from "react";
 import styled,  { css, CSSObject }  from "styled-components";
-import { CodeBlock, CopyBlock, nord, solarizedDark, dracula} from 'react-code-blocks';
+import { CodeBlock, CopyBlock, nord, solarizedDark, solarizedLight, atomOneDark, atomOneLight, codepen, arta, github, googlecode, monoBlue, monokai, ocean, obsidian, hybrid, hopscotch, irBlack, far, dracula} from 'react-code-blocks';
 
 const CodeDiv = styled.div`
     margin-bottom: 24px;
@@ -60,9 +60,13 @@ export function DemoCodeBlock({
                 <CodeBlock
                         showCode={isClicked}
                         text={code}
-                        language={language ? language : "typescript"}
+                        language={language ? language : "jsx"}
                         showLineNumbers={showLineNumbers ? showLineNumbers : true}
-                        theme={theme ? theme : dracula}
+                        theme={theme ? theme : nord}
+                        customStyle={{
+                            maxHeight: '400px',
+                            overflow: 'scroll',
+                        }}
                         {...props} /></>
 
                 : null }
@@ -82,7 +86,7 @@ export function DemoComponentCode(props) {
             text={props.code}
             language={props.language ? props.language : "tsx"}
             showLineNumbers={props.showLineNumbers ? props.showLineNumbers : true}
-            theme={props.theme ? props.theme : dracula}
+            theme={props.theme ? props.theme : nord}
             wrapLines 
         />
         </>
