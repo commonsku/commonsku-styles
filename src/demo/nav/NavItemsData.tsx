@@ -42,14 +42,21 @@ export const NavItems = [
             {title: 'Date Picker', to: '#datepicker' },
         ],
         open: false,
+    },
+    {
+        name: 'Notifications and Indicators', 
+        links: [
+            {title: 'Alert Notifications', to: '#alert-notifications' },
+            {title: 'Light Indicator', to: '#light-indicator' },
+            {title: 'Default Star', to: '#default-star' },
+        ],
+        open: false,
     },{
         name: 'Components', 
         links: [
             {title: 'Calendar Tasks', to: '#calendar-tasks' },
             {title: 'Loading Bars', to: '#loading-bars' },
             {title: 'Numbers Formatting', to: '#numbers-formatting' },
-            {title: 'Light Indicator', to: '#light-indicator' },
-            {title: 'Default Star', to: '#default-star' },
             {title: 'Collapsible', to: '#collapsible' },
             {title: 'Avatar', to: '#avatar' },
             {title: 'Progress', to: '#progress' },

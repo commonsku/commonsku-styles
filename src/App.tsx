@@ -77,7 +77,11 @@ import {
     DefaultStar,
     CancelButton,
     DoneButton,
+    AlertNotification,
+    LinkWithIcon,
 } from '@commonsku/styles';
+
+import { DemoCodeBlock, DemoComponentCode } from 'demo/DemoCodeblock';
 
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
@@ -629,11 +633,30 @@ const App = () => {
                   <CancelButton mr={16}/>
                   <DoneButton />
                 </ButtonsGroup>
+                {DemoCodeBlock({code:
+`<IconButton preset="edit"/>
+<IconButton preset="delete" />
+<IconButton preset="add" />
+<IconButton preset="remove" />
+<IconButton preset="close" />
+
+<CancelButton />
+<DoneButton />`
+                })}
+
+                <IconButton Icon={icons.TilesIcon} variant="secondary" size="huge" mr={24}>Tiles</IconButton>
+
 
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Links" id="links">
-                <Link block mt={20}>Link</Link>
+                <LinkWithIcon href=""  mb={24}>This is a default link</LinkWithIcon>
+
+                <LinkWithIcon href=""  Icon={icons.InfoIcon} mb={24}>This is a default link with Icon</LinkWithIcon>
+              
+                <LinkWithIcon href="" Icon={icons.InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark} mb={24}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>
+
+                {/* <Link block mt={20}>Link</Link> */}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Radio Buttons" id="radio-buttons">
@@ -829,6 +852,93 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
+            <demo.OuterContainer title="Notifications and Indicators" id="notifications-and-indicators">
+              <demo.InnerContainer title="Alert Notifications" id="alert-notifications">
+
+              <AlertNotification >This is an info message without a link</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification>This is an info message without a link</AlertNotification>`})}
+              
+
+              <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>
+              {DemoCodeBlock({code: `AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
+
+              <AlertNotification mb={24}  href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>
+
+              <AlertNotification alertType="error"  mb={24} href="" learnMore>This is a very short error message!</AlertNotification>
+
+              <AlertNotification alertType="success" learnMore mb={56}>This is a very short success message!</AlertNotification>
+                
+                <AlertNotification mb={24} learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>
+
+                <AlertNotification alertType="error" learnMore mb={24} >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>
+
+                <AlertNotification alertType="success" learnMore mb={24}>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Light Indicator" id="light-indicator">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <div style={{marginRight: '24px'}}>
+                      <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
+                      <LightIndicator name="Marketing integration: Mailchimp " on />
+                      <LightIndicator name="Credit card integration: Stripe" on />
+                      <LightIndicator name="Accounting integration: QuickBooks online" on/>
+                      <LightIndicator name="SAGE not configured" />
+                      <LightIndicator name="Avalara not configured" />
+                    </div>
+                    <div style={{marginRight: '24px'}}>
+                      <demo.LargeLabel underline>Large</demo.LargeLabel>
+                      <LightIndicator name="Marketing integration: Mailchimp " on large />
+                      <LightIndicator name="Credit card integration: Stripe" on large/>
+                      <LightIndicator name="Accounting integration: QuickBooks online" on large/>
+                      <LightIndicator name="SAGE not configured" large/>
+                      <LightIndicator name="Avalara not configured" large/>
+                    </div>
+                  </div>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Default Star" id="default-star" noBottomLine>
+                <div style={{display: 'flex', flexWrap: "wrap"}}>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
+                    <DefaultStar />
+                  </div>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
+                    <DefaultStar hoverText="Set Default">Default</DefaultStar>
+                  </div>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
+                    <DefaultStar width={"200px"}/>
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
+                    <DefaultStar color={colors.green.main}/>
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
+                    <DefaultStar initialSelected={true} />
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
+                    <DefaultStar forceSelected />
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>No<br />Text</demo.SmallLabel>
+                    <DefaultStar noText />
+                  </div>
+
+                </div>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
             <demo.OuterContainer title="Calendar Tasks" id="calendar-tasks">
               <demo.InnerContainer noBottomLine>
                 <DraggableTasksCalendar
@@ -895,7 +1005,7 @@ const App = () => {
                 onClickView={() => {}}
               />
               </demo.InnerContainer>
-            </demo.OuterContainer>
+            </demo.OuterContainer>    
 
             <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
               <demo.InnerContainer >
@@ -958,77 +1068,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
             
-
-
-            <demo.OuterContainer title="Light Indicator" id="light-indicator">
-              <demo.InnerContainer noBottomLine>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                  <div style={{marginRight: '24px'}}>
-                    <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
-                    <LightIndicator name="Marketing integration: Mailchimp " on />
-                    <LightIndicator name="Credit card integration: Stripe" on />
-                    <LightIndicator name="Accounting integration: QuickBooks online" on/>
-                    <LightIndicator name="SAGE not configured" />
-                    <LightIndicator name="Avalara not configured" />
-                  </div>
-                  <div style={{marginRight: '24px'}}>
-                    <demo.LargeLabel underline>Large</demo.LargeLabel>
-                    <LightIndicator name="Marketing integration: Mailchimp " on large />
-                    <LightIndicator name="Credit card integration: Stripe" on large/>
-                    <LightIndicator name="Accounting integration: QuickBooks online" on large/>
-                    <LightIndicator name="SAGE not configured" large/>
-                    <LightIndicator name="Avalara not configured" large/>
-                  </div>
-                </div>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
             
-            <demo.OuterContainer title="DefaultStar" id="default-star">
-              <demo.InnerContainer noBottomLine>
-                <div style={{display: 'flex', flexWrap: "wrap"}}>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
-                    <DefaultStar />
-                  </div>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
-                    <DefaultStar hoverText="Set Default">Default</DefaultStar>
-                  </div>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
-                    <DefaultStar width={"200px"}/>
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
-                    <DefaultStar color={colors.green.main}/>
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
-                    <DefaultStar initialSelected={true} />
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
-                    <DefaultStar forceSelected />
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>No<br />Text</demo.SmallLabel>
-                    <DefaultStar noText />
-                  </div>
-
-                </div>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
-          
-            
-
             <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
