@@ -5,6 +5,9 @@ import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
 import { document } from '../utils';
+import { RadioIcon } from '@commonsku/styles';
+import { neutrals } from './colors';
+import { fontStyles } from './Theme';
 
 type CommonInputProp = {
   noMargin?: boolean,
@@ -346,19 +349,19 @@ export const RadioLabel = styled.label<{disabled?: boolean}>`
   &&& {
     display: inline-block;
     position: relative;
-    padding-left: 35px;
+    padding-left: 32px;
     margin-bottom: 12px;
-    margin-right: 25px;
+    margin-right: 24px;
     cursor: pointer;
-    font-size: 16px;
-    color: #52585c;
-    font-family: 'skufont-medium', sans-serif;
+    font-size: ${fontStyles.label.fontSize};
+    color: ${neutrals.darkest};
+    font-family: ${fontStyles.label.fontFamily};
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     font-weight: normal;
-    line-height: 1.5;
+    line-height: ${fontStyles.label.lineHeight};
     box-sizing: border-box;
     opacity: ${(props) => props.disabled ? 0.7 : 1};
     &:focus {
@@ -468,8 +471,8 @@ CheckMark.defaultProps = {
   checked: false,
 }
 
-export const LabeledRadio: React.FC<RadioProps & {label: string}> = ({ 
-  label, name, checked, disabled, onChange, ...props 
+export const LabeledRadio: React.FC<RadioProps & {label: string, labelStyle?: CSSProperties}> = ({ 
+  label, name, checked, disabled, labelStyle, onChange, ...props 
 }) => {
   const [ isHovering, updateHover ] = useState(false);
   const radio = useRef<HTMLInputElement>(null);
@@ -480,13 +483,14 @@ export const LabeledRadio: React.FC<RadioProps & {label: string}> = ({
       onMouseOver={(e) => updateHover(true)}
       onMouseLeave={(e) => updateHover(false)}
       disabled={disabled}
+      style={{...labelStyle}}
       onClick={() => {
         radio.current?.click();
       }}
     >
+      <RadioIcon selected={checked} hover={isHovering} disabled={disabled} mr={8} style={{position: 'absolute', left: 0}}/>
       {label}
       <Radio ref={radio} name={name} type="radio" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
-      <Dot checked={checked} isHovering={isHovering} disabled={disabled}/>
     </RadioLabel>
   );
 }

@@ -729,6 +729,8 @@ const App = () => {
                   <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
                   <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
                   <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+                  <LabeledRadio disabled label="All" checked={false} />
+                  <LabeledRadio disabled label="All" checked={true} />
                 </ButtonsGroup>
               </demo.InnerContainer>
 
@@ -898,7 +900,7 @@ const App = () => {
                 <br />
               </ demo.InnerContainer>
 
-              <demo.InnerContainer title="Datepicker" id="datepicker" noBottomLine >
+              <demo.InnerContainer title="Datepicker" id="datepicker" >
                   <Row>
                   <Col xs={3} mr={16}>
                     <Datepicker
@@ -915,6 +917,33 @@ const App = () => {
                   </Col>
                 </Row>
               </demo.InnerContainer>
+
+              <demo.InnerContainer title="Dropdown Button" id="dropdown-button">
+                <Dropdown text="Drop Down" items={
+                  [
+                    {onClick: () => null, content: 'New Contact'},
+                    {onClick: () => null, content: 'New Address'},
+                  ]
+                }/>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdownla" noBottomLine>
+                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
+                  <Row>
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  </Row>
+                </Dropdown>
+              </demo.InnerContainer>
+
             </demo.OuterContainer>
 
             <demo.OuterContainer title="Notifications and Indicators" id="notifications-and-indicators">
@@ -1034,6 +1063,16 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
+            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
+              <demo.InnerContainer title="Popups" id="popups">
+                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
+              </demo.InnerContainer>
+              <demo.InnerContainer title="Side Panels" id="side-panels" noBottomLine>
+                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
             <demo.OuterContainer title="Calendar Tasks" id="calendar-tasks">
               <demo.InnerContainer noBottomLine>
                 <DraggableTasksCalendar
@@ -1101,41 +1140,6 @@ const App = () => {
               />
               </demo.InnerContainer>
             </demo.OuterContainer>    
-
-            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
-              <demo.InnerContainer >
-                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
-                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
-                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer >
-                <Dropdown text="Drop Down" items={
-                  [
-                    {onClick: () => null, content: 'New Contact'},
-                    {onClick: () => null, content: 'New Address'},
-                  ]
-                }/>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer noBottomLine>
-                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
-                  <Row>
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                  </Row>
-                </Dropdown>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
 
             <demo.OuterContainer title="Loading Bars" id="loading-bars">
               <demo.InnerContainer noBottomLine>
@@ -1579,7 +1583,9 @@ const App = () => {
 
                     <IconsShowcase Icons={[
                     <icons.RadioIcon />,
-                    <icons.RadioIcon selected />
+                    <icons.RadioIcon selected />,
+                    <icons.RadioIcon disabled />,
+                    <icons.RadioIcon selected disabled/>,
                     ]} name="RadioIcon" />
 
                     <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>

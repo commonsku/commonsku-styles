@@ -40,6 +40,16 @@ export const NavItems = [
             {title: 'Text Area', to: '#text-area' },
             {title: 'Select', to: '#select' },
             {title: 'Date Picker', to: '#datepicker' },
+            {title: 'Dropdown Button', to: '#dropdown-button' },
+            {title: 'Icon Dropdown', to: '#icon-dropdown' },
+        ],
+        open: false,
+    },
+    {
+        name: 'Popups and Side Panels', 
+        links: [
+            {title: 'Popups', to: '#popups-and-panels' },
+            {title: 'Side Panels', to: '#side-panels' },
         ],
         open: false,
     },
