@@ -1,7 +1,7 @@
 import React from 'react';
 import { SharedStyleTypes } from './SharedStyles';
 import { SizerTypes } from './Sizer';
-import { Button, IconButton, TSize, ButtonVariant } from './Button';
+import { Button, TSize, ButtonVariant } from './Button';
 
 
 export type CancelButtonProps = {

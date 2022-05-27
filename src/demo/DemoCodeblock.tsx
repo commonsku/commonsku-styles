@@ -1,6 +1,8 @@
-import { Button, IconButton, EyeIcon, ClipboardIcon, SharedStyleTypes, SizerTypes } from "@commonsku/styles";
+import { IconButton, EyeIcon, ClipboardIcon, SharedStyleTypes, SizerTypes } from "@commonsku/styles";
 import React,  { useState }from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styled,  { css, CSSObject }  from "styled-components";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CodeBlock, CopyBlock, nord, solarizedDark, solarizedLight, atomOneDark, atomOneLight, codepen, arta, github, googlecode, monoBlue, monokai, ocean, obsidian, hybrid, hopscotch, irBlack, far, dracula} from 'react-code-blocks';
 
 const CodeDiv = styled.div`
@@ -27,11 +29,6 @@ export function DemoCodeBlock({
 
     const [isClicked, setClicked] = useState(false);
     const [isCopied, setCopied] = useState(false);
-
-    function copyToClipboard(code) {
-
-        navigator.clipboard.writeText(code);
-      }
 
     return (
      

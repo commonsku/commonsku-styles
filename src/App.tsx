@@ -17,19 +17,13 @@ import * as icons from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
-    Box, 
-    Background,
     DropArea, Dropzoned, DropzonedPreviews,
-    Button, 
-    H1,
-    // H2,
-    // H3,
-    // H4,
-    H5, 
+    Button,  
     Page,
     Toggle,
     ToggleLink, 
     LabeledInput,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     LabeledTextarea,
     SidePanel,
     Tabs,
@@ -43,6 +37,7 @@ import {
     Row, Col,
     Popup,
     Task,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Link,
     Number,
     FeedPost, Publisher,
@@ -83,7 +78,7 @@ import {
     LabeledRadioInButton,
 } from '@commonsku/styles';
 
-import { DemoCodeBlock, DemoComponentCode } from 'demo/DemoCodeblock';
+import { DemoCodeBlock } from 'demo/DemoCodeblock';
 
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
@@ -93,6 +88,7 @@ import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, navy, neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { de } from 'date-fns/locale';
 
 const initialState = {
@@ -355,6 +351,7 @@ const App = () => {
   const [activeRadioInButtonFlex, setRadioInButtonFlex] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);

@@ -2,13 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import colors from './colors';
 import { fontStyles } from "./Theme";
-import { InfoIcon, AlertIcon, CheckmarkIcon, CompletedCheckmarkIcon, LinkWithIcon} from "@commonsku/styles";
+import { InfoIcon, AlertIcon, CompletedCheckmarkIcon, LinkWithIcon} from "@commonsku/styles";
 import { SharedStyleTypes, SharedStyles } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import { CSSObject } from "styled-components";
 
-
-// (props: ButtonProps, variant: ButtonVariant): CSSObject =>
 type AlertNotificationProps = React.PropsWithChildren<{
     alertType?: "neutral" | "success" | "error",
     style?: React.CSSProperties;
@@ -57,24 +55,6 @@ const StyledNotification = styled.div<{alertType?: string }>`
         ${SizerCss}
     }
 `;
-
-// const StyledLink = styled.a<{alertType?: string } & SharedStyleTypes & SizerTypes>`
-//     &&& {
-//         font-size: ${fontStyles.p.medium.fontSize};
-//         font-family: ${fontStyles.p.medium.fontFamily};
-//         line-height: ${fontStyles.p.medium.lineHeight};
-//         flex-shrink: 0;
-//         color: ${colors.teal.main};
-//         text-decoration: none;
-//         cursor: pointer;
-//         ${props => props.alertType ? NotificationVariantStyles(props.alertType): {}};
-//         ${SharedStyles}
-//         ${SizerCss}
-//         &:hover {
-//             color: ${colors.teal.dark};
-//         }
-//     }  
-// `;
 
 export default function AlertNotification({
     alertType="neutral",

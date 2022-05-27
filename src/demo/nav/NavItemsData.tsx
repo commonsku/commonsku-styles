@@ -1,21 +1,4 @@
-import React from "react";
 import { OuterContainerArray, InnerContainerArray } from "demo";
-
-// let filterInnerContainerArray = InnerContainerArray.filter(function (el) {
-//     return el != null;
-//   });
-
-// const results = InnerContainerArray.filter(element => {
-//     return element === undefined;
-//   });
-
-// const results: Array<string> = [];
-
-// InnerContainerArray.forEach(element => {
-//     if(element !== undefined) {
-//         results.push(element);
-//     }
-// });
 
 console.log(OuterContainerArray);
 console.log(InnerContainerArray);

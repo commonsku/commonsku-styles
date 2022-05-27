@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import colors from './colors';
 import { fontStyles } from "./Theme";
-import { InfoIcon, AlertIcon, CheckmarkIcon, CompletedCheckmarkIcon} from "@commonsku/styles";
 import { SharedStyleTypes, SharedStyles } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
-import { CSSObject } from "styled-components";
 import { TButtonIcon } from "@commonsku/styles";
 
 const StyledLink = styled.a<{alertType?: string, color?: string, hoverColor?: string, flexShrink?: boolean}>`
