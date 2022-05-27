@@ -80,6 +80,7 @@ import {
     // PresentationTypeButton,
     AlertNotification,
     LinkWithIcon,
+    LabeledRadioInButton,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock, DemoComponentCode } from 'demo/DemoCodeblock';
@@ -90,7 +91,7 @@ import NavAndPage from './demo/nav/NavAndPage';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { errors, neutrals, primary1, teal } from '@commonsku/styles/colors';
+import { errors, navy, neutrals, primary1, teal } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { de } from 'date-fns/locale';
 
@@ -350,6 +351,8 @@ const App = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showNewProjectPopup, setShowNewProjectPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
+  const [activeRadioInButton, setRadioInButton] = useState(1);
+  const [activeRadioInButtonFlex, setRadioInButtonFlex] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
   const [lock, setLock] = useState(false);
@@ -726,12 +729,64 @@ const App = () => {
 
               <demo.InnerContainer title="Radio Buttons" id="radio-buttons">
                 <ButtonsGroup>
-                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
-                  <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
+                  <demo.MediumLabel mb={32}>Default LabeledRadio</demo.MediumLabel>
+                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+                  />
+                  <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
                   <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
-                  <LabeledRadio disabled label="All" checked={false} />
-                  <LabeledRadio disabled label="All" checked={true} />
+                  <LabeledRadio disabled label="Disabled unselected" checked={false} />
+                  <LabeledRadio disabled label="Disabled selected" checked={true} />
                 </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+  `<LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+  />
+  <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
+  <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+  <LabeledRadio disabled label="Disabled unselected" checked={false} />
+  <LabeledRadio disabled label="Disabled selected" checked={true} />`
+                })}
+
+                <ButtonsGroup>
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton</demo.MediumLabel>                  
+                  <LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+                  />
+                  <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
+                  <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
+                  <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
+                  <LabeledRadioInButton disabled label="Disabled selected" checked={true} />
+                </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+  `<LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+  />
+  <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
+  <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
+  <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
+  <LabeledRadioInButton disabled label="Disabled selected" checked={true} />`
+                })}
+
+                <ButtonsGroup>
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton with 'flexGrow' prop inside a flex container</demo.MediumLabel>                  
+                  <div style={{display: 'flex', flexDirection: 'row', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
+                    <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+                    />
+                    <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
+                    <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
+                    <LabeledRadioInButton disabled flexGrow label="Disabled unselected" checked={false} />
+                    <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
+                  </div>
+                </ButtonsGroup>
+                {DemoCodeBlock({code: 
+  `<div style={{display: 'flex', flexDirection: 'row', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
+  <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+  />
+  <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
+  <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
+  <LabeledRadioInButton disabled flexGrow label="Disabled unselected" checked={false} />
+  <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
+</div>`
+                })}
+                
+
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Checkboxes" id="checkboxes">
@@ -1583,10 +1638,19 @@ const App = () => {
 
                     <IconsShowcase Icons={[
                     <icons.RadioIcon />,
+                    <icons.RadioIcon hover />,
                     <icons.RadioIcon selected />,
                     <icons.RadioIcon disabled />,
                     <icons.RadioIcon selected disabled/>,
                     ]} name="RadioIcon" />
+
+                    <IconsShowcase Icons={[
+                      <icons.CheckboxIcon />,
+                      <icons.CheckboxIcon hover />,
+                      <icons.CheckboxIcon selected />,
+                      <icons.CheckboxIcon disabled />,
+                      <icons.CheckboxIcon selected disabled/>,
+                    ]} name="CheckboxIcon" />
 
                     <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
                     <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />

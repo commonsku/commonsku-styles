@@ -35,7 +35,7 @@ export function DemoCodeBlock({
 
     return (
      
-        <CodeDiv>
+        <CodeDiv style={style}>
             <IconButton Icon={EyeIcon} iconProps={isClicked ? {hide: true} : undefined} size="tiny" variant="text" mb={ isClicked ? 16 : 0} onClick={() => setClicked(!isClicked)}>{ isClicked ? "Hide Code" : "See Code"}</IconButton>
 
             

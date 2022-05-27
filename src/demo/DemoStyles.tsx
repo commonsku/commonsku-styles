@@ -64,6 +64,7 @@ export const SmallLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
     margin-bottom: "8px";
     margin-right: "8px";
     border-bottom: ${props => props.underline ? `1px solid ${colors.neutrals[50]}` : `none`};
+    ${SharedStyles}
 `;
 
 export const MediumLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
@@ -74,6 +75,7 @@ export const MediumLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
     margin-bottom: "8px";
     margin-right: "8px";
     border-bottom: ${props => props.underline ? `1px solid ${colors.neutrals[50]}` : `none`};
+    ${SharedStyles}
 `;
 
 export const LargeLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
@@ -84,6 +86,7 @@ export const LargeLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
     margin-bottom: "16px";
     margin-right: "8px";
     border-bottom: ${props => props.underline ? `1px solid ${colors.neutrals[50]}` : `none`};
+    ${SharedStyles}
 `;
 
 const OuterBox = styled.div`
@@ -102,6 +105,7 @@ const InnerBox = styled.div<{ borderless?: boolean, padded?: boolean } & SharedS
     margin-top: 24px;
     margin-bottom: 24px;
     padding: 0;
+    ${SharedStyles}
 `;
 
 export const SeperationLine = styled.hr`
