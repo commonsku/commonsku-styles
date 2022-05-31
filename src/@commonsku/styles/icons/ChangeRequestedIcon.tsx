@@ -1,34 +1,21 @@
-import React from "react"
+import React from 'react';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { pink } from '../colors';
 
-export function ChangeRequestedIcon({
-  color="#ff297c", 
-  width, 
-  mr,
-  mt
-}: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number
-}>) {
-  return (
-    <svg
-    viewBox="0 0 195 195"
-    fillRule="evenodd"
-    clipRule="evenodd"
-    strokeLinejoin="round"
-    strokeMiterlimit={2}
-    fill={color}
-    width={width}
-    style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
-    >
-      <path fill="none" d="M.014.011H194.46v194.446H.014z" />
-      <path
-        d="M87.13 97.478L5.796 16.145a6.948 6.948 0 010-9.823 6.948 6.948 0 019.822 0l81.334 81.334 81.334-81.334c2.705-2.71 7.105-2.71 9.816 0a6.948 6.948 0 010 9.823l-81.328 81.333 81.328 81.334a6.94 6.94 0 010 9.816c-2.71 2.711-7.11 2.711-9.816 0L96.952 107.3l-81.334 81.328a6.948 6.948 0 01-9.822 0 6.94 6.94 0 010-9.816L87.13 97.478z"
-        fill={color}
-      />
-    </svg>
-  )
+type ChangeRequestedIconProps = SVGIconProps;
+export default function ChangeRequestedIcon({
+    color=pink.main,
+    size="medium",
+    altText="Change Requested",
+    ...props
+}: ChangeRequestedIconProps) {
+    return <SVG size={size} aria-labelledby="ChangeRequestedIcon" {...props}>
+        <title id="ChangeRequestedIcon" >{altText}</title>
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M10.593 12 3.39 4.797 3.292 4.7A.995.995 0 0 1 4.699 3.29l.099.099L12 10.592l7.203-7.202.098-.099A.995.995 0 1 1 20.71 4.7l-.099.098L13.408 12l7.202 7.203.099.098A.995.995 0 0 1 19.3 20.71l-.098-.099L12 13.407 4.797 20.61l-.098.099A.995.995 0 1 1 3.29 19.3l.099-.098L10.593 12Z"
+            fill={color}
+        />
+    </SVG>
 }
-
-export default ChangeRequestedIcon

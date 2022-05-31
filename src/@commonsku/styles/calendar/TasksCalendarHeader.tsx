@@ -6,7 +6,7 @@ import { Row, Col, } from '../FlexboxGrid';
 import HeaderWrapper from './HeaderWrapper';
 import { Tabs, TTab } from '../Tabs';
 import { Text, Link } from '../Text';
-import { GearIcon, ChevronIcon, Calendar2Icon } from '../icons';
+import { GearIcon, ChevronIcon, CalendarIcon } from '../icons';
 import {Dropdown} from '../Dropdown';
 import { Button, IconButton, TSize, ButtonVariant } from '../Button';
 import { H5 } from '../Headings';
@@ -26,14 +26,11 @@ type TextDatePickerProps = {
 const CalendarIconDatePicker = React.forwardRef(({ value, onClick }: TextDatePickerProps, ref: React.Ref<HTMLElement>) => {
     return (
         <span ref={ref} onClick={onClick}>
-            <Calendar2Icon
-                height={23}
-                width={25}
+            <CalendarIcon
                 style={{
                     display: 'block',
                     textAlign: 'center',
                     borderRadius: 5,
-                    padding: 4,
                     cursor: 'pointer',
                     color: colors.disabledButton,
                 }}
@@ -120,7 +117,7 @@ export const TasksCalendarHeader = ({
             `}>
                 <Dropdown
                     style={{verticalAlign: 'middle'}}
-                    icon={<GearIcon size="large" />}
+                    icon={<GearIcon pointer mr={5} />}
                 >
                     <Row>{weekendsCheckbox}</Row>
                 </Dropdown>

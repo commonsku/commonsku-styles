@@ -1,28 +1,15 @@
 import React from 'react';
-import { themeOptions } from '../Theme';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { teal } from '../colors';
 
-export default function Icon({
-    width=13,
-    height=14,
-    fill=themeOptions.colors.primary1.main,
-    style={},
+type BulletIconProps = SVGIconProps;
+export default function BulletIcon({
+    color=teal.main,
+    size="medium",
     ...props
-}: React.PropsWithChildren<{
-    width?: number|string,
-    height?: number|string,
-    fill?: string,
-    style?: React.CSSProperties,
-}>) {
-    return (
-        <svg
-            width={width}
-            height={height}
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style={style}
-            {...props}
-        >
-            <circle cx={6.5} cy={7} r={6.5} fill={fill} />
-        </svg>
-    );
+}: BulletIconProps) {
+    return <SVG size={size} {...props}>
+        <circle cx={12} cy={12} r={7} fill={color} />
+    </SVG>
 }
+

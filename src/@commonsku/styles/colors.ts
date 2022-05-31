@@ -28,12 +28,16 @@ primary1['dark'] = primary1['80'];
 primary1['dark-hover'] = primary1['85'];
 primary1['darkest'] = primary1['90'];
 
+export const teal = primary1;
+
 export const primary2 = {
   main: '#FFFFFF',
   border: {
     main: '#0C5A88',
   },
 };
+
+export const white = primary2;
 
 export const secondary1 = {
   '10': '#FFEDF4',
@@ -57,6 +61,8 @@ secondary1['light'] = secondary1['30'];
 secondary1['dark'] = secondary1['80'];
 secondary1['darkest'] = secondary1['90'];
 
+export const pink = secondary1;
+
 export const secondary2 = {
   '10': '#FFFDF5',
   '20': '#FFF9C5',
@@ -78,6 +84,8 @@ secondary2['lightest'] = secondary2['10'];
 secondary2['light'] = secondary2['30'];
 secondary2['dark'] = secondary2['70'];
 secondary2['darkest'] = secondary2['90'];
+
+export const yellow = secondary2;
 
 export const secondary3 = {
   '10': '#F2FFF9',
@@ -101,6 +109,8 @@ secondary3['light'] = secondary3['30'];
 secondary3['dark'] = secondary3['80'];
 secondary3['darkest'] = secondary3['90'];
 
+export const green = secondary3;
+
 export const secondary4 = {
   '10': '#EDF4F7',
   '20': '#C6E8F7',
@@ -122,6 +132,8 @@ secondary4['lightest'] = secondary4['10'];
 secondary4['light'] = secondary4['30'];
 secondary4['dark'] = secondary4['80'];
 secondary4['darkest'] = secondary4['90'];
+
+export const navy = secondary4;
 
 export const neutrals = {
   '10': '#FFFFFF',
@@ -177,11 +189,11 @@ const colors = {
   secondary3,
   secondary4,
 
-  teal: primary1,
-  pink: secondary1,
-  yellow: secondary2,
-  green: secondary3,
-  navy: secondary4,
+  teal: teal,
+  pink: pink,
+  yellow: yellow,
+  green: green,
+  navy: navy,
 
   neutrals,
   errors,

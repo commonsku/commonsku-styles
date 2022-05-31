@@ -1,14 +1,17 @@
 import React from 'react';
-import {errors, primary1, secondary3 } from '../colors';
+import {errors, teal, green } from '../colors';
 import SVG, { SVGIconProps } from './SvgIcon';
 
 type MarketingStatusIconProps = SVGIconProps & {approved?: boolean};
 export default function MarketingStatusIcon({
-    color=primary1.main,
+    color=teal.main,
     size="medium",
     approved=false,
+    altText="Marketing not allowed",
     ...props
 }: MarketingStatusIconProps) {
+
+    approved ? altText="Marketing allowed" : altText="Marketing not allowed";
 
     const finalPath = React.useMemo(() => {
         if (approved === true) {
@@ -18,7 +21,7 @@ export default function MarketingStatusIcon({
          />
          <path
            d="m17.04 21.07-2.835-2.835a.997.997 0 1 1 1.41-1.41l1.415 1.415 3.535-3.535a1.004 1.004 0 1 1 1.42 1.42L17.04 21.07Z"
-           fill={secondary3.main}
+           fill={green.main}
          /></>
         }
     // default to unselected
@@ -34,7 +37,8 @@ export default function MarketingStatusIcon({
     /></>
     }, [approved, color]);
       
-    return <SVG size={size} {...props}>
+    return <SVG size={size} aria-labelledby="MarketingStatusIcon" {...props}>
+        <title id="MarketingStatusIcon" >{altText}</title>
         <path fill="none" d="M0 0h24v24H0z" />
         {finalPath}
     </SVG>;

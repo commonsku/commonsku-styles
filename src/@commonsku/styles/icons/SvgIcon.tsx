@@ -1,4 +1,6 @@
-import styled, { CSSObject } from 'styled-components';
+import styled, { css, CSSObject } from 'styled-components';
+import { SharedStyles, SharedStyleTypes } from '../SharedStyles';
+
 
 export const iconSize = {
     tiny: {
@@ -50,8 +52,10 @@ type BaseSVGIconProps = {
     size?: TIconSize;
     width?: string | number;
     height?: string | number;
+    altText?: string;
+    pointer?: boolean;
     iconSizes?: TIconSizeObj;
-};
+} & SharedStyleTypes;
 
 export type SVGIconProps = React.SVGAttributes<SVGElement> & BaseSVGIconProps;
 
@@ -69,17 +73,25 @@ const SVG = styled.svg.attrs<BaseSVGIconProps>(p => {
     };
 })<BaseSVGIconProps>(
     p => {
+        return css`
+            ${SharedStyles}
+        `;
+    },
+    p => {
         const styles: CSSObject = {};
         const iconSizes = p.iconSizes || iconSize;
-        const size = p.size ? iconSizes[p.size] : null;
-        if (size) {
-            styles['height'] = size.height;
-            styles['width'] = size.width;
-        } else {
-            const defaultSize = iconSizes['default'];
-            styles['height'] = p.height !== undefined && p.height !== '' ? p.height : defaultSize.height;
-            styles['width'] = p.width !== undefined && p.width !== '' ? p.width : defaultSize.width;
+        let size = p.size ? iconSizes[p.size] : null;
+        
+        const defaultSize = iconSizes['default'];
+
+        if(!size) {
+            size = defaultSize;
         }
+        
+        styles['height'] = p.height !== undefined && p.height !== '' ? p.height : size.height;
+        styles['width'] = p.width !== undefined && p.width !== '' ? p.width : size.width;
+        styles['cursor'] = p.pointer ? 'pointer' : undefined;        
+    
         return styles;
     },
 );

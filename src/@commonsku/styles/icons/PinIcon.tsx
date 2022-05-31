@@ -1,33 +1,68 @@
-import React from "react"
+import React from 'react';
+import SVG, { SVGIconProps } from './SvgIcon';
+import { teal } from '../colors';
 
-export function PinIcon({
-  color="#000000", 
-  width, 
-  mr,
-  mt,
-  pinned
-}: React.PropsWithChildren<{
-  color?:string, 
-  width?:string, 
-  mr?:number,
-  mt?:number,
-  pinned?:boolean
-}>) {
-  return (
-      <svg
-      viewBox="0 0 300 300"
-      xmlns="http://www.w3.org/2000/svg"
-      fillRule="evenodd"
-      clipRule="evenodd"
-      strokeLinejoin="round"
-      strokeMiterlimit={2}
-      width={width}
-      style={{display:"inline-block", verticalAlign: "top", marginRight: mr, marginTop: mt }}
-    >
-      <path d="M0 0h300v300H0z" fill="none" />
-      { pinned ? <path d="M99.121 72.42l121.64 129.943h-55.974v47.414l-13.85 46.566-15.724-49.274v-44.706H45.86c3.953-28.506 17.238-53.626 36.291-71.411A53.561 53.561 0 0099.117 91.84c.003-6.41.004-13.21.004-19.42zM84.132 9.587A13.922 13.922 0 0194.377 5.09h111.246a13.922 13.922 0 0113.924 13.924v31.047h-.002c-10.309 0-18.666 8.357-18.666 18.665V91.84a53.565 53.565 0 0016.967 39.113c15.835 14.778 27.686 34.622 33.506 57.263L84.132 9.586z" fill={color} /> : <path d="M82.736 197.462l-67.37-67.37c24.474-18.512 53.43-27.436 81.206-26.48a57.116 57.116 0 0042.28-16.696c5.813-5.808 12.05-12.045 17.43-17.424 7.772-7.773 7.772-20.375 0-28.147l-.002-.002 23.41-23.409a14.849 14.849 0 0120.996 0l83.873 83.873a14.84 14.84 0 014.35 10.5 14.854 14.854 0 01-4.348 10.499l-23.41 23.409c-7.771-7.772-20.376-7.775-28.149-.003l-17.427 17.427a57.132 57.132 0 00-16.695 42.286c.962 27.777-7.965 56.73-26.476 81.206l-67.371-67.372-35.748 35.748-45.55 24.67 25.294-49.009 33.707-33.706z" fill={color} /> }
-    </svg>
-  )
+type PinIconProps = SVGIconProps & {filled?: boolean, pinned?: boolean; unpin?: boolean;};
+export default function PinIcon({
+    color=teal.main,
+    size="medium",
+    filled=false,
+    unpin=false,
+    pinned,
+    altText="Pin",
+    ...props
+}: PinIconProps) {
+ 
+
+    let renderPath;
+    
+    if(unpin) {
+      altText="Unpin";
+      renderPath = 
+        filled ? 
+          <>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="m21.313 2.658-1.288-1.53-2.038 1.714a.792.792 0 0 0-.002-.016L16.59 4h.02l-.61.514v-.018L5 13.75v.018L3 15.45l1.288 1.53L7.83 14h3.139v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3V7.127l5.313-4.469ZM7 2h8.86L8 8.613V4H7c-.55 0-1-.45-1-1s.45-1 1-1Z"
+            fill={color}
+          />
+          </> 
+        : 
+          <>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="m21.313 2.658-1.288-1.53-2.038 1.714a.792.792 0 0 0-.002-.016L16.59 4h.02l-.61.514v-.018L14 6.18v.017L9.966 9.59l.002-.02L5 13.75v.018L3 15.45l1.288 1.53L7.83 14h3.139v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3V7.127l5.313-4.469ZM14 8.81 10.208 12H15c-.63-.84-1-1.88-1-3v-.19Z"
+            fill={color}
+          />
+          <path
+            d="M7 2h8.86l-2.377 2H10v2.93L8 8.613V4H7c-.55 0-1-.45-1-1s.45-1 1-1Z"
+            fill={color}
+          />
+          </>
+        ;
+    } else {
+      renderPath = 
+      filled ? 
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3Z"
+          fill={color}
+        /> 
+      :
+        <path
+          d="M14 4v5c0 1.12.37 2.16 1 3H9c.65-.86 1-1.9 1-3V4h4Zm3-2H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3V4h1c.55 0 1-.45 1-1s-.45-1-1-1Z"
+          fill={color}
+        />
+        ;
+    };
+
+
+    return <SVG size={size} aria-labelledby="PinIcon" {...props}>
+        
+        <title id="PinIcon" >{altText}</title>
+         {renderPath}
+    </SVG>
 }
-
-export default PinIcon

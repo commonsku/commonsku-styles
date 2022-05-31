@@ -1,16 +1,40 @@
 import React from 'react';
-import { primary1 } from '../colors';
+import { teal } from '../colors';
 import SVG, { SVGIconProps } from './SvgIcon';
 
 type FilledChevronIconDirection = 'up' | 'right' | 'down' | 'left' | 'updown' | 'leftright';
 
 type FilledChevronIconProps = SVGIconProps & {direction?: FilledChevronIconDirection};
 export default function FilledChevronIcon({
-    color=primary1.main,
+    color=teal.main,
     direction="right",
+    altText="Next",
     size="medium",
     ...props
 }: FilledChevronIconProps) {
+
+    switch (direction) {
+        case "up":
+            altText="Sort ascending";
+            break;
+        case "right":
+            altText="Next";
+            break;
+        case "down":
+            altText="Sort descending";
+            break;
+        case "left":
+            altText="Previous";
+            break;
+        case "updown":
+            altText="Sort by";
+            break;
+        case "leftright":
+            altText="Next / Previous";
+            break;
+        default:
+            altText="Next";
+    };
 
     const directionPath = React.useMemo(() => {
         if (direction === "right") {
@@ -30,7 +54,8 @@ export default function FilledChevronIcon({
     return "m9.5 17 5-5-5-5v10Z";
     }, [direction]);
       
-    return <SVG size={size} {...props}>
+    return <SVG size={size} aria-labelledby="FilledChevronIcon" {...props}>
+        <title id="FilledChevronIcon">{altText}</title>
         <path fill="none" d="M0 0h24v24H0z" />
         <path
             d={directionPath}

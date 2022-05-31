@@ -11,7 +11,7 @@ export const IconContainer = styled.div`
   flex-wrap: wrap;
   > * {
     margin-right:32px;
-    margin-bottom:32px;
+    margin-bottom:48px;
   }
 `;
 
