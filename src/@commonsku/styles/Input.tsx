@@ -5,7 +5,7 @@ import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
 import { document } from '../utils';
-import { RadioIcon } from '@commonsku/styles';
+import { RadioIcon, CheckboxIcon } from '@commonsku/styles';
 import { neutrals, teal } from './colors';
 import { fontStyles } from './Theme';
 
@@ -475,6 +475,8 @@ export type LabeledRadioProps = RadioProps & {
   label: string;
   labelStyle?: React.CSSProperties;
   radioIconStyle?: React.CSSProperties;
+  radioColor?: string;
+  radioHoverColor?: string;
 };
 
 export const LabeledRadio: React.FC<LabeledRadioProps> = ({ 
@@ -484,6 +486,8 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
   disabled,
   labelStyle,
   radioIconStyle,
+  radioColor,
+  radioHoverColor,
   onChange,
   ...props 
 }) => {
@@ -502,7 +506,14 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
         radio.current?.click();
       }}
     >
-      <RadioIcon selected={checked} hover={isHovering} disabled={disabled} mr={8} style={radioIconStyle ? {...radioIconStyle} : {position: 'absolute', left: 0}}/>
+      <RadioIcon 
+        selected={checked} 
+        hover={isHovering} 
+        disabled={disabled} 
+        color={radioColor}
+        hoverColor={radioHoverColor}
+        mr={8} 
+        style={radioIconStyle ? {...radioIconStyle} : {position: 'absolute', left: 0}}/>
       {label}
       <Radio ref={radio} name={name} type="radio" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
     </RadioLabel>
@@ -570,16 +581,18 @@ export type LabeledCheckboxProps = {
   disabled?: boolean;
   label: string|React.ReactNode;
   name?: string;
-  checkboxStyle?: CSSProperties;
   labelStyle?: CSSProperties;
-  checkboxPosition?: string;
+  checkboxStyle?: React.CSSProperties;
+  checkboxColor?: string;
+  checkboxHoverColor?: string;
   hoverByLabel?: boolean;
   stopPropagation?: boolean;
   [key: string]: any;
 } & React.InputHTMLAttributes<HTMLInputElement>;
+
 export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxProps> =
   React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
-    {label, name, checked, disabled, onChange, checkboxPosition='top-left', checkboxStyle={}, labelStyle={}, hoverByLabel=true, stopPropagation=false, ...props},
+    {label, name, checked, disabled, onChange, checkboxColor, checkboxHoverColor, labelStyle={}, checkboxStyle={}, hoverByLabel=true, stopPropagation=false, ...props},
     ref
   ) => {
     const [isHovering, updateHover] = useState(false);
@@ -595,22 +608,17 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
         disabled={disabled}
         style={labelStyle}
       >
+        <CheckboxIcon 
+          hover={isHovering} 
+          selected={checked} 
+          disabled={disabled} 
+          color={checkboxColor} 
+          hoverColor={checkboxHoverColor} 
+          mr={8}
+          style={{...checkboxStyle}}
+        />
         {label}
         <Radio ref={ref} name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
-        <CheckMark
-          onMouseOver={!hoverByLabel ? onMouseOver : undefined}
-          onMouseLeave={!hoverByLabel ? onMouseLeave : undefined}
-          checked={checked}
-          isHovering={isHovering}
-          disabled={disabled}
-          style={{
-            ...(checkboxPosition === 'top-right' ? {right: 0, left: 'auto',} : {}),
-            ...checkboxStyle,
-          }}
-          onClick={(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-            stopPropagation && e && e.stopPropagation();
-          }}
-        />
       </RadioLabel>
     );
   });

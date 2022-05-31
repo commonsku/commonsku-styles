@@ -5,12 +5,14 @@ import SVG, { SVGIconProps } from './SvgIcon';
 type RadioIconProps = SVGIconProps & {
     selected?: boolean, 
     hover?: boolean, 
+    hoverColor?: string,
     disabled?: boolean,
     disabledColor?: string
 };
 
 export default function RadioIcon({
     color=teal.main,
+    hoverColor=teal.light,
     disabledColor=neutrals['70'],
     size="medium",
     hover=false,
@@ -29,11 +31,11 @@ export default function RadioIcon({
             return<><path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8Z"
                 fill={color} />
-                <circle cx={12} cy={12} r={7} fill={teal.light} /></>
+                <circle cx={12} cy={12} r={7} fill={hoverColor} /></>
         }
     // default to unselected
     return <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8Z" fill={disabled ?  disabledColor : color} />
-    }, [selected, hover, disabled, disabledColor, color]);
+    }, [selected, hover, hoverColor, disabled, disabledColor, color]);
       
     return <SVG size={size} aria-labelledby="RadioIcon" {...props}>
         <title id="RadioIcon">{altText}</title>
