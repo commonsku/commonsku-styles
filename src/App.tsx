@@ -969,6 +969,27 @@ const App = () => {
                 <br />
               </ demo.InnerContainer>
 
+              <demo.InnerContainer title="InputStepper " id="input-stepper">
+
+                      <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
+                      <InputStepper initialNumber={0}/>
+                      {DemoCodeBlock({code: `<InputStepper />`})}
+                 
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label and custom width</demo.MediumLabel>
+                      <InputStepper label="Label 3" initialNumber={0} width="100%"/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 3" width="100%"/>`})}
+
+
+              </demo.InnerContainer>
+
               <demo.InnerContainer title="Datepicker" id="datepicker" >
                   <Row>
                   <Col xs={3} mr={16}>
@@ -996,7 +1017,7 @@ const App = () => {
                 }/>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdownla" noBottomLine>
+              <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdown" noBottomLine>
                 <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
                   <Row>
                     <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
@@ -1233,29 +1254,6 @@ const App = () => {
                   <Number commas decimalPoints={0} num={334353434.44334}/>
                   <br/>
                   <Number commas num={334353434.44334}/>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-
-            <demo.OuterContainer title="InputStepper " id="input-stepper">
-              <demo.InnerContainer noBottomLine>
-
-                      <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
-                      <InputStepper initialNumber={0}/>
-                      {DemoCodeBlock({code: `<InputStepper />`})}
-                 
-                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
-                      <InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>
-                      {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
-
-                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
-                      <InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>
-                      {DemoCodeBlock({code: `<InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>`})}
-
-                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label and custom width</demo.MediumLabel>
-                      <InputStepper label="Label 3" initialNumber={0} width="100%"/>
-                      {DemoCodeBlock({code: `<InputStepper label="Label 3" width="100%"/>`})}
-
-
               </demo.InnerContainer>
             </demo.OuterContainer>
             
