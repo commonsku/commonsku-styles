@@ -76,6 +76,7 @@ import {
     AlertNotification,
     LinkWithIcon,
     LabeledRadioInButton,
+    InputStepper,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -1015,7 +1016,7 @@ const App = () => {
             </demo.OuterContainer>
 
             <demo.OuterContainer title="Notifications and Indicators" id="notifications-and-indicators">
-              <demo.InnerContainer title="Alert Notifications" id="alert-notifications">
+              <demo.InnerContainer title="AlertNotification" id="alert-notifications">
 
               <AlertNotification >This is an info message without a link</AlertNotification>
               {DemoCodeBlock({code: `<AlertNotification>This is an info message without a link</AlertNotification>`})}
@@ -1045,7 +1046,7 @@ const App = () => {
 
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Light Indicator" id="light-indicator">
+              <demo.InnerContainer title="LightIndicator" id="light-indicator">
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div style={{marginRight: '24px'}}>
                       <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
@@ -1081,7 +1082,7 @@ const App = () => {
                   </div>
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Default Star" id="default-star" noBottomLine>
+              <demo.InnerContainer title="DefaultStar" id="default-star" noBottomLine>
                 <div style={{display: 'flex', flexWrap: "wrap"}}>
                   
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
@@ -1226,12 +1227,35 @@ const App = () => {
             
             
             <demo.OuterContainer title="Numbers Formatting" id="numbers-formatting">
-              <demo.InnerContainer noBottomLine>
+              <demo.InnerContainer>
                   <Number commas decimalPoints={4} num={334353434.44334}/>
                   <br/>
                   <Number commas decimalPoints={0} num={334353434.44334}/>
                   <br/>
                   <Number commas num={334353434.44334}/>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="InputStepper " id="input-stepper">
+              <demo.InnerContainer noBottomLine>
+
+                      <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
+                      <InputStepper initialNumber={0}/>
+                      {DemoCodeBlock({code: `<InputStepper />`})}
+                 
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label and custom width</demo.MediumLabel>
+                      <InputStepper label="Label 3" initialNumber={0} width="100%"/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 3" width="100%"/>`})}
+
+
               </demo.InnerContainer>
             </demo.OuterContainer>
             

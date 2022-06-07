@@ -39,9 +39,9 @@ export const NavItems = [
     {
         name: 'Notifications and Indicators', 
         links: [
-            {title: 'Alert Notifications', to: '#alert-notifications' },
-            {title: 'Light Indicator', to: '#light-indicator' },
-            {title: 'Default Star', to: '#default-star' },
+            {title: 'AlertNotification', to: '#alert-notifications' },
+            {title: 'LightIndicator', to: '#light-indicator' },
+            {title: 'DefaultStar', to: '#default-star' },
         ],
         open: false,
     },{
@@ -50,6 +50,7 @@ export const NavItems = [
             {title: 'Calendar Tasks', to: '#calendar-tasks' },
             {title: 'Loading Bars', to: '#loading-bars' },
             {title: 'Numbers Formatting', to: '#numbers-formatting' },
+            {title: 'InputStepper', to: '#input-stepper' },
             {title: 'Collapsible', to: '#collapsible' },
             {title: 'Avatar', to: '#avatar' },
             {title: 'Progress', to: '#progress' },
