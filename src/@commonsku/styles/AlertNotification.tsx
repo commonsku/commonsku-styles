@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { CSSObject } from "styled-components";
 import colors from './colors';
 import { fontStyles } from "./Theme";
-import { InfoIcon, AlertIcon, CompletedCheckmarkIcon, LinkWithIcon} from "@commonsku/styles";
+import { InfoIcon, AlertIcon, CompletedCheckmarkIcon } from "./icons";
+import LinkWithIcon from "./LinkWithIcon";
 import { SharedStyleTypes, SharedStyles } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
-import { CSSObject } from "styled-components";
 
 type AlertNotificationProps = React.PropsWithChildren<{
     alertType?: "neutral" | "success" | "error",

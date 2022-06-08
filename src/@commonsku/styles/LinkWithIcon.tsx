@@ -4,7 +4,7 @@ import colors from './colors';
 import { fontStyles } from "./Theme";
 import { SharedStyleTypes, SharedStyles } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
-import { TButtonIcon } from "@commonsku/styles";
+import { TButtonIcon } from "./Button";
 
 const StyledLink = styled.a<{alertType?: string, color?: string, hoverColor?: string, flexShrink?: boolean}>`
     &&& {

@@ -1,13 +1,12 @@
 import { map } from 'lodash';
 import React, { useState, useRef, CSSProperties, useEffect } from 'react'
 import styled, { CSSObject } from 'styled-components'
-import { getThemeColor, colors } from './Theme';
+import { getThemeColor, colors, fontStyles } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
 import { document } from '../utils';
-import { RadioIcon, CheckboxIcon } from '@commonsku/styles';
+import { RadioIcon, CheckboxIcon } from './icons';
 import { neutrals, teal } from './colors';
-import { fontStyles } from './Theme';
 
 type CommonInputProp = {
   noMargin?: boolean,
@@ -193,6 +192,7 @@ type BaseLabeledIconInputProps = InputProps & {
   labelOnTop?: boolean,
   Icon: React.ReactElement,
   iconPosition?: 'left' | 'right',
+  iconLabelStyles?: React.CSSProperties,
 } & SharedStyleTypes;
 type LabeledIconInputProps = React.InputHTMLAttributes<HTMLInputElement> & BaseLabeledIconInputProps;
 export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconInputProps>(
@@ -213,6 +213,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
       onChange,
       onBlur,
       iconPosition = 'left',
+      iconLabelStyles = {},
       ...props
     },
     ref
@@ -311,7 +312,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
           onMouseLeave={() => setIsHovering(false)}
         >
           {iconPosition !== 'right' ? <InputIconLabel
-            style={{ marginBottom: 0, }}
+            style={{ marginBottom: 0, ...iconLabelStyles }}
             isActive={isActive}
             isDisabled={disabled}
             isHover={isHovering}
