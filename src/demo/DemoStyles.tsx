@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components'
 import { colors, fontStyles } from '../@commonsku/styles/Theme';
 import { SharedStyles, SharedStyleTypes } from '@commonsku/styles';
-import { isNull } from 'lodash';
 
 export const mainTitle = styled.h1<{ underline?: boolean } & SharedStyleTypes>`
     font-family: ${fontStyles.h1.fontFamily};
@@ -64,6 +63,7 @@ export const SmallLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
     margin-bottom: "8px";
     margin-right: "8px";
     border-bottom: ${props => props.underline ? `1px solid ${colors.neutrals[50]}` : `none`};
+    ${SharedStyles}
 `;
 
 export const MediumLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
@@ -74,6 +74,7 @@ export const MediumLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
     margin-bottom: "8px";
     margin-right: "8px";
     border-bottom: ${props => props.underline ? `1px solid ${colors.neutrals[50]}` : `none`};
+    ${SharedStyles}
 `;
 
 export const LargeLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
@@ -84,6 +85,7 @@ export const LargeLabel = styled.p<{ underline?: boolean } & SharedStyleTypes>`
     margin-bottom: "16px";
     margin-right: "8px";
     border-bottom: ${props => props.underline ? `1px solid ${colors.neutrals[50]}` : `none`};
+    ${SharedStyles}
 `;
 
 const OuterBox = styled.div`
@@ -102,6 +104,7 @@ const InnerBox = styled.div<{ borderless?: boolean, padded?: boolean } & SharedS
     margin-top: 24px;
     margin-bottom: 24px;
     padding: 0;
+    ${SharedStyles}
 `;
 
 export const SeperationLine = styled.hr`
@@ -120,8 +123,6 @@ type ContainerProps = React.PropsWithChildren<{
   noBottomLine?: boolean;
 } & SharedStyleTypes>;
 
-let OuterContainerCount = 0;
-
 export let OuterContainerArray: Array<string | undefined> = [];
 
 export let InnerContainerArray: Array<string | undefined> = [];
@@ -135,31 +136,13 @@ export const OuterContainer = ({
     ...props
   }: ContainerProps) => {
 
-    // useEffect(() => {
-    //   OuterContainerCount += 1
-    //   console.log({OuterContainerCount})
-    //   return () => {
-    //     OuterContainerCount -= 1
-    //     console.log({OuterContainerCount})
-    //   }
-    // }, [])
 
    if(props => props.id) {
       OuterContainerArray.push(props.id)
     } else {
 
     };
-  
-    
-    // let testNestedArr: Array<any> = []; 
 
-    // testNestedArr.push(nestedContainer ? nestedContainer.id : null);
-    
-    // console.log(testNestedArr);
-
-    // if(children === nestedContainer) {
-    //   testNestedArr.push(child.title);
-    // }
     return (
       <OuterBox className="outer" {...props}>
         {title ? <H1>{title}</H1> : null}
@@ -169,29 +152,13 @@ export const OuterContainer = ({
 };
 
 
-
-
-    
-    // var children = OuterContainer.children;
-    
-    // for(var i =0; i < .children.length; i++){
-    //   var testChild = this.children[i];
-    //   testNestedArr.push(testChild.id)
-    // }
-
 export function InnerContainer({
   title,
   noBottomLine,
   children,
   ...props
 }: ContainerProps) {
-  
 
-  // useEffect(() => {
-  //   let InnerContainerCount = 0;
-  //   InnerContainerCount += 1;
-  //   console.log({InnerContainerCount});
-  // });
 
   if(props => props.id !== undefined) {
     InnerContainerArray.push(props.id);
@@ -209,52 +176,3 @@ export function InnerContainer({
 InnerContainerArray = InnerContainerArray.filter(function( element ) {
   return element !== undefined;
 });
-
-
-
-
-
-
-
-
-
-// const StyledBox = styled.div<{ borderless?: boolean, padded?: boolean } & SharedStyleTypes>`
-//   background: white;
-//   margin-top: 20px;
-//   box-shadow: ${props => props.borderless ? 0 : `0 2px 4px rgba(0, 0, 0, 0.07)`};
-//   border-radius: 5px;
-//   padding: 20px ${props => props.padded ? 20 : 0}px;
-//   ${SharedStyles}
-// `
-// type BoxProps = React.PropsWithChildren<{
-//   borderless?: boolean,
-//   padded?: boolean,
-//   title?: string | React.ReactNode,
-//   controls?: React.ReactNode
-// } & SharedStyleTypes>;
-// const Box = ({
-//   title,
-//   controls,
-//   children,
-//   ...props
-// }: BoxProps) => {
-
-//   return (<StyledBox padded={props.padded} borderless={props.borderless} {...props}>
-//     {title || controls ?
-//       <Row>
-//         <Col xs={8}>
-//           {title ? <H2>{title}</H2> : null}
-//         </Col>
-//         <Col xs style={{ textAlign: "right" }}>
-//           {controls ? controls : null}
-//         </Col>
-//       </Row>
-//       : null}
-//     {children}
-//   </StyledBox>
-//   )
-// }
-
-// export { Box }
-
-

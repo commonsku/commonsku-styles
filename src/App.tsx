@@ -17,19 +17,13 @@ import * as icons from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
-    Box, 
-    Background,
     DropArea, Dropzoned, DropzonedPreviews,
-    Button, 
-    H1,
-    // H2,
-    // H3,
-    // H4,
-    H5, 
+    Button,  
     Page,
     Toggle,
     ToggleLink, 
     LabeledInput,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     LabeledTextarea,
     SidePanel,
     Tabs,
@@ -43,10 +37,11 @@ import {
     Row, Col,
     Popup,
     Task,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Link,
     Number,
     FeedPost, Publisher,
-    ButtonsGroup, LabeledRadio, LabeledCheckbox,
+    ButtonsGroup, LabeledRadio, LabeledCheckbox, 
     Table, TD, TH, TR, THead, TBody,
     Datepicker,
     ErrorBoundary,
@@ -74,8 +69,17 @@ import {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     THSorted,
     LightIndicator,
-    DefaultStar
+    DefaultStar,
+    CancelButton,
+    DoneButton,
+    // PresentationTypeButton,
+    AlertNotification,
+    LinkWithIcon,
+    LabeledRadioInButton,
+    InputStepper,
 } from '@commonsku/styles';
+
+import { DemoCodeBlock } from 'demo/DemoCodeblock';
 
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
@@ -83,9 +87,9 @@ import NavAndPage from './demo/nav/NavAndPage';
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { errors, neutrals, primary1, teal } from '@commonsku/styles/colors';
+import { errors, green, navy, neutrals, pink, primary1, teal, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
-import CancelButton from '@commonsku/styles/CancelButton';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { de } from 'date-fns/locale';
 
 const initialState = {
@@ -344,8 +348,12 @@ const App = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showNewProjectPopup, setShowNewProjectPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
+  const [activeRadioInButton, setRadioInButton] = useState(1);
+  const [activeRadioInButtonFlex, setRadioInButtonFlex] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
+  const [relish, toggleRelish] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
@@ -560,56 +568,120 @@ const App = () => {
 
             <demo.OuterContainer title="Buttons" id="buttons">   
 
-              <demo.InnerContainer title="Button Variants" id="button-variants">       
+              <demo.InnerContainer title="Button Variants" id="button-variants">  
+                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.</demo.LargeLabel>     
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"top"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+                <ButtonsGroup  style={{display: 'flex', flexDirection: 'row'}}>
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom" mr={10} mt={10} >Primary</IconButton>
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top">Primary</IconButton>
+<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom">Primary</IconButton>`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArowIcon} />`
+                })}
+                  
+                  <ButtonsGroup >
+                    <IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny" />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="large">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="small">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArowIcon} />`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup>
+                    <IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="tiny"Icon={icons.ArrowIcon} mr={10} mt={10} />
+                  </ButtonsGroup>
+                  {DemoCodeBlock({code:
+`<IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup>
+                    <IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup> 
+                  {DemoCodeBlock({code:
+`<IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
                 </div>
               </ demo.InnerContainer>
               
@@ -621,31 +693,124 @@ const App = () => {
                   <IconButton preset="remove" mr={16}/>
                   <IconButton preset="close" mr={16}/>
 
-                  <CancelButton />
+                  <CancelButton mr={16}/>
+                  <DoneButton />
                 </ButtonsGroup>
+                {DemoCodeBlock({code:
+`<IconButton preset="edit"/>
+<IconButton preset="delete" />
+<IconButton preset="add" />
+<IconButton preset="remove" />
+<IconButton preset="close" />
+
+<CancelButton />
+<DoneButton />`
+                })}
+
+                <IconButton Icon={icons.TilesIcon} variant="secondary" size="huge" mr={24}>Tiles</IconButton>
+
+                {/* <PresentationTypeButton presentationType="tiles"></PresentationTypeButton> */}
 
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Links" id="links">
-                <Link block mt={20}>Link</Link>
+                <LinkWithIcon href="" mb={8}>This is a default link</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href="">This is a default link</LinkWithIcon>`})}
+
+                <LinkWithIcon href=""  mb={8} Icon={icons.InfoIcon}>This is a default link with Icon</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href=""  Icon={InfoIcon}>This is a default link with Icon</LinkWithIcon>`})}
+              
+                <LinkWithIcon href="" mb={8} Icon={icons.InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href="" Icon={InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>`})}
+
+                {/* <Link block mt={20}>Link</Link> */}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Radio Buttons" id="radio-buttons">
                 <ButtonsGroup>
-                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
-                  <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
-                  <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+                  <demo.MediumLabel mb={32}>Default LabeledRadio</demo.MediumLabel>
+                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+                  />
+                  <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
+                  <LabeledRadio label="All" radioColor={pink.main} radioHoverColor={pink.light} checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+                  <LabeledRadio disabled label="Disabled unselected" checked={false} />
+                  <LabeledRadio disabled label="Disabled selected" checked={true} />
                 </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+  `<LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+  />
+  <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
+  <LabeledRadio label="All" radioColor={pink.main} radioHoverColor={pink.light} checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+  <LabeledRadio disabled label="Disabled unselected" checked={false} />
+  <LabeledRadio disabled label="Disabled selected" checked={true} />`
+                })}
+
+                <ButtonsGroup>
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton</demo.MediumLabel>                  
+                  <LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+                  />
+                  <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
+                  <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
+                  <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
+                  <LabeledRadioInButton disabled label="Disabled selected" checked={true} />
+                </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+  `<LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+  />
+  <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
+  <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
+  <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
+  <LabeledRadioInButton disabled label="Disabled selected" checked={true} />`
+                })}
+
+                <ButtonsGroup>
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton with 'flexGrow' prop inside a flex container</demo.MediumLabel>                  
+                  <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
+                    <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+                    />
+                    <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
+                    <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
+                    <LabeledRadioInButton disabled flexGrow label="Disabled unselected" checked={false} />
+                    <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
+                  </div>
+                </ButtonsGroup>
+                {DemoCodeBlock({code: 
+  `<div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
+  <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+  />
+  <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
+  <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
+  <LabeledRadioInButton disabled flexGrow label="Disabled unselected" checked={false} />
+  <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
+</div>`
+                })}
+                
+
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Checkboxes" id="checkboxes">
                 <ButtonsGroup>
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+                  <LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+
                   <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
+
+                  <LabeledCheckbox label="Relish" checked={relish} checkboxColor={pink.main} checkboxHoverColor={pink.light} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleRelish(!relish); }} />
+
+                  <LabeledCheckbox label="Relish" checked={false} disabled />
+
+                  <LabeledCheckbox label="Relish" checked={true} disabled />
+
                 </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+`<LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+<LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
+<LabeledCheckbox label="Relish" checked={relish} checkboxColor={pink.main} checkboxHoverColor={pink.light} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleRelish(!relish); }} />
+<LabeledCheckbox label="Relish" checked={false} disabled />
+<LabeledCheckbox label="Relish" checked={true} disabled />`
+                })}
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Toggle" id="toggles">
+              <demo.InnerContainer title="Toggle" id="toggles" noBottomLine>
                 <Toggle stretch mb={10}>
                   <ToggleLink selected stretch pr pl>Active</ToggleLink>
                   <ToggleLink stretch>Inactive</ToggleLink>
@@ -804,7 +969,28 @@ const App = () => {
                 <br />
               </ demo.InnerContainer>
 
-              <demo.InnerContainer title="Datepicker" id="datepicker" noBottomLine >
+              <demo.InnerContainer title="InputStepper " id="input-stepper">
+
+                      <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
+                      <InputStepper initialNumber={0}/>
+                      {DemoCodeBlock({code: `<InputStepper />`})}
+                 
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label and custom width</demo.MediumLabel>
+                      <InputStepper label="Label 3" initialNumber={0} width="100%"/>
+                      {DemoCodeBlock({code: `<InputStepper label="Label 3" width="100%"/>`})}
+
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Datepicker" id="datepicker" >
                   <Row>
                   <Col xs={3} mr={16}>
                     <Datepicker
@@ -820,6 +1006,160 @@ const App = () => {
                     />
                   </Col>
                 </Row>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Dropdown Button" id="dropdown-button">
+                <Dropdown text="Drop Down" items={
+                  [
+                    {onClick: () => null, content: 'New Contact'},
+                    {onClick: () => null, content: 'New Address'},
+                  ]
+                }/>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdown" noBottomLine>
+                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
+                  <Row>
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  </Row>
+                </Dropdown>
+              </demo.InnerContainer>
+
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Notifications and Indicators" id="notifications-and-indicators">
+              <demo.InnerContainer title="AlertNotification" id="alert-notifications">
+
+              <AlertNotification >This is an info message without a link</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification>This is an info message without a link</AlertNotification>`})}
+              
+
+              <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>
+              {DemoCodeBlock({code: `AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
+
+              <AlertNotification  href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>`})}
+
+              <AlertNotification alertType="error" href="" learnMore>This is a very short error message!</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification alertType="error" href="" learnMore>This is a very short error message!</AlertNotification>`})}
+
+              <AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>`})}
+                
+                <AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>`})}
+
+                <AlertNotification alertType="error" href="" learnMore >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification alertType="error" href="" learnMore >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>`})}
+
+                <AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>`})}
+                
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="LightIndicator" id="light-indicator">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <div style={{marginRight: '24px'}}>
+                      <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
+                      <LightIndicator name="Marketing integration: Mailchimp " on />
+                      <LightIndicator name="Credit card integration: Stripe" on />
+                      <LightIndicator name="Accounting integration: QuickBooks online" on/>
+                      <LightIndicator name="SAGE not configured" />
+                      <LightIndicator name="Avalara not configured" />
+
+                      {DemoCodeBlock({code: 
+`<LightIndicator name="Marketing integration: Mailchimp " on />
+<LightIndicator name="Credit card integration: Stripe" on />
+<LightIndicator name="Accounting integration: QuickBooks online" on/>
+<LightIndicator name="SAGE not configured" />
+<LightIndicator name="Avalara not configured" />`})}
+                    </div>
+                    
+                    <div style={{marginRight: '24px'}}>
+                      <demo.LargeLabel underline>Large</demo.LargeLabel>
+                      <LightIndicator name="Marketing integration: Mailchimp " on large />
+                      <LightIndicator name="Credit card integration: Stripe" on large/>
+                      <LightIndicator name="Accounting integration: QuickBooks online" on large/>
+                      <LightIndicator name="SAGE not configured" large/>
+                      <LightIndicator name="Avalara not configured" large/>
+                      {DemoCodeBlock({code: 
+`<LightIndicator name="Marketing integration: Mailchimp " on large />
+<LightIndicator name="Credit card integration: Stripe" on large/>
+<LightIndicator name="Accounting integration: QuickBooks online" on large/>
+<LightIndicator name="SAGE not configured" large/>
+<LightIndicator name="Avalara not configured" large/>`})}
+
+                    </div>
+                  </div>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="DefaultStar" id="default-star" noBottomLine>
+                <div style={{display: 'flex', flexWrap: "wrap"}}>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
+                    <DefaultStar />
+                    {DemoCodeBlock({code: `<DefaultStar />`})}
+                  </div>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
+                    <DefaultStar hoverText="Set Default">Test</DefaultStar>
+                    {DemoCodeBlock({code: `<DefaultStar hoverText="Set Default">Test</DefaultStar>`})}
+                  </div>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
+                    <DefaultStar width={"200px"}/>
+                    {DemoCodeBlock({code: `<DefaultStar width={"200px"}/>`})}
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
+                    <DefaultStar color={colors.green.main}/>
+                    {DemoCodeBlock({code: `<DefaultStar color={colors.green.main}/>`})}
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
+                    <DefaultStar initialSelected={true} />
+                    {DemoCodeBlock({code: `<DefaultStar initialSelected={true} />`})}
+                    
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
+                    <DefaultStar forceSelected />
+                    {DemoCodeBlock({code: `<DefaultStar forceSelected />`})}
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>No<br />Text</demo.SmallLabel>
+                    <DefaultStar noText />
+                    {DemoCodeBlock({code: `<DefaultStar noText />`})}
+                  </div>
+
+                </div>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
+              <demo.InnerContainer title="Popups" id="popups">
+                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
+              </demo.InnerContainer>
+              <demo.InnerContainer title="Side Panels" id="side-panels" noBottomLine>
+                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
               </demo.InnerContainer>
             </demo.OuterContainer>
 
@@ -889,42 +1229,7 @@ const App = () => {
                 onClickView={() => {}}
               />
               </demo.InnerContainer>
-            </demo.OuterContainer>
-
-            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
-              <demo.InnerContainer >
-                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
-                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
-                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer >
-                <Dropdown text="Drop Down" items={
-                  [
-                    {onClick: () => null, content: 'New Contact'},
-                    {onClick: () => null, content: 'New Address'},
-                  ]
-                }/>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer noBottomLine>
-                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
-                  <Row>
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                  </Row>
-                </Dropdown>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
+            </demo.OuterContainer>    
 
             <demo.OuterContainer title="Loading Bars" id="loading-bars">
               <demo.InnerContainer noBottomLine>
@@ -943,7 +1248,7 @@ const App = () => {
             
             
             <demo.OuterContainer title="Numbers Formatting" id="numbers-formatting">
-              <demo.InnerContainer noBottomLine>
+              <demo.InnerContainer>
                   <Number commas decimalPoints={4} num={334353434.44334}/>
                   <br/>
                   <Number commas decimalPoints={0} num={334353434.44334}/>
@@ -952,77 +1257,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
             
-
-
-            <demo.OuterContainer title="Light Indicator" id="light-indicator">
-              <demo.InnerContainer noBottomLine>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                  <div style={{marginRight: '24px'}}>
-                    <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
-                    <LightIndicator name="Marketing integration: Mailchimp " on />
-                    <LightIndicator name="Credit card integration: Stripe" on />
-                    <LightIndicator name="Accounting integration: QuickBooks online" on/>
-                    <LightIndicator name="SAGE not configured" />
-                    <LightIndicator name="Avalara not configured" />
-                  </div>
-                  <div style={{marginRight: '24px'}}>
-                    <demo.LargeLabel underline>Large</demo.LargeLabel>
-                    <LightIndicator name="Marketing integration: Mailchimp " on large />
-                    <LightIndicator name="Credit card integration: Stripe" on large/>
-                    <LightIndicator name="Accounting integration: QuickBooks online" on large/>
-                    <LightIndicator name="SAGE not configured" large/>
-                    <LightIndicator name="Avalara not configured" large/>
-                  </div>
-                </div>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
             
-            <demo.OuterContainer title="DefaultStar" id="default-star">
-              <demo.InnerContainer noBottomLine>
-                <div style={{display: 'flex', flexWrap: "wrap"}}>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
-                    <DefaultStar />
-                  </div>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
-                    <DefaultStar hoverText="Set Default">Default</DefaultStar>
-                  </div>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
-                    <DefaultStar width={"200px"}/>
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
-                    <DefaultStar color={colors.green.main}/>
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
-                    <DefaultStar initialSelected={true} />
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
-                    <DefaultStar forceSelected />
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>No<br />Text</demo.SmallLabel>
-                    <DefaultStar noText />
-                  </div>
-
-                </div>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
-          
-            
-
             <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
@@ -1438,8 +1673,19 @@ const App = () => {
 
                     <IconsShowcase Icons={[
                     <icons.RadioIcon />,
-                    <icons.RadioIcon selected />
+                    <icons.RadioIcon hover />,
+                    <icons.RadioIcon selected />,
+                    <icons.RadioIcon disabled />,
+                    <icons.RadioIcon selected disabled/>,
                     ]} name="RadioIcon" />
+
+                    <IconsShowcase Icons={[
+                      <icons.CheckboxIcon />,
+                      <icons.CheckboxIcon hover />,
+                      <icons.CheckboxIcon selected />,
+                      <icons.CheckboxIcon disabled />,
+                      <icons.CheckboxIcon selected disabled/>,
+                    ]} name="CheckboxIcon" />
 
                     <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
                     <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />

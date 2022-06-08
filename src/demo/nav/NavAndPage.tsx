@@ -57,7 +57,7 @@ export default function NavAndPage({
                 <IconButtonContainer openNav={isOpen}>
                     <IconButton Icon={isOpen ? ArrowIcon : MenuIcon} variant="primary" iconProps={{direction: "left"}} onClick={() => setOpen(!isOpen)} />
                 </IconButtonContainer>
-                { isOpen ? <H2 style={{paddingLeft: "16px", color: "white"}}>Work in Progress</H2> : null }
+                { isOpen ? <H2 style={{paddingLeft: "16px", color: "white"}}>Keep this Updated!</H2> : null }
                     
                     { isOpen ? NavItems.map((navItem, index) => {
                         return <SideItem key={index} items={navItem}/>

@@ -176,10 +176,10 @@ export const errors = {
   'dark': '',
   'darkest': '',
 };
-errors['main'] = errors['60'];
+errors['main'] = errors['50'];
 errors['lightest'] = errors['10'];
 errors['light'] = errors['30'];
-errors['dark'] = errors['80'];
+errors['dark'] = errors['70'];
 errors['darkest'] = errors['90'];
 
 const colors = {
