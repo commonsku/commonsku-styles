@@ -77,6 +77,8 @@ import {
     LinkWithIcon,
     LabeledRadioInButton,
     InputStepper,
+    VirtualTableStyles,
+    VirtualTable,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -89,8 +91,6 @@ import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, green, navy, neutrals, pink, primary1, teal, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { de } from 'date-fns/locale';
 
 const initialState = {
   date: new Date(),
@@ -1581,6 +1581,15 @@ const App = () => {
                   scrollOffsetDivRef={scrollOffsetDivRef}
                   horizontalOffsetDivRef={horizontalOffsetDivRef}
                 />
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Windowed Table" noBottomLine>
+                <VirtualTableStyles>
+                  <VirtualTable 
+                    columns={tableColumns}
+                    data={tableData}
+                  />
+                </VirtualTableStyles>
               </demo.InnerContainer>
 
             </demo.OuterContainer>
