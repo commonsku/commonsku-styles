@@ -195,7 +195,7 @@ const VirtualTable = (props: VirtualTableProps) => {
             })}
           </div>
           {row.isExpanded && renderRowSubComponent
-            ? <div className='tr-sub'>{renderRowSubComponent({ row })}</div>
+            ? <div className='tr-sub'>{renderRowSubComponent({ row, resetList })}</div>
             : null}
         </div>
       );
