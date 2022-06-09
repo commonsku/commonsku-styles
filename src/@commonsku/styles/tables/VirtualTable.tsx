@@ -292,28 +292,24 @@ const VirtualTable = (props: VirtualTableProps) => {
 
       <div className="tbody" {...getTableBodyProps()}>
         {rows.length === 0 && NoRowsFound ? <NoRowsFound /> :
-          // <AutoSizer onResize={onResize} disableWidth>
-          //   {({ height: sizerHeight }) => (
-              <VariableSizeList
-                useIsScrolling
-                className="table-list-rows"
-                height={500}
-                itemCount={rows.length}
-                itemSize={i => {
-                  if (itemSize) {
-                    return itemSize({ row: rows[i], index: i });
-                  }
-                  return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
-                }}
-                width={tableWidth}
-                onScroll={onScroll}
-                ref={listRef}
-                outerRef={rowsRef}
-              >
-                {RenderRow}
-              </VariableSizeList>
-          //   )}
-          // </AutoSizer>
+            <VariableSizeList
+              useIsScrolling
+              className="table-list-rows"
+              height={500}
+              itemCount={rows.length}
+              itemSize={i => {
+                if (itemSize) {
+                  return itemSize({ row: rows[i], index: i });
+                }
+                return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
+              }}
+              width={tableWidth}
+              onScroll={onScroll}
+              ref={listRef}
+              outerRef={rowsRef}
+            >
+              {RenderRow}
+            </VariableSizeList>
           }
       </div>
 
