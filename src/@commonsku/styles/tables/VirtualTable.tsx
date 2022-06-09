@@ -8,7 +8,6 @@ import {
   useExpanded,
 } from 'react-table';
 import { VariableSizeList, ListOnScrollProps } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
 import { BaseSortByHeaderGroup, SortByHeaderGroup } from './types';
 import {
   Row,
