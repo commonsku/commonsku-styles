@@ -185,7 +185,7 @@ const VirtualTable = (props: VirtualTableProps) => {
         </div>
       );
     },
-    [prepareRow, rows, onClickRow, renderRowSubComponent, rowStyles]
+    [prepareRow, rows, onClickRow, renderRowSubComponent, rowStyles, rowGroupStyles]
   );
 
   const getHeaderProps = (column: BaseSortByHeaderGroup<object>, isFooter = false) => {
