@@ -46,6 +46,8 @@ export type VirtualTableProps = {
   renderRowSubComponent?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   onSort?: (value: { column: ColumnInstance }) => void;
   onResize?: VoidFunction;
+  rowGroupStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
+  rowStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
 };
 
 const VirtualTable = (props: VirtualTableProps) => {
@@ -70,6 +72,8 @@ const VirtualTable = (props: VirtualTableProps) => {
     renderRowSubComponent,
     onSort,
     onResize,
+    rowGroupStyles,
+    rowStyles,
   } = props;
 
   const defaultColumn = useMemo(
@@ -153,8 +157,15 @@ const VirtualTable = (props: VirtualTableProps) => {
       prepareRow(row);
 
       return (
-        <div className="tr-group" {...row.getRowProps()} style={style}>
-          <div className="tr">
+        <div
+        className="tr-group"
+        {...row.getRowProps()}
+        style={{
+          ...style,
+          ...(rowGroupStyles ? rowGroupStyles({row, style}) : {}),
+        }}
+      >
+          <div className="tr" style={rowStyles ? rowStyles({row, style}) : {}}>
             {row.cells.map((cell) => {
               const cellProps = cell.getCellProps();
               return (
@@ -174,7 +185,7 @@ const VirtualTable = (props: VirtualTableProps) => {
         </div>
       );
     },
-    [prepareRow, rows, onClickRow, renderRowSubComponent]
+    [prepareRow, rows, onClickRow, renderRowSubComponent, rowStyles]
   );
 
   const getHeaderProps = (column: BaseSortByHeaderGroup<object>, isFooter = false) => {
@@ -272,7 +283,6 @@ const VirtualTable = (props: VirtualTableProps) => {
                 className="table-list-rows"
                 height={sizerHeight || height || 500}
                 itemCount={rows.length}
-                // Hardcoded values only :/
                 itemSize={i => {
                   if (itemSize) {
                     return itemSize({ row: rows[i], index: i });

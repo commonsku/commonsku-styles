@@ -40,7 +40,7 @@ padding: 1rem;
 
   .tbody {
     flex: 1 1 auto;
-    height: 500px;
+    height: 80vh;
   }
 
   .tr-group {
