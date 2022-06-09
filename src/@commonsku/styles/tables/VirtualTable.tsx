@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo, useCallback, useEffect } from 'react';
+import React, { useRef, useLayoutEffect, useMemo, useCallback, } from 'react';
 import {
   useTable,
   useSortBy,
@@ -48,28 +48,30 @@ export type VirtualTableProps = {
   onResize?: VoidFunction;
 };
 
-function VirtualTable({
-  columns,
-  data,
-  itemSize,
-  height,
-  minWidth = 140,
-  maxWidth = 500,
-  defaultSort,
-  onClickRow,
-  onScroll,
-  onUpdateData,
-  useTableProps = {},
-  tableHeaderProps = {},
-  tableFooterProps = {},
-  hideFooter = true,
-  hideHeader = false,
-  className = '',
-  NoRowsFound,
-  renderRowSubComponent,
-  onSort,
-  onResize,
-}: VirtualTableProps) {
+const VirtualTable = (props: VirtualTableProps) => {
+  const {
+    columns,
+    data,
+    itemSize,
+    height,
+    minWidth = 140,
+    maxWidth = 500,
+    defaultSort,
+    onClickRow,
+    onScroll,
+    onUpdateData,
+    useTableProps = {},
+    tableHeaderProps = {},
+    tableFooterProps = {},
+    hideFooter = true,
+    hideHeader = false,
+    className = '',
+    NoRowsFound,
+    renderRowSubComponent,
+    onSort,
+    onResize,
+  } = props;
+
   const defaultColumn = useMemo(
     () => ({
       minWidth: minWidth,
@@ -108,15 +110,19 @@ function VirtualTable({
   const headerRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
   const rowsRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
-  const listRef = useRef<VariableSizeList<any>>(null);
+  const listRef = useRef<VariableSizeList<any> | null>(null);
+
+  function resetList(index: number = 0) {
+    listRef.current && listRef.current.resetAfterIndex(index);
+  }
 
   const handleSort = useCallback(column => {
     listRef.current && listRef.current.resetAfterIndex(0);
     column.toggleSortBy();
     onSort && onSort({ column });
-  }, [listRef, onSort]);
+  }, [onSort]);
 
-  const onListScroll = useCallback((e: Event) => {
+  function onListScroll(e: Event) {
     if (headerRef.current && e && e.target) {
       const target = e.target as HTMLDivElement | HTMLSpanElement;
       headerRef.current.scrollLeft = target.scrollLeft;
@@ -126,7 +132,7 @@ function VirtualTable({
       const target = e.target as HTMLDivElement | HTMLSpanElement;
       footerRef.current.scrollLeft = target.scrollLeft;
     }
-  }, [headerRef, footerRef]);
+  }
 
   useLayoutEffect(() => {
     const rowsElem = rowsRef.current;
@@ -138,7 +144,7 @@ function VirtualTable({
         rowsElem.removeEventListener('scroll', onListScroll);
       }
     };
-  }, [rowsRef, onListScroll]);
+  }, [rowsRef]);
 
   const RenderRow = useCallback(
     ({ index, isScrolling, style }) => {
@@ -157,7 +163,7 @@ function VirtualTable({
                   onClick={() => (onClickRow ? onClickRow(cell.row.original, index) : null)}
                   className="td"
                 >
-                  {cell.render("Cell", { isScrolling })}
+                  {cell.render("Cell", { isScrolling, resetList })}
                 </div>
               );
             })}
@@ -299,7 +305,7 @@ function VirtualTable({
       </div> : null}
     </div>
   );
-}
+};
 
 function sortDirection(col: BaseSortByHeaderGroup<object>) {
   if (col.isSorted) {
