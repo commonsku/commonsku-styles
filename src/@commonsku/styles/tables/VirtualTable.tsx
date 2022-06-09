@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo, useCallback } from 'react';
+import React, { useRef, useLayoutEffect, useMemo, useCallback, useEffect } from 'react';
 import {
   useTable,
   useSortBy,
@@ -70,11 +70,6 @@ function VirtualTable({
   onSort,
   onResize,
 }: VirtualTableProps) {
-  const headerRef = useRef<HTMLDivElement | null>(null);
-  const footerRef = useRef<HTMLDivElement | null>(null);
-  const rowsRef = useRef<HTMLDivElement | HTMLSpanElement>();
-  const listRef = useRef<VariableSizeList<any>>(null);
-
   const defaultColumn = useMemo(
     () => ({
       minWidth: minWidth,
@@ -83,12 +78,6 @@ function VirtualTable({
     }),
     [minWidth, maxWidth]
   );
-
-  const handleSort = useCallback(column => {
-    listRef.current && listRef.current.resetAfterIndex(0);
-    column.toggleSortBy();
-    onSort && onSort({ column });
-  }, [listRef, onSort]);
 
   const {
     getTableProps,
@@ -116,8 +105,18 @@ function VirtualTable({
 
   const rows = useMemo(() => (tableData.rows as Row[]), [tableData.rows]);
 
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+  const rowsRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
+  const listRef = useRef<VariableSizeList<any>>(null);
+
+  const handleSort = useCallback(column => {
+    listRef.current && listRef.current.resetAfterIndex(0);
+    column.toggleSortBy();
+    onSort && onSort({ column });
+  }, [listRef, onSort]);
+
   const onListScroll = useCallback((e: Event) => {
-    console.log(onListScroll, e);
     if (headerRef.current && e && e.target) {
       const target = e.target as HTMLDivElement | HTMLSpanElement;
       headerRef.current.scrollLeft = target.scrollLeft;
@@ -132,7 +131,6 @@ function VirtualTable({
   useLayoutEffect(() => {
     const rowsElem = rowsRef.current;
     if (rowsElem) {
-      console.log(rowsElem);
       rowsElem.addEventListener('scroll', onListScroll);
     }
     return () => {
@@ -238,7 +236,7 @@ function VirtualTable({
         }}
       >
         {headerGroups.map((headerGroup) => (
-          <div {...getHeaderGroupProps(headerGroup, false)} className="tr" ref={headerRef}>
+          <div {...getHeaderGroupProps(headerGroup, false)} ref={headerRef}>
             {headerGroup.headers.map((column) => (
               <div
                 {...getHeaderProps(column, false)}
