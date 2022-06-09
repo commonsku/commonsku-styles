@@ -1,6 +1,7 @@
 import styled, { CSSObject } from 'styled-components';
 
 const VirtualTableStyles = styled.div<{
+  tableHeight?: number | string;
   bordered?: boolean | string;
   rowClickable?: boolean;
   hoverRowBg?: string | boolean;
@@ -26,6 +27,7 @@ padding: 1rem;
   ` : ''}
   width: 100% !important;
   min-width: 100% !important;
+  ${p => p.tableHeight ? `height: ${p.tableHeight}${typeof p.tableHeight === 'number' ? 'px' : '' };` : ''}
 
   .thead {
     padding-right: 15px;
@@ -33,8 +35,7 @@ padding: 1rem;
 
     .tr {
       overflow-x: hidden;
-      width: 100% !important;
-      min-width: 100% !important;
+      min-width: 100%;
     }
   }
 
@@ -46,6 +47,10 @@ padding: 1rem;
   .tr-group {
     display: flex;
     flex-direction: column;
+
+    .tr, .tr-sub {
+      width: 99%;
+    }
   }
 
   .tr {

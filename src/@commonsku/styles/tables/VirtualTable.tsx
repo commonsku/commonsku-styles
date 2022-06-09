@@ -17,6 +17,8 @@ import {
   TableOptions,
 } from './table-types';
 import { FilledChevronIcon } from '../icons';
+import scrollbarWidth from './scrollbarWidth';
+import { useWindowSize } from '../hooks';
 
 export type VirtualTableProps = {
   columns: Column<object>[];
@@ -48,6 +50,7 @@ export type VirtualTableProps = {
   onResize?: VoidFunction;
   rowGroupStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
   rowStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
+  gutterSize?: number;
 };
 
 const VirtualTable = (props: VirtualTableProps) => {
@@ -74,6 +77,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     onResize,
     rowGroupStyles,
     rowStyles,
+    gutterSize=0,
   } = props;
 
   const defaultColumn = useMemo(
@@ -110,6 +114,7 @@ const VirtualTable = (props: VirtualTableProps) => {
   ) as TableInstance;
 
   const rows = useMemo(() => (tableData.rows as Row[]), [tableData.rows]);
+  const windowSize = useWindowSize();
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
@@ -119,6 +124,15 @@ const VirtualTable = (props: VirtualTableProps) => {
   function resetList(index: number = 0) {
     listRef.current && listRef.current.resetAfterIndex(index);
   }
+
+  const scrollBarSize = React.useMemo(() => scrollbarWidth(), []);
+  const tableWidth = useMemo(() => {
+    if (rowsRef.current) {
+      const rect = rowsRef.current.getBoundingClientRect();
+      return windowSize[0]-30-rect.left;
+    }
+    return '100%';
+  }, [windowSize, rowsRef]);
 
   const handleSort = useCallback(column => {
     listRef.current && listRef.current.resetAfterIndex(0);
@@ -163,6 +177,8 @@ const VirtualTable = (props: VirtualTableProps) => {
         style={{
           ...style,
           ...(rowGroupStyles ? rowGroupStyles({row, style}) : {}),
+          minWidth: totalColumnsWidth,
+          width: '100%',
         }}
       >
           <div className="tr" style={rowStyles ? rowStyles({row, style}) : {}}>
@@ -180,12 +196,12 @@ const VirtualTable = (props: VirtualTableProps) => {
             })}
           </div>
           {row.isExpanded && renderRowSubComponent
-            ? renderRowSubComponent({ row })
+            ? <div className='tr-sub'>{renderRowSubComponent({ row })}</div>
             : null}
         </div>
       );
     },
-    [prepareRow, rows, onClickRow, renderRowSubComponent, rowStyles, rowGroupStyles]
+    [prepareRow, rows, onClickRow, renderRowSubComponent, rowStyles, rowGroupStyles, totalColumnsWidth]
   );
 
   const getHeaderProps = (column: BaseSortByHeaderGroup<object>, isFooter = false) => {
@@ -253,7 +269,7 @@ const VirtualTable = (props: VirtualTableProps) => {
         }}
       >
         {headerGroups.map((headerGroup) => (
-          <div {...getHeaderGroupProps(headerGroup, false)} ref={headerRef}>
+          <div {...getHeaderGroupProps(headerGroup, false)} ref={headerRef} style={{width: tableWidth,}}>
             {headerGroup.headers.map((column) => (
               <div
                 {...getHeaderProps(column, false)}
@@ -276,28 +292,29 @@ const VirtualTable = (props: VirtualTableProps) => {
 
       <div className="tbody" {...getTableBodyProps()}>
         {rows.length === 0 && NoRowsFound ? <NoRowsFound /> :
-          <AutoSizer onResize={onResize} disableWidth>
-            {({ height: sizerHeight }) => (
+          // <AutoSizer onResize={onResize} disableWidth>
+          //   {({ height: sizerHeight }) => (
               <VariableSizeList
                 useIsScrolling
                 className="table-list-rows"
-                height={sizerHeight || height || 500}
+                height={500}
                 itemCount={rows.length}
                 itemSize={i => {
                   if (itemSize) {
                     return itemSize({ row: rows[i], index: i });
                   }
-                  return rows[i] && rows[i].isExpanded ? 300 : 50;
+                  return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
                 }}
-                width={'100%'}
+                width={tableWidth}
                 onScroll={onScroll}
                 ref={listRef}
                 outerRef={rowsRef}
               >
                 {RenderRow}
               </VariableSizeList>
-            )}
-          </AutoSizer>}
+          //   )}
+          // </AutoSizer>
+          }
       </div>
 
       {!hideFooter ? <div {...tableFooterProps}
