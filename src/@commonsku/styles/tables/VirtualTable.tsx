@@ -95,6 +95,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     footerGroups,
     totalColumnsWidth,
     prepareRow,
+    toggleAllRowsExpanded,
     ...tableData
   } = useTable(
     {
@@ -124,7 +125,6 @@ const VirtualTable = (props: VirtualTableProps) => {
     listRef.current && listRef.current.resetAfterIndex(index);
   }
 
-  const scrollBarSize = React.useMemo(() => scrollbarWidth(), []);
   const tableWidth = useMemo(() => {
     if (rowsRef.current) {
       const rect = rowsRef.current.getBoundingClientRect();
@@ -189,18 +189,27 @@ const VirtualTable = (props: VirtualTableProps) => {
                   onClick={() => (onClickRow ? onClickRow(cell.row.original, index) : null)}
                   className="td"
                 >
-                  {cell.render("Cell", { isScrolling, resetList })}
+                  {cell.render("Cell", { isScrolling, resetList, toggleAllRowsExpanded })}
                 </div>
               );
             })}
           </div>
           {row.isExpanded && renderRowSubComponent
-            ? <div className='tr-sub'>{renderRowSubComponent({ row, resetList })}</div>
+            ? <div className='tr-sub'>{renderRowSubComponent({ row, resetList, })}</div>
             : null}
         </div>
       );
     },
-    [prepareRow, rows, onClickRow, renderRowSubComponent, rowStyles, rowGroupStyles, totalColumnsWidth]
+    [
+      prepareRow,
+      rows,
+      onClickRow,
+      renderRowSubComponent,
+      rowStyles,
+      rowGroupStyles,
+      totalColumnsWidth,
+      toggleAllRowsExpanded,
+    ]
   );
 
   const getHeaderProps = (column: BaseSortByHeaderGroup<object>, isFooter = false) => {
