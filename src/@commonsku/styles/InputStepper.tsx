@@ -86,9 +86,9 @@ export default function InputStepper({
     disabled=false,
     ...props
 }: InputStepperProps) {
-    const decrementButtonVariant = canDecrement(value, min) || disabled
+    const decrementButtonVariant = disabled || !canDecrement(value, min)
         ? "disabled" : "primary";
-    const incrementButtonVariant = canIncrement(value, max) || disabled
+    const incrementButtonVariant = disabled || !canIncrement(value, max)
         ? "disabled" : "primary";
 
     const handleIncrement = () => {
