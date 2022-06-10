@@ -7,17 +7,18 @@ import { AddIcon, SubtractIcon } from "./icons";
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 
-
-
 type InputStepperProps = {
-    initialNumber: number;
+    value: number;
     min?: number;
     max?: number;
     width?: string;
     label?: string;
     labelStyle?: React.CSSProperties;
     style?: React.CSSProperties;
-    onChange?: (value: number) => void;
+    disabled?: boolean;
+    onChange?: (value: number, action?: string) => void;
+    onIncrement?: (value: number) => void;
+    onDecrement?: (value: number) => void;
 } & SharedStyleTypes & SizerTypes;
 
 const InputStepperOuterContainer = styled.div<{ width?: string } & SharedStyleTypes & SizerTypes>`
@@ -66,8 +67,13 @@ const CurrentNumber = styled.div<SharedStyleTypes & SizerTypes>`
     }
 `;
 
+export const canIncrement = (value: number, max?: number) =>
+    (max !== undefined && value < max) || max === undefined;
+export const canDecrement = (value: number, min?: number) =>
+    (min !== undefined && value > min) || min === undefined;
+
 export default function InputStepper({
-    initialNumber = 0,
+    value = 0,
     min = 0,
     max,
     width,
@@ -75,29 +81,28 @@ export default function InputStepper({
     labelStyle = {},
     style = {},
     onChange,
+    onIncrement,
+    onDecrement,
+    disabled=false,
     ...props
 }: InputStepperProps) {
+    const decrementButtonVariant = canDecrement(value, min) || disabled
+        ? "disabled" : "primary";
+    const incrementButtonVariant = canIncrement(value, max) || disabled
+        ? "disabled" : "primary";
 
-    const [currentNumber, setCurrentNumber] = useState(initialNumber);
-
-    const incrementNumber = () => {
-        if ((max !== undefined && currentNumber < max) || max === undefined) {
-            const value = currentNumber + 1;
-            setCurrentNumber(value);
-            onChange && onChange(value);
-        }
+    const handleIncrement = () => {
+        const newValue = value + 1;
+        if (disabled || !canIncrement(value, max)) { return; }
+        onChange && onChange(value, 'INCREMENT');
+        onIncrement && onIncrement(newValue);
     };
-
-    const decrementNumber = () => {
-        if ((min !== undefined && currentNumber > min) || min === undefined) {
-            const value = currentNumber - 1;
-            setCurrentNumber(value);
-            onChange && onChange(value);
-        }
+    const handleDecrement = () => {
+        const newValue = value + 1;
+        if (disabled || !canDecrement(value, max)) { return; }
+        onChange && onChange(value, 'DECREMENT');
+        onDecrement && onDecrement(newValue);
     };
-
-    const decrementButtonVariant = min !== undefined && currentNumber <= min ? "disabled" : "primary";
-    const incrementButtonVariant = max !== undefined && currentNumber >= max ? "disabled" : "primary";
 
     return (
         <InputStepperOuterContainer width={width} {...props}>
@@ -106,19 +111,17 @@ export default function InputStepper({
                 <IconButton
                     Icon={SubtractIcon}
                     variant={decrementButtonVariant}
-                    onClick={decrementNumber}
+                    onClick={handleDecrement}
                     style={{ borderRadius: "5px 0 0 5px" }}
                 />
-                <CurrentNumber>{currentNumber}</CurrentNumber>
+                <CurrentNumber>{value}</CurrentNumber>
                 <IconButton
                     Icon={AddIcon}
                     variant={incrementButtonVariant}
-                    onClick={incrementNumber}
+                    onClick={handleIncrement}
                     style={{ borderRadius: "0 5px 5px 0" }}
                 />
             </InputStepperInnerContainer>
         </InputStepperOuterContainer>
-
-
     )
 }
