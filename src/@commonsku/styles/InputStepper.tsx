@@ -66,9 +66,9 @@ const CurrentNumber = styled.div<SharedStyleTypes & SizerTypes>`
 `;
 
 export const canIncrement = (value: number, max?: number) =>
-    (max !== undefined && value <= max) || max === undefined;
+    (max !== undefined && value < max) || max === undefined;
 export const canDecrement = (value: number, min?: number) =>
-    (min !== undefined && value >= min) || min === undefined;
+    (min !== undefined && value > min) || min === undefined;
 
 export default function InputStepper({
     value = 0,
@@ -89,12 +89,12 @@ export default function InputStepper({
 
     const handleIncrement = () => {
         const newValue = value + 1;
-        if (disabled || !canIncrement(newValue, max)) { return; }
+        if (disabled || !canIncrement(value, max)) { return; }
         onChange && onChange(newValue, 'INCREMENT');
     };
     const handleDecrement = () => {
         const newValue = value - 1;
-        if (disabled || !canDecrement(newValue, min)) { return; }
+        if (disabled || !canDecrement(value, min)) { return; }
         onChange && onChange(newValue, 'DECREMENT');
     };
 
