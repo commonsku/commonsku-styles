@@ -17,9 +17,10 @@ type InputStepperProps = {
     label?: string;
     labelStyle?: React.CSSProperties;
     style?: React.CSSProperties;
+    onChange?: (value: number) => void;
 } & SharedStyleTypes & SizerTypes;
 
-const InputStepperOuterContainer = styled.div<{width?: string} & SharedStyleTypes & SizerTypes>`
+const InputStepperOuterContainer = styled.div<{ width?: string } & SharedStyleTypes & SizerTypes>`
     &&&{
         width: ${props => props.width ? props.width : `160px`};
         ${SharedStyles}
@@ -66,54 +67,58 @@ const CurrentNumber = styled.div<SharedStyleTypes & SizerTypes>`
 `;
 
 export default function InputStepper({
-    initialNumber=0,
-    min=0,
+    initialNumber = 0,
+    min = 0,
     max,
     width,
     label,
-    labelStyle={},
-    style={},
+    labelStyle = {},
+    style = {},
+    onChange,
     ...props
-    }:InputStepperProps ){
+}: InputStepperProps) {
 
     const [currentNumber, setCurrentNumber] = useState(initialNumber);
 
     const incrementNumber = () => {
-        if((max !== undefined && currentNumber < max) || max === undefined){
-            setCurrentNumber(currentNumber + 1);
-        } 
+        if ((max !== undefined && currentNumber < max) || max === undefined) {
+            const value = currentNumber + 1;
+            setCurrentNumber(value);
+            onChange && onChange(value);
+        }
     };
 
     const decrementNumber = () => {
-        if((min !== undefined && currentNumber > min) || min === undefined) {
-            setCurrentNumber(currentNumber - 1);
-        };
+        if ((min !== undefined && currentNumber > min) || min === undefined) {
+            const value = currentNumber - 1;
+            setCurrentNumber(value);
+            onChange && onChange(value);
+        }
     };
 
     const decrementButtonVariant = min !== undefined && currentNumber <= min ? "disabled" : "primary";
-
     const incrementButtonVariant = max !== undefined && currentNumber >= max ? "disabled" : "primary";
-    
-    return(
+
+    return (
         <InputStepperOuterContainer width={width} {...props}>
             <InputStepperLabel style={labelStyle}>{label}</InputStepperLabel>
-            <InputStepperInnerContainer style={{...style}}>
-                <IconButton 
-                    Icon={SubtractIcon} 
-                    variant={decrementButtonVariant} 
-                    onClick={decrementNumber} 
-                    style={{borderRadius: "5px 0 0 5px"}}
+            <InputStepperInnerContainer style={{ ...style }}>
+                <IconButton
+                    Icon={SubtractIcon}
+                    variant={decrementButtonVariant}
+                    onClick={decrementNumber}
+                    style={{ borderRadius: "5px 0 0 5px" }}
                 />
                 <CurrentNumber>{currentNumber}</CurrentNumber>
-                <IconButton 
-                    Icon={AddIcon} 
-                    variant={incrementButtonVariant} 
-                    onClick={incrementNumber} 
-                    style={{borderRadius: "0 5px 5px 0"}}
+                <IconButton
+                    Icon={AddIcon}
+                    variant={incrementButtonVariant}
+                    onClick={incrementNumber}
+                    style={{ borderRadius: "0 5px 5px 0" }}
                 />
             </InputStepperInnerContainer>
         </InputStepperOuterContainer>
-        
-        
+
+
     )
 }
