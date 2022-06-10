@@ -39,7 +39,8 @@ export type VirtualTableProps = {
     className?: string;
     style?: React.CSSProperties;
   };
-  TableFooter?: React.ReactNode;
+  TableFooter?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
+  customTableFooterProps?: object;
   className?: string;
   hideFooter?: boolean;
   hideHeader?: boolean;
@@ -77,6 +78,8 @@ const VirtualTable = (props: VirtualTableProps) => {
     rowGroupStyles,
     rowStyles,
     gutterSize=0,
+    customTableFooterProps={},
+    TableFooter,
   } = props;
 
   const defaultColumn = useMemo(
@@ -334,6 +337,7 @@ const VirtualTable = (props: VirtualTableProps) => {
           </div>
         ))}
       </div> : null}
+      {TableFooter ? <TableFooter {...customTableFooterProps} /> : null}
     </div>
   );
 };
