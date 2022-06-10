@@ -17,8 +17,6 @@ type InputStepperProps = {
     style?: React.CSSProperties;
     disabled?: boolean;
     onChange?: (value: number, action?: string) => void;
-    onIncrement?: (value: number) => void;
-    onDecrement?: (value: number) => void;
 } & SharedStyleTypes & SizerTypes;
 
 const InputStepperOuterContainer = styled.div<{ width?: string } & SharedStyleTypes & SizerTypes>`
@@ -68,9 +66,9 @@ const CurrentNumber = styled.div<SharedStyleTypes & SizerTypes>`
 `;
 
 export const canIncrement = (value: number, max?: number) =>
-    (max !== undefined && value < max) || max === undefined;
+    (max !== undefined && value <= max) || max === undefined;
 export const canDecrement = (value: number, min?: number) =>
-    (min !== undefined && value > min) || min === undefined;
+    (min !== undefined && value >= min) || min === undefined;
 
 export default function InputStepper({
     value = 0,
@@ -81,8 +79,6 @@ export default function InputStepper({
     labelStyle = {},
     style = {},
     onChange,
-    onIncrement,
-    onDecrement,
     disabled=false,
     ...props
 }: InputStepperProps) {
@@ -93,15 +89,13 @@ export default function InputStepper({
 
     const handleIncrement = () => {
         const newValue = value + 1;
-        if (disabled || !canIncrement(value, max)) { return; }
-        onChange && onChange(value, 'INCREMENT');
-        onIncrement && onIncrement(newValue);
+        if (disabled || !canIncrement(newValue, max)) { return; }
+        onChange && onChange(newValue, 'INCREMENT');
     };
     const handleDecrement = () => {
-        const newValue = value + 1;
-        if (disabled || !canDecrement(value, max)) { return; }
-        onChange && onChange(value, 'DECREMENT');
-        onDecrement && onDecrement(newValue);
+        const newValue = value - 1;
+        if (disabled || !canDecrement(newValue, min)) { return; }
+        onChange && onChange(newValue, 'DECREMENT');
     };
 
     return (
