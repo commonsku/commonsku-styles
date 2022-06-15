@@ -18,6 +18,7 @@ type InputStepperProps = {
     labelStyle?: React.CSSProperties;
     style?: React.CSSProperties;
     disabled?: boolean;
+    inputDisabled?: boolean;
     onChange?: (value: number, action?: string) => void;
 } & SharedStyleTypes & SizerTypes;
 
@@ -82,6 +83,7 @@ export default function InputStepper({
     style = {},
     onChange,
     disabled=false,
+    inputDisabled=false,
     ...props
 }: InputStepperProps) {
     const decrementButtonVariant = disabled || !canDecrement(value, min)
@@ -115,12 +117,12 @@ export default function InputStepper({
                     value={value}
                     onChange={e => {
                         let val = onChangeNumber(e.target.value);
-                        if (!val || disabled) { return; }
+                        if (!val || inputDisabled) { return; }
                         val = typeof val === 'string' ? parseInt(val) : val;
                         if (!canIncrement(value, max) && !canDecrement(value, max)) { return; }
                         onChange && onChange(val, '');
                     }}
-                    disabled={disabled}
+                    disabled={inputDisabled}
                 />
                 <IconButton
                     Icon={AddIcon}
