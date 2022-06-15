@@ -68,7 +68,7 @@ const LightIndicatorContainer = styled.div<SharedStyleTypes & SizerTypes>`
     vertical-align: middle;
     align-items: top;
     max-width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     margin-right: 16px;
     ${SharedStyles}
     ${SizerCss}
