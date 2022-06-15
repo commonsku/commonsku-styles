@@ -58,7 +58,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     columns,
     data,
     itemSize,
-    height,
+    height=500,
     minWidth = 140,
     maxWidth = 500,
     defaultSort,
@@ -306,7 +306,7 @@ const VirtualTable = (props: VirtualTableProps) => {
             <VariableSizeList
               useIsScrolling
               className="table-list-rows"
-              height={500}
+              height={height}
               itemCount={rows.length}
               itemSize={i => {
                 if (itemSize) {
