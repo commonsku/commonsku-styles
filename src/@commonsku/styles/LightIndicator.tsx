@@ -88,7 +88,7 @@ export function LightIndicator({
     ...props
 }: LightIndicatorProps ) {
     return (
-       <LightIndicatorContainer>
+       <LightIndicatorContainer {...props}>
             <LightIndicatorLight large={large} lit={on} mr={8} mt={8}/>
             <LightIndicatorText large={large} LightIndicatorTextColor={on} >{name}</LightIndicatorText>
        </LightIndicatorContainer>
