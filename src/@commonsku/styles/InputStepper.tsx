@@ -7,7 +7,7 @@ import { AddIcon, SubtractIcon } from "./icons";
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import { Input } from "./Input";
-import { onChangeNumber } from "@commonsku/utils";
+import { onChangeNumber } from "../utils";
 
 type InputStepperProps = {
     value: number;
