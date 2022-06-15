@@ -35,3 +35,43 @@ export const range = (start: number, end?: number, step: number = 1) => {
 
 export const window = ssr.window;
 export const document = ssr.document;
+
+/**
+ * Handle on input change number
+ *
+ * Example:
+ * <Input
+ *   value={state.toLocaleString(undefined, { maximumFractionDigits: 4 })}
+ *   onChange={e => {
+ *     const value = onChangeNumber(e.target.value);
+ *     if (value === null) { return; }
+ *     setState(value);
+ *   }}
+ * />
+ *
+ */
+ export const onChangeNumber = (value?: string | number | null): (null | number | string) => {
+  let val = value;
+  if (val === undefined || val === null) {
+      val = '';
+  }
+  val = val + '';
+  val = val.replaceAll(',', '');
+  val = val.replaceAll(' ', '');
+
+  const dotIndex = val.indexOf('.');
+  const dotLastIndex = val.lastIndexOf('.');
+  // if adding float num, then allow to add '.'
+  const hasLastDot = dotIndex === val.length - 1;
+  const hasFirstDot = dotIndex === 0;
+  if ((hasLastDot || hasFirstDot) && dotLastIndex === dotIndex) {
+      if (isNaN(+(val.replace('.', '')))) {
+          return null;
+      }
+      return val;
+  }
+
+  val = +val;
+  if (isNaN(val)) { return null; }
+  return val;
+};

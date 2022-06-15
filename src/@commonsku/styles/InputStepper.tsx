@@ -6,6 +6,8 @@ import { neutrals } from "./colors";
 import { AddIcon, SubtractIcon } from "./icons";
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
+import { Input } from "./Input";
+import { onChangeNumber } from "@commonsku/utils";
 
 type InputStepperProps = {
     value: number;
@@ -108,7 +110,18 @@ export default function InputStepper({
                     onClick={handleDecrement}
                     style={{ borderRadius: "5px 0 0 5px" }}
                 />
-                <CurrentNumber>{value}</CurrentNumber>
+                <Input
+                    style={{ width: '100%', margin: 0, borderRadius: 0, }}
+                    value={value}
+                    onChange={e => {
+                        let val = onChangeNumber(e.target.value);
+                        if (!val || disabled) { return; }
+                        val = typeof val === 'string' ? parseInt(val) : val;
+                        if (!canIncrement(value, max) && !canDecrement(value, max)) { return; }
+                        onChange && onChange(val, '');
+                    }}
+                    disabled={disabled}
+                />
                 <IconButton
                     Icon={AddIcon}
                     variant={incrementButtonVariant}
