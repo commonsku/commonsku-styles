@@ -119,7 +119,6 @@ export default function InputStepper({
                         let val = onChangeNumber(e.target.value);
                         if (!val || inputDisabled) { return; }
                         val = typeof val === 'string' ? parseInt(val) : val;
-                        if (!canIncrement(value, max) && !canDecrement(value, max)) { return; }
                         onChange && onChange(val, '');
                     }}
                     disabled={inputDisabled}
