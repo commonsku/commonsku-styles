@@ -970,21 +970,20 @@ const App = () => {
               </ demo.InnerContainer>
 
               <demo.InnerContainer title="InputStepper " id="input-stepper">
-
                       <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
-                      <InputStepper initialNumber={0}/>
+                      <InputStepper value={0} />
                       {DemoCodeBlock({code: `<InputStepper />`})}
                  
                       <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
-                      <InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>
+                      <InputStepper label="Label 1" value={6} min={6} max={20} />
                       {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
 
                       <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
-                      <InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>
+                      <InputStepper label="Label 2" value={0} min={-20} max={20} />
                       {DemoCodeBlock({code: `<InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>`})}
 
                       <demo.MediumLabel mt={48} mb={32}>InputStepper with label and custom width</demo.MediumLabel>
-                      <InputStepper label="Label 3" initialNumber={0} width="100%"/>
+                      <InputStepper label="Label 3" value={0} width="100%" />
                       {DemoCodeBlock({code: `<InputStepper label="Label 3" width="100%"/>`})}
 
 
