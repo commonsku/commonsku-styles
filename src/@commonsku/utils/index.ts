@@ -71,6 +71,15 @@ export const document = ssr.document;
       return val;
   }
 
+  // if adding minus num, then allow to add '-'
+  const hasFirstdash = val.indexOf('-') === 0;
+  if (hasFirstdash) {
+      if (isNaN(+(val.replace('-', '')))) {
+          return null;
+      }
+      return val;
+  }
+
   val = +val;
   if (isNaN(val)) { return null; }
   return val;
