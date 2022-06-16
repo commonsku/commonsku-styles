@@ -371,6 +371,7 @@ const App = () => {
     {id: uniqueId('footer-day-'), completed: false, date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
     {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
+  const [stepperValue, setStepperValue] = useState<string | number>(6);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -975,7 +976,16 @@ const App = () => {
                       {DemoCodeBlock({code: `<InputStepper />`})}
                  
                       <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
-                      <InputStepper label="Label 1" value={6} min={6} max={20} />
+                      <InputStepper label="Label 1"
+                        value={stepperValue}
+                        min={6}
+                        max={20}
+                        onChange={val => {
+                          console.log({ val });
+                          if (val === null) { return; }
+                          setStepperValue(val);
+                        }}
+                      />
                       {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
 
                       <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
