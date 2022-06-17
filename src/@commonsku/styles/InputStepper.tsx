@@ -11,10 +11,10 @@ import { NumberInputProps, useNumberInput } from './NumberInput';
 import { Input } from "./Input";
 import { useLongPress } from "./hooks";
 
-type InputStepperProps = NumberInputProps & {
+type InputStepperProps = Omit<NumberInputProps, 'value'> & {
     min?: number;
     max?: number;
-    value?: number | string;
+    initialValue?: number | string;
     width?: string;
     label?: string;
     labelStyle?: React.CSSProperties;
@@ -83,7 +83,7 @@ export default function InputStepper(props: InputStepperProps) {
         disabled=false,
         inputDisabled=false,
         localeOptions,
-        value: defaultValue,
+        initialValue,
         ...rest
     } = props;
 
@@ -97,7 +97,7 @@ export default function InputStepper(props: InputStepperProps) {
         updateValue,
         strToNum,
     } = useNumberInput({
-        defaultValue: defaultValue,
+        defaultValue: initialValue,
         onChange: rest.onChange,
         onFocus: rest.onFocus,
         onBlur: rest.onBlur,
