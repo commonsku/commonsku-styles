@@ -5,6 +5,14 @@ console.log(InnerContainerArray);
 
 export const NavItems = [
     {
+        name: 'Colors', 
+        links: [
+            {title: 'Primary Colors', to: '#primary-colors' },
+            {title: 'Secondary Colors', to: '#secondary-colors' },
+            {title: 'Neutral and Error Colors', to: '#neutral-and-error-colors' },
+        ],
+        open: false,
+    },{
         name: 'Buttons', 
         links: [
             {title: 'Button Variants', to: '#button-variants' },

@@ -81,13 +81,15 @@ import {
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
 
+
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
+import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { errors, green, navy, neutrals, pink, primary1, teal, yellow } from '@commonsku/styles/colors';
+import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { de } from 'date-fns/locale';
@@ -566,6 +568,314 @@ const App = () => {
       
         <Row>
           <Col xs>
+            
+            <demo.OuterContainer title="Colors" id="colors">
+              <demo.InnerContainer title="Primary Colors" id="primary-colors">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>primary1 = teal<br/>ex: primary1['50'] = teal['50']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
+                          {color: teal.darkest, label: "teal.darkest = teal['90']", hex: "#004D59"},
+                          {color: teal.darkHover, label: "teal.darkHover = teal.['85']", hex: "#006672"},
+                          {color: teal.dark, label: "teal.dark = teal.['80']", hex: "#00788A"},
+                          {color: teal.mainHover, label: "teal.mainHover = teal.['75']", hex: "#008EA0"},
+                          {color: teal.main, label: "teal.main = teal.['70']", hex: "#00A0B6"},
+                          {color: teal['65'], label: "teal['65']", hex: "#00B1C8"},
+                          {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
+                          {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
+                          {color: teal['40'], label: "teal['40']", hex: "#5FE6FA", labelColor: teal.darkest},
+                          {color: teal.light, label: "teal.light = teal['30']", hex: "#A6F4FF", labelColor: teal.darkest},
+                          {color: teal['20'], label: "teal['20']", hex: "#E1F7FA", labelColor: teal.darkest},
+                          {color: teal.lightest, label: "teal.lightest = teal['10']", hex: "#F6FEFF", labelColor: teal.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
+        {color: teal.darkest, label: "teal.darkest = teal['90']", hex: "#004D59"},
+        {color: teal.darkHover, label: "teal.darkHover = teal.['85']", hex: "#006672"},
+        {color: teal.dark, label: "teal.dark = teal.['80']", hex: "#00788A"},
+        {color: teal.mainHover, label: "teal.mainHover = teal.['75']", hex: "#008EA0"},
+        {color: teal.main, label: "teal.main = teal.['70']", hex: "#00A0B6"},
+        {color: teal['65'], label: "teal['65']", hex: "#00B1C8"},
+        {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
+        {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
+        {color: teal['40'], label: "teal['40']", hex: "#5FE6FA", labelColor: teal.darkest},
+        {color: teal.light, label: "teal.light = teal['30']", hex: "#A6F4FF", labelColor: teal.darkest},
+        {color: teal['20'], label: "teal['20']", hex: "#E1F7FA", labelColor: teal.darkest},
+        {color: teal.lightest, label: "teal.lightest = teal['10']", hex: "#F6FEFF", labelColor: teal.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{}}>
+                    <demo.LargeLabel>primary2 = white<br/>(also neutrals.white)</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: white.main, label: "white = neutreals.white", hex: "#FFFFFF", labelColor: neutrals.darkest, style: {height: '154px', border: `3px solid ${teal.darkest}`, marginBottom: 0}},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: white.main, label: "white = neutreals.white", hex: "#FFFFFF", labelColor: neutrals.darkest,
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  
+
+                    
+                </div>
+                
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Secondary Colors" id="secondary-colors">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary1 = pink<br/>ex: secondary1['60'] = pink['60']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+                          {color: pink.darkest, label: "pink.darkest = pink['90']", hex: "#870036"},
+                          {color: pink.dark, label: "pink.dark = pink['80']", hex: "#A70043"},
+                          {color: pink['70'], label: "pink['70']", hex: "#C4004E"},
+                          {color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+                          {color: pink['50'], label: "pink['50']", hex: "#EB1D6E"},
+                          {color: pink['40'], label: "pink['40']", hex: "#F55393"},
+                          {color: pink.light, label: "pink.light = pink['30']", hex: "#FC9DC2", labelColor: pink.darkest},
+                          {color: pink['20'], label: "pink['20']", hex: "#FDC5DB", labelColor: pink.darkest},
+                          {color: pink.lightest, label: "pink.lightest = pink['10']", hex: "#FFEDF4", labelColor: pink.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+        {color: pink.darkest, label: "pink.darkest = pink['90']", hex: "#870036"},
+        {color: pink.dark, label: "pink.dark = pink['80']", hex: "#A70043"},
+        {color: pink['70'], label: "pink['70']", hex: "#C4004E"},
+        {color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+        {color: pink['50'], label: "pink['50']", hex: "#EB1D6E"},
+        {color: pink['40'], label: "pink['40']", hex: "#F55393"},
+        {color: pink.light, label: "pink.light = pink['30']", hex: "#FC9DC2", labelColor: pink.darkest},
+        {color: pink['20'], label: "pink['20']", hex: "#FDC5DB", labelColor: pink.darkest},
+        {color: pink.lightest, label: "pink.lightest = pink['10']", hex: "#FFEDF4", labelColor: pink.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary2 = yellow<br/>ex: secondary2['50'] = pink['50']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: yellow.main, label: "yellow.main = yellow['50']", hex: "#FFD302", labelColor: yellow.darkest},
+                          {color: yellow.darkest, label: "yellow.darkest = yellow['90']", hex: "#735400"},
+                          {color: yellow['80'], label: "yellow['80']", hex: "#9E7800"},
+                          {color: yellow.dark, label: "yellow.dark = yellow['70']", hex: "#C69B00"},
+                          {color: yellow['60'], label: "yellow['60']", hex: "#E6BA00", labelColor: yellow.darkest},
+                          {color: yellow.main, label: "yellow.main = yellow['50']", hex: "#FFD302", labelColor: yellow.darkest},
+                          {color: yellow['40'], label: "yellow['40']", hex: "#FFE544", labelColor: yellow.darkest},
+                          {color: yellow.light, label: "yellow.light = yellow['30']", hex: "#FFF597", labelColor: yellow.darkest},
+                          {color: yellow['20'], label: "yellow['20']", hex: "#FFF9C5", labelColor: yellow.darkest},
+                          {color: yellow.lightest, label: "yellow.lightest = yellow['10']", hex: "#FFFDF5", labelColor: yellow.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: yellow.main, label: "yellow.main = yellow['50']", hex: "#ffd302", labelColor: yellow.darkest},
+        {color: yellow.darkest, label: "yellow.darkest = yellow['90']", hex: "#735400"},
+        {color: yellow['80'], label: "yellow['80']", hex: "#9E7800"},
+        {color: yellow.dark, label: "yellow.dark = yellow['70']", hex: "#C69B00"},
+        {color: yellow['60'], label: "yellow['60']", hex: "#E6BA00", labelColor: yellow.darkest},
+        {color: yellow.main, label: "yellow.main = yellow['50']", hex: "#FFD302", labelColor: yellow.darkest},
+        {color: yellow['40'], label: "yellow['40']", hex: "#FFE544", labelColor: yellow.darkest},
+        {color: yellow.light, label: "yellow.light = yellow['30']", hex: "#FFF597", labelColor: yellow.darkest},
+        {color: yellow['20'], label: "yellow['20']", hex: "#FFF9C5", labelColor: yellow.darkest},
+        {color: yellow.lightest, label: "yellow.lightest = yellow['10']", hex: "#FFFDF5", labelColor: yellow.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary3 = green<br/>ex: secondary3['60'] = green['60']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+                          {color: green.darkest, label: "green.darkest = green['90']", hex: "#00733F"},
+                          {color: green.dark, label: "green.dark = green['80']", hex: "#009853"},
+                          {color: green['70'], label: "green['70']", hex: "#00B966"},
+                          {color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+                          {color: green['50'], label: "green['50']", hex: "#23E68E", labelColor: green.darkest},
+                          {color: green['40'], label: "green['40']", hex: "#59F3AE", labelColor: green.darkest},
+                          {color: green.light, label: "green.light = green['30']", hex: "#A1FBD2", labelColor: green.darkest},
+                          {color: green['20'], label: "green['20']", hex: "#C9FDE5", labelColor: green.darkest},
+                          {color: green.lightest, label: "green.lightest = green['10']", hex: "#F2FFF9", labelColor: green.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+        {color: green.darkest, label: "green.darkest = green['90']", hex: "#00733F"},
+        {color: green.dark, label: "green.dark = green['80']", hex: "#009853"},
+        {color: green['70'], label: "green['70']", hex: "#00B966"},
+        {color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+        {color: green['50'], label: "green['50']", hex: "#23E68E", labelColor: green.darkest},
+        {color: green['40'], label: "green['40']", hex: "#59F3AE", labelColor: green.darkest},
+        {color: green.light, label: "green.light = green['30']", hex: "#A1FBD2", labelColor: green.darkest},
+        {color: green['20'], label: "green['20']", hex: "#C9FDE5", labelColor: green.darkest},
+        {color: green.lightest, label: "green.lightest = green['10']", hex: "#F2FFF9", labelColor: green.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary4 = navy<br/>ex: secondary4['70'] = navy['70']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+                          {color: navy.darkest, label: "navy.darkest = navy['90']", hex: "#003C5E"},
+                          {color: navy.dark, label: "navy.dark = navy['80']", hex: "#05476E"},
+                          {color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+                          {color: navy['60'], label: "navy['60']", hex: "#0F6EA6"},
+                          {color: navy['50'], label: "navy['50']", hex: "#249AD4"},
+                          {color: navy['40'], label: "navy['40']", hex: "#5BBDEC", labelColor: navy.darkest},
+                          {color: navy.light, label: "navy.light = navy['30']", hex: "#A1DAF4", labelColor: navy.darkest},
+                          {color: navy['20'], label: "navy['20']", hex: "#C6E8F7", labelColor: navy.darkest},
+                          {color: navy.lightest, label: "navy.lightest = navy['10']", hex: "#EDF4F7", labelColor: navy.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+        {color: navy.darkest, label: "navy.darkest = navy['90']", hex: "#003C5E"},
+        {color: navy.dark, label: "navy.dark = navy['80']", hex: "#05476E"},
+        {color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+        {color: navy['60'], label: "navy['60']", hex: "#0F6EA6"},
+        {color: navy['50'], label: "navy['50']", hex: "#249AD4"},
+        {color: navy['40'], label: "navy['40']", hex: "#5BBDEC", labelColor: navy.darkest},
+        {color: navy.light, label: "navy.light = navy['30']", hex: "#A1DAF4", labelColor: navy.darkest},
+        {color: navy['20'], label: "navy['20']", hex: "#C6E8F7", labelColor: navy.darkest},
+        {color: navy.lightest, label: "navy.lightest = navy['10']", hex: "#EDF4F7", labelColor: navy.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+
+
+                </div>
+                
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Neutral and Error Colors" id="neutral-and-error-colors">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>neutrals<br/>ex: neutrals.bodyText = neutrals['90']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+                          {color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+                          {color: neutrals.dark, label: "neutrals.dark = neutrals['90']", hex: "#2A4D63"},
+                          {color: neutrals['80'], label: "neutrals['80']", hex: "#597486"},
+                          {color: neutrals['70'], label: "neutrals['70']", hex: "#899CA9"},
+                          {color: neutrals['60'], label: "neutrals['60']", hex: "#B8C4CB"},
+                          {color: neutrals['50'], label: "neutrals['50']", hex: "#D0D7DC"},
+                          {color: neutrals['40'], label: "neutrals['40']", hex: "#DAE9EE"},
+                          {color: neutrals['30'], label: "neutrals['30']", hex: "#E6EFF2", labelColor: neutrals.darkest},
+                          {color: neutrals.bg1, label: "neutrals.bg1 = neutrals['20']", hex: "#EDF4F7", labelColor: neutrals.darkest},
+                          {color: neutrals.white, label: "neutrals.white = neutrals['10']", hex: "#FFFFFF", labelColor: neutrals.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+        {color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+        {color: neutrals.dark, label: "neutrals.dark = neutrals['90']", hex: "#2A4D63"},
+        {color: neutrals['80'], label: "neutrals['80']", hex: "#597486"},
+        {color: neutrals['70'], label: "neutrals['70']", hex: "#899CA9"},
+        {color: neutrals['60'], label: "neutrals['60']", hex: "#B8C4CB"},
+        {color: neutrals['50'], label: "neutrals['50']", hex: "#D0D7DC"},
+        {color: neutrals['40'], label: "neutrals['40']", hex: "#DAE9EE"},
+        {color: neutrals['30'], label: "neutrals['30']", hex: "#E6EFF2", labelColor: neutrals.darkest},
+        {color: neutrals.bg1, label: "neutrals.bg1 = neutrals['20']", hex: "#EDF4F7", labelColor: neutrals.darkest},
+        {color: neutrals.white, label: "neutrals.white = neutrals['10']", hex: "#FFFFFF", labelColor: neutrals.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>Error State<br/>ex: errors.['50'] = error.main</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+                          {color: errors.darkest, label: "errors.darkest = errors['90']", hex: "#660007"},
+                          {color: errors['80'], label: "errors['80']", hex: "#8F000A"},
+                          {color: errors.dark, label: "errors.dark = errors['70']", hex: "#B4000C"},
+                          {color: errors['60'], label: "errors['60']", hex: "#D10411"},
+                          {color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+                          {color: errors['40'], label: "errors['40']", hex: "#F35C66", labelColor: errors.darkest},
+                          {color: errors.light, label: "errors.light = errors['30']", hex: "#FBA3A9", labelColor: errors.darkest},
+                          {color: errors['20'], label: "errors['20']", hex: "#FDCACD", labelColor: errors.darkest},
+                          {color: errors.lightest, label: "errors.lightest = errors['10']", hex: "#FFF2F3", labelColor: errors.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+        {color: errors.darkest, label: "errors.darkest = errors['90']", hex: "#660007"},
+        {color: errors['80'], label: "errors['80']", hex: "#8F000A"},
+        {color: errors.dark, label: "errors.dark = errors['70']", hex: "#B4000C"},
+        {color: errors['60'], label: "errors['60']", hex: "#D10411"},
+        {color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+        {color: errors['40'], label: "errors['40']", hex: "#F35C66", labelColor: errors.darkest},
+        {color: errors.light, label: "errors.light = errors['30']", hex: "#FBA3A9", labelColor: errors.darkest},
+        {color: errors['20'], label: "errors['20']", hex: "#FDCACD", labelColor: errors.darkest},
+        {color: errors.lightest, label: "errors.lightest = errors['10']", hex: "#FFF2F3", labelColor: errors.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                </div>
+                
+
+              </demo.InnerContainer>
+              
+
+            </demo.OuterContainer>
 
             <demo.OuterContainer title="Buttons" id="buttons">   
 
@@ -1053,7 +1363,7 @@ const App = () => {
               
 
               <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>
-              {DemoCodeBlock({code: `AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
+              {DemoCodeBlock({code: `<AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
 
               <AlertNotification  href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>
               {DemoCodeBlock({code: `<AlertNotification href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>`})}
