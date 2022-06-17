@@ -67,7 +67,7 @@ export function useNumberInput(props: useNumberInputProps) {
         setState(s => ({
             ...s,
             type: 'number',
-            // value: s.last_value,
+            value: +s.last_value,
         }));
     }
 
@@ -84,7 +84,7 @@ export function useNumberInput(props: useNumberInputProps) {
         if (val === null) { return; }
         const new_val = onChangeNumber(val);
         if(new_val !== null) {
-            setState(s => ({...s, value: new_val, last_value: s.value }));
+            setState(s => ({...s, value: new_val, last_value: new_val }));
             onChange && onChange(new_val);
         }
     };
