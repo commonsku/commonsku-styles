@@ -577,10 +577,10 @@ const App = () => {
                         [
                           {highlighted: true, color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
                           {color: teal.darkest, label: "teal.darkest = teal['90']", hex: "#004D59"},
-                          {color: teal.darkHover, label: "teal.darkHover = teal.['85']", hex: "#006672"},
-                          {color: teal.dark, label: "teal.dark = teal.['80']", hex: "#00788A"},
-                          {color: teal.mainHover, label: "teal.mainHover = teal.['75']", hex: "#008EA0"},
-                          {color: teal.main, label: "teal.main = teal.['70']", hex: "#00A0B6"},
+                          {color: teal.darkHover, label: "teal.darkHover = teal['85']", hex: "#006672"},
+                          {color: teal.dark, label: "teal.dark = teal['80']", hex: "#00788A"},
+                          {color: teal.mainHover, label: "teal.mainHover = teal['75']", hex: "#008EA0"},
+                          {color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
                           {color: teal['65'], label: "teal['65']", hex: "#00B1C8"},
                           {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
                           {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
@@ -597,10 +597,10 @@ const App = () => {
       [
         {highlighted: true, color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
         {color: teal.darkest, label: "teal.darkest = teal['90']", hex: "#004D59"},
-        {color: teal.darkHover, label: "teal.darkHover = teal.['85']", hex: "#006672"},
-        {color: teal.dark, label: "teal.dark = teal.['80']", hex: "#00788A"},
-        {color: teal.mainHover, label: "teal.mainHover = teal.['75']", hex: "#008EA0"},
-        {color: teal.main, label: "teal.main = teal.['70']", hex: "#00A0B6"},
+        {color: teal.darkHover, label: "teal.darkHover = teal['85']", hex: "#006672"},
+        {color: teal.dark, label: "teal.dark = teal['80']", hex: "#00788A"},
+        {color: teal.mainHover, label: "teal.mainHover = teal['75']", hex: "#008EA0"},
+        {color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
         {color: teal['65'], label: "teal['65']", hex: "#00B1C8"},
         {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
         {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
@@ -833,7 +833,7 @@ const App = () => {
                   </div>
 
                   <div style={{marginRight: "24px"}}>
-                    <demo.LargeLabel>Error State<br/>ex: errors.['50'] = error.main</demo.LargeLabel>
+                    <demo.LargeLabel>Error State<br/>ex: errors['50'] = error.main</demo.LargeLabel>
                     <ColorsBlock colors={
                         [
                           {highlighted: true, color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
@@ -878,8 +878,56 @@ const App = () => {
 
             <demo.OuterContainer title="Buttons" id="buttons">   
 
+              <demo.InnerContainer title="Button Component" id="button-component">
+                <demo.LargeLabel>The Button component takes a variant, secondary, cta, and size props. The Button component also takes children and has a variant of 'primary' by default.</demo.LargeLabel> 
+                <div>
+                  <Button mr={24} mb={24}>Default</Button>   
+                  <Button variant="primary" mr={24} mb={24}>Primary</Button>
+                  <Button variant="secondary" mr={24} mb={24}>Secondary</Button>
+                  <Button variant="cta" mr={24} mb={24}>CTA</Button>   
+                  <Button variant="text" mr={24} mb={24}>Text</Button>
+                  <Button variant="error" mr={24} mb={24}>Error</Button>
+                  <Button variant="disabled" mr={24} mb={24}>Disabled</Button>
+                </div>
+
+                {DemoCodeBlock({code:
+`<Button>Default</Button>   
+<Button variant="primary">Primary</Button>
+<Button variant="primary-light">Primary-light</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="cta">CTA</Button>   
+<Button variant="text">Text</Button>
+<Button variant="error">Error</Button>
+<Button variant="disabled">Disabled</Button>`
+                })}
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="IconButton Component" id="iconbutton-component">
+                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.The IconButton takes a "primary" variant and "medium" size as a default.</demo.LargeLabel> 
+                <div>
+                  <IconButton mr={24} mb={24}>Default</IconButton>   
+                  <IconButton variant="primary" mr={24} mb={24}>Primary</IconButton>
+                  <IconButton variant="secondary" mr={24} mb={24}>Secondary</IconButton>
+                  <IconButton variant="cta" mr={24} mb={24}>CTA</IconButton>   
+                  <IconButton variant="text" mr={24} mb={24}>Text</IconButton>
+                  <IconButton variant="error" mr={24} mb={24}>Error</IconButton>
+                  <IconButton variant="disabled" mr={24} mb={24}>Disabled</IconButton>
+                </div>
+
+                {DemoCodeBlock({code:
+`<IconButton>Default</IconButton>   
+<IconButton variant="primary">Primary</IconButton>
+<IconButton variant="secondary">Secondary</IconButton>
+<IconButton variant="cta">CTA</IconButton>   
+<IconButton variant="text">Text</IconButton>
+<IconButton variant="error">Error</IconButton>
+<IconButton variant="disabled">Disabled</IconButton>`
+                })}
+              </demo.InnerContainer>
+
               <demo.InnerContainer title="Button Variants" id="button-variants">  
-                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.</demo.LargeLabel>     
+                <demo.LargeLabel></demo.LargeLabel>  
+
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                 <ButtonsGroup  style={{display: 'flex', flexDirection: 'row'}}>
                     <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top" mr={10} mt={10} >Primary</IconButton>
@@ -1349,8 +1397,12 @@ const App = () => {
             <demo.OuterContainer title="Notifications and Indicators" id="notifications-and-indicators">
               <demo.InnerContainer title="AlertNotification" id="alert-notifications">
 
-              <AlertNotification >This is an info message without a link</AlertNotification>
+              <AlertNotification >This is an info message without a link
+                <IconButton Icon={icons.EyeIcon} style={{marginLeft: "auto"}}>Edit</IconButton>
+                </AlertNotification>
               {DemoCodeBlock({code: `<AlertNotification>This is an info message without a link</AlertNotification>`})}
+
+              <IconButton Icon={icons.UsersIcon} >Edit</IconButton>
               
 
               <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>

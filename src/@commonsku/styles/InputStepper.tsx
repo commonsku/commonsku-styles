@@ -33,7 +33,6 @@ const InputStepperInnerContainer = styled.div<SharedStyleTypes & SizerTypes>`
         width: 100%;
         flex-direction: row;
         justify-content: space-between;
-        border: 1px solid ${neutrals['60']};
         border-radius: 5px;
         background-color: white;
         ${SharedStyles}
@@ -59,6 +58,9 @@ const CurrentNumber = styled.div<SharedStyleTypes & SizerTypes>`
         justify-content: center;
         align-items: center;
         height:38px;
+        width:100%;
+        border-top: 1px solid ${neutrals['60']};
+        border-bottom: 1px solid ${neutrals['60']};
         color: ${neutrals.bodyText};
         text-align:center;
         vertical-align:middle;
