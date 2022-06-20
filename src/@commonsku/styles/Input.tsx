@@ -346,11 +346,10 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
   }
 );
 
-export const RadioLabel = styled.label<{disabled?: boolean}>`
+export const CheckboxLabel = styled.label<{disabled?: boolean}>`
   &&& {
     display: inline-flex;
     position: relative;
-    padding-left: 32px;
     margin-bottom: 12px;
     margin-right: 24px;
     cursor: ${props => props.disabled ? 'default' : 'pointer'};
@@ -368,6 +367,12 @@ export const RadioLabel = styled.label<{disabled?: boolean}>`
     &:focus {
       outline: 0;
     }
+  }
+`;
+
+export const RadioLabel = styled(CheckboxLabel)`
+  &&& {
+    padding-left: 32px;
   }
 `;
 
@@ -602,7 +607,7 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
     const onMouseLeave = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => updateHover(false);
 
     return (
-      <RadioLabel
+      <CheckboxLabel
         htmlFor={name}
         onMouseOver={hoverByLabel ? onMouseOver : undefined}
         onMouseLeave={hoverByLabel ? onMouseLeave : undefined}
@@ -620,6 +625,6 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
         />
         {label}
         <Radio ref={ref} name={name} type="checkbox" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
-      </RadioLabel>
+      </CheckboxLabel>
     );
   });

@@ -108,7 +108,7 @@ export const Dropdown = ({
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
 
-    const node = useRef();
+    const rootRef = useRef<HTMLSpanElement>(null);
     const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
         // width: '10px',
@@ -117,8 +117,7 @@ export const Dropdown = ({
     };
 
     const handleClick = (e: Event) => {
-        // @ts-ignore
-        if (node.current?.contains(e.target)) {
+        if (rootRef.current?.contains(e.target as Node)) {
           return;
         }
         setShowMenu(false);
@@ -135,8 +134,7 @@ export const Dropdown = ({
     }, [items]);
 
     return (
-        // @ts-ignore
-        <span ref={node} {...props} style={style} onMouseLeave={() => { 
+        <span ref={rootRef} {...props} style={style} onMouseLeave={() => { 
             setShowMenu(false); 
             if(mouseLeaveCallback) { 
                 mouseLeaveCallback()
