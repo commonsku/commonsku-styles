@@ -55,6 +55,7 @@ type BaseSVGIconProps = {
     altText?: string;
     pointer?: boolean;
     iconSizes?: TIconSizeObj;
+    disabled?: boolean;
 } & SharedStyleTypes;
 
 export type SVGIconProps = React.SVGAttributes<SVGElement> & BaseSVGIconProps;

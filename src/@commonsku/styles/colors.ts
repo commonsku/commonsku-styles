@@ -14,11 +14,14 @@ export const primary1 = {
   '90': '#004D59',
   'main': '',
   'main-hover': '',
+  'mainHover': '',
   'light': '',
   'lightest': '',
   'dark': '',
   'dark-hover': '',
+  'darkHover': '',
   'darkest': '',
+
 };
 primary1['main'] = primary1['70'];
 primary1['main-hover'] = primary1['75'];
@@ -27,6 +30,10 @@ primary1['light'] = primary1['30'];
 primary1['dark'] = primary1['80'];
 primary1['dark-hover'] = primary1['85'];
 primary1['darkest'] = primary1['90'];
+
+primary1.mainHover = primary1['main-hover'];
+primary1.darkHover = primary1['dark-hover'];
+
 
 export const teal = primary1;
 
@@ -176,10 +183,10 @@ export const errors = {
   'dark': '',
   'darkest': '',
 };
-errors['main'] = errors['60'];
+errors['main'] = errors['50'];
 errors['lightest'] = errors['10'];
 errors['light'] = errors['30'];
-errors['dark'] = errors['80'];
+errors['dark'] = errors['70'];
 errors['darkest'] = errors['90'];
 
 const colors = {

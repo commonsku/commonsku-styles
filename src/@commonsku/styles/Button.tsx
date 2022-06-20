@@ -90,7 +90,6 @@ export type ButtonVariant = 'primary'
   | 'secondary'
   | 'cta'
   | 'error'
-  | 'error-light'
   | 'disabled'
   | 'text'
   | 'primary-light'
@@ -128,8 +127,7 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
   // const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
 
   const error = getThemeColor(props, 'errors.main', colors.errors.main);
-  const errorDark = getThemeColor(props, 'errors.80', colors.errors['80']);
-  const errorLight = getThemeColor(props, 'errors.60', colors.errors['60']);
+  const errorDark = getThemeColor(props, 'errors.70', colors.errors['70']);
 
   switch (variant) {
     case 'primary':
@@ -216,24 +214,6 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           borderStyle: 'solid',
           borderColor: errorDark,
           background: errorDark,
-          color: white,
-        },
-        ':focus-visible': {
-          outlineColor: error,
-        },
-      };
-    case 'error-light':
-      return {
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: errorLight,
-        background: errorLight,
-        color: white,
-        ':hover': {
-          borderWidth: 3,
-          borderStyle: 'solid',
-          borderColor: error,
-          background: error,
           color: white,
         },
         ':focus-visible': {
@@ -333,7 +313,7 @@ const presets: {[key: string]: IconButtonProps} = {
   },
   delete: {
     Icon: TrashIcon, 
-    variant: 'error-light'
+    variant: 'error'
   },
   add: {
     Icon: AddIcon,
@@ -360,7 +340,7 @@ export type TButtonIcon = ((props: IconFuncProps) => React.ReactElement);
 export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   Icon?: TButtonIcon | React.ReactElement<IconFuncProps>;
   iconProps?: {[key: string]: any};
-  iconPosition?: 'left' | 'right' | 'top';
+  iconPosition?: 'left' | 'right' | 'top' | 'bottom';
   preset?: ButtonPreset;
   style?: React.CSSProperties;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -420,7 +400,7 @@ export function IconButton(props: IconButtonProps) {
     <Button size={size} {...newProps} style={{
       ...(newProps.style || {}),
       padding: buttonPadding({ ...newProps, size: size }),
-      ...(iconPosition === "top" ? {
+      ...(iconPosition === "top" || iconPosition === "bottom" ? {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -429,7 +409,7 @@ export function IconButton(props: IconButtonProps) {
     }}>
       {['left', 'top'].includes(iconPosition) ? RenderIcon : null}
       {children}
-      {iconPosition === 'right' ? RenderIcon : null}
+      {['right', 'bottom'].includes(iconPosition) ? RenderIcon : null}
     </Button>
   );
 }

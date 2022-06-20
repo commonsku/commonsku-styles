@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
-import { Button, TSize } from './Button';
+import { Button, ButtonVariant, TSize } from './Button';
 import { ChevronIcon } from './icons';
 import { document } from '../utils';
 
@@ -90,6 +90,7 @@ export type DropdownProps = {
     mouseLeaveCallback?: any;
     size?: TSize;
     style?: CSSObject;
+    buttonVariant?: ButtonVariant,
 };
 
 export const Dropdown = ({
@@ -103,10 +104,11 @@ export const Dropdown = ({
     mouseLeaveCallback,
     size,
     style={},
+    buttonVariant,
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
 
-    const node = useRef();
+    const rootRef = useRef<HTMLSpanElement>(null);
     const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
         // width: '10px',
@@ -115,8 +117,7 @@ export const Dropdown = ({
     };
 
     const handleClick = (e: Event) => {
-        // @ts-ignore
-        if (node.current?.contains(e.target)) {
+        if (rootRef.current?.contains(e.target as Node)) {
           return;
         }
         setShowMenu(false);
@@ -133,8 +134,7 @@ export const Dropdown = ({
     }, [items]);
 
     return (
-        // @ts-ignore
-        <span ref={node} {...props} style={style} onMouseLeave={() => { 
+        <span ref={rootRef} {...props} style={style} onMouseLeave={() => { 
             setShowMenu(false); 
             if(mouseLeaveCallback) { 
                 mouseLeaveCallback()
@@ -146,7 +146,7 @@ export const Dropdown = ({
                         {icon}
                     </span>
                 :
-                    <Button size={size} cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
+                    <Button size={size} cta={Boolean(!primary)} variant={buttonVariant} onClick={() => setShowMenu(!showMenu)}>
                         {text ? text : "Actions"} <ChevronIcon direction="up"  {...iconProps} />
                     </Button>
                 }

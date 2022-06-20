@@ -59,6 +59,7 @@ export { default as SearchIcon} from './SearchIcon';
 export { default as ClockIcon} from './ClockIcon';
 export { default as ClipboardIcon} from './ClipboardIcon';
 export { default as RadioIcon} from './RadioIcon';
+export { default as CheckboxIcon} from './CheckboxIcon';
 export { default as EditIcon} from './EditIcon';
 export { default as GridIcon} from './GridIcon';
 export { default as TemplateIcon} from './TemplateIcon';

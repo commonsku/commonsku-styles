@@ -1,27 +1,18 @@
-import React from "react";
 import { OuterContainerArray, InnerContainerArray } from "demo";
-
-// let filterInnerContainerArray = InnerContainerArray.filter(function (el) {
-//     return el != null;
-//   });
-
-// const results = InnerContainerArray.filter(element => {
-//     return element === undefined;
-//   });
-
-// const results: Array<string> = [];
-
-// InnerContainerArray.forEach(element => {
-//     if(element !== undefined) {
-//         results.push(element);
-//     }
-// });
 
 console.log(OuterContainerArray);
 console.log(InnerContainerArray);
 
 export const NavItems = [
     {
+        name: 'Colors', 
+        links: [
+            {title: 'Primary Colors', to: '#primary-colors' },
+            {title: 'Secondary Colors', to: '#secondary-colors' },
+            {title: 'Neutral and Error Colors', to: '#neutral-and-error-colors' },
+        ],
+        open: false,
+    },{
         name: 'Buttons', 
         links: [
             {title: 'Button Variants', to: '#button-variants' },
@@ -39,7 +30,27 @@ export const NavItems = [
             {title: 'Input Fields', to: '#input-fields' },
             {title: 'Text Area', to: '#text-area' },
             {title: 'Select', to: '#select' },
+            {title: 'InputStepper', to: '#input-stepper' },
             {title: 'Date Picker', to: '#datepicker' },
+            {title: 'Dropdown Button', to: '#dropdown-button' },
+            {title: 'Icon Dropdown', to: '#icon-dropdown' },
+        ],
+        open: false,
+    },
+    {
+        name: 'Popups and Side Panels', 
+        links: [
+            {title: 'Popups', to: '#popups-and-panels' },
+            {title: 'Side Panels', to: '#side-panels' },
+        ],
+        open: false,
+    },
+    {
+        name: 'Notifications and Indicators', 
+        links: [
+            {title: 'AlertNotification', to: '#alert-notifications' },
+            {title: 'LightIndicator', to: '#light-indicator' },
+            {title: 'DefaultStar', to: '#default-star' },
         ],
         open: false,
     },{
@@ -48,8 +59,6 @@ export const NavItems = [
             {title: 'Calendar Tasks', to: '#calendar-tasks' },
             {title: 'Loading Bars', to: '#loading-bars' },
             {title: 'Numbers Formatting', to: '#numbers-formatting' },
-            {title: 'Light Indicator', to: '#light-indicator' },
-            {title: 'Default Star', to: '#default-star' },
             {title: 'Collapsible', to: '#collapsible' },
             {title: 'Avatar', to: '#avatar' },
             {title: 'Progress', to: '#progress' },

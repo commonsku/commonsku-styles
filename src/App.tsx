@@ -17,19 +17,13 @@ import * as icons from './@commonsku/styles/icons';
 
 import { 
     Avatar, 
-    Box, 
-    Background,
     DropArea, Dropzoned, DropzonedPreviews,
-    Button, 
-    H1,
-    // H2,
-    // H3,
-    // H4,
-    H5, 
+    Button,  
     Page,
     Toggle,
     ToggleLink, 
     LabeledInput,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     LabeledTextarea,
     SidePanel,
     Tabs,
@@ -43,10 +37,11 @@ import {
     Row, Col,
     Popup,
     Task,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Link,
     Number,
     FeedPost, Publisher,
-    ButtonsGroup, LabeledRadio, LabeledCheckbox,
+    ButtonsGroup, LabeledRadio, LabeledCheckbox, 
     Table, TD, TH, TR, THead, TBody,
     Datepicker,
     ErrorBoundary,
@@ -74,19 +69,30 @@ import {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     THSorted,
     LightIndicator,
-    DefaultStar
+    DefaultStar,
+    CancelButton,
+    DoneButton,
+    // PresentationTypeButton,
+    AlertNotification,
+    LinkWithIcon,
+    LabeledRadioInButton,
+    InputStepper,
+    VirtualTableStyles,
+    VirtualTable,
 } from '@commonsku/styles';
+
+import { DemoCodeBlock } from 'demo/DemoCodeblock';
+
 
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
+import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
 import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { errors, neutrals, primary1, teal } from '@commonsku/styles/colors';
+import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
-import CancelButton from '@commonsku/styles/CancelButton';
-import { de } from 'date-fns/locale';
 
 const initialState = {
   date: new Date(),
@@ -344,8 +350,12 @@ const App = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showNewProjectPopup, setShowNewProjectPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
+  const [activeRadioInButton, setRadioInButton] = useState(1);
+  const [activeRadioInButtonFlex, setRadioInButtonFlex] = useState(1);
   const [mustard, toggleMustard] = useState(false);
   const [ketchup, toggleKetchup] = useState(false);
+  const [relish, toggleRelish] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [lock, setLock] = useState(false);
   const [colorfulBars, setColorfulBars] = useState(false);
   const [sidePanelRow, setSidePanelRow] = useState(null);
@@ -363,6 +373,7 @@ const App = () => {
     {id: uniqueId('footer-day-'), completed: false, date: today, title: 'Vandelay Other 2', description: 'Reach out to Jake Other', colorType: 'light-green'},
     {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
+  const [stepperValue, setStepperValue] = useState<string | number>(6);
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -557,59 +568,431 @@ const App = () => {
       
         <Row>
           <Col xs>
+            
+            <demo.OuterContainer title="Colors" id="colors">
+              <demo.InnerContainer title="Primary Colors" id="primary-colors">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>primary1 = teal<br/>ex: primary1['50'] = teal['50']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
+                          {color: teal.darkest, label: "teal.darkest = teal['90']", hex: "#004D59"},
+                          {color: teal.darkHover, label: "teal.darkHover = teal.['85']", hex: "#006672"},
+                          {color: teal.dark, label: "teal.dark = teal.['80']", hex: "#00788A"},
+                          {color: teal.mainHover, label: "teal.mainHover = teal.['75']", hex: "#008EA0"},
+                          {color: teal.main, label: "teal.main = teal.['70']", hex: "#00A0B6"},
+                          {color: teal['65'], label: "teal['65']", hex: "#00B1C8"},
+                          {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
+                          {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
+                          {color: teal['40'], label: "teal['40']", hex: "#5FE6FA", labelColor: teal.darkest},
+                          {color: teal.light, label: "teal.light = teal['30']", hex: "#A6F4FF", labelColor: teal.darkest},
+                          {color: teal['20'], label: "teal['20']", hex: "#E1F7FA", labelColor: teal.darkest},
+                          {color: teal.lightest, label: "teal.lightest = teal['10']", hex: "#F6FEFF", labelColor: teal.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: teal.main, label: "teal.main = teal['70']", hex: "#00A0B6"},
+        {color: teal.darkest, label: "teal.darkest = teal['90']", hex: "#004D59"},
+        {color: teal.darkHover, label: "teal.darkHover = teal.['85']", hex: "#006672"},
+        {color: teal.dark, label: "teal.dark = teal.['80']", hex: "#00788A"},
+        {color: teal.mainHover, label: "teal.mainHover = teal.['75']", hex: "#008EA0"},
+        {color: teal.main, label: "teal.main = teal.['70']", hex: "#00A0B6"},
+        {color: teal['65'], label: "teal['65']", hex: "#00B1C8"},
+        {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
+        {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
+        {color: teal['40'], label: "teal['40']", hex: "#5FE6FA", labelColor: teal.darkest},
+        {color: teal.light, label: "teal.light = teal['30']", hex: "#A6F4FF", labelColor: teal.darkest},
+        {color: teal['20'], label: "teal['20']", hex: "#E1F7FA", labelColor: teal.darkest},
+        {color: teal.lightest, label: "teal.lightest = teal['10']", hex: "#F6FEFF", labelColor: teal.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{}}>
+                    <demo.LargeLabel>primary2 = white<br/>(also neutrals.white)</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: white.main, label: "white = neutreals.white", hex: "#FFFFFF", labelColor: neutrals.darkest, style: {height: '154px', border: `3px solid ${teal.darkest}`, marginBottom: 0}},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: white.main, label: "white = neutreals.white", hex: "#FFFFFF", labelColor: neutrals.darkest,
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  
+
+                    
+                </div>
+                
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Secondary Colors" id="secondary-colors">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary1 = pink<br/>ex: secondary1['60'] = pink['60']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+                          {color: pink.darkest, label: "pink.darkest = pink['90']", hex: "#870036"},
+                          {color: pink.dark, label: "pink.dark = pink['80']", hex: "#A70043"},
+                          {color: pink['70'], label: "pink['70']", hex: "#C4004E"},
+                          {color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+                          {color: pink['50'], label: "pink['50']", hex: "#EB1D6E"},
+                          {color: pink['40'], label: "pink['40']", hex: "#F55393"},
+                          {color: pink.light, label: "pink.light = pink['30']", hex: "#FC9DC2", labelColor: pink.darkest},
+                          {color: pink['20'], label: "pink['20']", hex: "#FDC5DB", labelColor: pink.darkest},
+                          {color: pink.lightest, label: "pink.lightest = pink['10']", hex: "#FFEDF4", labelColor: pink.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+        {color: pink.darkest, label: "pink.darkest = pink['90']", hex: "#870036"},
+        {color: pink.dark, label: "pink.dark = pink['80']", hex: "#A70043"},
+        {color: pink['70'], label: "pink['70']", hex: "#C4004E"},
+        {color: pink.main, label: "pink.main = pink['60']", hex: "#DB0057"},
+        {color: pink['50'], label: "pink['50']", hex: "#EB1D6E"},
+        {color: pink['40'], label: "pink['40']", hex: "#F55393"},
+        {color: pink.light, label: "pink.light = pink['30']", hex: "#FC9DC2", labelColor: pink.darkest},
+        {color: pink['20'], label: "pink['20']", hex: "#FDC5DB", labelColor: pink.darkest},
+        {color: pink.lightest, label: "pink.lightest = pink['10']", hex: "#FFEDF4", labelColor: pink.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary2 = yellow<br/>ex: secondary2['50'] = pink['50']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: yellow.main, label: "yellow.main = yellow['50']", hex: "#FFD302", labelColor: yellow.darkest},
+                          {color: yellow.darkest, label: "yellow.darkest = yellow['90']", hex: "#735400"},
+                          {color: yellow['80'], label: "yellow['80']", hex: "#9E7800"},
+                          {color: yellow.dark, label: "yellow.dark = yellow['70']", hex: "#C69B00"},
+                          {color: yellow['60'], label: "yellow['60']", hex: "#E6BA00", labelColor: yellow.darkest},
+                          {color: yellow.main, label: "yellow.main = yellow['50']", hex: "#FFD302", labelColor: yellow.darkest},
+                          {color: yellow['40'], label: "yellow['40']", hex: "#FFE544", labelColor: yellow.darkest},
+                          {color: yellow.light, label: "yellow.light = yellow['30']", hex: "#FFF597", labelColor: yellow.darkest},
+                          {color: yellow['20'], label: "yellow['20']", hex: "#FFF9C5", labelColor: yellow.darkest},
+                          {color: yellow.lightest, label: "yellow.lightest = yellow['10']", hex: "#FFFDF5", labelColor: yellow.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: yellow.main, label: "yellow.main = yellow['50']", hex: "#ffd302", labelColor: yellow.darkest},
+        {color: yellow.darkest, label: "yellow.darkest = yellow['90']", hex: "#735400"},
+        {color: yellow['80'], label: "yellow['80']", hex: "#9E7800"},
+        {color: yellow.dark, label: "yellow.dark = yellow['70']", hex: "#C69B00"},
+        {color: yellow['60'], label: "yellow['60']", hex: "#E6BA00", labelColor: yellow.darkest},
+        {color: yellow.main, label: "yellow.main = yellow['50']", hex: "#FFD302", labelColor: yellow.darkest},
+        {color: yellow['40'], label: "yellow['40']", hex: "#FFE544", labelColor: yellow.darkest},
+        {color: yellow.light, label: "yellow.light = yellow['30']", hex: "#FFF597", labelColor: yellow.darkest},
+        {color: yellow['20'], label: "yellow['20']", hex: "#FFF9C5", labelColor: yellow.darkest},
+        {color: yellow.lightest, label: "yellow.lightest = yellow['10']", hex: "#FFFDF5", labelColor: yellow.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary3 = green<br/>ex: secondary3['60'] = green['60']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+                          {color: green.darkest, label: "green.darkest = green['90']", hex: "#00733F"},
+                          {color: green.dark, label: "green.dark = green['80']", hex: "#009853"},
+                          {color: green['70'], label: "green['70']", hex: "#00B966"},
+                          {color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+                          {color: green['50'], label: "green['50']", hex: "#23E68E", labelColor: green.darkest},
+                          {color: green['40'], label: "green['40']", hex: "#59F3AE", labelColor: green.darkest},
+                          {color: green.light, label: "green.light = green['30']", hex: "#A1FBD2", labelColor: green.darkest},
+                          {color: green['20'], label: "green['20']", hex: "#C9FDE5", labelColor: green.darkest},
+                          {color: green.lightest, label: "green.lightest = green['10']", hex: "#F2FFF9", labelColor: green.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+        {color: green.darkest, label: "green.darkest = green['90']", hex: "#00733F"},
+        {color: green.dark, label: "green.dark = green['80']", hex: "#009853"},
+        {color: green['70'], label: "green['70']", hex: "#00B966"},
+        {color: green.main, label: "green.main = green['60']", hex: "#00D374"},
+        {color: green['50'], label: "green['50']", hex: "#23E68E", labelColor: green.darkest},
+        {color: green['40'], label: "green['40']", hex: "#59F3AE", labelColor: green.darkest},
+        {color: green.light, label: "green.light = green['30']", hex: "#A1FBD2", labelColor: green.darkest},
+        {color: green['20'], label: "green['20']", hex: "#C9FDE5", labelColor: green.darkest},
+        {color: green.lightest, label: "green.lightest = green['10']", hex: "#F2FFF9", labelColor: green.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>secondary4 = navy<br/>ex: secondary4['70'] = navy['70']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+                          {color: navy.darkest, label: "navy.darkest = navy['90']", hex: "#003C5E"},
+                          {color: navy.dark, label: "navy.dark = navy['80']", hex: "#05476E"},
+                          {color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+                          {color: navy['60'], label: "navy['60']", hex: "#0F6EA6"},
+                          {color: navy['50'], label: "navy['50']", hex: "#249AD4"},
+                          {color: navy['40'], label: "navy['40']", hex: "#5BBDEC", labelColor: navy.darkest},
+                          {color: navy.light, label: "navy.light = navy['30']", hex: "#A1DAF4", labelColor: navy.darkest},
+                          {color: navy['20'], label: "navy['20']", hex: "#C6E8F7", labelColor: navy.darkest},
+                          {color: navy.lightest, label: "navy.lightest = navy['10']", hex: "#EDF4F7", labelColor: navy.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+        {color: navy.darkest, label: "navy.darkest = navy['90']", hex: "#003C5E"},
+        {color: navy.dark, label: "navy.dark = navy['80']", hex: "#05476E"},
+        {color: navy.main, label: "navy.main = navy['70']", hex: "#0C5A88"},
+        {color: navy['60'], label: "navy['60']", hex: "#0F6EA6"},
+        {color: navy['50'], label: "navy['50']", hex: "#249AD4"},
+        {color: navy['40'], label: "navy['40']", hex: "#5BBDEC", labelColor: navy.darkest},
+        {color: navy.light, label: "navy.light = navy['30']", hex: "#A1DAF4", labelColor: navy.darkest},
+        {color: navy['20'], label: "navy['20']", hex: "#C6E8F7", labelColor: navy.darkest},
+        {color: navy.lightest, label: "navy.lightest = navy['10']", hex: "#EDF4F7", labelColor: navy.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+
+
+                </div>
+                
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Neutral and Error Colors" id="neutral-and-error-colors">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>neutrals<br/>ex: neutrals.bodyText = neutrals['90']</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+                          {color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+                          {color: neutrals.dark, label: "neutrals.dark = neutrals['90']", hex: "#2A4D63"},
+                          {color: neutrals['80'], label: "neutrals['80']", hex: "#597486"},
+                          {color: neutrals['70'], label: "neutrals['70']", hex: "#899CA9"},
+                          {color: neutrals['60'], label: "neutrals['60']", hex: "#B8C4CB"},
+                          {color: neutrals['50'], label: "neutrals['50']", hex: "#D0D7DC"},
+                          {color: neutrals['40'], label: "neutrals['40']", hex: "#DAE9EE"},
+                          {color: neutrals['30'], label: "neutrals['30']", hex: "#E6EFF2", labelColor: neutrals.darkest},
+                          {color: neutrals.bg1, label: "neutrals.bg1 = neutrals['20']", hex: "#EDF4F7", labelColor: neutrals.darkest},
+                          {color: neutrals.white, label: "neutrals.white = neutrals['10']", hex: "#FFFFFF", labelColor: neutrals.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+        {color: neutrals.darkest, label: "neutrals.darkest = neutrals['100']", hex: "#123952"},
+        {color: neutrals.dark, label: "neutrals.dark = neutrals['90']", hex: "#2A4D63"},
+        {color: neutrals['80'], label: "neutrals['80']", hex: "#597486"},
+        {color: neutrals['70'], label: "neutrals['70']", hex: "#899CA9"},
+        {color: neutrals['60'], label: "neutrals['60']", hex: "#B8C4CB"},
+        {color: neutrals['50'], label: "neutrals['50']", hex: "#D0D7DC"},
+        {color: neutrals['40'], label: "neutrals['40']", hex: "#DAE9EE"},
+        {color: neutrals['30'], label: "neutrals['30']", hex: "#E6EFF2", labelColor: neutrals.darkest},
+        {color: neutrals.bg1, label: "neutrals.bg1 = neutrals['20']", hex: "#EDF4F7", labelColor: neutrals.darkest},
+        {color: neutrals.white, label: "neutrals.white = neutrals['10']", hex: "#FFFFFF", labelColor: neutrals.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                  <div style={{marginRight: "24px"}}>
+                    <demo.LargeLabel>Error State<br/>ex: errors.['50'] = error.main</demo.LargeLabel>
+                    <ColorsBlock colors={
+                        [
+                          {highlighted: true, color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+                          {color: errors.darkest, label: "errors.darkest = errors['90']", hex: "#660007"},
+                          {color: errors['80'], label: "errors['80']", hex: "#8F000A"},
+                          {color: errors.dark, label: "errors.dark = errors['70']", hex: "#B4000C"},
+                          {color: errors['60'], label: "errors['60']", hex: "#D10411"},
+                          {color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+                          {color: errors['40'], label: "errors['40']", hex: "#F35C66", labelColor: errors.darkest},
+                          {color: errors.light, label: "errors.light = errors['30']", hex: "#FBA3A9", labelColor: errors.darkest},
+                          {color: errors['20'], label: "errors['20']", hex: "#FDCACD", labelColor: errors.darkest},
+                          {color: errors.lightest, label: "errors.lightest = errors['10']", hex: "#FFF2F3", labelColor: errors.darkest},
+                        ]
+                      } 
+                    />
+
+                    {DemoCodeBlock({code:
+    `<ColorsBlock colors={
+      [
+        {highlighted: true, color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+        {color: errors.darkest, label: "errors.darkest = errors['90']", hex: "#660007"},
+        {color: errors['80'], label: "errors['80']", hex: "#8F000A"},
+        {color: errors.dark, label: "errors.dark = errors['70']", hex: "#B4000C"},
+        {color: errors['60'], label: "errors['60']", hex: "#D10411"},
+        {color: errors.main, label: "errors.main = errors['50']", hex: "#E52633"},
+        {color: errors['40'], label: "errors['40']", hex: "#F35C66", labelColor: errors.darkest},
+        {color: errors.light, label: "errors.light = errors['30']", hex: "#FBA3A9", labelColor: errors.darkest},
+        {color: errors['20'], label: "errors['20']", hex: "#FDCACD", labelColor: errors.darkest},
+        {color: errors.lightest, label: "errors.lightest = errors['10']", hex: "#FFF2F3", labelColor: errors.darkest},
+      ]
+    }/>`
+                    })}
+                  </div>
+
+                </div>
+                
+
+              </demo.InnerContainer>
+              
+
+            </demo.OuterContainer>
 
             <demo.OuterContainer title="Buttons" id="buttons">   
 
-              <demo.InnerContainer title="Button Variants" id="button-variants">       
+              <demo.InnerContainer title="Button Variants" id="button-variants">  
+                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.</demo.LargeLabel>     
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"top"} mr={10} mt={10} variant="primary" size="huge">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="large">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="medium">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="small">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="primary" size="tiny">Primary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="primary" size="tiny"></IconButton>
+                <ButtonsGroup  style={{display: 'flex', flexDirection: 'row'}}>
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom" mr={10} mt={10} >Primary</IconButton>
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="huge">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="large">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="medium">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="small">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="secondary" size="tiny">Secondary</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top">Primary</IconButton>
+<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom">Primary</IconButton>`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+                    <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="huge">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="large">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="medium">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="small">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="cta" size="tiny">CTA</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="cta" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArowIcon} />`
+                })}
+                  
+                  <ButtonsGroup >
+                    <IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny" />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="huge">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="large">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="medium">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="small">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="error" size="tiny">Error</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="error" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArowIcon} />`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+                    <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="huge">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="large">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="medium">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="small">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="disabled" size="tiny">Disabled</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="disabled" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup >
+                    <IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+                    <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
-                  <ButtonsGroup mb={30}>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="huge">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="large">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="medium">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="small">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} iconPosition={"right"} mr={10} mt={10} variant="text" size="tiny">Borderless</IconButton>
-                    <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="text" size="tiny"></IconButton>
+                  {DemoCodeBlock({code:
+`<IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup>
+                    <IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+                    <IconButton variant="disabled" size="tiny"Icon={icons.ArrowIcon} mr={10} mt={10} />
+                  </ButtonsGroup>
+                  {DemoCodeBlock({code:
+`<IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
+                  <ButtonsGroup>
+                    <IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+                    <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup> 
+                  {DemoCodeBlock({code:
+`<IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} />`
+                })}
+
                 </div>
               </ demo.InnerContainer>
               
@@ -621,31 +1004,124 @@ const App = () => {
                   <IconButton preset="remove" mr={16}/>
                   <IconButton preset="close" mr={16}/>
 
-                  <CancelButton />
+                  <CancelButton mr={16}/>
+                  <DoneButton />
                 </ButtonsGroup>
+                {DemoCodeBlock({code:
+`<IconButton preset="edit"/>
+<IconButton preset="delete" />
+<IconButton preset="add" />
+<IconButton preset="remove" />
+<IconButton preset="close" />
+
+<CancelButton />
+<DoneButton />`
+                })}
+
+                <IconButton Icon={icons.TilesIcon} variant="secondary" size="huge" mr={24}>Tiles</IconButton>
+
+                {/* <PresentationTypeButton presentationType="tiles"></PresentationTypeButton> */}
 
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Links" id="links">
-                <Link block mt={20}>Link</Link>
+                <LinkWithIcon href="" mb={8}>This is a default link</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href="">This is a default link</LinkWithIcon>`})}
+
+                <LinkWithIcon href=""  mb={8} Icon={icons.InfoIcon}>This is a default link with Icon</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href=""  Icon={InfoIcon}>This is a default link with Icon</LinkWithIcon>`})}
+              
+                <LinkWithIcon href="" mb={8} Icon={icons.InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>
+                {DemoCodeBlock({code: `<LinkWithIcon href="" Icon={InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>`})}
+
+                {/* <Link block mt={20}>Link</Link> */}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Radio Buttons" id="radio-buttons">
                 <ButtonsGroup>
-                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} />
-                  <LabeledRadio label="Inctive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
-                  <LabeledRadio label="All" checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+                  <demo.MediumLabel mb={32}>Default LabeledRadio</demo.MediumLabel>
+                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+                  />
+                  <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
+                  <LabeledRadio label="All" radioColor={pink.main} radioHoverColor={pink.light} checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+                  <LabeledRadio disabled label="Disabled unselected" checked={false} />
+                  <LabeledRadio disabled label="Disabled selected" checked={true} />
                 </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+  `<LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+  />
+  <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
+  <LabeledRadio label="All" radioColor={pink.main} radioHoverColor={pink.light} checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
+  <LabeledRadio disabled label="Disabled unselected" checked={false} />
+  <LabeledRadio disabled label="Disabled selected" checked={true} />`
+                })}
+
+                <ButtonsGroup>
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton</demo.MediumLabel>                  
+                  <LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+                  />
+                  <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
+                  <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
+                  <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
+                  <LabeledRadioInButton disabled label="Disabled selected" checked={true} />
+                </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+  `<LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+  />
+  <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
+  <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
+  <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
+  <LabeledRadioInButton disabled label="Disabled selected" checked={true} />`
+                })}
+
+                <ButtonsGroup>
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton with 'flexGrow' prop inside a flex container</demo.MediumLabel>                  
+                  <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
+                    <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+                    />
+                    <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
+                    <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
+                    <LabeledRadioInButton disabled flexGrow label="Disabled unselected" checked={false} />
+                    <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
+                  </div>
+                </ButtonsGroup>
+                {DemoCodeBlock({code: 
+  `<div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
+  <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+  />
+  <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
+  <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
+  <LabeledRadioInButton disabled flexGrow label="Disabled unselected" checked={false} />
+  <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
+</div>`
+                })}
+                
+
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Checkboxes" id="checkboxes">
                 <ButtonsGroup>
-                  <LabeledCheckbox label="Mustard" checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+                  <LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+
                   <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
+
+                  <LabeledCheckbox label="Relish" checked={relish} checkboxColor={pink.main} checkboxHoverColor={pink.light} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleRelish(!relish); }} />
+
+                  <LabeledCheckbox label="Relish" checked={false} disabled />
+
+                  <LabeledCheckbox label="Relish" checked={true} disabled />
+
                 </ButtonsGroup>
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+`<LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
+<LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
+<LabeledCheckbox label="Relish" checked={relish} checkboxColor={pink.main} checkboxHoverColor={pink.light} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleRelish(!relish); }} />
+<LabeledCheckbox label="Relish" checked={false} disabled />
+<LabeledCheckbox label="Relish" checked={true} disabled />`
+                })}
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Toggle" id="toggles">
+              <demo.InnerContainer title="Toggle" id="toggles" noBottomLine>
                 <Toggle stretch mb={10}>
                   <ToggleLink selected stretch pr pl>Active</ToggleLink>
                   <ToggleLink stretch>Inactive</ToggleLink>
@@ -804,7 +1280,36 @@ const App = () => {
                 <br />
               </ demo.InnerContainer>
 
-              <demo.InnerContainer title="Datepicker" id="datepicker" noBottomLine >
+              <demo.InnerContainer title="InputStepper " id="input-stepper">
+                      <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
+                      <InputStepper initialValue={0} />
+                      {DemoCodeBlock({code: `<InputStepper />`})}
+                 
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 1"
+                        initialValue={stepperValue}
+                        min={6}
+                        max={20}
+                        onChange={val => {
+                          console.log({ val });
+                          if (val === null) { return; }
+                          setStepperValue(val);
+                        }}
+                      />
+                      {DemoCodeBlock({code: `<InputStepper label="Label 1" initialNumber={6} min={6} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber of 0 and min of -20, and max of 20</demo.MediumLabel>
+                      <InputStepper label="Label 2" initialValue={0} min={-20} max={20} />
+                      {DemoCodeBlock({code: `<InputStepper label="Label 2" initialNumber={0} min={-20} max={20}/>`})}
+
+                      <demo.MediumLabel mt={48} mb={32}>InputStepper with label and custom width</demo.MediumLabel>
+                      <InputStepper label="Label 3" initialValue={0} width="100%" />
+                      {DemoCodeBlock({code: `<InputStepper label="Label 3" width="100%"/>`})}
+
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Datepicker" id="datepicker" >
                   <Row>
                   <Col xs={3} mr={16}>
                     <Datepicker
@@ -820,6 +1325,168 @@ const App = () => {
                     />
                   </Col>
                 </Row>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Dropdown Button" id="dropdown-button">
+                <Dropdown text="Drop Down" items={
+                  [
+                    {onClick: () => null, content: 'New Contact'},
+                    {onClick: () => null, content: 'New Address'},
+                    {
+                      onClick: () => null,
+                      content: <LabeledCheckbox
+                        label="Mustard"
+                        checked={mustard}
+                        onChange={() => toggleMustard(!mustard)}
+                      />
+                    },
+                  ]
+                }/>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdown" noBottomLine>
+                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
+                  <Row>
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+                  </Row>
+                </Dropdown>
+              </demo.InnerContainer>
+
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Notifications and Indicators" id="notifications-and-indicators">
+              <demo.InnerContainer title="AlertNotification" id="alert-notifications">
+
+              <AlertNotification >This is an info message without a link</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification>This is an info message without a link</AlertNotification>`})}
+              
+
+              <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
+
+              <AlertNotification  href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification href="" linkText="This is custom link">This is an info message with a link using custom text using 'linkText' prop</AlertNotification>`})}
+
+              <AlertNotification alertType="error" href="" learnMore>This is a very short error message!</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification alertType="error" href="" learnMore>This is a very short error message!</AlertNotification>`})}
+
+              <AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>
+              {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>`})}
+                
+                <AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>`})}
+
+                <AlertNotification alertType="error" href="" learnMore >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification alertType="error" href="" learnMore >This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message! This is a very long error message!</AlertNotification>`})}
+
+                <AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>
+                {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>`})}
+                
+
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="LightIndicator" id="light-indicator">
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <div style={{marginRight: '24px'}}>
+                      <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
+                      <LightIndicator name="Marketing integration: Mailchimp " on />
+                      <LightIndicator name="Credit card integration: Stripe" on />
+                      <LightIndicator name="Accounting integration: QuickBooks online" on/>
+                      <LightIndicator name="SAGE not configured" />
+                      <LightIndicator name="Avalara not configured" />
+
+                      {DemoCodeBlock({code: 
+`<LightIndicator name="Marketing integration: Mailchimp " on />
+<LightIndicator name="Credit card integration: Stripe" on />
+<LightIndicator name="Accounting integration: QuickBooks online" on/>
+<LightIndicator name="SAGE not configured" />
+<LightIndicator name="Avalara not configured" />`})}
+                    </div>
+                    
+                    <div style={{marginRight: '24px'}}>
+                      <demo.LargeLabel underline>Large</demo.LargeLabel>
+                      <LightIndicator name="Marketing integration: Mailchimp " on large />
+                      <LightIndicator name="Credit card integration: Stripe" on large/>
+                      <LightIndicator name="Accounting integration: QuickBooks online" on large/>
+                      <LightIndicator name="SAGE not configured" large/>
+                      <LightIndicator name="Avalara not configured" large/>
+                      {DemoCodeBlock({code: 
+`<LightIndicator name="Marketing integration: Mailchimp " on large />
+<LightIndicator name="Credit card integration: Stripe" on large/>
+<LightIndicator name="Accounting integration: QuickBooks online" on large/>
+<LightIndicator name="SAGE not configured" large/>
+<LightIndicator name="Avalara not configured" large/>`})}
+
+                    </div>
+                  </div>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="DefaultStar" id="default-star" noBottomLine>
+                <div style={{display: 'flex', flexWrap: "wrap"}}>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
+                    <DefaultStar />
+                    {DemoCodeBlock({code: `<DefaultStar />`})}
+                  </div>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
+                    <DefaultStar hoverText="Set Default">Test</DefaultStar>
+                    {DemoCodeBlock({code: `<DefaultStar hoverText="Set Default">Test</DefaultStar>`})}
+                  </div>
+                  
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
+                    <DefaultStar width={"200px"}/>
+                    {DemoCodeBlock({code: `<DefaultStar width={"200px"}/>`})}
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
+                    <DefaultStar color={colors.green.main}/>
+                    {DemoCodeBlock({code: `<DefaultStar color={colors.green.main}/>`})}
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
+                    <DefaultStar initialSelected={true} />
+                    {DemoCodeBlock({code: `<DefaultStar initialSelected={true} />`})}
+                    
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
+                    <DefaultStar forceSelected />
+                    {DemoCodeBlock({code: `<DefaultStar forceSelected />`})}
+                  </div>
+
+                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
+                    <demo.SmallLabel>No<br />Text</demo.SmallLabel>
+                    <DefaultStar noText />
+                    {DemoCodeBlock({code: `<DefaultStar noText />`})}
+                  </div>
+
+                </div>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
+              <demo.InnerContainer title="Popups" id="popups">
+                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
+              </demo.InnerContainer>
+              <demo.InnerContainer title="Side Panels" id="side-panels" noBottomLine>
+                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
               </demo.InnerContainer>
             </demo.OuterContainer>
 
@@ -889,42 +1556,7 @@ const App = () => {
                 onClickView={() => {}}
               />
               </demo.InnerContainer>
-            </demo.OuterContainer>
-
-            <demo.OuterContainer title="Popups and Side Panels" id="popups-and-panels">
-              <demo.InnerContainer >
-                  <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
-                  <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
-                  <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer >
-                <Dropdown text="Drop Down" items={
-                  [
-                    {onClick: () => null, content: 'New Contact'},
-                    {onClick: () => null, content: 'New Address'},
-                  ]
-                }/>
-              </demo.InnerContainer>
-
-              <demo.InnerContainer noBottomLine>
-                <Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
-                  <Row>
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
-                    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
-                  </Row>
-                </Dropdown>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
+            </demo.OuterContainer>    
 
             <demo.OuterContainer title="Loading Bars" id="loading-bars">
               <demo.InnerContainer noBottomLine>
@@ -943,7 +1575,7 @@ const App = () => {
             
             
             <demo.OuterContainer title="Numbers Formatting" id="numbers-formatting">
-              <demo.InnerContainer noBottomLine>
+              <demo.InnerContainer>
                   <Number commas decimalPoints={4} num={334353434.44334}/>
                   <br/>
                   <Number commas decimalPoints={0} num={334353434.44334}/>
@@ -952,77 +1584,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
             
-
-
-            <demo.OuterContainer title="Light Indicator" id="light-indicator">
-              <demo.InnerContainer noBottomLine>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                  <div style={{marginRight: '24px'}}>
-                    <demo.LargeLabel underline>Default=Small</demo.LargeLabel>
-                    <LightIndicator name="Marketing integration: Mailchimp " on />
-                    <LightIndicator name="Credit card integration: Stripe" on />
-                    <LightIndicator name="Accounting integration: QuickBooks online" on/>
-                    <LightIndicator name="SAGE not configured" />
-                    <LightIndicator name="Avalara not configured" />
-                  </div>
-                  <div style={{marginRight: '24px'}}>
-                    <demo.LargeLabel underline>Large</demo.LargeLabel>
-                    <LightIndicator name="Marketing integration: Mailchimp " on large />
-                    <LightIndicator name="Credit card integration: Stripe" on large/>
-                    <LightIndicator name="Accounting integration: QuickBooks online" on large/>
-                    <LightIndicator name="SAGE not configured" large/>
-                    <LightIndicator name="Avalara not configured" large/>
-                  </div>
-                </div>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
             
-            <demo.OuterContainer title="DefaultStar" id="default-star">
-              <demo.InnerContainer noBottomLine>
-                <div style={{display: 'flex', flexWrap: "wrap"}}>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
-                    <DefaultStar />
-                  </div>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
-                    <DefaultStar hoverText="Set Default">Default</DefaultStar>
-                  </div>
-                  
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
-                    <DefaultStar width={"200px"}/>
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Custom<br />color</demo.SmallLabel>
-                    <DefaultStar color={colors.green.main}/>
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
-                    <DefaultStar initialSelected={true} />
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>Force<br />Selected (not clickable)</demo.SmallLabel>
-                    <DefaultStar forceSelected />
-                  </div>
-
-                  <div style={{marginRight: "40px", marginBottom: "40px"}}>
-                    <demo.SmallLabel>No<br />Text</demo.SmallLabel>
-                    <DefaultStar noText />
-                  </div>
-
-                </div>
-              </demo.InnerContainer>
-            </demo.OuterContainer>
-            
-          
-            
-
             <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
@@ -1348,6 +1910,15 @@ const App = () => {
                 />
               </demo.InnerContainer>
 
+              <demo.InnerContainer title="Windowed Table" noBottomLine>
+                <VirtualTableStyles>
+                  <VirtualTable 
+                    columns={tableColumns}
+                    data={tableData}
+                  />
+                </VirtualTableStyles>
+              </demo.InnerContainer>
+
             </demo.OuterContainer>
 
             <demo.OuterContainer title="All Icons" id="icons">
@@ -1438,8 +2009,19 @@ const App = () => {
 
                     <IconsShowcase Icons={[
                     <icons.RadioIcon />,
-                    <icons.RadioIcon selected />
+                    <icons.RadioIcon hover />,
+                    <icons.RadioIcon selected />,
+                    <icons.RadioIcon disabled />,
+                    <icons.RadioIcon selected disabled/>,
                     ]} name="RadioIcon" />
+
+                    <IconsShowcase Icons={[
+                      <icons.CheckboxIcon />,
+                      <icons.CheckboxIcon hover />,
+                      <icons.CheckboxIcon selected />,
+                      <icons.CheckboxIcon disabled />,
+                      <icons.CheckboxIcon selected disabled/>,
+                    ]} name="CheckboxIcon" />
 
                     <IconsShowcase Icons={[<icons.BulletIcon />]} name="BulletIcon"/>
                     <IconsShowcase Icons={[<icons.TilesIcon />]} name="TilesIcon" />

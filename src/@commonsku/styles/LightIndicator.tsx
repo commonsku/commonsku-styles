@@ -7,12 +7,12 @@ import { SizerCss, SizerTypes } from './Sizer';
 import colors from './colors';
 import SVG, { SVGIconProps } from './icons/SvgIcon';
 
-type LightIndicatorLightProps = SVGIconProps & {lit?: boolean; large?: boolean;};
+type LightIndicatorLightProps = SVGIconProps & { lit?: boolean; large?: boolean; };
 export default function LightIndicatorLight({
-    width=10,
-    height=10,
-    lit=false,
-    large=false,
+    width = 10,
+    height = 10,
+    lit = false,
+    large = false,
     ...props
 }: LightIndicatorLightProps) {
 
@@ -21,32 +21,32 @@ export default function LightIndicatorLight({
     const gradientTransform = large ? "matrix(0 8 -8 0 8 8)" : "matrix(0 10 -10 0 10 10)";
 
     const lightID = uniqueId("LightIndicatorLight");
-    
-    const fillOpacity = 
+
+    const fillOpacity =
         lit ? 1 : 0.6;
 
-    const litOrNot = 
-        lit ? <><stop stopColor="#01D374" stopOpacity={0.39} /><stop offset={1} stopColor="#01D374" /></> 
-        : <><stop stopColor="#E4E4E4" stopOpacity={0.39} /><stop offset={1} stopColor="#9D9D9D" /></>;
+    const litOrNot =
+        lit ? <><stop stopColor="#01D374" stopOpacity={0.39} /><stop offset={1} stopColor="#01D374" /></>
+            : <><stop stopColor="#E4E4E4" stopOpacity={0.39} /><stop offset={1} stopColor="#9D9D9D" /></>;
 
     return <SVG width={size} height={size} {...props} >
-        <circle cx={circleSize} cy={circleSize} r={circleSize} fill={`url(#${lightID})`} fillOpacity={fillOpacity}/>
+        <circle cx={circleSize} cy={circleSize} r={circleSize} fill={`url(#${lightID})`} fillOpacity={fillOpacity} />
         <defs>
-        <radialGradient
-            id={lightID}
-            cx={0}
-            cy={0}
-            r={1}
-            gradientUnits="userSpaceOnUse"
-            gradientTransform={gradientTransform}
-        >
-            {litOrNot}
-        </radialGradient>
+            <radialGradient
+                id={lightID}
+                cx={0}
+                cy={0}
+                r={1}
+                gradientUnits="userSpaceOnUse"
+                gradientTransform={gradientTransform}
+            >
+                {litOrNot}
+            </radialGradient>
         </defs>
     </SVG>
 }
 
-type LightIndicatorTextType ={
+type LightIndicatorTextType = {
     LightIndicatorTextColor: boolean;
     large?: boolean;
 }
@@ -68,7 +68,7 @@ const LightIndicatorContainer = styled.div<SharedStyleTypes & SizerTypes>`
     vertical-align: middle;
     align-items: top;
     max-width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     margin-right: 16px;
     ${SharedStyles}
     ${SizerCss}
@@ -77,22 +77,20 @@ const LightIndicatorContainer = styled.div<SharedStyleTypes & SizerTypes>`
 
 type LightIndicatorProps = {
     name: string;
-    on ?: boolean;
+    on?: boolean;
     large?: boolean;
 }
 
 export function LightIndicator({
-    name="Name this Indicator",
-    on=false,
-    large=false,
+    name = "Name this Indicator",
+    on = false,
+    large = false,
     ...props
-}: LightIndicatorProps ) {
+}: LightIndicatorProps) {
     return (
-       <LightIndicatorContainer>
-            <LightIndicatorLight large={large} lit={on} mr={8} mt={8}/>
+        <LightIndicatorContainer {...props}>
+            <LightIndicatorLight large={large} lit={on} mr={8} mt={8} />
             <LightIndicatorText large={large} LightIndicatorTextColor={on} >{name}</LightIndicatorText>
-       </LightIndicatorContainer>
+        </LightIndicatorContainer>
     );
 }
-    
-    
