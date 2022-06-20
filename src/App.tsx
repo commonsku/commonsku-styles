@@ -1332,6 +1332,14 @@ const App = () => {
                   [
                     {onClick: () => null, content: 'New Contact'},
                     {onClick: () => null, content: 'New Address'},
+                    {
+                      onClick: () => null,
+                      content: <LabeledCheckbox
+                        label="Mustard"
+                        checked={mustard}
+                        onChange={() => toggleMustard(!mustard)}
+                      />
+                    },
                   ]
                 }/>
               </demo.InnerContainer>
