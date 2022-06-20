@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
-import { Button, TSize } from './Button';
+import { Button, ButtonVariant, TSize } from './Button';
 import { ChevronIcon } from './icons';
 import { document } from '../utils';
 
@@ -90,6 +90,7 @@ export type DropdownProps = {
     mouseLeaveCallback?: any;
     size?: TSize;
     style?: CSSObject;
+    buttonVariant?: ButtonVariant,
 };
 
 export const Dropdown = ({
@@ -103,6 +104,7 @@ export const Dropdown = ({
     mouseLeaveCallback,
     size,
     style={},
+    buttonVariant,
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
 
@@ -146,7 +148,7 @@ export const Dropdown = ({
                         {icon}
                     </span>
                 :
-                    <Button size={size} cta={Boolean(!primary)} onClick={() => setShowMenu(!showMenu)}>
+                    <Button size={size} cta={Boolean(!primary)} variant={buttonVariant} onClick={() => setShowMenu(!showMenu)}>
                         {text ? text : "Actions"} <ChevronIcon direction="up"  {...iconProps} />
                     </Button>
                 }
