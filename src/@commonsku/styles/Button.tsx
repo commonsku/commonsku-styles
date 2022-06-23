@@ -261,10 +261,10 @@ const Button = styled.button<ButtonProps>`
     border-radius: ${props => props.size && sizes[props.size] ? sizes[props.size].borderRadius : '4px'};
     background: ${({ secondary, cta, ...props }) => 
       secondary ? "transparent" : 
-      cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)
+      cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.teal.main)
     };
     color: ${props => props.secondary ? getThemeColor(props, 'primary', colors.primary) : "white"};
-    border-color: ${props => props.cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.primary)};
+    border-color: ${props => props.cta ? getThemeColor(props, 'cta', colors.cta) : getThemeColor(props, 'primary', colors.teal.main)};
     font-size: ${getSizeStyle('font-size', '1rem')};
     line-height: ${getSizeStyle('line-height', '1.5rem')};
     padding: ${p => getSizeStyle('padding', '12px 25px')};
@@ -288,7 +288,7 @@ const Button = styled.button<ButtonProps>`
       cursor: default;
       opacity: 0.5;
     }
-    ${p => css(p.variant ? getVariantStyles(p, p.variant): {})}
+    ${p => getVariantStyles(p, p.variant || 'primary')}
     ${SharedStyles}
     ${SizerCss}
   }

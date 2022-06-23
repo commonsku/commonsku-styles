@@ -44,7 +44,7 @@ type StylesPageProps = React.PropsWithChildren<RandomProps> & {
 };
 
 export default function NavAndPage({
-    initiallyOpened=false,
+    initiallyOpened=true,
     children,
 }:StylesPageProps ){
 

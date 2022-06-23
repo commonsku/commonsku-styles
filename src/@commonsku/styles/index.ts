@@ -46,9 +46,8 @@ export { default as AlertNotification } from './AlertNotification';
 export { default as LinkWithIcon } from './LinkWithIcon';
 export { default as InputStepper } from './InputStepper';
 export { default as NumberInput } from './NumberInput';
-
-
-
+export { default as VirtualTable } from './tables/VirtualTable';
+export { default as VirtualTableStyles } from './tables/VirtualTableStyles';
 
 export * from './icons'
 export * from './Theme'

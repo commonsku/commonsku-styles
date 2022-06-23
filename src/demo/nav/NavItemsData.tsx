@@ -15,6 +15,8 @@ export const NavItems = [
     },{
         name: 'Buttons', 
         links: [
+            {title: 'Button Component', to: '#button-component' },
+            {title: 'IconButton Component', to: '#iconbutton-component' },
             {title: 'Button Variants', to: '#button-variants' },
             {title: 'Button Presets', to: '#button-presets' },
             {title: 'Links', to: '#links' },
