@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { get } from 'lodash';
-import { getThemeColor, fontStyles} from './Theme';
+import { getThemeColor, fontStyles, colors} from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 
 export const toggleSizes = {
@@ -54,7 +54,7 @@ const Wrapper = styled.div<{size?: ToggleSize}>`
 
 const Container = styled.div<{stretch?:boolean, size?: ToggleSize }&SharedStyleTypes>`
   &&& {
-    background: ${props => getThemeColor(props, 'teal[20]')};
+    background: ${props => getThemeColor(props, 'teal.20', colors.teal['20'])};
     border-radius: 50px;
     display: flex;
     justify-content: space-between;
@@ -75,8 +75,8 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean, size?: Toggle
     width: ${props => props.stretch? "50%" : "auto"};
     justify-content: center;
     cursor: pointer;
-    background-color: ${props => props.selected ? getThemeColor(props, 'teal.main') : getThemeColor(props, 'teal[20]') };
-    color:            ${props => props.selected ? "white" : getThemeColor(props, 'teal.main') };
+    background-color: ${props => props.selected ? getThemeColor(props, 'teal.main', colors.teal.main) : getThemeColor(props, 'teal.20', colors.teal['20']) };
+    color: ${props => props.selected ? "white" : getThemeColor(props, 'teal.main', colors.teal.main) };
     ${SharedStyles}
   }`
 
