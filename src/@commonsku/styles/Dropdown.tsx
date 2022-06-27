@@ -1,9 +1,9 @@
-import React, { ReactNode, useEffect, useState, useRef } from 'react';
+import React, { ReactNode, useEffect, useState, useRef, useCallback } from 'react';
 import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
 import { Button, ButtonVariant, TSize } from './Button';
 import { ChevronIcon } from './icons';
-import { document } from '../utils';
+import { document, stripUnit, window } from '../utils';
 
 export const StyledDropdown = styled.div`
 &&& {
@@ -16,9 +16,16 @@ type DropdownContentProps = {
     primary?: boolean,
     underlined?: boolean,
     text?: string,
+    width?: string | number,
+    bordered?: boolean,
 }
 
-export const DropdownItem = styled.div<DropdownContentProps>`
+type DropdownItemProps = {
+    primary?: boolean,
+    underlined?: boolean,
+}
+
+export const DropdownItem = styled.div<DropdownItemProps>`
 &&& {
     color: ${p => getColor('primary')};
     padding: 8px 8px;
@@ -43,8 +50,9 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 &&& {
     display: block;
     position: absolute;
-    background-color: ${p => getColor(p.primary ? 'white' : 'white')};
-    min-width: 160px;
+    background-color: ${p => getColor('white')};
+    min-width: ${p => typeof p.width === 'number' ? p.width+'px' : p.width || '160px'};
+    ${p => p.bordered ? `border: 2px solid ${getColor(!p.primary || p.primary ? 'teal.main' : 'pink.main')};` : ''}
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 8px 8px;
     border-radius: 5px;
@@ -90,7 +98,23 @@ export type DropdownProps = {
     mouseLeaveCallback?: any;
     size?: TSize;
     style?: CSSObject;
-    buttonVariant?: ButtonVariant,
+    buttonVariant?: ButtonVariant;
+    width?: string | number;
+    bordered?: boolean;
+    onToggleMenu?: (value: boolean) => void;
+};
+
+const getContentStyle = (width: string| number, rootElem: HTMLSpanElement | null, buttonElem: HTMLButtonElement | null) => {
+    if (!rootElem || !buttonElem) { return {}; }
+    const rect = rootElem.getBoundingClientRect();
+    const buttonRect = buttonElem.getBoundingClientRect();
+    const offset = window.innerWidth - (rect.x + rect.width);
+    if (offset < stripUnit(width)) {
+        return {
+            marginLeft: '-' + Math.abs(stripUnit(width) - buttonRect.width) + 'px',
+        };
+    }
+    return {};
 };
 
 export const Dropdown = ({
@@ -101,27 +125,37 @@ export const Dropdown = ({
     text,
     icon,
     openMenu=false,
+    onToggleMenu,
     mouseLeaveCallback,
     size,
     style={},
     buttonVariant,
+    width=160,
+    bordered=false,
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
-
     const rootRef = useRef<HTMLSpanElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const [showMenu, setShowMenu] = useState(openMenu);
     const iconProps = {
-        // width: '10px',
         color: getColor(primary ? 'primary100' : 'white'),
         style: {verticalAlign: 'middle', transitionDuration: '.3s', transform: 'rotate(' + ( showMenu ? 0 : 180 ) + 'deg)'},
     };
 
-    const handleClick = (e: Event) => {
+    const handleToggleMenu = useCallback((value = null) => {
+        setShowMenu(s => {
+            const newValue = value !== null ? value : !s;
+            onToggleMenu && onToggleMenu(newValue);
+            return newValue;
+        });
+    }, [onToggleMenu]);
+
+    const handleClick = useCallback((e: Event) => {
         if (rootRef.current?.contains(e.target as Node)) {
           return;
         }
-        setShowMenu(false);
-    };
+        handleToggleMenu(false);
+    }, [handleToggleMenu]);
 
     useEffect(() => {
         if(items) {
@@ -131,26 +165,33 @@ export const Dropdown = ({
                 document.removeEventListener("mousedown", handleClick);
             };
         }
-    }, [items]);
+    }, [items, handleClick]);
 
+    const contentStyle = getContentStyle(width, rootRef.current, buttonRef.current);
     return (
         <span ref={rootRef} {...props} style={style} onMouseLeave={() => { 
-            setShowMenu(false); 
-            if(mouseLeaveCallback) { 
+            handleToggleMenu(false);
+            if(mouseLeaveCallback) {
                 mouseLeaveCallback()
             }
         }}>
             <StyledDropdown>
                 {icon ?
-                    <span onClick={() => setShowMenu(!showMenu)}>
+                    <span onClick={() => handleToggleMenu(!showMenu)}>
                         {icon}
                     </span>
                 :
-                    <Button size={size} cta={Boolean(!primary)} variant={buttonVariant} onClick={() => setShowMenu(!showMenu)}>
+                    <Button
+                        size={size}
+                        cta={Boolean(!primary)}
+                        variant={buttonVariant}
+                        onClick={() => handleToggleMenu(!showMenu)}
+                        ref={buttonRef}
+                    >
                         {text ? text : "Actions"} <ChevronIcon direction="up"  {...iconProps} />
                     </Button>
                 }
-                {showMenu && <DropDownContent underlined={underlined} primary={primary}>
+                {showMenu && <DropDownContent style={contentStyle} underlined={underlined} primary={primary} width={width} bordered={bordered}>
                     {items && items.map((item, i) => {
                         return item && <DropdownItem key={'dropdown-item-'+i}
                             {...item.props}

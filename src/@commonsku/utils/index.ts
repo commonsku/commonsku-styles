@@ -84,3 +84,17 @@ export const document = ssr.document;
   if (isNaN(val)) { return null; }
   return val;
 };
+
+// (+|-)100(px|em|rem|...) => px|em|rem|...
+export const getUnit = (measurement: string|number) => {
+  if (typeof measurement !== "string") {
+    return "px";
+  }
+  const matchedMeasurement = measurement.match(/^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/);
+  return matchedMeasurement ? matchedMeasurement[2] : "px";
+};
+
+export const stripUnit = (measurement: string|number) =>
+  (typeof measurement === "number") ? measurement : parseFloat(measurement);
+
+export const parseMeasurement = (measurement: string|number) => stripUnit(measurement) + getUnit(measurement);

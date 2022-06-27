@@ -1376,7 +1376,22 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Dropdown Button" id="dropdown-button">
-                <Dropdown text="Drop Down" items={
+                <Dropdown text="Drop Down" bordered width={200} items={
+                  [
+                    {onClick: () => null, content: 'New Contact'},
+                    {onClick: () => null, content: 'New Address'},
+                    {
+                      onClick: () => null,
+                      content: <LabeledCheckbox
+                        label="Mustard"
+                        checked={mustard}
+                        onChange={() => toggleMustard(!mustard)}
+                      />
+                    },
+                  ]
+                }/>
+                <br /><br />
+                <Dropdown style={{ float: 'right' }} text="Drop Down" bordered width={300} items={
                   [
                     {onClick: () => null, content: 'New Contact'},
                     {onClick: () => null, content: 'New Address'},

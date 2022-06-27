@@ -344,7 +344,7 @@ export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   preset?: ButtonPreset;
   style?: React.CSSProperties;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>;
-export function IconButton(props: IconButtonProps) {
+export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const {
     Icon,
     children,
@@ -397,7 +397,7 @@ export function IconButton(props: IconButtonProps) {
     : getSizeStyle('padding', '12px');
 
   return (
-    <Button size={size} {...newProps} style={{
+    <Button ref={ref} size={size} {...newProps} style={{
       ...(newProps.style || {}),
       padding: buttonPadding({ ...newProps, size: size }),
       ...(iconPosition === "top" || iconPosition === "bottom" ? {
@@ -412,6 +412,6 @@ export function IconButton(props: IconButtonProps) {
       {['right', 'bottom'].includes(iconPosition) ? RenderIcon : null}
     </Button>
   );
-}
+});
 
 export {Button};
