@@ -49,7 +49,8 @@ export const GridItem = styled.div<BaseGridItemProps>(
                 const mediaStyles: CSSObject = (p[`${k}Style`] as CSSObject | undefined) || {};
                 const val = p[k];
                 if (typeof val !== 'undefined' && typeof val !== 'boolean') {
-                    mediaStyles['gridColumn'] = parseMeasurement(val);
+                    const colspan = stripUnit(val);
+                    mediaStyles['gridColumn'] = `span ${colspan} / span ${colspan}`;
                 } else if (val === false) {
                     mediaStyles['display'] = 'none';
                 }
@@ -62,10 +63,11 @@ export const GridItem = styled.div<BaseGridItemProps>(
             params['gridColumn'] = `span ${colSpan} / span ${colSpan}`;
         }
         if (typeof p.xs !== 'undefined' && typeof p.xs !== 'boolean') {
-            params['gridColumn'] = parseMeasurement(p.xs);
+            const colspan = stripUnit(p.xs);
+            params['gridColumn'] = `span ${colspan} / span ${colspan}`;
         } else if (p.xs === false) {
             params['display'] = 'none';
         }
-        return [params, ...styles];
+        return [...styles, params];
     },
 );

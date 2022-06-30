@@ -1997,19 +1997,19 @@ const App = () => {
                   <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
                   <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
 
-                  <GridItem colSpan={2} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
-                  <GridItem style={{ height: 80, background: colors.teal['60'] }}></GridItem>
-                  <GridItem style={{ height: 80, background: colors.teal['60'] }}></GridItem>
-                  
-                  <GridItem style={{ height: 80, background: colors.teal['70'] }}></GridItem>
-                  <GridItem style={{ height: 80, background: colors.teal['70'] }}></GridItem>
-                  <GridItem colSpan={2} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem md={1} colSpan={2} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem md={1} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem md={2} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
 
-                  <GridItem colSpan={3} style={{ height: 80, background: 'teal' }}></GridItem>
-                  <GridItem style={{ height: 80, background: 'teal' }}></GridItem>
-                  
-                  <GridItem style={{ height: 80, background: colors.teal['80'] }}></GridItem>
-                  <GridItem colSpan={3} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
+                  <GridItem md={1} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem md={2} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem colSpan={2} md={1} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+
+                  <GridItem colSpan={3} md={1} style={{ height: 80, background: 'teal' }}></GridItem>
+                  <GridItem md={3} style={{ height: 80, background: 'teal' }}></GridItem>
+
+                  <GridItem md={3} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
+                  <GridItem colSpan={3} md={1} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
 
                   <GridItem colSpan={4} style={{ height: 80, background: colors.teal['90'] }}></GridItem>
                 </Grid>
@@ -2030,37 +2030,37 @@ const App = () => {
                     <div style={{ height: 80, background: colors.teal['40'] }}></div>
                   </Col>
 
-                  <Col totalCols={4} xs={2} padded>
+                  <Col totalCols={4} xs={2} md={1} padded>
                     <div style={{ height: 80, background: colors.teal['60'] }}></div>
                   </Col>
-                  <Col totalCols={4} xs={1} padded>
+                  <Col totalCols={4} xs={1} md={1} padded>
                     <div style={{ height: 80, background: colors.teal['60'] }}></div>
                   </Col>
-                  <Col totalCols={4} xs={1} padded>
+                  <Col totalCols={4} xs={1} md={2} padded>
                     <div style={{ height: 80, background: colors.teal['60'] }}></div>
                   </Col>
 
-                  <Col totalCols={4} xs={1} padded>
+                  <Col totalCols={4} xs={1} md={1} padded>
                     <div style={{ height: 80, background: colors.teal['70'] }}></div>
                   </Col>
-                  <Col totalCols={4} xs={1} padded>
+                  <Col totalCols={4} xs={1} md={2} padded>
                     <div style={{ height: 80, background: colors.teal['70'] }}></div>
                   </Col>
-                  <Col totalCols={4} xs={2} padded>
+                  <Col totalCols={4} xs={2} md={1} padded>
                     <div style={{ height: 80, background: colors.teal['70'] }}></div>
                   </Col>
 
-                  <Col totalCols={4} xs={3} padded>
+                  <Col totalCols={4} xs={3} md={1} padded>
                     <div style={{ height: 80, background: 'teal' }}></div>
                   </Col>
-                  <Col totalCols={4} xs={1} padded>
+                  <Col totalCols={4} xs={1} md={3} padded>
                     <div style={{ height: 80, background: 'teal' }}></div>
                   </Col>
-                  
-                  <Col totalCols={4} xs={1} padded>
+
+                  <Col totalCols={4} xs={1} md={3} padded>
                     <div style={{ height: 80, background: colors.teal['80'] }}></div>
                   </Col>
-                  <Col totalCols={4} xs={3} padded>
+                  <Col totalCols={4} xs={3} md={1} padded>
                     <div style={{ height: 80, background: colors.teal['80'] }}></div>
                   </Col>
 
