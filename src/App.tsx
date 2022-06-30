@@ -1997,19 +1997,19 @@ const App = () => {
                   <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
                   <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
 
-                  <GridItem md={1} colSpan={2} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
-                  <GridItem md={1} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
-                  <GridItem md={2} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem colSpan={{ xs: 2, md: 1 }} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem colSpan={{ md: 1 }} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem colSpan={{ md: 2 }} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
 
-                  <GridItem md={1} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
-                  <GridItem md={2} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
-                  <GridItem colSpan={2} md={1} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem colSpan={{ md: 1 }} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem colSpan={{ md: 2 }} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem colSpan={{ xs: 2, md: 1 }} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
 
-                  <GridItem colSpan={3} md={1} style={{ height: 80, background: 'teal' }}></GridItem>
-                  <GridItem md={3} style={{ height: 80, background: 'teal' }}></GridItem>
+                  <GridItem colSpan={{ xs: 3,md: 1 }} style={{ height: 80, background: 'teal' }}></GridItem>
+                  <GridItem colSpan={[null, null, 3]} style={{ height: 80, background: 'teal' }}></GridItem>
 
-                  <GridItem md={3} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
-                  <GridItem colSpan={3} md={1} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
+                  <GridItem colSpan={{ md: 3 }} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
+                  <GridItem colSpan={[3, null, 1]} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
 
                   <GridItem colSpan={4} style={{ height: 80, background: colors.teal['90'] }}></GridItem>
                 </Grid>

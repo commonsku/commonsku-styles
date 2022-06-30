@@ -28,5 +28,21 @@ export const media: {[key: string]: ((value: string | CSSObject) => string)} = {
     `,
 };
 
+export const sizeMediaWith = {
+    xs: '0px',
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+};
+
+export const sizeMedia = {
+    xs: `@media only screen and (min-width: ${sizeMediaWith.xs})`,
+    sm: `@media only screen and (min-width: ${sizeMediaWith.sm})`,
+    md: `@media only screen and (min-width: ${sizeMediaWith.md})`,
+    lg: `@media only screen and (min-width: ${sizeMediaWith.lg})`,
+    xl: `@media only screen and (min-width: ${sizeMediaWith.xl})`,
+};
+
 export type TSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export const sizes: TSize[] = Object.keys(media) as TSize[];
