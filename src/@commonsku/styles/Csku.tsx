@@ -1,4 +1,4 @@
-import styled, { CSSObject, SimpleInterpolation } from 'styled-components';
+import styled, { CSSObject, SimpleInterpolation, StyledComponent, StyledComponentProps } from 'styled-components';
 import { parseMeasurement, stripUnit } from '../utils';
 import { parseResponsiveValue, ResponseValue } from '../utils/styled';
 
@@ -40,7 +40,7 @@ const stylesTransformMap = {
   sx: (v: CSSObject) => v,
 };
 
-export type CskuProps = {
+export type BaseCskuProps = {
   mx?: ResponseValue<string | number>;
   my?: ResponseValue<string | number>;
   px?: ResponseValue<string | number>;
@@ -55,7 +55,9 @@ export type CskuProps = {
   style?: ResponseValue<CSSObject>;
   sx?: ResponseValue<CSSObject>;
 };
-const Csku = styled.div<CskuProps>(
+
+export type CskuProps = StyledComponent<"div", any, BaseCskuProps, never>;
+const Csku = styled.div<BaseCskuProps>(
   p => {
     let stylesObj: CSSObject = {};
     const stylesArr: SimpleInterpolation[] = [];
