@@ -1,4 +1,4 @@
-import { parseResponsiveValue, ResponseValue } from '@commonsku/utils/styled';
+import { parseResponsiveValue, ResponseValue } from '../utils/styled';
 import React from 'react';
 import styled, { CSSObject, FlattenSimpleInterpolation, SimpleInterpolation } from 'styled-components';
 import { parseMeasurement, stripUnit } from '../utils';
