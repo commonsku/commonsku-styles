@@ -28,7 +28,16 @@ export type VirtualTableProps = {
   minWidth?: number;
   maxWidth?: number;
   defaultSort?: SortingRule<string>;
-  onClickRow?: (row?: object, index?: number, cell?: Cell<Record<string, unknown>, any>) => void;
+  onClickRow?: (
+    row?: object,
+    index?: number,
+    data?: {
+      isScrolling: boolean;
+      cell: Cell<Record<string, unknown>, any>;
+      resetList: (index?: number) => void;
+      toggleAllRowsExpanded: (value?: boolean | undefined) => void;
+    }
+  ) => void;
   onScroll?: ((props: ListOnScrollProps) => any);
   onUpdateData?: (...args: any) => void;
   useTableProps?: object;
@@ -190,7 +199,7 @@ const VirtualTable = (props: VirtualTableProps) => {
               return (
                 <div
                   {...{...cellProps}}
-                  onClick={() => (onClickRow ? onClickRow(cell.row.original, index, cell) : null)}
+                  onClick={() => (onClickRow ? onClickRow(cell.row.original, index, { cell, isScrolling, resetList, toggleAllRowsExpanded }) : null)}
                   className="td"
                 >
                   {cell.render("Cell", { isScrolling, resetList, toggleAllRowsExpanded })}
