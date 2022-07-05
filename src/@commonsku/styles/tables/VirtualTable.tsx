@@ -5,6 +5,7 @@ import {
   useFlexLayout,
   SortingRule,
   Column,
+  Cell,
   useExpanded,
 } from 'react-table';
 import { VariableSizeList, ListOnScrollProps } from 'react-window';
@@ -27,7 +28,7 @@ export type VirtualTableProps = {
   minWidth?: number;
   maxWidth?: number;
   defaultSort?: SortingRule<string>;
-  onClickRow?: (row?: object, index?: number) => void;
+  onClickRow?: (row?: object, index?: number, cell?: Cell<Record<string, unknown>, any>) => void;
   onScroll?: ((props: ListOnScrollProps) => any);
   onUpdateData?: (...args: any) => void;
   useTableProps?: object;
@@ -189,7 +190,7 @@ const VirtualTable = (props: VirtualTableProps) => {
               return (
                 <div
                   {...{...cellProps}}
-                  onClick={() => (onClickRow ? onClickRow(cell.row.original, index) : null)}
+                  onClick={() => (onClickRow ? onClickRow(cell.row.original, index, cell) : null)}
                   className="td"
                 >
                   {cell.render("Cell", { isScrolling, resetList, toggleAllRowsExpanded })}
