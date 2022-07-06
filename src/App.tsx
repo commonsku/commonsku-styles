@@ -1171,15 +1171,89 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Toggle" id="toggles" noBottomLine>
-                <Toggle stretch mb={10}>
-                  <ToggleLink selected stretch pr pl>Active</ToggleLink>
-                  <ToggleLink stretch>Inactive</ToggleLink>
-                </Toggle>
-                <br/><br/>
-                <Toggle ml={10}>
-                  <ToggleLink selected stretch pr={20} pl={20}>Active</ToggleLink>
-                  <ToggleLink stretch pr={20} pl={20}>Inactive</ToggleLink>
-                </Toggle>
+
+                <div style={{display: 'flex', flexDirection: 'column', marginBottom: '24px'}}>
+                  <demo.SmallLabel>Small Toggle</demo.SmallLabel>
+                  <Toggle size="small" mr={24} mb={24}>
+                    <ToggleLink selected >Active</ToggleLink>
+                    <ToggleLink>Inactiveeeeeeeee</ToggleLink>
+                  </Toggle>
+                  {DemoCodeBlock({code: 
+`<Toggle size="small">
+<ToggleLink selected >Active</ToggleLink>
+<ToggleLink>Inactiveeeeeeeee</ToggleLink>
+</Toggle>
+`})}
+                  <demo.SmallLabel>Medium Toggle</demo.SmallLabel>
+                  <Toggle size="medium" mr={24} mb={24}>
+                    <ToggleLink >Active</ToggleLink>
+                    <ToggleLink selected >Inactive</ToggleLink>
+                  </Toggle>
+                  {DemoCodeBlock({code:
+`<Toggle size="medium">
+<ToggleLink>Active</ToggleLink>
+<ToggleLink selected>Inactive</ToggleLink>
+</Toggle>
+`
+})}
+                  <demo.SmallLabel>Small Toggle</demo.SmallLabel>
+                  <Toggle size="large" mr={24} mb={24}>
+                    <ToggleLink selected >Active</ToggleLink>
+                    <ToggleLink >Inactive</ToggleLink>
+                  </Toggle>
+                  {DemoCodeBlock({code:
+`<Toggle size="large">
+<ToggleLink selected>Active</ToggleLink>
+<ToggleLink>Inactive</ToggleLink>
+</Toggle>
+`
+})}
+                </div>
+
+                <div style={{display: 'flex', flexDirection: 'column', marginBottom: '24px'}}>
+                  <demo.SmallLabel>Small Toggle with stretch prop</demo.SmallLabel>
+                  <Toggle size="small" stretch mr={24} mb={24}>
+                    <ToggleLink selected stretch >Active</ToggleLink>
+                    <ToggleLink stretch >Inactive</ToggleLink>
+                  </Toggle>
+                  {DemoCodeBlock({code: 
+`<Toggle size="small" stretch>
+<ToggleLink selected stretch>Active</ToggleLink>
+<ToggleLink stretch>Inactive</ToggleLink>
+</Toggle>
+`
+})}
+
+                  <demo.SmallLabel>Medium Toggle with stretch prop</demo.SmallLabel>
+                  <Toggle size="medium" stretch mr={24} mb={24}>
+                    <ToggleLink selected stretch>Active</ToggleLink>
+                    <ToggleLink stretch>Inactive</ToggleLink>
+                  </Toggle>
+                  {DemoCodeBlock({code: 
+`
+<Toggle size="medium" stretch>
+  <ToggleLink selected stretch>Active</ToggleLink>
+  <ToggleLink stretch>Inactive</ToggleLink>
+</Toggle>
+`
+})}
+
+                  <demo.SmallLabel>Large Toggle with stretch prop</demo.SmallLabel>
+                  <Toggle size="large" stretch mr={24} mb={24}>
+                    <ToggleLink selected stretch >Active</ToggleLink>
+                    <ToggleLink stretch >Inactive</ToggleLink>
+                  </Toggle>
+                  {DemoCodeBlock({code:
+`<Toggle size="large" stretch>
+  <ToggleLink selected stretch>Active</ToggleLink>
+  <ToggleLink stretch>Inactive</ToggleLink>
+</Toggle>
+`
+})}
+                </div>
+
+                
+
               </demo.InnerContainer>
 
             </demo.OuterContainer>
@@ -2319,6 +2393,21 @@ const App = () => {
                   ]} name="StarIcon"/>
 
                   <IconsShowcase Icons={[<icons.MenuIcon />]} name="MenuIcon"/>
+
+                  <div style={{}}>
+                    <IconsShowcase Icons={[
+                      <icons.CommentIcon />,
+                      <icons.CommentIcon number={3}/>,
+                      <icons.CommentIcon number={99}/>,
+                      <icons.CommentIcon number={14234}/>,
+                    ]} name="CommentIcon"/>
+                    {DemoCodeBlock({code:
+`<CommentIcon />,
+<CommentIcon number={3}/>,
+<CommentIcon number={99}/>,
+<CommentIcon number={14234}/>
+  `})}
+                  </div>
 
                   <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
                   <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
