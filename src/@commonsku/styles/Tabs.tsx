@@ -2,6 +2,7 @@ import _ from 'lodash'
 import styled, { css } from 'styled-components'
 import React, { Component } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+import colors from './colors';
 
 const tabSizes = {
   small: css`
@@ -28,11 +29,18 @@ const TabBar = styled.ul<{padded?: boolean} & SharedStyleTypes>`
   }
 `
 
-const Tab = styled.li<{selected?: boolean, size?: keyof typeof tabSizes} & SharedStyleTypes>`
+type Tabprops = {
+  selected?: boolean;
+  size?: keyof typeof tabSizes;
+  variant?: 'primary' | 'secondary';
+} & SharedStyleTypes;
+const Tab = styled.li<Tabprops>`
   &&& {
     cursor: pointer;
     display: inline-block;
-    border-bottom: ${props => props.selected ? "5px solid #02c0da" : "none"};
+    border-bottom: ${props => props.selected
+        ? `5px solid ${props.variant === 'secondary' ? colors.secondary1.main : colors.primary1.main}`
+        : "none"};
     color: #222222;
     opacity: ${props => props.selected ? "1" : ".5"};
     list-style: none;
