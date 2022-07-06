@@ -3,7 +3,7 @@ import SVG, { SVGIconProps } from './SvgIcon';
 import { green } from '../colors';
 
 type AddIconProps = SVGIconProps;
-export default function AddIcon({
+export default function CompletedCheckmarkIcon({
     color=green.main,
     size="medium",
     altText="Completed checkmark",
