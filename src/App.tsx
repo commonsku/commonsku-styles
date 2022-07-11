@@ -914,6 +914,12 @@ const App = () => {
                   <IconButton variant="text" mr={24} mb={24}>Text</IconButton>
                   <IconButton variant="error" mr={24} mb={24}>Error</IconButton>
                   <IconButton variant="disabled" mr={24} mb={24}>Disabled</IconButton>
+                  <IconButton
+                    Icon={icons.XIcon}
+                    variant="text-error"
+                    mr={24}
+                    mb={24}
+                  />
                 </div>
 
                 {DemoCodeBlock({code:

@@ -166,12 +166,13 @@ type BaseLabelInputProps = InputProps & {
   label: string,
   name?: string,
   labelOnTop?: boolean,
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>,
 } & SharedStyleTypes;
 type LabeledInputPropType = React.InputHTMLAttributes<HTMLInputElement> & BaseLabelInputProps;
 export const LabeledInput =
   React.forwardRef<HTMLInputElement, LabeledInputPropType>(
-    ({label, name, required, labelOnTop=false, ...props}, ref) => (
-      <div>
+    ({label, name, required, labelOnTop=false, wrapperProps={}, ...props}, ref) => (
+      <div {...wrapperProps}>
         <Label
           htmlFor={name}
           style={{

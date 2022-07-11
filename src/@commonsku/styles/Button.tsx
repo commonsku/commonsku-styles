@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { get } from 'lodash';
 import styled, { css, CSSObject } from 'styled-components'
 import { getThemeColor, themeOptions } from './Theme';
@@ -93,6 +93,7 @@ export type ButtonVariant = 'primary'
   | 'disabled'
   | 'text'
   | 'primary-light'
+  | 'text-error'
   // | 'cta-outline'
   // | 'error-outline'
   // | 'disabled-outline';
@@ -250,6 +251,24 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
             outlineColor: white,
           },
         };
+      case 'text-error':
+        return {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: 'transparent',
+          background: 'transparent',
+          color: error,
+          ':hover': {
+            borderWidth: 3,
+            borderStyle: 'solid',
+            borderColor: error,
+            background: error,
+            color: white,
+          },
+          ':focus-visible': {
+            outlineColor: 'transparent',
+          },
+        };
     default:
       return {};
   }
@@ -353,38 +372,45 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((
     iconProps={},
     ...newProps
   } = getPropsByPresets(props, props.preset);
+  const [hovering, setHovering] = useState(false);
 
-  const variantStyles = newProps.variant
-    ? getVariantStyles(props, newProps.variant)
-    : { color: '#fff' };
+  const variantStyles = React.useMemo(() => {
+    return newProps.variant
+      ? getVariantStyles(props, newProps.variant)
+      : { color: '#fff' };
+  }, [newProps, props]);
 
-  const RenderIcon = React.useMemo(() => {
-    if (!Icon) { return null; }
+  // const RenderIcon = React.useMemo(() => {
+  //   if (!Icon) { return null; }
 
-    let btnSize = "small";
-    if (size !== "tiny" && size !== "small") {
-      btnSize = "medium";
-    }
-    const iconNewProps = {
-      ...iconProps,
-      size: btnSize,
-      color: variantStyles.color || '#fff',
-      style: {
-        verticalAlign: 'top',
-        paddingRight: children && iconPosition === "left" ? '5px' : '0px',
-        paddingLeft: children && iconPosition === "right" ? '5px' : '0px',
-        boxSizing: 'content-box',
-        ...(iconProps.style || {}),
-      },
-    };
-    if (typeof Icon !== 'function') {
-      return React.cloneElement(Icon, iconNewProps);
-    }
+  //   let btnSize = "small";
+  //   if (size !== "tiny" && size !== "small") {
+  //     btnSize = "medium";
+  //   }
+  //   const hoverColor = get(variantStyles, [':hover', 'color']) || '';
+  //   const iconNewProps = {
+  //     ...iconProps,
+  //     size: btnSize,
+  //     color: variantStyles.color || '#fff',
+  //     style: {
+  //       verticalAlign: 'top',
+  //       paddingRight: children && iconPosition === "left" ? '5px' : '0px',
+  //       paddingLeft: children && iconPosition === "right" ? '5px' : '0px',
+  //       boxSizing: 'content-box',
+  //       ...(iconProps.style || {}),
+  //       ':hover': {
+  //         ...(hoverColor ? { color: hoverColor } : {}),
+  //       },
+  //     },
+  //   };
+  //   if (typeof Icon !== 'function') {
+  //     return React.cloneElement(Icon, iconNewProps);
+  //   }
 
-    return (
-      <Icon {...iconNewProps} />
-    );
-  }, [variantStyles.color, Icon, size, iconPosition, iconProps, children]);
+  //   return (
+  //     <Icon {...iconNewProps} />
+  //   );
+  // }, [variantStyles, Icon, size, iconPosition, iconProps, children]);
 
   const hasChildren = (
     (children && children !== null && children !== undefined)
@@ -397,20 +423,91 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((
     : getSizeStyle('padding', '12px');
 
   return (
-    <Button ref={ref} size={size} {...newProps} style={{
-      ...(newProps.style || {}),
-      padding: buttonPadding({ ...newProps, size: size }),
-      ...(iconPosition === "top" || iconPosition === "bottom" ? {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+    <Button
+      ref={ref}
+      size={size}
+      {...newProps}
+      style={{
+        ...(newProps.style || {}),
+        padding: buttonPadding({ ...newProps, size: size }),
+        ...(iconPosition === "top" || iconPosition === "bottom" ? {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
 
-      } : {}),
-    }}>
-      {['left', 'top'].includes(iconPosition) ? RenderIcon : null}
+        } : {}),
+      }}
+      onMouseOver={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+    >
+      {['left', 'top'].includes(iconPosition) && <ButtonIcon
+        Icon={Icon}
+        size={size}
+        variantStyles={variantStyles}
+        iconProps={iconProps}
+        iconPosition={iconPosition}
+        hasChildren={!!hasChildren}
+        isHovering={hovering}
+      />}
       {children}
-      {['right', 'bottom'].includes(iconPosition) ? RenderIcon : null}
+      {['right', 'bottom'].includes(iconPosition) && <ButtonIcon
+        Icon={Icon}
+        size={size}
+        variantStyles={variantStyles}
+        iconProps={iconProps}
+        iconPosition={iconPosition}
+        hasChildren={!!hasChildren}
+        isHovering={hovering}
+      />}
     </Button>
+  );
+});
+
+type ButtonIconProps = {
+  Icon?: TButtonIcon | React.ReactElement<IconFuncProps>;
+  iconProps?: {[key: string]: any};
+  iconPosition?: 'left' | 'right' | 'top' | 'bottom';
+  size?: TSize;
+  variantStyles: CSSObject;
+  hasChildren?: boolean;
+  isHovering?: boolean;
+};
+const ButtonIcon = React.forwardRef<SVGElement, ButtonIconProps>((props, ref) => {
+  const {
+    Icon,
+    size,
+    variantStyles,
+    iconProps={},
+    iconPosition,
+    hasChildren,
+    isHovering,
+  } = props;
+  if (!Icon) { return null; }
+
+  let btnSize = "small";
+  if (size !== "tiny" && size !== "small") {
+    btnSize = "medium";
+  }
+  const hoverColor = get(variantStyles, [':hover', 'color']) || '';
+  const iconNewProps = {
+    ...iconProps,
+    size: btnSize,
+    color: hoverColor && isHovering ? hoverColor : (variantStyles.color || '#fff'),
+    style: {
+      verticalAlign: 'top',
+      paddingRight: hasChildren && iconPosition === "left" ? '5px' : '0px',
+      paddingLeft: hasChildren && iconPosition === "right" ? '5px' : '0px',
+      boxSizing: 'content-box',
+      ...(iconProps?.style || {}),
+    },
+  };
+
+  if (typeof Icon !== 'function') {
+    return React.cloneElement(Icon, iconNewProps);
+  }
+
+  return (
+    <Icon {...iconNewProps} ref={ref} />
   );
 });
 
