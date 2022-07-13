@@ -79,18 +79,20 @@ type LightIndicatorProps = {
     name: string;
     on?: boolean;
     large?: boolean;
+    textProps?: React.HTMLAttributes<HTMLParagraphElement>;
 }
 
 export function LightIndicator({
     name = "Name this Indicator",
     on = false,
     large = false,
+    textProps = {},
     ...props
 }: LightIndicatorProps) {
     return (
         <LightIndicatorContainer {...props}>
             <LightIndicatorLight large={large} lit={on} mr={8} mt={8} />
-            <LightIndicatorText large={large} LightIndicatorTextColor={on} >{name}</LightIndicatorText>
+            <LightIndicatorText {...textProps} large={large} LightIndicatorTextColor={on} >{name}</LightIndicatorText>
         </LightIndicatorContainer>
     );
 }
