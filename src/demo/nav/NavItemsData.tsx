@@ -1,7 +1,7 @@
-import { OuterContainerArray, InnerContainerArray } from "demo";
+// import { OuterContainerArray, InnerContainerArray } from "demo";
 
-console.log(OuterContainerArray);
-console.log(InnerContainerArray);
+// console.log(OuterContainerArray);
+// console.log(InnerContainerArray);
 
 export const NavItems = [
     {

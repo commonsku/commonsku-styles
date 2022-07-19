@@ -22,7 +22,7 @@ export const Overlay = styled.div`
   }
 `;
 
-const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string}>`
+const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string, padding?: string}>`
   &&& {
     width: ${props => props.width ?? '90%'};
     height: ${props => props.height ?? '75%'}; 
@@ -36,7 +36,7 @@ const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, 
     display: block;
     z-index: 1006;
 
-    padding: 1rem;
+    padding: ${props => props.padding ?? '1rem'};
     border: 1px solid #CCD5DA;
     background-color: #fefefe;
     border-radius: 3px;
@@ -95,14 +95,19 @@ const PopupContainer: React.FC<{}> = ({ children }) => {
 
 export type PopupProps = React.PropsWithChildren<{ 
     header?: React.Component,
+    noHeader?: boolean,
     title?: string|React.Component,
     controls?: Array<React.ReactNode>,
     onClose?: (event?: React.MouseEvent) => void,
+    noCloseButton?: boolean,
     closeOnClickOutside?: boolean,
     closeOnEsc?: boolean,
+    width?: string,
+    height?: string,
+    padding?: string,
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=false, ...props }: PopupProps) => {
+export const Popup = ({ header, noHeader=false, title, controls, children, onClose, noCloseButton=false, closeOnEsc=true, closeOnClickOutside=false, ...props }: PopupProps) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   /* there is a bug where this closes popup involuntarily
@@ -144,13 +149,15 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
   return <PopupContainer>
     <Overlay>
       <PopupWindow className="popup" {...props} ref={ref}>
-          {header ? header : (
+          { noHeader ? null :
+            header ? header : (
               <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
                   <Col style={{textAlign: 'left', alignSelf: 'center'}}>
                       <span className="title">{title}</span>
                   </Col>
                   <Col style={{textAlign: 'right', alignSelf: 'center'}}>
-                      {controls || <Button onClick={onClose}>Close</Button>}
+                      { noCloseButton ? null :
+                        controls || <Button onClick={onClose}>Close</Button>}
                   </Col>
               </PopupHeader>
           )}
