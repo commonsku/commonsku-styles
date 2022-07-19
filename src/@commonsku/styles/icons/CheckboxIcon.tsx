@@ -2,7 +2,7 @@ import React from 'react';
 import { teal, neutrals } from '../colors';
 import SVG, { SVGIconProps } from './SvgIcon';
 
-type CheckboxIconProps = SVGIconProps & {
+export type CheckboxIconProps = SVGIconProps & {
     selected?: boolean, 
     hover?: boolean, 
     hoverColor?: string;
