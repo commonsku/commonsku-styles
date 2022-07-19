@@ -1,11 +1,11 @@
 import React from 'react';
 import { get } from 'lodash';
-import styled, { css, CSSObject } from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
 import { getThemeColor, themeOptions } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
 import colors from './colors';
-import { EditIcon, TrashIcon, AddIcon, SubtractIcon, XIcon } from './icons';
+import { EditIcon, TrashIcon, AddIcon, SubtractIcon, XIcon, DragIcon } from './icons';
 
 /*
 
@@ -84,6 +84,7 @@ export type ButtonPreset = 'edit'
 | 'add' 
 | 'remove'
 | 'close'
+| 'drag'
 ;
 
 export type ButtonVariant = 'primary'
@@ -326,6 +327,13 @@ const presets: {[key: string]: IconButtonProps} = {
   close: {
     Icon: XIcon,
     variant: 'secondary'
+  },
+  drag: {
+    Icon: DragIcon,
+    variant: 'text',
+    style: {
+      cursor: 'grab',
+    }
   }
 };
 
@@ -368,7 +376,7 @@ export function IconButton(props: IconButtonProps) {
     const iconNewProps = {
       ...iconProps,
       size: btnSize,
-      color: variantStyles.color || '#fff',
+      color: iconProps.color || variantStyles.color || '#fff',
       style: {
         verticalAlign: 'top',
         paddingRight: children && iconPosition === "left" ? '5px' : '0px',

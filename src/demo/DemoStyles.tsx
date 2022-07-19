@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import { colors, fontStyles } from '../@commonsku/styles/Theme';
-import { SharedStyles, SharedStyleTypes } from '@commonsku/styles';
+import { SharedStyles, SharedStyleTypes } from '../@commonsku/styles/';
 
 export const mainTitle = styled.h1<{ underline?: boolean } & SharedStyleTypes>`
     font-family: ${fontStyles.h1.fontFamily};
@@ -137,11 +137,11 @@ export const OuterContainer = ({
   }: ContainerProps) => {
 
 
-   if(props => props.id) {
-      OuterContainerArray.push(props.id)
-    } else {
+  //  if(props => props.id) {
+  //     OuterContainerArray.push(props.id)
+  //   } else {
 
-    };
+  //   };
 
     return (
       <OuterBox className="outer" {...props}>
@@ -160,9 +160,9 @@ export function InnerContainer({
 }: ContainerProps) {
 
 
-  if(props => props.id !== undefined) {
-    InnerContainerArray.push(props.id);
-  } 
+  // if(props => props.id !== undefined) {
+  //   InnerContainerArray.push(props.id);
+  // } 
   
 
   return (<InnerBox className="inner" {...props}>

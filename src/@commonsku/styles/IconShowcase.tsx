@@ -4,6 +4,7 @@ import styled, { css, CSSObject } from 'styled-components'
 import {themeOptions } from './Theme';
 import colors, { primary1 } from './colors';
 import {TButtonIcon} from './Button';
+import { uniqueId } from "lodash";
 
 export const IconContainer = styled.div`
   display:flex;
@@ -90,6 +91,7 @@ export function IconsShowcase({
         <IconBox>
             <IconGroup>
              {Icons.map((Icon, i) => React.cloneElement(Icon, { 
+                key: uniqueId("IconsShowcase"),
                 //  fill: iconColor, 
                 //  color: iconColor,
                  size: size, 

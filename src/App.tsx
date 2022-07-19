@@ -43,6 +43,7 @@ import {
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox, 
     Table, TD, TH, TR, THead, TBody,
+    GridTable, Column,
     Datepicker,
     ErrorBoundary,
     Theme,
@@ -537,7 +538,7 @@ const App = () => {
       >
         Hello from Popup
         <br/>
-        <Select inPopup options={options} value={options[0]} />
+        <Select inPopup options={options} defaultValue={options[0]} />
         <CreatableSelect inPopup options={options} value={options[0]}
           onChange={(newValue: any, actionMeta: any) => {
             console.group('Value Changed');
@@ -571,7 +572,7 @@ const App = () => {
             
             <demo.OuterContainer title="Colors" id="colors">
               <demo.InnerContainer title="Primary Colors" id="primary-colors">
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                   <div style={{marginRight: "24px"}}>
                     <demo.LargeLabel>primary1 = teal<br/>ex: primary1['50'] = teal['50']</demo.LargeLabel>
                     <ColorsBlock colors={
@@ -641,7 +642,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Secondary Colors" id="secondary-colors">
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                   <div style={{marginRight: "24px"}}>
                     <demo.LargeLabel>secondary1 = pink<br/>ex: secondary1['60'] = pink['60']</demo.LargeLabel>
                     <ColorsBlock colors={
@@ -794,7 +795,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Neutral and Error Colors" id="neutral-and-error-colors">
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                   <div style={{marginRight: "24px"}}>
                     <demo.LargeLabel>neutrals<br/>ex: neutrals.bodyText = neutrals['90']</demo.LargeLabel>
                     <ColorsBlock colors={
@@ -873,8 +874,6 @@ const App = () => {
                 
 
               </demo.InnerContainer>
-              
-
             </demo.OuterContainer>
 
             <demo.OuterContainer title="Buttons" id="buttons">   
@@ -1065,6 +1064,7 @@ const App = () => {
 <CancelButton />
 <DoneButton />`
                 })}
+
 
                 <IconButton Icon={icons.TilesIcon} variant="secondary" size="huge" mr={24}>Tiles</IconButton>
 
@@ -1261,25 +1261,25 @@ const App = () => {
             <demo.OuterContainer title="Fields" id="fields">
               <demo.InnerContainer title="Input Fields" id="input-fields">
                 <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
-                <Input name="basic-input" value="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+                <Input name="basic-input" defaultValue="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
-                <Input error name="basic-input" value="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+                <Input error name="basic-input" defaultValue="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
 
                 <br />
-                <LabeledInput labelOnTop label='Labeled input' name="basic-input" value="input value" style={{ width: 200 }} placeholder="enter something" />
-                <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" value="disabled value" style={{ width: 200 }} placeholder="enter something" />
-                <LabeledInput labelOnTop error label='Labeled error' name="error-input" value="error value" style={{ width: 200 }} placeholder="enter something" />
+                <LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
+                <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" defaultValue="disabled value" style={{ width: 200 }} placeholder="enter something" />
+                <LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200 }} placeholder="enter something" />
 
                 <br />
                 <LabeledIconInput
                   labelOnTop
                   label='Labeled input'
                   name="basic-input"
-                  value="input value"
+                  defaultValue="input value"
                   placeholder="enter something"
-                  Icon={<icons.DollarIcon style={{ paddingLeft: 10, paddingRight: 0, }} />}
+                  Icon={<icons.DollarIcon  />}
                   style={{ width: 200 }}
                 />
 
@@ -1288,9 +1288,9 @@ const App = () => {
                   disabled
                   label='Labeled disabled'
                   name="basic-disabled"
-                  value="disabled value"
+                  defaultValue="disabled value"
                   placeholder="enter something"
-                  Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
+                  Icon={<icons.TrashIcon color={"#fff"}  />}
                   style={{ width: 200 }}
                 />
 
@@ -1398,6 +1398,14 @@ const App = () => {
                   components={{ MenuList: SelectMenuList }}
                   isDisabled
                 />
+
+                <LabeledSelect value={{ value: 'value4', label: 'value4', }}
+                  options={[
+                    ...(Array(100).fill(1).map((v, i) => (
+                      {value: 'value'+i, label: 'value'+i}
+                    ))),
+                  ]}/>
+                
 
                 <br />
               </ demo.InnerContainer>
@@ -2037,12 +2045,214 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Windowed Table" noBottomLine>
-                <VirtualTableStyles>
+                <VirtualTableStyles tableHeight="100%">
                   <VirtualTable 
                     columns={tableColumns}
                     data={tableData}
                   />
                 </VirtualTableStyles>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="GridTable">
+                <demo.MediumLabel>GridTable component uses CSS Grid. This component takes optional 'gridTemplateColumns', 'gridTemplateRows', 'gridColumnGap', 'gridRowGap' props. If these optional props are not provided, the component gives '1fr' for each column and '16px' as gridColumnGap and gridRowGap. <br/><br />
+                The component takes 'Column' components as children which can take any other element you put into it such as select fields, input fields, buttons, etc. The table maps through the data provided in the 'data' prop and creates the columns provided for each object of data. 
+                <br/><br/>
+                This component also takes a 'data', 'onUpdate', 'onDelete', 'onAdd', 'onSort', and 'validate' props. These props are handled by the developer that is using the gridTable. The 'onAdd' prop creates an '+ Add New' button at the bottom of the table which allows the user to create a new row. If an 'onSort' prop is given, the component creates draggable handles for each row. If 'onDelete' is provided then the component creates a delete button for each row. The column width for the drag handles column and delete button column is 'auto'.  
+                </demo.MediumLabel>
+                  
+                  <GridTable
+                    gridTemplateColumns="56px minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr)"
+                    gridTemplateRows="auto"
+                    gridColumnGap="16px"
+                    gridRowGap="16px"
+                    mt={48}
+
+
+                    data={[
+                      { id: 1, tax_name: 'PST', percent: 8, select: 'hello'},
+                      { id: 2, tax_name: 'HST', percent: 15, select: 'hello'},
+                      { id: 3, tax_name: 'HST', percent: 13,  select: 'hello'},
+                    ]}
+
+                    onUpdate={
+                      (value) =>  console.log(value)
+                    }
+                    
+                    onDelete={
+                      (id) => console.log(id, 'test')
+                    }
+
+                    onAdd={
+                      (id) => console.log(id)
+                    }
+
+                    onSort={
+                      (id, index) => console.log(id)
+                    }
+
+                    validate={
+                      (data) => {
+                        // console.log(data);
+
+                        let result: {[key: string] : false | string} = { id: false, tax_name: false, percent: false, select: false, date_picker: false};
+
+                        if (!data.id) {
+                          result.id = "need id";
+                        } else if (isNaN(+data.id)){
+                          result.id = "not a number";
+                        }
+
+                        if (!data.tax_name) {
+                          result.tax_name = "need tax name";
+                        } else if (typeof data.tax_name !== "string"){
+                          result.tax_name = "not a number";
+                        }
+
+                        if (!data.percent) {
+                          result.percent = "Percent is mandatory";
+                        } else if (isNaN(+data.percent)) {
+                          result.percent = "Not a number";
+                        } else if (data.percent < 0) {
+                          result.percent = "Too low";
+                        } else if (data.percent > 100) {
+                          result.percent = "Too high";
+                        }
+
+                        if (!data.select) {
+                          
+                          result.select = "need select";
+                        } else if (data.select?.value !== "skucamp"){
+                          result.select = "this is not skucamp";
+                        }
+
+                        if (!data.date_picker) {
+                          result.date_picker = "need date";
+                        }
+
+                        return result;
+                      }
+                      
+                    }
+                  >
+                    <Column name="id" title={<span style={{display: 'flex', flexDirection: 'row',
+                  justifyContent: 'center'}}>ID <icons.InfoIcon ml={8}/></span>} >
+                      <Input placeholder="enter something" style={{marginBottom: 0}}/>
+                    </Column>
+                    <Column name="tax_name" title="Tax Name" >
+                      <Input placeholder="enter something" style={{marginBottom: 0}}/>
+                    </Column>
+                    <Column name="percent" title="Percent" >
+                      <Input placeholder="enter something" style={{marginBottom: 0}}/>
+                    </Column>
+                    <Column name="select" title="Select" transform={(value) => value} >
+                      <Select inPopup options={options} noMargin />
+                    </Column>
+                    <Column name="date_picker" title={"Datepicker"} transform={(value) => value} >
+                      <Datepicker
+                        value={state.date}
+                        onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+                        noMargin
+                      />
+                    </Column>
+                    
+                </GridTable>
+
+                {DemoCodeBlock({code: 
+`<GridTable
+    gridTemplateColumns="56px minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr)"
+    gridTemplateRows="auto"
+    gridColumnGap="16px"
+    gridRowGap="16px"
+    mt={48}
+
+
+    data={[
+      { id: 1, tax_name: 'PST', percent: 8, select: 'hello'},
+      { id: 2, tax_name: 'HST', percent: 15, select: 'hello'},
+      { id: 3, tax_name: 'HST', percent: 13,  select: 'hello'},
+    ]}
+
+    onUpdate={
+      (value) =>  console.log(value)
+    }
+
+    onDelete={
+      (id) => console.log(id, 'test')
+    }
+
+    onAdd={
+      (id) => console.log(id)
+    }
+
+    onSort={
+      (id, index) => console.log(id)
+    }
+
+    validate={
+      (data) => {
+
+        let result: {[key: string] : false | string} = { id: false, tax_name: false, percent: false, select: false, date_picker: false};
+
+        if (!data.id) {
+          result.id = "need id";
+        } else if (isNaN(+data.id)){
+          result.id = "not a number";
+        }
+
+        if (!data.tax_name) {
+          result.tax_name = "need tax name";
+        } else if (typeof data.tax_name !== "string"){
+          result.tax_name = "not a number";
+        }
+
+        if (!data.percent) {
+          result.percent = "Percent is mandatory";
+        } else if (isNaN(+data.percent)) {
+          result.percent = "Not a number";
+        } else if (data.percent < 0) {
+          result.percent = "Too low";
+        } else if (data.percent > 100) {
+          result.percent = "Too high";
+        }
+
+        if (!data.select) {
+          result.select = "need select";
+        } else if (data.select?.value !== "skucamp"){
+          result.select = "this is not skucamp";
+        }
+
+        if (!data.date_picker) {
+          result.date_picker = "need date";
+        }
+
+        return result;
+      }
+    }
+    >
+      <Column name="id" title={<span style={{display: 'flex', flexDirection: 'row',
+      justifyContent: 'center'}}>ID <icons.InfoIcon ml={8}/></span>} >
+        <Input placeholder="enter something" style={{marginBottom: 0}}/>
+      </Column>
+      <Column name="tax_name" title="Tax Name" >
+        <Input placeholder="enter something" style={{marginBottom: 0}}/>
+      </Column>
+      <Column name="percent" title="Percent" >
+        <Input placeholder="enter something" style={{marginBottom: 0}}/>
+      </Column>
+      <Column name="select" title="Select" transform={(value) => value} >
+        <Select inPopup options={options} noMargin />
+      </Column>
+      <Column name="date_picker" title={"Datepicker"} transform={(value) => value} >
+        <Datepicker
+          value={state.date}
+          onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+          noMargin
+        />
+      </Column>
+
+</GridTable>
+`})}
+                
               </demo.InnerContainer>
 
             </demo.OuterContainer>
@@ -2310,6 +2520,10 @@ const App = () => {
 <CommentIcon number={14234}/>
   `})}
                   </div>
+
+                  <IconsShowcase Icons={[<icons.EllipsisIcon />]} name="EllipsisIcon"/>
+
+                  <IconsShowcase Icons={[<icons.DragIcon />]} name="DragIcon"/>
 
                   <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
                   <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
