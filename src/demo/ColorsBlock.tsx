@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled, { css, CSSObject } from "styled-components";
 import { fontStyles } from '../@commonsku/styles/Theme';
-import { SharedStyles, SharedStyleTypes, SizerCss, SizerTypes, AlertNotification } from '@commonsku/styles';
-import { neutrals, teal } from "@commonsku/styles/colors";
+import { SharedStyleTypes, SizerTypes } from '../@commonsku/styles/';
+import { neutrals} from "../@commonsku/styles/colors";
 
 type ColorsBlockProps = React.PropsWithChildren <{
     colors: {
@@ -150,6 +150,7 @@ export default function ColorsBlock({
         if(color.highlighted === true) {
             return (
                 <HighlightedColor 
+                key={index}
                 color={color.color} 
                 onMouseEnter={() => setHoveredColorBlock(index)}
                 onMouseLeave={() => setHoveredColorBlock(null)}
@@ -173,6 +174,7 @@ export default function ColorsBlock({
         }
         return (
             <ColorBlock 
+                key={index}
                 color={color.color}
                 onMouseEnter={() => setHoveredColorBlock(index)}
                 onMouseLeave={() => setHoveredColorBlock(null)}
