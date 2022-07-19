@@ -1,6 +1,6 @@
-import styled, { CSSObject, SimpleInterpolation, StyledComponent, StyledComponentProps } from 'styled-components';
+import styled, { CSSObject, SimpleInterpolation, StyledComponent } from 'styled-components';
 import { parseMeasurement, stripUnit } from '../utils';
-import { parseResponsiveValue, ResponsiveValue } from '../utils/styled';
+import { isSizeObj, parseResponsiveValue, ResponsiveValue } from '../utils/styled';
 
 export const createMeasurementStyle = (v: string | number, keys: string[]) => {
   const value = typeof v === 'string' && ['auto', 'none'].includes(v)
@@ -59,6 +59,7 @@ export type BaseCskuProps = {
 export type CskuProps = StyledComponent<"div", any, BaseCskuProps, never>;
 const Csku = styled.div<BaseCskuProps>(
   p => {
+    let sizeStylesObj: {[key: string]: CSSObject} = {};
     let stylesObj: CSSObject = {};
     const stylesArr: SimpleInterpolation[] = [];
     Object.keys(p)
@@ -72,13 +73,22 @@ const Csku = styled.div<BaseCskuProps>(
             stylesArr.push(v);
           })
         } else {
-          stylesObj = {
-            ...stylesObj,
-            ...parsedStyles,
-          };
+          if (isSizeObj(p[k]) || Array.isArray(p[k])) {
+            Object.keys(parsedStyles).forEach(sk => {
+              sizeStylesObj[sk] = {
+                ...(sizeStylesObj[sk] || {}),
+                ...parsedStyles[sk],
+              };
+            });
+          } else {
+            stylesObj = {
+              ...stylesObj,
+              ...parsedStyles,
+            };
+          }
         }
       });
-    return [ stylesObj, ...stylesArr ];
+    return [ stylesObj, sizeStylesObj, ...stylesArr ];
   },
 );
 
