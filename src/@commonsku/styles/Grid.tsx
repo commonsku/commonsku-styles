@@ -1,4 +1,4 @@
-import { parseResponsiveValue, ResponseValue } from '../utils/styled';
+import { parseResponsiveValue, ResponsiveValue } from '../utils/styled';
 import React from 'react';
 import styled, { CSSObject, FlattenSimpleInterpolation, SimpleInterpolation } from 'styled-components';
 import { parseMeasurement, stripUnit } from '../utils';
@@ -23,8 +23,8 @@ export const Grid = styled.div<BaseGridProps>(
 );
 
 type BaseGridItemProps = {
-    colSpan?: ResponseValue<string | number | boolean>;
-    style?: ResponseValue<CSSObject>;
+    colSpan?: ResponsiveValue<string | number | boolean>;
+    style?: ResponsiveValue<CSSObject>;
 };
 
 export type GridItemProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'style'> & BaseGridItemProps;

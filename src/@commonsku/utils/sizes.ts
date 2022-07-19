@@ -45,4 +45,4 @@ export const sizeMedia = {
 };
 
 export type TSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export const sizes: TSize[] = Object.keys(media) as TSize[];
+export const sizes: TSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];

@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSObject, FlattenSimpleInterpolation, SimpleInterpolation } from 'styled-components';
 import { sizes, sizeMedia, TSize } from './sizes';
 
-export type ResponseValue<T = string | number> = T
+export type ResponsiveValue<T = string | number> = T
     | Array<T | null>
     | {
         xs?: T;
@@ -13,7 +13,7 @@ export type ResponseValue<T = string | number> = T
     };
 
 export const parseResponsiveValue = (
-  value: ResponseValue<any>,
+  value: ResponsiveValue<any>,
   transform: ((v: any) => any),
 ): (React.CSSProperties | CSSObject | (SimpleInterpolation | FlattenSimpleInterpolation)[]) => {
   if (typeof value === 'number' || typeof value === 'string' || typeof value === 'boolean') {

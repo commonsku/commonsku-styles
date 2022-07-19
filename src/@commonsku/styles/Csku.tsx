@@ -1,6 +1,6 @@
 import styled, { CSSObject, SimpleInterpolation, StyledComponent, StyledComponentProps } from 'styled-components';
 import { parseMeasurement, stripUnit } from '../utils';
-import { parseResponsiveValue, ResponseValue } from '../utils/styled';
+import { parseResponsiveValue, ResponsiveValue } from '../utils/styled';
 
 export const createMeasurementStyle = (v: string | number, keys: string[]) => {
   const value = typeof v === 'string' && ['auto', 'none'].includes(v)
@@ -41,19 +41,19 @@ const stylesTransformMap = {
 };
 
 export type BaseCskuProps = {
-  mx?: ResponseValue<string | number>;
-  my?: ResponseValue<string | number>;
-  px?: ResponseValue<string | number>;
-  py?: ResponseValue<string | number>;
-  width?: ResponseValue<string | number>;
-  height?: ResponseValue<string | number>;
-  color?: ResponseValue<string>;
-  bg?: ResponseValue<string>;
-  background?: ResponseValue<string>;
-  backgroundColor?: ResponseValue<string>;
-  colSpan?: ResponseValue<string | number | boolean>;
-  style?: ResponseValue<CSSObject>;
-  sx?: ResponseValue<CSSObject>;
+  mx?: ResponsiveValue<string | number>;
+  my?: ResponsiveValue<string | number>;
+  px?: ResponsiveValue<string | number>;
+  py?: ResponsiveValue<string | number>;
+  width?: ResponsiveValue<string | number>;
+  height?: ResponsiveValue<string | number>;
+  color?: ResponsiveValue<string>;
+  bg?: ResponsiveValue<string>;
+  background?: ResponsiveValue<string>;
+  backgroundColor?: ResponsiveValue<string>;
+  colSpan?: ResponsiveValue<string | number | boolean>;
+  style?: ResponsiveValue<CSSObject>;
+  sx?: ResponsiveValue<CSSObject>;
 };
 
 export type CskuProps = StyledComponent<"div", any, BaseCskuProps, never>;
