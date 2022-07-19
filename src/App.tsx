@@ -80,6 +80,7 @@ import {
     InputStepper,
     VirtualTableStyles,
     VirtualTable,
+    Csku,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -874,6 +875,23 @@ const App = () => {
                 </div>
                 
 
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Csku" id="csku">
+              <demo.InnerContainer title="Csku Component" id="csku-component">
+                <Csku
+                  width={{
+                    xs: 110,
+                    sm: 220,
+                    md: 330,
+                    lg: 440,
+                    xl: 550,
+                  }}
+                  background={['red', 'blue', 'green', 'yellow', 'magenta']}
+                  sx={[{color: 'black'}, {color: 'white'}, {color: 'black'}, {color: 'white'}, {color: 'black'}]}
+                  style={{ padding: 10 }}
+                >Csku</Csku>
               </demo.InnerContainer>
             </demo.OuterContainer>
 
