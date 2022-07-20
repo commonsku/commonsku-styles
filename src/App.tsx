@@ -889,7 +889,13 @@ const App = () => {
                     xl: 550,
                   }}
                   background={['red', 'blue', 'green', 'yellow', 'magenta']}
-                  sx={[{color: 'black'}, {color: 'white'}, {color: 'black'}, {color: 'white'}, {color: 'black'}]}
+                  sx={[
+                    {color: 'black', _hover: {background: 'grey'}},
+                    {color: 'white'},
+                    {color: 'black'},
+                    {color: 'white', ':hover': {background: 'black'}},
+                    {color: 'black', ':hover': {background: 'grey'}}
+                  ]}
                   style={{ padding: 10 }}
                 >Csku</Csku>
               </demo.InnerContainer>
