@@ -132,7 +132,7 @@ const VirtualTable = (props: VirtualTableProps) => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
   const rowsRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
-  const listRef = useRef<VariableSizeList<any> | null>(null);
+  const listRef = useRef<VariableSizeList | null>(null);
 
   function resetList(index: number = 0) {
     listRef.current && listRef.current.resetAfterIndex(index);
