@@ -265,7 +265,7 @@ const colors = {
   white: '#fff',
   black: '#000',
   primary: '#02c0da',
-  cta: '#fa237c',
+  cta: pink.main,
   primary0: '#DAE9EE', // lighter
   primary10: '#C9E8F2', // light
   primary100: '#00889B', // dark
