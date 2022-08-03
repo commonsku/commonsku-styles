@@ -9,7 +9,7 @@ export default function PinIcon({
     filled=false,
     unpin=false,
     pinned,
-    altText="Pin",
+    altText,
     ...props
 }: PinIconProps) {
  
@@ -17,7 +17,8 @@ export default function PinIcon({
     let renderPath;
     
     if(unpin) {
-      altText="Unpin";
+      altText = altText ? altText : "Unpin";
+
       renderPath = 
         filled ? 
           <>
@@ -43,6 +44,8 @@ export default function PinIcon({
           </>
         ;
     } else {
+      altText = altText ? altText : "Pin";
+
       renderPath = 
       filled ? 
         <path
