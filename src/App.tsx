@@ -888,13 +888,13 @@ const App = () => {
                     lg: 440,
                     xl: 550,
                   }}
-                  background={['red', 'blue', 'green', 'yellow', 'magenta']}
+                  background={['tomato', 'blue', 'green', 'yellow', 'magenta']}
                   sx={[
-                    {color: 'black', _hover: {background: 'grey'}},
-                    {color: 'white'},
-                    {color: 'black'},
-                    {color: 'white', ':hover': {background: 'black'}},
-                    {color: 'black', ':hover': {background: 'grey'}}
+                    {color: 'black', ':hover': {background: 'teal'}},
+                    {color: 'white', ':hover': {background: 'magenta'}},
+                    {color: 'black', ':hover': {background: 'tomato'}},
+                    {color: 'white', ':hover': {background: 'green'}},
+                    {color: 'black', ':hover': {background: 'tomato'}}
                   ]}
                   style={{ padding: 10 }}
                 >Csku</Csku>
