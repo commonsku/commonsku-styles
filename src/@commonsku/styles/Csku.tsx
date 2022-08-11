@@ -128,39 +128,6 @@ export const parseCskuStyles = (p: BaseCskuProps) => {
 };
 
 export type CskuProps = StyledComponent<"div", any, BaseCskuProps, never>;
-const Csku = styled.div<BaseCskuProps>(
-  p => {
-    let sizeStylesObj: {[key: string]: CSSObject} = {};
-    let stylesObj: CSSObject = {};
-    const stylesArr: SimpleInterpolation[] = [];
-    Object.keys(p)
-      .filter(k => styleKeys.includes(k))
-      .forEach(k => {
-        const parsedStyles = parseResponsiveValue(
-          p[k], stylesTransformMap[k]
-        );
-        if (Array.isArray(parsedStyles)) {
-          parsedStyles.forEach(v => {
-            stylesArr.push(v);
-          })
-        } else {
-          if (isSizeObj(p[k]) || Array.isArray(p[k])) {
-            Object.keys(parsedStyles).forEach(sk => {
-              sizeStylesObj[sk] = {
-                ...(sizeStylesObj[sk] || {}),
-                ...parsedStyles[sk],
-              };
-            });
-          } else {
-            stylesObj = {
-              ...stylesObj,
-              ...parsedStyles,
-            };
-          }
-        }
-      });
-    return [ stylesObj, sizeStylesObj, ...stylesArr ];
-  },
-);
+const Csku = styled.div<BaseCskuProps>(parseCskuStyles);
 
 export default Csku;
