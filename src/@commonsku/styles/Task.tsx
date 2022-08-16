@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { LabeledCheckbox } from './Input'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-const TaskLabel = styled.div<{hasCheckbox?: boolean;}>`display: flex; min-height: 25px; ${p => p.hasCheckbox ? `padding-right: 25px;` : ''}`
+const TaskLabel = styled.div<{hasCheckbox?: boolean;}>`display: flex; min-height: 25px; ${p => p.hasCheckbox ? `width: calc(100% - 24px);` : ''}`
 const TaskName = styled.div`flex-grow: 1; font-size:13px;`
 const StyledTask = styled.div<SharedStyleTypes>`margin-bottom: 1.5em; ${SharedStyles}`
 const TaskBody = styled.div`margin-left:34px;`
@@ -170,6 +170,11 @@ const CalendarTask = React.forwardRef<HTMLInputElement, CalendarTaskHtmlProps>((
             onClickCheckbox && onClickCheckbox(!s);
             return !s;
           });
+        }}
+        style={{
+          padding: 0,
+          margin: 0,
+          marginLeft: 20,
         }}
       /> : RenderTaskLabel()}
       <StyledCalendarTaskBody
