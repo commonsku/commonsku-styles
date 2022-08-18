@@ -5,6 +5,7 @@ import { fontStyles } from './Theme';
 import colors from './colors';
 
 export type ConfirmPopupProps = {
+  disableDelete?: boolean;
   confirmText?: string;
   onDelete?: () => void;
   onClose?: () => void;
@@ -12,6 +13,7 @@ export type ConfirmPopupProps = {
 const ConfirmPopup = (props: ConfirmPopupProps) => {
   const {
     confirmText='Are you sure you want to delete?',
+    disableDelete = false,
     onDelete,
     onClose,
   } = props;
@@ -43,10 +45,11 @@ const ConfirmPopup = (props: ConfirmPopupProps) => {
         </Button>
         <Button
           size="medium"
-          variant='error'
+          variant={disableDelete ? 'disabled' : 'error'}
           onClick={() => {
             onDelete && onDelete();
           }}
+          disabled={disableDelete}
         >
           Delete
         </Button>
