@@ -101,6 +101,7 @@ export type DropdownProps = {
     buttonVariant?: ButtonVariant;
     width?: string | number;
     bordered?: boolean;
+    hideOnMouseLeave?: boolean;
     onToggleMenu?: (value: boolean) => void;
 };
 
@@ -132,6 +133,7 @@ export const Dropdown = ({
     buttonVariant,
     width=160,
     bordered=false,
+    hideOnMouseLeave=true,
     ...props
 }: React.PropsWithChildren<DropdownProps & DropdownContentProps>) => {
     const rootRef = useRef<HTMLSpanElement>(null);
@@ -170,6 +172,7 @@ export const Dropdown = ({
     const contentStyle = getContentStyle(width, rootRef.current, buttonRef.current);
     return (
         <span ref={rootRef} {...props} style={style} onMouseLeave={() => { 
+            if (!hideOnMouseLeave) { return; }
             handleToggleMenu(false);
             if(mouseLeaveCallback) {
                 mouseLeaveCallback()
