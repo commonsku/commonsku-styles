@@ -74,3 +74,6 @@ export { default as MenuIcon} from './MenuIcon';
 export { default as CommentIcon} from './CommentIcon';
 export { default as EllipsisIcon} from './EllipsisIcon';
 export { default as DragIcon} from './DragIcon';
+export { default as CreditCardIcon} from './CreditCardIcon';
+export { default as ShopIcon} from './ShopIcon';
+export { default as HistoryIcon} from './HistoryIcon';

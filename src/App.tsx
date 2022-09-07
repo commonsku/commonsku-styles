@@ -2520,6 +2520,10 @@ const App = () => {
 
                     <IconsShowcase Icons={[<icons.EpsIcon />]} name="EpsIcon"/>
 
+                    <IconsShowcase Icons={[<icons.CreditCardIcon />]} name="CreditCardIcon"/>
+                    <IconsShowcase Icons={[<icons.ShopIcon />]} name="ShopIcon"/>
+                    <IconsShowcase Icons={[<icons.HistoryIcon />]} name="HistoryIcon"/>
+
                   </IconContainer>
               </demo.InnerContainer>
 
