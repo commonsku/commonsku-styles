@@ -3,7 +3,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle, { AdditionalStyles } from "./globalStyles";
 import _ from 'lodash'
 import colors from "./colors";
-import { sizeMedia, sizeMediaWith } from "../utils";
+import { sizeMedia, sizeMediaWidth } from "../utils";
 
 export {colors}; 
 
@@ -125,7 +125,7 @@ export const themeOptions = {
     '10': '80px',
   },
   mediaQueries: {
-    sizeMediaWith: sizeMediaWith,
+    sizeMediaWidth: sizeMediaWidth,
     sizeMedia: sizeMedia,
   },
 }

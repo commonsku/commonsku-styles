@@ -28,7 +28,7 @@ export const media: {[key: string]: ((value: string | CSSObject) => string)} = {
     `,
 };
 
-export const sizeMediaWith = {
+export const sizeMediaWidth = {
     xs: '0px',
     sm: '640px',
     md: '768px',
@@ -37,11 +37,11 @@ export const sizeMediaWith = {
 };
 
 export const sizeMedia = {
-    xs: `@media only screen and (min-width: ${sizeMediaWith.xs})`,
-    sm: `@media only screen and (min-width: ${sizeMediaWith.sm})`,
-    md: `@media only screen and (min-width: ${sizeMediaWith.md})`,
-    lg: `@media only screen and (min-width: ${sizeMediaWith.lg})`,
-    xl: `@media only screen and (min-width: ${sizeMediaWith.xl})`,
+    xs: `@media only screen and (min-width: ${sizeMediaWidth.xs})`,
+    sm: `@media only screen and (min-width: ${sizeMediaWidth.sm})`,
+    md: `@media only screen and (min-width: ${sizeMediaWidth.md})`,
+    lg: `@media only screen and (min-width: ${sizeMediaWidth.lg})`,
+    xl: `@media only screen and (min-width: ${sizeMediaWidth.xl})`,
 };
 
 export type TSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
