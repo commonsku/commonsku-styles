@@ -68,11 +68,11 @@ export default function AlertNotification({
 
     function notificationIcon(){
         if(alertType === "success") {
-            return <CompletedCheckmarkIcon color={colors.green.dark} mr={8} style={{flexShrink: "0"}}/> 
+            return <CompletedCheckmarkIcon color={colors.green.dark} mr={8} style={{flexShrink: 0}}/> 
         } else if (alertType === "error") {
-            return <AlertIcon color={colors.errors.dark} mr={8} style={{flexShrink: "0"}}/>
+            return <AlertIcon color={colors.errors.dark} mr={8} style={{flexShrink: 0}}/>
         } else {
-            return <InfoIcon color={colors.navy.dark} mr={8} style={{flexShrink: "0"}}/>
+            return <InfoIcon color={colors.navy.dark} mr={8} style={{flexShrink: 0}}/>
         }
     };
 

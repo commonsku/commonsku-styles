@@ -10,10 +10,9 @@ export default function CreditCardIcon({
     ...props
 }: CreditCardIcon) {
     return <SVG size={size} aria-labelledby="CreditCardIcon" {...props}>
-        <path fill="none" d="M0 0h24v24H0z" />
         <title id="CreditCardIcon" >{altText}</title>
         <path
-            d="M18 0H2C0.89 0 0.00999999 0.89 0.00999999 2L0 14C0 15.11 0.89 16 2 16H18C19.11 16 20 15.11 20 14V2C20 0.89 19.11 0 18 0ZM18 14H2V8H18V14ZM18 4H2V2H18V4Z"
+            d="M20 4H4C2.89 4 2.01 4.89 2.01 6L2 18C2 19.11 2.89 20 4 20H20C21.11 20 22 19.11 22 18V6C22 4.89 21.11 4 20 4ZM20 18H4V12H20V18ZM20 8H4V6H20V8Z" 
             fill={color}
         />
     </SVG>
