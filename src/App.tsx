@@ -2523,6 +2523,7 @@ const App = () => {
                     <IconsShowcase Icons={[<icons.CreditCardIcon />]} name="CreditCardIcon"/>
                     <IconsShowcase Icons={[<icons.ShopIcon />]} name="ShopIcon"/>
                     <IconsShowcase Icons={[<icons.HistoryIcon />]} name="HistoryIcon"/>
+                    <IconsShowcase Icons={[<icons.HandleIcon />]} name="HandleIcon"/>
 
                   </IconContainer>
               </demo.InnerContainer>

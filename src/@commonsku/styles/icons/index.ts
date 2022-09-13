@@ -77,3 +77,4 @@ export { default as DragIcon} from './DragIcon';
 export { default as CreditCardIcon} from './CreditCardIcon';
 export { default as ShopIcon} from './ShopIcon';
 export { default as HistoryIcon} from './HistoryIcon';
+export { default as HandleIcon} from './HandleIcon';
