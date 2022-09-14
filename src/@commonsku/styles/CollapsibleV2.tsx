@@ -49,8 +49,9 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
     <div style={style}>
       <Row style={{
         alignItems: 'center',
-        padding: 8,
-        gap: 1,
+        padding: 10,
+        paddingTop: 12,
+        paddingBottom: 8,
         background: isOpen ? colors.white : colors.teal[20],
         borderRadius: isOpen ? 25 : 2000,
         flex: 'none',
