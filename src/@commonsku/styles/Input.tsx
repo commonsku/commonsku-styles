@@ -598,7 +598,7 @@ export type LabeledCheckboxProps = {
 
 export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxProps> =
   React.forwardRef<HTMLInputElement, LabeledCheckboxProps>((
-    {label, name, checked, disabled, onChange, checkboxColor, checkboxHoverColor, labelStyle={}, checkboxStyle={}, hoverByLabel=true, stopPropagation=false, ...props},
+    {label, name, checked, disabled, indeterminate, onChange, checkboxColor, checkboxHoverColor, labelStyle={}, checkboxStyle={}, hoverByLabel=true, stopPropagation=false, ...props},
     ref
   ) => {
     const [isHovering, updateHover] = useState(false);
@@ -620,6 +620,7 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
           disabled={disabled} 
           color={checkboxColor} 
           hoverColor={checkboxHoverColor} 
+          indeterminate={indeterminate}
           mr={8}
           style={{...checkboxStyle}}
         />
