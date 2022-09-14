@@ -55,6 +55,7 @@ export * from './Csku';
 export {
     default as CollapsibleV2,
     Collapsibles,
+    CollapsibleLabel,
 } from './CollapsibleV2';
 
 export * from './icons'

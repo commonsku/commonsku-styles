@@ -49,8 +49,8 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
     <div style={style}>
       <Row style={{
         alignItems: 'center',
-        padding: 14,
-        gap: 8,
+        padding: 8,
+        gap: 1,
         background: isOpen ? colors.white : colors.teal[20],
         borderRadius: isOpen ? 25 : 2000,
         flex: 'none',
@@ -62,14 +62,14 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
       }}>
         <Col xs
           sm={5.9}
-          style={{ cursor: 'pointer', ...(isOpen ? {} : { marginBottom: -8 }), }}
+          style={{ cursor: 'pointer', }}
           onClick={handleToggle}
         >
           <CollapsibleLabel>{label}</CollapsibleLabel>
         </Col>
         <Col xs
           sm={5.9}
-          style={{ cursor: 'pointer', ...(isOpen ? {} : { marginBottom: -8 })}}
+          style={{ cursor: 'pointer', }}
           smStyle={`text-align: right;`}
           xsStyle={`text-align: center;`}
           onClick={handleToggle}
@@ -125,7 +125,7 @@ const Collapsible = (props: CollapsibleProps) => {
 type CollapsibleLabelProps = {
   children?: TReactNode;
 };
-const CollapsibleLabel = (props: CollapsibleLabelProps) => {
+export const CollapsibleLabel = (props: CollapsibleLabelProps) => {
   const { children } = props;
 
   if (children === undefined || children === null) {
