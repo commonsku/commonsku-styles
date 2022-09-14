@@ -616,6 +616,7 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
       name,
       checked,
       disabled,
+      indeterminate,
       onChange,
       checkboxColor,
       checkboxHoverColor,
@@ -650,6 +651,7 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
           disabled={disabled} 
           color={checkboxColor} 
           hoverColor={checkboxHoverColor} 
+          indeterminate={indeterminate}
           mr={8}
           style={{...checkboxStyle}}
         />

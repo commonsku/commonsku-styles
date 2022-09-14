@@ -1192,6 +1192,9 @@ const App = () => {
 
                   <LabeledCheckbox label="Relish" checked={true} disabled />
 
+                  <LabeledCheckbox label="Indeterminate" indeterminate={true} />
+
+
                 </ButtonsGroup>
                 {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
 `<LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />

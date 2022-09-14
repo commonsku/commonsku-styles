@@ -56,7 +56,6 @@ const LightIndicatorText = styled.p<LightIndicatorTextType>`
         font-family: ${themeOptions.fontStyles.p.small.fontFamily};
         line-height: ${themeOptions.fontStyles.p.small.lineHeight};
         color: ${props => props.LightIndicatorTextColor ? colors.neutrals.bodyText : colors.neutrals[70]};
-        max-width: 180px;
         margin-top:0;
         margin-bottom:0;
     };
