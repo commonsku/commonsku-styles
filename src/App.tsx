@@ -53,6 +53,7 @@ import {
     StatusDropdown,
     StateDropdown,
     Text,
+    CollapsibleV2,
     Collapsible,
     CollapsiblePanel,
     CollapsiblePanels,
@@ -81,6 +82,7 @@ import {
     VirtualTableStyles,
     VirtualTable,
     Csku,
+    Collapsibles,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -1767,6 +1769,69 @@ const App = () => {
             
             <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
+                <CollapsibleV2 label={'CollapsibleV2'}>
+                  <Row>
+                    <Col xs>
+                      Collapsible Content
+                    </Col>
+                    <Col xs>
+                      Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                      Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                      pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                      et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                      quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                      nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                      rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                      nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                      auctor augue
+                    </Col>
+                  </Row>
+                </CollapsibleV2>
+                <br />
+                <Collapsibles
+                  list={[
+                    {
+                      label: 'Collapsible 1',
+                      children: <Row>
+                        <Col xs>
+                          Collapsible Content
+                        </Col>
+                        <Col xs>
+                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                          auctor augue
+                        </Col>
+                      </Row>,
+                    },
+                    {
+                      label: 'Collapsible 2',
+                      children: <Row>
+                        <Col xs>
+                          Collapsible Content
+                        </Col>
+                        <Col xs>
+                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                          auctor augue
+                        </Col>
+                      </Row>,
+                    },
+                  ]}
+                />
+                <br />
+
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
                   <Text
                     style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}

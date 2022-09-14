@@ -52,6 +52,10 @@ export { default as VirtualTableStyles } from './tables/VirtualTableStyles';
 export { default as Csku } from './Csku';
 export * from './Grid';
 export * from './Csku';
+export {
+    default as CollapsibleV2,
+    Collapsibles,
+} from './CollapsibleV2';
 
 export * from './icons'
 export * from './Theme'
