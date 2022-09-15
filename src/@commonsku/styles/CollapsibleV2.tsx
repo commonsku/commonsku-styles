@@ -66,7 +66,7 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
           style={{ cursor: 'pointer', }}
           onClick={handleToggle}
         >
-          <CollapsibleLabel>{label}</CollapsibleLabel>
+          <CollapsibleLabel isOpen={isOpen}>{label}</CollapsibleLabel>
         </Col>
         <Col xs
           sm={5.9}
@@ -125,9 +125,10 @@ const Collapsible = (props: CollapsibleProps) => {
 
 type CollapsibleLabelProps = {
   children?: TReactNode;
+  isOpen?: boolean;
 };
 export const CollapsibleLabel = (props: CollapsibleLabelProps) => {
-  const { children } = props;
+  const { children, isOpen } = props;
 
   if (children === undefined || children === null) {
     return null;
@@ -142,7 +143,34 @@ export const CollapsibleLabel = (props: CollapsibleLabelProps) => {
         fontSize: 16,
       }}>{children}</span>;
   }
-  return children;
+  return React.cloneElement(children, { isOpen });
+};
+
+type CollapsibleArrowIconProps = {
+  isOpen?: boolean;
+};
+export const CollapsibleArrowIcon = (props: CollapsibleArrowIconProps) => {
+  const { isOpen } = props;
+
+  return <ChevronIcon
+    size='medium'
+    direction={'down'}
+    altText={isOpen ? 'Close' : 'Open'}
+    style={{
+      transition: 'all 0.2s linear',
+      MozTransition: 'all 0.2s linear',
+      WebkitTransition: 'all 0.2s linear',
+      ...(isOpen ? {
+        transform: 'rotate(180deg)',
+        MozTransform: 'rotate(180deg)',
+        WebkitTransform: 'rotate(180deg)',
+      } : {
+        transform: 'rotate(360deg)',
+        MozTransform: 'rotate(360deg)',
+        WebkitTransform: 'rotate(360deg)',
+      }),
+    }}
+  />;
 };
 
 type CollapsibleControlsProps = {
@@ -152,25 +180,7 @@ type CollapsibleControlsProps = {
 const CollapsibleControls = (props: CollapsibleControlsProps) => {
   const { children, isOpen=false, } = props;
   if (children === undefined || children === null) {
-    return <ChevronIcon
-      size='medium'
-      direction={'down'}
-      altText={isOpen ? 'Close' : 'Open'}
-      style={{
-        transition: 'all 0.2s linear',
-        MozTransition: 'all 0.2s linear',
-        WebkitTransition: 'all 0.2s linear',
-        ...(isOpen ? {
-          transform: 'rotate(180deg)',
-          MozTransform: 'rotate(180deg)',
-          WebkitTransform: 'rotate(180deg)',
-        } : {
-          transform: 'rotate(360deg)',
-          MozTransform: 'rotate(360deg)',
-          WebkitTransform: 'rotate(360deg)',
-        }),
-      }}
-    />;
+    return <CollapsibleArrowIcon isOpen={isOpen} />;
   }
 
   if (typeof children === 'string' || typeof children === 'number' || typeof children === 'boolean') {
@@ -183,7 +193,7 @@ const CollapsibleControls = (props: CollapsibleControlsProps) => {
         fontSize: 16,
       }}>{children}</span>;
   }
-  return children;
+  return React.cloneElement(children, { isOpen });
 };
 
 type CollapsiblesProps = {

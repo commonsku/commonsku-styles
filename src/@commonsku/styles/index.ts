@@ -56,6 +56,7 @@ export {
     default as CollapsibleV2,
     Collapsibles,
     CollapsibleLabel,
+    CollapsibleArrowIcon,
 } from './CollapsibleV2';
 
 export * from './icons'
