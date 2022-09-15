@@ -7,7 +7,7 @@ import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerCss, SizerTypes } from './Sizer'
 import { document } from '../utils';
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ zIndex?: number; }>`
   &&& {
     position: fixed;
     top: 0px;
@@ -16,13 +16,13 @@ export const Overlay = styled.div`
     right: 0px;
     background: rgba(42, 56, 63, 0.45);
     display: flex;
-    z-index: 999;
+    z-index: ${p => p.zIndex || 999};
     margin-left: auto;
     margin-right: auto;
   }
 `;
 
-const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string}>`
+const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string, padding?: string; zIndex?: number;}>`
   &&& {
     width: ${props => props.width ?? '90%'};
     height: ${props => props.height ?? '75%'}; 
@@ -34,9 +34,9 @@ const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, 
     ${props => props.height ?  '' : 'max-height: 700px;'}
     overflow-y: hidden;
     display: block;
-    z-index: 1006;
+    z-index: ${p => p.zIndex || 1006};
 
-    padding: 1rem;
+    padding: ${props => props.padding ?? '1rem'};
     border: 1px solid #CCD5DA;
     background-color: #fefefe;
     border-radius: 3px;
@@ -95,14 +95,21 @@ const PopupContainer: React.FC<{}> = ({ children }) => {
 
 export type PopupProps = React.PropsWithChildren<{ 
     header?: React.Component,
+    noHeader?: boolean,
     title?: string|React.Component,
     controls?: Array<React.ReactNode>,
     onClose?: (event?: React.MouseEvent) => void,
+    noCloseButton?: boolean,
     closeOnClickOutside?: boolean,
     closeOnEsc?: boolean,
+    width?: string,
+    height?: string,
+    padding?: string,
+    zIndex?: number,
+    overlayZIndex?: number;
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=true, closeOnClickOutside=false, ...props }: PopupProps) => {
+export const Popup = ({ header, noHeader=false, title, controls, children, onClose, noCloseButton=false, closeOnEsc=true, closeOnClickOutside=false, overlayZIndex, ...props }: PopupProps) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   /* there is a bug where this closes popup involuntarily
@@ -142,15 +149,17 @@ export const Popup = ({ header, title, controls, children, onClose, closeOnEsc=t
   }, [closeOnClickOutside, closeOnEsc, onClose]);
 
   return <PopupContainer>
-    <Overlay>
+    <Overlay zIndex={overlayZIndex}>
       <PopupWindow className="popup" {...props} ref={ref}>
-          {header ? header : (
+          {noHeader ? null :
+            header ? header : (
               <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
                   <Col style={{textAlign: 'left', alignSelf: 'center'}}>
                       <span className="title">{title}</span>
                   </Col>
                   <Col style={{textAlign: 'right', alignSelf: 'center'}}>
-                      {controls || <Button onClick={onClose}>Close</Button>}
+                      { noCloseButton ? null :
+                        controls || <Button onClick={onClose}>Close</Button>}
                   </Col>
               </PopupHeader>
           )}

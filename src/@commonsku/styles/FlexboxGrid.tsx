@@ -2,10 +2,6 @@ import styled from 'styled-components';
 import { SizerCss, SizerTypes } from './Sizer';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 
-export const Grid = styled.div<SharedStyleTypes>`
-    ${SharedStyles}
-`;
-
 export type RowPropTypes = {
     justify ?: string,
     wrap ?: string, // 'wrap', 'nowrap', 'wrap-reverse', ...

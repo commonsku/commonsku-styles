@@ -164,8 +164,11 @@ export default function InputStepper(props: InputStepperProps) {
                     variant={decrementButtonVariant}
                     onClick={handleDecrement}
                     style={{ borderRadius: "5px 0 0 5px" }}
-                    onMouseDown={onDecrementMouseDown}
-                    onMouseLeave={onDecrementMouseLeave}
+                    onMouseDown={e => {
+                        if (e.button !== 0) { return; }
+                        onDecrementMouseDown();
+                    }}
+                    onMouseOut={onDecrementMouseLeave}
                     onMouseUp={onDecrementMouseUp}
                     onTouchEnd={onDecrementTouchEnd}
                     onTouchStart={onDecrementTouchStart}
@@ -187,8 +190,11 @@ export default function InputStepper(props: InputStepperProps) {
                     variant={incrementButtonVariant}
                     onClick={handleIncrement}
                     style={{ borderRadius: "0 5px 5px 0" }}
-                    onMouseDown={onIncrementMouseDown}
-                    onMouseLeave={onIncrementMouseLeave}
+                    onMouseDown={e => {
+                        if (e.button !== 0) { return; }
+                        onIncrementMouseDown();
+                    }}
+                    onMouseOut={onIncrementMouseLeave}
                     onMouseUp={onIncrementMouseUp}
                     onTouchEnd={onIncrementTouchEnd}
                     onTouchStart={onIncrementTouchStart}

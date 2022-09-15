@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle, { AdditionalStyles } from "./globalStyles";
 import _ from 'lodash'
 import colors from "./colors";
+import { sizeMedia, sizeMediaWidth } from "../utils";
 
 export {colors}; 
 
@@ -122,6 +123,10 @@ export const themeOptions = {
     '8': '64px',
     '9': '72px',
     '10': '80px',
+  },
+  mediaQueries: {
+    sizeMediaWidth: sizeMediaWidth,
+    sizeMedia: sizeMedia,
   },
 }
 

@@ -43,6 +43,7 @@ import {
     FeedPost, Publisher,
     ButtonsGroup, LabeledRadio, LabeledCheckbox, 
     Table, TD, TH, TR, THead, TBody,
+    GridTable, Column,
     Datepicker,
     ErrorBoundary,
     Theme,
@@ -52,6 +53,7 @@ import {
     StatusDropdown,
     StateDropdown,
     Text,
+    CollapsibleV2,
     Collapsible,
     CollapsiblePanel,
     CollapsiblePanels,
@@ -79,6 +81,8 @@ import {
     InputStepper,
     VirtualTableStyles,
     VirtualTable,
+    Csku,
+    Collapsibles,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -93,6 +97,7 @@ import { MenuListComponentProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
+import { Grid, GridItem } from '@commonsku/styles/Grid';
 
 const initialState = {
   date: new Date(),
@@ -537,7 +542,7 @@ const App = () => {
       >
         Hello from Popup
         <br/>
-        <Select inPopup options={options} value={options[0]} />
+        <Select inPopup options={options} defaultValue={options[0]} />
         <CreatableSelect inPopup options={options} value={options[0]}
           onChange={(newValue: any, actionMeta: any) => {
             console.group('Value Changed');
@@ -571,7 +576,7 @@ const App = () => {
             
             <demo.OuterContainer title="Colors" id="colors">
               <demo.InnerContainer title="Primary Colors" id="primary-colors">
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                   <div style={{marginRight: "24px"}}>
                     <demo.LargeLabel>primary1 = teal<br/>ex: primary1['50'] = teal['50']</demo.LargeLabel>
                     <ColorsBlock colors={
@@ -641,7 +646,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Secondary Colors" id="secondary-colors">
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                   <div style={{marginRight: "24px"}}>
                     <demo.LargeLabel>secondary1 = pink<br/>ex: secondary1['60'] = pink['60']</demo.LargeLabel>
                     <ColorsBlock colors={
@@ -794,7 +799,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Neutral and Error Colors" id="neutral-and-error-colors">
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                   <div style={{marginRight: "24px"}}>
                     <demo.LargeLabel>neutrals<br/>ex: neutrals.bodyText = neutrals['90']</demo.LargeLabel>
                     <ColorsBlock colors={
@@ -873,8 +878,29 @@ const App = () => {
                 
 
               </demo.InnerContainer>
-              
+            </demo.OuterContainer>
 
+            <demo.OuterContainer title="Csku" id="csku">
+              <demo.InnerContainer title="Csku Component" id="csku-component">
+                <Csku
+                  width={{
+                    xs: 110,
+                    sm: 220,
+                    md: 330,
+                    lg: 440,
+                    xl: 550,
+                  }}
+                  background={['tomato', 'blue', 'green', 'yellow', 'magenta']}
+                  sx={[
+                    {color: 'black', ':hover': {background: 'teal'}},
+                    {color: 'white', ':hover': {background: 'magenta'}},
+                    {color: 'black', ':hover': {background: 'tomato'}},
+                    {color: 'white', ':hover': {background: 'green'}},
+                    {color: 'black', ':hover': {background: 'tomato'}}
+                  ]}
+                  style={{ padding: 10 }}
+                >Csku</Csku>
+              </demo.InnerContainer>
             </demo.OuterContainer>
 
             <demo.OuterContainer title="Buttons" id="buttons">   
@@ -913,6 +939,12 @@ const App = () => {
                   <IconButton variant="text" mr={24} mb={24}>Text</IconButton>
                   <IconButton variant="error" mr={24} mb={24}>Error</IconButton>
                   <IconButton variant="disabled" mr={24} mb={24}>Disabled</IconButton>
+                  <IconButton
+                    Icon={icons.XIcon}
+                    variant="text-error"
+                    mr={24}
+                    mb={24}
+                  />
                 </div>
 
                 {DemoCodeBlock({code:
@@ -1065,6 +1097,7 @@ const App = () => {
 <CancelButton />
 <DoneButton />`
                 })}
+
 
                 <IconButton Icon={icons.TilesIcon} variant="secondary" size="huge" mr={24}>Tiles</IconButton>
 
@@ -1264,25 +1297,25 @@ const App = () => {
             <demo.OuterContainer title="Fields" id="fields">
               <demo.InnerContainer title="Input Fields" id="input-fields">
                 <Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
-                <Input name="basic-input" value="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+                <Input name="basic-input" defaultValue="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
-                <Input error name="basic-input" value="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+                <Input error name="basic-input" defaultValue="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
 
                 <br />
-                <LabeledInput labelOnTop label='Labeled input' name="basic-input" value="input value" style={{ width: 200 }} placeholder="enter something" />
-                <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" value="disabled value" style={{ width: 200 }} placeholder="enter something" />
-                <LabeledInput labelOnTop error label='Labeled error' name="error-input" value="error value" style={{ width: 200 }} placeholder="enter something" />
+                <LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
+                <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" defaultValue="disabled value" style={{ width: 200 }} placeholder="enter something" />
+                <LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200 }} placeholder="enter something" />
 
                 <br />
                 <LabeledIconInput
                   labelOnTop
                   label='Labeled input'
                   name="basic-input"
-                  value="input value"
+                  defaultValue="input value"
                   placeholder="enter something"
-                  Icon={<icons.DollarIcon style={{ paddingLeft: 10, paddingRight: 0, }} />}
+                  Icon={<icons.DollarIcon  />}
                   style={{ width: 200 }}
                 />
 
@@ -1291,9 +1324,9 @@ const App = () => {
                   disabled
                   label='Labeled disabled'
                   name="basic-disabled"
-                  value="disabled value"
+                  defaultValue="disabled value"
                   placeholder="enter something"
-                  Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
+                  Icon={<icons.TrashIcon color={"#fff"}  />}
                   style={{ width: 200 }}
                 />
 
@@ -1402,6 +1435,14 @@ const App = () => {
                   isDisabled
                 />
 
+                <LabeledSelect value={{ value: 'value4', label: 'value4', }}
+                  options={[
+                    ...(Array(100).fill(1).map((v, i) => (
+                      {value: 'value'+i, label: 'value'+i}
+                    ))),
+                  ]}/>
+                
+
                 <br />
               </ demo.InnerContainer>
 
@@ -1453,7 +1494,22 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Dropdown Button" id="dropdown-button">
-                <Dropdown text="Drop Down" items={
+                <Dropdown text="Drop Down" bordered width={200} items={
+                  [
+                    {onClick: () => null, content: 'New Contact'},
+                    {onClick: () => null, content: 'New Address'},
+                    {
+                      onClick: () => null,
+                      content: <LabeledCheckbox
+                        label="Mustard"
+                        checked={mustard}
+                        onChange={() => toggleMustard(!mustard)}
+                      />
+                    },
+                  ]
+                }/>
+                <br /><br />
+                <Dropdown style={{ float: 'right' }} text="Drop Down" bordered width={300} items={
                   [
                     {onClick: () => null, content: 'New Contact'},
                     {onClick: () => null, content: 'New Address'},
@@ -1716,6 +1772,69 @@ const App = () => {
             
             <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
+                <CollapsibleV2 label={'CollapsibleV2'}>
+                  <Row>
+                    <Col xs>
+                      Collapsible Content
+                    </Col>
+                    <Col xs>
+                      Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                      Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                      pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                      et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                      quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                      nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                      rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                      nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                      auctor augue
+                    </Col>
+                  </Row>
+                </CollapsibleV2>
+                <br />
+                <Collapsibles
+                  list={[
+                    {
+                      label: 'Collapsible 1',
+                      children: <Row>
+                        <Col xs>
+                          Collapsible Content
+                        </Col>
+                        <Col xs>
+                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                          auctor augue
+                        </Col>
+                      </Row>,
+                    },
+                    {
+                      label: 'Collapsible 2',
+                      children: <Row>
+                        <Col xs>
+                          Collapsible Content
+                        </Col>
+                        <Col xs>
+                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                          auctor augue
+                        </Col>
+                      </Row>,
+                    },
+                  ]}
+                />
+                <br />
+
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
                   <Text
                     style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}
@@ -2040,7 +2159,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Windowed Table" noBottomLine>
-                <VirtualTableStyles>
+                <VirtualTableStyles tableHeight="100%">
                   <VirtualTable 
                     columns={tableColumns}
                     data={tableData}
@@ -2048,6 +2167,290 @@ const App = () => {
                 </VirtualTableStyles>
               </demo.InnerContainer>
 
+              <demo.InnerContainer title="GridTable">
+                <demo.MediumLabel>GridTable component uses CSS Grid. This component takes optional 'gridTemplateColumns', 'gridTemplateRows', 'gridColumnGap', 'gridRowGap' props. If these optional props are not provided, the component gives '1fr' for each column and '16px' as gridColumnGap and gridRowGap. <br/><br />
+                The component takes 'Column' components as children which can take any other element you put into it such as select fields, input fields, buttons, etc. The table maps through the data provided in the 'data' prop and creates the columns provided for each object of data. 
+                <br/><br/>
+                This component also takes a 'data', 'onUpdate', 'onDelete', 'onAdd', 'onSort', and 'validate' props. These props are handled by the developer that is using the gridTable. The 'onAdd' prop creates an '+ Add New' button at the bottom of the table which allows the user to create a new row. If an 'onSort' prop is given, the component creates draggable handles for each row. If 'onDelete' is provided then the component creates a delete button for each row. The column width for the drag handles column and delete button column is 'auto'.  
+                </demo.MediumLabel>
+                  
+                  <GridTable
+                    gridTemplateColumns="56px minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr)"
+                    gridTemplateRows="auto"
+                    gridColumnGap="16px"
+                    gridRowGap="16px"
+                    mt={48}
+
+
+                    data={[
+                      { id: 1, tax_name: 'PST', percent: 8, select: 'hello'},
+                      { id: 2, tax_name: 'HST', percent: 15, select: 'hello'},
+                      { id: 3, tax_name: 'HST', percent: 13,  select: 'hello'},
+                    ]}
+
+                    onUpdate={
+                      (value) =>  console.log(value)
+                    }
+                    
+                    onDelete={
+                      (id) => console.log(id, 'test')
+                    }
+
+                    onAdd={
+                      (id) => console.log(id)
+                    }
+
+                    onSort={
+                      (id, index) => console.log(id)
+                    }
+
+                    validate={
+                      (data) => {
+                        // console.log(data);
+
+                        let result: {[key: string] : false | string} = { id: false, tax_name: false, percent: false, select: false, date_picker: false};
+
+                        if (!data.id) {
+                          result.id = "need id";
+                        } else if (isNaN(+data.id)){
+                          result.id = "not a number";
+                        }
+
+                        if (!data.tax_name) {
+                          result.tax_name = "need tax name";
+                        } else if (typeof data.tax_name !== "string"){
+                          result.tax_name = "not a number";
+                        }
+
+                        if (!data.percent) {
+                          result.percent = "Percent is mandatory";
+                        } else if (isNaN(+data.percent)) {
+                          result.percent = "Not a number";
+                        } else if (data.percent < 0) {
+                          result.percent = "Too low";
+                        } else if (data.percent > 100) {
+                          result.percent = "Too high";
+                        }
+
+                        if (!data.select) {
+                          
+                          result.select = "need select";
+                        } else if (data.select?.value !== "skucamp"){
+                          result.select = "this is not skucamp";
+                        }
+
+                        if (!data.date_picker) {
+                          result.date_picker = "need date";
+                        }
+
+                        return result;
+                      }
+                      
+                    }
+                  >
+                    <Column name="id" title={<span style={{display: 'flex', flexDirection: 'row',
+                  justifyContent: 'center'}}>ID <icons.InfoIcon ml={8}/></span>} >
+                      <Input placeholder="enter something" style={{marginBottom: 0}}/>
+                    </Column>
+                    <Column name="tax_name" title="Tax Name" >
+                      <Input placeholder="enter something" style={{marginBottom: 0}}/>
+                    </Column>
+                    <Column name="percent" title="Percent" >
+                      <Input placeholder="enter something" style={{marginBottom: 0}}/>
+                    </Column>
+                    <Column name="select" title="Select" transform={(value) => value} >
+                      <Select inPopup options={options} noMargin />
+                    </Column>
+                    <Column name="date_picker" title={"Datepicker"} transform={(value) => value} >
+                      <Datepicker
+                        value={state.date}
+                        onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+                        noMargin
+                      />
+                    </Column>
+                    
+                </GridTable>
+
+                {DemoCodeBlock({code: 
+`<GridTable
+    gridTemplateColumns="56px minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr)"
+    gridTemplateRows="auto"
+    gridColumnGap="16px"
+    gridRowGap="16px"
+    mt={48}
+
+
+    data={[
+      { id: 1, tax_name: 'PST', percent: 8, select: 'hello'},
+      { id: 2, tax_name: 'HST', percent: 15, select: 'hello'},
+      { id: 3, tax_name: 'HST', percent: 13,  select: 'hello'},
+    ]}
+
+    onUpdate={
+      (value) =>  console.log(value)
+    }
+
+    onDelete={
+      (id) => console.log(id, 'test')
+    }
+
+    onAdd={
+      (id) => console.log(id)
+    }
+
+    onSort={
+      (id, index) => console.log(id)
+    }
+
+    validate={
+      (data) => {
+
+        let result: {[key: string] : false | string} = { id: false, tax_name: false, percent: false, select: false, date_picker: false};
+
+        if (!data.id) {
+          result.id = "need id";
+        } else if (isNaN(+data.id)){
+          result.id = "not a number";
+        }
+
+        if (!data.tax_name) {
+          result.tax_name = "need tax name";
+        } else if (typeof data.tax_name !== "string"){
+          result.tax_name = "not a number";
+        }
+
+        if (!data.percent) {
+          result.percent = "Percent is mandatory";
+        } else if (isNaN(+data.percent)) {
+          result.percent = "Not a number";
+        } else if (data.percent < 0) {
+          result.percent = "Too low";
+        } else if (data.percent > 100) {
+          result.percent = "Too high";
+        }
+
+        if (!data.select) {
+          result.select = "need select";
+        } else if (data.select?.value !== "skucamp"){
+          result.select = "this is not skucamp";
+        }
+
+        if (!data.date_picker) {
+          result.date_picker = "need date";
+        }
+
+        return result;
+      }
+    }
+    >
+      <Column name="id" title={<span style={{display: 'flex', flexDirection: 'row',
+      justifyContent: 'center'}}>ID <icons.InfoIcon ml={8}/></span>} >
+        <Input placeholder="enter something" style={{marginBottom: 0}}/>
+      </Column>
+      <Column name="tax_name" title="Tax Name" >
+        <Input placeholder="enter something" style={{marginBottom: 0}}/>
+      </Column>
+      <Column name="percent" title="Percent" >
+        <Input placeholder="enter something" style={{marginBottom: 0}}/>
+      </Column>
+      <Column name="select" title="Select" transform={(value) => value} >
+        <Select inPopup options={options} noMargin />
+      </Column>
+      <Column name="date_picker" title={"Datepicker"} transform={(value) => value} >
+        <Datepicker
+          value={state.date}
+          onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+          noMargin
+        />
+      </Column>
+
+</GridTable>
+`})}
+                
+              </demo.InnerContainer>
+
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Grid" id="grids">
+              <demo.InnerContainer title="CSS Grid" noBottomLine>
+                <Grid gap={15} columns={4}>
+                  <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
+                  <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
+                  <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
+                  <GridItem style={{ height: 80, background: colors.teal['40'] }}></GridItem>
+
+                  <GridItem colSpan={{ xs: 2, md: 1 }} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem colSpan={{ md: 1 }} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+                  <GridItem colSpan={{ md: 2 }} style={{ height: 80, background: colors.teal['60'] }}></GridItem>
+
+                  <GridItem colSpan={{ md: 1 }} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem colSpan={{ md: 2 }} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+                  <GridItem colSpan={{ xs: 2, md: 1 }} style={{ height: 80, background: colors.teal['70'] }}></GridItem>
+
+                  <GridItem colSpan={{ xs: 3,md: 1 }} style={{ height: 80, background: 'teal' }}></GridItem>
+                  <GridItem colSpan={[null, null, 3]} style={{ height: 80, background: 'teal' }}></GridItem>
+
+                  <GridItem colSpan={{ md: 3 }} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
+                  <GridItem colSpan={[3, null, 1]} style={{ height: 80, background: colors.teal['80'] }}></GridItem>
+
+                  <GridItem colSpan={4} style={{ height: 80, background: colors.teal['90'] }}></GridItem>
+                </Grid>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Flexbox Grid" noBottomLine>
+                <Row>
+                  <Col totalCols={4} xs={1} padded>
+                    <div style={{ height: 80, background: colors.teal['40'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} padded>
+                    <div style={{ height: 80, background: colors.teal['40'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} padded>
+                    <div style={{ height: 80, background: colors.teal['40'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} padded>
+                    <div style={{ height: 80, background: colors.teal['40'] }}></div>
+                  </Col>
+
+                  <Col totalCols={4} xs={2} md={1} padded>
+                    <div style={{ height: 80, background: colors.teal['60'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} md={1} padded>
+                    <div style={{ height: 80, background: colors.teal['60'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} md={2} padded>
+                    <div style={{ height: 80, background: colors.teal['60'] }}></div>
+                  </Col>
+
+                  <Col totalCols={4} xs={1} md={1} padded>
+                    <div style={{ height: 80, background: colors.teal['70'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} md={2} padded>
+                    <div style={{ height: 80, background: colors.teal['70'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={2} md={1} padded>
+                    <div style={{ height: 80, background: colors.teal['70'] }}></div>
+                  </Col>
+
+                  <Col totalCols={4} xs={3} md={1} padded>
+                    <div style={{ height: 80, background: 'teal' }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={1} md={3} padded>
+                    <div style={{ height: 80, background: 'teal' }}></div>
+                  </Col>
+
+                  <Col totalCols={4} xs={1} md={3} padded>
+                    <div style={{ height: 80, background: colors.teal['80'] }}></div>
+                  </Col>
+                  <Col totalCols={4} xs={3} md={1} padded>
+                    <div style={{ height: 80, background: colors.teal['80'] }}></div>
+                  </Col>
+
+                  <Col totalCols={4} xs={4} padded>
+                    <div style={{ height: 80, background: colors.teal['90'] }}></div>
+                  </Col>
+                </Row>
+              </demo.InnerContainer>
             </demo.OuterContainer>
 
             <demo.OuterContainer title="All Icons" id="icons">
@@ -2318,6 +2721,10 @@ const App = () => {
 <CommentIcon number={14234}/>
   `})}
                   </div>
+
+                  <IconsShowcase Icons={[<icons.EllipsisIcon />]} name="EllipsisIcon"/>
+
+                  <IconsShowcase Icons={[<icons.DragIcon />]} name="DragIcon"/>
 
                   <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
                   <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}

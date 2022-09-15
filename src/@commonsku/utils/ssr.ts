@@ -73,6 +73,8 @@ const doc = typeof document !== 'undefined' ? document : {
 };
 
 const win = typeof window !== 'undefined' ? window : {
+  innerWidth: 0,
+  innerHeight: 0,
   document: doc,
   navigator: {
     userAgent: '',
