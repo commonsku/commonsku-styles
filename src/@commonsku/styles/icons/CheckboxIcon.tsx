@@ -24,7 +24,6 @@ export default function CheckboxIcon({
   altText = "Select",
   ...props
 }: CheckboxIconProps) {
-
   return <SVG size={size} aria-labelledby="CheckboxIcon" {...props}>
     <title id="CheckboxIcon">{selected && (altText === "Select" || !altText) ? "Unselect" : altText}</title>
     <path fill="none" d="M0 0h24v24H0z" />
@@ -38,7 +37,6 @@ export default function CheckboxIcon({
       disabledColor={disabledColor}
     />
   </SVG>;
-
 }
 
 type IconPathProps = BaseCheckboxIconProps & { color?: string | undefined; };
