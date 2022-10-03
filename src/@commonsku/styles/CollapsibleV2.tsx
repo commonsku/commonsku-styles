@@ -10,6 +10,7 @@ type BaseCollapsibleProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
   label: TReactNode;
   controls?: TReactNode;
+  header?: TReactNode;
   isOpen?: boolean;
   handleToggle?: React.MouseEventHandler<HTMLDivElement>;
 }>;
@@ -19,6 +20,7 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
     style,
     label,
     controls,
+    header,
     isOpen=false,
     handleToggle,
   } = props;
@@ -61,22 +63,11 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
           ? { border: `3px solid ${colors.teal.main}` }
           : {}),
       }}>
-        <Col xs
-          sm={5.9}
-          style={{ cursor: 'pointer', }}
-          onClick={handleToggle}
-        >
-          <CollapsibleLabel isOpen={isOpen}>{label}</CollapsibleLabel>
-        </Col>
-        <Col xs
-          sm={5.9}
-          style={{ cursor: 'pointer', }}
-          smStyle={`text-align: right;`}
-          xsStyle={`text-align: center;`}
-          onClick={handleToggle}
-        >
-          <CollapsibleControls isOpen={isOpen}>{controls}</CollapsibleControls>
-        </Col>
+        <CollapsibleHeader
+          isOpen={isOpen}
+          handleToggle={handleToggle}
+          controls={controls}
+        >{header || label}</CollapsibleHeader>
         <Col xs
           style={{
             overflow: 'hidden',
@@ -122,6 +113,47 @@ const Collapsible = (props: CollapsibleProps) => {
     </BaseCollapsible>
   );
 };
+
+type CollapsibleHeaderProps = {
+  children: TReactNode;
+  controls?: TReactNode;
+  isOpen?: boolean;
+  handleToggle?: React.MouseEventHandler<HTMLDivElement>;
+};
+const CollapsibleHeader = (props: CollapsibleHeaderProps) => {
+  const {
+    children,
+    controls,
+    isOpen,
+    handleToggle,
+  } = props;
+
+  if (children === undefined || children === null) {
+    return null;
+  }
+  if (typeof children === 'string' || typeof children === 'number' || typeof children === 'boolean') {
+    return <>
+      <Col xs
+        sm={5.9}
+        style={{ cursor: 'pointer', }}
+        onClick={handleToggle}
+      >
+        <CollapsibleLabel isOpen={isOpen}>{children}</CollapsibleLabel>
+      </Col>
+      <Col xs
+        sm={5.9}
+        style={{ cursor: 'pointer', }}
+        smStyle={`text-align: right;`}
+        xsStyle={`text-align: center;`}
+        onClick={handleToggle}
+      >
+        <CollapsibleControls isOpen={isOpen}>{controls}</CollapsibleControls>
+      </Col>
+    </>;
+  }
+  return React.cloneElement(children, { isOpen, handleToggle });
+};
+
 
 type CollapsibleLabelProps = {
   children?: TReactNode;
