@@ -1,6 +1,6 @@
 import styled, { CSSObject, SimpleInterpolation, StyledComponent } from 'styled-components';
 import { parseMeasurement, stripUnit } from '../utils';
-import { isSizeObj, parseResponsiveValue, ResponsiveValue } from '../utils/styled';
+import { psuedoSelectors, isSizeObj, parseResponsiveValue, ResponsiveValue } from '../utils/styled';
 
 export const createMeasurementStyle = (v: string | number, keys: string[]) => {
   const value = typeof v === 'string' && ['auto', 'none'].includes(v)
@@ -16,7 +16,15 @@ const styleKeys = [
   'color', 'bg', 'background', 'backgroundColor',
   'colSpan',
   'style', 'sx',
+  Object.keys(psuedoSelectors),
 ];
+
+const psuedoStylesTransformMap = Object.keys(psuedoSelectors)
+  .reduce((acc, k) => ({
+    ...acc,
+    [k]: (v: CSSObject) => ({ [psuedoSelectors[k]]: v }),
+  }), {});
+
 const stylesTransformMap = {
   mr: (v: string | number) => createMeasurementStyle(v, ['marginRight']),
   ml: (v: string | number) => createMeasurementStyle(v, ['marginLeft']),
@@ -61,6 +69,7 @@ const stylesTransformMap = {
   },
   style: (v: CSSObject) => v,
   sx: (v: CSSObject) => v,
+  ...psuedoStylesTransformMap,
 };
 
 export type BaseCskuProps = {
@@ -90,6 +99,17 @@ export type BaseCskuProps = {
   grid?: ResponsiveValue<boolean>;
   float?: ResponsiveValue<string>;
   colSpan?: ResponsiveValue<string | number | boolean>;
+  __after?: ResponsiveValue<CSSObject>;
+  __before?: ResponsiveValue<CSSObject>;
+  __firstLetter?: ResponsiveValue<CSSObject>;
+  __firstLine?: ResponsiveValue<CSSObject>;
+  __active?: ResponsiveValue<CSSObject>;
+  __firstChild?: ResponsiveValue<CSSObject>;
+  __focus?: ResponsiveValue<CSSObject>;
+  __hover?: ResponsiveValue<CSSObject>;
+  __lang?: ResponsiveValue<CSSObject>;
+  __link?: ResponsiveValue<CSSObject>;
+  __visited?: ResponsiveValue<CSSObject>;
   style?: ResponsiveValue<CSSObject>;
   sx?: ResponsiveValue<CSSObject>;
 };

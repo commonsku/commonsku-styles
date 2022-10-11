@@ -2,6 +2,20 @@ import React from 'react';
 import { CSSObject, FlattenSimpleInterpolation, SimpleInterpolation } from 'styled-components';
 import { sizes, sizeMedia, TSize } from './sizes';
 
+export const psuedoSelectors = {
+  __after: '&:after',
+  __before: '&:before',
+  __firstLetter: '&:first-letter',
+  __firstLine: '&:first-line',
+  __active: '&:active',
+  __firstChild: '&:first-child',
+  __focus: '&:focus',
+  __hover: '&:hover',
+  __lang: '&:lang',
+  __link: '&:link',
+  __visited: '&:visited',
+};
+
 export type ResponsiveValue<T = string | number> = T
   | Array<T | null>
   | {
