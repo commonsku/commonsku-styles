@@ -606,6 +606,7 @@ export type LabeledCheckboxProps = {
   stopPropagation?: boolean;
   labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
   checkboxIconProps?: CheckboxIconProps;
+  indeterminate?: boolean;
   [key: string]: any;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -616,14 +617,14 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
       name,
       checked,
       disabled,
-      indeterminate,
       onChange,
       checkboxColor,
       checkboxHoverColor,
-      labelStyle={},
-      checkboxStyle={},
       hoverByLabel=true,
       stopPropagation=false,
+      indeterminate=false,
+      labelStyle={},
+      checkboxStyle={},
       labelProps={},
       checkboxIconProps={},
       ...props
