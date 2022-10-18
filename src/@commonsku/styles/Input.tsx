@@ -196,6 +196,7 @@ type BaseLabeledIconInputProps = InputProps & {
   Icon: React.ReactElement,
   iconPosition?: 'left' | 'right',
   iconLabelStyles?: React.CSSProperties,
+  containerStyle?: React.CSSProperties,
 } & SharedStyleTypes;
 type LabeledIconInputProps = React.InputHTMLAttributes<HTMLInputElement> & BaseLabeledIconInputProps;
 export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconInputProps>(
@@ -217,6 +218,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
       onBlur,
       iconPosition = 'left',
       iconLabelStyles = {},
+      containerStyle = {},
       ...props
     },
     ref
@@ -287,7 +289,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
     }, []);
 
     return (
-      <div>
+      <div style={containerStyle}>
         {label ? <Label
           htmlFor={name}
           style={{
