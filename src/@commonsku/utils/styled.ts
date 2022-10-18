@@ -45,7 +45,7 @@ export const parseResponsiveValue = (
     }).reduce((acc, v) => ({ ...acc, ...v }), {});
   } else if (typeof value === 'object') {
     if (!isSizeObj(value)) {
-      return value;
+      return transform(value) || value;
     }
     return Object.keys(value)
       .filter((k) => sizes.includes(k as TSize))

@@ -16,7 +16,7 @@ const styleKeys = [
   'color', 'bg', 'background', 'backgroundColor',
   'colSpan',
   'style', 'sx',
-  Object.keys(psuedoSelectors),
+  ...Object.keys(psuedoSelectors),
 ];
 
 const psuedoStylesTransformMap = Object.keys(psuedoSelectors)
