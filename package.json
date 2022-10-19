@@ -23,7 +23,8 @@
     "packTest": "npm pack --dry-run",
     "eject": "react-scripts eject",
     "styleguide": "styleguidist server --open",
-    "styleguide:build": "styleguidist build"
+    "styleguide:build": "styleguidist build",
+    "postinstall": "npx npm-install-peers"
   },
   "keywords": [
     "commonsku",
