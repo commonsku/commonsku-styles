@@ -47,10 +47,11 @@ class Img extends Component {
       });
     }, attempt_interval * (this.state.attempts + 1) * (this.state.attempts + 1));
   }
-  render() { const props = {
+  render() {
+    const props = {
+      onError: this.onError,
       ...this.props,
       src: this.state.src,
-      onError: this.onError
     };
     return (
       <img alt="" {...props} />
