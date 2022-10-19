@@ -93,7 +93,7 @@ import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
-import { MenuListComponentProps } from 'react-select';
+import { MenuListProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
@@ -283,9 +283,7 @@ const tableData = [
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ] 
 
-const SelectMenuList = (
-  props: MenuListComponentProps<{label: string, value: string}>
-) => {
+const SelectMenuList = (props: MenuListProps) => {
   return (
     <selectComponents.MenuList {...props}>
       {props.children}
