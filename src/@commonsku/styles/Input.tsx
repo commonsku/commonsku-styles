@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 import React, { useState, useRef, CSSProperties, useEffect } from 'react'
-import styled, { CSSObject, StyledComponent } from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
 import { getThemeColor, colors, fontStyles } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import {Label} from './Label'
