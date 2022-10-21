@@ -6,15 +6,15 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 
 type TReactNode = React.ReactChild | React.ReactPortal | null | undefined;
-type BaseCollapsibleProps = React.PropsWithRef<React.PropsWithChildren<{
+type BaseCollapsibleProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
   label: TReactNode;
   controls?: TReactNode;
   header?: TReactNode;
   isOpen?: boolean;
   handleToggle?: React.MouseEventHandler<HTMLDivElement>;
-}>>;
-export const BaseCollapsible = React.forwardRef<HTMLDivElement, BaseCollapsibleProps>((props, ref) => {
+}>;
+export const BaseCollapsible = (props: BaseCollapsibleProps) => {
   const {
     children,
     style,
@@ -28,14 +28,14 @@ export const BaseCollapsible = React.forwardRef<HTMLDivElement, BaseCollapsibleP
   const [height, setHeight] = useState<number | undefined>(
     isOpen ? undefined : 0
   );
-  const childrenWrapperRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!height || !isOpen || !childrenWrapperRef.current) return undefined;
+    if (!height || !isOpen || !ref.current) return undefined;
     const resizeObserver = new ResizeObserver((el) => {
       setHeight(el[0].contentRect.height);
     });
-    resizeObserver.observe(childrenWrapperRef.current);
+    resizeObserver.observe(ref.current);
 
     return () => {
       resizeObserver.disconnect();
@@ -43,12 +43,12 @@ export const BaseCollapsible = React.forwardRef<HTMLDivElement, BaseCollapsibleP
   }, [height, isOpen]);
 
   useEffect(() => {
-    if (isOpen) setHeight(childrenWrapperRef.current?.getBoundingClientRect().height);
+    if (isOpen) setHeight(ref.current?.getBoundingClientRect().height);
     else setHeight(0);
   }, [isOpen]);
 
   return (
-    <div style={style} ref={ref}>
+    <div style={style}>
       <Row style={{
         alignItems: 'center',
         padding: 10,
@@ -75,22 +75,22 @@ export const BaseCollapsible = React.forwardRef<HTMLDivElement, BaseCollapsibleP
             height: height,
           }}
         >
-          <div ref={childrenWrapperRef}>{children}</div>
+          <div ref={ref}>{children}</div>
         </Col>
       </Row>
     </div>
   );
-});
+};
 
-type CollapsibleProps = React.PropsWithRef<React.PropsWithChildren<{
+type CollapsibleProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
   label: TReactNode;
   controls?: TReactNode;
   open?: boolean;
   onToggleOpen?: (v: boolean) => void;
-}>>;
+}>;
 
-const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>((props, ref) => {
+const Collapsible = (props: CollapsibleProps) => {
   const {
     children,
     open,
@@ -108,11 +108,11 @@ const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>((props, r
   };
 
   return (
-    <BaseCollapsible ref={ref} isOpen={isOpen} handleToggle={handleToggle} {...rest}>
+    <BaseCollapsible isOpen={isOpen} handleToggle={handleToggle} {...rest}>
       {children}
     </BaseCollapsible>
   );
-});
+};
 
 type CollapsibleHeaderProps = {
   children: TReactNode;
