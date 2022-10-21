@@ -99,6 +99,7 @@ export type ArtworkProps = {
   onEdit?:Function|VoidFunction,
   onDelete?:Function|VoidFunction,
   onSave?:Function|VoidFunction,
+  onError?:Function|VoidFunction,
   onDownload?:Function|VoidFunction,
   inputProps?: InputProps,
   inputEl?:React.ReactNode,
@@ -112,7 +113,7 @@ export const Artwork = ({
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
     {props.picture?
       <ArtworkPicture onClick={(e) => props.onClick ? props.onClick(e) : null} cssHeight={props.cssHeight ? props.cssHeight : 17}>
-        <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}}/>
+        <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}} onError={props.onError}/>
       </ArtworkPicture>
       :
       <IconDoc ext={extension(props.name)} style={{width:"3vw"}} />
