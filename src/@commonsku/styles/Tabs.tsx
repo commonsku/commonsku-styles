@@ -29,12 +29,15 @@ const TabBar = styled.ul<{padded?: boolean} & SharedStyleTypes>`
   }
 `
 
-type Tabprops = {
-  selected?: boolean;
+type CommonTabProps = {
   size?: keyof typeof tabSizes;
   variant?: 'primary' | 'secondary';
-} & SharedStyleTypes;
-const Tab = styled.li<Tabprops>`
+};
+
+type TabProps = {
+  selected?: boolean;
+} & CommonTabProps & SharedStyleTypes;
+const Tab = styled.li<TabProps>`
   &&& {
     cursor: pointer;
     display: inline-block;
@@ -54,38 +57,16 @@ const Tab = styled.li<Tabprops>`
   }
 `
 
-/* 
-
-Here's how you use this:
-
-<Tabs tabs={[
-              { name: "abc", label: "ABC", content: <div>abc</div> },
-              { name: "xyz", label: "XYZ", content: <div>xyz</div> },
-           ]}
-/>
-
-*/
-
-// const Tabs = ({ tabs }: { tabs: {label: string, content: React.ReactNode}[], }) => {
-//   /* add state, onclick event */
-//   const [state, setState] = useState({ 
-//     selectedTabIndex: 0,
-//     selectedTab: tabs[0]
-//   });
-//   return <div>
-//     <TabBar>
-//       {tabs.map((tab, index) => <Tab key={index}
-//         selected={index == state.selectedTabIndex}
-//         onClick={() => setState({ ...state, selectedTabIndex: index })}>
-//         {tab.label}
-//       </Tab>)}
-//     </TabBar>
-//     {tabs[state.selectedTabIndex].content}
-//   </div>
-// }
-
-export type TTab = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
-export type TabsProps = { tabs: TTab[], selectedTabIndex?: number, padded?: boolean, size?: keyof typeof tabSizes };
+export type TTab = {
+  label: string,
+  content: React.ReactNode,
+  onClick?: (e?: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
+} & CommonTabProps;
+export type TabsProps = {
+  tabs: TTab[],
+  selectedTabIndex?: number,
+  padded?: boolean
+} & CommonTabProps;
 type TabsState = {selectedTabIndex: number};
 
 class Tabs extends Component<TabsProps, TabsState> {
@@ -130,15 +111,17 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   render () {
-    const { tabs, size } = this.props;
+    const { tabs, size, padded, variant, } = this.props;
     const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
     return <div>
-      <TabBar padded={this.props.padded === true}>
+      <TabBar padded={padded}>
         {tabs.map((tab, index) => <Tab 
-          key={index} size={size}
+          key={index}
+          size={tab.size || size}
+          variant={tab.variant || variant}
           selected={index === this.state.selectedTabIndex}
-          onClick={() => {
-            this.setState({ selectedTabIndex: index })
+          onClick={(e) => {
+            this.setState({ selectedTabIndex: index });
             let callback = tabs[index].onClick;
             if(callback) { callback(); }
           }}>

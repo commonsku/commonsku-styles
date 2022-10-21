@@ -2,6 +2,20 @@ import React from 'react';
 import { CSSObject, FlattenSimpleInterpolation, SimpleInterpolation } from 'styled-components';
 import { sizes, sizeMedia, TSize } from './sizes';
 
+export const psuedoSelectors = {
+  __after: '&:after',
+  __before: '&:before',
+  __firstLetter: '&:first-letter',
+  __firstLine: '&:first-line',
+  __active: '&:active',
+  __firstChild: '&:first-child',
+  __focus: '&:focus',
+  __hover: '&:hover',
+  __lang: '&:lang',
+  __link: '&:link',
+  __visited: '&:visited',
+};
+
 export type ResponsiveValue<T = string | number> = T
   | Array<T | null>
   | {
@@ -31,7 +45,7 @@ export const parseResponsiveValue = (
     }).reduce((acc, v) => ({ ...acc, ...v }), {});
   } else if (typeof value === 'object') {
     if (!isSizeObj(value)) {
-      return value;
+      return transform(value) ||value;
     }
     return Object.keys(value)
       .filter((k) => sizes.includes(k as TSize))

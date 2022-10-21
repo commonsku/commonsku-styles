@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 import { debounce } from "lodash";
-import { IconButton } from './Button';
+import { IconButton, IconButtonProps } from './Button';
 import { fontStyles } from './Theme';
 import { neutrals } from "./colors";
 import { AddIcon, SubtractIcon } from "./icons";
@@ -19,6 +19,9 @@ type InputStepperProps = Omit<NumberInputProps, 'value'> & {
     label?: string;
     labelStyle?: React.CSSProperties;
     inputDisabled?: boolean;
+    delayChangeTimeout?: number;
+    holdIncrement?: boolean;
+    holdDecrement?: boolean;
 };
 
 const InputStepperOuterContainer = styled.div<{ width?: string } & SharedStyleTypes & SizerTypes>`
@@ -69,6 +72,59 @@ const CurrentNumber = styled.div<SharedStyleTypes & SizerTypes>`
     }
 `;
 
+
+type InputStepperStyledProps = Omit<NumberInputProps, 'onChange'> & {
+    onCHange?: React.ChangeEventHandler<HTMLInputElement>;
+    containerWidth?: string;
+    style?: CSSProperties;
+    label?: string;
+    labelStyle?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
+    inputDisabled?: boolean;
+    decrementButtonProps?: IconButtonProps;
+    incrementButtonProps?: IconButtonProps;
+    onIncrement?: React.MouseEventHandler<HTMLButtonElement>;
+    onDecrement?: React.MouseEventHandler<HTMLButtonElement>;
+};
+export function InputStepperStyled(props: InputStepperStyledProps) {
+    const {
+        containerWidth,
+        inputDisabled,
+        label,
+        labelStyle,
+        containerStyle,
+        style,
+        onIncrement,
+        onDecrement,
+        decrementButtonProps={},
+        incrementButtonProps={},
+        ...rest
+    } = props;
+    return (
+        <InputStepperOuterContainer width={containerWidth} style={containerStyle}>
+            {label && <InputStepperLabel style={labelStyle}>{label}</InputStepperLabel>}
+            <InputStepperInnerContainer style={style}>
+                <IconButton
+                    Icon={SubtractIcon}
+                    style={{ borderRadius: "5px 0 0 5px" }}
+                    onClick={onDecrement}
+                    {...decrementButtonProps}
+                />
+                <Input
+                    {...rest}
+                    style={{ width: '100%', margin: 0, borderRadius: 0, textAlign: "center" }}
+                />
+                <IconButton
+                    Icon={AddIcon}
+                    style={{ borderRadius: "0 5px 5px 0" }}
+                    onClick={onIncrement}
+                    {...incrementButtonProps}
+                />
+            </InputStepperInnerContainer>
+        </InputStepperOuterContainer>
+    )
+}
+
 export const canIncrement = (value: number, max?: number) =>
     (max !== undefined && value < max) || max === undefined;
 export const canDecrement = (value: number, min?: number) =>
@@ -86,6 +142,9 @@ export default function InputStepper(props: InputStepperProps) {
         inputDisabled=false,
         localeOptions,
         initialValue,
+        delayChangeTimeout = 1000,
+        holdIncrement = true,
+        holdDecrement = true,
         ...rest
     } = props;
 
@@ -153,7 +212,7 @@ export default function InputStepper(props: InputStepperProps) {
         } else if (!canDecrement(parseInt(val), min) && min !== undefined) {
             updateValue(min);
         }
-    }, [ref, min, max, updateValue]), 1000);
+    }, [ref, min, max, updateValue]), delayChangeTimeout);
 
     return (
         <InputStepperOuterContainer width={width}>
@@ -165,13 +224,13 @@ export default function InputStepper(props: InputStepperProps) {
                     onClick={handleDecrement}
                     style={{ borderRadius: "5px 0 0 5px" }}
                     onMouseDown={e => {
-                        if (e.button !== 0) { return; }
+                        if (e.button !== 0 || !holdDecrement) { return; }
                         onDecrementMouseDown();
                     }}
-                    onMouseOut={onDecrementMouseLeave}
-                    onMouseUp={onDecrementMouseUp}
-                    onTouchEnd={onDecrementTouchEnd}
-                    onTouchStart={onDecrementTouchStart}
+                    onMouseOut={holdDecrement ? onDecrementMouseLeave : undefined}
+                    onMouseUp={holdDecrement ? onDecrementMouseUp : undefined}
+                    onTouchEnd={holdDecrement ? onDecrementTouchEnd : undefined}
+                    onTouchStart={holdDecrement ? onDecrementTouchStart : undefined}
                 />
                 <Input
                     {...rest}
@@ -191,13 +250,13 @@ export default function InputStepper(props: InputStepperProps) {
                     onClick={handleIncrement}
                     style={{ borderRadius: "0 5px 5px 0" }}
                     onMouseDown={e => {
-                        if (e.button !== 0) { return; }
+                        if (e.button !== 0 || !holdIncrement) { return; }
                         onIncrementMouseDown();
                     }}
-                    onMouseOut={onIncrementMouseLeave}
-                    onMouseUp={onIncrementMouseUp}
-                    onTouchEnd={onIncrementTouchEnd}
-                    onTouchStart={onIncrementTouchStart}
+                    onMouseOut={holdIncrement ? onIncrementMouseLeave : undefined}
+                    onMouseUp={holdIncrement ? onIncrementMouseUp : undefined}
+                    onTouchEnd={holdIncrement ? onIncrementTouchEnd : undefined}
+                    onTouchStart={holdIncrement ? onIncrementTouchStart : undefined}
                 />
             </InputStepperInnerContainer>
         </InputStepperOuterContainer>
