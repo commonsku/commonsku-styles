@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import { get, isString } from 'lodash'
 import styled, { css } from 'styled-components'
-import React, { Component } from 'react'
+import React, { Component, MouseEvent } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import colors from './colors';
 
@@ -84,7 +84,7 @@ Here's how you use this:
 //   </div>
 // }
 
-export type TTab = {label: string, content: React.ReactNode, onClick?: Function|VoidFunction};
+export type TTab = {label: string | React.ReactNode, content: React.ReactNode, onClick?: (e?: MouseEvent<HTMLLIElement>) => void};
 export type TabsProps = { tabs: TTab[], selectedTabIndex?: number, padded?: boolean, size?: keyof typeof tabSizes };
 type TabsState = {selectedTabIndex: number};
 
@@ -118,8 +118,10 @@ class Tabs extends Component<TabsProps, TabsState> {
     || (
       prevProps.tabs.length === this.props.tabs.length
       && prevProps.tabs.every((e, i) =>
-        e.label === this.props.tabs[i].label
-        && (e.onClick || "null").toString() === (this.props.tabs[i].onClick || 'null').toString()
+        !isString(e.label) || (
+          e.label === this.props.tabs[i].label
+          && (e.onClick || "null").toString() === (this.props.tabs[i].onClick || 'null').toString()
+        )
       )
     );
     if (!sameTabs) {
@@ -130,22 +132,23 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   render () {
-    const { tabs, size } = this.props;
+    const { tabs, size, ...props } = this.props;
     const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
-    return <div>
+    return <div {...props}>
       <TabBar padded={this.props.padded === true}>
         {tabs.map((tab, index) => <Tab 
           key={index} size={size}
+          className={index === this.state.selectedTabIndex ? 'selected' : ''}
           selected={index === this.state.selectedTabIndex}
-          onClick={() => {
+          onClick={(e) => {
             this.setState({ selectedTabIndex: index })
             let callback = tabs[index].onClick;
-            if(callback) { callback(); }
+            if(callback) { callback(e); }
           }}>
           {tab.label}
         </Tab>)}
       </TabBar>
-      {_.get(selectedTab, ['content'], '')}
+      {get(selectedTab, ['content'], '')}
     </div>
   }
 }
