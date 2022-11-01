@@ -1,7 +1,8 @@
-import React, { ReactNode, useEffect, useState, useRef, useCallback } from 'react';
+import { filter } from 'lodash';
+import React, { ReactNode, useEffect, useState, useRef, useCallback, MouseEventHandler } from 'react';
 import styled, { CSSObject } from 'styled-components'
 import { getColor } from './Theme';
-import { Button, ButtonVariant, TSize } from './Button';
+import { Button, ButtonVariant, ButtonProps, TSize } from './Button';
 import { ChevronIcon } from './icons';
 import { document, stripUnit, window } from '../utils';
 
@@ -84,7 +85,7 @@ export const DropDownContent = styled.div<DropdownContentProps>`
 `;
 
 export type TDropdownItem = {
-    onClick?: Function|VoidFunction|null;
+    onClick?: MouseEventHandler<HTMLDivElement>;
     props?: {
         [key: string]: any;
         underlined?:boolean;
@@ -99,6 +100,7 @@ export type DropdownProps = {
     size?: TSize;
     style?: CSSObject;
     buttonVariant?: ButtonVariant;
+    buttonProps?: ButtonProps,
     width?: string | number;
     bordered?: boolean;
     hideOnMouseLeave?: boolean;
@@ -131,6 +133,7 @@ export const Dropdown = ({
     size,
     style={},
     buttonVariant,
+    buttonProps={},
     width=160,
     bordered=false,
     hideOnMouseLeave=true,
@@ -190,21 +193,23 @@ export const Dropdown = ({
                         variant={buttonVariant}
                         onClick={() => handleToggleMenu(!showMenu)}
                         ref={buttonRef}
+                        {...buttonProps}
                     >
                         {text ? text : "Actions"} <ChevronIcon direction="up"  {...iconProps} />
                     </Button>
                 }
                 {showMenu && <DropDownContent style={contentStyle} underlined={underlined} primary={primary} width={width} bordered={bordered}>
-                    {items && items.map((item, i) => {
-                        return item && <DropdownItem key={'dropdown-item-'+i}
-                            {...item.props}
+                    {items && filter(items).map(({ onClick, content, props: legecyProps, ...itemProps }, i) => {
+                        return <DropdownItem key={'dropdown-item-'+i}
+                            underlined={underlined}
+                            {...legecyProps}
                             primary={primary}
-                            underlined={item.props && item.props.underlined ? item.props.underlined : underlined}
-                            onClick={() => {
+                            onClick={(e) => {
                                 setShowMenu(false);
-                                item.onClick && item.onClick()
+                                onClick && onClick(e);
                             }}
-                        >{item.content}</DropdownItem>
+                            {...itemProps}
+                        >{content}</DropdownItem>
                     })}
                     {children ? children : null}
                 </DropDownContent>}
