@@ -132,12 +132,12 @@ export const themeOptions = {
 
 export function getColor(color?: string, def?: string): string {
   if (!color) { return ''; }
-  return _.get(colors, color, _.get(colors, def || '', def));
+  return _.get(colors, color, _.get(colors, def || '', def)) ?? '';
 }
 
 export function getFontStyle(value?: string, def?: string): string {
   if (!value) { return ''; }
-  return _.get(fontStyles, value, _.get(fontStyles, def || '', def));
+  return _.get(fontStyles, value, _.get(fontStyles, def || '', def)) ?? '';
 }
 
 export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
@@ -164,7 +164,7 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
       return props.theme[prop];
     }
   } else if (_.get(themeOptions, `${prop}.${value}`, null)) {
-    return _.get(themeOptions, `${prop}.${value}`, null);
+    return _.get(themeOptions, `${prop}.${value}`) ?? '';
   }
 
   switch (prop) {
@@ -179,7 +179,7 @@ export function getThemeProperty(props: {[key: string]: any}, prop: string, valu
         themeOptions.fontFamilies,
         `${value}.fontFamily`,
         fallbackValue || themeOptions.fontFamily
-      );
+      ) ?? '';
     default:
       return '';
   }

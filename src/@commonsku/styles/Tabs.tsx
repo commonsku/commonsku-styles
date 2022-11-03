@@ -132,10 +132,10 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   render () {
-    const { tabs, size, ...props } = this.props;
+    const { tabs, size, padded, ...props } = this.props;
     const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
     return <div {...props}>
-      <TabBar padded={this.props.padded === true}>
+      <TabBar padded={padded === true}>
         {tabs.map((tab, index) => <Tab 
           key={index} size={size}
           className={index === this.state.selectedTabIndex ? 'selected' : ''}
