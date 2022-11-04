@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import { get, isString } from 'lodash'
 import styled, { css } from 'styled-components'
-import React, { Component } from 'react'
+import React, { Component, MouseEvent } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import colors from './colors';
 
@@ -57,10 +57,40 @@ const Tab = styled.li<TabProps>`
   }
 `
 
+/* 
+
+Here's how you use this:
+
+<Tabs tabs={[
+              { name: "abc", label: "ABC", content: <div>abc</div> },
+              { name: "xyz", label: "XYZ", content: <div>xyz</div> },
+           ]}
+/>
+
+*/
+
+// const Tabs = ({ tabs }: { tabs: {label: string, content: React.ReactNode}[], }) => {
+//   /* add state, onclick event */
+//   const [state, setState] = useState({ 
+//     selectedTabIndex: 0,
+//     selectedTab: tabs[0]
+//   });
+//   return <div>
+//     <TabBar>
+//       {tabs.map((tab, index) => <Tab key={index}
+//         selected={index == state.selectedTabIndex}
+//         onClick={() => setState({ ...state, selectedTabIndex: index })}>
+//         {tab.label}
+//       </Tab>)}
+//     </TabBar>
+//     {tabs[state.selectedTabIndex].content}
+//   </div>
+// }
+
 export type TTab = {
-  label: string,
+  label: string | React.ReactNode,
   content: React.ReactNode,
-  onClick?: (e?: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
+  onClick?: (e?: MouseEvent<HTMLLIElement>) => void
 } & CommonTabProps;
 export type TabsProps = {
   tabs: TTab[],
@@ -99,8 +129,10 @@ class Tabs extends Component<TabsProps, TabsState> {
     || (
       prevProps.tabs.length === this.props.tabs.length
       && prevProps.tabs.every((e, i) =>
-        e.label === this.props.tabs[i].label
-        && (e.onClick || "null").toString() === (this.props.tabs[i].onClick || 'null').toString()
+        !isString(e.label) || (
+          e.label === this.props.tabs[i].label
+          && (e.onClick || "null").toString() === (this.props.tabs[i].onClick || 'null').toString()
+        )
       )
     );
     if (!sameTabs) {
@@ -111,24 +143,25 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   render () {
-    const { tabs, size, padded, variant, } = this.props;
+    const { tabs, size, padded, variant, ...props } = this.props;
     const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
-    return <div>
-      <TabBar padded={padded}>
+    return <div {...props}>
+      <TabBar padded={padded === true}>
         {tabs.map((tab, index) => <Tab 
           key={index}
           size={tab.size || size}
           variant={tab.variant || variant}
+          className={index === this.state.selectedTabIndex ? 'selected' : ''}
           selected={index === this.state.selectedTabIndex}
           onClick={(e) => {
-            this.setState({ selectedTabIndex: index });
+            this.setState({ selectedTabIndex: index })
             let callback = tabs[index].onClick;
-            if(callback) { callback(); }
+            if(callback) { callback(e); }
           }}>
           {tab.label}
         </Tab>)}
       </TabBar>
-      {_.get(selectedTab, ['content'], '')}
+      {get(selectedTab, ['content'], '')}
     </div>
   }
 }

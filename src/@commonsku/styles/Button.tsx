@@ -99,7 +99,7 @@ export type ButtonVariant = 'primary'
   // | 'error-outline'
   // | 'disabled-outline';
 
-type ButtonProps = {
+export type ButtonProps = {
   secondary?: boolean;
   cta?: boolean;
   size?: TSize;

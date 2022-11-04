@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Button } from './Button';
@@ -6,6 +6,8 @@ import { Col } from './FlexboxGrid';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerCss, SizerTypes } from './Sizer'
 import { document } from '../utils';
+import useClickOutside from './hooks/useClickOutside';
+import { useFallbackRef } from './hooks';
 
 export const Overlay = styled.div<{ zIndex?: number; }>`
   &&& {
@@ -52,6 +54,7 @@ const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, 
     ${SizerCss}
   }
 `;
+type PopupWindow = typeof PopupWindow;
 
 export const PopupHeader = styled.div<SharedStyleTypes & SizerTypes>`
   &&& {
@@ -111,32 +114,32 @@ export type PopupProps = React.PropsWithChildren<{
     contentClassName?: string;
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
-export const Popup = ({
-  header,
-  noHeader=false,
-  title,
-  controls,
-  children,
-  onClose,
-  noCloseButton=false,
-  closeOnEsc=true,
-  closeOnClickOutside=false,
-  overlayZIndex,
-  popupClassName,
-  contentClassName,
-  ...props
-}: PopupProps) => {
-  const ref = React.useRef<HTMLDivElement | null>(null);
-
-  /* there is a bug where this closes popup involuntarily
-  const handleClick = (e: Event) => {
-    // @ts-ignore
-    if (ref.current?.contains(e.target)) {
-      return;
-    }
-    onClose && onClose();
-  };
-  */
+export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
+  {
+    header,
+    noHeader=false,
+    title,
+    controls,
+    children,
+    onClose,
+    noCloseButton=false,
+    closeOnEsc=true,
+    closeOnClickOutside=false,
+    overlayZIndex,
+    popupClassName,
+    contentClassName,
+    ...props
+  }: PopupProps, 
+  forwardedRef 
+) => {
+  const ref = useFallbackRef<HTMLDivElement>(forwardedRef);
+  useClickOutside({
+    ref,
+    onClick: (e) => {
+      closeOnClickOutside && onClose && onClose(e);
+    },
+    onCleanup: onClose,
+  });
 
   useEffect(() => {
     const handleKeyDown = (e: Event) => {
@@ -147,17 +150,11 @@ export const Popup = ({
       }
     };
 
-    if(closeOnClickOutside) {
-      //document.addEventListener("mousedown", handleClick);
-    }
     if (closeOnEsc) {
       document.addEventListener("keyup", handleKeyDown);
     }
 
     return () => {
-      if(closeOnClickOutside) {
-        //document.removeEventListener("mousedown", handleClick);
-      }
       if (closeOnEsc) {
         document.removeEventListener("keyup", handleKeyDown);
       }
@@ -183,7 +180,7 @@ export const Popup = ({
       </PopupWindow>
     </Overlay>
   </PopupContainer>
-}
+})
 
 export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
   popup: React.ComponentType<PopupProps>,
