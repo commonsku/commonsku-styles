@@ -1,3 +1,5 @@
+import { useClickOutside } from './hooks'
+
 export * from './Avatar'
 export * from './Box'
 export * from './Background'
@@ -68,3 +70,4 @@ export { default as ConfirmPopup } from './ConfirmPopup';
 
 export * from './calendar';
 export * from './tables';
+export * from './hooks';
