@@ -11,9 +11,7 @@ const useClickOutside = <T extends HTMLElement = HTMLElement>(
   const { ref, eventType = 'mousedown', onClick, onCleanup } = props;
   useEffect(() => {
     function handleClickOutside(this: Document, e: MouseEvent): any {
-      console.log('handleClickOutside');
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        console.log('click outside');
         onClick && onClick(e);
       }
     };
