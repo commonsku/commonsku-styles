@@ -110,10 +110,26 @@ export type PopupProps = React.PropsWithChildren<{
     padding?: string,
     zIndex?: number,
     overlayZIndex?: number;
+    popupClassName?: string;
+    contentClassName?: string;
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
 export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
-  { header, noHeader=false, title, controls, children, onClose, noCloseButton=false, closeOnEsc=true, closeOnClickOutside=false, overlayZIndex, ...props }: PopupProps, 
+  {
+    header,
+    noHeader=false,
+    title,
+    controls,
+    children,
+    onClose,
+    noCloseButton=false,
+    closeOnEsc=true,
+    closeOnClickOutside=false,
+    overlayZIndex,
+    popupClassName,
+    contentClassName,
+    ...props
+  }: PopupProps, 
   forwardedRef 
 ) => {
   const ref = useFallbackRef<HTMLDivElement>(forwardedRef);
@@ -147,7 +163,7 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
 
   return <PopupContainer>
     <Overlay zIndex={overlayZIndex}>
-      <PopupWindow className="popup" {...props} ref={ref}>
+      <PopupWindow className={"popup" + (popupClassName ? ` ${popupClassName}` : '')} {...props} ref={ref}>
           {noHeader ? null :
             header ? header : (
               <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
@@ -160,7 +176,7 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
                   </Col>
               </PopupHeader>
           )}
-          <div className="popup-content">{children}</div>
+          <div className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}>{children}</div>
       </PopupWindow>
     </Overlay>
   </PopupContainer>

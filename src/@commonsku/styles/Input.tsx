@@ -195,7 +195,9 @@ type BaseLabeledIconInputProps = InputProps & {
   labelOnTop?: boolean,
   Icon: React.ReactElement,
   iconPosition?: 'left' | 'right',
+  iconColor?: string;
   iconLabelStyles?: React.CSSProperties,
+  containerStyle?: React.CSSProperties,
 } & SharedStyleTypes;
 type LabeledIconInputProps = React.InputHTMLAttributes<HTMLInputElement> & BaseLabeledIconInputProps;
 export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconInputProps>(
@@ -216,7 +218,9 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
       onChange,
       onBlur,
       iconPosition = 'left',
+      iconColor = '#fff',
       iconLabelStyles = {},
+      containerStyle = {},
       ...props
     },
     ref
@@ -253,8 +257,8 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
 
     const NewIcon = React.useMemo(() => {
       const iconProps = {
-        fill: '#fff',
-        color: '#fff',
+        fill: iconColor,
+        color: iconColor,
       };
       if (error) {
         iconProps['fill'] = errorBorderColor;
@@ -270,7 +274,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
         iconProps['color'] = colors.input.icon.active.fill;
       }
       return React.cloneElement(Icon, iconProps);
-    }, [Icon, error, disabled, errorBorderColor, isActive, isHovering]);
+    }, [Icon, error, disabled, errorBorderColor, isActive, isHovering, iconColor]);
 
     const onClickOutside = (e: Event) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -287,7 +291,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
     }, []);
 
     return (
-      <div>
+      <div style={containerStyle}>
         {label ? <Label
           htmlFor={name}
           style={{
