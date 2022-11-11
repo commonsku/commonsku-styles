@@ -78,3 +78,5 @@ export { default as CreditCardIcon} from './CreditCardIcon';
 export { default as ShopIcon} from './ShopIcon';
 export { default as HistoryIcon} from './HistoryIcon';
 export { default as HandleIcon} from './HandleIcon';
+export { default as ShoppingCartIcon } from './ShoppingCartIcon';
+export { default as AddShoppingCartIcon } from './AddShoppingCartIcon';
