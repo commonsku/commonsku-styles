@@ -98,3 +98,16 @@ export const stripUnit = (measurement: string|number) =>
   (typeof measurement === "number") ? measurement : parseFloat(measurement);
 
 export const parseMeasurement = (measurement: string|number) => stripUnit(measurement) + getUnit(measurement);
+
+export const wait = (time: number) => {
+  let timeoutId: NodeJS.Timeout;
+  const promise = new Promise((resolve) => {
+    timeoutId = setTimeout(resolve, time);
+  });
+  return {
+    promise,
+    cancel: () => {
+      clearTimeout(timeoutId);
+    },
+  };
+}

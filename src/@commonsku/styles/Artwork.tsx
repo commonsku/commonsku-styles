@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactEventHandler } from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
 import {Img} from './Img'
@@ -99,7 +99,7 @@ export type ArtworkProps = {
   onEdit?:Function|VoidFunction,
   onDelete?:Function|VoidFunction,
   onSave?:Function|VoidFunction,
-  onError?:Function|VoidFunction,
+  onError?:ReactEventHandler<HTMLImageElement>,
   onDownload?:Function|VoidFunction,
   inputProps?: InputProps,
   inputEl?:React.ReactNode,
@@ -107,13 +107,14 @@ export type ArtworkProps = {
 
 export const Artwork = ({
     inputProps={},
+    onError,
     ...props
   }: ArtworkProps & SharedStyleTypes) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
     {props.picture?
       <ArtworkPicture onClick={(e) => props.onClick ? props.onClick(e) : null} cssHeight={props.cssHeight ? props.cssHeight : 17}>
-        <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}} onError={props.onError}/>
+        <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}} onError={onError}/>
       </ArtworkPicture>
       :
       <IconDoc ext={extension(props.name)} style={{width:"3vw"}} />
