@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Button } from './Button';
@@ -54,7 +54,6 @@ const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, 
     ${SizerCss}
   }
 `;
-type PopupWindow = typeof PopupWindow;
 
 export const PopupHeader = styled.div<SharedStyleTypes & SizerTypes>`
   &&& {
