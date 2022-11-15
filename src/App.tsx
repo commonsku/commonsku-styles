@@ -21,7 +21,7 @@ import {
     Button,  
     Page,
     Toggle,
-    ToggleLink, 
+    ToggleLink,
     LabeledInput,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     LabeledTextarea,
@@ -91,6 +91,7 @@ import { DemoCodeBlock } from 'demo/DemoCodeblock';
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
+import {ToggleDemo, ToggleWithStetchDemo} from 'demo/ToggleDemo';
 
 import { uniqueId } from 'lodash';
 import { MenuListProps } from 'react-select';
@@ -390,11 +391,11 @@ const App = () => {
 
   const tableColumns = [
     {
-      Header: () => <div>&nbsp;</div>, 
+      Header: () => <div>Panel Title</div>, 
       accessor: 'rowId', 
       sticky: 'left',
       noDrag: true,
-      width: 50,
+      width: 100,
       isRowId: true
     },
     {
@@ -527,6 +528,28 @@ const App = () => {
         { label: "Third Tab", content: <div>This is the last tab</div> },
       ]}
       />
+      {DemoCodeBlock({code:
+    `<SidePanel title="Panel Title"
+    // fullWidthTitle
+    controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}
+    visible={showPanel}
+    animationDuration={300}
+    from="right"
+    height={100}
+    //backdrop
+    bodyScrollable={false}
+  >
+    <Tabs padded tabs={[
+      { label: "Contacts", content: <Row>
+          <PanelTileContact key="0" name="Jeff Dienstman" avatar={<Avatar/>} position="Marketing Coordinator" email="jeffdfsdfsdfsdfs.dfsdfsdfs@sdfsdfsdabc.com" phones={[{phone_number: "843-443-4432"}]} />
+          <PanelTileContact key="1" name="Caralyn Smith" avatar={<Avatar pic="https://commonsku.com/img/brand/icon.png"/>} position="Marketing Coordinator" email="caralyn@abc.com" phones={[{phone_number: "843-443-4432"}]} />
+          <PanelTileContact key="2" name="Jenny Smith" avatar={<Avatar/>} position="Intern" email="jenny@abc.com" phones={[{phone_number: "843-443-4432"}]} />
+      </Row>},
+      { label: "Addresses", content: <div>This is tab number two</div> },
+      { label: "Third Tab", content: <div>This is the last tab</div> },
+    ]}
+    />
+  </SidePanel>`})}
     </SidePanel>
     
     <NavAndPage>
@@ -547,8 +570,11 @@ const App = () => {
             console.log(newValue);
             console.log(`action: ${actionMeta.action}`);
             console.groupEnd();
-          }} />
-      </Popup>}
+          }} /> 
+          
+      </Popup>
+      
+      }
 
       {showNewProjectPopup && <Popup
         title={'New Project'}
@@ -965,8 +991,10 @@ const App = () => {
                     <IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom" mr={10} mt={10} >Primary</IconButton>
                   </ButtonsGroup>
                   {DemoCodeBlock({code:
-`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top">Primary</IconButton>
-<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom">Primary</IconButton>`
+`<ButtonsGroup  style={{display: 'flex', flexDirection: 'row'}}>
+<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="top" mr={10} mt={10} >Primary</IconButton>
+<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="bottom" mr={10} mt={10} >Primary</IconButton>
+</ButtonsGroup>`
                 })}
 
                   <ButtonsGroup >
@@ -978,12 +1006,14 @@ const App = () => {
                     <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
                   {DemoCodeBlock({code:
-`<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
-<IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
-<IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
-<IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
-<IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
-<IconButton variant="primary" size="tiny" Icon={icons.ArowIcon} />`
+`<ButtonsGroup >
+<IconButton variant="primary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+<IconButton variant="primary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+<IconButton variant="primary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+<IconButton variant="primary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Primary</IconButton>
+<IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
+</ButtonsGroup>`
                 })}
                   
                   <ButtonsGroup >
@@ -995,15 +1025,17 @@ const App = () => {
                     <IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny" />
                   </ButtonsGroup>
                   {DemoCodeBlock({code:
-`<IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
-<IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
-<IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
-<IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
-<IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Secondary</IconButton>
-<IconButton variant="secondary" size="tiny" Icon={icons.ArowIcon} />`
+`<ButtonsGroup >
+<IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+<IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+<IconButton variant="secondary" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+<IconButton variant="secondary" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+<IconButton variant="secondary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
+<IconButton Icon={icons.ArrowIcon} mr={10} mt={10} variant="secondary" size="tiny" />
+</ButtonsGroup>`
                 })}
 
-                  <ButtonsGroup >
+                  <ButtonsGroup>
                     <IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
                     <IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
                     <IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
@@ -1012,12 +1044,14 @@ const App = () => {
                     <IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
                   {DemoCodeBlock({code:
-`<IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
-<IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
-<IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
-<IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
-<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">CTA</IconButton>
-<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} />`
+`<ButtonsGroup >
+<IconButton variant="cta" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+<IconButton variant="cta" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+<IconButton variant="cta" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+<IconButton variant="cta" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >CTA</IconButton>
+<IconButton variant="cta" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
+</ButtonsGroup>`
                 })}
 
                   <ButtonsGroup >
@@ -1029,12 +1063,14 @@ const App = () => {
                     <IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
                   {DemoCodeBlock({code:
-`<IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
-<IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
-<IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
-<IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
-<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Error</IconButton>
-<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} />`
+`<ButtonsGroup >
+<IconButton variant="error" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+<IconButton variant="error" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+<IconButton variant="error" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+<IconButton variant="error" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Error</IconButton>
+<IconButton variant="error" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
+</ButtonsGroup>`
                 })}
 
                   <ButtonsGroup>
@@ -1046,12 +1082,14 @@ const App = () => {
                     <IconButton variant="disabled" size="tiny"Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup>
                   {DemoCodeBlock({code:
-`<IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
-<IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
-<IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
-<IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
-<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Disabled</IconButton>
-<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} />`
+`<ButtonsGroup>
+<IconButton variant="disabled" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+<IconButton variant="disabled" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+<IconButton variant="disabled" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+<IconButton variant="disabled" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+<IconButton variant="disabled" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Disabled</IconButton>
+<IconButton variant="disabled" size="tiny"Icon={icons.ArrowIcon} mr={10} mt={10} />
+</ButtonsGroup>`
                 })}
 
                   <ButtonsGroup>
@@ -1063,12 +1101,14 @@ const App = () => {
                     <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
                   </ButtonsGroup> 
                   {DemoCodeBlock({code:
-`<IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
-<IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
-<IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
-<IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
-<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
-<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} />`
+`<ButtonsGroup>
+<IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+<IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+<IconButton variant="text" size="medium" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+<IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
+<IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
+</ButtonsGroup> `
                 })}
 
                 </div>
@@ -1086,14 +1126,16 @@ const App = () => {
                   <DoneButton />
                 </ButtonsGroup>
                 {DemoCodeBlock({code:
-`<IconButton preset="edit"/>
-<IconButton preset="delete" />
-<IconButton preset="add" />
-<IconButton preset="remove" />
-<IconButton preset="close" />
+`<ButtonsGroup mb={30}>
+<IconButton preset="edit" mr={16}/>
+<IconButton preset="delete" mr={16}/>
+<IconButton preset="add" mr={16}/>
+<IconButton preset="remove" mr={16}/>
+<IconButton preset="close" mr={16}/>
 
-<CancelButton />
-<DoneButton />`
+<CancelButton mr={16}/>
+<DoneButton />
+</ButtonsGroup>`
                 })}
 
 
@@ -1178,7 +1220,7 @@ const App = () => {
 
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Checkboxes" id="checkboxes">
+              <demo.InnerContainer title="Labeled Checkboxes" id="checkboxes">
                 <ButtonsGroup>
                   <LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
 
@@ -1204,89 +1246,8 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Toggle" id="toggles" noBottomLine>
-
-                <div style={{display: 'flex', flexDirection: 'column', marginBottom: '24px'}}>
-                  <demo.SmallLabel>Small Toggle</demo.SmallLabel>
-                  <Toggle size="small" mr={24} mb={24}>
-                    <ToggleLink selected >Active</ToggleLink>
-                    <ToggleLink>Inactiveeeeeeeee</ToggleLink>
-                  </Toggle>
-                  {DemoCodeBlock({code: 
-`<Toggle size="small">
-<ToggleLink selected >Active</ToggleLink>
-<ToggleLink>Inactiveeeeeeeee</ToggleLink>
-</Toggle>
-`})}
-                  <demo.SmallLabel>Medium Toggle</demo.SmallLabel>
-                  <Toggle size="medium" mr={24} mb={24}>
-                    <ToggleLink >Active</ToggleLink>
-                    <ToggleLink selected >Inactive</ToggleLink>
-                  </Toggle>
-                  {DemoCodeBlock({code:
-`<Toggle size="medium">
-<ToggleLink>Active</ToggleLink>
-<ToggleLink selected>Inactive</ToggleLink>
-</Toggle>
-`
-})}
-                  <demo.SmallLabel>Small Toggle</demo.SmallLabel>
-                  <Toggle size="large" mr={24} mb={24}>
-                    <ToggleLink selected >Active</ToggleLink>
-                    <ToggleLink >Inactive</ToggleLink>
-                  </Toggle>
-                  {DemoCodeBlock({code:
-`<Toggle size="large">
-<ToggleLink selected>Active</ToggleLink>
-<ToggleLink>Inactive</ToggleLink>
-</Toggle>
-`
-})}
-                </div>
-
-                <div style={{display: 'flex', flexDirection: 'column', marginBottom: '24px'}}>
-                  <demo.SmallLabel>Small Toggle with stretch prop</demo.SmallLabel>
-                  <Toggle size="small" stretch mr={24} mb={24}>
-                    <ToggleLink selected stretch >Active</ToggleLink>
-                    <ToggleLink stretch >Inactive</ToggleLink>
-                  </Toggle>
-                  {DemoCodeBlock({code: 
-`<Toggle size="small" stretch>
-<ToggleLink selected stretch>Active</ToggleLink>
-<ToggleLink stretch>Inactive</ToggleLink>
-</Toggle>
-`
-})}
-
-                  <demo.SmallLabel>Medium Toggle with stretch prop</demo.SmallLabel>
-                  <Toggle size="medium" stretch mr={24} mb={24}>
-                    <ToggleLink selected stretch>Active</ToggleLink>
-                    <ToggleLink stretch>Inactive</ToggleLink>
-                  </Toggle>
-                  {DemoCodeBlock({code: 
-`
-<Toggle size="medium" stretch>
-  <ToggleLink selected stretch>Active</ToggleLink>
-  <ToggleLink stretch>Inactive</ToggleLink>
-</Toggle>
-`
-})}
-
-                  <demo.SmallLabel>Large Toggle with stretch prop</demo.SmallLabel>
-                  <Toggle size="large" stretch mr={24} mb={24}>
-                    <ToggleLink selected stretch >Active</ToggleLink>
-                    <ToggleLink stretch >Inactive</ToggleLink>
-                  </Toggle>
-                  {DemoCodeBlock({code:
-`<Toggle size="large" stretch>
-  <ToggleLink selected stretch>Active</ToggleLink>
-  <ToggleLink stretch>Inactive</ToggleLink>
-</Toggle>
-`
-})}
-                </div>
-
-                
-
+                  <ToggleDemo />
+                  <ToggleWithStetchDemo />
               </demo.InnerContainer>
 
             </demo.OuterContainer>
@@ -1300,13 +1261,20 @@ const App = () => {
                 <Input error name="basic-input" defaultValue="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
-
-                <br />
+                {DemoCodeBlock({code:`<Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
+<Input name="basic-input" defaultValue="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+<Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+<Input error name="basic-input" defaultValue="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+<Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
+<Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />`})}
+                
                 <LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
                 <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" defaultValue="disabled value" style={{ width: 200 }} placeholder="enter something" />
-                <LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200 }} placeholder="enter something" />
-
-                <br />
+                <LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200}} placeholder="enter something" />
+                {DemoCodeBlock({code:`<LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
+<LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" defaultValue="disabled value" style={{ width: 200 }} placeholder="enter something" />
+<LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200}} placeholder="enter something" />`})}
+                
                 <LabeledIconInput
                   labelOnTop
                   label='Labeled input'
@@ -1336,9 +1304,39 @@ const App = () => {
                   value="error value"
                   placeholder="enter something"
                   Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
-                  style={{ width: 200 }}
+                  style={{ width: 200, marginBottom: '1rem' }}
                 />
-                <br />
+                {DemoCodeBlock({code:`<LabeledIconInput
+  labelOnTop
+  label='Labeled input'
+  name="basic-input"
+  defaultValue="input value"
+  placeholder="enter something"
+  Icon={<icons.DollarIcon  />}
+  style={{ width: 200 }}
+  />
+
+<LabeledIconInput
+  labelOnTop
+  disabled
+  label='Labeled disabled'
+  name="basic-disabled"
+  defaultValue="disabled value"
+  placeholder="enter something"
+  Icon={<icons.TrashIcon color={"#fff"}  />}
+  style={{ width: 200 }}
+  />
+
+<LabeledIconInput
+  labelOnTop
+  error
+  label='Labeled error'
+  name="basic-error"
+  value="error value"
+  placeholder="enter something"
+  Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
+  style={{ width: 200, marginBottom: '1rem' }}
+  />`})}
 
                 <br />
                 <LabeledIconInput
@@ -1348,7 +1346,7 @@ const App = () => {
                   name="basic-input"
                   defaultValue="input value"
                   placeholder="enter something"
-                  Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
+                  Icon={<icons.DollarIcon  />}
                   style={{ width: 200 }}
                 />
 
@@ -1373,15 +1371,51 @@ const App = () => {
                   defaultValue="error value"
                   placeholder="enter something"
                   Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
-                  style={{ width: 200 }}
+                  style={{ width: 200, marginBottom: '1rem' }}
                 />
-                <br />
+                {DemoCodeBlock({code:`<LabeledIconInput
+  labelOnTop
+  iconPosition='right'
+  label='Labeled input'
+  name="basic-input"
+  defaultValue="input value"
+  placeholder="enter something"
+  Icon={<icons.DollarIcon  />}
+  style={{ width: 200 }}
+  />
+
+<LabeledIconInput
+  labelOnTop
+  iconPosition='right'
+  disabled
+  label='Labeled disabled'
+  name="basic-disabled"
+  defaultValue="disabled value"
+  placeholder="enter something"
+  Icon={<icons.TrashIcon color={"#fff"} width={"1.5rem"} />}
+  style={{ width: 200 }}
+  />
+
+<LabeledIconInput
+  labelOnTop
+  iconPosition='right'
+  error
+  label='Labeled error'
+  name="basic-error"
+  defaultValue="error value"
+  placeholder="enter something"
+  Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
+  style={{ width: 200, marginBottom: '1rem' }}
+  />`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Text Area" id="text-area">
                 <Textarea placeholder="Textarea" defaultValue="basic textarea" />
+                {DemoCodeBlock({code: `<Textarea placeholder="Textarea" defaultValue="basic textarea" />`})}
                 <Textarea disabled defaultValue="diabled textarea" />
+                {DemoCodeBlock({code: `<Textarea disabled defaultValue="diabled textarea" />`})}
                 <Textarea error placeholder="Textarea" defaultValue="error textarea" />
+                {DemoCodeBlock({code: `<Textarea error placeholder="Textarea" defaultValue="error textarea" />`})}
 
                 <br />
               </demo.InnerContainer>
@@ -1397,10 +1431,9 @@ const App = () => {
                   components={{ MenuList: SelectMenuList }}
                   isClearable
                   inPopup
-                />
-
-                <Select
-                  value={{ value: 'value2', label: 'value2', }}
+                />                     
+                {DemoCodeBlock({code: `<Select
+                  value={{ value: 'value1', label: 'value1', }}
                   options={[
                     ...(Array(100).fill(1).map((v, i) => (
                       {value: 'value'+i, label: 'value'+i}
@@ -1408,10 +1441,12 @@ const App = () => {
                   ]}
                   components={{ MenuList: SelectMenuList }}
                   isClearable
-                />
+                  inPopup
+                /> `})}
 
+                <demo.SmallLabel>Error</demo.SmallLabel>   
                 <Select
-                  value={{ value: 'value3', label: 'value3', }}
+                  value={{ value: 'value2', label: 'value2', }}
                   options={[
                     ...(Array(100).fill(1).map((v, i) => (
                       {value: 'value'+i, label: 'value'+i}
@@ -1421,9 +1456,21 @@ const App = () => {
                   error
                   isClearable
                 />
+                {DemoCodeBlock({code: `<Select
+                  value={{ value: 'value2', label: 'value2', }}
+                  options={[
+                    ...(Array(100).fill(1).map((v, i) => (
+                      {value: 'value'+i, label: 'value'+i}
+                    ))),
+                  ]}
+                  components={{ MenuList: SelectMenuList }}
+                  error
+                  isClearable
+                />`})}
 
+                <demo.SmallLabel>Disabled</demo.SmallLabel>  
                 <Select
-                  value={{ value: 'value4', label: 'value4', }}
+                  value={{ value: 'value3', label: 'value3', }}
                   options={[
                     ...(Array(100).fill(1).map((v, i) => (
                       {value: 'value'+i, label: 'value'+i}
@@ -1432,13 +1479,32 @@ const App = () => {
                   components={{ MenuList: SelectMenuList }}
                   isDisabled
                 />
-
-                <LabeledSelect value={{ value: 'value4', label: 'value4', }}
+                {DemoCodeBlock({code: `<Select
+                  value={{ value: 'value3', label: 'value3', }}
+                  options={[
+                    ...(Array(100).fill(1).map((v, i) => (
+                      {value: 'value'+i, label: 'value'+i}
+                    ))),
+                  ]}
+                  components={{ MenuList: SelectMenuList }}
+                  isDisabled
+                />`})}
+                <LabeledSelect 
+                  label="Labeled Select"
+                  value={{ value: 'value4', label: 'value4', }}
                   options={[
                     ...(Array(100).fill(1).map((v, i) => (
                       {value: 'value'+i, label: 'value'+i}
                     ))),
                   ]}/>
+                  {DemoCodeBlock({code: `<LabeledSelect 
+                  label="Labeled Select"
+                  value={{ value: 'value4', label: 'value4', }}
+                  options={[
+                    ...(Array(100).fill(1).map((v, i) => (
+                      {value: 'value'+i, label: 'value'+i}
+                    ))),
+                  ]}/>`})}
                 
 
                 <br />
@@ -1474,13 +1540,20 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Datepicker" id="datepicker" >
-                  <Row>
+                  
                   <Col xs={3} mr={16}>
                     <Datepicker
                       value={state.date}
                       onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
                     />
                   </Col>
+                  {DemoCodeBlock({code: `<Col xs={3} mr={16}>
+  <Datepicker
+    value={state.date}
+    onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+  />
+</Col>`})}
+
                   <Col xs={3} mr={16}>
                     <Datepicker
                       value={state.date}
@@ -1488,7 +1561,14 @@ const App = () => {
                       disabled
                     />
                   </Col>
-                </Row>
+                  {DemoCodeBlock({code: `<Col xs={3} mr={16}>
+  <Datepicker
+    value={state.date}
+    onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+    disabled
+  />
+</Col>`})}
+                
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Dropdown Button" id="dropdown-button">
@@ -1506,21 +1586,19 @@ const App = () => {
                     },
                   ]
                 }/>
-                <br /><br />
-                <Dropdown style={{ float: 'right' }} text="Drop Down" bordered width={300} items={
-                  [
-                    {onClick: () => null, content: 'New Contact'},
-                    {onClick: () => null, content: 'New Address'},
-                    {
-                      onClick: () => null,
-                      content: <LabeledCheckbox
-                        label="Mustard"
-                        checked={mustard}
-                        onChange={() => toggleMustard(!mustard)}
-                      />
-                    },
-                  ]
-                }/>
+                {DemoCodeBlock({code: `<Dropdown text="Drop Down" bordered width={200} items={
+  [
+    {onClick: () => null, content: 'New Contact'},
+    {onClick: () => null, content: 'New Address'},
+    {
+     onClick: () => null,
+     content: <LabeledCheckbox
+     label="Mustard"
+     checked={mustard}
+     onChange={() => toggleMustard(!mustard)}
+    />
+    },
+ ]}/>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdown" noBottomLine>
@@ -1538,6 +1616,20 @@ const App = () => {
                     <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
                   </Row>
                 </Dropdown>
+                {DemoCodeBlock({code: `<Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
+  <Row>
+    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+    <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
+    <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
+  </Row>
+</Dropdown>`})}
               </demo.InnerContainer>
 
             </demo.OuterContainer>
@@ -1667,9 +1759,13 @@ const App = () => {
               <demo.InnerContainer title="Popups" id="popups">
                   <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
                   <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
+                  {DemoCodeBlock({code: `<Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+<Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
+`})}
               </demo.InnerContainer>
               <demo.InnerContainer title="Side Panels" id="side-panels" noBottomLine>
                   <Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>
+                  {DemoCodeBlock({code: `<Button mr={10} onClick={() => setShowPanel(!showPanel)}>Show Panel</Button>`})}
               </demo.InnerContainer>
             </demo.OuterContainer>
 
@@ -1788,7 +1884,24 @@ const App = () => {
                     </Col>
                   </Row>
                 </CollapsibleV2>
-                <br />
+                {DemoCodeBlock({code: `<CollapsibleV2 label={'CollapsibleV2'}>
+                  <Row>
+                    <Col xs>
+                      Collapsible Content
+                    </Col>
+                    <Col xs>
+                      Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                      Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                      pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                      et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                      quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                      nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                      rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                      nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                      auctor augue
+                    </Col>
+                  </Row>
+                </CollapsibleV2>`})}
                 <Collapsibles
                   list={[
                     {
@@ -1831,7 +1944,48 @@ const App = () => {
                     },
                   ]}
                 />
-                <br />
+                {DemoCodeBlock({code: `<Collapsibles
+                  list={[
+                    {
+                      label: 'Collapsible 1',
+                      children: <Row>
+                        <Col xs>
+                          Collapsible Content
+                        </Col>
+                        <Col xs>
+                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                          auctor augue
+                        </Col>
+                      </Row>,
+                    },
+                    {
+                      label: 'Collapsible 2',
+                      children: <Row>
+                        <Col xs>
+                          Collapsible Content
+                        </Col>
+                        <Col xs>
+                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+                          auctor augue
+                        </Col>
+                      </Row>,
+                    },
+                  ]}
+                />`})}
 
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
                   <Text
@@ -1846,6 +2000,16 @@ const App = () => {
                   </Row>
                   </Collapsible>
                 </div>
+                {DemoCodeBlock({code: `<Text style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}
+                    onClick={e => setCollapse(!collapse)}
+                  >Click Me</Text>
+                  <Collapsible isOpen={collapse} style={{background: colors.primary}}>
+                  <Row>
+                    <Col xs padded>
+                      <Text style={{color: '#fff'}}>Collapsible body</Text>
+                    </Col>
+                  </Row>
+                  </Collapsible>`})}
               <CollapsiblePanel title="Collapsible Panel Title" components={{
                 Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
                 }}>
@@ -1867,6 +2031,27 @@ const App = () => {
                   </Col>
                 </Row>
               </CollapsiblePanel>
+              {DemoCodeBlock({code: `<CollapsiblePanel title="Collapsible Panel Title" components={{
+                Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
+                }}>
+                <Row>
+                  <Col xs padded>
+                    Testttttt
+                  </Col>
+                  <Col xs padded>
+                    Testttttt
+                  </Col>
+                  <Col xs padded>
+                    Testttttt
+                  </Col>
+                  <Col xs padded>
+                    Testttttt
+                  </Col>
+                  <Col xs padded>
+                    Testttttt
+                  </Col>
+                </Row>
+              </CollapsiblePanel>`})}
               <CollapsiblePanel title="Collapsible Panel Title 2">
                 <Row>
                   <Col xs padded>
@@ -1877,11 +2062,25 @@ const App = () => {
               <CollapsiblePanel title="Collapsible Panel Title 3">
                 Testttttt
               </CollapsiblePanel>
+              {DemoCodeBlock({code: `<CollapsiblePanel title="Collapsible Panel Title 2">
+                <Row>
+                  <Col xs padded>
+                    Testttttt
+                  </Col>
+                </Row>
+              </CollapsiblePanel>
+              <CollapsiblePanel title="Collapsible Panel Title 3">
+                Testttttt
+              </CollapsiblePanel>`})}
 
               <CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
                 {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
                 {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
               ]} />
+              {DemoCodeBlock({code: `<CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
+                {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
+                {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
+              ]} />`})}
               </demo.InnerContainer>
             </demo.OuterContainer>
             
@@ -1958,6 +2157,7 @@ const App = () => {
             <demo.OuterContainer title="Progress" id="progress">
               <demo.InnerContainer title="">
                 <LabeledProgress max={4389.99} value={8434.44} mb={40}/>
+                {DemoCodeBlock({code: `<LabeledProgress max={4389.99} value={8434.44} mb={40}/>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Multi Progress">
@@ -1965,6 +2165,10 @@ const App = () => {
                     {value: 94.44, text: v => 'Projection: $' + v},
                     // {value: 2.44, text: v => '$' + v},
                   ]} max={100} style={{marginBottom: "40px"}}/>
+                {DemoCodeBlock({code: `<LabeledMultiProgress title="Invoices this month" values={[
+  {value: 94.44, text: v => 'Projection: $' + v},
+]} max={100} style={{marginBottom: "40px"}}/>`})}
+
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Thermometer" noBottomLine>
@@ -1981,16 +2185,21 @@ const App = () => {
             <demo.OuterContainer title="Drop Area" id="drop-area">
               <demo.InnerContainer title="Drop Here">
                 <DropArea placeholder="Drop Here"></DropArea>
+                {DemoCodeBlock({code: `<DropArea placeholder="Drop Here"></DropArea>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Dropzoned with List">
                 <Dropzoned showDroppedFiles />
+                {DemoCodeBlock({code: `<Dropzoned showDroppedFiles />`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="DropZoned Preview" noBottomLine>
                 <DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
                     console.log(acceptedFiles);
                   }} />
+                {DemoCodeBlock({code: `<DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
+  console.log(acceptedFiles);
+}} />`})}
               </demo.InnerContainer>                
               
             </demo.OuterContainer>
@@ -2060,9 +2269,9 @@ const App = () => {
             </demo.OuterContainer>
 
 
-            <demo.OuterContainer title="Feed" id="feed">
+            <demo.OuterContainer title="Feed Post" id="feed">
 
-              <demo.InnerContainer >
+              <demo.InnerContainer title="Publisher" noBottomLine >
                 <Publisher/>
               </demo.InnerContainer>
 
@@ -2095,6 +2304,11 @@ const App = () => {
                   { label: "Third Tab", content: <div>This is the last tab</div> },
                 ]}
                 />
+                {DemoCodeBlock({code:`<Tabs tabs={[
+  { label: "First Tab", content: <div>This is the first tab</div> },
+  { label: "Second Tab", content: <div>This is tab number two</div> },
+  { label: "Third Tab", content: <div>This is the last tab</div> },
+]}/>`})}
               </demo.InnerContainer>
             </demo.OuterContainer>
             
@@ -2121,6 +2335,26 @@ const App = () => {
                       </TR>
                   </TBody>
                 </Table>
+                {DemoCodeBlock({code: `<Table>
+    <THead>
+      <TR>
+        <TH>Header 0</TH>
+        <TH clickable>Header 1</TH>
+        <TH>Header 2</TH>
+        <TH>Header 3</TH>
+        <TH>Header 4</TH>
+      </TR>
+    </THead>
+    <TBody>
+      <TR>
+        <TD clickable>Body 0</TD>
+        <TD>Body 1</TD>
+        <TD>Body 2</TD>
+        <TD>Body 3</TD>
+        <TD>Body 4</TD>
+      </TR>
+    </TBody>
+</Table>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer >
@@ -2154,15 +2388,38 @@ const App = () => {
                   scrollOffsetDivRef={scrollOffsetDivRef}
                   horizontalOffsetDivRef={horizontalOffsetDivRef}
                 />
+                {DemoCodeBlock({code: `<HeadlessTable 
+  columns={tableColumns} 
+  data={tableData} 
+  rowIdField="rowId"
+  defaultSort={{ id: 'firstName', desc: true }}
+  defaultScrollOffset={defaultScrollOffset}
+  defaultHorizontalOffset={0}
+  onChangeSelected={onChangeSelected}
+  onChangeSortOrColumns={onChangeSortOrColumns}
+  pageIndexDivRef={pageIndexDivRef}
+  sortDirectionDivRef={sortDirectionDivRef}
+  currentColumnsDivRef={currentColumnsDivRef}
+  minHeight={400}
+  pagination={false}
+  scrollOffsetDivRef={scrollOffsetDivRef}
+  horizontalOffsetDivRef={horizontalOffsetDivRef}
+/>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Windowed Table" noBottomLine>
                 <VirtualTableStyles tableHeight="100%">
-                  <VirtualTable 
+                  <VirtualTable
                     columns={tableColumns}
                     data={tableData}
                   />
                 </VirtualTableStyles>
+                {DemoCodeBlock({code: `<VirtualTableStyles tableHeight="100%">
+  <VirtualTable 
+    columns={tableColumns}
+    data={tableData}
+  />
+  </VirtualTableStyles>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="GridTable">
@@ -2730,7 +2987,6 @@ const App = () => {
 
                 </IconContainer>
               </demo.InnerContainer>
-
             </demo.OuterContainer>
 
 
