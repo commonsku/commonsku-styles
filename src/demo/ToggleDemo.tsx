@@ -13,7 +13,8 @@ export function ToggleDemo() {
         <ToggleLink selected={selected}>Active</ToggleLink>
         <ToggleLink selected={!selected}>Inactiveeeeeeeee</ToggleLink>
     </Toggle>
-  {DemoCodeBlock({code:`<Toggle size="small" onClick={() => setSelected(!selected)}>
+  {DemoCodeBlock({code:
+`<Toggle size="small" onClick={() => setSelected(!selected)}>
     <ToggleLink selected={!selected} >Active</ToggleLink>
     <ToggleLink selected={selected}>Inactiveeeeeeeee</ToggleLink>
 </Toggle>`})}
@@ -23,7 +24,8 @@ export function ToggleDemo() {
         <ToggleLink>Active</ToggleLink>
         <ToggleLink selected>Inactive</ToggleLink>
     </Toggle>
-{DemoCodeBlock({code:`<Toggle size="medium">
+{DemoCodeBlock({code:
+`<Toggle size="medium">
     <ToggleLink>Active</ToggleLink>
     <ToggleLink selected>Inactive</ToggleLink>
 </Toggle>`})}
@@ -33,7 +35,8 @@ export function ToggleDemo() {
         <ToggleLink selected >Active</ToggleLink>
         <ToggleLink >Inactive</ToggleLink>
     </Toggle>
-{DemoCodeBlock({code:`<Toggle size="large">
+{DemoCodeBlock({code:
+`<Toggle size="large">
     <ToggleLink selected>Active</ToggleLink>
     <ToggleLink>Inactive</ToggleLink>
 </Toggle>`})}

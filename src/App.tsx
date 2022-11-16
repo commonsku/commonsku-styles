@@ -529,7 +529,7 @@ const App = () => {
       ]}
       />
       {DemoCodeBlock({code:
-    `<SidePanel title="Panel Title"
+  `<SidePanel title="Panel Title"
     // fullWidthTitle
     controls={<Button onClick={() => { setShowPanel(false); setSidePanelRow(null) }}>Close Panel</Button>}
     visible={showPanel}
@@ -1261,7 +1261,8 @@ const App = () => {
                 <Input error name="basic-input" defaultValue="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
                 <Input disabled name="basic-input" value="disabled value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
-                {DemoCodeBlock({code:`<Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
+                {DemoCodeBlock({code:
+`<Input name="basic-input" style={{ width: 200 }} placeholder="enter something" />
 <Input name="basic-input" defaultValue="input value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
 <Input error name="basic-input" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
 <Input error name="basic-input" defaultValue="error value" style={{ marginLeft: 10, width: 200 }} placeholder="enter something" />
@@ -1271,7 +1272,8 @@ const App = () => {
                 <LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
                 <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" defaultValue="disabled value" style={{ width: 200 }} placeholder="enter something" />
                 <LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200}} placeholder="enter something" />
-                {DemoCodeBlock({code:`<LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
+                {DemoCodeBlock({code:
+`<LabeledInput labelOnTop label='Labeled input' name="basic-input" defaultValue="input value" style={{ width: 200 }} placeholder="enter something" />
 <LabeledInput labelOnTop disabled label='Labeled disabled' name="disabled-input" defaultValue="disabled value" style={{ width: 200 }} placeholder="enter something" />
 <LabeledInput labelOnTop error label='Labeled error' name="error-input" defaultValue="error value" style={{ width: 200}} placeholder="enter something" />`})}
                 
@@ -1306,7 +1308,8 @@ const App = () => {
                   Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
                   style={{ width: 200, marginBottom: '1rem' }}
                 />
-                {DemoCodeBlock({code:`<LabeledIconInput
+                {DemoCodeBlock({code:
+`<LabeledIconInput
   labelOnTop
   label='Labeled input'
   name="basic-input"
@@ -1373,7 +1376,8 @@ const App = () => {
                   Icon={<icons.UserIcon fill={"#fff"} width={"1.5rem"} />}
                   style={{ width: 200, marginBottom: '1rem' }}
                 />
-                {DemoCodeBlock({code:`<LabeledIconInput
+                {DemoCodeBlock({code:
+`<LabeledIconInput
   labelOnTop
   iconPosition='right'
   label='Labeled input'
@@ -1432,17 +1436,18 @@ const App = () => {
                   isClearable
                   inPopup
                 />                     
-                {DemoCodeBlock({code: `<Select
-                  value={{ value: 'value1', label: 'value1', }}
-                  options={[
-                    ...(Array(100).fill(1).map((v, i) => (
-                      {value: 'value'+i, label: 'value'+i}
-                    ))),
-                  ]}
-                  components={{ MenuList: SelectMenuList }}
-                  isClearable
-                  inPopup
-                /> `})}
+                {DemoCodeBlock({code: 
+`<Select
+  value={{ value: 'value1', label: 'value1', }}
+  options={[
+    ...(Array(100).fill(1).map((v, i) => (
+      {value: 'value'+i, label: 'value'+i}
+    ))),
+  ]}
+  components={{ MenuList: SelectMenuList }}
+  isClearable
+  inPopup
+/> `})}
 
                 <demo.SmallLabel>Error</demo.SmallLabel>   
                 <Select
@@ -1456,17 +1461,18 @@ const App = () => {
                   error
                   isClearable
                 />
-                {DemoCodeBlock({code: `<Select
-                  value={{ value: 'value2', label: 'value2', }}
-                  options={[
-                    ...(Array(100).fill(1).map((v, i) => (
-                      {value: 'value'+i, label: 'value'+i}
-                    ))),
-                  ]}
-                  components={{ MenuList: SelectMenuList }}
-                  error
-                  isClearable
-                />`})}
+                {DemoCodeBlock({code: 
+`<Select
+  value={{ value: 'value2', label: 'value2', }}
+  options={[
+    ...(Array(100).fill(1).map((v, i) => (
+      {value: 'value'+i, label: 'value'+i}
+    ))),
+  ]}
+  components={{ MenuList: SelectMenuList }}
+  error
+  isClearable
+/>`})}
 
                 <demo.SmallLabel>Disabled</demo.SmallLabel>  
                 <Select
@@ -1479,16 +1485,17 @@ const App = () => {
                   components={{ MenuList: SelectMenuList }}
                   isDisabled
                 />
-                {DemoCodeBlock({code: `<Select
-                  value={{ value: 'value3', label: 'value3', }}
-                  options={[
-                    ...(Array(100).fill(1).map((v, i) => (
-                      {value: 'value'+i, label: 'value'+i}
-                    ))),
-                  ]}
-                  components={{ MenuList: SelectMenuList }}
-                  isDisabled
-                />`})}
+                {DemoCodeBlock({code: 
+`<Select
+  value={{ value: 'value3', label: 'value3', }}
+  options={[
+    ...(Array(100).fill(1).map((v, i) => (
+      {value: 'value'+i, label: 'value'+i}
+    ))),
+  ]}
+  components={{ MenuList: SelectMenuList }}
+  isDisabled
+/>`})}
                 <LabeledSelect 
                   label="Labeled Select"
                   value={{ value: 'value4', label: 'value4', }}
@@ -1497,16 +1504,16 @@ const App = () => {
                       {value: 'value'+i, label: 'value'+i}
                     ))),
                   ]}/>
-                  {DemoCodeBlock({code: `<LabeledSelect 
-                  label="Labeled Select"
-                  value={{ value: 'value4', label: 'value4', }}
-                  options={[
-                    ...(Array(100).fill(1).map((v, i) => (
-                      {value: 'value'+i, label: 'value'+i}
-                    ))),
-                  ]}/>`})}
-                
-
+                  {DemoCodeBlock({code: 
+`<LabeledSelect 
+  label="Labeled Select"
+  value={{ value: 'value4', label: 'value4', }}
+  options={[
+    ...(Array(100).fill(1).map((v, i) => (
+      {value: 'value'+i, label: 'value'+i}
+    ))),
+  ]}
+/>`})}
                 <br />
               </ demo.InnerContainer>
 
@@ -1547,7 +1554,8 @@ const App = () => {
                       onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
                     />
                   </Col>
-                  {DemoCodeBlock({code: `<Col xs={3} mr={16}>
+                  {DemoCodeBlock({code: 
+`<Col xs={3} mr={16}>
   <Datepicker
     value={state.date}
     onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
@@ -1561,7 +1569,8 @@ const App = () => {
                       disabled
                     />
                   </Col>
-                  {DemoCodeBlock({code: `<Col xs={3} mr={16}>
+                  {DemoCodeBlock({code: 
+`<Col xs={3} mr={16}>
   <Datepicker
     value={state.date}
     onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
@@ -1586,7 +1595,8 @@ const App = () => {
                     },
                   ]
                 }/>
-                {DemoCodeBlock({code: `<Dropdown text="Drop Down" bordered width={200} items={
+                {DemoCodeBlock({code: 
+`<Dropdown text="Drop Down" bordered width={200} items={
   [
     {onClick: () => null, content: 'New Contact'},
     {onClick: () => null, content: 'New Address'},
@@ -1598,7 +1608,8 @@ const App = () => {
      onChange={() => toggleMustard(!mustard)}
     />
     },
- ]}/>`})}
+ ]}
+ />`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Icon Dropdown with checkboxes" id="icon-dropdown" noBottomLine>
@@ -1616,7 +1627,8 @@ const App = () => {
                     <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
                   </Row>
                 </Dropdown>
-                {DemoCodeBlock({code: `<Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
+                {DemoCodeBlock({code: 
+`<Dropdown text="Dropdown Panel" icon={<icons.NoteIcon size="huge"/>}>
   <Row>
     <LabeledCheckbox label="Mustard" checked={mustard} onChange={() => toggleMustard(!mustard)} />
     <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={() => toggleKetchup(!ketchup)} />
@@ -1759,7 +1771,8 @@ const App = () => {
               <demo.InnerContainer title="Popups" id="popups">
                   <Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
                   <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
-                  {DemoCodeBlock({code: `<Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
+                  {DemoCodeBlock({code: 
+`<Button mr={10} cta onClick={() => setShowPopup(true)}>Show Popup</Button>
 <Button variant="primary" mr={10} cta onClick={() => setShowNewProjectPopup(true)}>Show New Project Popup</Button>
 `})}
               </demo.InnerContainer>
@@ -1884,24 +1897,25 @@ const App = () => {
                     </Col>
                   </Row>
                 </CollapsibleV2>
-                {DemoCodeBlock({code: `<CollapsibleV2 label={'CollapsibleV2'}>
-                  <Row>
-                    <Col xs>
-                      Collapsible Content
-                    </Col>
-                    <Col xs>
-                      Consectetur adipiscing elit pellentesque habitant morbi tristique.
-                      Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
-                      pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
-                      et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
-                      quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
-                      nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
-                      rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
-                      nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
-                      auctor augue
-                    </Col>
-                  </Row>
-                </CollapsibleV2>`})}
+                {DemoCodeBlock({code: 
+`<CollapsibleV2 label={'CollapsibleV2'}>
+  <Row>
+    <Col xs>
+      Collapsible Content
+    </Col>
+    <Col xs>
+      Consectetur adipiscing elit pellentesque habitant morbi tristique.
+      Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+      pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+      et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+      quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+      nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+      rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+      nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+      auctor augue
+    </Col>
+  </Row>
+</CollapsibleV2>`})}
                 <Collapsibles
                   list={[
                     {
@@ -1944,48 +1958,49 @@ const App = () => {
                     },
                   ]}
                 />
-                {DemoCodeBlock({code: `<Collapsibles
-                  list={[
-                    {
-                      label: 'Collapsible 1',
-                      children: <Row>
-                        <Col xs>
-                          Collapsible Content
-                        </Col>
-                        <Col xs>
-                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
-                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
-                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
-                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
-                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
-                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
-                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
-                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
-                          auctor augue
-                        </Col>
-                      </Row>,
-                    },
-                    {
-                      label: 'Collapsible 2',
-                      children: <Row>
-                        <Col xs>
-                          Collapsible Content
-                        </Col>
-                        <Col xs>
-                          Consectetur adipiscing elit pellentesque habitant morbi tristique.
-                          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
-                          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
-                          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
-                          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
-                          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
-                          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
-                          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
-                          auctor augue
-                        </Col>
-                      </Row>,
-                    },
-                  ]}
-                />`})}
+                {DemoCodeBlock({code: 
+`<Collapsibles
+  list={[
+    {
+      label: 'Collapsible 1',
+      children: <Row>
+        <Col xs>
+          Collapsible Content
+        </Col>
+        <Col xs>
+          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+          auctor augue
+        </Col>
+      </Row>,
+    },
+    {
+      label: 'Collapsible 2',
+      children: <Row>
+        <Col xs>
+          Collapsible Content
+        </Col>
+        <Col xs>
+          Consectetur adipiscing elit pellentesque habitant morbi tristique.
+          Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+          pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+          et netus et. Elementum integer enim neque volutpat. Faucibus in ornare
+          quam viverra orci sagittis. Amet volutpat consequat mauris nunc congue
+          nisi vitae suscipit. Dui accumsan sit amet nulla. Proin sagittis nisl
+          rhoncus mattis. Enim nulla aliquet porttitor lacus. Arcu odio ut sem
+          nulla pharetra diam sit amet. Gravida rutrum quisque non tellus orci ac
+          auctor augue
+        </Col>
+      </Row>,
+    },
+  ]}
+/>`})}
 
                 <div style={{border: `1px solid ${colors.primary}`, padding: 10, cursor: 'pointer'}}>
                   <Text
@@ -2000,16 +2015,17 @@ const App = () => {
                   </Row>
                   </Collapsible>
                 </div>
-                {DemoCodeBlock({code: `<Text style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}
-                    onClick={e => setCollapse(!collapse)}
-                  >Click Me</Text>
-                  <Collapsible isOpen={collapse} style={{background: colors.primary}}>
-                  <Row>
-                    <Col xs padded>
-                      <Text style={{color: '#fff'}}>Collapsible body</Text>
-                    </Col>
-                  </Row>
-                  </Collapsible>`})}
+                {DemoCodeBlock({code: 
+`<Text style={{fontWeight: 'bold', fontSize: '1.3rem', marginBottom: 5}}
+    onClick={e => setCollapse(!collapse)}
+  >Click Me</Text>
+  <Collapsible isOpen={collapse} style={{background: colors.primary}}>
+  <Row>
+    <Col xs padded>
+      <Text style={{color: '#fff'}}>Collapsible body</Text>
+    </Col>
+  </Row>
+</Collapsible>`})}
               <CollapsiblePanel title="Collapsible Panel Title" components={{
                 Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
                 }}>
@@ -2031,27 +2047,28 @@ const App = () => {
                   </Col>
                 </Row>
               </CollapsiblePanel>
-              {DemoCodeBlock({code: `<CollapsiblePanel title="Collapsible Panel Title" components={{
-                Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
-                }}>
-                <Row>
-                  <Col xs padded>
-                    Testttttt
-                  </Col>
-                  <Col xs padded>
-                    Testttttt
-                  </Col>
-                  <Col xs padded>
-                    Testttttt
-                  </Col>
-                  <Col xs padded>
-                    Testttttt
-                  </Col>
-                  <Col xs padded>
-                    Testttttt
-                  </Col>
-                </Row>
-              </CollapsiblePanel>`})}
+              {DemoCodeBlock({code: 
+`<CollapsiblePanel title="Collapsible Panel Title" components={{
+  Title: ({onClick}) => <Button onClick={onClick}>Click Me</Button>
+  }}>
+  <Row>
+    <Col xs padded>
+      Testttttt
+    </Col>
+    <Col xs padded>
+      Testttttt
+    </Col>
+    <Col xs padded>
+      Testttttt
+    </Col>
+    <Col xs padded>
+      Testttttt
+    </Col>
+    <Col xs padded>
+      Testttttt
+    </Col>
+  </Row>
+</CollapsiblePanel>`})}
               <CollapsiblePanel title="Collapsible Panel Title 2">
                 <Row>
                   <Col xs padded>
@@ -2062,25 +2079,27 @@ const App = () => {
               <CollapsiblePanel title="Collapsible Panel Title 3">
                 Testttttt
               </CollapsiblePanel>
-              {DemoCodeBlock({code: `<CollapsiblePanel title="Collapsible Panel Title 2">
-                <Row>
-                  <Col xs padded>
-                    Testttttt
-                  </Col>
-                </Row>
-              </CollapsiblePanel>
-              <CollapsiblePanel title="Collapsible Panel Title 3">
-                Testttttt
-              </CollapsiblePanel>`})}
+              {DemoCodeBlock({code: 
+`<CollapsiblePanel title="Collapsible Panel Title 2">
+  <Row>
+    <Col xs padded>
+      Testttttt
+    </Col>
+  </Row>
+</CollapsiblePanel>
+<CollapsiblePanel title="Collapsible Panel Title 3">
+  Testttttt
+</CollapsiblePanel>`})}
 
               <CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
                 {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
                 {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
               ]} />
-              {DemoCodeBlock({code: `<CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
-                {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
-                {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
-              ]} />`})}
+              {DemoCodeBlock({code: 
+`<CollapsiblePanels spaceBetween onClickPanel={i => {console.log(i, 'Clicked')}} panels={[
+  {title: "Collapsible Panel Title 11", children: <p style={{padding: 20}}>HELLOOO 11</p>},
+  {title: "Collapsible Panel Title 12", children: <p style={{padding: 20}}>HELLOOO 12</p>},
+]} />`})}
               </demo.InnerContainer>
             </demo.OuterContainer>
             
@@ -2165,7 +2184,8 @@ const App = () => {
                     {value: 94.44, text: v => 'Projection: $' + v},
                     // {value: 2.44, text: v => '$' + v},
                   ]} max={100} style={{marginBottom: "40px"}}/>
-                {DemoCodeBlock({code: `<LabeledMultiProgress title="Invoices this month" values={[
+                {DemoCodeBlock({code: 
+`<LabeledMultiProgress title="Invoices this month" values={[
   {value: 94.44, text: v => 'Projection: $' + v},
 ]} max={100} style={{marginBottom: "40px"}}/>`})}
 
@@ -2197,7 +2217,8 @@ const App = () => {
                 <DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
                     console.log(acceptedFiles);
                   }} />
-                {DemoCodeBlock({code: `<DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
+                {DemoCodeBlock({code: 
+`<DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
   console.log(acceptedFiles);
 }} />`})}
               </demo.InnerContainer>                
@@ -2304,7 +2325,8 @@ const App = () => {
                   { label: "Third Tab", content: <div>This is the last tab</div> },
                 ]}
                 />
-                {DemoCodeBlock({code:`<Tabs tabs={[
+                {DemoCodeBlock({code:
+`<Tabs tabs={[
   { label: "First Tab", content: <div>This is the first tab</div> },
   { label: "Second Tab", content: <div>This is tab number two</div> },
   { label: "Third Tab", content: <div>This is the last tab</div> },
@@ -2335,7 +2357,8 @@ const App = () => {
                       </TR>
                   </TBody>
                 </Table>
-                {DemoCodeBlock({code: `<Table>
+                {DemoCodeBlock({code: 
+`<Table>
     <THead>
       <TR>
         <TH>Header 0</TH>
@@ -2388,7 +2411,8 @@ const App = () => {
                   scrollOffsetDivRef={scrollOffsetDivRef}
                   horizontalOffsetDivRef={horizontalOffsetDivRef}
                 />
-                {DemoCodeBlock({code: `<HeadlessTable 
+                {DemoCodeBlock({code: 
+`<HeadlessTable 
   columns={tableColumns} 
   data={tableData} 
   rowIdField="rowId"
@@ -2414,12 +2438,13 @@ const App = () => {
                     data={tableData}
                   />
                 </VirtualTableStyles>
-                {DemoCodeBlock({code: `<VirtualTableStyles tableHeight="100%">
+                {DemoCodeBlock({code: 
+`<VirtualTableStyles tableHeight="100%">
   <VirtualTable 
     columns={tableColumns}
     data={tableData}
   />
-  </VirtualTableStyles>`})}
+</VirtualTableStyles>`})}
               </demo.InnerContainer>
 
               <demo.InnerContainer title="GridTable">
