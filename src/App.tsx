@@ -379,6 +379,7 @@ const App = () => {
   ]);
   const [stepperValue, setStepperValue] = useState<string | number>(6);
 
+
   useEffect(() => {
     if(sidePanelRow) {
       setShowPanel(true)
@@ -597,6 +598,10 @@ const App = () => {
       
         <Row>
           <Col xs>
+
+          <demo.InnerContainer>
+            
+            </demo.InnerContainer>
             
             <demo.OuterContainer title="Colors" id="colors">
               <demo.InnerContainer title="Primary Colors" id="primary-colors">
@@ -3013,14 +3018,10 @@ const App = () => {
                 </IconContainer>
               </demo.InnerContainer>
             </demo.OuterContainer>
-
-
           </Col>
           <Col xs />
         </Row>
-    </NavAndPage>
-    
-    
+    </NavAndPage>  
   </Page></Theme>
 }
 

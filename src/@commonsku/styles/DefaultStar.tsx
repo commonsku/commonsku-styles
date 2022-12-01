@@ -54,7 +54,7 @@ type DefaultStarProps = React.PropsWithChildren<{
     color?: string;
 }>
 
-export default function DefaultStar({
+const DefaultStar = React.forwardRef<HTMLDivElement, DefaultStarProps>(({
     initialSelected=false,
     forceSelected=false,
     hoverText,
@@ -63,7 +63,7 @@ export default function DefaultStar({
     width,
     color=teal.main,
     ...props
-}: DefaultStarProps ) {
+}: DefaultStarProps, ref ) => {
 
     if(!hoverText) {
         hoverText = children
@@ -74,6 +74,7 @@ export default function DefaultStar({
 
     return (
        <DefaultStarContainer 
+            ref={ref}
             onClick={() => setClicked(!isClicked)} 
             onMouseEnter={() => setHover(true)} 
             onMouseLeave={() => setHover(false)} 
@@ -98,6 +99,8 @@ export default function DefaultStar({
                 }
        </DefaultStarContainer>
     );
-}
+});
+
+export default DefaultStar
     
     

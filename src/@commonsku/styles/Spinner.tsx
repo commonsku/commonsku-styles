@@ -13,9 +13,13 @@ const Wrapper = styled.div<SharedStyleTypes>`
   align-items: center;
   ${SharedStyles}
 `
-
-export const Spinner = ( props : React.PropsWithChildren<{small?:boolean} & SharedStyleTypes>) => {
-  return <Wrapper {...props}>
-           <img alt="Loading..." src={props.small ? gearsSmall : gears}/>
-         </Wrapper>
+type SpinnerProps= {
+  children: React.ReactNode
 }
+
+export const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(( 
+  props: React.PropsWithChildren<{small?:boolean} & SharedStyleTypes>, ref) => {
+  return <Wrapper ref={ref} {...props}>
+    <img alt="Loading..." src={props.small ? gearsSmall : gears}/>
+  </Wrapper>
+});

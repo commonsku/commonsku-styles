@@ -105,13 +105,13 @@ export type ArtworkProps = {
   inputEl?:React.ReactNode,
 };
 
-export const Artwork = ({
+export const Artwork = React.forwardRef<HTMLDivElement, ArtworkProps>(({
     inputProps={},
     onError,
     ...props
-  }: ArtworkProps & SharedStyleTypes) => {
+  }: ArtworkProps & SharedStyleTypes, ref) => {
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
-  return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
+  return <ArtworkWrapper ref={ref} cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
     {props.picture?
       <ArtworkPicture onClick={(e) => props.onClick ? props.onClick(e) : null} cssHeight={props.cssHeight ? props.cssHeight : 17}>
         <Img src={props.picture} style={{objectFit:"contain", width:"100%", height: "100%"}} onError={onError}/>
@@ -143,4 +143,4 @@ export const Artwork = ({
        <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>
   </ArtworkWrapper>
-}
+});

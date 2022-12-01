@@ -14,7 +14,9 @@ type BaseCollapsibleProps = React.PropsWithChildren<{
   isOpen?: boolean;
   handleToggle?: React.MouseEventHandler<HTMLDivElement>;
 }>;
-export const BaseCollapsible = (props: BaseCollapsibleProps) => {
+
+export const BaseCollapsible = React.forwardRef<HTMLDivElement, BaseCollapsibleProps>((
+  props: BaseCollapsibleProps, forwardedRef) => {
   const {
     children,
     style,
@@ -48,7 +50,7 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
   }, [isOpen]);
 
   return (
-    <div style={style}>
+    <div ref={forwardedRef} style={style}>
       <Row style={{
         alignItems: 'center',
         padding: 10,
@@ -80,17 +82,19 @@ export const BaseCollapsible = (props: BaseCollapsibleProps) => {
       </Row>
     </div>
   );
-};
+});
 
-type CollapsibleProps = React.PropsWithChildren<{
+type CollapsibleProps = {
+  children: React.ReactNode;
   style?: React.CSSProperties;
   label: TReactNode;
   controls?: TReactNode;
   open?: boolean;
   onToggleOpen?: (v: boolean) => void;
-}>;
+};
 
-const Collapsible = (props: CollapsibleProps) => {
+const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>((
+  props: React.PropsWithChildren<CollapsibleProps>, ref) => {
   const {
     children,
     open,
@@ -108,11 +112,11 @@ const Collapsible = (props: CollapsibleProps) => {
   };
 
   return (
-    <BaseCollapsible isOpen={isOpen} handleToggle={handleToggle} {...rest}>
+    <BaseCollapsible ref={ref} isOpen={isOpen} handleToggle={handleToggle} {...rest}>
       {children}
     </BaseCollapsible>
   );
-};
+});
 
 type CollapsibleHeaderProps = {
   children: TReactNode;
@@ -232,7 +236,8 @@ type CollapsiblesProps = {
   list: CollapsibleProps[];
   controls?: TReactNode;
 };
-export function Collapsibles(props: CollapsiblesProps) {
+export const Collapsibles = React.forwardRef<HTMLDivElement, CollapsiblesProps> ((
+  props: React.PropsWithChildren<CollapsiblesProps>, ref) => {
   const { list, controls } = props;
   const [open, setOpen] = useState(-1);
   const handleOpen = (i: number) => setOpen(s => s === i ? -1 : i);
@@ -241,6 +246,7 @@ export function Collapsibles(props: CollapsiblesProps) {
     <div>{
       list.map((v, i) => (
         <BaseCollapsible
+          ref={ref}
           key={`Collapsible-key-${i}`}
           label={v.label}
           style={{ paddingBottom: 10, ...v.style }}
@@ -253,6 +259,6 @@ export function Collapsibles(props: CollapsiblesProps) {
       ))
     }</div>
   );
-}
+});
 
 export default Collapsible;

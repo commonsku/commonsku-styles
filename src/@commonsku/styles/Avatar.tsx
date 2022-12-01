@@ -104,21 +104,20 @@ const AvatarInitials = styled.p<_AvatarProps>`
 `
 
 const Avatar: React.FC<
-  Omit<_AvatarProps, 'size'> & {pic?: string, size?: AvatarSize, shape?: AvatarShape, color?: AvatarColor, initials?: string, icon?: boolean}
-> = ({ pic, size='small', shape='square', color, initials, icon, children, ...props }) => {
+  Omit<_AvatarProps, 'size'> & {pic?: string, size?: AvatarSize}> = React.forwardRef(({ 
+    pic, size='small', shape='square', color, initials, icon, children, ...props }, ref: React.Ref<HTMLDivElement>) => {
   if(pic) {
-    return <AvatarWrapper hasPic={true} size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} {...props}>
+    return <AvatarWrapper ref={ref} hasPic={true} size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} {...props}>
     <AvatarPic src={pic ?? placeholder } size={size}/>
   </AvatarWrapper>
   } else if (!pic && icon){
-    return <AvatarWrapper size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} style={{backgroundColor: neutrals['50']}} {...props}><UserIcon color={neutrals[70]} size={size} style={{position:'relative', top: '50%', transform: 'translate(0, -50%)'}}/>
+    return <AvatarWrapper ref={ref} size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} style={{backgroundColor: neutrals['50']}} {...props}><UserIcon color={neutrals[70]} size={size} style={{position:'relative', top: '50%', transform: 'translate(0, -50%)'}}/>
   </AvatarWrapper>
   } else {
-    return <AvatarWrapper size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} color={color} initials={initials} {...props}>
+    return <AvatarWrapper ref={ref} size={get(avatarSizes, [size ?? 'small', 'size'], size) as AvatarSize} shape={get(avatarShapes, shape ?? 'square', shape) as AvatarShape} color={color} initials={initials} {...props}>
       <AvatarInitials size={size}>{initials ?? children}</AvatarInitials>
   </AvatarWrapper>
-  }
-  
-}
+  } 
+});
 
 export { Avatar }

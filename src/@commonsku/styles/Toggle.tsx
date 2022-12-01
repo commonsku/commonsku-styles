@@ -86,8 +86,11 @@ type ToggleProps = React.PropsWithChildren<{
   size?: ToggleSize;
 } & SharedStyleTypes>;
 
-const Toggle = ({ size='medium', ...props }: ToggleProps) => {
-  return <Wrapper size={size} {...props}>
+const Toggle = React.forwardRef<HTMLDivElement, ToggleProps>(({ 
+  size='medium', 
+  ...props 
+}: ToggleProps, ref) => {
+  return <Wrapper ref={ref} size={size} {...props}>
     <Container stretch={props.stretch} size={size} {...props}>
       {
         React.Children.map(props.children, (child:any, index) => {
@@ -96,6 +99,6 @@ const Toggle = ({ size='medium', ...props }: ToggleProps) => {
       }
     </Container>
   </Wrapper>
-}
+});
 
 export { Toggle, ToggleLink }

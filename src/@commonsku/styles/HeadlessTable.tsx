@@ -336,11 +336,11 @@ const StickyList = ({
   </StickyListContext.Provider>
 }
 
-export function HeadlessTable({ 
+export const HeadlessTable = React.forwardRef<HTMLDivElement, HeadlessTableProps>(({ 
   columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0, defaultScrollOffset=0, defaultHorizontalOffset=0,
   pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef, horizontalOffsetDivRef, selectedRowId,
   sortDirectionDivRef, currentColumnsDivRef, minHeight, pagination=true
-}: HeadlessTableProps) {
+}: HeadlessTableProps, ref) => {
   //@ts-ignore
   const initialState: any = { 
     pageIndex: defaultPageIndex, 
@@ -551,7 +551,7 @@ export function HeadlessTable({
   //infinite scroll
   const scrollBarSize = useMemo(() => verticalScrollbarWidth(), [])
   return (
-    <Styles minHeight={minHeight}>
+    <Styles ref={ref} minHeight={minHeight}>
       <>
         {pagination ?
           <div ref={topScrollRef} style={{ 
@@ -755,4 +755,5 @@ export function HeadlessTable({
       </>
     </Styles>
   )
-}
+});
+

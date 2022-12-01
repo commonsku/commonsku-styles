@@ -130,7 +130,7 @@ export const canIncrement = (value: number, max?: number) =>
 export const canDecrement = (value: number, min?: number) =>
     (min !== undefined && value > min) || min === undefined;
 
-export default function InputStepper(props: InputStepperProps) {
+export const InputStepper = React.forwardRef<HTMLDivElement, InputStepperProps>((props: InputStepperProps, forwardedRef) => {
     const {
         min = 0,
         max,
@@ -215,7 +215,7 @@ export default function InputStepper(props: InputStepperProps) {
     }, [ref, min, max, updateValue]), delayChangeTimeout);
 
     return (
-        <InputStepperOuterContainer width={width}>
+        <InputStepperOuterContainer ref={forwardedRef} width={width}>
             <InputStepperLabel style={labelStyle}>{label}</InputStepperLabel>
             <InputStepperInnerContainer style={style}>
                 <IconButton
@@ -261,4 +261,6 @@ export default function InputStepper(props: InputStepperProps) {
             </InputStepperInnerContainer>
         </InputStepperOuterContainer>
     )
-}
+});
+
+export default InputStepper

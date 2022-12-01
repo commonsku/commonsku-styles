@@ -10,7 +10,8 @@ export type CollapseStyledProps = {
 }
 export type CollapseWrapperProps = CollapseStyledProps
 export type CollapsiblePanelTitleProps = {}
-export type CollapsibleProps = CollapseWrapperProps & CollapsiblePanelTitleProps & {
+
+export type CollapsibleProps = React.PropsWithChildren<CollapseWrapperProps & CollapsiblePanelTitleProps & {
     style?: React.CSSProperties,
     isOpen?: boolean;
     padded?: boolean;
@@ -19,7 +20,8 @@ export type CollapsibleProps = CollapseWrapperProps & CollapsiblePanelTitleProps
     onExit?: Function;
     onExiting?: Function;
     onExited?: Function;
-}
+}>
+
 export type CollapsiblePanelProps = React.PropsWithChildren<Omit<
 CollapsibleProps & {onClick?: null | ((i?: number|null) => void);}, "isOpen"> & {
     title?: string;
@@ -28,11 +30,11 @@ CollapsibleProps & {onClick?: null | ((i?: number|null) => void);}, "isOpen"> & 
     titleProps?: { [key in string]: any };
 }>
 
-export type CollapsiblePanelsProps = {
+export type CollapsiblePanelsProps = React.PropsWithChildren<{
     panels?: Array<CollapsiblePanelProps & {wrapperProps?: { [key in string]: any }}>;
     spaceBetween?: boolean; // space between panels
     onClickPanel?: null | ((i?: number|null) => void);
-}
+}>
 
 export const CollapseStyled = styled.div<CollapseStyledProps>`
 &&& {
@@ -88,10 +90,10 @@ function getNodeHeight(node: HTMLElement) {
     return node.scrollHeight;
 }
 
-export function Collapsible({
+export const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>(({
     onEntering, onEntered, onExit, onExiting, onExited,
     duration=300, isOpen=false, children, style={}, padded=false, ...props
-}: React.PropsWithChildren<CollapsibleProps>) {
+}: React.PropsWithChildren<CollapsibleProps>, ref) => {
     const [height, setHeight] = React.useState<null | number>(null);
     const onHandleEnters = (type: string) => (node: HTMLElement, isAppearing: boolean) => {
         switch (type) {
@@ -129,7 +131,7 @@ export function Collapsible({
     }
 
     const bodyStyles = _.omit(style, ['padding', 'paddingTop', 'paddingBottom']);
-    return (<CollapseStyled duration={duration}>
+    return (<CollapseStyled ref={ref} duration={duration}>
         <Transition in={isOpen} timeout={duration}
             onEntering={onHandleEnters('onEntering')}
             onEntered={onHandleEnters('onEntered')}
@@ -147,12 +149,12 @@ export function Collapsible({
             )}
         </Transition>
     </CollapseStyled>);
-}
+});
 
 
-export function CollapsiblePanel({
+export const CollapsiblePanel = React.forwardRef<HTMLDivElement, CollapsiblePanelProps>(({
     title, duration=300, isDefaultOpen=false, components, children, titleProps={}, ...props
-}: React.PropsWithChildren<CollapsiblePanelProps>) {
+}: React.PropsWithChildren<CollapsiblePanelProps>, ref) => {
     const [open, setOpen] = React.useState(isDefaultOpen);
     const togglePanel = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e && e.preventDefault();
@@ -163,15 +165,17 @@ export function CollapsiblePanel({
         onClick: togglePanel,
         ...titleProps
     }
-    return (<CollapseWrapper duration={duration}>
+    return (<CollapseWrapper ref={ref} duration={duration}>
         {components && components.Title
             ? <components.Title {..._titleProps} />
             : <CollapsiblePanelTitle {..._titleProps}>{title}</CollapsiblePanelTitle>}
         <Collapsible {...props} duration={duration} isOpen={open}>{children}</Collapsible>
     </CollapseWrapper>);
-}
+});
 
-export function CollapsiblePanels({panels=[], spaceBetween=false, onClickPanel=null}: CollapsiblePanelsProps) {
+export const CollapsiblePanels = React.forwardRef<HTMLDivElement, CollapsiblePanelsProps>(({
+    panels=[], spaceBetween=false, onClickPanel=null
+}: React.PropsWithChildren<CollapsiblePanelsProps>, ref) => {
     const [openIndex, setOpenIndex] = React.useState<number | null>(null);
     const updatePanelIndex = (i: number | null) => {
         let idx: number|null = null;
@@ -207,7 +211,7 @@ export function CollapsiblePanels({panels=[], spaceBetween=false, onClickPanel=n
             }
             const { style={}, ..._wrapperProps } = wrapperProps;
             return (
-                <CollapseWrapper key={`CSKU_CollapsiblePanels_${i}`} duration={duration} style={{
+                <CollapseWrapper ref={ref} key={`CSKU_CollapsiblePanels_${i}`} duration={duration} style={{
                     ...(spaceBetween ? {marginBottom: 10} : {}),
                     ...style,
                 }} {..._wrapperProps}>
@@ -219,4 +223,4 @@ export function CollapsiblePanels({panels=[], spaceBetween=false, onClickPanel=n
             );
         })}
     </>);
-}
+});

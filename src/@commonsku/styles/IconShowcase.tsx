@@ -55,40 +55,40 @@ type IconShowcaseProps = ShowcaseProps & {
     Icon: TButtonIcon;
 };
 
-export function IconShowcase({
+export const IconShowcase = React.forwardRef<HTMLDivElement, IconShowcaseProps>(({
 Icon,
 name,
 iconColor=primary1.main,
 iconProps,
 size="medium",
 ...props
-}: IconShowcaseProps) {
+}: IconShowcaseProps, ref) => {
 
     return (
-        <IconBox>
+        <IconBox ref={ref}>
             <IconGroup>
             <Icon color={iconColor} size={size} {...iconProps}/>
             </IconGroup>
             <IconLabel>{name}</IconLabel>
         </IconBox>
     );
-}
+});
 
 
 type IconsShowcaseProps = ShowcaseProps & {
   Icons: React.ReactElement[];
 };
 
-export function IconsShowcase({
+export const IconsShowcase = React.forwardRef<HTMLDivElement,IconsShowcaseProps>(({
   Icons,
   name,
   iconColor=primary1.main,
   iconProps,
   size="medium"
-}: IconsShowcaseProps) {
+}: IconsShowcaseProps, ref) => {
 
     return (
-        <IconBox>
+        <IconBox ref={ref}>
             <IconGroup>
              {Icons.map((Icon, i) => React.cloneElement(Icon, { 
                 key: uniqueId("IconsShowcase"),
@@ -103,5 +103,5 @@ export function IconsShowcase({
             <IconLabel>{name}</IconLabel>
         </IconBox>
     );
-}
+});
 

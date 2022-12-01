@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
 import { getColor } from './Theme';
 import { document, truncate } from '../utils';
+import { useFallbackRef } from './hooks'
 
 const StyledCircles = styled.div`
   line-height: 0;
@@ -112,7 +113,8 @@ type StateDropdownProps = {
     dataFor?: string;
     background?: string,
 } & DropdownContentProps;
-export const StateDropdown = ({
+
+export const StateDropdown = React.forwardRef<HTMLDivElement, StateDropdownProps>(({
     items,
     text,
     value,
@@ -123,9 +125,9 @@ export const StateDropdown = ({
     dataFor='',
     background = '#F4F7FF',
     ...props
-}: StateDropdownProps) => {
+}: StateDropdownProps, ref) => {
 
-    const node = useRef<HTMLDivElement>(null);
+    const node = useFallbackRef<HTMLDivElement>(ref);
     const [showMenu, setShowMenu] = useState(false);
     const [value2, setValue] = useState(value);
 
@@ -177,4 +179,4 @@ export const StateDropdown = ({
             </DropDownContent>}
         </StyledDropdown>
     );
-}
+});

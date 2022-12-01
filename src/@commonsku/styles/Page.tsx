@@ -13,10 +13,15 @@ const StyledPage = styled.div<SharedStyleTypes>`
   ${SharedStyles}
 `;
 
-function Page (props: React.PropsWithChildren<SharedStyleTypes>) {
-  return <StyledPage {...props}>
+type PageProps = {
+  children: React.ReactNode
+};
+
+
+const Page = React.forwardRef<HTMLDivElement, PageProps>((props: React.PropsWithChildren<SharedStyleTypes>, ref) => {
+  return <StyledPage ref={ref} {...props}>
     {props.children}
   </StyledPage>
-}
+});
 
 export {Page};

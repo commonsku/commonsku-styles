@@ -24,11 +24,9 @@ const ErrorTextContainer = styled.div`
     padding: 100px 50px;
     margin-top: auto;
     margin-bottom: auto;
-
     @media only screen and (max-width: 700px) {
     margin-right: auto;
     }
-
     @media only screen and (min-width: 701px) {
     margin-right: 10px;
     }
@@ -40,13 +38,11 @@ const BotContainer = styled.div`
     border-radius: 10px;
     font-size: 2em;
     padding: 40px;
-
     margin-right: auto;
     @media only screen and (max-width: 700px) {
       margin-left: auto;
       margin-top: 20px;
     }
-
     @media only screen and (min-width: 701px) {
       margin-left: 5px;
     }
@@ -89,6 +85,6 @@ export class ErrorBoundary extends Component<object, StateType> {
     }
     return this.props.children;
   }
-}
+};
 
 export default ErrorBoundary;

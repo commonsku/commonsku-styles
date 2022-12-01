@@ -49,7 +49,7 @@ export type ThermometerProps = {
 	labelTextColor?: string;
 	isSecondary?: boolean;
 };
-export default function Thermometer({
+const Thermometer = React.forwardRef<HTMLDivElement, ThermometerProps>(({
     title,
     target,
     value1,
@@ -58,7 +58,7 @@ export default function Thermometer({
 	labelTextColor,
 	isSecondary,
     ...props
-}: ThermometerProps) {
+}: ThermometerProps, ref) => {
     const targetRef = useRef<HTMLSpanElement | null>(null);
     const val1Ref = useRef<HTMLSpanElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -89,7 +89,7 @@ export default function Thermometer({
     }, []);
 
     return (
-        <div {...props}>
+        <div ref={ref} {...props}>
             {title ? <Text
                 style={{fontWeight: 'bold', fontSize: 18, color: colors.neutrals.bodyText}}
             >{title}</Text> : null}
@@ -122,4 +122,6 @@ export default function Thermometer({
             </div>
         </div>
     );
-}
+});
+
+export default Thermometer

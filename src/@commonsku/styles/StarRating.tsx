@@ -15,8 +15,13 @@ const StyledRating = styled.div<SharedStyleTypes>`
   ${SharedStyles}
 `
 
-export const StarRating = (props: {rating:number} & SharedStyleTypes) => {
-  return <StyledRating {...props}>
+type StarRatingProps= {
+  rating: number
+}
+
+export const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>((
+  props: React.PropsWithChildren<{rating:number} & SharedStyleTypes>, ref) => {
+  return <StyledRating ref={ref} {...props}>
     {[1,2,3,4,5].map((x,i) => i < props.rating ? <StyledStar key={`star${i}`} src={star_light}/> : <StyledStar key={`star${i}`} src={star_dark}/>)}
   </StyledRating>
-}
+});

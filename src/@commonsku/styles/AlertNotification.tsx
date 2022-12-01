@@ -56,7 +56,7 @@ const StyledNotification = styled.div<{alertType?: string }>`
     }
 `;
 
-export default function AlertNotification({
+const AlertNotification = React.forwardRef<HTMLDivElement, AlertNotificationProps>(({
     alertType="neutral",
     learnMore=false,
     href,
@@ -64,7 +64,7 @@ export default function AlertNotification({
     children, 
     style={},
     ...props
-}: AlertNotificationProps){
+}: AlertNotificationProps, ref) => {
 
     function notificationIcon(){
         if(alertType === "success") {
@@ -79,7 +79,7 @@ export default function AlertNotification({
     NotificationVariantStyles(alertType);
     
     return (
-        <StyledNotification alertType={alertType} {...props}>
+        <StyledNotification ref={ref} alertType={alertType} {...props}>
             {notificationIcon()}
             {children}
             {learnMore ? 
@@ -91,4 +91,6 @@ export default function AlertNotification({
             }
         </StyledNotification>
     )
-};
+});
+
+export default AlertNotification
