@@ -10,7 +10,7 @@ import {
 import { FixedSizeList, ListOnScrollProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup, SortByTableInstance, SortByTableOptions } from './types';
 import { colors, getThemeColor } from '../Theme';
-import { FilledChevronIcon} from '../icons';
+import { FilledChevronIcon } from '../icons';
 import scrollbarWidth from './scrollbarWidth';
 
 export const SimpleWindowedTableStyles = styled.div<{
@@ -116,9 +116,11 @@ export type SimpleWindowedTableProps = {
         className?: string;
         style?: React.CSSProperties;
     };
+    headerGroupStyle?: React.CSSProperties;
     TableFooter?: React.ReactNode;
     className?: string;
     hideFooter?: boolean;
+    clearRowFullWidth?: boolean;
     NoRowsFound?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
 };
 
@@ -136,7 +138,9 @@ function SimpleWindowedTable({
     useTableProps={},
     tableHeaderProps={},
     tableFooterProps={},
+    headerGroupStyle={},
     hideFooter=true,
+    clearRowFullWidth=false,
     className='',
     NoRowsFound,
 }: SimpleWindowedTableProps) {
@@ -200,11 +204,13 @@ function SimpleWindowedTable({
         ({ index, isScrolling, style }) => {
             const row = rows[index];
             prepareRow(row);
+            const rowStyle = { ...(style || {}) };
+            if (rowStyle.width && rowStyle.width === '100%' && clearRowFullWidth) {
+                delete rowStyle.width;
+            }
             return (
                 <div
-                    {...row.getRowProps({
-                        style
-                    })}
+                    {...row.getRowProps({ style: rowStyle })}
                     className="tr"
                 >
                     {row.cells.map((cell) => {
@@ -220,7 +226,7 @@ function SimpleWindowedTable({
                 </div>
             );
         },
-        [prepareRow, rows, onClickRow]
+        [prepareRow, rows, onClickRow, clearRowFullWidth]
     );
 
     const getHeaderProps = (column: BaseSortByHeaderGroup<object>, isFooter = false) => {
@@ -282,20 +288,34 @@ function SimpleWindowedTable({
             <div {...tableHeaderProps}
                 className={`header-wrapper ${tableHeaderProps.className || ''}`}
             >
-                {headerGroups.map((headerGroup) => (
-                    <div {...getHeaderGroupProps(headerGroup, false)} className="header tr" ref={headerRef}>
-                        {headerGroup.headers.map((column) => (
-                            <div {...getHeaderProps(column, false)}>
-                                {column.render("Header")}
-                                {column.canSort ? <span style={{ display: 'inline-block', paddingLeft: 5, verticalAlign: 'text-top' }}>
-                                    {column.isSorted ? (
-                                        column.isSortedDesc ? <FilledChevronIcon direction="down" width="15px" /> : <FilledChevronIcon direction="up" width="15px" />
-                                    ) : <FilledChevronIcon direction="updown" width="15px" />}
-                                </span> : null}
-                            </div>
-                        ))}
-                    </div>
-                ))}
+                {headerGroups.map((headerGroup) => {
+                    const headerGroupProps = getHeaderGroupProps(headerGroup, false);
+                    return (
+                        <div
+                            {...headerGroupProps}
+                            className="header tr"
+                            ref={headerRef}
+                            style={{
+                                ...(headerGroupProps.style || {}),
+                                ...(headerGroupStyle || {}),
+                            }}
+                        >
+                            {headerGroup.headers.map((column) => (
+                                <div {...getHeaderProps(column, false)}>
+                                    {column.render("Header")}
+                                    {column.canSort ?
+                                        <FilledChevronIcon size='medium'
+                                            direction={column.isSorted
+                                                ? (column.isSortedDesc ? 'down' : 'up')
+                                                : 'updown'}
+                                            style={{ verticalAlign: 'middle' }}
+                                        />
+                                    : null}
+                                </div>
+                            ))}
+                        </div>
+                    );
+                })}
             </div>
 
             <div {...getTableBodyProps()}>
