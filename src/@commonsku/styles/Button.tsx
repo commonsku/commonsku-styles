@@ -464,7 +464,7 @@ const ButtonIcon = React.forwardRef<SVGElement, ButtonIconProps>((props, ref) =>
   if (size !== "tiny" && size !== "small") {
     btnSize = "medium";
   }
-  const hoverColor = get(variantStyles, [':hover', 'color']) || '';
+  const hoverColor = iconProps?.hoverColor || get(variantStyles, [':hover', 'color']) || '';
   const iconNewProps = {
     ...iconProps,
     size: btnSize,
