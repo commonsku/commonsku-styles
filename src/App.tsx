@@ -2600,6 +2600,18 @@ const App = () => {
                 </IconContainer>
               </demo.InnerContainer>
 
+              <demo.InnerContainer title="Supplier Icons" id="supplier-icons">
+                <IconContainer>
+                  <IconsShowcase Icons={[<icons.CollaborateIcon />]} name="CollaborateIcon"/>
+                  <IconsShowcase Icons={[<icons.InventoryIcon />]} name="InventoryIcon"/>
+                  <IconsShowcase Icons={[<icons.OrderStatusIcon />]} name="OrderStatusIcon"/>
+                  <IconsShowcase Icons={[<icons.EPOIcon />]} name="EPOIcon"/>
+                  <IconsShowcase Icons={[<icons.CommunityIcon />]} name="CommunityIcon"/>
+                  <IconsShowcase Icons={[<icons.ConnectedIcon />]} name="ConnectedIcon"/>
+                  <IconsShowcase Icons={[<icons.ConnectedPlusIcon />]} name="ConnectedPlusIcon"/>
+                </IconContainer>
+              </demo.InnerContainer>
+
               <demo.InnerContainer title="Status Icons" id="status-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[
