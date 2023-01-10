@@ -80,3 +80,12 @@ export { default as HistoryIcon} from './HistoryIcon';
 export { default as HandleIcon} from './HandleIcon';
 export { default as ShoppingCartIcon } from './ShoppingCartIcon';
 export { default as AddShoppingCartIcon } from './AddShoppingCartIcon';
+
+export { default as CommunityIcon} from './CommunityIcon';
+export { default as ConnectedIcon} from './ConnectedIcon';
+export { default as ConnectedPlusIcon} from './ConnectedPlusIcon';
+
+export { default as CollaborateIcon} from './CollaborateIcon';
+export { default as InventoryIcon} from './InventoryIcon';
+export { default as OrderStatusIcon} from './OrderStatusIcon';
+export { default as EPOIcon} from './EPOIcon';
