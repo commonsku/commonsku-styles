@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import React, { Component, MouseEvent } from 'react'
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import colors from './colors';
+import { defaultProps } from 'react-select/src/Select';
 
 const tabSizes = {
   small: css`
@@ -52,21 +53,17 @@ const Tab = styled.li<TabProps>`
     padding: 1rem 12px;
     margin-right: 15px;
     ${SharedStyles}
-
     ${props => tabSizes[props.size ?? 'medium']}
   }
 `
 
 /* 
-
 Here's how you use this:
-
 <Tabs tabs={[
               { name: "abc", label: "ABC", content: <div>abc</div> },
               { name: "xyz", label: "XYZ", content: <div>xyz</div> },
            ]}
 />
-
 */
 
 // const Tabs = ({ tabs }: { tabs: {label: string, content: React.ReactNode}[], }) => {
@@ -95,16 +92,17 @@ export type TTab = {
 export type TabsProps = {
   tabs: TTab[],
   selectedTabIndex?: number,
-  padded?: boolean
+  padded?: boolean;
 } & CommonTabProps;
 type TabsState = {selectedTabIndex: number};
 
-class Tabs extends Component<TabsProps, TabsState> {
-  constructor(props: TabsProps) {
+
+class _Tabs extends Component<TabsProps & {forwardedRef: React.ForwardedRef<HTMLDivElement>}, TabsState> {
+  constructor(props) {
     super(props);
     this.state = {
       selectedTabIndex: this.props.selectedTabIndex || 0,
-    };
+    }; 
   }
 
   getTab(tabs: TTab[], tabIndex=0): null | TTab {
@@ -143,9 +141,10 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   render () {
-    const { tabs, size, padded, variant, ...props } = this.props;
+    const { tabs, size, padded, variant, forwardedRef, ...props } = this.props;
     const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
-    return <div {...props}>
+    
+    return <div ref={forwardedRef} {...props}>
       <TabBar padded={padded === true}>
         {tabs.map((tab, index) => <Tab 
           key={index}
@@ -164,6 +163,8 @@ class Tabs extends Component<TabsProps, TabsState> {
       {get(selectedTab, ['content'], '')}
     </div>
   }
-}
-
+};
+const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
+  return <_Tabs forwardedRef={ref} {...props} />
+});
 export {TabBar, Tab, Tabs};

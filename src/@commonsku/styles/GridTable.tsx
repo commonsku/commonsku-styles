@@ -97,23 +97,23 @@ type GridTableProps = {
 
 const defaultTransform = (v: any) => v.target ? v.target.value : v.currentTarget ? v.currentTarget.value : v.value;
 
-const Column = ({
+const Column = React.forwardRef<HTMLDivElement, ColumnProps>(({
   name,
   title,
   children,
   centerContent,
   transform = defaultTransform,
-}: ColumnProps) => <GridCell centerContent={centerContent}>{title}</GridCell>;
+}: ColumnProps, ref) => <GridCell ref={ref} centerContent={centerContent}>{title}</GridCell>);
 
 
-const Cell = ({
+const Cell = React.forwardRef<HTMLDivElement, CellProps>(({
   defaultValue,
   onUpdate,
   children,
   validate,
   centerContent,
   transform = (v) => v
-}: CellProps) => {
+}: CellProps, ref) => {
   const [value, setValue] = useState(defaultValue);
   const [error, setError] = useState<string>('');
 
@@ -152,11 +152,11 @@ const Cell = ({
     }
   );
   return (
-    <GridCell centerContent={centerContent}>{cell} {<FieldError>{error}</FieldError>}</GridCell>
+    <GridCell ref={ref} centerContent={centerContent}>{cell} {<FieldError>{error}</FieldError>}</GridCell>
   );
-}
+});
 
-function GridTable({
+const GridTable = React.forwardRef<HTMLDivElement, GridTableProps>(({
   data,
   idField = "id",
   onUpdate,
@@ -170,7 +170,7 @@ function GridTable({
   gridRowGap,
   gridColumnGap,
   ...props
-}: GridTableProps) {
+}: GridTableProps, ref) => {
 
   const [NewData, setNewData] = useState({});
   const [Adding, setAdding] = useState(false);
@@ -355,6 +355,7 @@ function GridTable({
     <>
       {showPopupWithRowId !== 0 ?
         <Popup
+          ref={ref}
           width={'auto'}
           height={'auto'}
           padding={'36px'}
@@ -393,6 +394,7 @@ function GridTable({
         </Popup> : null}
 
       <GridTableContainer
+        ref={ref}
         gridTemplateRows={gridTemplateRows}
         gridTemplateColumns={gridColumns}
         gridRowGap={gridRowGap}
@@ -405,7 +407,7 @@ function GridTable({
         {onAdd && !Adding && AddNew}
       </GridTableContainer></>
   );
-}
+});
 
 export { GridTableContainer, GridTable, GridRow, GridCell, Column };
 

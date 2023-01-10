@@ -18,14 +18,15 @@ type BoxProps = React.PropsWithChildren<{
   title?: string | React.ReactNode,
   controls?: React.ReactNode
 } & SharedStyleTypes>;
-const Box = ({
+
+const Box = React.forwardRef<HTMLDivElement, BoxProps>(({
   title,
   controls,
   children,
   ...props
-}: BoxProps) => {
+}: BoxProps, ref) => {
 
-  return (<StyledBox padded={props.padded} borderless={props.borderless} {...props}>
+  return (<StyledBox ref={ref} padded={props.padded} borderless={props.borderless} {...props}>
     {title || controls ?
       <Row>
         <Col xs={8}>
@@ -39,6 +40,6 @@ const Box = ({
     {children}
   </StyledBox>
   )
-}
+});
 
 export { Box }

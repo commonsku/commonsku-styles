@@ -71,15 +71,16 @@ const ImgPreview = styled.img`
 export type DropAreaProps = React.PropsWithChildren<{
   placeholder?: string | React.ReactNode;
 } & SharedStyleTypes>
-export const DropArea = ({
+
+export const DropArea = React.forwardRef<HTMLDivElement,DropAreaProps>(({
   children,
   placeholder,
   ...props
-}: DropAreaProps) => {
-  return <StyledDropArea {...props}>
+}: DropAreaProps, ref) => {
+  return <StyledDropArea ref={ref} {...props}>
            {children ? children : <PlaceHolder>{placeholder}</PlaceHolder>}
          </StyledDropArea>
-}
+});
 
 
 const getColor = (props: {isDragAccept?: boolean, isDragReject?: boolean, isDragActive?: boolean}) => {
@@ -100,12 +101,12 @@ export type DropzoneTypes = {
   showDroppedFiles ?: boolean,
 } & DropzoneOptions
 
-export function Dropzoned({
+export const Dropzoned = React.forwardRef<HTMLDivElement, DropzoneTypes>(({
   placeholder="Drop Here",
   accept,
   showDroppedFiles=false,
   ...props
-}: DropzoneTypes) {
+}: DropzoneTypes, ref) => {
   const {
     acceptedFiles,
     getRootProps,
@@ -123,7 +124,7 @@ export function Dropzoned({
 
   return (
     <Fragment>
-      <StyledDropArea {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
+      <StyledDropArea ref={ref} {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
         <input {...getInputProps()} />
         <PlaceHolder>{placeholder}</PlaceHolder>
       </StyledDropArea>
@@ -133,14 +134,14 @@ export function Dropzoned({
       </aside>}
     </Fragment>
   )
-}
+});
 
-export function DropzonedPreviews({
+export const DropzonedPreviews = React.forwardRef<HTMLDivElement, DropzoneTypes>(({
   placeholder="Drop Here",
   accept,
   onDrop,
   ...props
-}: DropzoneTypes) {
+}: DropzoneTypes, ref) => {
   const [files, setFiles] = useState([]);
   const {
     getRootProps,
@@ -175,7 +176,7 @@ export function DropzonedPreviews({
 
   return (
     <section className="dropzoned-container">
-      <StyledDropArea {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
+      <StyledDropArea ref={ref} {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
         <input {...getInputProps()} />
         {thumbs.length 
           ? <ThumbsContainer>{thumbs}</ThumbsContainer>
@@ -184,5 +185,5 @@ export function DropzonedPreviews({
       {/* <ThumbsContainer>{thumbs}</ThumbsContainer> */}
     </section>
   );
-}
+});
 

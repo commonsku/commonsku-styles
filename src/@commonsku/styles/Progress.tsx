@@ -20,7 +20,8 @@ const ProgressBar = styled.div<ProgressBarProps>`
   background: ${props => props.error ? "#B21154" : "#00d374"};
 `
 
-const Progress = (props: ProgressBarProps) => {
+const Progress = React.forwardRef<HTMLDivElement, ProgressBarProps>((
+  props: ProgressBarProps, ref) => {
   const val = typeof props.value === 'number'
                 ? props.value
                 : !isNaN(props.value) ? parseInt(props.value) : 0;
@@ -28,14 +29,15 @@ const Progress = (props: ProgressBarProps) => {
                 ? props.max
                 : !isNaN(props.max) ? parseInt(props.max) : 0;
 
-  return <ProgressWrapper {...props}>
+  return <ProgressWrapper ref={ref} {...props}>
     <ProgressBar value={val < max ? val : max} max={max} error={props.error} />
     {props.error ? <Text color="error" bold>{props.error}</Text> : null}
   </ProgressWrapper>
-}
+});
 
-const LabeledProgress = (props: ProgressBarProps) => {
-  return <div>
+const LabeledProgress = React.forwardRef<HTMLDivElement, ProgressBarProps>((
+  props: ProgressBarProps, ref) => {
+  return <div ref={ref}>
     <strong>
       <span style={{ color: "#00a259" }}>
         $<Number commas decimalPoints={0} num={props.value}/>
@@ -44,6 +46,6 @@ const LabeledProgress = (props: ProgressBarProps) => {
     <br />
     <Progress value={props.value} max={props.max} error={props.error}/>
   </div>
-}
+});
 
 export { Progress, LabeledProgress };

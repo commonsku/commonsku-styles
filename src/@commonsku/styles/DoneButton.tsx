@@ -10,13 +10,15 @@ export type DoneButtonProps = {
     variant?: ButtonVariant;
 } & SharedStyleTypes & SizerTypes;
 
-export default function DoneButton({
+const DoneButton = React.forwardRef<HTMLButtonElement, DoneButtonProps>(({
     size="medium",
     variant="primary",
     style={},
     ...Props
-}: DoneButtonProps){
+}: DoneButtonProps, ref) => {
     return (
-        <Button variant={variant} size={size} {...Props}>Done</Button>
+        <Button ref ={ref} variant={variant} size={size} {...Props}>Done</Button>
     )
-};
+});
+
+export default DoneButton

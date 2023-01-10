@@ -8,6 +8,7 @@ import colors from './colors';
 import SVG, { SVGIconProps } from './icons/SvgIcon';
 
 type LightIndicatorLightProps = SVGIconProps & { lit?: boolean; large?: boolean; };
+
 export default function LightIndicatorLight({
     width = 10,
     height = 10,
@@ -81,17 +82,19 @@ type LightIndicatorProps = {
     textProps?: React.HTMLAttributes<HTMLParagraphElement>;
 }
 
-export function LightIndicator({
+export const LightIndicator = React.forwardRef<HTMLDivElement, LightIndicatorProps>(({
     name = "Name this Indicator",
     on = false,
     large = false,
     textProps = {},
     ...props
-}: LightIndicatorProps) {
+}: LightIndicatorProps, ref) => {
     return (
-        <LightIndicatorContainer {...props}>
+        <LightIndicatorContainer ref={ref} {...props}>
             <LightIndicatorLight large={large} lit={on} mr={8} mt={8} />
             <LightIndicatorText {...textProps} large={large} LightIndicatorTextColor={on} >{name}</LightIndicatorText>
         </LightIndicatorContainer>
     );
-}
+});
+
+

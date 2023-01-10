@@ -36,7 +36,7 @@ export type LinkWithIconProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
 } & SharedStyleTypes & SizerTypes>;
 
-export default function LinkWithIcon({
+const LinkWithIcon = React.forwardRef<HTMLAnchorElement, LinkWithIconProps>(({
     Icon,
     href,
     children,
@@ -46,7 +46,7 @@ export default function LinkWithIcon({
     iconProps,
     style={},
     ...props
-}: LinkWithIconProps){
+}: LinkWithIconProps, ref) => {
 
     const [isHover, setHover] = useState(false);
 
@@ -58,7 +58,7 @@ export default function LinkWithIcon({
         }
     
         return (
-          <Icon 
+          <Icon
             color={isHover ? hoverColor : color} 
             mr={8} 
             style={{flexShrink: "0"}}
@@ -69,6 +69,7 @@ export default function LinkWithIcon({
 
     return(
         <StyledLink 
+            ref={ref} 
             href={href} 
             color={color} 
             hoverColor={hoverColor} 
@@ -82,4 +83,6 @@ export default function LinkWithIcon({
             {children}
         </StyledLink>
     )
-}
+});
+
+export default LinkWithIcon

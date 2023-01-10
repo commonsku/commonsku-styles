@@ -20,7 +20,7 @@ export type TaskProps = {
   initialChecked?: boolean;
   onClickCheckbox?: (checked?: boolean) => any,
 };
-const Task = ({
+const Task = React.forwardRef<HTMLDivElement,TaskProps & SharedStyleTypes> (({
   taskName,
   date,
   done,
@@ -29,10 +29,10 @@ const Task = ({
   initialChecked=false,
   onClickCheckbox,
   ...props
-}: React.PropsWithChildren<TaskProps & SharedStyleTypes>) => {
+}: React.PropsWithChildren<TaskProps & SharedStyleTypes>, ref) => {
   const [checked, setChecked] = useState<boolean>(initialChecked);
   return (
-    <StyledTask {...props}>
+    <StyledTask ref={ref} {...props}>
       <LabeledCheckbox checked={checked} label={
         <TaskLabel>
           <TaskName>{taskName}</TaskName>
@@ -50,7 +50,7 @@ const Task = ({
       </div>
     </StyledTask>
   );
-}
+});
 
 const StyledCalendarTaskBody = styled.span`
     font-size: 13px;

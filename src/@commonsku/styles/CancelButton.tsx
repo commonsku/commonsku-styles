@@ -10,13 +10,15 @@ export type CancelButtonProps = {
     variant?: ButtonVariant;
 } & SharedStyleTypes & SizerTypes;
 
-export default function CancelButton({
+const CancelButton = React.forwardRef<HTMLButtonElement, CancelButtonProps>(({
     size="medium",
     variant="error",
     style={},
     ...Props
-}: CancelButtonProps){
+}: CancelButtonProps, ref) => {
     return (
-        <Button variant={variant} size={size} {...Props} >Cancel</Button>
+      <Button ref ={ref} variant={variant} size={size} {...Props} >Cancel</Button>
     )
-};
+});
+
+export default CancelButton

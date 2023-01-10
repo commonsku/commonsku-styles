@@ -103,17 +103,29 @@ const THContentWrapper = styled.span<SizerTypes>`
   }
 `;
 
-const ResponsiveTable = ({parentProps, children, ...props}: React.PropsWithChildren<{parentProps?: {[key: string]: any, style?:object}} & SharedStyleTypes>) => {
+type ResponsiveTableProps = {
+  children: React.ReactNode
+}
+
+const ResponsiveTable = React.forwardRef<HTMLDivElement, ResponsiveTableProps>(({
+  parentProps, children, ...props}
+  : React.PropsWithChildren<{parentProps?: {[key: string]: any, style?:object}} & SharedStyleTypes>, ref) => {
   return (
-    <div style={{overflowX: 'auto'}} {...parentProps}>
+    <div ref={ref} style={{overflowX: 'auto'}} {...parentProps}>
       <Table style={{borderCollapse: 'collapse', borderSpacing: 0, width: '100%'}} {...props}>{children}</Table>
     </div>
   );
+});
+
+type THSortedProps = {
+  children: React.ReactNode
 }
 
-const THSorted = ({children, order, iconHeight=15, iconStyles, hideIconOnMobile, ...props}: React.PropsWithChildren<{order?: string, iconHeight?: number, iconStyles?: object, hideIconOnMobile?:boolean}>) => {
+const THSorted = React.forwardRef<HTMLTableCellElement, THSortedProps>(({
+  children, order, iconHeight=15, iconStyles, hideIconOnMobile, ...props}
+  : React.PropsWithChildren<{order?: string, iconHeight?: number, iconStyles?: object, hideIconOnMobile?:boolean}>, ref) => {
   return (
-    <TH {...props}>
+    <TH ref={ref} {...props}>
       <THContentWrapper
         xs={`display: ${hideIconOnMobile ? 'none': 'inline-block'};`}
         sm={"display: inline-block;"}
@@ -125,7 +137,7 @@ const THSorted = ({children, order, iconHeight=15, iconStyles, hideIconOnMobile,
       }</THContentWrapper> {children}
     </TH>
   );
-}
+});
 
 
 export { Table, TD, TH, TR, THead, TBody, ResponsiveTable, THSorted };

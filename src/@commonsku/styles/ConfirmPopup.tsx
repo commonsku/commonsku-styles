@@ -10,7 +10,9 @@ export type ConfirmPopupProps = {
   onDelete?: () => void;
   onClose?: () => void;
 };
-const ConfirmPopup = (props: ConfirmPopupProps) => {
+
+const ConfirmPopup = React.forwardRef<HTMLDivElement, ConfirmPopupProps>((
+  props: ConfirmPopupProps, ref) => {
   const {
     confirmText='Are you sure you want to delete?',
     disableDelete = false,
@@ -20,6 +22,7 @@ const ConfirmPopup = (props: ConfirmPopupProps) => {
 
   return (
     <Popup
+      ref={ref}
       width={'auto'}
       height={'auto'}
       padding={'36px'}
@@ -56,6 +59,6 @@ const ConfirmPopup = (props: ConfirmPopupProps) => {
       </div>
     </Popup>
   );
-};
+});
 
 export default ConfirmPopup;

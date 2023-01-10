@@ -68,8 +68,19 @@ const ProductWrapper = styled.div<{picture:string} & SharedStyleTypes >`
   ${SharedStyles}
 `
 
-export const Product = (props: {sku:string, picture:string, supplier:string, name:string, price?:number, currency?:string, rating?:number} & SharedStyleTypes) => {
-  return <ProductWrapper {...props}>
+type ProductProps = React.PropsWithChildren<{
+  sku:string, 
+  picture:string, 
+  supplier:string, 
+  name:string, 
+  price?:number, 
+  currency?:string, 
+  rating?:number
+}> & SharedStyleTypes;
+
+export const Product = React.forwardRef<HTMLDivElement, ProductProps>((
+  props: ProductProps, ref) => {
+  return <ProductWrapper ref={ref} {...props}>
     <ProductInfo>
       <SupplierName>{props.supplier}</SupplierName>
       <ProductName>{props.name}</ProductName>
@@ -78,4 +89,4 @@ export const Product = (props: {sku:string, picture:string, supplier:string, nam
       {props.rating ? <StarRating rating={props.rating}/> : null}
     </ProductInfo>
   </ProductWrapper>
-}
+});

@@ -22,8 +22,17 @@ const TopLine = styled.div`display:flex;`
 const PostFooter = styled.div`font-size:.9em;`
 const Comments = styled.div`margin-top: 1em;`
 
-export const FeedPost = (props: React.PropsWithChildren<{author: any, subject?: string, body: React.ReactNode, date: string, comments?: React.ReactNode[]}&SharedStyleTypes>) => {
- return <PostWrapper {...props}>
+type FeedPostProps = React.PropsWithChildren<{
+  author: any, 
+  subject?: string, 
+  body: React.ReactNode, 
+  date: string, 
+  comments?: React.ReactNode[]
+}> & SharedStyleTypes;
+
+export const FeedPost = React.forwardRef<HTMLDivElement, FeedPostProps> ((
+  props: FeedPostProps, ref) => {
+ return <PostWrapper ref ={ref} {...props}>
    <Avatar pic={props.author.avatar}/>
    <WidePart>
      <TopLine>
@@ -41,4 +50,4 @@ export const FeedPost = (props: React.PropsWithChildren<{author: any, subject?: 
      </Comments> : null }
    </WidePart>
  </PostWrapper>
-}
+});

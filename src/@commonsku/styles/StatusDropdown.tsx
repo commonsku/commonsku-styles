@@ -100,4 +100,4 @@ export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, disable
             </DropDownContent>}
         </StyledDropdown>
     );
-}
+};
