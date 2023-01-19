@@ -404,8 +404,8 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((
       size={size}
       {...newProps}
       style={{
-        ...(newProps.style || {}),
         padding: buttonPadding({ ...newProps, size: size }),
+        ...(newProps.style || {}),
         ...(iconPosition === "top" || iconPosition === "bottom" ? {
           display: 'flex',
           flexDirection: 'column',
