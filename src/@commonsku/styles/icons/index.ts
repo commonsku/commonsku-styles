@@ -89,3 +89,5 @@ export { default as CollaborateIcon} from './CollaborateIcon';
 export { default as InventoryIcon} from './InventoryIcon';
 export { default as OrderStatusIcon} from './OrderStatusIcon';
 export { default as EPOIcon} from './EPOIcon';
+export { default as HelpIcon} from './HelpIcon';
+export { default as FileUploadIcon} from './FileUploadIcon';
