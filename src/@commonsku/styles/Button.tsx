@@ -95,15 +95,22 @@ export type ButtonVariant = 'primary'
   | 'text'
   | 'primary-light'
   | 'text-error'
-  // | 'cta-outline'
-  // | 'error-outline'
-  // | 'disabled-outline';
+  | 'error-light'
+  | 'text-error-light'
+  | 'custom';
 
 export type ButtonProps = {
   secondary?: boolean;
   cta?: boolean;
   size?: TSize;
-  variant?: ButtonVariant
+  variant?: ButtonVariant;
+  variantColor?: string;
+  variantBg?: string;
+  variantBorderColor?: string;
+  variantHoverColor?: string;
+  variantHoverBg?: string;
+  variantHoverBorderColor?: string;
+  style?: CSSObject;
 } & SharedStyleTypes & SizerTypes;
 
 const getSizeStyle = (style: string, defaults: string) => {
@@ -129,7 +136,15 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
   // const ctaLight = getThemeColor(props, 'secondary1.20', colors.secondary1['20']);
 
   const error = getThemeColor(props, 'errors.main', colors.errors.main);
+  const errorLight = getThemeColor(props, 'errors.10', colors.errors['10']);
   const errorDark = getThemeColor(props, 'errors.70', colors.errors['70']);
+
+  const customColor = props.variantColor || white;
+  const customBorderColor = props.variantBorderColor;
+  const customBg = props.variantBg;
+  const customHoverColor = props.variantHoverColor || white;
+  const customHoverBorderColor = props.variantHoverBorderColor;
+  const customHoverBg = props.variantHoverBg;
 
   switch (variant) {
     case 'primary':
@@ -222,6 +237,24 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           outlineColor: error,
         },
       };
+    case 'error-light':
+      return {
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: error,
+        background: error,
+        color: white,
+        ':hover': {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: errorLight,
+          background: errorLight,
+          color: white,
+        },
+        ':focus-visible': {
+          outlineColor: error,
+        },
+      };
     case 'disabled':
       return {
         borderWidth: 3,
@@ -268,6 +301,45 @@ const getVariantStyles = (props: ButtonProps, variant: ButtonVariant): CSSObject
           },
           ':focus-visible': {
             outlineColor: 'transparent',
+          },
+        };
+      case 'text-error-light':
+        return {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: 'transparent',
+          background: 'transparent',
+          color: error,
+          ':hover': {
+            borderWidth: 3,
+            borderStyle: 'solid',
+            borderColor: errorLight,
+            background: errorLight,
+            color: white,
+          },
+          ':focus-visible': {
+            outlineColor: 'transparent',
+          },
+        };
+      case 'custom':
+        if (!customBorderColor && !customBg) {
+          return {};
+        }
+        return {
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: customBorderColor,
+          background: customBg,
+          color: customColor,
+          ':hover': {
+            borderWidth: 3,
+            borderStyle: 'solid',
+            borderColor: customHoverBorderColor || customBorderColor,
+            background: customHoverBg || customBg,
+            color: customHoverColor || customColor,
+          },
+          ':focus-visible': {
+            outlineColor: customBorderColor,
           },
         };
     default:
@@ -357,7 +429,6 @@ const presets: {[key: string]: IconButtonProps} = {
 };
 
 function getPropsByPresets(props: IconButtonProps, preset?: ButtonPreset) {
-
   const presetProps = get(presets, [preset || ""]) || {};
   return { ...presetProps, ...props }
 }
@@ -369,7 +440,7 @@ export type IconButtonProps = React.PropsWithChildren<ButtonProps & {
   iconProps?: {[key: string]: any};
   iconPosition?: 'left' | 'right' | 'top' | 'bottom';
   preset?: ButtonPreset;
-  style?: React.CSSProperties;
+  style?: CSSObject;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>;
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const {
@@ -410,7 +481,6 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-
         } : {}),
       }}
       onMouseOver={() => setHovering(true)}
