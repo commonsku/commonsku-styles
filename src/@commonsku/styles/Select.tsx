@@ -200,21 +200,22 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
   };
 }
 
-const skuSelectTheme = (theme: Theme) => ({
-  ...theme,
-  borderRadius: 5,
-  colors: {
-    ...theme.colors,
-    primary25: colors.primary0,
-    primary75: colors.primary0,
-    primary50: colors.primary10,
-    primary: colors.primary,
-    neutral20: colors.select.border,
-    neutral30: colors.select.border,
-    neutral80: colors.textbody,
-    neutral90: colors.textbody
-  },
-})
+const skuSelectThemeByProps =
+  (props: SKUSelectProps | SKUAsyncSelectProps | SKUCreatableSelectProps) => (theme: Theme) => ({
+    ...theme,
+    borderRadius: 5,
+    colors: {
+      ...theme.colors,
+      primary25: getThemeColor(props, 'primary0', colors.primary0),
+      primary75: getThemeColor(props, 'primary0', colors.primary0),
+      primary50: getThemeColor(props, 'primary10', colors.primary10),
+      primary: getThemeColor(props, 'primary', colors.primary),
+      neutral20: getThemeColor(props, 'select.border', colors.select.border),
+      neutral30: getThemeColor(props, 'select.border', colors.select.border),
+      neutral80: getThemeColor(props, 'textbody', colors.textbody),
+      neutral90: getThemeColor(props, 'textbody', colors.textbody),
+    },
+  });
 
 // duplicate styles to overide .resku global styles
 // : React.ForwardRefExoticComponent<SKUSelectProps & React.RefAttributes<BaseSelect>>
@@ -223,6 +224,7 @@ const SKUSelect = React.forwardRef<SelectInstance<unknown, boolean, GroupBase<un
   {noMargin, menuRelative, inPopup, error, ...props},
   ref
 ) => {
+  const skuSelectTheme = skuSelectThemeByProps(props);
   const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
   const selectStyleProps = {
     ...props,
@@ -255,6 +257,7 @@ const LabeledSelect = React.forwardRef<SelectInstance<unknown, boolean, GroupBas
 
 const SKUCreatableSelect = React.forwardRef<SelectInstance, SKUCreatableSelectProps>(
   ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
+    const skuSelectTheme = skuSelectThemeByProps(props);
     const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
     const selectStyleProps = {
       ...props,
@@ -292,6 +295,7 @@ const LabeledCreatableSelect = React.forwardRef<SelectInstance, LabeledCreatable
 
 const SKUAsyncSelect = React.forwardRef<SelectInstance, SKUAsyncSelectProps>(
   ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
+    const skuSelectTheme = skuSelectThemeByProps(props);
     const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
     const selectStyleProps = {
       ...props,
