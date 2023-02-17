@@ -6,7 +6,7 @@ type HelpIconProps = SVGIconProps;
 export default function HelpIcon({
     color=teal.main,
     size="medium",
-    altText="EPO",
+    altText="Help",
     ...props
 }: HelpIconProps) {
     return <SVG size={size} aria-labelledby="HelpIcon" {...props}>
