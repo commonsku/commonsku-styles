@@ -92,3 +92,4 @@ export { default as EPOIcon} from './EPOIcon';
 export { default as HelpIcon} from './HelpIcon';
 export { default as FileUploadIcon} from './FileUploadIcon';
 export { default as DoubleArrowIcon} from './DoubleArrowIcon';
+export { default as ImageIcon} from './ImageIcon';
