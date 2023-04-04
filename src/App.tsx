@@ -2672,6 +2672,7 @@ const App = () => {
               <demo.InnerContainer title="Action Icons" id="action-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[<icons.DownloadIcon />]} name="DownloadIcon" />
+                  <IconsShowcase Icons={[<icons.UploadIcon />]} name="UploadIcon" />
 
                   <IconsShowcase Icons={[
                     <icons.InfoIcon />,

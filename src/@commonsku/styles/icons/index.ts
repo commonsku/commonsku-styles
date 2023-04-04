@@ -24,6 +24,7 @@ export { default as AddNoteIcon } from './AddNoteIcon';
 export { default as LockIcon } from './LockIcon';
 export { default as InfoIcon } from './InfoIcon';
 export { default as DownloadIcon} from "./DownloadIcon"
+export { default as UploadIcon} from "./UploadIcon"
 export { default as MarketingStatusIcon } from './MarketingStatusIcon';
 export { default as GearIcon } from './GearIcon';
 export { default as CircleProgressIcon } from './CircleProgressIcon';
