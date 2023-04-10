@@ -94,10 +94,14 @@ export const getUnit = (measurement: string|number) => {
   return matchedMeasurement ? matchedMeasurement[2] : "px";
 };
 
+const isCalOrPercent = (measurement: string) => (measurement.endsWith('%') || measurement.includes('calc'));
+
 export const stripUnit = (measurement: string|number) =>
   (typeof measurement === "number") ? measurement : parseFloat(measurement);
 
-export const parseMeasurement = (measurement: string|number) => stripUnit(measurement) + getUnit(measurement);
+export const parseMeasurement = (measurement: string|number) =>
+  typeof measurement === 'string' && isCalOrPercent(measurement)
+    ? measurement : stripUnit(measurement) + getUnit(measurement);
 
 export const wait = (time: number) => {
   let timeoutId: NodeJS.Timeout;

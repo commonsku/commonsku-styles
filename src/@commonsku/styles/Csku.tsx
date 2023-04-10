@@ -73,6 +73,7 @@ const stylesTransformMap = {
 };
 
 export type BaseCskuProps = {
+  forceStyles?: boolean;
   pr?: ResponsiveValue<string | number>;
   pl?: ResponsiveValue<string | number>;
   pt?: ResponsiveValue<string | number>;
@@ -148,6 +149,10 @@ export const parseCskuStyles = (p: BaseCskuProps) => {
 };
 
 export type CskuProps = StyledComponent<"div", any, BaseCskuProps, never>;
-const Csku = styled.div<BaseCskuProps>(parseCskuStyles);
+const Csku = styled.div<BaseCskuProps>`
+${p => p.forceStyles ? '&&& {' : ''}
+  ${parseCskuStyles}
+${p => p.forceStyles ? '}' : ''}
+`;
 
 export default Csku;
