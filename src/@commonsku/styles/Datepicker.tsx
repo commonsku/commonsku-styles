@@ -28,13 +28,16 @@ export const CustomDateInput = forwardRef<HTMLInputElement, CustomInputProps>((
   </>);
 });
 
+// @ts-ignore
+const ReactDatePickerComponent = ReactDatePicker.default || ReactDatePicker;
+
 export type DatepickerProps = Omit<ReactDatePickerProps, 'value'>
   & Omit<InputProps, 'value'>
   & {
     value?: Date | null;
     placeholder?: string;
   };
-const Datepicker = forwardRef<ReactDatePicker, DatepickerProps>((
+const Datepicker = (
   {
     error,
     value,
@@ -57,10 +60,9 @@ const Datepicker = forwardRef<ReactDatePicker, DatepickerProps>((
     popperClassName,
     wrapperClassName,
     ...props
-  },
-  ref
+  }: DatepickerProps
 ) => (
-  <ReactDatePicker
+  <ReactDatePickerComponent
     locale={locale}
     selected={value || props.selected}
     todayButton={todayButton}
@@ -80,8 +82,7 @@ const Datepicker = forwardRef<ReactDatePicker, DatepickerProps>((
     wrapperClassName={`commonsku-styles-datepicker ${wrapperClassName || ''}`}
     showPopperArrow={showPopperArrow}
     {...props}
-    ref={ref}
   />
-));
+);
 
 export default Datepicker;
