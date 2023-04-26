@@ -51,23 +51,6 @@ const config = [
       commonjs({
         include: ['node_modules/**'],
         exclude: ['node_modules/process-es6/**'],
-        namedExports: {
-          'node_modules/react/index.js': [
-            'Children',
-            'Component',
-            'PropTypes',
-            'createElement',
-          ],
-          'node_modules/react-dom/index.js': ['render'],
-          'node_modules/react-table/index.js': [
-            'useTable',
-            'useSortBy',
-            'useBlockLayout',
-            'usePagination',
-            'useColumnOrder'
-          ],
-          'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer']
-        },
       }),
       postcss({
         modules: true
