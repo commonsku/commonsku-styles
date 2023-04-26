@@ -81,7 +81,7 @@ export const PopupHeader = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
-const PopupContainer: React.FC<{}> = ({ children }) => {
+const PopupContainer = ({ children }: React.PropsWithChildren<{}>) => {
   const ref = React.useRef(document.createElement('div'));
 
   useEffect(() => {
@@ -163,19 +163,21 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
   return <PopupContainer>
     <Overlay zIndex={overlayZIndex}>
       <PopupWindow className={"popup" + (popupClassName ? ` ${popupClassName}` : '')} {...props} ref={ref}>
-          {noHeader ? null :
-            header ? header : (
-              <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
-                  <Col style={{textAlign: 'left', alignSelf: 'center'}}>
-                      <span className="title">{title}</span>
-                  </Col>
-                  <Col style={{textAlign: 'right', alignSelf: 'center'}}>
-                      { noCloseButton ? null :
-                        controls || <Button onClick={onClose}>Close</Button>}
-                  </Col>
-              </PopupHeader>
-          )}
-          <div className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}>{children}</div>
+          <>
+            {noHeader ? null :
+              header ? header : (
+                <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
+                    <Col style={{textAlign: 'left', alignSelf: 'center'}}>
+                        <span className="title">{title}</span>
+                    </Col>
+                    <Col style={{textAlign: 'right', alignSelf: 'center'}}>
+                        { noCloseButton ? null :
+                          controls || <Button onClick={onClose}>Close</Button>}
+                    </Col>
+                </PopupHeader>
+            )}
+            <div className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}>{children}</div>
+          </>
       </PopupWindow>
     </Overlay>
   </PopupContainer>

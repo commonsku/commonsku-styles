@@ -180,13 +180,15 @@ function NumberInput(props: NumberInputProps) {
         }
     };
 
+    const InputIcon = icon;
+
     return (
         <>
             {label
                 ? <LabeledInput {...inputProps} label={label} ref={ref} />
                 : <Input {...inputProps} ref={ref} />}
-            {icon && type !== 'number'
-                ? <span style={iconWrapperStyles} onClick={handleClickIcon}>{icon}</span>
+            {InputIcon && type !== 'number'
+                ? <span style={iconWrapperStyles} onClick={handleClickIcon}><InputIcon /></span>
                 : null}
         </>
     );

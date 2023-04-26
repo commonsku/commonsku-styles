@@ -8,7 +8,7 @@ import {
   Cell,
   useExpanded,
 } from 'react-table';
-import { VariableSizeList, ListOnScrollProps } from 'react-window';
+import { VariableSizeList, ListOnScrollProps, ListChildComponentProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup } from './types';
 import {
   Row,
@@ -146,7 +146,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     return '100%';
   }, [windowSize, rowsRef]);
 
-  const handleSort = useCallback(column => {
+  const handleSort = useCallback((column: ColumnInstance<Record<string, unknown>>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
     column.toggleSortBy();
     onSort && onSort({ column });
@@ -177,7 +177,7 @@ const VirtualTable = (props: VirtualTableProps) => {
   }, [rowsRef]);
 
   const RenderRow = useCallback(
-    ({ index, isScrolling, style }) => {
+    ({ index, isScrolling, style }: ListChildComponentProps<any>) => {
       const row = rows[index];
 
       prepareRow(row);
@@ -199,7 +199,7 @@ const VirtualTable = (props: VirtualTableProps) => {
               return (
                 <div
                   {...{...cellProps}}
-                  onClick={() => (onClickRow ? onClickRow(cell.row.original, index, { cell, isScrolling, resetList, toggleAllRowsExpanded }) : null)}
+                  onClick={() => (onClickRow ? onClickRow(cell.row.original, index, { cell, isScrolling: Boolean(isScrolling), resetList, toggleAllRowsExpanded }) : null)}
                   className="td"
                 >
                   {cell.render("Cell", { isScrolling, resetList, toggleAllRowsExpanded })}
@@ -295,7 +295,7 @@ const VirtualTable = (props: VirtualTableProps) => {
               <div
                 {...getHeaderProps(column, false)}
                 className="th"
-                onClick={() => handleSort(column)}
+                onClick={() => handleSort(column as never as ColumnInstance<Record<string, unknown>>)}
               >
                 {column.render("Header")}
                 <span>

@@ -1988,7 +1988,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="DropZoned Preview" noBottomLine>
-                <DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
+                <DropzonedPreviews accept={{"image/*": []}} multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
                     console.log(acceptedFiles);
                   }} />
               </demo.InnerContainer>                

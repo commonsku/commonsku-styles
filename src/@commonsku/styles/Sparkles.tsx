@@ -7,8 +7,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { random, range } from '../utils';
-import { usePrefersReducedMotion } from './hooks';
-import { useRandomInterval } from './hooks';
+import { usePrefersReducedMotion, useRandomInterval } from './hooks';
 
 const DEFAULT_COLOR = '#FFC700';
 
@@ -26,7 +25,7 @@ const generateSparkle = (color: string) => {
   return sparkle;
 };
 
-export const Sparkles: React.FC<{ color: string }> = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
+export const Sparkles = ({ color = DEFAULT_COLOR, children, ...delegated }: React.PropsWithChildren<{ color: string }>) => {
   const [sparkles, setSparkles] = React.useState(() => {
     return range(3).map(() => generateSparkle(color));
   });

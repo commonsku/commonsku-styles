@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { useDropzone, DropzoneOptions, DropEvent, DropzoneInputProps } from 'react-dropzone';
+import { useDropzone, DropzoneOptions, DropEvent, DropzoneInputProps, FileRejection } from 'react-dropzone';
 import styled from 'styled-components';
 import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
@@ -150,7 +150,7 @@ export function DropzonedPreviews({
     isDragReject,
   } = useDropzone({
     accept,
-    onDrop: (acceptedFiles: File[], rejectedFiles: File[], event: DropEvent) => {
+    onDrop: (acceptedFiles: File[], rejectedFiles: FileRejection[], event: DropEvent) => {
       onDrop && onDrop(acceptedFiles, rejectedFiles, event);
       // @ts-ignore
       setFiles(acceptedFiles.map((file: File) => Object.assign(file, {

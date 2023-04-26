@@ -60,9 +60,10 @@ const BotImg = styled.img`
 `;
 
 type StateType = { hasError: boolean };
+type ErrorBoundaryProps = React.PropsWithChildren<{}>;
 
-export class ErrorBoundary extends Component<object, StateType> {
-  constructor(props: StateType) {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, StateType> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false }
   }
