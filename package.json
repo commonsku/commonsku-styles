@@ -7,6 +7,7 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
