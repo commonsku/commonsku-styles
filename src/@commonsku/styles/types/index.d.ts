@@ -1,5 +1,5 @@
-import { DatepickerPorps } from "../Datepicker";
+import { DatepickerProps } from "../Datepicker";
 
 declare module '@commonsku/styles' {
-    export { DatepickerPorps };
+    export { DatepickerProps };
 };
