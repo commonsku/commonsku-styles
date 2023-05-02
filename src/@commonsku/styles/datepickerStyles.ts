@@ -108,6 +108,10 @@ const datepickerStyles = `
       margin-top: 8px;
     }
   }
+
+  .react-datepicker__aria-live {
+    display: none;
+  }
 }
 `;
 
