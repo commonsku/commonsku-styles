@@ -48,6 +48,13 @@ export type ToggleSwitchStatedProps = {
 } & Omit<CommonProps, 'selected'>
   & Omit<BaseCskuProps, 'style'>;
 
+const createAnimationLeftStyle = (p: CommonProps) => {
+  if (p.stretch) {
+    return `calc(100% * 1.5px)`;
+  }
+  return `${stripUnit(toggleSizes[p.size || 'medium'].height) * 1.5}px`;
+};
+
 const ContainerStyled = styled(Csku)<CommonProps>`
   &&& {
     position: relative;
@@ -55,27 +62,22 @@ const ContainerStyled = styled(Csku)<CommonProps>`
       ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
       : getThemeColor(p, 'teal.20', colors.teal['20'])};
     width: ${p => p.stretch
-        ? '50%'
-        : `${stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5 }px`};
+        ? '100%'
+        : `${stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5}px`};
     padding: 0.35rem;
     border-radius: 1.8rem;
     cursor: pointer;
     transition: background .3s;
 
-    @keyframes switch-slide-right {
+    @keyframes switch-slide-to-right {
       from { left: 0; }
       to {
-        left: ${p =>
-          (stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5) -
-           stripUnit(toggleSizes[p.size || 'medium'].height)}px;
-      }
+        left: ${createAnimationLeftStyle};
     }
-    
-    @keyframes switch-slide-left {
+  
+    @keyframes switch-slide-to-left {
       from {
-         left: ${p =>
-          (stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5) -
-          stripUnit(toggleSizes[p.size || 'medium'].height)}px;
+        left: ${createAnimationLeftStyle};
       }
       to { left: 0; }
     }
@@ -90,8 +92,8 @@ const ToggleSwitchDotStyled = styled(Csku)<CommonProps>`
   border-radius: 50%;
 
   animation: ${p => p.selected
-    ? 'switch-slide-right .3s forwards 1'
-    : 'switch-slide-left .3s forwards 1'};
+    ? 'switch-slide-to-right .3s forwards 1'
+    : 'switch-slide-to-left .3s forwards 1'};
  }
 `;
 
