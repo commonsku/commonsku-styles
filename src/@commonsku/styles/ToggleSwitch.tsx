@@ -73,6 +73,7 @@ const ContainerStyled = styled(Csku)<CommonProps>`
       from { left: 0; }
       to {
         left: ${createAnimationLeftStyle};
+      }
     }
   
     @keyframes switch-slide-to-left {
