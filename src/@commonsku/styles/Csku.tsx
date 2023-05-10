@@ -148,7 +148,12 @@ export const parseCskuStyles = (p: BaseCskuProps) => {
   return [ stylesObj, sizeStylesObj, ...stylesArr ];
 };
 
-export type CskuProps = StyledComponent<"div", any, BaseCskuProps, never>;
+export type CskuProps<
+  C extends keyof JSX.IntrinsicElements | React.ComponentType<any> = "div",
+  T extends object = any,
+  O extends object = BaseCskuProps,
+  A extends keyof any = never
+> = StyledComponent<C, T, O, A>;
 const Csku = styled.div<BaseCskuProps>`
 ${p => p.forceStyles ? '&&& {' : ''}
   ${parseCskuStyles}
