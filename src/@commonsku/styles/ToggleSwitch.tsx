@@ -108,19 +108,20 @@ const ToggleSwitchStyled = ({
   ...props
 }: ToggleSwitchProps) => {
   return (
-    <Csku {...props} onClick={onClick}>
-      <ContainerStyled
+    <ContainerStyled
+      selected={selected}
+      stretch={stretch}
+      size={size}
+      onClick={onClick}
+      style={style}
+      {...props}
+    >
+      <ToggleSwitchDotStyled
         selected={selected}
         stretch={stretch}
         size={size}
-      >
-        <ToggleSwitchDotStyled
-          selected={selected}
-          stretch={stretch}
-          size={size}
-        />
-      </ContainerStyled>
-    </Csku>
+      />
+    </ContainerStyled>
   );
 }
 
