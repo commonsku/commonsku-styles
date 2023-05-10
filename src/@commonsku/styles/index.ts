@@ -70,3 +70,4 @@ export { default as ConfirmAlertPopup } from './ConfirmAlertPopup';
 export * from './calendar';
 export * from './tables';
 export * from './hooks';
+export * from './ToggleSwitch';
