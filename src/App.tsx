@@ -83,8 +83,8 @@ import {
     VirtualTable,
     Csku,
     Collapsibles,
+    ToggleSwitchStyled,
     ToggleSwitch,
-    ToggleSwitchStated,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -1210,9 +1210,9 @@ const App = () => {
                 <div style={{display: 'flex', flexDirection: 'column', marginBottom: '24px'}}>
                   <demo.SmallLabel>Small Toggle</demo.SmallLabel>
                   <div style={{ marginTop: 10, marginBottom: 10, }}>
-                    <ToggleSwitch />
+                    <ToggleSwitchStyled />
                     <div style={{ padding: 5 }} />
-                    <ToggleSwitchStated initialSelected />
+                    <ToggleSwitch initialSelected />
                     <div style={{ padding: 5 }} />
                   </div>
                   <Toggle size="small" mr={24} mb={24}>

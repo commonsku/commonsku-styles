@@ -48,7 +48,7 @@ export type ToggleSwitchStatedProps = {
 } & Omit<CommonProps, 'selected'>
   & Omit<BaseCskuProps, 'style'>;
 
-const ToggleSwitchStyled = styled(Csku)<CommonProps>`
+const ContainerStyled = styled(Csku)<CommonProps>`
   &&& {
     position: relative;
     background: ${p => p.selected
@@ -96,7 +96,7 @@ const ToggleSwitchDotStyled = styled(Csku)<CommonProps>`
 `;
 
 
-const ToggleSwitch = ({
+const ToggleSwitchStyled = ({
   onClick,
   size = 'medium',
   selected = false,
@@ -106,7 +106,7 @@ const ToggleSwitch = ({
 }: ToggleSwitchProps) => {
   return (
     <Csku {...props} onClick={onClick}>
-      <ToggleSwitchStyled
+      <ContainerStyled
         selected={selected}
         stretch={stretch}
         size={size}
@@ -116,12 +116,12 @@ const ToggleSwitch = ({
           stretch={stretch}
           size={size}
         />
-      </ToggleSwitchStyled>
+      </ContainerStyled>
     </Csku>
   );
 }
 
-const ToggleSwitchStated = ({
+const ToggleSwitch = ({
   size = 'medium',
   initialSelected = false,
   stretch = false,
@@ -136,7 +136,7 @@ const ToggleSwitchStated = ({
   }
 
   return (
-    <ToggleSwitch
+    <ToggleSwitchStyled
       {...props}
       selected={state}
       stretch={stretch}
@@ -147,6 +147,6 @@ const ToggleSwitchStated = ({
 }
 
 export {
+  ToggleSwitchStyled,
   ToggleSwitch,
-  ToggleSwitchStated,
 }
