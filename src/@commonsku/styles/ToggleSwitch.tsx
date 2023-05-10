@@ -12,7 +12,6 @@ const toggleSizes = {
     padding: '8px 12px',
     borderRadius: '4px',
     height: '15px',
-
   },
   medium: {
     'font-family': fontStyles.button.medium.fontFamily,
@@ -20,8 +19,7 @@ const toggleSizes = {
     'line-height': fontStyles.button.medium.lineHeight,
     padding: '8px 16px',
     borderRadius: '4px',
-    height: '22px',
-
+    height: '20px',
   },
   large: {
     'font-family': fontStyles.button.large.fontFamily,
