@@ -5,7 +5,7 @@ import { Button } from './Button';
 import { Col } from './FlexboxGrid';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { SizerCss, SizerTypes } from './Sizer'
-import { document } from '../utils';
+import { document, isClientSide } from '../utils';
 import useClickOutside from './hooks/useClickOutside';
 import { useFallbackRef } from './hooks';
 
@@ -92,6 +92,9 @@ const PopupContainer: React.FC<{}> = ({ children }) => {
     }
   }, []);
 
+  if (!isClientSide()) {
+    return null;
+  }
   return ReactDOM.createPortal(children, ref.current);
 }
 

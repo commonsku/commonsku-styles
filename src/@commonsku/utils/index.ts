@@ -2,6 +2,10 @@ import ssr from './ssr';
 export * from './sizes';
 export { default as generateColor } from './generateColor';
 
+export function isClientSide() {
+  return Boolean(typeof window !== 'undefined' && window.document);
+}
+
 export const valIsValid = (val: any) => val !== null && val !== undefined && val !== ''; // not checking for 0
 
 export const aeval = (obj:{[key: string]: any}, key: string, def: any) => {
