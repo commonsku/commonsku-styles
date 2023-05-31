@@ -79,7 +79,7 @@ const SideItem = ({items}) => {
                 // const active = to === window.location.hash;
 
                 return (
-                    <div>
+                    <div key={title}>
                         <StyledSideItemAtag href={to}>
                             <StyledSubNavItem id={index} className="subnav-item">{title}</StyledSubNavItem>
                         </StyledSideItemAtag>
