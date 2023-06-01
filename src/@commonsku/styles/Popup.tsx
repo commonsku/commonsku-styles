@@ -95,28 +95,29 @@ const PopupContainer: React.FC<{}> = ({ children }) => {
   return ReactDOM.createPortal(children, ref.current);
 }
 
-export type PopupProps = React.PropsWithChildren<{ 
-    header?: React.Component,
-    noHeader?: boolean,
-    title?: string|React.Component,
-    controls?: Array<React.ReactNode>,
-    onClose?: (event?: React.MouseEvent) => void,
-    noCloseButton?: boolean,
-    closeOnClickOutside?: boolean,
-    closeOnEsc?: boolean,
-    width?: string,
-    height?: string,
-    padding?: string,
-    zIndex?: number,
-    overlayZIndex?: number;
-    popupClassName?: string;
-    contentClassName?: string;
+export type PopupProps = React.PropsWithChildren<{
+  header?: React.Component,
+  noHeader?: boolean,
+  title?: string | React.Component,
+  controls?: Array<React.ReactNode>,
+  onClose?: (event?: React.MouseEvent) => void,
+  noCloseButton?: boolean,
+  closeOnClickOutside?: boolean,
+  closeOnEsc?: boolean,
+  width?: string,
+  height?: string,
+  padding?: string,
+  zIndex?: number,
+  overlayZIndex?: number;
+  popupClassName?: string;
+  contentClassName?: string;
+  backgroundComponent?: React.ReactNode,
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
 export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
   {
     header,
-    noHeader=false,
+    backgroundComponent,
     title,
     controls,
     children,
@@ -162,6 +163,7 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
 
   return <PopupContainer>
     <Overlay zIndex={overlayZIndex}>
+      {backgroundComponent && backgroundComponent}
       <PopupWindow className={"popup" + (popupClassName ? ` ${popupClassName}` : '')} {...props} ref={ref}>
           {noHeader ? null :
             header ? header : (
