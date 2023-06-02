@@ -8,6 +8,7 @@ import { SizerCss, SizerTypes } from './Sizer'
 import { document } from '../utils';
 import useClickOutside from './hooks/useClickOutside';
 import { useFallbackRef } from './hooks';
+import { ChevronIcon } from './icons';
 
 export const Overlay = styled.div<{ zIndex?: number; }>`
   &&& {
@@ -81,6 +82,16 @@ export const PopupHeader = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
+const ChevronButton = styled(ChevronIcon) <{ left?: boolean }>`
+  && {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    ${props => props.left ? 'left: 0px;' : 'right: 0px;'}
+    top: calc(50% - 120px/2 + 22.5px);
+  }
+`;
+
 const PopupContainer: React.FC<{}> = ({ children }) => {
   const ref = React.useRef(document.createElement('div'));
 
@@ -111,13 +122,13 @@ export type PopupProps = React.PropsWithChildren<{
   overlayZIndex?: number;
   popupClassName?: string;
   contentClassName?: string;
-  backgroundComponent?: React.ReactNode,
+  PopupWindowComponent?: React.ComponentType<React.ComponentPropsWithRef<any>>,
 } & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
 
 export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
   {
     header,
-    backgroundComponent,
+    noHeader = false,
     title,
     controls,
     children,
@@ -128,6 +139,7 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
     overlayZIndex,
     popupClassName,
     contentClassName,
+    PopupWindowComponent = PopupWindow,
     ...props
   }: PopupProps, 
   forwardedRef 
@@ -163,22 +175,21 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
 
   return <PopupContainer>
     <Overlay zIndex={overlayZIndex}>
-      {backgroundComponent && backgroundComponent}
-      <PopupWindow className={"popup" + (popupClassName ? ` ${popupClassName}` : '')} {...props} ref={ref}>
-          {noHeader ? null :
-            header ? header : (
-              <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
-                  <Col style={{textAlign: 'left', alignSelf: 'center'}}>
-                      <span className="title">{title}</span>
-                  </Col>
-                  <Col style={{textAlign: 'right', alignSelf: 'center'}}>
-                      { noCloseButton ? null :
-                        controls || <Button onClick={onClose}>Close</Button>}
-                  </Col>
-              </PopupHeader>
+      <PopupWindowComponent className={"popup" + (popupClassName ? ` ${popupClassName}` : '')} {...props} ref={ref}>
+        {noHeader ? null :
+          header ? header : (
+            <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">
+              <Col style={{ textAlign: 'left', alignSelf: 'center' }}>
+                <span className="title">{title}</span>
+              </Col>
+              <Col style={{ textAlign: 'right', alignSelf: 'center' }}>
+                {noCloseButton ? null :
+                  controls || <Button onClick={onClose}>Close</Button>}
+              </Col>
+            </PopupHeader>
           )}
-          <div className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}>{children}</div>
-      </PopupWindow>
+        <div className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}>{children} </div>
+      </PopupWindowComponent>
     </Overlay>
   </PopupContainer>
 })
@@ -193,6 +204,19 @@ export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
     {showPopup && <PopupComponent onClose={() => setShowPopup(false)} closeOnEsc={closeOnEsc} closeOnClickOutside={closeOnClickOutside} {...props}/>}
     {render && render({onClick: () => setShowPopup(!showPopup)})}
   </>
+}
+
+const ChevronPopupWindow = (props) => {
+  const { onPreviousButton, onNextButton, index, max } = props;
+  return <>
+    {index > 0 && <ChevronButton direction='left' left={true} onClick={() => onPreviousButton(index)} />}
+    <PopupWindow {...props} />
+    {index < max && <ChevronButton direction='right' onClick={() => onNextButton(index)} />}
+  </>;
+};
+
+export const ChevronPopup = (props) => {
+  return <Popup PopupWindowComponent={ChevronPopupWindow} {...props} />
 }
 
 export default Popup;
