@@ -207,11 +207,11 @@ export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
 }
 
 const ChevronPopupWindow = (props) => {
-  const { onPreviousButton, onNextButton, index, max } = props;
+  const { onPreviousButtonClick, onNextButtonClick, hidePreviousButton, hideNextButton } = props;
   return <>
-    {index > 0 && <ChevronButton direction='left' left={true} onClick={() => onPreviousButton(index)} />}
+    {!hidePreviousButton && <ChevronButton direction='left' left={true} onClick={onPreviousButtonClick} />}
     <PopupWindow {...props} />
-    {index < max && <ChevronButton direction='right' onClick={() => onNextButton(index)} />}
+    {!hideNextButton && <ChevronButton direction='right' onClick={onNextButtonClick} />}
   </>;
 };
 
