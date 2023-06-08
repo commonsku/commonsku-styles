@@ -25,7 +25,14 @@ export const Overlay = styled.div<{ zIndex?: number; }>`
   }
 `;
 
-const PopupWindow = styled.div<SharedStyleTypes & SizerTypes & {width?: string, height?: string, padding?: string; zIndex?: number;}>`
+type PopupWindowProps = {
+  width?: string;
+  height?: string;
+  padding?: string;
+  zIndex?: number;
+} & SharedStyleTypes & SizerTypes;
+
+const PopupWindow = styled.div<PopupWindowProps>`
   &&& {
     width: ${props => props.width ?? '90%'};
     height: ${props => props.height ?? '75%'}; 
@@ -206,16 +213,31 @@ export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
   </>
 }
 
-const ChevronPopupWindow = (props) => {
-  const { onPreviousButtonClick, onNextButtonClick, hidePreviousButton, hideNextButton } = props;
+type ChevronPopupWindowProps = {
+  onPreviousButtonClick?: React.MouseEventHandler<SVGElement>;
+  onNextButtonClick?: React.MouseEventHandler<SVGElement>;
+  hidePreviousButton?: boolean;
+  hideNextButton?: boolean;
+} & PopupWindowProps;
+
+const ChevronPopupWindow = (props: ChevronPopupWindowProps) => {
+  const {
+    onPreviousButtonClick,
+    onNextButtonClick,
+    hidePreviousButton,
+    hideNextButton,
+    ...rest
+  } = props;
   return <>
     {!hidePreviousButton && <ChevronButton direction='left' left={true} onClick={onPreviousButtonClick} />}
-    <PopupWindow {...props} />
+    <PopupWindow {...rest} />
     {!hideNextButton && <ChevronButton direction='right' onClick={onNextButtonClick} />}
   </>;
 };
 
-export const ChevronPopup = (props) => {
+type ChevronPopupProps = Omit<PopupProps, 'PopupWindowComponent'>;
+
+export const ChevronPopup = (props: ChevronPopupProps) => {
   return <Popup PopupWindowComponent={ChevronPopupWindow} {...props} />
 }
 
