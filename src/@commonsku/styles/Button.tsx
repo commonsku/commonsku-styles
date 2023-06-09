@@ -456,7 +456,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((
 
   const variantStyles = React.useMemo(() => {
     return newProps.variant
-      ? getVariantStyles(props, newProps.disabled ? 'disabled' : (newProps.variant ?? 'primary'))
+      ? getVariantStyles(props, newProps.disabled ? 'disabled' : newProps.variant)
       : { color: '#fff' };
   }, [newProps, props]);
 
