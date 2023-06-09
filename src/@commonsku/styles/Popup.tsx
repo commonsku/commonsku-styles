@@ -220,7 +220,7 @@ type ChevronPopupWindowProps = {
   hideNextButton?: boolean;
 } & PopupWindowProps;
 
-const ChevronPopupWindow = (props: ChevronPopupWindowProps) => {
+const ChevronPopupWindow = React.forwardRef<HTMLDivElement, ChevronPopupWindowProps>((props, ref) => {
   const {
     onPreviousButtonClick,
     onNextButtonClick,
@@ -230,10 +230,10 @@ const ChevronPopupWindow = (props: ChevronPopupWindowProps) => {
   } = props;
   return <>
     {!hidePreviousButton && <ChevronButton direction='left' left={true} onClick={onPreviousButtonClick} />}
-    <PopupWindow {...rest} />
+    <PopupWindow ref={ref} {...rest} />
     {!hideNextButton && <ChevronButton direction='right' onClick={onNextButtonClick} />}
   </>;
-};
+});
 
 type ChevronPopupProps = Omit<PopupProps, 'PopupWindowComponent'>;
 
