@@ -226,11 +226,12 @@ const ChevronPopupWindow = React.forwardRef<HTMLDivElement, ChevronPopupWindowPr
     onNextButtonClick,
     hidePreviousButton,
     hideNextButton,
+    width,
     ...rest
   } = props;
   return <>
     {!hidePreviousButton && <ChevronButton direction='left' left={true} onClick={onPreviousButtonClick} />}
-    <PopupWindow ref={ref} {...rest} />
+    <PopupWindow width={width || '80%'} ref={ref} {...rest} />
     {!hideNextButton && <ChevronButton direction='right' onClick={onNextButtonClick} />}
   </>;
 });
