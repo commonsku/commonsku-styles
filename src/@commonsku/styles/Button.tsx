@@ -380,7 +380,7 @@ const Button = styled.button<ButtonProps>`
       cursor: default;
       opacity: 0.5;
     }
-    ${p => getVariantStyles(p, p.variant || 'primary')}
+    ${p => p.variant ? getVariantStyles(p, p.variant || 'primary') : null}
     ${SharedStyles}
     ${SizerCss}
   }
