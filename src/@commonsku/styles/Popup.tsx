@@ -96,6 +96,7 @@ const ChevronButton = styled(ChevronIcon) <{ left?: boolean }>`
     height: 120px;
     ${props => props.left ? 'left: 0px;' : 'right: 0px;'}
     top: calc(50% - 120px/2 + 22.5px);
+    cursor: pointer;
   }
 `;
 
