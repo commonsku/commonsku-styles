@@ -379,8 +379,9 @@ const Button = styled.button<ButtonProps>`
       color: ${props => getThemeColor(props, 'primary', colors.primary)};
       cursor: default;
       opacity: 0.5;
+      ${p => getVariantStyles(p, 'disabled')}
     }
-    ${p => getVariantStyles(p, p.variant || 'primary')}
+    ${p => getVariantStyles(p, p.disabled ? 'disabled' : (p.variant ?? 'primary'))}
     ${SharedStyles}
     ${SizerCss}
   }
@@ -455,7 +456,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((
 
   const variantStyles = React.useMemo(() => {
     return newProps.variant
-      ? getVariantStyles(props, newProps.variant)
+      ? getVariantStyles(props, newProps.disabled ? 'disabled' : newProps.variant)
       : { color: '#fff' };
   }, [newProps, props]);
 
