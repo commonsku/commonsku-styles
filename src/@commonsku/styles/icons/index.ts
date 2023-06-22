@@ -94,3 +94,5 @@ export { default as HelpIcon} from './HelpIcon';
 export { default as FileUploadIcon} from './FileUploadIcon';
 export { default as DoubleArrowIcon} from './DoubleArrowIcon';
 export { default as ImageIcon} from './ImageIcon';
+export { default as StarLightIcon} from './StarLightIcon';
+export { default as StarDarkIcon} from './StarDarkIcon';
