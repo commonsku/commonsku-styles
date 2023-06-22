@@ -8,6 +8,6 @@ const verticalScrollbarWidth = () => {
   const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
   document.body.removeChild(scrollDiv)
   return scrollbarWidth
-}
+};
 
-export default verticalScrollbarWidth
+export default verticalScrollbarWidth;

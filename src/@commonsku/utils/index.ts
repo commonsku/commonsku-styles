@@ -100,7 +100,7 @@ export const parseMeasurement = (measurement: string|number) =>
     ? measurement : stripUnit(measurement) + getUnit(measurement);
 
 export const wait = (time: number) => {
-  let timeoutId: NodeJS.Timeout;
+  let timeoutId: ReturnType<typeof setTimeout>;
   const promise = new Promise((resolve) => {
     timeoutId = setTimeout(resolve, time);
   });
