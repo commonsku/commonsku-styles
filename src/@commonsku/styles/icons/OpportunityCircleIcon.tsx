@@ -9,7 +9,7 @@ export default function OpportunityCircleIcon({
     variant="primary",
     selected=false,
     size,
-    altText="Opportunity order stage",
+    altText="Opportunity",
     style={},
     ...props
 }: OpportunityCircleIconProps) {
