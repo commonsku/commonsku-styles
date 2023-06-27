@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "start": "react-scripts start",
-    "build": "NODE_ENV=production npx rollup -c",
+    "build": "NODE_ENV=production BABEL_ENV=production npx rollup -c",
     "test": "echo \"No test specified\"",
     "prepare": "echo \"install devDependencies for github install...\"",
     "prepack": "rm -rf dist && npm run build",
