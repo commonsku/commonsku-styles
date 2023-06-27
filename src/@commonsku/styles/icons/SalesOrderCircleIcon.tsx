@@ -9,7 +9,7 @@ export default function SalesOrderCircleIcon({
     variant="primary",
     selected=false,
     size,
-    altText="Sales Order stage",
+    altText="Sales Order",
     style={},
     ...props
 }: SalesOrderCircleIconProps) {

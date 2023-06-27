@@ -9,7 +9,7 @@ export default function EstimateCircleIcon({
     variant="primary",
     selected=false,
     size,
-    altText="Estimate order stage",
+    altText="Estimate",
     style={},
     ...props
 }: EstimateCircleIconProps) {

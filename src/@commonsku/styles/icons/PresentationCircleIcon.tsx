@@ -9,7 +9,7 @@ export default function PresentationCircleIcon({
     variant="primary",
     selected=false,
     size,
-    altText="Presentation order stage",
+    altText="Presentation",
     style={},
     ...props
 }: PresentationCircleIconProps) {
