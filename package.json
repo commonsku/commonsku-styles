@@ -4,8 +4,8 @@
   "description": "Common React components by commonsku",
   "author": "commonsku",
   "license": "ISC",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "type": "module",
   "engines": {

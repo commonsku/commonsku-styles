@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from 'node:fs';
+import path from 'node:path';
 
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -29,13 +29,15 @@ const config = [
     output: [{
       file: pkg.main,
       format: 'cjs',
-      exports: 'named',
-      sourcemap: true
+      // exports: 'named',
+      sourcemap: true,
+      interop: 'compat',
     }, {
       file: pkg.module,
       format: 'es',
-      exports: 'named',
-      sourcemap: true
+      // exports: 'named',
+      sourcemap: true,
+      interop: 'compat',
     }],
     plugins: [
       peerDepsExternal({ includeDependencies: true }),
