@@ -11,7 +11,19 @@ type AdditionalSKUSelectProps = {
   noMargin?: boolean,
   error?: boolean,
   menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
-  inPopup?:boolean,
+  inPopup?: boolean,
+  controlStyles?: React.CSSProperties,
+  menuStyles?: React.CSSProperties,
+  menuListStyles?: React.CSSProperties,
+  menuPortalStyles?: React.CSSProperties,
+  optionStyles?: React.CSSProperties,
+  inputStyles?: React.CSSProperties,
+  clearIndicatorStyles?: React.CSSProperties,
+  dropdownIndicatorStyles?: React.CSSProperties,
+  indicatorSeparatorStyles?: React.CSSProperties,
+  singleValueStyles?: React.CSSProperties,
+  valueContainerStyles?: React.CSSProperties,
+  containerStyles?: React.CSSProperties,
 }
 
 type SKUSelectProps = AdditionalSKUSelectProps & SelectProps
@@ -31,6 +43,12 @@ const popupStyles = {
 function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Group extends GroupBase<Option> = GroupBase<Option>>
 (props: SKUSelectStylesProps): StylesConfig<Option, IsMulti, Group> {
   return {
+    container: (provided, state) => {
+      return {
+        ...provided,
+        ...props.containerStyles,
+      };
+    },
     clearIndicator: (provided, state) => {
       return {
         ...provided,
@@ -38,6 +56,7 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
         ':hover': {
           color: getThemeColor(props, 'select.clearIcon.color', colors.select.clearIcon.color),
         },
+        ...props.clearIndicatorStyles,
       };
     },
     dropdownIndicator: (provided, state) => {
@@ -57,20 +76,23 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
       return {
         ...provided,
         ...styles,
+        ...props.dropdownIndicatorStyles,
       };
     },
     indicatorSeparator: (provided, state) => ({
       ...provided,
-      display: 'none'
+      display: 'none',
+      ...props.indicatorSeparatorStyles,
     }),
 
     option: (provided, state) => {
-      return ({
+      return {
         ...provided,
         ...(get(state.data, 'styles') || {}),
         borderBottom: 'none',
         padding: 10,
-      });
+        ...props.optionStyles,
+      };
     },
     input: (provided, state) => {
       return {
@@ -78,7 +100,8 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
       height: 'auto',
       borderColor: props.error
         ? getThemeColor(props, 'select.error.border', colors.select.error.border)
-        : getThemeColor(props, 'select.border', colors.select.border)
+        : getThemeColor(props, 'select.border', colors.select.border),
+      ...props.inputStyles,
     }},
     control: (provided, state) => {
       const styles: React.CSSProperties = {
@@ -135,6 +158,7 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
             ? getThemeColor(props, 'select.error.border', colors.select.error.border)
             : getThemeColor(props, 'select.active.border', colors.select.active.border),
         },
+        ...props.controlStyles,
       });
     },
     menu: (provided, state) => {
@@ -169,32 +193,41 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
         styles['marginBottom'] = '0px';
       }
 
-      return ({
+      return {
         ...provided,
         ...styles,
-      });
+        ...props.menuStyles,
+      };
     },
     menuList: (provided, state) => {
       return {
         ...provided,
         paddingBottom: 0,
+        ...props.menuListStyles,
       };
     },
     menuPortal: (provided, state) => {
       return {
         ...provided,
         zIndex: 9999,
+        ...props.menuPortalStyles,
       };
     },
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = 'opacity 300ms';
-      return { ...provided, opacity, transition };
+      return {
+        ...provided,
+        opacity,
+        transition,
+        ...props.singleValueStyles,
+      };
     },
     valueContainer: (provided, state) => {
       return {
         ...provided,
         padding: '2px 8px',
+        ...props.valueContainerStyles,
       };
     },
   };
@@ -245,11 +278,16 @@ const SKUSelect = React.forwardRef<SelectInstance<unknown, boolean, GroupBase<un
   />
 });
 
-type LabeledSelectProp = SKUSelectProps & {parentStyle?: React.CSSProperties, label?: string, required?: boolean};
+type LabeledSelectProp = SKUSelectProps & {
+  parentStyle?: React.CSSProperties,
+  labelStyle?: React.CSSProperties,
+  label?: string,
+  required?: boolean
+};
 const LabeledSelect = React.forwardRef<SelectInstance<unknown, boolean, GroupBase<unknown>>, LabeledSelectProp>(
-  ({ parentStyle, ...props }, ref) => (
+  ({ parentStyle, labelStyle, ...props }, ref) => (
     <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
       <SKUSelect {...props} ref={ref} />
     </div>
   )
@@ -282,11 +320,16 @@ const SKUCreatableSelect = React.forwardRef<SelectInstance, SKUCreatableSelectPr
   }
 );
 
-type LabeledCreatableSelectProps = SKUCreatableSelectProps & {parentStyle?: React.CSSProperties, label?: string, required?: boolean};
+type LabeledCreatableSelectProps = SKUCreatableSelectProps & {
+  parentStyle?: React.CSSProperties,
+  labelStyle?: React.CSSProperties,
+  label?: string,
+  required?: boolean
+};
 const LabeledCreatableSelect = React.forwardRef<SelectInstance, LabeledCreatableSelectProps>(
-  ({ parentStyle, ...props }, ref) => (
+  ({ parentStyle, labelStyle, ...props }, ref) => (
     <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
       <SKUCreatableSelect {...props} ref={ref} />
     </div>
   )
@@ -320,11 +363,16 @@ const SKUAsyncSelect = React.forwardRef<SelectInstance, SKUAsyncSelectProps>(
   }
 );
 
-type LabeledAsyncSelectProps = SKUAsyncSelectProps & {parentStyle?: React.CSSProperties, label?: string, required?: boolean};
+type LabeledAsyncSelectProps = SKUAsyncSelectProps & {
+  parentStyle?: React.CSSProperties,
+  labelStyle?: React.CSSProperties,
+  label?: string,
+  required?: boolean
+};
 const LabeledAsyncSelect = React.forwardRef<SelectInstance, LabeledAsyncSelectProps>(
-  ({ parentStyle, ...props }, ref) => (
+  ({ parentStyle, labelStyle, ...props }, ref) => (
     <div style={parentStyle}>
-      <Label htmlFor={props.name}>{props.label} {props.required && '*'}</Label>
+      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
       <SKUAsyncSelect {...props} ref={ref} />
     </div>
   )
