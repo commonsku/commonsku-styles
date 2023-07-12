@@ -71,3 +71,4 @@ export * from './calendar';
 export * from './tables';
 export * from './hooks';
 export * from './ToggleSwitch';
+export * from './Dropzone';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { useDropzone, DropzoneOptions, DropEvent, DropzoneInputProps } from 'react-dropzone';
+import { useDropzone, DropzoneOptions, DropEvent } from 'react-dropzone';
 import styled from 'styled-components';
 import { getThemeColor, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
@@ -185,34 +185,3 @@ export function DropzonedPreviews({
     </section>
   );
 }
-
-
-export type DropzoneSimpleProps = {
-  children: React.ReactElement;
-} & DropzoneOptions;
-
-export function DropzonedSimple({
-  accept,
-  children,
-  ...props
-}: DropzoneSimpleProps) {
-  const {
-    acceptedFiles,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({accept, ...props});
-  const Child = React.Children.only(children);
-  if (!Child) {
-    return null;
-  }
-  const ChildElem = React.cloneElement(Child, {
-    acceptedFiles: acceptedFiles,
-    inputProps: getInputProps(),
-    rootProps: getRootProps({isDragActive, isDragAccept, isDragReject}),
-  });
-  return ChildElem
-}
-
