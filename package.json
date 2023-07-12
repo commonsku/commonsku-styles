@@ -39,9 +39,6 @@
     "styled-components": "^5.1.0"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.194",
     "@types/node": "^13.13.52",
@@ -67,6 +64,9 @@
     "react-window": "^1.8.9"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^7.2.1",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-image": "^3.0.2",
