@@ -99,7 +99,7 @@ const ChevronButton = styled(ChevronIcon) <{ left?: boolean }>`
   }
 `;
 
-const PopupContainer: React.FC<{}> = ({ children }) => {
+const PopupContainer: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const ref = React.useRef(document.createElement('div'));
 
   useEffect(() => {
