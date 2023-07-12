@@ -147,7 +147,7 @@ export const Dropdown = ({
         style: {verticalAlign: 'middle', transitionDuration: '.3s', transform: 'rotate(' + ( showMenu ? 0 : 180 ) + 'deg)'},
     };
 
-    const handleToggleMenu = useCallback((value = null) => {
+    const handleToggleMenu = useCallback((value: boolean | null = null) => {
         setShowMenu(s => {
             const newValue = value !== null ? value : !s;
             onToggleMenu && onToggleMenu(newValue);
