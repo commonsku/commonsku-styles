@@ -1,11 +1,23 @@
 import React from "react";
 import * as ReactIs from "react-is";
 
-type TChildElement = React.ReactElement<{ [key: string]: any }>
-  | string | number | boolean | null | undefined
-  | React.JSXElementConstructor<{ [key: string]: any }>;
-type ChildProps = { children?: TChildElement };
-const RenderChild = ({ children, ...props }: ChildProps) => {
+type GenericObj = { [key: string]: any };
+
+export type TConcreteChildElement<P = GenericObj> = React.ReactElement<P>
+  | React.JSXElementConstructor<P>;
+export type TChildElement<P = GenericObj> = TConcreteChildElement<P>
+  | string | number | boolean | null | undefined;
+type ChildProps<P = GenericObj> = {
+  children?: TChildElement<P>;
+  parseProps?: (props: P, elem: TConcreteChildElement<P>) => Partial<P>;
+};
+
+export function getComponentDisplayName(WrappedComponent: TConcreteChildElement) {
+  // @ts-ignore
+  return String(WrappedComponent?.displayName || WrappedComponent?.name || 'Component');
+}
+
+const RenderChild = ({ children, parseProps, ...props }: ChildProps) => {
     if (typeof children === 'string'
     || typeof children === 'number'
     || typeof children === 'boolean'
@@ -17,23 +29,24 @@ const RenderChild = ({ children, ...props }: ChildProps) => {
     );
   }
 
-  const ChildE = React.Children.only(children);
-  if (!ChildE) {
+  const ChildElement = React.Children.only(children);
+  if (!ChildElement) {
     return null;
   }
-  if (typeof ChildE === 'string'
-    || typeof ChildE === 'number'
-    || typeof ChildE === 'boolean'
+  if (typeof ChildElement === 'string'
+    || typeof ChildElement === 'number'
+    || typeof ChildElement === 'boolean'
   ) {
-    return ChildE;
+    return ChildElement;
   }
 
-  if (ReactIs.isElement(ChildE)) {
-    return React.cloneElement(ChildE, props);
+  const elementProps = parseProps ? parseProps(props, ChildElement) : props;
+  if (ReactIs.isElement(ChildElement)) {
+    return React.cloneElement(ChildElement, elementProps);
   }
 
   return (
-    <ChildE {...props} />
+    <ChildElement {...elementProps} />
   );
 };
 
