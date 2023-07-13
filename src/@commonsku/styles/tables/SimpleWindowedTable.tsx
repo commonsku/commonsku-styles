@@ -7,7 +7,7 @@ import {
     SortingRule,
     Column,
 } from 'react-table';
-import { FixedSizeList, ListOnScrollProps } from 'react-window';
+import { FixedSizeList, ListChildComponentProps, ListOnScrollProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup, SortByTableInstance, SortByTableOptions } from './types';
 import { colors, getThemeColor } from '../Theme';
 import { FilledChevronIcon } from '../icons';
@@ -201,7 +201,7 @@ function SimpleWindowedTable({
     }, [rowsRef]);
 
     const RenderRow = React.useCallback(
-        ({ index, isScrolling, style }) => {
+        ({ index, isScrolling, style }: ListChildComponentProps) => {
             const row = rows[index];
             prepareRow(row);
             const rowStyle = { ...(style || {}) };

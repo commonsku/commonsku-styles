@@ -1,37 +1,22 @@
 import React from 'react';
-import * as ReactIs from "react-is";
 import BaseDropzone, {
   useDropzone,
-  FileWithPath,
   DropzoneOptions,
   DropzoneInputProps,
   DropzoneState,
   DropzoneRootProps,
   DropzoneRef,
 } from 'react-dropzone';
+import RenderChild, { getComponentDisplayName, TChildElement, TConcreteChildElement } from './RenderChild';
 
 type ChildDropzoneState = Omit<
   DropzoneState,
   'getRootProps' | 'rootRef' | 'getInputProps' | 'inputRef'
 >;
 
-type TChild = React.ReactChild | boolean | null | undefined;
-type TChildElement = React.ReactElement<Partial<ChildDropzoneState>>
-  | React.ReactChild | boolean | null | undefined | TChild[]
-  | React.JSXElementConstructor<Partial<ChildDropzoneState>>;
-
-type ChildElementProps = ChildDropzoneState & {
-  children?: TChildElement,
-};
-
-function getComponentDisplayName(WrappedComponent: TChildElement) {
-  // @ts-ignore
-  return String(WrappedComponent?.displayName || WrappedComponent?.name || 'Component');
-}
-
 /**
  * Dropzone ChildElement
- * if child element displayName === 'DropzoneChildWrapper' then it'll pass dropzone options in props
+ * if child element's displayName === 'DropzoneChildWrapper' then it'll pass dropzone options in props
  *
  * Example with dropzone wrapper:
  * ```
@@ -62,74 +47,8 @@ function getComponentDisplayName(WrappedComponent: TChildElement) {
  *
  */
 
-const ChildElement = ({
-  children,
-  acceptedFiles,
-  draggedFiles,
-  isDragAccept,
-  isDragActive,
-  isDragReject,
-  isFileDialogActive,
-  isFocused,
-  open,
-  rejectedFiles,
-  ...props
-}: ChildElementProps) => {
-  if (typeof children === 'string'
-    || typeof children === 'number'
-    || typeof children === 'boolean'
-    || typeof children === 'undefined'
-    || children === null
-  ) {
-    return (
-      <div>{children}</div>
-    );
-  }
-
-  const Child = React.Children.only(children);
-  if (!Child) {
-    return null;
-  }
-  if (typeof Child === 'string'
-    || typeof Child === 'number'
-    || typeof Child === 'boolean'
-  ) {
-    return Child;
-  }
-
-  const dropzoneOptions = {
-    acceptedFiles,
-    draggedFiles,
-    isDragAccept,
-    isDragActive,
-    isDragReject,
-    isFileDialogActive,
-    isFocused,
-    open,
-    rejectedFiles,
-    children,
-  };
-
-  let elementProps: Partial<ChildDropzoneState> = props;
-  const elemName = getComponentDisplayName(Child);
-  if (elemName === 'DropzoneChildWrapper') {
-    elementProps = {
-      ...props,
-      ...dropzoneOptions,
-    };
-  }
-
-  if (ReactIs.isElement(Child)) {
-    return React.cloneElement(Child, elementProps);
-  }
-
-  return (
-    <Child {...elementProps} />
-  );
-};
-
 type DropzoneProps = {
-  children: TChildElement;
+  children: TChildElement<Partial<ChildDropzoneState>>;
   className?: string;
   style?: React.CSSProperties,
   rootProps?: DropzoneRootProps,
@@ -141,6 +60,17 @@ const Dropzone = React.forwardRef<DropzoneRef, DropzoneProps>(({ children, class
     <BaseDropzone ref={ref} {...props}>
       {({ getRootProps, rootRef, getInputProps, inputRef, ...rest }) => {
         const allRootProps = getRootProps(rootProps);
+        const parseChildProps = (
+          p: object,
+          Child: TConcreteChildElement<Partial<ChildDropzoneState>>
+        ) => {
+          const elemName = getComponentDisplayName(Child);
+          if (elemName === 'DropzoneChildWrapper') {
+            return rest;
+          }
+          return {};
+        };
+
         return (
           <div {...allRootProps}
             ref={rootRef as React.LegacyRef<HTMLDivElement>}
@@ -151,9 +81,9 @@ const Dropzone = React.forwardRef<DropzoneRef, DropzoneProps>(({ children, class
             }}
           >
             <input {...getInputProps(inputProps)} ref={inputRef} />
-            <ChildElement {...rest}>
+            <RenderChild parseProps={parseChildProps}>
               {children}
-            </ChildElement>
+            </RenderChild>
           </div>
         );
       }}

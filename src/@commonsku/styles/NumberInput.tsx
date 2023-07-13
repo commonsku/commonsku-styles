@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Input, InputProps, LabeledInput } from "./Input";
 import { onChangeNumber } from "../utils";
+import RenderChild from "./RenderChild";
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat
 export type LocaleOptions = {
@@ -186,7 +187,9 @@ function NumberInput(props: NumberInputProps) {
                 ? <LabeledInput {...inputProps} label={label} ref={ref} />
                 : <Input {...inputProps} ref={ref} />}
             {icon && type !== 'number'
-                ? <span style={iconWrapperStyles} onClick={handleClickIcon}>{icon}</span>
+                ? <span style={iconWrapperStyles} onClick={handleClickIcon}>
+                        <RenderChild>{icon}</RenderChild>
+                    </span>
                 : null}
         </>
     );
