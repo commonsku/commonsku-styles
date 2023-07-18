@@ -56,9 +56,9 @@ export type DropZoneProps = DropzoneOptions & {
  *
  */
 export const DropZone = React.forwardRef<DropzoneRef, DropZoneProps>(({ children, className, rootProps, inputProps, style={}, ...props }, ref) => {
-  const { open, getRootProps, rootRef, getInputProps, inputRef, ...rest } = useDropzone(props);
+  const { getRootProps, rootRef, getInputProps, inputRef, ...rest } = useDropzone(props);
 
-  useImperativeHandle(ref, () => ({ open }), [open]);
+  useImperativeHandle(ref, () => ({ open: rest.open }), [rest.open]);
 
   const allRootProps = getRootProps(rootProps);
   const parseChildProps = useCallback(
