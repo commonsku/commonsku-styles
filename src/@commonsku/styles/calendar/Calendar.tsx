@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { CSSObject } from 'styled-components';
 import { startOfWeek, lastDayOfWeek, getWeek, } from  'date-fns';
-import { useCalendar } from '../hooks';
 import CalendarWrapper from './CalendarWrapper';
 import DefaultCalendarHeader from './DefaultCalendarHeader';
 import DefaultCalendarFooter from './DefaultCalendarFooter';
 import CalendarDaysHeader from './CalendarDaysHeader';
 import CalendarDaysBody from './CalendarDaysBody';
-import { getDatesBetween } from '../hooks/useCalendar';
+import useCalendar, { getDatesBetween } from '../hooks/useCalendar';
 
 export type CalendarHeaderComponentProps = {
     onNextWeek: VoidFunction;

@@ -5,7 +5,6 @@ import { getWeek, getYear } from 'date-fns'
 import { CalendarTaskProps, } from '../Task';
 import { CalendarProps } from './Calendar';
 import { TTab } from '../Tabs';
-import { useCalendar } from '../hooks';
 import CalendarDaysHeader from './CalendarDaysHeader';
 import CalendarWrapper from './CalendarWrapper';
 import TasksCalendarHeader from './TasksCalendarHeader';
@@ -13,7 +12,7 @@ import DroppableFooter from './DroppableFooter';
 import DroppableDays from './DroppableDays';
 import { convertTasksToDays } from './TasksCalendar';
 import {LabeledCheckbox} from '../Input';
-import { useCalendarProps } from '../hooks/useCalendar';
+import useCalendar, { useCalendarProps } from '../hooks/useCalendar';
 import Loading from '../icons/Loading';
 import { DaysObject, onClickTaskFunc, onUpdateTaskFunc, TCalendarView, onClickViewFunc } from './types';
 
