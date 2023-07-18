@@ -1,5 +1,5 @@
-import React from 'react';
-import BaseDropzone, {
+import React, { useCallback, useImperativeHandle } from 'react';
+import {
   useDropzone,
   DropzoneOptions,
   DropzoneInputProps,
@@ -14,13 +14,22 @@ type ChildDropzoneState = Omit<
   'getRootProps' | 'rootRef' | 'getInputProps' | 'inputRef'
 >;
 
+export type DropZoneProps = DropzoneOptions & {
+  children: TChildElement<Partial<ChildDropzoneState>>;
+  className?: string;
+  style?: React.CSSProperties,
+  rootProps?: DropzoneRootProps,
+  inputProps?: DropzoneInputProps,
+};
+
 /**
- * Dropzone ChildElement
+ * DropZone
+ *
  * if child element's displayName === 'DropzoneChildWrapper' then it'll pass dropzone options in props
  *
- * Example with dropzone wrapper:
+ * Example with dropzone wrapper (dropzone props will be passed in children):
  * ```
- * const SomeComponent = ({ open, ...dropzoneOptions }) => {
+ * const DropzoneChildWrapper = ({ open, ...dropzoneOptions }) => {
  *   // do something with dropzoneOptions...
  *   return (
  *     <>
@@ -29,105 +38,58 @@ type ChildDropzoneState = Omit<
  *     </>
  *   );
  * };
- * SomeComponent.displayName = 'DropzoneChildWrapper';
+ * DropzoneChildWrapper.displayName = 'DropzoneChildWrapper';
  *
- * <Dropzone noClick={true} onDrop={...}>
+ * <DropZone noClick={true} onDrop={...}>
  *   <DropzoneChildWrapper />
- * </Dropzone>
+ * </DropZone>
  * ```
  *
  * ---------------------------------------------------------
  *
- * Example without dropzone wrapper:
+ * Example without dropzone wrapper (dropzone props will NOT be passed in children):
  * ```
- * <Dropzone onDrop={...}>
+ * <DropZone onDrop={...}>
  *   <button onClick={() => {}}>Upload</button>
- * </Dropzone>
+ * </DropZone>
  * ```
  *
  */
+export const DropZone = React.forwardRef<DropzoneRef, DropZoneProps>(({ children, className, rootProps, inputProps, style={}, ...props }, ref) => {
+  const { open, getRootProps, rootRef, getInputProps, inputRef, ...rest } = useDropzone(props);
 
-type DropzoneProps = {
-  children: TChildElement<Partial<ChildDropzoneState>>;
-  className?: string;
-  style?: React.CSSProperties,
-  rootProps?: DropzoneRootProps,
-  inputProps?: DropzoneInputProps,
-} & Omit<DropzoneOptions, 'children' | 'ref'>;
+  useImperativeHandle(ref, () => ({ open }), [open]);
 
-const Dropzone = React.forwardRef<DropzoneRef, DropzoneProps>(({ children, className, rootProps, inputProps, style={}, ...props }, ref) => {
+  const allRootProps = getRootProps(rootProps);
+  const parseChildProps = useCallback(
+    (
+      p: object,
+      Child: TConcreteChildElement<Partial<ChildDropzoneState>>
+    ) => {
+      const elemName = getComponentDisplayName(Child);
+      if (elemName === 'DropzoneChildWrapper') {
+        return rest;
+      }
+      return {};
+    },
+    [rest]
+  );
+
   return (
-    <BaseDropzone ref={ref} {...props}>
-      {({ getRootProps, rootRef, getInputProps, inputRef, ...rest }) => {
-        const allRootProps = getRootProps(rootProps);
-        const parseChildProps = (
-          p: object,
-          Child: TConcreteChildElement<Partial<ChildDropzoneState>>
-        ) => {
-          const elemName = getComponentDisplayName(Child);
-          if (elemName === 'DropzoneChildWrapper') {
-            return rest;
-          }
-          return {};
-        };
-
-        return (
-          <div {...allRootProps}
-            ref={rootRef as React.LegacyRef<HTMLDivElement>}
-            className={className}
-            style={{
-              ...allRootProps.style,
-              ...style,
-            }}
-          >
-            <input {...getInputProps(inputProps)} ref={inputRef} />
-            <RenderChild parseProps={parseChildProps}>
-              {children}
-            </RenderChild>
-          </div>
-        );
-      }}
-    </BaseDropzone>
+    <React.Fragment>
+      <div {...allRootProps}
+        ref={rootRef as React.RefObject<HTMLDivElement>}
+        className={className}
+        style={{
+          ...allRootProps.style,
+          ...style,
+        }}
+      >
+        <input {...getInputProps(inputProps)} ref={inputRef} />
+        <RenderChild parseProps={parseChildProps}>
+          {children}
+        </RenderChild>
+      </div>
+    </React.Fragment>
   );
 });
-
-
-type DropzoneSimpleProps = {
-  children: React.ReactElement;
-} & DropzoneOptions;
-
-function DropzonedSimple({
-  accept,
-  children,
-  ...props
-}: DropzoneSimpleProps) {
-  const {
-    acceptedFiles,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({ accept, ...props });
-  const Child = React.Children.only(children);
-  if (!Child) {
-    return null;
-  }
-  const ChildElem = React.cloneElement(Child, {
-    acceptedFiles: acceptedFiles,
-    inputProps: getInputProps(),
-    rootProps: getRootProps({ isDragActive, isDragAccept, isDragReject }),
-  });
-  return ChildElem
-}
-
-export type {
-  DropzoneProps,
-  DropzoneSimpleProps,
-}
-
-export {
-  useDropzone,
-  Dropzone,
-  DropzonedSimple,
-};
