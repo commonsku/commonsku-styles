@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
-import { getColor } from './Theme';
 import { document, truncate } from '../utils';
+import { getColor } from '../utils/theme_helpers';
 
 const StyledCircles = styled.div`
   line-height: 0;
@@ -74,7 +74,7 @@ const DropdownItem = styled.div<DropdownContentProps>`
 const DropDownContent = styled.div<DropdownContentProps>`
     display: block;
     position: absolute;
-    background-color: ${p => getColor('white')};
+    background-color: ${p => getColor(p.theme)('white')};
     width: 100%;
     box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.5);
     z-index: 10;

@@ -13,8 +13,8 @@ import verticalScrollbarWidth from './verticalScrollbarWidth';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button'
 import { FilledChevronIcon } from './icons';
-import { getColor } from './Theme';
 import { document } from '../utils';
+import useTheme from './hooks/useTheme';
 
 const PADDING_SIZE = 60
 
@@ -250,11 +250,6 @@ const RenderDivRow = memo(({ data, index, style }) => {
   </StickyListContext.Consumer>
 }, areEqual);
 
-const iconProps = {
-  // width: '10px',
-  color: getColor('primary100')
-}
-
 const iconStyle = (up: boolean) => {
   return {
     verticalAlign: 'middle', 
@@ -264,39 +259,50 @@ const iconStyle = (up: boolean) => {
   }
 }
 
-const StickyRow = ({ style, headerGroups, onColumnClick, onDragStart, onDrop }) => (
-  <div className="row sticky" style={style}>
-    {headerGroups.map((headerGroup: any, h: any) => (
-      <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-        {headerGroup.headers.map((column: any, i: any) => (
-          <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
-            data-column-index={i}
-            draggable={column.noDrag ? false : true}
-            onDragStart={column.noDrag ? undefined : onDragStart}
-            onDragOver={e => {
-              e.preventDefault()
-            }}
-            onDrop={column.noDrag ? undefined : onDrop}
-            className="th"
-            width={column.width}
-            onClick={() => {
-              onColumnClick(column);
-            }}
-          >
-            {column.render('Header')}
-            <span>
-              {column.isSorted
-                ? column.isSortedDesc
-                  ? <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(false)} />
-                  : <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(true)} />
-                : ''}
-            </span>
-          </div>
-        ))}
-      </div>
-    ))}
-  </div>
-)
+const StickyRow = ({ style, headerGroups, onColumnClick, onDragStart, onDrop }) => {
+  const { getColor } = useTheme();
+
+  return (
+    <div className="row sticky" style={style}>
+      {headerGroups.map((headerGroup: any, h: any) => (
+        <div key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
+          {headerGroup.headers.map((column: any, i: any) => {
+            let iconProps = {
+              color: getColor(props.theme)('primary100'),
+              direction: 'up',
+              style: iconStyle(true),
+            };
+            if (column.isSortedDesc) {
+              iconProps.direction = 'down';
+              iconProps.style = iconStyle(false);
+            }
+            return (
+              <div key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+                data-column-index={i}
+                draggable={column.noDrag ? false : true}
+                onDragStart={column.noDrag ? undefined : onDragStart}
+                onDragOver={e => {
+                  e.preventDefault()
+                }}
+                onDrop={column.noDrag ? undefined : onDrop}
+                className="th"
+                width={column.width}
+                onClick={() => {
+                  onColumnClick(column);
+                }}
+              >
+                {column.render('Header')}
+                <span>
+                  {column.isSorted ? <FilledChevronIcon {...iconProps} /> : ''}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const StickyContainer = forwardRef(({ children, style, ...props }, ref) => {
   return <StickyListContext.Consumer>
@@ -382,6 +388,7 @@ export function HeadlessTable({
     previousPage,
     state: { pageIndex },
   } = table
+  const { getColor } = useTheme();
 
   const [sortDirection, _setSortDirection] = useState(defaultSort ? { accessor: defaultSort.id, direction: defaultSort.desc ? 'DESC' : 'ASC' } : {})
   const [currentColumns, _setCurrentColumns] = useState(visibleColumns.map((c: any) => c.id))
@@ -550,6 +557,7 @@ export function HeadlessTable({
 
   //infinite scroll
   const scrollBarSize = useMemo(() => verticalScrollbarWidth(), [])
+
   return (
     <Styles minHeight={minHeight}>
       <>
@@ -572,59 +580,67 @@ export function HeadlessTable({
             <thead className="header">
               {headerGroups.map((headerGroup: any, h: any) => (
                 <tr key={h} {...headerGroup.getHeaderGroupProps()} className="tr">
-                  {headerGroup.headers.map((column: any, i: any) => (
-                    <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
-                      data-column-index={i}
-                      draggable={column.noDrag ? false : true}
-                      onDragStart={column.noDrag ? undefined : onDragStart}
-                      onDragOver={e => {
-                        e.preventDefault()
-                        /* const draggable = e.currentTarget.getAttribute('draggable')
-                        if(draggable === 'false') {
-                          _.throttle(() => {
-                            //@ts-ignore
-                            tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
-                          }, 1000, { 'trailing': true })
-                        } */
-                      }}
-                      onDrop={column.noDrag ? undefined : onDrop}
-                      className="th"
-                      width={column.width}
-                      onClick={() => {
-                        column.isSorted
-                          ? column.isSortedDesc
-                            ? column.clearSortBy()
-                            : column.toggleSortBy(true)
-                          : column.toggleSortBy(false)
-                        let direction
-                        if(column.isSorted) {
-                          if(column.isSortedDesc) {
-                            direction = ''
+                  {headerGroup.headers.map((column: any, i: any) => {
+                    let iconProps = {
+                      color: getColor(props.theme)('primary100'),
+                      direction: 'up',
+                      style: iconStyle(true),
+                    };
+                    if (column.isSortedDesc) {
+                      iconProps.direction = 'down';
+                      iconProps.style = iconStyle(false);
+                    }
+
+                    return (
+                      <th key={i} {...column.getHeaderProps(column.getSortByToggleProps())}
+                        data-column-index={i}
+                        draggable={column.noDrag ? false : true}
+                        onDragStart={column.noDrag ? undefined : onDragStart}
+                        onDragOver={e => {
+                          e.preventDefault()
+                          /* const draggable = e.currentTarget.getAttribute('draggable')
+                          if(draggable === 'false') {
+                            _.throttle(() => {
+                              //@ts-ignore
+                              tableRef.current.parentNode.scroll(tableRef.current.getBoundingClientRect().x + 1, tableRef.current.getBoundingClientRect().y)
+                            }, 1000, { 'trailing': true })
+                          } */
+                        }}
+                        onDrop={column.noDrag ? undefined : onDrop}
+                        className="th"
+                        width={column.width}
+                        onClick={() => {
+                          column.isSorted
+                            ? column.isSortedDesc
+                              ? column.clearSortBy()
+                              : column.toggleSortBy(true)
+                            : column.toggleSortBy(false)
+                          let direction
+                          if(column.isSorted) {
+                            if(column.isSortedDesc) {
+                              direction = ''
+                            }else{
+                              direction = 'DESC'
+                            }
                           }else{
-                            direction = 'DESC'
+                            direction = 'ASC'
                           }
-                        }else{
-                          direction = 'ASC'
-                        }
-                        let sortDirectionState
-                        if(direction === '') {
-                          sortDirectionState = {}
-                        }else{
-                          sortDirectionState = { accessor: column.id, direction }
-                        }
-                        setSortDirection(sortDirectionState)
-                      }}
-                    >
-                      {column.render('Header')}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(false)} />
-                            : <FilledChevronIcon direction="up" {...iconProps} style={iconStyle(true)} />
-                          : ''}
-                      </span>
-                    </th>
-                  ))}
+                          let sortDirectionState
+                          if(direction === '') {
+                            sortDirectionState = {}
+                          }else{
+                            sortDirectionState = { accessor: column.id, direction }
+                          }
+                          setSortDirection(sortDirectionState)
+                        }}
+                      >
+                        {column.render('Header')}
+                        <span>
+                          {column.isSorted ? <FilledChevronIcon {...iconProps} /> : ''}
+                        </span>
+                      </th>
+                    )
+                  })}
                 </tr>
               ))}
             </thead>

@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
-import { getColor } from './Theme';
+import { getColor } from '../utils/theme_helpers';
 import { document } from '../utils';
 
 const StyledDropdown = styled.div`
@@ -22,7 +22,7 @@ const DropdownItem = styled.div<DropdownContentProps>`
     text-decoration: none;
     display: block;
     text-align: center;
-    background-color: ${p => p.color ? p.color : "#F4F7FF"};
+    background-color: ${p => p.color ?? "#F4F7FF"};
     border-radius: ${p => p.rounded ? "100px" : 0};
     opacity: ${p => p.active ? 0.85 : 1};
     &:hover {
@@ -34,7 +34,7 @@ const DropdownItem = styled.div<DropdownContentProps>`
 const DropDownContent = styled.div<DropdownContentProps>`
     display: block;
     position: absolute;
-    background-color: ${p => getColor('white')};
+    background-color: ${p => getColor(p.theme)('white')};
     width: 100%;
     box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.5);
     z-index: 4;
