@@ -593,9 +593,9 @@ export function HeadlessTable({
                       onClick={() => {
                         column.isSorted
                           ? column.isSortedDesc
-                            ? column.clearSortBy()
-                            : column.toggleSortBy(true)
-                          : column.toggleSortBy(false)
+                            ? column.clearSortBy?.()
+                            : column?.toggleSortBy?.(true)
+                          : column?.toggleSortBy?.(false)
                         let direction
                         if(column.isSorted) {
                           if(column.isSortedDesc) {
@@ -692,11 +692,11 @@ export function HeadlessTable({
                     if (column.isSortedDesc) {
                       column.clearSortBy();
                     } else {
-                      column.toggleSortBy(true);
+                      column?.toggleSortBy?.(true);
                       sortDirectionState = { accessor: column.id, direction: 'DESC' };
                     }
                   } else {
-                    column.toggleSortBy(false);
+                    column?.toggleSortBy?.(false);
                     sortDirectionState = { accessor: column.id, direction: 'ASC' };
                   }
                   setSortDirection(sortDirectionState);

@@ -146,7 +146,7 @@ const VirtualTable = (props: VirtualTableProps) => {
 
   const handleSort = useCallback((column: BaseSortByHeaderGroup<object>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
-    column.toggleSortBy();
+    column.toggleSortBy?.();
     onSort && onSort({ column });
   }, [onSort]);
 
