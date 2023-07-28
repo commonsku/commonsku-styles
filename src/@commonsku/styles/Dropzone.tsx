@@ -20,16 +20,17 @@ export type DropZoneProps = DropzoneOptions & {
   style?: React.CSSProperties,
   rootProps?: DropzoneRootProps,
   inputProps?: DropzoneInputProps,
+  useDropzoneProps?: boolean;
 };
 
 /**
  * DropZone
  *
- * if child element's displayName === 'DropzoneChildWrapper' then it'll pass dropzone options in props
+ * if `useDropzoneProps={true}` is passed then dropzone options props will passed to child element
  *
- * Example with dropzone wrapper (dropzone props will be passed in children):
+ * Example with `useDropzoneProps={true}` (dropzone props will be passed in children):
  * ```
- * const DropzoneChildWrapper = ({ open, ...dropzoneOptions }) => {
+ * const DropzoneChild = ({ open, ...dropzoneOptions }) => {
  *   // do something with dropzoneOptions...
  *   return (
  *     <>
@@ -38,16 +39,15 @@ export type DropZoneProps = DropzoneOptions & {
  *     </>
  *   );
  * };
- * DropzoneChildWrapper.displayName = 'DropzoneChildWrapper';
  *
- * <DropZone noClick={true} onDrop={...}>
- *   <DropzoneChildWrapper />
+ * <DropZone useDropzoneProps={true} noClick={true} onDrop={...}>
+ *   <DropzoneChild />
  * </DropZone>
  * ```
  *
  * ---------------------------------------------------------
  *
- * Example without dropzone wrapper (dropzone props will NOT be passed in children):
+ * Example without `useDropzoneProps` (dropzone props will NOT be passed in children):
  * ```
  * <DropZone onDrop={...}>
  *   <button onClick={() => {}}>Upload</button>
@@ -55,24 +55,20 @@ export type DropZoneProps = DropzoneOptions & {
  * ```
  *
  */
-export const DropZone = React.forwardRef<DropzoneRef, DropZoneProps>(({ children, className, rootProps, inputProps, style={}, ...props }, ref) => {
+export const DropZone = React.forwardRef<DropzoneRef, DropZoneProps>((
+  { children, className, rootProps, inputProps, style={}, useDropzoneProps = false, ...props },
+  ref
+) => {
   const { getRootProps, rootRef, getInputProps, inputRef, ...rest } = useDropzone(props);
 
   useImperativeHandle(ref, () => ({ open: rest.open }), [rest.open]);
 
   const allRootProps = getRootProps(rootProps);
   const parseChildProps = useCallback(
-    (
-      p: object,
-      Child: TConcreteChildElement<Partial<ChildDropzoneState>>
-    ) => {
-      const elemName = getComponentDisplayName(Child);
-      if (elemName === 'DropzoneChildWrapper') {
-        return rest;
-      }
-      return {};
-    },
-    [rest]
+    (p: object, Child: TConcreteChildElement<Partial<ChildDropzoneState>>) => (
+      useDropzoneProps ? rest : {}
+    ),
+    [rest, useDropzoneProps]
   );
 
   return (
