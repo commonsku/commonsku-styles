@@ -112,6 +112,19 @@ const datepickerStyles = `
   .react-datepicker__aria-live {
     display: none;
   }
+
+  @media only screen and (min-height: 600px) and (max-height: 800px ) {
+    .react-datepicker__month {
+      overflow-y: scroll !important;
+      height: 15vh !important;
+    }
+  }
+  @media only screen and (max-height: 599px ) {
+    .react-datepicker__month {
+      overflow-y: scroll !important;
+      height: 5vh !important;
+    }
+  }
 }
 `;
 
