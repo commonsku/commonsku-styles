@@ -54,8 +54,8 @@ type LabeledBarprops = ProgressBarProps & {
 const LabeledBar = (props: LabeledBarprops) => {
   const [width,] = useWindowSize();
   const [size, setSize] = useState({height: 0, width: 0, x: 0, y: 0,});
-  const measureRef = useCallback(node => {
-    const rect: DOMRect | undefined = node?.getBoundingClientRect() as DOMRect;
+  const measureRef = useCallback((node: HTMLDivElement | null) => {
+    const rect = node?.getBoundingClientRect();
     setSize(s => (rect ? {
       ...s,
       height: rect.height,

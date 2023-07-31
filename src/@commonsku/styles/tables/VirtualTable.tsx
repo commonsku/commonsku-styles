@@ -8,16 +8,14 @@ import {
   Cell,
   useExpanded,
 } from 'react-table';
-import { VariableSizeList, ListOnScrollProps } from 'react-window';
+import { VariableSizeList, ListOnScrollProps, ListChildComponentProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup } from './types';
 import {
   Row,
-  ColumnInstance,
   TableInstance,
   TableOptions,
 } from './table-types';
 import { FilledChevronIcon } from '../icons';
-import scrollbarWidth from './scrollbarWidth';
 import { useWindowSize } from '../hooks';
 
 export type VirtualTableProps = {
@@ -32,7 +30,7 @@ export type VirtualTableProps = {
     row?: object,
     index?: number,
     data?: {
-      isScrolling: boolean;
+      isScrolling?: boolean;
       cell: Cell<Record<string, unknown>, any>;
       resetList: (index?: number) => void;
       toggleAllRowsExpanded: (value?: boolean | undefined) => void;
@@ -56,7 +54,7 @@ export type VirtualTableProps = {
   hideHeader?: boolean;
   NoRowsFound?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   renderRowSubComponent?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
-  onSort?: (value: { column: ColumnInstance }) => void;
+  onSort?: (value: { column: BaseSortByHeaderGroup<object> }) => void;
   onResize?: VoidFunction;
   rowGroupStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
   rowStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
@@ -146,9 +144,9 @@ const VirtualTable = (props: VirtualTableProps) => {
     return '100%';
   }, [windowSize, rowsRef]);
 
-  const handleSort = useCallback(column => {
+  const handleSort = useCallback((column: BaseSortByHeaderGroup<object>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
-    column.toggleSortBy();
+    column.toggleSortBy?.();
     onSort && onSort({ column });
   }, [onSort]);
 
@@ -177,7 +175,7 @@ const VirtualTable = (props: VirtualTableProps) => {
   }, [rowsRef]);
 
   const RenderRow = useCallback(
-    ({ index, isScrolling, style }) => {
+    ({ index, isScrolling, style }: ListChildComponentProps) => {
       const row = rows[index];
 
       prepareRow(row);
@@ -190,7 +188,7 @@ const VirtualTable = (props: VirtualTableProps) => {
           ...style,
           ...(rowGroupStyles ? rowGroupStyles({row, style}) : {}),
           minWidth: totalColumnsWidth,
-          width: '100%',
+          width: '100%', 
         }}
       >
           <div className="tr" style={rowStyles ? rowStyles({row, style}) : {}}>

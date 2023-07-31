@@ -1,4 +1,4 @@
-import { TButtonIcon } from '..';
+import { TButtonIcon } from '../Button';
 import { CalendarTaskProps, } from '../Task';
 
 export type ACTIONS = 'TOGGLE_CHECKBOX' | 'DROP';

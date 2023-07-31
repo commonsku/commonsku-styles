@@ -26,7 +26,7 @@ const generateSparkle = (color: string) => {
   return sparkle;
 };
 
-export const Sparkles: React.FC<{ color: string }> = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
+export const Sparkles: React.FC<React.PropsWithChildren<{ color: string }>> = ({ color = DEFAULT_COLOR, children, ...delegated }) => {
   const [sparkles, setSparkles] = React.useState(() => {
     return range(3).map(() => generateSparkle(color));
   });

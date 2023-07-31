@@ -71,3 +71,5 @@ export * from './calendar';
 export * from './tables';
 export * from './hooks';
 export * from './ToggleSwitch';
+export { default as RenderChild } from './RenderChild';
+export * from './Dropzone';
