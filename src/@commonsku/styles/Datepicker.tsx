@@ -44,8 +44,8 @@ const Datepicker = (
     customInput,
     locale='en',
     todayButton='Today',
-    placeholder='yyyy-MM-dd',
-    placeholderText='yyyy-MM-dd',
+    placeholder,
+    placeholderText,
     dateFormat='yyyy-MM-dd',
     isClearable=false,
     peekNextMonth=true,
@@ -68,7 +68,7 @@ const Datepicker = (
     todayButton={todayButton}
     customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
     dateFormat={dateFormat}
-    placeholderText={placeholder || placeholderText}
+    placeholderText={placeholder || placeholderText || 'yyyy-MM-dd'}
     isClearable={isClearable}
     showMonthDropdown={showMonthDropdown}
     showYearDropdown={showYearDropdown}
