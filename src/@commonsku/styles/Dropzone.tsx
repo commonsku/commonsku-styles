@@ -7,14 +7,14 @@ import {
   DropzoneRootProps,
   DropzoneRef,
 } from 'react-dropzone';
-import RenderChild, { getComponentDisplayName, TChildElement, TConcreteChildElement } from './RenderChild';
+import RenderChild, { TChildElement, TConcreteChildElement } from './RenderChild';
 
 type ChildDropzoneState = Omit<
   DropzoneState,
   'getRootProps' | 'rootRef' | 'getInputProps' | 'inputRef'
 >;
 
-export type DropZoneProps = DropzoneOptions & {
+export type DropzoneProps = DropzoneOptions & {
   children: TChildElement<Partial<ChildDropzoneState>>;
   className?: string;
   style?: React.CSSProperties,
@@ -24,7 +24,7 @@ export type DropZoneProps = DropzoneOptions & {
 };
 
 /**
- * DropZone
+ * Dropzone
  *
  * if `useDropzoneProps={true}` is passed then dropzone options props will passed to child element
  *
@@ -40,22 +40,22 @@ export type DropZoneProps = DropzoneOptions & {
  *   );
  * };
  *
- * <DropZone useDropzoneProps={true} noClick={true} onDrop={...}>
+ * <Dropzone useDropzoneProps={true} noClick={true} onDrop={...}>
  *   <DropzoneChild />
- * </DropZone>
+ * </Dropzone>
  * ```
  *
  * ---------------------------------------------------------
  *
  * Example without `useDropzoneProps` (dropzone props will NOT be passed in children):
  * ```
- * <DropZone onDrop={...}>
+ * <Dropzone onDrop={...}>
  *   <button onClick={() => {}}>Upload</button>
- * </DropZone>
+ * </Dropzone>
  * ```
  *
  */
-export const DropZone = React.forwardRef<DropzoneRef, DropZoneProps>((
+export const Dropzone = React.forwardRef<DropzoneRef, DropzoneProps>((
   { children, className, rootProps, inputProps, style={}, useDropzoneProps = false, ...props },
   ref
 ) => {
