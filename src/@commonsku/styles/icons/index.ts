@@ -96,3 +96,10 @@ export { default as DoubleArrowIcon} from './DoubleArrowIcon';
 export { default as ImageIcon} from './ImageIcon';
 export { default as StarLightIcon} from './StarLightIcon';
 export { default as StarDarkIcon} from './StarDarkIcon';
+
+export { default as MagicIcon} from './MagicIcon';
+export { default as MagicEraserIcon} from './MagicEraserIcon';
+export { default as TrendIcon} from './TrendIcon';
+export { default as SlideInIcon} from './SlideInIcon';
+
+
