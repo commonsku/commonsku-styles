@@ -611,7 +611,7 @@ const App = () => {
         {color: teal['60'], label: "teal['60']", hex: "#02C0DA"},
         {color: teal['50'], label: "teal['50']", hex: "#28D5EE", labelColor: teal.darkest},
         {color: teal['40'], label: "teal['40']", hex: "#5FE6FA", labelColor: teal.darkest},
-        {color: teal.light, label: "teal.light = teal['30']", /Trendhex: "#A6F4FF", labelColor: teal.darkest},
+        {color: teal.light, label: "teal.light = teal['30']", Trendhex: "#A6F4FF", labelColor: teal.darkest},
         {color: teal['20'], label: "teal['20']", hex: "#E1F7FA", labelColor: teal.darkest},
         {color: teal.lightest, label: "teal.lightest = teal['10']", hex: "#F6FEFF", labelColor: teal.darkest},
       ]
