@@ -17,7 +17,6 @@ export const CustomDateInput = forwardRef<HTMLInputElement, CustomInputProps>((
       noMargin={noMargin}
       error={error}
       style={{ marginRight: '2rem', display: 'inline-block' }}
-      className="react-datepicker-ignore-onclickoutside" 
       type="text"
       autoComplete="off"
       {...props}
