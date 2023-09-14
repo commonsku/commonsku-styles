@@ -3,7 +3,7 @@ import SVG, { SVGIconProps } from './SvgIcon';
 import { teal } from '../colors';
 
 type MagicIconProps = SVGIconProps & {hover?:boolean, filled?: boolean;};
-export default function StarIcon({
+export default function MagicIcon({
     color=teal.main,
     size="medium",
     hover=false,
