@@ -17,7 +17,7 @@ export function getComponentDisplayName(WrappedComponent: TConcreteChildElement)
   return String(WrappedComponent?.displayName || WrappedComponent?.name || 'Component');
 }
 
-const RenderChild = ({ children, parseProps, ...props }: ChildProps) => {
+const RenderChild = React.forwardRef<HTMLElement, ChildProps>(({ children, parseProps, ...props }, ref) => {
   const ChildElement = React.Children.only(children);
   const elementProps = useMemo(
     () => {
@@ -30,9 +30,12 @@ const RenderChild = ({ children, parseProps, ...props }: ChildProps) => {
         return props;
       }
 
-      return parseProps ? parseProps(props, ChildElement) : props;
+      return {
+        ...(parseProps ? parseProps(props, ChildElement) : props),
+        ref,
+      };
     },
-    [parseProps, props, ChildElement]
+    [parseProps, props, ChildElement, ref]
   );
 
   if (typeof ChildElement === 'string'
@@ -51,8 +54,8 @@ const RenderChild = ({ children, parseProps, ...props }: ChildProps) => {
   }
 
   return (
-    <ChildElement {...elementProps} />
+    <ChildElement {...elementProps} ref={ref} />
   );
-};
+});
 
 export default RenderChild;
