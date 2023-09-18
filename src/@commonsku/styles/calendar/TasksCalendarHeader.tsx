@@ -11,7 +11,7 @@ import {Dropdown} from '../Dropdown';
 import { Button, IconButton, TSize, ButtonVariant } from '../Button';
 import { H5 } from '../Headings';
 import { TCalendarView, onClickViewFunc } from './types';
-import { Datepicker } from '../Datepicker';
+import Datepicker from '../Datepicker';
 import { changeDateFunc, changeWeekFunc } from '../hooks/useCalendar';
 
 const WeekNav = styled(Text)`

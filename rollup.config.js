@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from 'node:fs';
+import path from 'node:path';
 
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -16,7 +16,7 @@ import typescript from 'rollup-plugin-typescript2';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 // see https://github.com/Hacker0x01/react-datepicker/issues/1606
 const dateFnsDirs = fs
@@ -29,13 +29,15 @@ const config = [
     output: [{
       file: pkg.main,
       format: 'cjs',
-      exports: 'named',
-      sourcemap: true
+      // exports: 'named',
+      sourcemap: true,
+      interop: 'compat',
     }, {
       file: pkg.module,
       format: 'es',
-      exports: 'named',
-      sourcemap: true
+      // exports: 'named',
+      sourcemap: true,
+      interop: 'compat',
     }],
     plugins: [
       peerDepsExternal({ includeDependencies: true }),
@@ -51,23 +53,6 @@ const config = [
       commonjs({
         include: ['node_modules/**'],
         exclude: ['node_modules/process-es6/**'],
-        namedExports: {
-          'node_modules/react/index.js': [
-            'Children',
-            'Component',
-            'PropTypes',
-            'createElement',
-          ],
-          'node_modules/react-dom/index.js': ['render'],
-          'node_modules/react-table/index.js': [
-            'useTable',
-            'useSortBy',
-            'useBlockLayout',
-            'usePagination',
-            'useColumnOrder'
-          ],
-          'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer']
-        },
       }),
       postcss({
         modules: true

@@ -1,10 +1,13 @@
-import React from 'react';
-import { default as BaseDatePicker, ReactDatePickerProps } from 'react-datepicker';
+import React, { forwardRef } from 'react';
+import {
+  default as ReactDatePicker,
+  ReactDatePickerProps,
+} from 'react-datepicker';
 import { Input, InputProps } from './Input';
 import { CalendarIcon } from './icons';
 
 type CustomInputProps = InputProps & {isClearable?: boolean};
-export const CustomDateInput = React.forwardRef<HTMLInputElement, CustomInputProps>((
+export const CustomDateInput = forwardRef<HTMLInputElement, CustomInputProps>((
   { error, noMargin, onClick, isClearable, ...props },
   ref
 ) => {
@@ -24,13 +27,16 @@ export const CustomDateInput = React.forwardRef<HTMLInputElement, CustomInputPro
   </>);
 });
 
-export type DatepickerPorps = Omit<ReactDatePickerProps, 'value'>
+// @ts-ignore
+const ReactDatePickerComponent = ReactDatePicker.default || ReactDatePicker;
+
+export type DatepickerProps = Omit<ReactDatePickerProps, 'value'>
   & Omit<InputProps, 'value'>
   & {
     value?: Date | null;
     placeholder?: string;
   };
-export const Datepicker = React.forwardRef((
+const Datepicker = (
   {
     error,
     value,
@@ -53,32 +59,29 @@ export const Datepicker = React.forwardRef((
     popperClassName,
     wrapperClassName,
     ...props
-  }: DatepickerPorps,
-  ref: React.Ref<BaseDatePicker>
-) => {
-  return (
-    <BaseDatePicker
-      locale={locale}
-      selected={value || props.selected}
-      todayButton={todayButton}
-      customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
-      dateFormat={dateFormat}
-      placeholderText={placeholder || placeholderText || 'yyyy-MM-dd'}
-      isClearable={isClearable}
-      showMonthDropdown={showMonthDropdown}
-      showYearDropdown={showYearDropdown}
-      nextMonthButtonLabel={nextMonthButtonLabel}
-      nextYearButtonLabel={nextYearButtonLabel}
-      previousMonthButtonLabel={previousMonthButtonLabel}
-      previousYearButtonLabel={previousYearButtonLabel}
-      dropdownMode={dropdownMode}
-      peekNextMonth={peekNextMonth}
-      popperClassName={`commonsku-styles-datepicker ${popperClassName || ''}`}
-      wrapperClassName={`commonsku-styles-datepicker ${wrapperClassName || ''}`}
-      showPopperArrow={showPopperArrow}
-      {...props}
-      ref={ref}
-    />
-  )
-})
+  }: DatepickerProps
+) => (
+  <ReactDatePickerComponent
+    locale={locale}
+    selected={value || props.selected}
+    todayButton={todayButton}
+    customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
+    dateFormat={dateFormat}
+    placeholderText={placeholder || placeholderText || 'yyyy-MM-dd'}
+    isClearable={isClearable}
+    showMonthDropdown={showMonthDropdown}
+    showYearDropdown={showYearDropdown}
+    nextMonthButtonLabel={nextMonthButtonLabel}
+    nextYearButtonLabel={nextYearButtonLabel}
+    previousMonthButtonLabel={previousMonthButtonLabel}
+    previousYearButtonLabel={previousYearButtonLabel}
+    dropdownMode={dropdownMode}
+    peekNextMonth={peekNextMonth}
+    popperClassName={`commonsku-styles-datepicker ${popperClassName || ''}`}
+    wrapperClassName={`commonsku-styles-datepicker ${wrapperClassName || ''}`}
+    showPopperArrow={showPopperArrow}
+    {...props}
+  />
+);
 
+export default Datepicker;
