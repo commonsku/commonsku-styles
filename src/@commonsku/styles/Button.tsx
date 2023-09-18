@@ -381,7 +381,7 @@ const Button = styled.button<ButtonProps>`
       opacity: 0.5;
       ${p => getVariantStyles(p, 'disabled')}
     }
-    ${p => getVariantStyles(p, p.disabled ? 'disabled' : (p.variant ?? (secondary ? 'secondary' : (cta ? 'cta' : 'primary'))))}
+    ${p => getVariantStyles(p, p.disabled ? 'disabled' : (p.variant ?? (p.secondary ? 'secondary' : (p.cta ? 'cta' : 'primary'))))}
     ${SharedStyles}
     ${SizerCss}
   }
