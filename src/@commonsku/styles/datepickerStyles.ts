@@ -95,6 +95,14 @@ const datepickerStyles = `
     outline: none;
   }
 
+  .react-datepicker__time-container {
+    margin-top: -2px;
+    border-top-left-radius: 0px;
+    border-right: 2px solid var(--color-primary1-60);
+    border-bottom: 2px solid var(--color-primary1-60);
+    border-top: 2px solid var(--color-primary1-60);
+  }
+
   .react-datepicker__navigation {
     border: 0.45rem solid transparent;
 
@@ -123,6 +131,14 @@ const datepickerStyles = `
     .react-datepicker__month {
       overflow-y: scroll !important;
       height: 5vh !important;
+    }
+
+    .react-datepicker__time-container {
+      margin-top: -2px;
+      border-top-left-radius: 0px;
+      border-right: 2px solid var(--color-primary1-60);
+      border-bottom: 2px solid var(--color-primary1-60);
+      border-top: 2px solid var(--color-primary1-60);
     }
   }
 }
