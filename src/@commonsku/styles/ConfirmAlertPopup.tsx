@@ -13,6 +13,8 @@ export type ConfirmAlertPopupProps = React.PropsWithChildren<{
   disableActionButton?: boolean;
   cancelButtonContent?: React.ReactNode;
   actionButtonContent?: React.ReactNode;
+  height?: string;
+  width?: string;
   onAction?: () => void;
   onClose?: () => void;
 }>;
@@ -20,6 +22,8 @@ const ConfirmAlertPopup = (props: ConfirmAlertPopupProps) => {
   const {
     padding='16px',
     maxWidth=555,
+    height = 'auto',
+    width = 'auto',
     title='',
     children='Are you sure you want to perform this action?',
     cancelButtonContent='Cancel',
@@ -31,8 +35,8 @@ const ConfirmAlertPopup = (props: ConfirmAlertPopupProps) => {
 
   return (
     <Popup
-      width={'auto'}
-      height={'auto'}
+      width={width ?? 'auto'}
+      height={height ?? 'auto'}
       padding={padding}
       style={{ borderRadius: 10, maxWidth: maxWidth, }}
       noHeader
