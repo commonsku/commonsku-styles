@@ -7,8 +7,24 @@ import DraggableTaskBody from './DraggableTaskBody';
 import { droppableChildWrapperProps } from './styles';
 import { DaysObject, onClickTaskFunc, onUpdateTaskFunc } from './types';
 
-export type DroppableDaysProps = { days: DaysObject; selectedDate: Date; onClickTask?: onClickTaskFunc; onUpdateTask?: onUpdateTaskFunc; onClickDay: (day: any) => void; [key: string]: any; weekend?: boolean; };
-const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTask, weekend, ...props}: DroppableDaysProps) => {
+export type DroppableDaysProps = {
+  days: DaysObject;
+  selectedDate: Date;
+  onClickTask?: onClickTaskFunc;
+  onUpdateTask?: onUpdateTaskFunc;
+  onClickDay: (day: any) => void;
+  weekend?: boolean;
+  [key: string]: any;
+};
+const DroppableDays = ({
+  days,
+  weekend,
+  selectedDate,
+  onUpdateTask,
+  onClickDay,
+  onClickTask,
+  ...props
+}: DroppableDaysProps) => {
   return (
     <DaysBodyWrapper className="days-body-wrapper" {...props}>
       <Row className="day-body-wrapper-row">
@@ -27,9 +43,17 @@ const DroppableDays = ({days, selectedDate, onUpdateTask, onClickDay, onClickTas
                   <div {...droppableChildWrapperProps(provided, snapshot)}>
                     {provided.placeholder}
                     {d.tasks.map((t, j) => (
-                      <DraggableTaskBody key={t.__id__} index={j} task={t} onClickTask={onClickTask} onUpdateTask={onUpdateTask ? (newData, otherData) => {
-                        onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
-                      } : undefined} />
+                      <DraggableTaskBody
+                        key={t.__id__}
+                        index={j}
+                        task={t}
+                        onClickTask={onClickTask}
+                        onUpdateTask={(newData, otherData) => {
+                          if (typeof onUpdateTask !== 'undefined') {
+                            onUpdateTask(newData, { ...otherData, day__id: __id__, task__id: t.__id__ });
+                          }
+                        }}
+                      />
                     ))}
                   </div>
                 )}
