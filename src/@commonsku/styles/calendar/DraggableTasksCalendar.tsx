@@ -271,34 +271,7 @@ const DraggableTasksCalendar = ({
             weekend={showWeekend}
             onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
               if (!day__id) {return;}
-              _.flowRight(() => {
-                onUpdateTask(newData, otherData);
-              }, () => {
-                setState(s => {
-                  return { ...s,
-                    days: { ...s.days,
-                      [day__id]: { ...s.days[day__id],
-                        tasks: [
-                          ...s.days[day__id].tasks.slice(0, otherData.index),
-                          {...s.days[day__id].tasks[otherData.index], ...newData},
-                          ...s.days[day__id].tasks.slice(otherData.index+1),
-                        ],
-                      }
-                    },
-                  };
-                });
-              })();
-            }}
-          />}
-        </div>
-        {showFooterTasks ? <DroppableFooter
-          tasks={state.footerTasks}
-          onClickTask={onClickTask}
-          onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
-            _.flowRight(() => {
               onUpdateTask(newData, otherData);
-            }, () => {
-              if (!day__id) { return; }
               setState(s => {
                 return { ...s,
                   days: { ...s.days,
@@ -312,7 +285,28 @@ const DraggableTasksCalendar = ({
                   },
                 };
               });
-            })();
+            }}
+          />}
+        </div>
+        {showFooterTasks ? <DroppableFooter
+          tasks={state.footerTasks}
+          onClickTask={onClickTask}
+          onUpdateTask={(newData, {day__id, task__id, ...otherData}) => {
+            onUpdateTask(newData, otherData);
+            if (!day__id) { return; }
+            setState(s => {
+              return { ...s,
+                days: { ...s.days,
+                  [day__id]: { ...s.days[day__id],
+                    tasks: [
+                      ...s.days[day__id].tasks.slice(0, otherData.index),
+                      {...s.days[day__id].tasks[otherData.index], ...newData},
+                      ...s.days[day__id].tasks.slice(otherData.index+1),
+                    ],
+                  }
+                },
+              };
+            });
           }}
           {...headerProps}
         /> : null}

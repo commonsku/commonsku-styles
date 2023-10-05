@@ -158,7 +158,7 @@ const CalendarTask = React.forwardRef<HTMLInputElement, CalendarTaskHtmlProps>((
         checkboxStyle={checkboxStyles}
         hoverByLabel={false}
         labelStyle={{width: '100%', paddingLeft: 0, paddingRight: 0, marginRight: 0, marginLeft: 0, margin: 0,}}
-        label={RenderTaskLabel()}
+        label={<RenderTaskLabel />}
         onClick={(e: React.MouseEvent<HTMLInputElement>) => {
           e && e.preventDefault();
           e && e.stopPropagation();
@@ -166,17 +166,16 @@ const CalendarTask = React.forwardRef<HTMLInputElement, CalendarTaskHtmlProps>((
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           e && e.preventDefault();
           e && e.stopPropagation();
-          setChecked((s: boolean) => {
-            onClickCheckbox && onClickCheckbox(!s);
-            return !s;
-          });
+          const newValue = !checked;
+          setChecked(newValue);
+          onClickCheckbox?.(newValue);
         }}
         style={{
           padding: 0,
           margin: 0,
           marginLeft: 20,
         }}
-      /> : RenderTaskLabel()}
+      /> : <RenderTaskLabel />}
       <StyledCalendarTaskBody
         {...(isDescriptionHtml && typeof description === 'string'
             ? { dangerouslySetInnerHTML: { __html: description } }
