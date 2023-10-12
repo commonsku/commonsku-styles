@@ -100,6 +100,7 @@ import { MenuListProps } from 'react-select';
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { Grid, GridItem } from '@commonsku/styles/Grid';
+import SelectionTable from '@commonsku/styles/tables/SelectionTable';
 
 const initialState = {
   date: new Date(),
@@ -2173,6 +2174,15 @@ const App = () => {
                 </VirtualTableStyles>
               </demo.InnerContainer>
 
+              <demo.InnerContainer title="Selection Table" noBottomLine>
+                <VirtualTableStyles tableHeight="100%" scrollDecoration>
+                  <SelectionTable 
+                    columns={tableColumns}
+                    data={tableData}
+                  />
+                </VirtualTableStyles>
+              </demo.InnerContainer>
+
               <demo.InnerContainer title="GridTable">
                 <demo.MediumLabel>GridTable component uses CSS Grid. This component takes optional 'gridTemplateColumns', 'gridTemplateRows', 'gridColumnGap', 'gridRowGap' props. If these optional props are not provided, the component gives '1fr' for each column and '16px' as gridColumnGap and gridRowGap. <br/><br />
                 The component takes 'Column' components as children which can take any other element you put into it such as select fields, input fields, buttons, etc. The table maps through the data provided in the 'data' prop and creates the columns provided for each object of data. 
@@ -2534,6 +2544,13 @@ const App = () => {
                       <icons.ArrowIcon direction="left" />, 
                       <icons.ArrowIcon direction="up" />
                     ]} name="ArrowIcon" />
+
+                    <IconsShowcase Icons={[
+                      <icons.DoubleArrowIcon direction="right" />,
+                      <icons.DoubleArrowIcon direction="down" />,
+                      <icons.DoubleArrowIcon direction="left" />,
+                      <icons.DoubleArrowIcon direction="up" />
+                    ]} name="DoubleArrowIcon" />
 
                     <IconsShowcase Icons={[<icons.AddIcon />]} name="AddIcon" />
                     <IconsShowcase Icons={[<icons.SubtractIcon />]} name="SubtractIcon" />

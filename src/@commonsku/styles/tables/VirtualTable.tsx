@@ -15,7 +15,7 @@ import {
   TableInstance,
   TableOptions,
 } from './table-types';
-import { FilledChevronIcon } from '../icons';
+import { DoubleArrowIcon, FilledChevronIcon } from '../icons';
 import { useWindowSize } from '../hooks';
 
 export type VirtualTableProps = {
@@ -297,11 +297,13 @@ const VirtualTable = (props: VirtualTableProps) => {
               >
                 {column.render("Header")}
                 <span>
-                  {column.isSorted ? <FilledChevronIcon
-                    direction={sortDirection(column)}
-                    size="medium"
-                    style={{ verticalAlign: 'middle' }}
-                  /> : null}
+                  {column.canSort &&
+                    <FilledChevronIcon
+                      direction={column.isSorted ? sortDirection(column) : 'updown'}
+                      size="medium"
+                      style={{ verticalAlign: 'middle' }}
+                    />
+                  }
                 </span>
               </div>
             ))}
@@ -311,6 +313,10 @@ const VirtualTable = (props: VirtualTableProps) => {
 
       <div className="tbody" {...getTableBodyProps()}>
         {rows.length === 0 && NoRowsFound ? <NoRowsFound /> :
+          <div className="scroll-container">
+            <div className="scroll-decoration-top">
+              <DoubleArrowIcon direction="up" />
+            </div>
             <VariableSizeList
               useIsScrolling
               className="table-list-rows"
@@ -329,7 +335,11 @@ const VirtualTable = (props: VirtualTableProps) => {
             >
               {RenderRow}
             </VariableSizeList>
-          }
+            <div className="scroll-decoration-bottom">
+              <DoubleArrowIcon direction="down" />
+            </div>
+          </div>
+        }
       </div>
 
       {!hideFooter ? <div {...tableFooterProps}
