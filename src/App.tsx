@@ -89,7 +89,6 @@ import {
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
 
-
 import * as demo from './demo/DemoStyles';
 import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
@@ -100,6 +99,7 @@ import { MenuListProps } from 'react-select';
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { Grid, GridItem } from '@commonsku/styles/Grid';
+import { CircleSpinner } from '@commonsku/styles/CircleSpinner';
 
 const initialState = {
   date: new Date(),
@@ -2755,6 +2755,10 @@ const App = () => {
                   <IconsShowcase Icons={[<icons.ChatIcon width="24" />]} name="ChatIcon"/>
                   <IconsShowcase Icons={[<icons.IconDoc width="24" />]} name="IconDoc" /> {/* FileIcon.tsx */}
                   <IconsShowcase Icons={[<icons.FolderIcon />]} name="FolderIcon" />
+
+                  <CircleSpinner skubot width={100} background="white"></CircleSpinner>
+
+
 
                 </IconContainer>
               </demo.InnerContainer>
