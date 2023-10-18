@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo, useCallback, } from 'react';
+import React, { useRef, useLayoutEffect, useMemo, useCallback, useState, } from 'react';
 import {
   useTable,
   useSortBy,
@@ -126,6 +126,8 @@ const VirtualTable = (props: VirtualTableProps) => {
 
   const rows = useMemo(() => (tableData.rows as Row[]), [tableData.rows]);
   const windowSize = useWindowSize();
+  const [scrolledToTop, setScrolledToTop] = useState(false);
+  const [scrolledToBottom, setScrolledToBottom] = useState(false);
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
@@ -277,6 +279,18 @@ const VirtualTable = (props: VirtualTableProps) => {
     };
   };
 
+  const handleScroll = useCallback((props: ListOnScrollProps) => {
+    if (onScroll != null) {
+      onScroll(props);
+    }
+
+    const rows = rowsRef.current;
+    if (rows != null) {
+      setScrolledToTop(rows.scrollTop === 0);
+      setScrolledToBottom(rows.scrollTop === rows.scrollHeight - rows.offsetHeight);
+    }
+  }, [onScroll]);
+
   return (
     <div {...getTableProps()} className={`table ${className || ''}`}>
       <div
@@ -314,9 +328,11 @@ const VirtualTable = (props: VirtualTableProps) => {
       <div className="tbody" {...getTableBodyProps()}>
         {rows.length === 0 && NoRowsFound ? <NoRowsFound /> :
           <div className="scroll-container">
-            <div className="scroll-decoration-top">
-              <DoubleArrowIcon direction="up" />
-            </div>
+              {!scrolledToTop &&
+                <div className="scroll-decoration-top">
+                  <DoubleArrowIcon direction="up" />
+                </div>
+              }
             <VariableSizeList
               useIsScrolling
               className="table-list-rows"
@@ -329,15 +345,17 @@ const VirtualTable = (props: VirtualTableProps) => {
                 return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
               }}
               width={tableWidth}
-              onScroll={onScroll}
+              onScroll={handleScroll}
               ref={listRef}
               outerRef={rowsRef}
             >
               {RenderRow}
             </VariableSizeList>
-            <div className="scroll-decoration-bottom">
-              <DoubleArrowIcon direction="down" />
-            </div>
+            {!scrolledToBottom && 
+              <div className="scroll-decoration-bottom">
+                <DoubleArrowIcon direction="down" />
+              </div>
+            }
           </div>
         }
       </div>
