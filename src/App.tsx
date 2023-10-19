@@ -2175,7 +2175,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Selection Table" noBottomLine>
-                <VirtualTableStyles tableHeight="100%" scrollDecoration>
+                <VirtualTableStyles tableHeight="100%" scrollIndicators>
                   <SelectionTable 
                     columns={tableColumns}
                     data={tableData}

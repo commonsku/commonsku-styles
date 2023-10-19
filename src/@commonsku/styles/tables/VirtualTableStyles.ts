@@ -7,7 +7,7 @@ const VirtualTableStyles = styled.div<{
   hoverRowBg?: string | boolean;
   selectedRowIndex?: number;
   selectedRowStyle?: boolean | CSSObject; // if true, then set bg same as hoverRowBg
-  scrollDecoration?: boolean;
+  scrollIndicators?: boolean;
 }>`
 padding: 1rem;
 
@@ -89,7 +89,7 @@ padding: 1rem;
 }
 
 .scroll-decoration-top, .scroll-decoration-bottom {
-${p => p.scrollDecoration ? `
+${p => p.scrollIndicators ? `
   position: absolute;
   height: 48px;
   width: 100%;
