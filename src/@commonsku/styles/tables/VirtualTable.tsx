@@ -287,7 +287,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     const rows = rowsRef.current;
     if (rows != null) {
       setScrolledToTop(rows.scrollTop === 0);
-      setScrolledToBottom(rows.scrollTop === rows.scrollHeight - rows.offsetHeight);
+      setScrolledToBottom(Math.round(rows.scrollTop) >= rows.scrollHeight - rows.offsetHeight);
     }
   }, [onScroll]);
 
