@@ -102,4 +102,9 @@ export { default as MagicEraserIcon} from './MagicEraserIcon';
 export { default as TrendIcon} from './TrendIcon';
 export { default as SlideInIcon} from './SlideInIcon';
 
+export { default as TagIcon} from './TagIcon';
+export { default as MergeIcon} from './MergeIcon';
+export { default as DesignIcon} from './DesignIcon';
+
+
 
