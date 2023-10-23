@@ -2617,6 +2617,13 @@ const App = () => {
                     <IconsShowcase Icons={[<icons.MagicIcon/>]} name="MagicIcon"/>
                     <IconsShowcase Icons={[<icons.MagicEraserIcon/>]} name="MagicEraserIcon"/>
                     <IconsShowcase Icons={[<icons.SlideInIcon/>]} name="SlideInIcon"/>
+
+                    <IconsShowcase Icons={[<icons.TagIcon/>]} name="TagIcon"/>
+                    <IconsShowcase Icons={[<icons.MergeIcon/>]} name="MergeIcon"/>
+                    <IconsShowcase Icons={[<icons.DesignIcon/>]} name="DesignIcon"/>
+
+
+
                     <IconsShowcase Icons={[<icons.TrendIcon direction="up"/>]} name="TrendIcon"/>
                     <IconsShowcase Icons={[<icons.TrendIcon direction="down"/>]} name="TrendIcon"/>
                     <IconsShowcase Icons={[<icons.TrendIcon direction="flat"/>]} name="TrendIcon"/>
