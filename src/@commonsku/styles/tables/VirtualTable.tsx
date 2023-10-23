@@ -4,7 +4,7 @@ import {
   useSortBy,
   useFlexLayout,
   SortingRule,
-  Column as BaseColumn,
+  Column,
   Cell,
   useExpanded,
   UseExpandedRowProps,
@@ -21,11 +21,10 @@ import { useWindowSize } from '../hooks';
 
 export type VirtualTableProps<
   RowType extends Record<string, unknown>,
-  Column extends BaseColumn<RowType>,
   TableProps,
   TableFooterProps,
 > = {
-  columns: readonly Column[];
+  columns: readonly Column<RowType>[];
   data: RowType[];
   itemSize?: (value: { index: number; row: Row<RowType> }) => number;
   height?: number;
@@ -69,10 +68,9 @@ export type VirtualTableProps<
 
 const VirtualTable = <
   RowType extends Record<string, unknown>,
-  Column extends BaseColumn<RowType>,
   TableProps,
   TableFooterProps,
-> (props: VirtualTableProps<RowType, Column, TableProps, TableFooterProps>) => {
+> (props: VirtualTableProps<RowType, TableProps, TableFooterProps>) => {
   const {
     columns,
     data,

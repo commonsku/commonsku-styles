@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import VirtualTable, { VirtualTableProps } from './VirtualTable';
-import { Column as BaseColumn, CellProps } from 'react-table';
+import { Column, CellProps } from 'react-table';
 import { LabeledCheckbox } from '../Input';
 
 export type SelectionTableProps<
     RowType extends Record<string, unknown> & { selected?: boolean },
-    Column extends BaseColumn<RowType>,
     TableProps,
     TableFooterProps,
-> = VirtualTableProps<RowType, Column, TableProps, TableFooterProps> & {
+> = VirtualTableProps<RowType, TableProps, TableFooterProps> & {
     data: RowType[];
     onSelectRow?: (row: RowType, index: number) => void;
     onSelectionChange?: (selectedRows: RowType[]) => void;
@@ -18,10 +17,9 @@ type SelectionState = 'none' | 'indeterminate' | 'all';
 
 const SelectionTable = <
     RowType extends Record<string, unknown> & { selected?: boolean },
-    Column extends BaseColumn<RowType>,
     TableProps,
     TableFooterProps,
-> (props: SelectionTableProps<RowType, Column, TableProps, TableFooterProps>) => {
+> (props: SelectionTableProps<RowType, TableProps, TableFooterProps>) => {
     const { columns, onSelectRow, onSelectionChange } = props;
 
     const [data, setData] = useState<RowType[]>(
@@ -90,7 +88,7 @@ const SelectionTable = <
         />
     ), [selectionState, handleSelectHeader]);
 
-    const selectionColumn = useMemo<BaseColumn<RowType>>(() => ({
+    const selectionColumn = useMemo<Column<RowType>>(() => ({
         Header: selectionHeader, 
         accessor: 'selected',
         Cell: (cell: CellProps<RowType>) => {
