@@ -26,7 +26,7 @@ export type VirtualTableProps<
 > = {
   columns: readonly Column<RowType>[];
   data: RowType[];
-  itemSize?: (value: { index: number; row: Row<RowType> }) => number;
+  itemSize?: (value: { index: number; row: Row<RowType> & UseExpandedRowProps<RowType> }) => number;
   height?: number;
   minWidth?: number;
   maxWidth?: number;
@@ -131,11 +131,9 @@ const VirtualTable = <
     useFlexLayout,
     useSortBy,
     useExpanded
-  ) as TypedTableInstance<RowType> & UseExpandedInstanceProps<RowType>;
+  ) as TypedTableInstance<RowType>;
 
-  const rows = useMemo(() => tableData.rows as Array<Row<RowType> & UseExpandedRowProps<RowType>>,
-    [tableData.rows]
-  );
+  const rows = useMemo(() => tableData.rows, [tableData.rows]);
   const windowSize = useWindowSize();
   const [scrolledToTop, setScrolledToTop] = useState(false);
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
