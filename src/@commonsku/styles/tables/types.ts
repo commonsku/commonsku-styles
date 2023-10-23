@@ -6,6 +6,8 @@ import {
     TableOptions,
     SortingRule,
     UseSortByColumnProps,
+    Row,
+    UseExpandedRowProps,
 } from 'react-table';
 
 export interface BaseSortByHeaderGroup<D extends object = {}> extends HeaderGroup<D>, UseSortByColumnProps<D> {
@@ -29,3 +31,9 @@ export interface SortByTableInstance<D extends object = {}> extends Omit<Omit<Ta
 export interface SortByTableOptions<D extends object = {}> extends Omit<TableOptions<D>, 'initialState'> {
     initialState: TableInitialStateStateWithSortBy<D>;
 };
+
+export interface TypedTableInstance<D extends object = {}> extends Omit<Omit<Omit<TableInstance<D>, 'rows'>, 'headerGroups'>, 'footerGroups'> {
+    rows: Array<Row<D> & UseExpandedRowProps<D>>,
+    headerGroups: Array<SortByHeaderGroup<D>>,
+    footerGroups: Array<SortByHeaderGroup<D>>,
+}
