@@ -15,6 +15,7 @@ export { default as NavProdIcon } from './NavProdIcon';
 export { default as NavFinanceIcon } from './NavFinanceIcon';
 export { default as NavResourcesIcon } from './NavResourcesIcon';
 export { default as NavManagementIcon } from './NavManagementIcon';
+export { default as NavReportsIcon } from './NavReportsIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as PinIcon } from './PinIcon';
 export { default as TaskIcon } from './TaskIcon';
