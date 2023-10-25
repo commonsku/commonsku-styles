@@ -8,7 +8,6 @@ import {
   Cell,
   useExpanded,
   UseExpandedRowProps,
-  UseExpandedInstanceProps,
 } from 'react-table';
 import { VariableSizeList, ListOnScrollProps, ListChildComponentProps } from 'react-window';
 import { BaseSortByHeaderGroup, SortByHeaderGroup, TypedTableInstance } from './types';

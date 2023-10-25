@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import VirtualTable, { VirtualTableProps } from './VirtualTable';
 import { Column, CellProps } from 'react-table';
 import { LabeledCheckbox } from '../Input';
@@ -26,14 +26,8 @@ const SelectionTable = <
         props.data.map((row: RowType) => ({
             selected: false,
             ...row,
-        })
-    ));
+        })    ));
 
-    useEffect(() => {
-        if (onSelectionChange != null) {
-            onSelectionChange(data.filter(row => row.selected));
-        }
-    }, [data, onSelectionChange]);
 
     const selectionState: SelectionState = useMemo(() =>
         !data.some(row => row.selected === false)
@@ -60,7 +54,11 @@ const SelectionTable = <
                 })));
                 break;
         }
-    }, [data, selectionState]);
+
+        if (onSelectionChange != null) {
+            onSelectionChange(data.filter(row => row.selected));
+        }
+    }, [data, selectionState, onSelectionChange]);
 
     const handleSelectRow = useCallback((rowIndex: number) => {
         setData(prev => prev.map((row, index) => {
@@ -70,6 +68,10 @@ const SelectionTable = <
                 onSelectRow(row, rowIndex);
             }
 
+            if (onSelectionChange != null) {
+                onSelectionChange(data.filter(row => row.selected));
+            }
+
             return {
                 ...row,
                 selected: rowIndex === index 
@@ -77,7 +79,7 @@ const SelectionTable = <
                     : row.selected,
             };
         }));
-    }, [onSelectRow]);
+    }, [data, onSelectRow, onSelectionChange]);
 
     const selectionHeader = useMemo(() => (
         <LabeledCheckbox
@@ -91,17 +93,16 @@ const SelectionTable = <
     const selectionColumn = useMemo<Column<RowType>>(() => ({
         Header: selectionHeader, 
         accessor: 'selected',
-        Cell: (cell: CellProps<RowType>) => {
-            return (
+        Cell: (cell: CellProps<RowType>) => (
             <LabeledCheckbox
                 label=""
                 checked={cell.row.original.selected}
                 onChange={() => handleSelectRow(cell.row.index)}
             />
-        )},
+        ),
         width: 40,
         disableSortBy: true,
-    } as const), [handleSelectRow, selectionHeader]);
+    }), [handleSelectRow, selectionHeader]);
 
     return (
         <VirtualTable
