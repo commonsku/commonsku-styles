@@ -23,7 +23,7 @@ const SelectionTable = <
     const { columns, onSelectRow, onSelectionChange } = props;
 
     const [data, setData] = useState<RowType[]>(
-        props.data.map((row: RowType) => ({
+        props.data.map(row => ({
             selected: false,
             ...row,
         })
