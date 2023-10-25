@@ -43,6 +43,7 @@ function fn_cskustyled() {
     && cd $CSKU_DEV_DIR \
         && pm2 kill \
         && npm install $CSKU_STYLES_DIR/commonsku-styles-$CSKUS_PKG_VERSION.tgz \
+        && npm run build:dll \
         && npm run start
 }
 
