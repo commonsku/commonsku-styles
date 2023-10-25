@@ -26,8 +26,8 @@ const SelectionTable = <
         props.data.map((row: RowType) => ({
             selected: false,
             ...row,
-        })    ));
-
+        })
+    ));
 
     const selectionState: SelectionState = useMemo(() =>
         !data.some(row => row.selected === false)
