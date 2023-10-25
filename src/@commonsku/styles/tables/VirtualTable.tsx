@@ -25,7 +25,7 @@ export type VirtualTableProps<
 > = {
   columns: readonly Column<RowType>[];
   data: RowType[];
-  itemSize?: (value: { index: number; row: Row<RowType> & UseExpandedRowProps<RowType> }) => number;
+  itemSize?: (value: { index: number; row: Row<RowType> }) => number;
   height?: number;
   minWidth?: number;
   maxWidth?: number;
