@@ -86,6 +86,8 @@ import {
     ToggleSwitchStyled,
     ToggleSwitch,
     ProductCard,
+    ChevronPopup,
+    ProductDetail,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -355,6 +357,7 @@ const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showProductDetailPopup, setShowProductDetailPopup] = useState(false);
   const [showNewProjectPopup, setShowNewProjectPopup] = useState(false);
   const [activeRadio, setRadio] = useState(1);
   const [activeRadioInButton, setRadioInButton] = useState(1);
@@ -553,6 +556,107 @@ const App = () => {
             console.groupEnd();
           }} />
       </Popup>}
+
+        {showProductDetailPopup && <ChevronPopup
+          hidePreviousButton={false}
+          hideNextButton={false}
+          onPreviousButtonClick={() => { }}
+          onNextButtonClick={() => { }}
+          controls={[<span
+            style={{ fontSize: '1.6rem', color: colors.teal[65], cursor: 'pointer', marginTop: '-10px' }}
+            onClick={() => {
+              setShowProductDetailPopup(false);
+            }}
+          >&times;</span>]}
+          width='63%'
+          height='87%'
+        >
+          <ProductDetail
+            name={'Gratuitously Lengthy But Highly Descriptive Product Name'}
+            sku={'#6410'}
+            descriptions={[
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+              "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+              "when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+              "t has survived not only five centuries,",
+              "but also the leap into electronic typesetting, ",
+              "remaining essentially unchanged. ",
+              "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,",
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+              "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+              "when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+              "t has survived not only five centuries,",
+              "but also the leap into electronic typesetting, ",
+              "remaining essentially unchanged. ",
+              "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,",
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+              "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+              "when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+              "t has survived not only five centuries,",
+              "but also the leap into electronic typesetting, ",
+              "remaining essentially unchanged. ",
+              "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,"
+            ]} 
+            sizes={[
+              "S",
+              "M",
+              "L",
+              "XL",
+              "2XL",
+              "3XL",
+              "4XL",
+              "5XL"
+            ]} 
+            allColors={[
+              "Red",
+              "White",
+              "Black",
+              "Blue",
+              "Green"
+            ]} 
+            images={[
+              {
+                "url": product_pic1,
+                "width": 700,
+                "height": 700,
+              },
+              {
+                "url": product_pic2,
+                "width": 700,
+                "height": 700,
+              },
+            ]} 
+            mainImage={{
+              url: product_pic1,
+              width: 700,
+              height: 700
+            }} 
+            prices={[
+              {
+                "min_quantity": 36,
+                "price": "10.9740",
+              },
+              {
+                "min_quantity": 48,
+                "price": "10.6290",
+              },
+              {
+                "min_quantity": 96,
+                "price": "10.2840",
+              },
+              {
+                "min_quantity": 244,
+                "price": "9.5940",
+              }
+            ]} 
+            costBased='Cost is based on M/Red'
+            handleClickProductEvent={function (): void {
+              throw new Error('Function not implemented.');
+            }} 
+            selected={false} 
+            showAddButton={true} 
+            />
+        </ChevronPopup>}
 
       {showNewProjectPopup && <Popup
         title={'New Project'}
@@ -2029,6 +2133,13 @@ const App = () => {
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={false} showButton={true} />
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={true} showButton={true} />
               </Row>
+            </demo.InnerContainer>
+          </demo.OuterContainer>
+
+
+          <demo.OuterContainer title="Product Detail Popup" id="product-detail-popup">
+            <demo.InnerContainer title="Product Detail" id="product-detail">
+              <Button mr={10} onClick={() => setShowProductDetailPopup(true)}>Show ProductDetailPopup</Button>
             </demo.InnerContainer>
           </demo.OuterContainer>
 

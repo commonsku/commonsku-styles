@@ -124,7 +124,7 @@ const ProductButton = styled(IconButton)`
   }
 `;
 
-// can export from IconButton
+// can import from Button
 type IconFuncProps = { color: string;[key: string]: any };
 
 type ButtonState = {
