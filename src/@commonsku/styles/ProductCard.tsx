@@ -15,9 +15,6 @@ const ProductCardWrapper = styled.div`
     padding: 8px;
     gap: 8px;
     
-    width: 208px;
-    height: 333px;
-    
     background: #FFFFFF;
     border-radius: 5px;
     cursor: pointer;
@@ -41,7 +38,7 @@ const ProductContent = styled.div`
   && {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     align-self: stretch;
     align-items: flex-start;
     flex-direction: column;
@@ -49,7 +46,7 @@ const ProductContent = styled.div`
 
 const ProductTitle = styled.div`
   && {
-    width: 135px;
+    width: 208px;
     max-height: 53px;
 
     font-style: normal;
@@ -81,9 +78,8 @@ const ProductTitle = styled.div`
 
 const ProductSubTitle = styled.div`
   && {
-    width: 209px;
+    width: 135px;
     height: 24px;
-    padding-top: 4px;
 
     font-style: normal;
     font-weight: 400;
@@ -93,7 +89,6 @@ const ProductSubTitle = styled.div`
     color: ${colors.neutrals['90']};
 
     flex: none;
-    order: 1;
     flex-grow: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -129,6 +124,7 @@ const ProductButton = styled(IconButton)`
   }
 `;
 
+// can export from IconButton
 type IconFuncProps = { color: string;[key: string]: any };
 
 type ButtonState = {
@@ -157,10 +153,8 @@ export const ProductCard = (props: ProductCardProps) => {
       return { icon: undefined, variant: 'error', name: 'Remove' };
     } else if (props.selected) {
       return { icon: CheckmarkIcon, variant: 'primary', name: 'Added' };
-    } else if (hover) {
-      return { icon: AddIcon, variant: 'secondary', name: 'Add' };
     }
-    return { icon: undefined, variant: 'primary', name: '' };
+    return { icon: AddIcon, variant: 'primary', name: 'Add' };
   };
 
   const button = buttonState();
@@ -168,12 +162,12 @@ export const ProductCard = (props: ProductCardProps) => {
     <ProductCardWrapper onClick={props.handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className={props.selected ? 'selected' : ''} >
       <ProductImg src={props.imgUrl}></ProductImg>
       <ProductContent>
-        <div style={{ display: 'flex', alignItems: 'center', paddingTop: 8 }}>
-          <ProductTitle>{props.title}</ProductTitle>
+        <ProductTitle>{props.title}</ProductTitle>
+        {props.sku && <ProductSubTitle>{props.sku}</ProductSubTitle>}
+        <div style={{ display: 'flex', alignItems: 'center', height: 32, marginTop: '-4px' }}>
+          <ProductSubTitle >{props.subTitle}</ProductSubTitle>
           {props.showButton && (hover || props.selected) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={props.handleClickProductEvent}  >{button.name}</ProductButton>}
         </div>
-        {props.sku && <ProductSubTitle>{props.sku}</ProductSubTitle>}
-        <ProductSubTitle>{props.subTitle}</ProductSubTitle>
       </ProductContent>
     </ProductCardWrapper>
   );

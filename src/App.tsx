@@ -2024,18 +2024,10 @@ const App = () => {
 
           <demo.OuterContainer title="ProductCard" id="productCard">
             <demo.InnerContainer noBottomLine>
-              <Row>
-                <Col padded xs={4}>
+              <Row style={{gap: 16}}>
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={false} showButton={false} />
-                </Col>
-                <Col padded xs={4}>
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={false} showButton={true} />
-
-                </Col>
-                <Col padded xs={4}>
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={true} showButton={true} />
-
-                </Col>
               </Row>
             </demo.InnerContainer>
           </demo.OuterContainer>
