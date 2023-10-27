@@ -22,6 +22,8 @@ export const Overlay = styled.div<{ zIndex?: number; }>`
     z-index: ${p => p.zIndex || 999};
     margin-left: auto;
     margin-right: auto;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -37,11 +39,7 @@ const PopupWindow = styled.div<PopupWindowProps>`
     width: ${props => props.width ?? '90%'};
     height: ${props => props.height ?? '75%'}; 
     margin: 0 !important;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: fixed;
-    ${props => props.height ?  '' : 'max-height: 700px;'}
+    ${props => props.height ? '' : 'max-height: 700px;'}
     overflow-y: hidden;
     display: block;
     z-index: ${p => p.zIndex || 1006};
@@ -89,13 +87,12 @@ export const PopupHeader = styled.div<SharedStyleTypes & SizerTypes>`
   }
 `;
 
-const ChevronButton = styled(ChevronIcon) <{ left?: boolean }>`
+const ChevronButton = styled(ChevronIcon) <{ left?: boolean, hide?: boolean }>`
   && {
-    position: absolute;
     width: 120px;
     height: 120px;
-    ${props => props.left ? 'left: 0px;' : 'right: 0px;'}
-    top: calc(50% - 120px/2 + 22.5px);
+    cursor: ${props => props.hide ? 'default' : 'pointer'};
+    ${props => props.hide && 'opacity: 0;'}
   }
 `;
 
@@ -143,16 +140,16 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
     controls,
     children,
     onClose,
-    noCloseButton=false,
-    closeOnEsc=true,
-    closeOnClickOutside=false,
+    noCloseButton = false,
+    closeOnEsc = true,
+    closeOnClickOutside = false,
     overlayZIndex,
     popupClassName,
     contentClassName,
     PopupWindowComponent = PopupWindow,
     ...props
-  }: PopupProps, 
-  forwardedRef 
+  }: PopupProps,
+  forwardedRef
 ) => {
   const ref = useFallbackRef<HTMLDivElement>(forwardedRef);
   useClickOutside({
@@ -207,12 +204,12 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
 export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
   popup: React.ComponentType<PopupProps>,
   autoOpen?: boolean,
-  render?: React.FC<{onClick: () => void}>
-}> = ({ autoOpen = false, popup: PopupComponent, render, closeOnEsc=true, closeOnClickOutside=false, ...props }) => {
+  render?: React.FC<{ onClick: () => void }>
+}> = ({ autoOpen = false, popup: PopupComponent, render, closeOnEsc = true, closeOnClickOutside = false, ...props }) => {
   const [showPopup, setShowPopup] = useState(autoOpen);
   return <>
-    {showPopup && <PopupComponent onClose={() => setShowPopup(false)} closeOnEsc={closeOnEsc} closeOnClickOutside={closeOnClickOutside} {...props}/>}
-    {render && render({onClick: () => setShowPopup(!showPopup)})}
+    {showPopup && <PopupComponent onClose={() => setShowPopup(false)} closeOnEsc={closeOnEsc} closeOnClickOutside={closeOnClickOutside} {...props} />}
+    {render && render({ onClick: () => setShowPopup(!showPopup) })}
   </>
 }
 
@@ -235,9 +232,9 @@ const ChevronPopupWindow = React.forwardRef<HTMLDivElement, ChevronPopupWindowPr
     ...rest
   } = props;
   return <>
-    {!hidePreviousButton && <ChevronButton direction='left' left={true} onClick={onPreviousButtonClick} />}
+    <ChevronButton direction='left' left={true} onClick={!hidePreviousButton ? onPreviousButtonClick : undefined} hide={hidePreviousButton} />
     <PopupWindow width={width || '80%'} ref={ref} {...rest} />
-    {!hideNextButton && <ChevronButton direction='right' onClick={onNextButtonClick} />}
+    <ChevronButton direction='right' onClick={!hideNextButton ? onNextButtonClick : undefined} hide={hideNextButton} />
   </>;
 });
 
