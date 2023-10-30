@@ -4,88 +4,74 @@ import { Column, CellProps } from 'react-table';
 import { LabeledCheckbox } from '../Input';
 
 export type SelectionTableProps<
-    RowType extends Record<string, unknown> & { selected?: boolean },
+    RowType extends Record<string, unknown>,
     TableProps,
     TableFooterProps,
 > = VirtualTableProps<RowType, TableProps, TableFooterProps> & {
-    data: RowType[];
-    onSelectRow?: (row: RowType, index: number) => void;
+    onSelectRow?: (row: RowType, isSelected: boolean) => void;
     onSelectionChange?: (selectedRows: RowType[]) => void;
 }
 
-type SelectionState = 'none' | 'indeterminate' | 'all';
+type SelectionState = 'none' | 'some' | 'all';
 
 const SelectionTable = <
-    RowType extends Record<string, unknown> & { selected?: boolean },
+    RowType extends Record<string, unknown>,
     TableProps,
     TableFooterProps,
 > (props: SelectionTableProps<RowType, TableProps, TableFooterProps>) => {
-    const { columns, onSelectRow, onSelectionChange } = props;
+    const { columns, onSelectRow, onSelectionChange, data } = props;
+    const [selection, setSelection] = useState<RowType[]>([]);
 
-    const [data, setData] = useState<RowType[]>(
-        props.data.map(row => ({
-            selected: false,
-            ...row,
-        })
-    ));
-
-    const selectionState: SelectionState = useMemo(() =>
-        !data.some(row => row.selected === false)
-            ? 'all'
-            : data.some(row => row.selected === true)
-                ? 'indeterminate'
-                : 'none',
-        [data]
-    );
+    const selectionState: SelectionState = useMemo(() => {
+        switch (selection.length) {
+            case 0:
+                return 'none';
+            case data.length:
+                return 'all';
+            default:
+                return 'some';
+        }
+    }, [data.length, selection.length]);
 
     const handleSelectHeader = useCallback(() => {
         switch (selectionState) {
             case 'none':
-                setData(data.map(row => ({
-                    ...row,
-                    selected: true,
-                })));
+                setSelection(data);
                 break;
             case 'all':
-            case 'indeterminate':
-                setData(data.map(row => ({
-                    ...row,
-                    selected: false,
-                })));
+            case 'some':
+                setSelection([]);
                 break;
         }
 
         if (onSelectionChange != null) {
             onSelectionChange(data.filter(row => row.selected));
         }
-    }, [data, selectionState, onSelectionChange]);
+    }, [selectionState, onSelectionChange, data]);
 
-    const handleSelectRow = useCallback((rowIndex: number) => {
-        setData(prev => prev.map((row, index) => {
-            if (rowIndex !== index) return row;
+    const handleSelectRow = useCallback((row: RowType) => {
+        const isSelected = selection.includes(row);
+    
+        if (isSelected) {
+            setSelection(selection.filter(r => r !== row));
+        } else {
+            setSelection([...selection, row]);
+        }
 
-            if (onSelectRow != null) {
-                onSelectRow(row, rowIndex);
-            }
+        if (onSelectRow != null) {
+            onSelectRow(row, isSelected);
+        }
 
-            if (onSelectionChange != null) {
-                onSelectionChange(data.filter(row => row.selected));
-            }
-
-            return {
-                ...row,
-                selected: rowIndex === index 
-                    ? !row.selected
-                    : row.selected,
-            };
-        }));
-    }, [data, onSelectRow, onSelectionChange]);
+        if (onSelectionChange != null) {
+            onSelectionChange(selection);
+        }
+    }, [onSelectRow, onSelectionChange, selection]);
 
     const selectionHeader = useMemo(() => (
         <LabeledCheckbox
             label=""
             checked={selectionState === 'all'}
-            indeterminate={selectionState === 'indeterminate'}
+            indeterminate={selectionState === 'some'}
             onChange={handleSelectHeader}
         />
     ), [selectionState, handleSelectHeader]);
@@ -96,13 +82,13 @@ const SelectionTable = <
         Cell: (cell: CellProps<RowType>) => (
             <LabeledCheckbox
                 label=""
-                checked={cell.row.original.selected}
-                onChange={() => handleSelectRow(cell.row.index)}
+                checked={selection.includes(cell.row.original)}
+                onChange={() => handleSelectRow(cell.row.original)}
             />
         ),
         width: 40,
         disableSortBy: true,
-    }), [handleSelectRow, selectionHeader]);
+    }), [handleSelectRow, selection, selectionHeader]);
 
     return (
         <VirtualTable
