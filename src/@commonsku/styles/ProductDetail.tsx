@@ -1,5 +1,5 @@
 import { map, get, filter, round, toNumber } from 'lodash';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { ButtonVariant, IconButton, TButtonIcon } from './Button';
 import colors from './colors';
@@ -11,6 +11,11 @@ import { SizerTypes } from './Sizer';
 import { Table, TBody, TR, TD } from './Table';
 import Theme, { themeOptions } from './Theme';
 import { DoubleArrowIcon, ArrowIcon, AddIcon, CheckmarkIcon } from './icons';
+
+const IMAGE_WIDTH_THRESHOLD = 250;
+const IMAGE_HEIGHT_THRESHOLD = 250;
+const INITIAL_THUMBNAILS_COUNT = 11;
+const SLICE_COUNT = 2;
 
 const ThumbnailVerticalContainer = styled.div`
     max-height: 660px;
@@ -196,7 +201,7 @@ const ReadMore = (props: { text: string }) => {
   tempDiv.innerHTML = props.text;
   const innerText = tempDiv.innerText.substring(0, readMore ? truncateLength : props.text.length);
 
-  return <Col style={{flex: '0 1 0%'}}>
+  return <Col style={{flex: '0 1 0%', marginBottom: 27}}>
     <div style={{ position: 'relative', display: 'inline-block', whiteSpace: 'pre-wrap', fontFamily: 'var(--font-family-regular)' }}>
       {innerText}
       {props.text.length > truncateLength &&
@@ -219,59 +224,115 @@ const ReadMore = (props: { text: string }) => {
   </Col>
 }
 
-export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#' }: ProductDetailProps) => {
-  const thumbnailDiv = useRef<HTMLDivElement>(null)
-  const [isTextOverflowed, setIsTextOverflowed] = useState(false)
-  const [image, setImage] = useState(mainImage)
-  const [hover, setHover] = useState(false)
-  useEffect(() => {
-    setImage(mainImage)
-  }, [mainImage])
+type ImageGalleryProps = {
+  image: ImageProps,
+  setImage: React.Dispatch<React.SetStateAction<ImageProps>>,
+  filtered: ImageProps[], 
+  handleMoreImagesBtnClick: () => void
+}
 
-  const filtered = filter(images, ({ width = 0, height = 0 }) => {
-    return (!width && !height) || width > 250 || height > 250
-  }) || images;
-  const [slicedThumbnails, setSlicedThumbnails] = useState(filtered.slice(0, 11))
-
+const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: ImageGalleryProps) => {
+  const thumbnailDiv = useRef<HTMLDivElement>(null);
+  const [slicedThumbnails, setSlicedThumbnails] = useState(() => filtered.slice(0, INITIAL_THUMBNAILS_COUNT));
   useEffect(() => {
-    const divElement = thumbnailDiv.current
+    setSlicedThumbnails(filtered.slice(0, INITIAL_THUMBNAILS_COUNT));
+  }, [filtered])
+  
+  useEffect(() => {
+    const divElement = thumbnailDiv.current;
     const checkOverflow = () => {
       if (divElement) {
         if (divElement.clientHeight < divElement.scrollHeight || divElement.offsetHeight < divElement.clientHeight) {
-          setSlicedThumbnails(slicedThumbnails.slice(0, -2))
+          setSlicedThumbnails(slicedThumbnails.slice(0, -SLICE_COUNT));
         }
       }
     }
-    setTimeout(checkOverflow, 0)
-    window.addEventListener('resize', checkOverflow)
+    setTimeout(checkOverflow, 0);
+    window.addEventListener('resize', checkOverflow);
     return () => {
-      window.removeEventListener('resize', checkOverflow)
+      window.removeEventListener('resize', checkOverflow);
     }
   }, [slicedThumbnails])
+  
+  return <div style={{ width: '100%' }}>
+    <MainImage image={image} StyledDiv={Main} />
+    <ThumbnailContainer ref={thumbnailDiv} style={{ overflow: 'hidden' }}>
+      <Row>
+        {image && map(slicedThumbnails, (thumbnail, i) => {
+          console.log('slicedThumbnails mapping', slicedThumbnails);
+          const selected = thumbnail.url === image.url ? { border: `3px solid ${colors.teal['70']}`, borderRadius: 5 } : {};
+          return <SelectableThumbnail key={i} style={selected}>
+            <InnerFrameThumbnail>
+              <AutoHideImage
+                key={i}
+                src={thumbnail.url}
+                onClick={() => { setImage(thumbnail); } }
+                style={{
+                  display: 'inline-block',
+                  objectFit: 'contain',
+                  cursor: 'pointer'
+                }} /></InnerFrameThumbnail>
+          </SelectableThumbnail>;
+        })}
+        {filtered.length > slicedThumbnails.length
+          ? <div style={{
+            width: '15%', height: '15%', display: 'flex',
+            justifyContent: 'center',
+            cursor: 'pointer'
+          }}><span style={{
+            backgroundColor: 'white',
+            color: colors.teal[65],
+            fontWeight: 'bolder',
+            paddingTop: '15%',
+            fontSize: 'xx-large'
+          }}
+            onClick={handleMoreImagesBtnClick}>
+              ...</span>
+          </div>
+          : null}
+      </Row>
+    </ThumbnailContainer>
+  </div>;
+}
 
-  const [showAllImages, setShowAllImages] = useState(false)
+export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#' }: ProductDetailProps) => {
+  
+  const [isTextOverflowed, setIsTextOverflowed] = useState(false);
+  const [image, setImage] = useState(mainImage);
+  const [hover, setHover] = useState(false);
+  
+  const filtered = useMemo(() => filter(images, ({ width = 0, height = 0 }) => {
+    return (!width && !height) || width > IMAGE_WIDTH_THRESHOLD || height > IMAGE_HEIGHT_THRESHOLD;
+  }) || images, [images]);
+
+  useEffect(() => {
+    setImage(mainImage);
+  }, [mainImage])
+
+
+  const [showAllImages, setShowAllImages] = useState(false);
 
   const handleMoreImagesBtnClick = () => {
-    setShowAllImages(true)
+    setShowAllImages(true);
   }
 
-  const tableRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLDivElement>(null)
-  let factor = 1
-  const [arrowDirection, setArrowDirection] = useState<ArrowIconDirection>('right')
+  const tableRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  let factor = 1;
+  const [arrowDirection, setArrowDirection] = useState<ArrowIconDirection>('right');
 
   function scrollTable() {
-    const offset = 258
+    const offset = 258;
     if (tableRef.current) {
-      const element = tableRef.current
+      const element = tableRef.current;
       if (element.scrollWidth > element.clientWidth) {
         if (Math.round(element.scrollLeft + element.clientWidth) === element.scrollWidth) {
-          factor = -1
+          factor = -1;
         }
         if (element.scrollLeft === 0) {
-          factor = 1
+          factor = 1;
         }
-        element.scrollLeft += (offset * factor)
+        element.scrollLeft += (offset * factor);
       }
     }
   };
@@ -279,19 +340,23 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
   useEffect(() => {
     const handleScroll = () => {
       if (tableRef.current) {
-        const element = tableRef.current
+        const element = tableRef.current;
         if (Math.round(tableRef.current.scrollLeft + element.clientWidth) === element.scrollWidth) {
-          setArrowDirection('left')
+          setArrowDirection('left');
         }
         if (element.scrollLeft === 0) {
-          setArrowDirection('right')
+          setArrowDirection('right');
         }
       }
     }
-    const scrollElement = tableRef.current
-    if (scrollElement) scrollElement.addEventListener('scroll', handleScroll)
+    const scrollElement = tableRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', handleScroll);
+    }
     return () => {
-      if (scrollElement) scrollElement.removeEventListener('scroll', handleScroll)
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', handleScroll);
+      }
     }
   }, [])
 
@@ -300,7 +365,6 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
       let isOverflowed = false;
       if (textRef.current) {
         isOverflowed = textRef.current.scrollHeight > textRef.current.clientHeight;
-        console.log(textRef.current.scrollHeight, textRef.current.clientHeight)
       }
       setIsTextOverflowed(isOverflowed);
     }
@@ -314,11 +378,11 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
 
   const buttonState = (): ButtonState => {
     if (hover && selected) {
-      return { icon: undefined, variant: 'error', name: 'Remove from Project' }
+      return { icon: undefined, variant: 'error', name: 'Remove from Project' };
     } else if (selected) {
-      return { icon: CheckmarkIcon, variant: 'primary', name: 'Added to Project' }
+      return { icon: CheckmarkIcon, variant: 'primary', name: 'Added to Project' };
     } else {
-      return { icon: AddIcon, variant: 'primary', name: 'Add to Project' }
+      return { icon: AddIcon, variant: 'primary', name: 'Add to Project' };
     }
   }
 
@@ -329,7 +393,7 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
       <div style={{ overflowY: 'hidden', padding: 0, height: '100%' }}>
         {showAllImages
           ? <>
-            <Row style={{ marginTop: '15px', position: 'absolute', top: '0', zIndex: '100', gap: 16, alignItems: 'center' }}>
+            <Row style={{ marginTop: '15px', position: 'absolute', top: 85, zIndex: '100', gap: 16, alignItems: 'center' }}>
               <ArrowIcon direction='left' size='large' onClick={() => setShowAllImages(false)} style={{ cursor: 'pointer' }} />
               <h2 style={{fontSize: 24,
                   fontStyle: 'normal',
@@ -370,45 +434,7 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
           </>
           : <Row style={{alignItems: 'flex-start', height: '100%'}} >
             <Col md={6} sm={12} lg={6} style={{ paddingRight: '15px' }}>
-              <div style={{ width: '100%' }}>
-                <MainImage image={image} StyledDiv={Main} />
-                <ThumbnailContainer ref={thumbnailDiv} style={{ overflow: 'hidden' }} >
-                  <Row >
-                    {image && map(slicedThumbnails, (thumbnail, i) => {
-                      const selected = thumbnail.url === image.url ? { border: `3px solid ${colors.teal['70']}`, borderRadius: 5 } : {};
-                      return <SelectableThumbnail key={i} style={selected}>
-                        <InnerFrameThumbnail >
-                          <AutoHideImage
-                            key={i}
-                            src={thumbnail.url}
-                            onClick={() => { setImage(thumbnail) }}
-                            style={{
-                              display: 'inline-block',
-                              objectFit: 'contain',
-                              cursor: 'pointer'
-                            }}
-                          /></InnerFrameThumbnail>
-                      </SelectableThumbnail>
-                    })}
-                    {filtered.length > slicedThumbnails.length
-                      ? <div style={{
-                        width: '15%', height: '15%', display: 'flex',
-                        justifyContent: 'center',
-                        cursor: 'pointer'
-                      }}><span style={{
-                        backgroundColor: 'white',
-                        color: colors.teal[65],
-                        fontWeight: 'bolder',
-                        paddingTop: '15%',
-                        fontSize: 'xx-large'
-                      }}
-                        onClick={handleMoreImagesBtnClick}>
-                          ...</span>
-                      </div>
-                      : null}
-                  </Row>
-                </ThumbnailContainer>
-              </div>
+              <ImageGallery image={image} setImage={setImage} filtered={filtered} handleMoreImagesBtnClick={handleMoreImagesBtnClick} />
             </Col>
             <Col md={6} sm={12} lg={6} style={{ height: '100%', overflow: 'auto', display: 'flex',
               flexDirection: 'column',
@@ -433,20 +459,19 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
                 <section>
                   <div ref={tableRef} style={{ overflowX: 'hidden', display: 'flex', scrollBehavior: 'smooth' }}>
                     <Table style={{ marginBottom: '8px', pointerEvents: 'none', borderTop: `1px solid ${colors.neutrals['70']}`, borderBottom: `1px solid ${colors.neutrals['70']}` }} >
-                      <TBody>
+                      <TBody style={{ border: 'none' }} >
                         <TR>
                           <TD style={{fontFamily: 'var(--font-family-demibold)'}}>Qty</TD>
                           {map(prices, ({ min_quantity }, i) => {
-                            return <TD style={{ textAlign: 'right' }} key={i}>{min_quantity} </TD>
+                            return <TD style={{ textAlign: 'right' }} key={i}>{min_quantity}</TD>
                           })
                           }
                         </TR>
                         <TR>
-                          <TD style={{fontFamily: 'var(--font-family-demibold)'}}>Price </TD>
-
+                          <TD style={{fontFamily: 'var(--font-family-demibold)'}}>Price</TD>
                           { // call checkCredential ?
                             map(prices, ({ price }, i) => {
-                              return <TD style={{ textAlign: 'right' }} key={i}>${round(toNumber(price), 2)} </TD>
+                              return <TD style={{ textAlign: 'right' }} key={i}>${round(toNumber(price), 2)}</TD>
                             })
                           }
                         </TR>
@@ -459,8 +484,7 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
                     }
                     {tableRef.current && (tableRef.current.clientWidth < tableRef.current.scrollWidth)
                       ? <span style={{ float: 'right', cursor: 'pointer' }} onClick={scrollTable} >scroll to see more
-                        <ArrowIcon direction={arrowDirection}
-                          size="tiny" color={colors.teal['65']} />
+                        <ArrowIcon direction={arrowDirection} size="tiny" color={colors.teal['65']} />
                       </span>
                       : null
                     }
@@ -492,12 +516,11 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
                 ? <ReadMore text={descriptions.join('\n')} />
                 : <ReadMore text={descriptions} />
               }
-              <Row style={{ marginTop: '20px', pointerEvents: 'none' }}>
+              <Row style={{ pointerEvents: 'none' }}>
                 <Col md={2} lg={2} sm={12}>
-                  <Label style={{ marginTop: '10px',lineHeight: '30px' }}>Sizes: </Label>
+                  <Label style={{ lineHeight: '30px' }}>Sizes: </Label>
                 </Col>
                 <Col md={10} lg={10} sm={12} style={{display: 'flex', gap: 8, flexWrap: 'wrap'}}>
-
                   {map(sizes, (s, i) => {
                     return <SizeTag
                       key={s + i}
@@ -505,9 +528,9 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
                   })}
                 </Col>
               </Row>
-              <Row style={{ marginTop: '13px', pointerEvents: 'none' }}>
+              <Row style={{ pointerEvents: 'none' }}>
                 <Col md={2} lg={2} sm={12}>
-                  <Label style={{ marginTop: '10px', pointerEvents: 'none',lineHeight: '30px' }}>Colors: </Label>
+                  <Label style={{ pointerEvents: 'none',lineHeight: '30px' }}>Colors: </Label>
                 </Col>
                 <Col md={10} lg={10} sm={12} style={{display: 'flex', gap: 8, flexWrap: 'wrap'}}>
                   {map(allColors, (c, i) => {
@@ -524,4 +547,4 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
     </Theme>)
 }
 
-export default ProductDetail
+export default ProductDetail;
