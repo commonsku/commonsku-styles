@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { SharedStyles, SharedStyleTypes } from './SharedStyles'
+import { SharedStyleTypes } from './SharedStyles'
 import { AddIcon, CheckmarkIcon } from './icons'
 import colors from './colors'
 import { ButtonVariant, IconButton, TButtonIcon } from './Button'
