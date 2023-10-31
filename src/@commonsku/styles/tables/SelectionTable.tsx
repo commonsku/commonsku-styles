@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import VirtualTable, { VirtualTableProps } from './VirtualTable';
 import { Column, CellProps } from 'react-table';
 import { LabeledCheckbox } from '../Input';
@@ -8,7 +8,7 @@ export type SelectionTableProps<
     TableProps,
     TableFooterProps,
 > = VirtualTableProps<RowType, TableProps, TableFooterProps> & {
-    onSelectRow?: (row: RowType, isSelected: boolean) => void;
+    selectedRows?: RowType[];
     onSelectionChange?: (selectedRows: RowType[]) => void;
 }
 
@@ -19,11 +19,12 @@ const SelectionTable = <
     TableProps,
     TableFooterProps,
 > (props: SelectionTableProps<RowType, TableProps, TableFooterProps>) => {
-    const { columns, onSelectRow, onSelectionChange, data } = props;
-    const [selection, setSelection] = useState<RowType[]>([]);
+    const { columns, data, selectedRows, onSelectionChange } = props;
 
     const selectionState: SelectionState = useMemo(() => {
-        switch (selection.length) {
+        if (selectedRows == null) return "none";
+
+        switch (selectedRows.length) {
             case 0:
                 return 'none';
             case data.length:
@@ -31,41 +32,35 @@ const SelectionTable = <
             default:
                 return 'some';
         }
-    }, [data.length, selection.length]);
+    }, [data.length, selectedRows]);
+
+    const handleSelectRows = useCallback((rows: RowType[]) => {
+        if (onSelectionChange == null) return;
+
+        if (selectedRows == null) {
+            onSelectionChange(rows);
+            return;
+        }
+
+        const newSelection = selectedRows.filter(row => !rows.includes(row));
+        newSelection.push(
+            ...rows.filter(row => !selectedRows.includes(row))
+        );
+
+        onSelectionChange(newSelection);
+    }, [selectedRows, onSelectionChange]);
 
     const handleSelectHeader = useCallback(() => {
         switch (selectionState) {
             case 'none':
-                setSelection(data);
+                handleSelectRows(data);
                 break;
             case 'all':
             case 'some':
-                setSelection([]);
+                handleSelectRows([]);
                 break;
         }
-
-        if (onSelectionChange != null) {
-            onSelectionChange(data.filter(row => row.selected));
-        }
-    }, [selectionState, onSelectionChange, data]);
-
-    const handleSelectRow = useCallback((row: RowType) => {
-        const isSelected = selection.includes(row);
-    
-        if (isSelected) {
-            setSelection(selection.filter(r => r !== row));
-        } else {
-            setSelection([...selection, row]);
-        }
-
-        if (onSelectRow != null) {
-            onSelectRow(row, isSelected);
-        }
-
-        if (onSelectionChange != null) {
-            onSelectionChange(selection);
-        }
-    }, [onSelectRow, onSelectionChange, selection]);
+    }, [selectionState, handleSelectRows, data]);
 
     const selectionHeader = useMemo(() => (
         <LabeledCheckbox
@@ -82,13 +77,13 @@ const SelectionTable = <
         Cell: (cell: CellProps<RowType>) => (
             <LabeledCheckbox
                 label=""
-                checked={selection.includes(cell.row.original)}
-                onChange={() => handleSelectRow(cell.row.original)}
+                checked={selectedRows != null && selectedRows.includes(cell.row.original)}
+                onChange={() => handleSelectRows([cell.row.original])}
             />
         ),
         width: 40,
         disableSortBy: true,
-    }), [handleSelectRow, selection, selectionHeader]);
+    }), [handleSelectRows, selectedRows, selectionHeader]);
 
     return (
         <VirtualTable
