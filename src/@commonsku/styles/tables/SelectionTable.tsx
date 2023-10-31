@@ -51,16 +51,18 @@ const SelectionTable = <
     }, [selectedRows, onSelectionChange]);
 
     const handleSelectHeader = useCallback(() => {
+        if (onSelectionChange == null) return;
+
         switch (selectionState) {
             case 'none':
-                handleSelectRows(data);
+                onSelectionChange([...data]);
                 break;
             case 'all':
             case 'some':
-                handleSelectRows([]);
+                onSelectionChange([]);
                 break;
         }
-    }, [selectionState, handleSelectRows, data]);
+    }, [selectionState, data, onSelectionChange]);
 
     const selectionHeader = useMemo(() => (
         <LabeledCheckbox
@@ -83,7 +85,7 @@ const SelectionTable = <
         ),
         width: 40,
         disableSortBy: true,
-    }), [handleSelectRows, selectedRows, selectionHeader]);
+    }), [selectedRows, selectionHeader, handleSelectRows]);
 
     return (
         <VirtualTable
