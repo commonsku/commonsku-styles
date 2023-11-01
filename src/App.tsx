@@ -13,8 +13,6 @@ import user_pic2 from './users/2.jpeg';
 
 import * as icons from './@commonsku/styles/icons';
 
-
-
 import {
     Avatar,
     DropArea, Dropzoned, DropzonedPreviews,
@@ -399,14 +397,14 @@ const App = () => {
       noDrag: true,
       width: 50,
       isRowId: true
-    },
+    } as const,
     {
       Header: () => <span style={{ textAlign: "left" }}>First Name</span>,
       accessor: 'firstName',
       sticky: 'left',
       noDrag: true,
       width: 100
-    },
+    } as const,
     {
       Header: 'Last Name',
       accessor: 'lastName',
@@ -431,7 +429,7 @@ const App = () => {
           }}>{row.lastName}</span>
         )
       }
-    },
+    } as const,
     {
       Header: <span style={{ textAlign: "left" }}>Status</span>,
       accessor: 'status',
@@ -461,11 +459,11 @@ const App = () => {
           </div>
         )
       }
-    },
+    } as const,
     {
       Header: 'Age',
       accessor: 'age',
-    },
+    } as const,
     {
       Header: <span style={{ display: 'inline-block', marginLeft: '50px' }}>Visits</span>,
       accessor: 'state',
@@ -482,11 +480,11 @@ const App = () => {
           />
         )
       }
-    },
+    } as const,
     {
       Header: 'Profile Progress',
       accessor: 'progress',
-    },
+    } as const,
   ]
 
   const scrollOffsetDivRef = useRef(null)
