@@ -7,6 +7,7 @@ const VirtualTableStyles = styled.div<{
   hoverRowBg?: string | boolean;
   selectedRowIndex?: number;
   selectedRowStyle?: boolean | CSSObject; // if true, then set bg same as hoverRowBg
+  scrollIndicators?: boolean;
 }>`
 padding: 1rem;
 
@@ -81,6 +82,35 @@ padding: 1rem;
       }
     ` : ''}
   }
+}
+
+.scroll-container {
+  position: relative;
+}
+
+.scroll-decoration-top, .scroll-decoration-bottom {
+${p => p.scrollIndicators ? `
+  position: absolute;
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000000000;
+  pointer-events: none;
+` : `
+  display: none;
+`}
+}
+
+.scroll-decoration-top {
+  background: linear-gradient(180deg, #DFEEF4 0%, rgba(166, 194, 198, 0.00) 100%);
+  top: 0;
+}
+
+.scroll-decoration-bottom {
+  background: linear-gradient(0deg, #DFEEF4 0%, rgba(166, 194, 198, 0.00) 100%);
+  bottom: 0;
 }`;
 
 export default VirtualTableStyles;

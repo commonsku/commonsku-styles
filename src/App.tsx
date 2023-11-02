@@ -14,15 +14,13 @@ import user_pic2 from './users/2.jpeg';
 import pattern from './patterns/commonsku-patterns-geometric.png';
 import * as icons from './@commonsku/styles/icons';
 
-
-
-import { 
-    Avatar, 
+import {
+    Avatar,
     DropArea, Dropzoned, DropzonedPreviews,
-    Button,  
+    Button,
     Page,
     Toggle,
-    ToggleLink, 
+    ToggleLink,
     LabeledInput,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     LabeledTextarea,
@@ -42,7 +40,7 @@ import {
     Link,
     Number,
     FeedPost, Publisher,
-    ButtonsGroup, LabeledRadio, LabeledCheckbox, 
+    ButtonsGroup, LabeledRadio, LabeledCheckbox,
     Table, TD, TH, TR, THead, TBody,
     GridTable, Column,
     Datepicker,
@@ -101,6 +99,7 @@ import { MenuListProps } from 'react-select';
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { Grid, GridItem } from '@commonsku/styles/Grid';
+import SelectionTable from '@commonsku/styles/tables/SelectionTable';
 
 const initialState = {
   date: new Date(),
@@ -121,26 +120,26 @@ const options = [
 ]
 
 const statuses = [
-  { 
-    value: 'OK', 
-    content: 'OK', 
-    color: "#00D374", 
+  {
+    value: 'OK',
+    content: 'OK',
+    color: "#00D374",
     onClick: (item, row) => {
       console.log(item, row)
     }
   },
-  { 
-    value: 'PROBLEM', 
-    content: 'Problem', 
-    color: "#FF2674", 
+  {
+    value: 'PROBLEM',
+    content: 'Problem',
+    color: "#FF2674",
     onClick: (item, row) => {
       console.log(item, row)
     }
   },
-  { 
-    value: 'FOLLOWUP', 
-    content: 'Followup', 
-    color: "#FFAE00", 
+  {
+    value: 'FOLLOWUP',
+    content: 'Followup',
+    color: "#FFAE00",
     onClick: (item, row) => {
       console.log(item, row)
     }
@@ -148,50 +147,50 @@ const statuses = [
 ]
 
 const states = [
-  { 
-    value: 'new', 
-    content: 'New', 
-    order: 1, 
+  {
+    value: 'new',
+    content: 'New',
+    order: 1,
     onClick: (item, row) => {
       console.log(item, row)
     }
   },
-  { 
-    value: 'submitted', 
-    content: 'Submitted', 
-    order: 2, 
+  {
+    value: 'submitted',
+    content: 'Submitted',
+    order: 2,
     oonClick: (item, row) => {
       console.log(item, row)
-    } 
+    }
   },
-  { 
-    value: 'reviewed', 
-    content: 'Reviewed', 
-    order: 3, 
+  {
+    value: 'reviewed',
+    content: 'Reviewed',
+    order: 3,
     onClick: (item, row) => {
       console.log(item, row)
     }
   },
-  { 
-    value: 'attempted', 
-    content: 'Attempted', 
-    order: 4, 
+  {
+    value: 'attempted',
+    content: 'Attempted',
+    order: 4,
     oonClick: (item, row) => {
       console.log(item, row)
-    } 
+    }
   },
-  { 
-    value: 'abandoned', 
-    content: 'Abandoned', 
-    order: 5, 
+  {
+    value: 'abandoned',
+    content: 'Abandoned',
+    order: 5,
     oonClick: (item, row) => {
       console.log(item, row)
-    } 
+    }
   },
-  { 
-    value: 'long', 
-    content: 'Super Loooooooooooooooooooooooog Description', 
-    order: 6, 
+  {
+    value: 'long',
+    content: 'Super Loooooooooooooooooooooooog Description',
+    order: 6,
     onClick: (item, row) => {
       console.log(item, row)
     }
@@ -284,7 +283,7 @@ const tableData = [
   {"rowId":82,"firstName":"profit","lastName":"doctor","age":24,"state":states[2].content,"progress":24,"status": statuses[0].value},
   {"rowId":83,"firstName":"hall","lastName":"shake","age":3,"state":states[3].content,"progress":15,"status": statuses[0].value},
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
-] 
+]
 
 const SelectMenuList = (props: MenuListProps) => {
   return (
@@ -393,20 +392,20 @@ const App = () => {
 
   const tableColumns = [
     {
-      Header: () => <div>&nbsp;</div>, 
-      accessor: 'rowId', 
+      Header: () => <div>&nbsp;</div>,
+      accessor: 'rowId',
       sticky: 'left',
       noDrag: true,
       width: 50,
       isRowId: true
-    },
+    } as const,
     {
       Header: () => <span style={{ textAlign: "left" }}>First Name</span>,
       accessor: 'firstName',
       sticky: 'left',
       noDrag: true,
       width: 100
-    },
+    } as const,
     {
       Header: 'Last Name',
       accessor: 'lastName',
@@ -431,7 +430,7 @@ const App = () => {
           }}>{row.lastName}</span>
         )
       }
-    },
+    } as const,
     {
       Header: <span style={{ textAlign: "left" }}>Status</span>,
       accessor: 'status',
@@ -453,40 +452,40 @@ const App = () => {
         return (
           <div ref={wrapper}>
             <StatusDropdown
-              items={statuses} 
-              value={statuses[0]} 
+              items={statuses}
+              value={statuses[0]}
               row={po}
               setMenuIsOpen={setMenuIsOpen}
             />
           </div>
         )
       }
-    },
+    } as const,
     {
       Header: 'Age',
       accessor: 'age',
-    },
+    } as const,
     {
       Header: <span style={{ display: 'inline-block', marginLeft: '50px' }}>Visits</span>,
       accessor: 'state',
       Cell: (row) => {
         const po = row.row.original
-  
+
         return (
           <StateDropdown
-            items={states} 
-            value={states[0]} 
+            items={states}
+            value={states[0]}
             row={po}
             showCircles={false}
             scrollContentHeight="200px"
           />
         )
       }
-    },
+    } as const,
     {
       Header: 'Profile Progress',
       accessor: 'progress',
-    },
+    } as const,
   ]
 
   const scrollOffsetDivRef = useRef(null)
@@ -531,7 +530,7 @@ const App = () => {
       ]}
       />
     </SidePanel>
-    
+
     <NavAndPage>
       <demo.mainTitle>commonsku Styles</demo.mainTitle>
     <div>
@@ -571,10 +570,10 @@ const App = () => {
           }} />
       </Popup>}
     </div>
-      
+
         <Row>
           <Col xs>
-            
+
             <demo.OuterContainer title="Colors" id="colors">
               <demo.InnerContainer title="Primary Colors" id="primary-colors">
                 <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -596,7 +595,7 @@ const App = () => {
                           {color: teal['20'], label: "teal['20']", hex: "#E1F7FA", labelColor: teal.darkest},
                           {color: teal.lightest, label: "teal.lightest = teal['10']", hex: "#F6FEFF", labelColor: teal.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -626,7 +625,7 @@ const App = () => {
                         [
                           {highlighted: true, color: white.main, label: "white = neutreals.white", hex: "#FFFFFF", labelColor: neutrals.darkest, style: {height: '154px', border: `3px solid ${teal.darkest}`, marginBottom: 0}},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -638,11 +637,11 @@ const App = () => {
                     })}
                   </div>
 
-                  
 
-                    
+
+
                 </div>
-                
+
 
               </demo.InnerContainer>
 
@@ -663,7 +662,7 @@ const App = () => {
                           {color: pink['20'], label: "pink['20']", hex: "#FDC5DB", labelColor: pink.darkest},
                           {color: pink.lightest, label: "pink.lightest = pink['10']", hex: "#FFEDF4", labelColor: pink.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -699,7 +698,7 @@ const App = () => {
                           {color: yellow['20'], label: "yellow['20']", hex: "#FFF9C5", labelColor: yellow.darkest},
                           {color: yellow.lightest, label: "yellow.lightest = yellow['10']", hex: "#FFFDF5", labelColor: yellow.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -735,7 +734,7 @@ const App = () => {
                           {color: green['20'], label: "green['20']", hex: "#C9FDE5", labelColor: green.darkest},
                           {color: green.lightest, label: "green.lightest = green['10']", hex: "#F2FFF9", labelColor: green.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -771,7 +770,7 @@ const App = () => {
                           {color: navy['20'], label: "navy['20']", hex: "#C6E8F7", labelColor: navy.darkest},
                           {color: navy.lightest, label: "navy.lightest = navy['10']", hex: "#EDF4F7", labelColor: navy.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -795,7 +794,7 @@ const App = () => {
 
 
                 </div>
-                
+
 
               </demo.InnerContainer>
 
@@ -817,7 +816,7 @@ const App = () => {
                           {color: neutrals.bg1, label: "neutrals.bg1 = neutrals['20']", hex: "#EDF4F7", labelColor: neutrals.darkest},
                           {color: neutrals.white, label: "neutrals.white = neutrals['10']", hex: "#FFFFFF", labelColor: neutrals.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -854,7 +853,7 @@ const App = () => {
                           {color: errors['20'], label: "errors['20']", hex: "#FDCACD", labelColor: errors.darkest},
                           {color: errors.lightest, label: "errors.lightest = errors['10']", hex: "#FFF2F3", labelColor: errors.darkest},
                         ]
-                      } 
+                      }
                     />
 
                     {DemoCodeBlock({code:
@@ -876,7 +875,7 @@ const App = () => {
                   </div>
 
                 </div>
-                
+
 
               </demo.InnerContainer>
             </demo.OuterContainer>
@@ -904,15 +903,15 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
-            <demo.OuterContainer title="Buttons" id="buttons">   
+            <demo.OuterContainer title="Buttons" id="buttons">
 
               <demo.InnerContainer title="Button Component" id="button-component">
-                <demo.LargeLabel>The Button component takes a variant, secondary, cta, and size props. The Button component also takes children and has a variant of 'primary' by default.</demo.LargeLabel> 
+                <demo.LargeLabel>The Button component takes a variant, secondary, cta, and size props. The Button component also takes children and has a variant of 'primary' by default.</demo.LargeLabel>
                 <div>
-                  <Button mr={24} mb={24}>Default</Button>   
+                  <Button mr={24} mb={24}>Default</Button>
                   <Button variant="primary" mr={24} mb={24}>Primary</Button>
                   <Button variant="secondary" mr={24} mb={24}>Secondary</Button>
-                  <Button variant="cta" mr={24} mb={24}>CTA</Button>   
+                  <Button variant="cta" mr={24} mb={24}>CTA</Button>
                   <Button variant="text" mr={24} mb={24}>Text</Button>
                   <Button variant="error" mr={24} mb={24}>Error</Button>
                   <Button variant="disabled" mr={24} mb={24}>Disabled</Button>
@@ -931,12 +930,12 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="IconButton Component" id="iconbutton-component">
-                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.The IconButton takes a "primary" variant and "medium" size as a default.</demo.LargeLabel> 
+                <demo.LargeLabel>The IconButton button component takes a variant, size, Icon, iconPosition, iconProps, preset, children, and style props.The IconButton takes a "primary" variant and "medium" size as a default.</demo.LargeLabel>
                 <div>
-                  <IconButton mr={24} mb={24}>Default</IconButton>   
+                  <IconButton mr={24} mb={24}>Default</IconButton>
                   <IconButton variant="primary" mr={24} mb={24}>Primary</IconButton>
                   <IconButton variant="secondary" mr={24} mb={24}>Secondary</IconButton>
-                  <IconButton variant="cta" mr={24} mb={24}>CTA</IconButton>   
+                  <IconButton variant="cta" mr={24} mb={24}>CTA</IconButton>
                   <IconButton variant="text" mr={24} mb={24}>Text</IconButton>
                   <IconButton variant="error" mr={24} mb={24}>Error</IconButton>
                   <IconButton variant="disabled" mr={24} mb={24}>Disabled</IconButton>
@@ -959,8 +958,8 @@ const App = () => {
                 })}
               </demo.InnerContainer>
 
-              <demo.InnerContainer title="Button Variants" id="button-variants">  
-                <demo.LargeLabel></demo.LargeLabel>  
+              <demo.InnerContainer title="Button Variants" id="button-variants">
+                <demo.LargeLabel></demo.LargeLabel>
 
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                 <ButtonsGroup  style={{display: 'flex', flexDirection: 'row'}}>
@@ -988,7 +987,7 @@ const App = () => {
 <IconButton variant="primary" size="tiny" Icon={icons.ArrowIcon} iconPosition="right">Primary</IconButton>
 <IconButton variant="primary" size="tiny" Icon={icons.ArowIcon} />`
                 })}
-                  
+
                   <ButtonsGroup >
                     <IconButton variant="secondary" size="huge" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
                     <IconButton variant="secondary" size="large" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Secondary</IconButton>
@@ -1064,7 +1063,7 @@ const App = () => {
                     <IconButton variant="text" size="small" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
                     <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} iconPosition="right" mr={10} mt={10} >Borderless</IconButton>
                     <IconButton variant="text" size="tiny" Icon={icons.ArrowIcon} mr={10} mt={10} />
-                  </ButtonsGroup> 
+                  </ButtonsGroup>
                   {DemoCodeBlock({code:
 `<IconButton variant="text" size="huge" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
 <IconButton variant="text" size="large" Icon={icons.ArrowIcon} iconPosition="right">Borderless</IconButton>
@@ -1076,7 +1075,7 @@ const App = () => {
 
                 </div>
               </ demo.InnerContainer>
-              
+
               <demo.InnerContainer title="Button Presets" id="button-presets">
                 <ButtonsGroup mb={30}>
                   <IconButton preset="edit" mr={16}/>
@@ -1112,7 +1111,7 @@ const App = () => {
 
                 <LinkWithIcon href=""  mb={8} Icon={icons.InfoIcon}>This is a default link with Icon</LinkWithIcon>
                 {DemoCodeBlock({code: `<LinkWithIcon href=""  Icon={InfoIcon}>This is a default link with Icon</LinkWithIcon>`})}
-              
+
                 <LinkWithIcon href="" mb={8} Icon={icons.InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>
                 {DemoCodeBlock({code: `<LinkWithIcon href="" Icon={InfoIcon} color={colors.errors.main} hoverColor={colors.errors.dark}>This is a link with an Icon and custom 'color' and 'hoverColor' props</LinkWithIcon>`})}
 
@@ -1122,14 +1121,14 @@ const App = () => {
               <demo.InnerContainer title="Radio Buttons" id="radio-buttons">
                 <ButtonsGroup>
                   <demo.MediumLabel mb={32}>Default LabeledRadio</demo.MediumLabel>
-                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+                  <LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)}
                   />
                   <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
                   <LabeledRadio label="All" radioColor={pink.main} radioHoverColor={pink.light} checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
                   <LabeledRadio disabled label="Disabled unselected" checked={false} />
                   <LabeledRadio disabled label="Disabled selected" checked={true} />
                 </ButtonsGroup>
-                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code:
   `<LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
   />
   <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
@@ -1139,15 +1138,15 @@ const App = () => {
                 })}
 
                 <ButtonsGroup>
-                  <demo.MediumLabel mb={32}>LabeledRadioInButton</demo.MediumLabel>                  
-                  <LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton</demo.MediumLabel>
+                  <LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)}
                   />
                   <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
                   <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
                   <LabeledRadioInButton disabled label="Disabled unselected" checked={false} />
                   <LabeledRadioInButton disabled label="Disabled selected" checked={true} />
                 </ButtonsGroup>
-                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code:
   `<LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
   />
   <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
@@ -1157,9 +1156,9 @@ const App = () => {
                 })}
 
                 <ButtonsGroup>
-                  <demo.MediumLabel mb={32}>LabeledRadioInButton with 'flexGrow' prop inside a flex container</demo.MediumLabel>                  
+                  <demo.MediumLabel mb={32}>LabeledRadioInButton with 'flexGrow' prop inside a flex container</demo.MediumLabel>
                   <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
-                    <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+                    <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)}
                     />
                     <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
                     <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
@@ -1167,7 +1166,7 @@ const App = () => {
                     <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
                   </div>
                 </ButtonsGroup>
-                {DemoCodeBlock({code: 
+                {DemoCodeBlock({code:
   `<div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
   <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
   />
@@ -1177,7 +1176,7 @@ const App = () => {
   <LabeledRadioInButton disabled flexGrow label="Disabled selected" checked={true} />
 </div>`
                 })}
-                
+
 
               </demo.InnerContainer>
 
@@ -1197,7 +1196,7 @@ const App = () => {
 
 
                 </ButtonsGroup>
-                {DemoCodeBlock({style:{marginBottom: "40px"}, code: 
+                {DemoCodeBlock({style:{marginBottom: "40px"}, code:
 `<LabeledCheckbox label="Mustard"  checked={mustard} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleMustard(!mustard); }} />
 <LabeledCheckbox label="Ketchup" checked={ketchup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleKetchup(!ketchup); }} />
 <LabeledCheckbox label="Relish" checked={relish} checkboxColor={pink.main} checkboxHoverColor={pink.light} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { toggleRelish(!relish); }} />
@@ -1220,7 +1219,7 @@ const App = () => {
                     <ToggleLink selected >Active</ToggleLink>
                     <ToggleLink>Inactiveeeeeeeee</ToggleLink>
                   </Toggle>
-                  {DemoCodeBlock({code: 
+                  {DemoCodeBlock({code:
 `<Toggle size="small">
 <ToggleLink selected >Active</ToggleLink>
 <ToggleLink>Inactiveeeeeeeee</ToggleLink>
@@ -1258,7 +1257,7 @@ const App = () => {
                     <ToggleLink selected stretch >Active</ToggleLink>
                     <ToggleLink stretch >Inactive</ToggleLink>
                   </Toggle>
-                  {DemoCodeBlock({code: 
+                  {DemoCodeBlock({code:
 `<Toggle size="small" stretch>
 <ToggleLink selected stretch>Active</ToggleLink>
 <ToggleLink stretch>Inactive</ToggleLink>
@@ -1271,7 +1270,7 @@ const App = () => {
                     <ToggleLink selected stretch>Active</ToggleLink>
                     <ToggleLink stretch>Inactive</ToggleLink>
                   </Toggle>
-                  {DemoCodeBlock({code: 
+                  {DemoCodeBlock({code:
 `
 <Toggle size="medium" stretch>
   <ToggleLink selected stretch>Active</ToggleLink>
@@ -1294,12 +1293,12 @@ const App = () => {
 })}
                 </div>
 
-                
+
 
               </demo.InnerContainer>
 
             </demo.OuterContainer>
-            
+
 
             <demo.OuterContainer title="Fields" id="fields">
               <demo.InnerContainer title="Input Fields" id="input-fields">
@@ -1448,7 +1447,7 @@ const App = () => {
                       {value: 'value'+i, label: 'value'+i}
                     ))),
                   ]}/>
-                
+
 
                 <br />
               </ demo.InnerContainer>
@@ -1457,7 +1456,7 @@ const App = () => {
                       <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
                       <InputStepper initialValue={0} />
                       {DemoCodeBlock({code: `<InputStepper />`})}
-                 
+
                       <demo.MediumLabel mt={48} mb={32}>InputStepper with label, initialNumber and min of 6, and max of 20</demo.MediumLabel>
                       <InputStepper label="Label 1"
                         initialValue={stepperValue}
@@ -1560,7 +1559,7 @@ const App = () => {
               {DemoCodeBlock({code: `<AlertNotification>This is an info message without a link</AlertNotification>`})}
 
               <IconButton Icon={icons.UsersIcon} >Edit</IconButton>
-              
+
 
               <AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>
               {DemoCodeBlock({code: `<AlertNotification  href="" learnMore>This is an info message with a link using 'learnMore' prop</AlertNotification>`})}
@@ -1573,7 +1572,7 @@ const App = () => {
 
               <AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>
               {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very short success message!</AlertNotification>`})}
-                
+
                 <AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>
                 {DemoCodeBlock({code: `<AlertNotification learnMore href="">This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! This is a very long info message! </AlertNotification>`})}
 
@@ -1582,7 +1581,7 @@ const App = () => {
 
                 <AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>
                 {DemoCodeBlock({code: `<AlertNotification alertType="success" href="" learnMore>This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message! This is a very long success message!</AlertNotification>`})}
-                
+
 
               </demo.InnerContainer>
 
@@ -1596,14 +1595,14 @@ const App = () => {
                       <LightIndicator name="SAGE not configured" />
                       <LightIndicator name="Avalara not configured" />
 
-                      {DemoCodeBlock({code: 
+                      {DemoCodeBlock({code:
 `<LightIndicator name="Marketing integration: Mailchimp " on />
 <LightIndicator name="Credit card integration: Stripe" on />
 <LightIndicator name="Accounting integration: QuickBooks online" on/>
 <LightIndicator name="SAGE not configured" />
 <LightIndicator name="Avalara not configured" />`})}
                     </div>
-                    
+
                     <div style={{marginRight: '24px'}}>
                       <demo.LargeLabel underline>Large</demo.LargeLabel>
                       <LightIndicator name="Marketing integration: Mailchimp " on large />
@@ -1611,7 +1610,7 @@ const App = () => {
                       <LightIndicator name="Accounting integration: QuickBooks online" on large/>
                       <LightIndicator name="SAGE not configured" large/>
                       <LightIndicator name="Avalara not configured" large/>
-                      {DemoCodeBlock({code: 
+                      {DemoCodeBlock({code:
 `<LightIndicator name="Marketing integration: Mailchimp " on large />
 <LightIndicator name="Credit card integration: Stripe" on large/>
 <LightIndicator name="Accounting integration: QuickBooks online" on large/>
@@ -1624,19 +1623,19 @@ const App = () => {
 
               <demo.InnerContainer title="DefaultStar" id="default-star" noBottomLine>
                 <div style={{display: 'flex', flexWrap: "wrap"}}>
-                  
+
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Same hover and<br />selected text (Default)</demo.SmallLabel>
                     <DefaultStar />
                     {DemoCodeBlock({code: `<DefaultStar />`})}
                   </div>
-                  
+
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Different hover and<br />selected text</demo.SmallLabel>
                     <DefaultStar hoverText="Set Default">Test</DefaultStar>
                     {DemoCodeBlock({code: `<DefaultStar hoverText="Set Default">Test</DefaultStar>`})}
                   </div>
-                  
+
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
                     <demo.SmallLabel>Custom<br />width</demo.SmallLabel>
                     <DefaultStar width={"200px"}/>
@@ -1653,7 +1652,7 @@ const App = () => {
                     <demo.SmallLabel>Initial Selected = <br />true (still clickable)</demo.SmallLabel>
                     <DefaultStar initialSelected={true} />
                     {DemoCodeBlock({code: `<DefaultStar initialSelected={true} />`})}
-                    
+
                   </div>
 
                   <div style={{marginRight: "40px", marginBottom: "40px"}}>
@@ -1748,7 +1747,7 @@ const App = () => {
                 onClickView={() => {}}
               />
               </demo.InnerContainer>
-            </demo.OuterContainer>    
+            </demo.OuterContainer>
 
             <demo.OuterContainer title="Loading Bars" id="loading-bars">
               <demo.InnerContainer noBottomLine>
@@ -1797,6 +1796,7 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
+
             <demo.OuterContainer title="Numbers Formatting" id="numbers-formatting">
               <demo.InnerContainer>
                   <Number commas decimalPoints={4} num={334353434.44334}/>
@@ -1806,8 +1806,8 @@ const App = () => {
                   <Number commas num={334353434.44334}/>
               </demo.InnerContainer>
             </demo.OuterContainer>
-            
-            
+
+
             <demo.OuterContainer title="Collapsible" id="collapsible">
               <demo.InnerContainer noBottomLine>
                 <CollapsibleV2 label={'CollapsibleV2'}>
@@ -1924,7 +1924,7 @@ const App = () => {
               ]} />
               </demo.InnerContainer>
             </demo.OuterContainer>
-            
+
             <demo.OuterContainer title="Avatar" id="avatar" noBottomLine>
               <demo.InnerContainer noBottomLine>
                 <div style={{display: 'flex'}}>
@@ -1979,10 +1979,10 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
-            
-            
 
-            
+
+
+
 
             {/* I think this is OLD */}
 
@@ -2014,10 +2014,10 @@ const App = () => {
                     value1={10}
                     value1Label={v => `$ ${v}`}
                   />
-              </demo.InnerContainer> 
+              </demo.InnerContainer>
             </demo.OuterContainer>
-            
-            
+
+
             <demo.OuterContainer title="Drop Area" id="drop-area">
               <demo.InnerContainer title="Drop Here">
                 <DropArea placeholder="Drop Here"></DropArea>
@@ -2031,10 +2031,10 @@ const App = () => {
                 <DropzonedPreviews accept="image/*" multiple onDrop={(acceptedFiles, rejectedFiles, event) => {
                     console.log(acceptedFiles);
                   }} />
-              </demo.InnerContainer>                
-              
+              </demo.InnerContainer>
+
             </demo.OuterContainer>
-            
+
 
             <demo.OuterContainer title="Product" id="product">
               <demo.InnerContainer noBottomLine>
@@ -2071,7 +2071,7 @@ const App = () => {
                   </Col>
                 </Row>
               </demo.InnerContainer>
-              
+
               <demo.InnerContainer noBottomLine>
                 <Row>
                     <Col padded xs={3}>
@@ -2089,7 +2089,7 @@ const App = () => {
                   </Row>
               </demo.InnerContainer>
             </demo.OuterContainer>
-       	       	    
+
             <demo.OuterContainer title="Tasks" id="tasks">
               <demo.InnerContainer noBottomLine>
                 <Task date="2019-11-06" taskName="Check Status" taskBody="Call the client and check if they are ready to order"/>
@@ -2125,7 +2125,7 @@ const App = () => {
               </demo.InnerContainer>
 
             </demo.OuterContainer>
-            
+
 
             <demo.OuterContainer title="Tabs" id="tabs">
               <demo.InnerContainer noBottomLine>
@@ -2137,7 +2137,7 @@ const App = () => {
                 />
               </demo.InnerContainer>
             </demo.OuterContainer>
-            
+
 
             <demo.OuterContainer title="Table" id="table">
               <demo.InnerContainer >
@@ -2168,7 +2168,7 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer >
-                <Button onClick={() => { 
+                <Button onClick={() => {
                   // @ts-ignore
                   console.log(sortDirectionDivRef.current.innerText)
                   // @ts-ignore
@@ -2177,9 +2177,9 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Headless Table" noBottomLine>
-                <HeadlessTable 
-                  columns={tableColumns} 
-                  data={tableData} 
+                <HeadlessTable
+                  columns={tableColumns}
+                  data={tableData}
                   rowIdField="rowId"
                   defaultSort={{ id: 'firstName', desc: true }}
                   defaultScrollOffset={defaultScrollOffset}
@@ -2198,7 +2198,16 @@ const App = () => {
 
               <demo.InnerContainer title="Windowed Table" noBottomLine>
                 <VirtualTableStyles tableHeight="100%">
-                  <VirtualTable 
+                  <VirtualTable
+                    columns={tableColumns}
+                    data={tableData}
+                  />
+                </VirtualTableStyles>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Selection Table" noBottomLine>
+                <VirtualTableStyles tableHeight="100%" scrollIndicators>
+                  <SelectionTable
                     columns={tableColumns}
                     data={tableData}
                   />
@@ -2207,11 +2216,11 @@ const App = () => {
 
               <demo.InnerContainer title="GridTable">
                 <demo.MediumLabel>GridTable component uses CSS Grid. This component takes optional 'gridTemplateColumns', 'gridTemplateRows', 'gridColumnGap', 'gridRowGap' props. If these optional props are not provided, the component gives '1fr' for each column and '16px' as gridColumnGap and gridRowGap. <br/><br />
-                The component takes 'Column' components as children which can take any other element you put into it such as select fields, input fields, buttons, etc. The table maps through the data provided in the 'data' prop and creates the columns provided for each object of data. 
+                The component takes 'Column' components as children which can take any other element you put into it such as select fields, input fields, buttons, etc. The table maps through the data provided in the 'data' prop and creates the columns provided for each object of data.
                 <br/><br/>
-                This component also takes a 'data', 'onUpdate', 'onDelete', 'onAdd', 'onSort', and 'validate' props. These props are handled by the developer that is using the gridTable. The 'onAdd' prop creates an '+ Add New' button at the bottom of the table which allows the user to create a new row. If an 'onSort' prop is given, the component creates draggable handles for each row. If 'onDelete' is provided then the component creates a delete button for each row. The column width for the drag handles column and delete button column is 'auto'.  
+                This component also takes a 'data', 'onUpdate', 'onDelete', 'onAdd', 'onSort', and 'validate' props. These props are handled by the developer that is using the gridTable. The 'onAdd' prop creates an '+ Add New' button at the bottom of the table which allows the user to create a new row. If an 'onSort' prop is given, the component creates draggable handles for each row. If 'onDelete' is provided then the component creates a delete button for each row. The column width for the drag handles column and delete button column is 'auto'.
                 </demo.MediumLabel>
-                  
+
                   <GridTable
                     gridTemplateColumns="56px minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr)"
                     gridTemplateRows="auto"
@@ -2229,7 +2238,7 @@ const App = () => {
                     onUpdate={
                       (value) =>  console.log(value)
                     }
-                    
+
                     onDelete={
                       (id) => console.log(id, 'test')
                     }
@@ -2271,7 +2280,7 @@ const App = () => {
                         }
 
                         if (!data.select) {
-                          
+
                           result.select = "need select";
                         } else if (data.select?.value !== "skucamp"){
                           result.select = "this is not skucamp";
@@ -2283,7 +2292,7 @@ const App = () => {
 
                         return result;
                       }
-                      
+
                     }
                   >
                     <Column name="id" title={<span style={{display: 'flex', flexDirection: 'row',
@@ -2306,10 +2315,10 @@ const App = () => {
                         noMargin
                       />
                     </Column>
-                    
+
                 </GridTable>
 
-                {DemoCodeBlock({code: 
+                {DemoCodeBlock({code:
 `<GridTable
     gridTemplateColumns="56px minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr) minmax(136px, 1fr)"
     gridTemplateRows="auto"
@@ -2404,7 +2413,7 @@ const App = () => {
 
 </GridTable>
 `})}
-                
+
               </demo.InnerContainer>
 
             </demo.OuterContainer>
@@ -2518,11 +2527,16 @@ const App = () => {
                       <icons.NavResourcesIcon color={teal.main} />,
                       <icons.NavResourcesIcon color={teal.main} filled />
                     ]} name="NavResourcesIcon" />
-                    
+
                     <IconsShowcase Icons={[
                       <icons.NavSalesIcon color={teal.main} />,
                       <icons.NavSalesIcon color={teal.main} filled />
                     ]} name="NavSalesIcon"/>
+
+                    <IconsShowcase Icons={[
+                        <icons.NavReportsIcon color={teal.main} />,
+                        <icons.NavReportsIcon color={teal.main} filled />
+                    ]} name="NavReportsIcon" />
                 </IconContainer>
               </demo.InnerContainer>
 
@@ -2543,29 +2557,36 @@ const App = () => {
                     <IconsShowcase Icons={[<icons.DollarIcon />]} name="DollarIcon"/>
 
                     <IconsShowcase Icons={[
-                      <icons.FilledChevronIcon direction="right" />, 
-                      <icons.FilledChevronIcon direction="down" />, 
-                      <icons.FilledChevronIcon direction="left" />, 
+                      <icons.FilledChevronIcon direction="right" />,
+                      <icons.FilledChevronIcon direction="down" />,
+                      <icons.FilledChevronIcon direction="left" />,
                       <icons.FilledChevronIcon direction="up" />,
                       <icons.FilledChevronIcon direction="updown" />,
                       <icons.FilledChevronIcon direction="leftright" />
                     ]} name="FilledChevronIcon" />
 
                     <IconsShowcase Icons={[
-                      <icons.ChevronIcon direction="right" />, 
-                      <icons.ChevronIcon direction="down" />, 
-                      <icons.ChevronIcon direction="left" />, 
+                      <icons.ChevronIcon direction="right" />,
+                      <icons.ChevronIcon direction="down" />,
+                      <icons.ChevronIcon direction="left" />,
                       <icons.ChevronIcon direction="up" />,
                       <icons.ChevronIcon direction="updown" />,
                       <icons.ChevronIcon direction="leftright" />
                     ]} name="ChevronIcon" />
 
                     <IconsShowcase Icons={[
-                      <icons.ArrowIcon direction="right" />, 
-                      <icons.ArrowIcon direction="down" />, 
-                      <icons.ArrowIcon direction="left" />, 
+                      <icons.ArrowIcon direction="right" />,
+                      <icons.ArrowIcon direction="down" />,
+                      <icons.ArrowIcon direction="left" />,
                       <icons.ArrowIcon direction="up" />
                     ]} name="ArrowIcon" />
+
+                    <IconsShowcase Icons={[
+                      <icons.DoubleArrowIcon direction="right" />,
+                      <icons.DoubleArrowIcon direction="down" />,
+                      <icons.DoubleArrowIcon direction="left" />,
+                      <icons.DoubleArrowIcon direction="up" />
+                    ]} name="DoubleArrowIcon" />
 
                     <IconsShowcase Icons={[<icons.AddIcon />]} name="AddIcon" />
                     <IconsShowcase Icons={[<icons.SubtractIcon />]} name="SubtractIcon" />
@@ -2634,6 +2655,13 @@ const App = () => {
                     <IconsShowcase Icons={[<icons.MagicIcon/>]} name="MagicIcon"/>
                     <IconsShowcase Icons={[<icons.MagicEraserIcon/>]} name="MagicEraserIcon"/>
                     <IconsShowcase Icons={[<icons.SlideInIcon/>]} name="SlideInIcon"/>
+
+                    <IconsShowcase Icons={[<icons.TagIcon/>]} name="TagIcon"/>
+                    <IconsShowcase Icons={[<icons.MergeIcon/>]} name="MergeIcon"/>
+                    <IconsShowcase Icons={[<icons.DesignIcon/>]} name="DesignIcon"/>
+
+
+
                     <IconsShowcase Icons={[<icons.TrendIcon direction="up"/>]} name="TrendIcon"/>
                     <IconsShowcase Icons={[<icons.TrendIcon direction="down"/>]} name="TrendIcon"/>
                     <IconsShowcase Icons={[<icons.TrendIcon direction="flat"/>]} name="TrendIcon"/>
@@ -2662,8 +2690,8 @@ const App = () => {
               <demo.InnerContainer title="Status Icons" id="status-icons">
                 <IconContainer>
                   <IconsShowcase Icons={[
-                      <icons.MarketingStatusIcon />, 
-                      <icons.MarketingStatusIcon approved/>, 
+                      <icons.MarketingStatusIcon />,
+                      <icons.MarketingStatusIcon approved/>,
                   ]} name="MarketingStatusIcon" />
 
                   <IconsShowcase Icons={[<icons.CompletedCheckmarkIcon />]} name="CompletedCheckmarkIcon"/>
@@ -2698,7 +2726,7 @@ const App = () => {
                     <icons.PresentationCircleIcon variant="primary" pointer/>,
                     <icons.PresentationCircleIcon variant="primary" selected />,
                     <icons.PresentationCircleIcon variant="cta" style={{cursor: 'zoom-in'}}/>,
-                    <icons.PresentationCircleIcon variant="cta" selected pointer/>, 
+                    <icons.PresentationCircleIcon variant="cta" selected pointer/>,
                     ]} name="PresentationCircleIcon" />
                   <IconsShowcase Icons={[
                     <icons.EstimateCircleIcon variant="primary" pointer/>,
@@ -2711,7 +2739,7 @@ const App = () => {
                     <icons.SalesOrderCircleIcon variant="primary" selected pointer/>,
                     <icons.SalesOrderCircleIcon variant="cta" pointer/>,
                     <icons.SalesOrderCircleIcon variant="cta" selected pointer/>
-                  ]} name="SalesOrderCircleIcon" />  
+                  ]} name="SalesOrderCircleIcon" />
 
                 </IconContainer>
               </demo.InnerContainer>
@@ -2743,16 +2771,16 @@ const App = () => {
                   ]} name="TrashIcon" />
 
                   <IconsShowcase Icons={[
-                    <icons.PinIcon />, 
+                    <icons.PinIcon />,
                     <icons.PinIcon filled/>,
-                    <icons.PinIcon unpin />, 
+                    <icons.PinIcon unpin />,
                     <icons.PinIcon unpin filled/>
                   ]} name="PinIcon" />
 
                   <IconsShowcase Icons={[<icons.TableIcon />]} name="TableIcon" />
                   <IconsShowcase Icons={[<icons.ColumnSelectIcon />]} name="ColumnSelectIcon" />
                   <IconsShowcase Icons={[<icons.CouponIcon />]} name="CouponIcon"/>
-                  
+
                   <IconsShowcase Icons={[
                     <icons.EyeIcon />,
                     <icons.EyeIcon hide/>
@@ -2798,8 +2826,8 @@ const App = () => {
           <Col xs />
         </Row>
     </NavAndPage>
-    
-    
+
+
   </Page></Theme>
 }
 

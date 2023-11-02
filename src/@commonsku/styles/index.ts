@@ -50,6 +50,7 @@ export { default as InputStepper, InputStepperStyled } from './InputStepper';
 export { default as NumberInput } from './NumberInput';
 export { default as VirtualTable } from './tables/VirtualTable';
 export { default as VirtualTableStyles } from './tables/VirtualTableStyles';
+export { default as SelectionTable } from './tables/SelectionTable';
 export { default as Csku } from './Csku';
 export * from './Grid';
 export * from './Csku';
