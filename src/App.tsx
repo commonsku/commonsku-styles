@@ -11,6 +11,7 @@ import product_narrow from './products/narrow.png';
 import user_pic1 from './users/1.jpeg';
 import user_pic2 from './users/2.jpeg';
 
+import pattern from './patterns/commonsku-patterns-geometric.png';
 import * as icons from './@commonsku/styles/icons';
 
 
@@ -1763,8 +1764,39 @@ const App = () => {
               </demo.InnerContainer>
             </demo.OuterContainer>
 
-            
-            
+            <demo.OuterContainer title="Skubot Spinner" id="skubot-spinner">
+              <demo.InnerContainer noBottomLine>
+                <div style={{maxWidth: 90}}>
+                  <demo.SmallLabel>Large(default)</demo.SmallLabel>
+                  <icons.SkubotSpinner mb={10} size="large" />
+                  <demo.SmallLabel>Medium</demo.SmallLabel>
+                  <icons.SkubotSpinner mb={10} size="medium" />
+                  <demo.SmallLabel>Small</demo.SmallLabel>
+                  <icons.SkubotSpinner mb={10} size="small" />
+                </div>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+            <demo.OuterContainer title="Logos" id="skubot-logo">
+              <demo.InnerContainer noBottomLine>
+                <div style={{maxWidth: 200}}>
+                <demo.LargeLabel>Skubot Logo</demo.LargeLabel>
+                  <icons.SkubotLogo mb={10} />
+                </div>
+                <div style={{maxWidth: 200, marginTop:25}}>
+                  <demo.LargeLabel>Commonsku Main Logo</demo.LargeLabel>
+                  <icons.CommonskuMainLogo/>
+                </div>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
+            <demo.OuterContainer title="Pattern" id="background-pattern">
+              <demo.InnerContainer noBottomLine>
+                <div>
+                  <img src={pattern} alt="pattern"  width="50%"/>
+                </div>
+              </demo.InnerContainer>
+            </demo.OuterContainer>
+
             <demo.OuterContainer title="Numbers Formatting" id="numbers-formatting">
               <demo.InnerContainer>
                   <Number commas decimalPoints={4} num={334353434.44334}/>
