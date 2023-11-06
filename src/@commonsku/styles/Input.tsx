@@ -208,6 +208,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
       value,
       defaultValue,
       placeholder,
+      readOnly,
       required,
       labelOnTop=false,
       Icon,
@@ -331,6 +332,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
             value={value}
             defaultValue={defaultValue}
             placeholder={placeholder}
+            readOnly={readOnly}
             required={required}
             style={{ marginBottom: 0, }}
             noMargin={noMargin}
@@ -341,7 +343,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
             onBlur={onBlur}
           />
           {iconPosition === 'right' ? <InputIconLabel
-            style={{ marginBottom: 0, padding: 6, }}
+            style={{ marginBottom: 0, padding: 6, ...iconLabelStyles }}
             isActive={isActive}
             isDisabled={disabled}
             isHover={isHovering}
@@ -546,6 +548,8 @@ export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: bool
   name,
   checked,
   disabled,
+  readOnly,
+  defaultValue,
   labelStyle,
   radioIconStyle,
   flexGrow,
@@ -558,6 +562,8 @@ export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: bool
       checked={checked}
       disabled={disabled}
       onChange={onChange}
+      readOnly={readOnly}
+      defaultValue={defaultValue}
       labelStyle={{
         padding: "13px 40px",
         backgroundColor: disabled ? neutrals['40'] : checked ? colors.white : teal['20'],

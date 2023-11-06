@@ -122,15 +122,15 @@ const datepickerStyles = `
   }
 
   @media only screen and (min-height: 600px) and (max-height: 800px ) {
-    .react-datepicker__month {
-      overflow-y: scroll !important;
-      height: 15vh !important;
+    .react-datepicker .react-datepicker__month-container .react-datepicker__month {
+      overflow-y: scroll;
+      max-height: 140px;
     }
   }
   @media only screen and (max-height: 599px ) {
-    .react-datepicker__month {
-      overflow-y: scroll !important;
-      height: 5vh !important;
+    .react-datepicker .react-datepicker__month-container .react-datepicker__month {
+      overflow-y: scroll;
+      max-height: 110px;
     }
 
     .react-datepicker__time-container {
