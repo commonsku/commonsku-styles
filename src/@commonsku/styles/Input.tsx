@@ -343,7 +343,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
             onBlur={onBlur}
           />
           {iconPosition === 'right' ? <InputIconLabel
-            style={{ marginBottom: 0, padding: 6, }}
+            style={{ marginBottom: 0, padding: 6, ...iconLabelStyles }}
             isActive={isActive}
             isDisabled={disabled}
             isHover={isHovering}

@@ -1325,6 +1325,20 @@ const App = () => {
                   style={{ width: 200 }}
                 />
 
+                <br />
+
+                <LabeledIconInput
+                  labelOnTop
+                  label='Labeled input'
+                  name="basic-input"
+                  defaultValue="input value"
+                  placeholder="Password"
+                  Icon={<Link>Forgot?</Link>}
+                  iconPosition='right'
+                  iconLabelStyles={{width:"auto", fontSize: 11, background: 'transparent', color: teal.main }}
+                  style={{ width: 200 }}
+                />
+
                 <LabeledIconInput
                   labelOnTop
                   disabled
