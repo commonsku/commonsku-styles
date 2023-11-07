@@ -57,12 +57,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, StateType> {
         <Wrapper {...this.props}>
             <ErrorTextContainer>
             <b style={{color:'#2A4D63',fontSize:'64px'}}>Sorry, something went wrong.</b>< br />
-              <p style={{ color:'#597486',fontSize:'32px',fontStyle:'normal',lineHeight: '48px',fontWeight: 600}}> We’ve been notified about the error <br />
+              <p style={{ color:'#597486',fontSize:'24px',fontStyle:'normal',lineHeight: '40px',fontWeight: 400, position:'relative', zIndex: 100}}> We’ve been notified about the error
               and will get it resolved shortly.</p>
               <br />
               <div style={{display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
-              <Button  variant="primary" size="medium" id="goBackButton" onClick={goBack} style={{marginRight: '25px', display : this.state.isNewTab ? 'none':'table-cell' }}>Back to previous page</Button>
-              <Button variant="text"  size="medium"   onClick={e=> window.location.href = "/"} >Go to homepage</Button>
+              <Button  variant="primary" size="medium" id="goBackButton" onClick={goBack} style={{marginRight: '25px', zIndex: 100 ,display : this.state.isNewTab ? 'none':'table-cell' }}>Back to previous page</Button>
+              <Button variant="text"  size="medium" style={{zIndex: 100}}  onClick={e=> window.location.href = "/"} >Go to homepage</Button>
               </div>
             </ErrorTextContainer>
             <div style={{position: 'absolute',bottom:'0',width:'100%'}}>
