@@ -16,7 +16,6 @@ const Wrapper = styled.div<SharedStyleTypes>`
 `;
 
 const ErrorTextContainer = styled.div`
-    font-size: 2em;
     padding: 100px 50px;
     margin-top: 100px;
 
@@ -57,12 +56,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, StateType> {
       return (
         <Wrapper {...this.props}>
             <ErrorTextContainer>
-            <b style={{color:'#2A4D63'}}>Sorry, something went wrong.</b>< br />
-              <p style={{ color:'#597486',fontSize:'24px',fontStyle:'normal',lineHeight: '48px',fontWeight: 600}}> We’ve been notified about the error <br />
+            <b style={{color:'#2A4D63',fontSize:'64px'}}>Sorry, something went wrong.</b>< br />
+              <p style={{ color:'#597486',fontSize:'32px',fontStyle:'normal',lineHeight: '48px',fontWeight: 600}}> We’ve been notified about the error <br />
               and will get it resolved shortly.</p>
               <br />
+              <div style={{display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
               <Button  variant="primary" size="medium" id="goBackButton" onClick={goBack} style={{marginRight: '25px', display : this.state.isNewTab ? 'none':'table-cell' }}>Back to previous page</Button>
-              <a style={{color:'#00A0B6',textDecoration: 'none',fontSize:'14px',fontWeight: '600', marginRight:'40px'}} href="/">Go to homepage</a>
+              <Button variant="text"  size="medium"   onClick={e=> window.location.href = "/"} >Go to homepage</Button>
+              </div>
             </ErrorTextContainer>
             <div style={{position: 'absolute',bottom:'0',width:'100%'}}>
               <svg xmlns="http://www.w3.org/2000/svg"  width="100%" height="310" viewBox="0 0 1510 310" fill="none" preserveAspectRatio="none">
