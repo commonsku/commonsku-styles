@@ -350,6 +350,16 @@ const calTasks = Object.freeze({
 
 const allCalTasks = Object.values(calTasks).reduce((acc, v) => ([ ...acc, ...v ]), []);
 
+const ErrorClicker = () => {
+  const [error, setError] = useState(false);
+  if (error) {
+    throw new Error('crashed');
+  }
+  return <div onClick={() => {
+    setError(true);
+  }}>click me to throw error</div>
+}
+
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -2178,7 +2188,9 @@ const App = () => {
               </demo.InnerContainer>
 
               <demo.InnerContainer >
-                <ErrorBoundary>this is an error boundary</ErrorBoundary>
+                <ErrorBoundary>
+                  <ErrorClicker/>
+                </ErrorBoundary>
               </demo.InnerContainer>
 
               <demo.InnerContainer >

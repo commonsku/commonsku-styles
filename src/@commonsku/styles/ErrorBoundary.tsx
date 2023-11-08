@@ -2,17 +2,20 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
 import { Button } from './Button';
+import { window } from '../utils';
 
 const Wrapper = styled.div<SharedStyleTypes>`
+  &&& {
     text-align: center;
     font-family: "TT Norms Pro", sans-serif;
-    background: white !important;
-    position: fixed !important;
+    background: white;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    ${SharedStyles}
+    ${SharedStyles}   
+  }
 `;
 
 const ErrorTextContainer = styled.div`
@@ -28,30 +31,25 @@ const ErrorTextContainer = styled.div`
     }
 `;
 
-type StateType = { hasError: boolean, isNewTab: boolean };
+type StateType = { hasError: boolean };
 type ErrorBoundaryProps = React.PropsWithChildren<{}>;
 export class ErrorBoundary extends Component<ErrorBoundaryProps, StateType> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false,isNewTab: false }
+    this.state = { hasError: false }
   }
 
- 
+
   componentDidCatch(error: Error | any, info: string | any) {
     this.setState({ hasError: true })
     console.log({ error, info })
   }
 
-  componentDidMount() {
-    if (window.history.length === 1) {
-      this.setState({ isNewTab: true });
-    }
-  }
-  
   render() {
     const goBack = () =>{
       window.history.back();
     }
+    const isNewTab = window.history.length === 1;
     if (this.state.hasError) {
       return (
         <Wrapper {...this.props}>
@@ -61,7 +59,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, StateType> {
               and will get it resolved shortly.</p>
               <br />
               <div style={{display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
-              <Button  variant="primary" size="medium" id="goBackButton" onClick={goBack} style={{marginRight: '25px', zIndex: 100 ,display : this.state.isNewTab ? 'none':'table-cell' }}>Back to previous page</Button>
+              <Button variant="primary" size="medium" id="goBackButton" onClick={goBack} style={{marginRight: '25px', zIndex: 100 , display: isNewTab ? 'none':'table-cell' }}>Back to previous page</Button>
               <Button variant="text"  size="medium" style={{zIndex: 100}}  onClick={e=> window.location.href = "/"} >Go to homepage</Button>
               </div>
             </ErrorTextContainer>
