@@ -2845,6 +2845,8 @@ const App = () => {
                 </IconContainer>
               </demo.InnerContainer>
 
+              <IconsShowcase Icons={[<icons.EmptyStateArrow direction="down" />]} name="Empty State Arrow"/>
+
             </demo.OuterContainer>
 
 
