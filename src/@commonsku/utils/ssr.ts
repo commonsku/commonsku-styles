@@ -94,6 +94,7 @@ const win = typeof window !== 'undefined' ? window : {
     pushState() {},
     go() {},
     back() {},
+    length: 1,
   },
   CustomEvent: function CustomEvent() {
     return this;
