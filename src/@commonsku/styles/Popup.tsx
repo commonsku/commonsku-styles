@@ -213,12 +213,14 @@ export const ShowPopup: React.FC<Omit<PopupProps, 'onClose'> & {
   </>
 }
 
-type ChevronPopupWindowProps = {
+type BaseChevronPopupWindowProps = {
   onPreviousButtonClick?: React.MouseEventHandler<SVGElement>;
   onNextButtonClick?: React.MouseEventHandler<SVGElement>;
   hidePreviousButton?: boolean;
   hideNextButton?: boolean;
-} & PopupWindowProps;
+};
+
+type ChevronPopupWindowProps =BaseChevronPopupWindowProps & PopupWindowProps;
 
 const ChevronPopupWindow = React.forwardRef<HTMLDivElement, ChevronPopupWindowProps>((props, ref) => {
   const {
@@ -236,7 +238,7 @@ const ChevronPopupWindow = React.forwardRef<HTMLDivElement, ChevronPopupWindowPr
   </>;
 });
 
-type ChevronPopupProps = Omit<PopupProps, 'PopupWindowComponent'>;
+type ChevronPopupProps = Omit<PopupProps, 'PopupWindowComponent'> & BaseChevronPopupWindowProps;
 
 export const ChevronPopup = (props: ChevronPopupProps) => {
   return <Popup PopupWindowComponent={ChevronPopupWindow} {...props} />

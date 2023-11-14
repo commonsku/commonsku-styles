@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo, useCallback, useState, } from 'react';
+import React, { useRef, useLayoutEffect, useMemo, useCallback, useState } from 'react';
 import {
   useTable,
   useSortBy,
@@ -9,36 +9,39 @@ import {
   useExpanded,
 } from 'react-table';
 import { VariableSizeList, ListOnScrollProps, ListChildComponentProps } from 'react-window';
-import { BaseSortByHeaderGroup, SortByHeaderGroup } from './types';
+import { BaseSortByHeaderGroup, SortByHeaderGroup, TypedTableInstance } from './types';
 import {
   Row,
-  TableInstance,
   TableOptions,
 } from './table-types';
 import { DoubleArrowIcon, FilledChevronIcon } from '../icons';
 import { useWindowSize } from '../hooks';
 
-export type VirtualTableProps = {
-  columns: Column<object>[];
-  data: object[];
-  itemSize?: (value: { index: number; row: Row }) => number;
+export type VirtualTableProps<
+  RowType extends Record<string, unknown>,
+  TableProps,
+  TableFooterProps,
+> = {
+  columns: readonly Column<RowType>[];
+  data: RowType[];
+  itemSize?: (value: { index: number; row: Row<RowType> }) => number;
   height?: number;
   minWidth?: number;
   maxWidth?: number;
   defaultSort?: SortingRule<string>;
   onClickRow?: (
-    row?: object,
+    row?: RowType,
     index?: number,
     data?: {
       isScrolling?: boolean;
-      cell: Cell<Record<string, unknown>, any>;
+      cell: Cell<RowType>;
       resetList: (index?: number) => void;
       toggleAllRowsExpanded: (value?: boolean | undefined) => void;
     }
   ) => void;
   onScroll?: ((props: ListOnScrollProps) => any);
   onUpdateData?: (...args: any) => void;
-  useTableProps?: object;
+  useTableProps?: TableProps;
   tableHeaderProps?: {
     className?: string;
     style?: React.CSSProperties;
@@ -47,26 +50,30 @@ export type VirtualTableProps = {
     className?: string;
     style?: React.CSSProperties;
   };
-  TableFooter?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
-  customTableFooterProps?: object;
+  TableFooter?: (props: React.PropsWithChildren<TableFooterProps>) => React.ReactElement;
+  customTableFooterProps?: TableFooterProps;
   className?: string;
   hideFooter?: boolean;
   hideHeader?: boolean;
   NoRowsFound?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
-  renderRowSubComponent?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
-  onSort?: (value: { column: BaseSortByHeaderGroup<object> }) => void;
+  renderRowSubComponent?: <P = unknown>(props: React.PropsWithChildren<P>) => React.ReactElement;
+  onSort?: (value: { column: BaseSortByHeaderGroup<RowType> }) => void;
   onResize?: VoidFunction;
-  rowGroupStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
-  rowStyles?: (value: {row: Row, style: React.CSSProperties }) => React.CSSProperties;
+  rowGroupStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
+  rowStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   gutterSize?: number;
 };
 
-const VirtualTable = (props: VirtualTableProps) => {
+const VirtualTable = <
+  RowType extends Record<string, unknown>,
+  TableProps,
+  TableFooterProps,
+> (props: VirtualTableProps<RowType, TableProps, TableFooterProps>) => {
   const {
     columns,
     data,
     itemSize,
-    height=500,
+    height = 500,
     minWidth = 140,
     maxWidth = 500,
     defaultSort,
@@ -85,8 +92,8 @@ const VirtualTable = (props: VirtualTableProps) => {
     onResize,
     rowGroupStyles,
     rowStyles,
-    gutterSize=0,
-    customTableFooterProps={},
+    gutterSize = 0,
+    customTableFooterProps = {},
     TableFooter,
   } = props;
 
@@ -122,9 +129,9 @@ const VirtualTable = (props: VirtualTableProps) => {
     useFlexLayout,
     useSortBy,
     useExpanded
-  ) as TableInstance;
+  ) as TypedTableInstance<RowType>;
 
-  const rows = useMemo(() => (tableData.rows as Row[]), [tableData.rows]);
+  const rows = useMemo(() => tableData.rows, [tableData.rows]);
   const windowSize = useWindowSize();
   const [scrolledToTop, setScrolledToTop] = useState(false);
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
@@ -146,7 +153,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     return '100%';
   }, [windowSize, rowsRef]);
 
-  const handleSort = useCallback((column: BaseSortByHeaderGroup<object>) => {
+  const handleSort = useCallback((column: BaseSortByHeaderGroup<RowType>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
     column.toggleSortBy?.();
     onSort && onSort({ column });
@@ -225,7 +232,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     ]
   );
 
-  const getHeaderProps = (column: BaseSortByHeaderGroup<object>, isFooter = false) => {
+  const getHeaderProps = (column: BaseSortByHeaderGroup<RowType>, isFooter = false) => {
     let headerProps = column.getHeaderProps({
       ...column.getSortByToggleProps(),
       ...(column.containerProps || {}),
@@ -253,7 +260,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     };
   };
 
-  const getHeaderGroupProps = (headerGroup: SortByHeaderGroup<object>, isFooter = false) => {
+  const getHeaderGroupProps = (headerGroup: SortByHeaderGroup<RowType>, isFooter = false) => {
     let headerGroupProps = headerGroup.getHeaderGroupProps({
       ...(headerGroup.containerProps || {}),
     });
@@ -287,7 +294,7 @@ const VirtualTable = (props: VirtualTableProps) => {
     const rows = rowsRef.current;
     if (rows != null) {
       setScrolledToTop(rows.scrollTop === 0);
-      setScrolledToBottom(rows.scrollTop === rows.scrollHeight - rows.offsetHeight);
+      setScrolledToBottom(Math.round(rows.scrollTop) >= rows.scrollHeight - rows.offsetHeight);
     }
   }, [onScroll]);
 
@@ -303,7 +310,7 @@ const VirtualTable = (props: VirtualTableProps) => {
       >
         {headerGroups.map((headerGroup) => (
           <div {...getHeaderGroupProps(headerGroup, false)} ref={headerRef} style={{width: tableWidth,}}>
-            {headerGroup.headers.map((column) => (
+            {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => (
               <div
                 {...getHeaderProps(column, false)}
                 className="th"
@@ -373,12 +380,14 @@ const VirtualTable = (props: VirtualTableProps) => {
           </div>
         ))}
       </div> : null}
-      {TableFooter ? <TableFooter {...customTableFooterProps} /> : null}
+      {TableFooter ? <TableFooter {...(customTableFooterProps as React.PropsWithChildren<TableFooterProps>)} /> : null}
     </div>
   );
 };
 
-function sortDirection(col: BaseSortByHeaderGroup<object>) {
+function sortDirection<
+  RowType extends Record<string, unknown> = Record<string, unknown>,
+>(col: BaseSortByHeaderGroup<RowType>) {
   if (col.isSorted) {
     if (col.isSortedDesc) {
       return "down";

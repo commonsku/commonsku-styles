@@ -60,6 +60,7 @@ export const NavItems = [
         links: [
             {title: 'Calendar Tasks', to: '#calendar-tasks' },
             {title: 'Loading Bars', to: '#loading-bars' },
+            {title: 'Skubot Spinner', to: '#skubot-spinner' },
             {title: 'Numbers Formatting', to: '#numbers-formatting' },
             {title: 'Collapsible', to: '#collapsible' },
             {title: 'Avatar', to: '#avatar' },
