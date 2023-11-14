@@ -1,6 +1,6 @@
 import { map, get, filter, round, toNumber } from 'lodash';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from 'react-tooltip';
 import { ButtonVariant, IconButton, TButtonIcon } from './Button';
 import colors from './colors';
 import styled, { CSSProperties, StyledComponent } from 'styled-components';
@@ -228,7 +228,7 @@ const ReadMore = (props: { text: string }) => {
 type ImageGalleryProps = {
   image: ImageProps,
   setImage: React.Dispatch<React.SetStateAction<ImageProps>>,
-  filtered: ImageProps[], 
+  filtered: ImageProps[],
   handleMoreImagesBtnClick: () => void
 }
 
@@ -238,7 +238,7 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
   useEffect(() => {
     setSlicedThumbnails(filtered.slice(0, INITIAL_THUMBNAILS_COUNT));
   }, [filtered])
-  
+
   useEffect(() => {
     const divElement = thumbnailDiv.current;
     const checkOverflow = () => {
@@ -254,7 +254,7 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
       window.removeEventListener('resize', checkOverflow);
     }
   }, [slicedThumbnails])
-  
+
   return <div style={{ width: '100%' }}>
     <MainImage image={image} StyledDiv={Main} />
     <ThumbnailContainer ref={thumbnailDiv} style={{ overflow: 'hidden' }}>
@@ -297,11 +297,11 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
 }
 
 export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#', addToTarget = 'Project' }: ProductDetailProps) => {
-  
+
   const [isTextOverflowed, setIsTextOverflowed] = useState(false);
   const [image, setImage] = useState(mainImage);
   const [hover, setHover] = useState(false);
-  
+
   const filtered = useMemo(() => filter(images, ({ width = 0, height = 0 }) => {
     return (!width && !height) || width > IMAGE_WIDTH_THRESHOLD || height > IMAGE_HEIGHT_THRESHOLD;
   }) || images, [images]);
@@ -445,11 +445,11 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
                 fontStyle: 'normal',
                 fontWeight: 600,
                 lineHeight: '48px',
-                margin: 0, 
+                margin: 0,
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
                 display: '-webkit-box'}}>{name}</h1>
-                
+
               {isTextOverflowed
                 ? <StyledTooltip id='title'  place="left" />
                 : null
