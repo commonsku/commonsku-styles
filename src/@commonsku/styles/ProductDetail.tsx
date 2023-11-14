@@ -140,6 +140,7 @@ type ProductDetailProps = {
   showAddButton: boolean;
   costBased?: string;
   productHref?: string;
+  addToTarget?: string;
 }
 
 type MainImageProps = {
@@ -295,7 +296,7 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
   </div>;
 }
 
-export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#' }: ProductDetailProps) => {
+export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#', addToTarget = 'Project' }: ProductDetailProps) => {
   
   const [isTextOverflowed, setIsTextOverflowed] = useState(false);
   const [image, setImage] = useState(mainImage);
@@ -378,11 +379,11 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
 
   const buttonState = (): ButtonState => {
     if (hover && selected) {
-      return { icon: undefined, variant: 'error', name: 'Remove from Project' };
+      return { icon: undefined, variant: 'error', name: `Remove from ${addToTarget}` };
     } else if (selected) {
-      return { icon: CheckmarkIcon, variant: 'primary', name: 'Added to Project' };
+      return { icon: CheckmarkIcon, variant: 'primary', name: `Added to ${addToTarget}` };
     } else {
-      return { icon: AddIcon, variant: 'primary', name: 'Add to Project' };
+      return { icon: AddIcon, variant: 'primary', name: `Add to ${addToTarget}` };
     }
   }
 
