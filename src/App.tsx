@@ -99,6 +99,7 @@ import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } fr
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { Grid, GridItem } from '@commonsku/styles/Grid';
 import SelectionTable from '@commonsku/styles/tables/SelectionTable';
+import DateRangePicker from '@commonsku/styles/DateRangePicker';
 
 const initialState = {
   date: new Date(),
@@ -1499,14 +1500,43 @@ const App = () => {
                   <Col xs={3} mr={16}>
                     <Datepicker
                       value={state.date}
-                      onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+                      onChange={(date: Date) => dispatch({type: "dateChange", payload: {date} })}
                     />
                   </Col>
                   <Col xs={3} mr={16}>
                     <Datepicker
                       value={state.date}
-                      onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
+                      onChange={(date: Date) => dispatch({type: "dateChange", payload: {date} })}
                       disabled
+                    />
+                  </Col>
+                </Row>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Date Range Picker" id="date-range-picker" >
+                  <Row>
+                  <Col xs={3} mr={16}>
+                    <DateRangePicker
+                      range={[state.startDate, state.endDate]}
+                      onChange={([startDate, endDate]) => dispatch({ type: "dateChange", payload: {startDate, endDate} })}
+                      presets={[
+                        {
+                          label: 'Today',
+                          onSelect: () => dispatch({ type: "dateChange", payload: new Date() }),
+                        },
+                        {
+                          label: 'Yesterday',
+                          onSelect: () => dispatch({ type: "dateChange", payload: new Date() }),
+                        },
+                        {
+                          label: 'This Week',
+                          onSelect: () => dispatch({ type: "dateChange", payload: new Date() }),
+                        },
+                        {
+                          label: 'YTD',
+                          onSelect: () => dispatch({ type: "dateChange", payload: new Date() }),
+                        },
+                      ]}
                     />
                   </Col>
                 </Row>
