@@ -19,6 +19,8 @@ export * from './Toggle'
 export * from './Textarea'
 export * from './Spinner'
 export * from './Product'
+export * from './ProductCard'
+export * from './ProductDetail'
 export * from './Artwork'
 export * from './StarRating'
 export * from './FlexboxGrid'
@@ -63,8 +65,8 @@ export {
 
 export * from './icons'
 export * from './Theme'
-export {default as Theme} from './Theme'
-export {default as GlobalStyle} from './globalStyles'
+export { default as Theme } from './Theme'
+export { default as GlobalStyle } from './globalStyles'
 export { default as datepickerStyles } from './datepickerStyles';
 export { default as ConfirmPopup } from './ConfirmPopup';
 export { default as ConfirmAlertPopup } from './ConfirmAlertPopup';
