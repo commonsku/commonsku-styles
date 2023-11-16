@@ -52,7 +52,6 @@ interface DateRangeInputProps extends Omit<InputProps, 'onChange'> {
     isClearable: boolean
     selected: DateRange
     dateFormat: string
-    onChange: (value: string) => void
     onInputSelect: () => void
 };
 
@@ -63,7 +62,6 @@ export const DateRangeInput = ({
     isClearable,
     selected,
     dateFormat,
-    onChange,
     onInputSelect,
     ...props
 }: DateRangeInputProps) => {
@@ -73,17 +71,12 @@ export const DateRangeInput = ({
         setValue(formatDateRange(selected, dateFormat));
     }, [dateFormat, selected]);
 
-    const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.value);
-    }, [onChange]);
-
     return (
         <div style={{ position: 'relative', display: 'inline-block' }}>
             <Input
                 onFocus={onInputSelect}
                 value={value}
                 onClick={onClick}
-                onChange={handleInputChange}
                 noMargin={noMargin}
                 error={error}
                 style={{ marginRight: '2rem', display: 'inline-block', width: '250px' }}
@@ -204,13 +197,12 @@ export const DateRangePicker = ({
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <Datepicker
+                        open={false}
                         locale={locale}
                         selected={startDate}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
-                        popperClassName="commonsku-styles-datepicker no-popper"
                         onChange={(newStart, event) => handleChange('start', [newStart, endDate], event)}
-                        {...props}
                     />
                     <Datepicker
                         inline
@@ -239,13 +231,12 @@ export const DateRangePicker = ({
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <Datepicker
+                        open={false}
                         locale={locale}
                         selected={endDate}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
-                        popperClassName="commonsku-styles-datepicker no-popper"
                         onChange={(newEnd, event) => handleChange('end', [startDate, newEnd], event)}
-                        {...props}
                     />
                     <Datepicker
                         inline
@@ -290,7 +281,6 @@ export const DateRangePicker = ({
             <DateRangeInput
                 noMargin
                 onInputSelect={() => setOpen(true)}
-                onChange={(val) => console.log(val)}
                 error={error}
                 isClearable={isClearable}
                 selected={range}
