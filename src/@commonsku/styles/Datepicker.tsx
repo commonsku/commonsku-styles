@@ -31,7 +31,7 @@ export const CustomDateInput = forwardRef<HTMLInputElement, CustomInputProps>((
 const ReactDatePickerComponent = ReactDatePicker.default || ReactDatePicker;
 
 export type DatepickerProps = Omit<ReactDatePickerProps, 'value'>
-  & Omit<InputProps, 'value'>
+  & Omit<InputProps, 'value' | 'onChange'>
   & {
     value?: Date | null;
     placeholder?: string;
@@ -67,7 +67,7 @@ const Datepicker = (
     todayButton={todayButton}
     customInput={customInput || <CustomDateInput noMargin error={error} isClearable={isClearable} />}
     dateFormat={dateFormat}
-    placeholderText={placeholder || placeholderText || 'yyyy-MM-dd'}
+    placeholderText={placeholder || placeholderText || dateFormat}
     isClearable={isClearable}
     showMonthDropdown={showMonthDropdown}
     showYearDropdown={showYearDropdown}

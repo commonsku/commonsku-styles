@@ -121,6 +121,10 @@ const datepickerStyles = `
     display: none;
   }
 
+  no-popper {
+    display: none;
+  }
+
   @media only screen and (min-height: 600px) and (max-height: 800px ) {
     .react-datepicker .react-datepicker__month-container .react-datepicker__month {
       overflow-y: scroll;
