@@ -1,4 +1,4 @@
-import React, { CSSProperties, ChangeEvent, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Datepicker, { DatepickerProps } from './Datepicker';
 import { Input, InputProps, LabeledRadioInButton } from './Input';
 import { CalendarIcon } from './icons';
