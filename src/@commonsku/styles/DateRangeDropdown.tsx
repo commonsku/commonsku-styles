@@ -28,6 +28,7 @@ interface DateRangeInputProps extends Omit<InputProps, 'onChange'> {
 };
 
 export const DateRangeInput = ({
+    value,
     error,
     noMargin,
     onClick,
@@ -37,17 +38,17 @@ export const DateRangeInput = ({
     onInputSelect,
     ...props
 }: DateRangeInputProps) => {
-    const [value, setValue] = useState<string>();
+    const [fallbackValue, setFallbackValue] = useState<string>();
 
     useEffect(() => {
-        setValue(formatDateRange(selected, dateFormat));
+        setFallbackValue(formatDateRange(selected, dateFormat));
     }, [dateFormat, selected]);
 
     return (
         <div style={{ position: 'relative', display: 'inline-block' }}>
             <Input
                 onFocus={onInputSelect}
-                value={value}
+                value={value != null ? value : fallbackValue}
                 onClick={onClick}
                 noMargin={noMargin}
                 error={error}
@@ -74,8 +75,13 @@ export const DateRangeInput = ({
     );
 };
 
-export const DateRangeDropdown = (props: DateRangePickerProps) => {
+interface DateRangeDropdownProps extends DateRangePickerProps {
+    dateText?: string
+}
+
+export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
     const {
+        dateText,
         range,
         error,
         isClearable=false,
@@ -104,6 +110,7 @@ export const DateRangeDropdown = (props: DateRangePickerProps) => {
         <>
             <DateRangeInput
                 noMargin
+                value={dateText}
                 onInputSelect={() => setOpen(true)}
                 error={error}
                 isClearable={isClearable}
