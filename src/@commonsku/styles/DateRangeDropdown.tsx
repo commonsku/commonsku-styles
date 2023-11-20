@@ -125,4 +125,4 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
     );
 }
 
-export default DateRangePicker;
+export default DateRangeDropdown;
