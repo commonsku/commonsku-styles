@@ -62,7 +62,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         placeholder,
         placeholderText,
         dateFormat='yyyy-MM-dd',
-        isClearable=false,
+        isClearable=true,
         peekNextMonth=true,
         showMonthDropdown=true,
         showYearDropdown=true,
@@ -83,6 +83,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [activeTab, setActiveTab] = useState<'custom' | 'preset'>('custom');
     const [selectedPreset, setSelectedPreset] = useState<DateRangePreset>();
 
+    // Workaround for react-datepicker selection bug
+    const [startDateKey, setStartDateKey] = useState(0);
+    const [endDateKey, setEndDateKey] = useState(0);
+
     const hasPresets = presets != null && presets.length > 0;
 
     const handleChange = useCallback(
@@ -95,6 +99,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                 }
             }
 
+            // Forces the calendars to re-render on date change
+            setStartDateKey(startDateKey + 1);
+            setEndDateKey(endDateKey + 1);
+
             if (onChange != null) {
                 const newDateRange: DateRange = {
                     category: "custom",
@@ -105,7 +113,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                 onChange(newDateRange, event);
             }
         },
-        [onChange]
+        [endDateKey, onChange, startDateKey]
     );
 
     const handleSelectPreset = useCallback((preset: DateRangePreset) => {
@@ -125,15 +133,16 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                     <Datepicker
                         open={false}
                         locale={locale}
-                        selected={startDate}
+                        value={startDate}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
                         onChange={(newStart, event) => handleChange('start', newStart, endDate, event)}
                     />
                     <Datepicker
+                        key={startDateKey}
                         inline
                         locale={locale}
-                        selected={startDate}
+                        value={startDate}
                         todayButton={todayButton}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
@@ -159,15 +168,16 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                     <Datepicker
                         open={false}
                         locale={locale}
-                        selected={endDate}
+                        value={endDate}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
                         onChange={(newEnd, event) => handleChange('end', startDate, newEnd, event)}
                     />
                     <Datepicker
+                        key={endDateKey}
                         inline
                         locale={locale}
-                        selected={endDate}
+                        value={endDate}
                         todayButton={todayButton}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
