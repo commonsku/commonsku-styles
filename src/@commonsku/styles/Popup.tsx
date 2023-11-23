@@ -147,6 +147,7 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
     popupClassName,
     contentClassName,
     PopupWindowComponent = PopupWindow,
+    style,
     ...props
   }: PopupProps,
   forwardedRef
@@ -182,7 +183,7 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
 
   return <PopupContainer>
     <Overlay zIndex={overlayZIndex}>
-      <PopupWindowComponent className={"popup" + (popupClassName ? ` ${popupClassName}` : '')} {...props} ref={ref}>
+      <PopupWindowComponent className={"popup" + (popupClassName ? ` ${popupClassName}` : '')}  style={{ position: 'fixed', ...style }} {...props} ref={ref}>
         {noHeader ? null :
           header ? header : (
             <PopupHeader className="popup-header" xsStyle="flex-wrap: wrap-reverse;" smStyle="flex-wrap: wrap;">

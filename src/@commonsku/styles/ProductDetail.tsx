@@ -18,11 +18,13 @@ const INITIAL_THUMBNAILS_COUNT = 11;
 const SLICE_COUNT = 2;
 
 const ThumbnailVerticalContainer = styled.div`
+  &&& {
     max-height: 660px;
     height: 660px;
     overflow: auto;
-    margin-top: 20px !important;
-    padding-right: 5px !important;
+    margin-top: 20px;
+    padding-right: 5px;
+  }
 `;
 
 const MainViewing = styled.div`
@@ -34,18 +36,23 @@ const MainViewing = styled.div`
 `;
 
 const Main = styled.div`
+  &&& {
     width: 100%;
     height: 478px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;   
+  }
 `;
 
 const StyledTooltip = styled(Tooltip)`
-    background: #123952E5 !important;
-    width: 250px !important;
-    font-size: large !important;
+  &&& {
+    background: #123952E5;
+    width: 250px;
+    font-size: large;   
+    padding: 10px 15px;
+  }
 `;
 
 const ThumbnailContainer = styled.div`
@@ -83,7 +90,6 @@ const InnerFrameThumbnail = styled.div`
     display: flex;
     padding: 8px;
     flex-direction: column;
-    align-items: flex-start;
     gap: 10px;
     flex: 1 0 0;
     align-self: stretch;
@@ -272,7 +278,9 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
                   display: 'inline-block',
                   objectFit: 'contain',
                   cursor: 'pointer'
-                }} /></InnerFrameThumbnail>
+                }}
+              />
+            </InnerFrameThumbnail>
           </SelectableThumbnail>;
         })}
         {filtered.length > slicedThumbnails.length

@@ -112,3 +112,4 @@ export { default as TagIcon} from './TagIcon';
 export { default as MergeIcon} from './MergeIcon';
 export { default as DesignIcon} from './DesignIcon';
 export { default as ResizableIcon} from './ResizableIcon';
+export { default as CommentBubbleIcon} from './CommentBubbleIcon';
