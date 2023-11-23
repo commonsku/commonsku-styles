@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Input, InputProps } from './Input';
 import { CalendarIcon } from './icons';
 import { format } from 'date-fns';
@@ -12,13 +12,20 @@ const dropdownStyles: CSSProperties = {
     border: '2px solid',
     borderRadius: '5px',
     borderColor: 'var(--color-primary1-60)',
-    zIndex: '1',
+    zIndex: 1,
 };
 
-const formatDateRange = ({startDate, endDate}: DateRange, dateFormat: string) => 
-    (startDate == null || endDate == null)
-        ? ''
-        : `${format(startDate, dateFormat)} to ${format(endDate, dateFormat)}`;
+const formatDateRange = ({startDate, endDate}: DateRange, dateFormat: string) => {
+    if (startDate != null && endDate != null) {
+        return `${format(startDate, dateFormat)} to ${format(endDate, dateFormat)}`;
+    } else if (startDate != null) {
+        return `Since ${format(startDate, dateFormat)}`;
+    } else if (endDate != null) {
+        return `Until ${format(endDate, dateFormat)}`;
+    }
+
+    return '';
+}
 
 interface DateRangeInputProps extends Omit<InputProps, 'onChange'> {
     isClearable: boolean
@@ -38,17 +45,12 @@ export const DateRangeInput = ({
     onInputSelect,
     ...props
 }: DateRangeInputProps) => {
-    const [fallbackValue, setFallbackValue] = useState<string>();
-
-    useEffect(() => {
-        setFallbackValue(formatDateRange(selected, dateFormat));
-    }, [dateFormat, selected]);
-
     return (
         <div style={{ position: 'relative', display: 'inline-block' }}>
             <Input
+                readOnly
                 onFocus={onInputSelect}
-                value={value != null ? value : fallbackValue}
+                value={value}
                 onClick={onClick}
                 noMargin={noMargin}
                 error={error}
@@ -81,6 +83,8 @@ interface DateRangeDropdownProps extends DateRangePickerProps {
 
 export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
     const {
+        onChange,
+        presets,
         dateText,
         range,
         error,
@@ -92,6 +96,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
     } = props;
 
     const [open, setOpen] = useState(false);
+    const [defaultDateText, setDefaultDateText] = useState<string | undefined>();
     const datepickerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -106,11 +111,28 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
         return () => document.removeEventListener("mousedown", handleExternalClick);
     }, []);
 
+    const handleChange = useCallback((range: DateRange, event?: SyntheticEvent<any>) => {
+        if (onChange != null) {
+            onChange(range, event);
+        }
+
+        const preset = presets != null && 
+            presets.find(preset => preset.name === range.category);
+
+        if (preset && preset != null) {
+            setDefaultDateText(preset.label);
+        } else if (range.category === 'custom') {
+            setDefaultDateText(formatDateRange(range, dateFormat));
+        } else {
+            setDefaultDateText('');
+        }
+    }, [dateFormat, onChange, presets]);
+
     return (
         <>
             <DateRangeInput
                 noMargin
-                value={dateText}
+                value={dateText != null ? dateText : defaultDateText}
                 onInputSelect={() => setOpen(true)}
                 error={error}
                 isClearable={isClearable}
@@ -119,7 +141,12 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
                 placeholder={placeholder || placeholderText || `${dateFormat} to ${dateFormat}`}
             />
             {open && 
-                <DateRangePicker ref={datepickerRef} style={style} {...props} />
+                <DateRangePicker
+                    {...props}
+                    ref={datepickerRef}
+                    style={style} 
+                    onChange={handleChange}
+                />
             }
         </>
     );

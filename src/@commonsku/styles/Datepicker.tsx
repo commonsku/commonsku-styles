@@ -36,6 +36,7 @@ export type DatepickerProps = Omit<ReactDatePickerProps, 'value'>
     value?: Date | null;
     placeholder?: string;
   };
+
 const Datepicker = (
   {
     error,
