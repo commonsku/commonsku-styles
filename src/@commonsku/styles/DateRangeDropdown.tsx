@@ -15,6 +15,14 @@ const dropdownStyles: CSSProperties = {
     zIndex: 1,
 };
 
+const inputStyles: CSSProperties = {
+    fontStyle: 'normal',
+    cursor: 'pointer',
+    position: 'absolute',
+    top: '8px',
+    right: '36px',
+};
+
 const formatDateRange = ({startDate, endDate}: DateRange, dateFormat: string) => {
     if (startDate != null && endDate != null) {
         return `${format(startDate, dateFormat)} to ${format(endDate, dateFormat)}`;
@@ -59,16 +67,7 @@ export const DateRangeInput = ({
                 autoComplete="off"
                 {...props}
             />
-            <span 
-                style={{
-                    fontStyle: 'normal',
-                    cursor: 'pointer',
-                    position: 'absolute',
-                    top: '8px',
-                    right: '36px',
-                }} 
-                onClick={onClick}
-            >
+            <span style={inputStyles} onClick={onClick}>
                 {!isClearable &&
                     <CalendarIcon style={{ width: '1.9rem', verticalAlign: 'middle' }}/> 
                 }
@@ -138,7 +137,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
                 isClearable={isClearable}
                 selected={range}
                 dateFormat={dateFormat}
-                placeholder={placeholder || placeholderText || `${dateFormat} to ${dateFormat}`}
+                placeholder={placeholder || placeholderText || `Select a date range...`}
             />
             {open && 
                 <DateRangePicker
