@@ -76,3 +76,4 @@ export * from './hooks';
 export * from './ToggleSwitch';
 export { default as RenderChild } from './RenderChild';
 export * from './Dropzone';
+export { default as Tooltip } from './Tooltip';

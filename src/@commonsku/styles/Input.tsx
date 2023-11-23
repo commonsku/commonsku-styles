@@ -506,6 +506,7 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
   radioColor,
   radioHoverColor,
   onChange,
+  children,
   labelProps={},
   radioIconProps={},
   ...props 
@@ -537,7 +538,7 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
           ...(radioIconProps.style || {}),
           ...(radioIconStyle ? radioIconStyle : {position: 'absolute', left: 0}),
         }}/>
-      {label}
+      {children || label}
       <Radio ref={radio} name={name} type="radio" checked={checked} isHovering={isHovering} onChange={disabled? undefined : onChange} {...props} />
     </RadioLabel>
   );
