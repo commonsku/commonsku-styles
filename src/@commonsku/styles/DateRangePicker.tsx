@@ -15,7 +15,7 @@ const tabStyles: CSSProperties = {
 
 const activeTabStyles: CSSProperties = {
     ...tabStyles,
-    color: '#000',
+    color: colors.neutrals['darkest'],
     textDecorationLine: 'underline',
     textUnderlineOffset: '1rem',
     textDecorationColor: colors.secondary1[50],
@@ -27,7 +27,12 @@ const presetListStyles: CSSProperties = {
     flexWrap: 'wrap',
     width: '520px',
     gap: '0.5rem 1rem',
-}
+};
+
+const dateRangeLabelStyles: CSSProperties = {
+    color: colors.neutrals['darkest'],
+    marginBottom: '0.25rem',
+};
 
 export interface DateRange {
     category: string
@@ -84,6 +89,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [selectedPreset, setSelectedPreset] = useState<DateRangePreset>();
 
     // Workaround for react-datepicker selection bug
+    // https://github.com/Hacker0x01/react-datepicker/issues/3367
     const [startDateKey, setStartDateKey] = useState(0);
     const [endDateKey, setEndDateKey] = useState(0);
 
@@ -126,7 +132,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const renderCustomTab = () => (
         <Row style={{ flexFlow: 'row', gap: '2rem' }}>
             <Col>
-                <div style={{ marginBottom: '0.25rem' }}>
+                <div style={dateRangeLabelStyles}>
                     From
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -161,7 +167,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                 </div>
             </Col>
             <Col>
-                <div style={{ marginBottom: '0.25rem' }}>
+                <div style={dateRangeLabelStyles}>
                     To
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
