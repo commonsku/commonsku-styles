@@ -150,8 +150,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                         locale={locale}
                         selected={startDate}
                         selectsStart
-                        startDate={startDate ?? new Date(0)}
-                        endDate={endDate ?? new Date(9999, 1, 1)}
+                        startDate={startDate ?? (endDate ? new Date(0) : null)}
+                        endDate={endDate ?? (startDate ? new Date(9999, 1, 1) : null)}
                         todayButton={todayButton}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
@@ -188,8 +188,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                         locale={locale}
                         selected={endDate}
                         selectsEnd
-                        startDate={startDate ?? new Date(0)}
-                        endDate={endDate ?? new Date(9999, 1, 1)}
+                        startDate={startDate ?? (endDate ? new Date(0) : null)}
+                        endDate={endDate ?? (startDate ? new Date(9999, 1, 1) : null)}
                         todayButton={todayButton}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
