@@ -69,13 +69,6 @@ const datepickerStyles = `
         color: var(--color-errors-main);
       }
     }
-
-    .react-datepicker__day--in-range:not(
-      .react-datepicker__day--in-selecting-range
-    )
-    {
-      background-color: var(--color-neutrals-20);
-    }
   }
 
   .react-datepicker__current-month,
