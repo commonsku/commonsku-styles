@@ -63,8 +63,9 @@ const datepickerStyles = `
     }
 
     .react-datepicker__day--in-selecting-range:not(
-      .react-datepicker__day--selecting-range-start,
-      .react-datepicker__day--selecting-range-end
+      .react-datepicker__day--range-start,
+      .react-datepicker__day--range-end,
+      .react-datepicker__day:hover
     )
     {
       background-color: var(--color-primary1-40);
