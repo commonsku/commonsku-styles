@@ -149,6 +149,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                         inline
                         locale={locale}
                         selected={startDate}
+                        selectsStart
+                        startDate={startDate ?? new Date(0)}
+                        endDate={endDate ?? new Date(9999, 1, 1)}
                         todayButton={todayButton}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
@@ -160,7 +163,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                         previousYearButtonLabel={previousYearButtonLabel}
                         dropdownMode={dropdownMode}
                         peekNextMonth={peekNextMonth}
-                        calendarClassName={`commonsku-styles-datepicker ${popperClassName || ''}`}
+                        calendarClassName={`commonsku-styles-datepicker daterangepicker ${popperClassName || ''}`}
                         onChange={(newStart, event) => handleChange('start', newStart, endDate, event)}
                         {...props}
                     />
@@ -184,6 +187,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                         inline
                         locale={locale}
                         selected={endDate}
+                        selectsEnd
+                        startDate={startDate ?? new Date(0)}
+                        endDate={endDate ?? new Date(9999, 1, 1)}
                         todayButton={todayButton}
                         dateFormat={dateFormat}
                         isClearable={isClearable}
@@ -195,7 +201,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                         previousYearButtonLabel={previousYearButtonLabel}
                         dropdownMode={dropdownMode}
                         peekNextMonth={peekNextMonth}
-                        calendarClassName={`commonsku-styles-datepicker ${popperClassName || ''}`}
+                        calendarClassName={`commonsku-styles-datepicker daterangepicker ${popperClassName || ''}`}
                         onChange={(newEnd, event) => handleChange('end', startDate, newEnd, event)}
                         {...props}
                     />

@@ -15,12 +15,67 @@ const datepickerStyles = `
   }
 
   .react-datepicker {
+    border-radius: 3px;
     border: 1px solid var(--color-primary1-60);
     outline: none;
     box-shadow: 1px  1px 0px var(--color-primary1-60),
               -1px -1px 0px var(--color-primary1-60),
               1px -1px 0px var(--color-primary1-60),
               -1px  1px 0px var(--color-primary1-60);
+  }
+
+  /* For date ranges */
+  &.daterangepicker {
+    .react-datepicker__day--range-start.react-datepicker__day--in-selecting-range,
+    .react-datepicker__day--range-end.react-datepicker__day--in-selecting-range,
+    .react-datepicker__day:hover
+    {
+      background-color: var(--color-primary1-60);
+      color: #fff;
+    }
+
+    .react-datepicker__day--in-range:not(
+      .react-datepicker__day--range-start,
+      .react-datepicker__day--range-end
+    )
+    {
+      background-color: var(--color-primary1-40);
+    }
+
+    .react-datepicker__day--in-selecting-range {
+      &.react-datepicker__day--selecting-range-start,
+      &.react-datepicker__day--selecting-range-end
+      {
+        background-color: var(--color-primary1-60);
+        color: #fff;
+      }
+    }
+
+    .react-datepicker__day--in-selecting-range:not(
+      .react-datepicker__day--selecting-range-start,
+      .react-datepicker__day--selecting-range-end
+    )
+    {
+      background-color: var(--color-primary1-40);
+      &.react-datepicker__day:not(
+        .react-datepicker__day--outside-month
+      ) {
+        color: var(--color-neutrals-90);
+      }
+      &.react-datepicker__day--outside-month {
+        color: var(--color-neutrals-70);
+      }
+      &.react-datepicker__day--weekend {
+        color: var(--color-errors-main);
+      }
+    }
+
+    .react-datepicker__day--in-range:not(
+      .react-datepicker__day--in-selecting-range
+    )
+    {
+      background-color: var(--color-neutrals-20);
+    }
   }
 
   .react-datepicker__current-month,
@@ -79,13 +134,16 @@ const datepickerStyles = `
   }
 
   .react-datepicker__day--selected,
-  .react-datepicker__day--keyboard-selected,
   .react-datepicker__month-text--keyboard-selected,
   .react-datepicker__quarter-text--keyboard-selected,
   .react-datepicker__year-text--keyboard-selected
    {
     background-color: var(--color-primary1-60);
     color: #fff;
+  }
+
+  .react-datepicker__day--keyboard-selected {
+    background-color: inherit;
   }
 
   .react-datepicker__triangle {
