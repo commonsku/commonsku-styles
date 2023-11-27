@@ -87,6 +87,9 @@ import {
     ProductCard,
     ChevronPopup,
     ProductDetail,
+    SelectionTable,
+    DateRangePicker,
+    DateRangeDropdown,
 } from '@commonsku/styles';
 
 import { DemoCodeBlock } from 'demo/DemoCodeblock';
@@ -102,7 +105,6 @@ import { MenuListProps } from 'react-select';
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { Grid, GridItem } from '@commonsku/styles/Grid';
-import SelectionTable from '@commonsku/styles/tables/SelectionTable';
 
 const initialState = {
   date: new Date(),
@@ -1623,6 +1625,64 @@ const App = () => {
                       value={state.date}
                       onChange={(date: any) => dispatch({type: "dateChange", payload: {date} })}
                       disabled
+                    />
+                  </Col>
+                </Row>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Date Range Picker" id="date-range-picker">
+                <Row>
+                  <Col xs={3} mr={16}>
+                    <DateRangePicker
+                      range={{ category: 'custom', startDate: state.startDate, endDate: state.endDate }}
+                      onChange={({startDate, endDate}) => dispatch({ type: "dateChange", payload: {startDate, endDate} })}
+                      presets={[
+                        {
+                          name: 'today',
+                          label: 'Today',
+                        },
+                        {
+                          name: 'yesterday',
+                          label: 'Yesterday',
+                        },
+                        {
+                          name: 'this_week',
+                          label: 'This Week',
+                        },
+                        {
+                          name: 'ytd',
+                          label: 'YTD',
+                        },
+                      ]}
+                    />
+                  </Col>
+                </Row>
+              </demo.InnerContainer>
+
+              <demo.InnerContainer title="Date Range Dropdown" id="date-range-dropdown">
+                <Row>
+                  <Col xs={3} mr={16}>
+                    <DateRangeDropdown
+                      range={{ category: 'custom', startDate: state.startDate, endDate: state.endDate }}
+                      onChange={({startDate, endDate}) => dispatch({ type: "dateChange", payload: {startDate, endDate} })}
+                      presets={[
+                        {
+                          name: 'today',
+                          label: 'Today',
+                        },
+                        {
+                          name: 'yesterday',
+                          label: 'Yesterday',
+                        },
+                        {
+                          name: 'this_week',
+                          label: 'This Week',
+                        },
+                        {
+                          name: 'ytd',
+                          label: 'YTD',
+                        },
+                      ]}
                     />
                   </Col>
                 </Row>

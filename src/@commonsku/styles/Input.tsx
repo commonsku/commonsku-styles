@@ -585,9 +585,11 @@ export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: bool
         color: disabled ? neutrals['70'] : teal.main,
         flexGrow: flexGrow ? 1 : undefined, 
         justifyContent: 'center',
+        ...labelStyle,
       }}
       radioIconStyle={{
       }}
+      {...props}
     />
   )
 }
