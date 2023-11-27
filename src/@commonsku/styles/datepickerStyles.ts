@@ -26,8 +26,8 @@ const datepickerStyles = `
 
   /* For date ranges */
   &.daterangepicker {
-    .react-datepicker__day--range-start.react-datepicker__day--in-selecting-range,
-    .react-datepicker__day--range-end.react-datepicker__day--in-selecting-range,
+    .react-datepicker__day--range-start,
+    .react-datepicker__day--range-end,
     .react-datepicker__day:hover
     {
       background-color: var(--color-primary1-60);
@@ -36,19 +36,30 @@ const datepickerStyles = `
 
     .react-datepicker__day--in-range:not(
       .react-datepicker__day--range-start,
-      .react-datepicker__day--range-end
+      .react-datepicker__day--range-end,
+      .react-datepicker__day:hover
     )
     {
       background-color: var(--color-primary1-40);
     }
 
-    .react-datepicker__day--in-selecting-range {
-      &.react-datepicker__day--selecting-range-start,
-      &.react-datepicker__day--selecting-range-end
-      {
-        background-color: var(--color-primary1-60);
-        color: #fff;
-      }
+    .react-datepicker__day--in-range:not(
+      .react-datepicker__day--in-selecting-range,
+      .react-datepicker__day--weekend,
+      .react-datepicker__day--selected
+    )
+    {
+      color: var(--color-neutrals-dark);
+    }
+
+    .react-datepicker__day--in-range.react-datepicker__day--weekend:not(
+      .react-datepicker__day--selected,
+      .react-datepicker__day--range-start,
+      .react-datepicker__day--range-end,
+      .react-datepicker__day:hover
+    )
+    {
+      color: var(--color-errors-main);
     }
 
     .react-datepicker__day--in-selecting-range:not(
@@ -58,7 +69,8 @@ const datepickerStyles = `
     {
       background-color: var(--color-primary1-40);
       &.react-datepicker__day:not(
-        .react-datepicker__day--outside-month
+        .react-datepicker__day--outside-month,
+        .react-datepicker__day--weekend,
       ) {
         color: var(--color-neutrals-90);
       }
@@ -95,20 +107,14 @@ const datepickerStyles = `
     border-top: none;
   }
 
-  .react-datepicker__day {
+  .react-datepicker__day
+  {
     outline: none;
     color: var(--color-neutrals-dark);
   }
 
   .react-datepicker__day-name {
     color: var(--color-neutrals-dark);
-  }
-
-  .react-datepicker__day :not(
-    .react-datepicker__day--outside-month,
-    .react-datepicker__day--selected
-  ) {
-    color: var(--color-neutrals-90);
   }
 
   .react-datepicker__day:hover :not(.react-datepicker__day--selected),
