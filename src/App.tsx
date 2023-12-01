@@ -1446,18 +1446,6 @@ const App = () => {
 
                 <LabeledIconInput
                   labelOnTop
-                  label='Labeled input'
-                  name="basic-input"
-                  defaultValue="input value"
-                  placeholder="Password"
-                  Icon={<Link>Forgot?</Link>}
-                  iconPosition='right'
-                  iconLabelStyles={{width:"auto", fontSize: 11, background: 'transparent', color: teal.main }}
-                  style={{ width: 200 }}
-                />
-
-                <LabeledIconInput
-                  labelOnTop
                   disabled
                   label='Labeled disabled'
                   name="basic-disabled"
@@ -1515,6 +1503,18 @@ const App = () => {
                   style={{ width: 200 }}
                 />
                 <br />
+                <LabeledIconInput
+                  labelOnTop
+                  label='Password input'
+                  name="basic-input"
+                  defaultValue="input value"
+                  placeholder="Password"
+                  Icon={<Link>Forgot?</Link>}
+                  iconPosition='right'
+                  password
+                  iconLabelStyles={{width:"auto", fontSize: 11, background: 'transparent', color: teal.main }}
+                />
+
               </demo.InnerContainer>
 
               <demo.InnerContainer title="Text Area" id="text-area">

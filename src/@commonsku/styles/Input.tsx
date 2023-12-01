@@ -9,6 +9,8 @@ import { RadioIcon, CheckboxIcon } from './icons';
 import { neutrals, teal } from './colors';
 import { RadioIconProps } from './icons/RadioIcon';
 import { CheckboxIconProps } from './icons/CheckboxIcon';
+import { Row, Col } from './FlexboxGrid';
+import EyeIcon from './icons/EyeIcon'
 
 type CommonInputProp = {
   noMargin?: boolean,
@@ -17,6 +19,7 @@ type CommonInputProp = {
 
 type BaseInputProps = CommonInputProp
   & { hasIcon?: boolean; }
+  & { password?: boolean; }
   & SharedStyleTypes;
 export type InputProps = BaseInputProps
   & React.InputHTMLAttributes<HTMLInputElement>;
@@ -229,6 +232,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
     const containerRef = useRef<HTMLDivElement>(null);
     const [isActive, setIsActive] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
+    const [showPassword, setShowPassword] = useState(props.password ? false : true);
 
     const activeBorderColor = getThemeColor(props, 'input.active.border', colors.input.active.border);
     const activeTextColor = colors.input.active.text;
@@ -291,6 +295,13 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
       };
     }, []);
 
+    const labelWithAction = props.password ? <div>
+                              {label}
+                              <div style={{ width: 24, float: 'right' }} onClick={() => setShowPassword(s => !s)}>
+                                <EyeIcon hide={showPassword} cursor="pointer" />
+                              </div>
+                            </div> : <>{label}</>
+
     return (
       <div style={containerStyle}>
         {label ? <Label
@@ -302,7 +313,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
             fontSize: '16px',
             color: getThemeColor(props, 'neutrals.100'),
           }}
-        >{label} {required && '*'}</Label> : null}
+        >{labelWithAction} {required && '*'}</Label> : null}
         <InputIconLabelContainer
           {...props}
           ref={containerRef}
@@ -341,6 +352,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
             onFocus={onFocus}
             onChange={onChange}
             onBlur={onBlur}
+            type={!showPassword ? 'password' : 'text'}
           />
           {iconPosition === 'right' ? <InputIconLabel
             style={{ marginBottom: 0, padding: 6, ...iconLabelStyles }}
