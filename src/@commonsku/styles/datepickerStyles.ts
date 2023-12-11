@@ -174,6 +174,8 @@ const datepickerStyles = `
 
   .react-datepicker__navigation-icon {
     &.react-datepicker__navigation-icon--next::before {
+      content: '';
+      box-sizing: initial;
       top: 2px;
       left: -8px;
       height: 6px;
@@ -184,6 +186,8 @@ const datepickerStyles = `
     }
 
     &.react-datepicker__navigation-icon--previous::before {
+      content: '';
+      box-sizing: initial;
       top: 2px;
       right: -8px;
       height: 6px;
