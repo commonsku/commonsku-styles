@@ -298,7 +298,7 @@ export const LabeledIconInput = React.forwardRef<HTMLInputElement, LabeledIconIn
     const labelWithAction = props.password ? <div>
                               {label}
                               <div style={{ width: 24, float: 'right' }} onClick={() => setShowPassword(s => !s)}>
-                                <EyeIcon hide={showPassword} cursor="pointer" />
+                                <EyeIcon hide={!showPassword} cursor="pointer" />
                               </div>
                             </div> : <>{label}</>
 
