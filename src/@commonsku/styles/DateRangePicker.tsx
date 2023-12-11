@@ -29,6 +29,14 @@ const presetListStyles: CSSProperties = {
     gap: '0.5rem 1rem',
 };
 
+const presetLabelStyles: CSSProperties = {
+    margin: '0',
+    flexGrow: '1',
+    flexBasis: '200px',
+    justifyContent: 'left',
+    padding: '13px',
+};
+
 const dateRangeLabelStyles: CSSProperties = {
     color: colors.neutrals['darkest'],
     marginBottom: '0.25rem',
@@ -215,7 +223,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
             {presets?.map((preset, idx) => (
                 <LabeledRadioInButton
                     key={idx}
-                    labelStyle={{  margin: '0', flexGrow: '1', flexBasis: '200px' }}
+                    labelStyle={presetLabelStyles}
                     label={preset.label}
                     onChange={() => handleSelectPreset(preset)}
                     checked={selectedPreset != null && preset.label === selectedPreset.label}
