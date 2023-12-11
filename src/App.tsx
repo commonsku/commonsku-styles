@@ -2248,6 +2248,7 @@ const App = () => {
               <Row style={{gap: 16}}>
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={false} showButton={false} />
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={false} showButton={true} />
+                  <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={false} loading={true} showButton={true} />
                   <ProductCard title="Gratuiously Lengthy But Highly Descriptive Product Name" subTitle="Extremely Long And Tedious Supplier Name" sku="#6410" imgUrl={product_pic1} selected={true} showButton={true} />
               </Row>
             </demo.InnerContainer>
