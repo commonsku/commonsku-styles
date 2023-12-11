@@ -35,7 +35,7 @@ const formatDateRange = ({startDate, endDate}: DateRange, dateFormat: string) =>
     return '';
 }
 
-interface DateRangeInputProps extends Omit<InputProps, 'onChange'> {
+export interface DateRangeInputProps extends Omit<InputProps, 'onChange'> {
     isClearable: boolean
     selected: DateRange
     dateFormat: string
@@ -76,7 +76,7 @@ export const DateRangeInput = ({
     );
 };
 
-interface DateRangeDropdownProps extends DateRangePickerProps {
+export interface DateRangeDropdownProps extends DateRangePickerProps {
     dateText?: string
 }
 
