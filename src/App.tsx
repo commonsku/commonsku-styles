@@ -1961,6 +1961,8 @@ const App = () => {
                   <icons.SkubotSpinner mb={10} size="medium" />
                   <demo.SmallLabel>Small</demo.SmallLabel>
                   <icons.SkubotSpinner mb={10} size="small" />
+                  <demo.SmallLabel>Tiny</demo.SmallLabel>
+                  <icons.SkubotSpinner mb={10} size="tiny" />
                 </div>
               </demo.InnerContainer>
             </demo.OuterContainer>
