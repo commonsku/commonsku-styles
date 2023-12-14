@@ -20,7 +20,7 @@ const inputStyles: CSSProperties = {
     cursor: 'pointer',
     position: 'absolute',
     top: '8px',
-    right: '36px',
+    right: '4px',
 };
 
 const formatDateRange = ({startDate, endDate}: DateRange, dateFormat: string) => {
@@ -54,7 +54,7 @@ export const DateRangeInput = ({
     ...props
 }: DateRangeInputProps) => {
     return (
-        <div style={{ position: 'relative', display: 'inline-block' }}>
+        <div style={{ position: 'relative' }}>
             <Input
                 readOnly
                 onFocus={onInputSelect}
@@ -62,7 +62,6 @@ export const DateRangeInput = ({
                 onClick={onClick}
                 noMargin={noMargin}
                 error={error}
-                style={{ marginRight: '2rem', display: 'inline-block', width: '250px' }}
                 type="text"
                 autoComplete="off"
                 {...props}
