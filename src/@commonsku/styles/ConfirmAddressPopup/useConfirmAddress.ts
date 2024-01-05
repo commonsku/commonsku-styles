@@ -48,52 +48,58 @@ const useConfirmAddress = (address: TAddress, addMap = false, mapElementId: stri
     }
   }, [mapElementId]);
 
+  const fetchAddress = useCallback((address: TAddress) => {
+    setLoading(true);
+    const mapElem = document.getElementById(mapElementId);
+    if (mapElem) {
+      mapElem.style.display = 'none';
+    }
+    const places = window.google.maps.places;
+    if (!places) {
+      setLoading(false);
+      return;
+    }
+    const sessionToken = new places.AutocompleteSessionToken();
+    let value = address.address_line_1 || '';
+        value += ', ' + getAddressCityAndState({ city: address.address_city, state: address.address_state });
+        value += ' ' + getAddressPostalCodeAndCountry({ country: address.address_country, postal: address.address_postal });
+    getPlacesAutocomplete({ input: value, language: 'en', sessionToken }).then(res => {
+      if (res?.length === 0 || !res?.[0]?.place_id) {
+        setLoading(false);
+        setRecommendedAddress(null);
+        return;
+      }
+      geocodePlaceDetails(res[0].place_id).then(details => {
+        setLoading(false);
+        if (!details) {
+          setRecommendedAddress(null);
+          return;
+        }
+        setRecommendedAddress(parseAddressComponents(details.address_components));
+
+        addMap && addMapElement(details);
+      }).catch(() => {
+        setLoading(false);
+        setRecommendedAddress(null);
+      })
+    }).catch(() => {
+      setLoading(false);
+      setRecommendedAddress(null);
+    });
+  }, [addMap, addMapElement, mapElementId]);
+
   useEffect(() => {
     if (typeof window === 'undefined') { return; }
     setLoading(true);
     setTimeout(() => {
-      const mapElem = document.getElementById(mapElementId);
-      if (mapElem) {
-        mapElem.style.display = 'none';
-      }
-      const places = window.google.maps.places;
-      if (!places) {
-        setLoading(false);
-        return;
-      }
-      const sessionToken = new places.AutocompleteSessionToken();
-      let value = address.address_line_1 || '';
-          value += ', ' + getAddressCityAndState({ city: address.address_city, state: address.address_state });
-          value += ' ' + getAddressPostalCodeAndCountry({ country: address.address_country, postal: address.address_postal });
-      getPlacesAutocomplete({ input: value, language: 'en', sessionToken }).then(res => {
-        if (res?.length === 0 || !res?.[0]?.place_id) {
-          setLoading(false);
-          setRecommendedAddress(null);
-          return;
-        }
-        geocodePlaceDetails(res[0].place_id).then(details => {
-          setLoading(false);
-          if (!details) {
-            setRecommendedAddress(null);
-            return;
-          }
-          setRecommendedAddress(parseAddressComponents(details.address_components));
-
-          addMap && addMapElement(details);
-        }).catch(() => {
-          setLoading(false);
-          setRecommendedAddress(null);
-        })
-      }).catch(() => {
-        setLoading(false);
-        setRecommendedAddress(null);
-      });
+      fetchAddress(address);
     }, 1500);
-  }, [address, addMapElement, mapElementId, addMap]);
+  }, [fetchAddress, address]);
 
   return {
     loading,
     recommendedAddress,
+    fetchAddress,
   };
 };
 

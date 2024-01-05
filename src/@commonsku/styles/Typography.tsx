@@ -3,18 +3,38 @@ import styled, { CSSObject } from 'styled-components';
 const DEFAULT_COLOR = 'var(--color-neutrals-90)';
 
 type TypographyName = 'h1' | 'h2' | 'h5' | 'p' | 'span';
-type TypographyCommonProps = { color?: string, noBottom?: boolean; bold?: boolean };
+type TypographyCommonProps = {
+  color?: string;
+  noBottom?: boolean;
+  bold?: boolean;
+  underlined?: boolean;
+  italic?: boolean;
+  textTransform?: CSSObject['textTransform'],
+  lineHeight?: CSSObject['lineHeight'],
+  fontSize?: CSSObject['fontSize'];
+  fontWeight?: CSSObject['fontWeight'];
+};
 
 const createStyles = (name: TypographyName) => {
   return ({
     color=DEFAULT_COLOR,
     noBottom = false,
     bold = false,
+    underlined = false,
+    italic = false,
+    textTransform = undefined,
+    lineHeight = undefined,
+    fontSize = undefined,
+    fontWeight = undefined,
   }: TypographyCommonProps): CSSObject => {
     const styles: CSSObject = {
       color: color,
       fontFamily: bold ? 'var(--skufont-bold)' : 'var(--skufont-regular)',
       ...(noBottom ? { marginBottom: '0px' } : {}),
+      ...(underlined ? {borderBottom: '1px solid #ccc'} : {}),
+      ...(italic ? {fontStyle: 'italic'} : {}),
+      ...(textTransform ? { textTransform } : {}),
+      ...(lineHeight ? { lineHeight } : {}),
     };
     if (name === 'h1') {
       styles.fontSize = '34px';
@@ -25,6 +45,13 @@ const createStyles = (name: TypographyName) => {
     } else if (name === 'h5') {
       styles.fontSize = '20px';
       styles.fontFamily = 'var(--skufont-demibold)';
+    } else {
+      if (typeof fontSize !== 'undefined' && fontSize !== null) {
+        styles.fontSize = fontSize;
+      }
+      if (typeof fontWeight !== 'undefined' && fontWeight !== null) {
+        styles.fontWeight = fontWeight;
+      }
     }
     return styles;
   };

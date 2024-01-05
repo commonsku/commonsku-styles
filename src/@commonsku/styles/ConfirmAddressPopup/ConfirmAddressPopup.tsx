@@ -16,7 +16,14 @@ const ConfirmAddressPopup = ({
     <Popup noHeader
       onClose={onClose}
       className="popup confirm-address-popup"
-      style={{ width: 550, height: 750, background: 'var(--color-neutrals-30)' }}
+      style={{
+        maxWidth: 550,
+        maxHeight: 750,
+        background: 'var(--color-neutrals-30)',
+      }}
+      popupContentStyle={{
+        height: '100%',
+      }}
     >
       <ConfirmAddressContent
         address={address}
