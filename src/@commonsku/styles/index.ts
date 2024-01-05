@@ -79,3 +79,5 @@ export * from './ToggleSwitch';
 export { default as RenderChild } from './RenderChild';
 export * from './Dropzone';
 export { default as Tooltip } from './Tooltip';
+export * from './AddressAutocomplete';
+export * from './ConfirmAddressPopup';

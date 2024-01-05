@@ -1,47 +1,22 @@
 import { get } from 'lodash';
-import React from 'react'
-import BaseSelect, { Props as SelectProps, SelectInstance, GroupBase, StylesConfig, Theme, components, createFilter, mergeStyles } from 'react-select'
-import BaseCreatableSelect, { CreatableProps } from 'react-select/creatable'
-import BaseAsyncSelect, { AsyncProps } from 'react-select/async'
-import { getThemeColor, colors } from './Theme';
-import {Label} from './Label'
-import { document } from '../utils';
+import React from 'react';
+import { GroupBase, StylesConfig, Theme } from 'react-select';
+import { getThemeColor, colors } from '../Theme';
+import { document } from '../../utils';
+import { SelectType, TBaseOption, TSelectProps } from './types';
 
-type AdditionalSKUSelectProps = {
-  noMargin?: boolean,
-  error?: boolean,
-  menuRelative?: boolean, // fix for scroll menu inside scroll container like popup
-  inPopup?: boolean,
-  controlStyles?: React.CSSProperties,
-  menuStyles?: React.CSSProperties,
-  menuListStyles?: React.CSSProperties,
-  menuPortalStyles?: React.CSSProperties,
-  optionStyles?: React.CSSProperties,
-  inputStyles?: React.CSSProperties,
-  clearIndicatorStyles?: React.CSSProperties,
-  dropdownIndicatorStyles?: React.CSSProperties,
-  indicatorSeparatorStyles?: React.CSSProperties,
-  singleValueStyles?: React.CSSProperties,
-  valueContainerStyles?: React.CSSProperties,
-  containerStyles?: React.CSSProperties,
-}
-
-type SKUSelectProps = AdditionalSKUSelectProps & SelectProps
-type SKUAsyncSelectProps<Option = unknown, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>> = AdditionalSKUSelectProps & AsyncProps<Option, IsMulti, Group>
-type SKUCreatableSelectProps<Option = unknown, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>> = AdditionalSKUSelectProps & CreatableProps<Option, IsMulti, Group>
-
-type SKUSelectStylesProps = SKUSelectProps
-  | SKUAsyncSelectProps
-  | SKUCreatableSelectProps
-
-const popupStyles = {
+export const popupStyles = {
   menuPlacement: 'auto',
   menuPosition: 'fixed',
   menuPortalTarget: document.body,
 }
 
-function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Group extends GroupBase<Option> = GroupBase<Option>>
-(props: SKUSelectStylesProps): StylesConfig<Option, IsMulti, Group> {
+export function skuSelectStyles<
+  Type extends SelectType = 'base',
+  Option = TBaseOption,
+  IsMulti extends boolean = boolean,
+  Group extends GroupBase<Option> = GroupBase<Option>>
+(props: TSelectProps<Type, Option, IsMulti, Group>): StylesConfig<Option, IsMulti, Group> {
   return {
     container: (provided, state) => {
       return {
@@ -233,8 +208,13 @@ function skuSelectStyles<Option = unknown, IsMulti extends boolean = boolean, Gr
   };
 }
 
-const skuSelectThemeByProps =
-  (props: SKUSelectProps | SKUAsyncSelectProps | SKUCreatableSelectProps) => (theme: Theme) => ({
+export function skuSelectThemeByProps<
+  Type extends SelectType = 'base',
+  Option = TBaseOption,
+  IsMulti extends boolean = boolean,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(props: TSelectProps<Type, Option, IsMulti, Group>) {
+  return (theme: Theme) => ({
     ...theme,
     borderRadius: 5,
     colors: {
@@ -249,143 +229,4 @@ const skuSelectThemeByProps =
       neutral90: getThemeColor(props, 'textbody', colors.textbody),
     },
   });
-
-// duplicate styles to overide .resku global styles
-// : React.ForwardRefExoticComponent<SKUSelectProps & React.RefAttributes<BaseSelect>>
-//   React.ForwardRefExoticComponent<AdditionalSKUSelectProps & Omit<Pick<Props<unknown, boolean, GroupBase<unknown>>, "aria-errormessage" | "aria-invalid" | "aria-label" | ... 27 more ... | "form"> & InexactPartial<...> & InexactPartial<...>, StateManagedPropKeys> & Partial<...> & StateManagerAdditionalProps<...> & React.RefAttributes<...>>
-const SKUSelect = React.forwardRef<SelectInstance<unknown, boolean, GroupBase<unknown>>, SKUSelectProps>((
-  {noMargin, menuRelative, inPopup, error, ...props},
-  ref
-) => {
-  const skuSelectTheme = skuSelectThemeByProps(props);
-  const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
-  const selectStyleProps = {
-    ...props,
-    noMargin: noMargin,
-    menuRelative: menuRelative,
-    inPopup: inPopup,
-    error: error,
-    classNamePrefix: classNamePrefix,
-    theme: skuSelectTheme,
-  };
-  return <BaseSelect
-    ref={ref}
-    classNamePrefix={classNamePrefix}
-    {...(inPopup ? popupStyles as SelectProps : {})}
-    styles={skuSelectStyles(selectStyleProps)}
-    theme={skuSelectTheme}
-    {...props}
-  />
-});
-
-type LabeledSelectProp = SKUSelectProps & {
-  parentStyle?: React.CSSProperties,
-  labelStyle?: React.CSSProperties,
-  label?: string,
-  required?: boolean
-};
-const LabeledSelect = React.forwardRef<SelectInstance<unknown, boolean, GroupBase<unknown>>, LabeledSelectProp>(
-  ({ parentStyle, labelStyle, ...props }, ref) => (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
-      <SKUSelect {...props} ref={ref} />
-    </div>
-  )
-);
-
-const SKUCreatableSelect = React.forwardRef<SelectInstance, SKUCreatableSelectProps>(
-  ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
-    const skuSelectTheme = skuSelectThemeByProps(props);
-    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
-    const selectStyleProps = {
-      ...props,
-      noMargin: noMargin,
-      menuRelative: menuRelative,
-      inPopup: inPopup,
-      error: error,
-      classNamePrefix: classNamePrefix,
-      theme: skuSelectTheme,
-    };
-
-    return (
-      <BaseCreatableSelect
-        ref={ref}
-        classNamePrefix={classNamePrefix}
-        styles={skuSelectStyles(selectStyleProps)}
-        theme={skuSelectTheme}
-        {...props}
-        {...(inPopup ? popupStyles as CreatableProps<unknown, false, GroupBase<unknown>> : {})}
-      />
-    );
-  }
-);
-
-type LabeledCreatableSelectProps = SKUCreatableSelectProps & {
-  parentStyle?: React.CSSProperties,
-  labelStyle?: React.CSSProperties,
-  label?: string,
-  required?: boolean
-};
-const LabeledCreatableSelect = React.forwardRef<SelectInstance, LabeledCreatableSelectProps>(
-  ({ parentStyle, labelStyle, ...props }, ref) => (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
-      <SKUCreatableSelect {...props} ref={ref} />
-    </div>
-  )
-);
-
-
-const SKUAsyncSelect = React.forwardRef<SelectInstance, SKUAsyncSelectProps>(
-  ({noMargin, menuRelative, inPopup, error, ...props}, ref) => {
-    const skuSelectTheme = skuSelectThemeByProps(props);
-    const classNamePrefix = `${error ? 'select-error' : ''} commonsku-styles-select`;
-    const selectStyleProps = {
-      ...props,
-      noMargin: noMargin,
-      menuRelative: menuRelative,
-      inPopup: inPopup,
-      error: error,
-      classNamePrefix: classNamePrefix,
-      theme: skuSelectTheme,
-    };
-
-    return (
-      <BaseAsyncSelect 
-        ref={ref}
-        classNamePrefix={classNamePrefix}
-        styles={skuSelectStyles(selectStyleProps)}
-        theme={skuSelectTheme}
-        {...props}
-        {...(inPopup ? popupStyles as AsyncProps<unknown, false, GroupBase<unknown>> : {})}
-      />
-    );
-  }
-);
-
-type LabeledAsyncSelectProps = SKUAsyncSelectProps & {
-  parentStyle?: React.CSSProperties,
-  labelStyle?: React.CSSProperties,
-  label?: string,
-  required?: boolean
-};
-const LabeledAsyncSelect = React.forwardRef<SelectInstance, LabeledAsyncSelectProps>(
-  ({ parentStyle, labelStyle, ...props }, ref) => (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
-      <SKUAsyncSelect {...props} ref={ref} />
-    </div>
-  )
-);
-
-export {
-  SKUSelect as Select,
-  LabeledSelect,
-  SKUCreatableSelect as CreatableSelect,
-  LabeledCreatableSelect,
-  SKUAsyncSelect as AsyncSelect,
-  LabeledAsyncSelect,
-  components,
-  createFilter,
-  mergeStyles,
-};
+}
