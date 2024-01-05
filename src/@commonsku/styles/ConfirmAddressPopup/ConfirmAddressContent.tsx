@@ -10,7 +10,7 @@ import {
 } from "../AddressAutocomplete/utils";
 import { ConfirmAddressContentProps, TAddress, TSelectedValue } from "./types";
 import useConfirmAddress from "./useConfirmAddress";
-import { AlertIcon, WarnIcon } from "../icons";
+import { WarnIcon } from "../icons";
 import { fontStyles } from "../Theme";
 
 
@@ -123,7 +123,7 @@ export const ConfirmAddressContent = ({
                   verticalAlign: 'middle',
                   alignSelf: 'start',
                 }}>
-                  <WarnIcon size='large' color={'var(--color-yellow-90)'} />
+                  <WarnIcon size='medium' color={'var(--color-yellow-90)'} />
                 </div>
                 <Typography.Text bold
                   fontSize={fontStyles.p.large.fontSize}
