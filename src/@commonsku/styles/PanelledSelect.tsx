@@ -1,7 +1,7 @@
 import React, { ReactElement, Ref, forwardRef, useState, useMemo, useCallback, useEffect, useLayoutEffect, useRef, CSSProperties } from 'react';
 import { SKUSelectProps, Select } from './Select';
 import { Row, Col, useWindowSize, getThemeColor, colors } from '@commonsku/styles';
-import { ActionMeta, components, OptionProps, SelectInstance } from 'react-select'
+import { ActionMeta, components, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
 
 const menuContainerStyles: CSSProperties = {
     position: 'absolute',
@@ -24,15 +24,13 @@ type NestedOption<Option> = Option & {
     subOptions: Option[] | undefined
 }
 
-export interface PanelledSelectProps<Option> extends Omit<SKUSelectProps, 'value' | 'options' | 'onChange'> {
-    value?: NestedOption<Option>
-    subValue?: Option
+export interface PanelledSelectProps<
+    Option, 
+    IsMulti extends boolean,
+> extends Omit<SKUSelectProps, 'value' | 'options' | 'onChange'> {
+    value?: PropsValue<Option>
     options?: Array<NestedOption<Option>>
-    onChange?: (
-        newValue: NestedOption<Option> | undefined,
-        newSubValue: Option | undefined,
-        actionMeta: ActionMeta<Option>
-    ) => void
+    onChange?: (newValue: OnChangeValue<Option, IsMulti>, actionMeta: ActionMeta<Option>) => void
 }
 
 const ParentOption = <Option,>({setFocusedOption, ...props}: {
@@ -53,17 +51,16 @@ const ParentOption = <Option,>({setFocusedOption, ...props}: {
     );
 }
 
-const PanelledSelect = <Option,>(
+const PanelledSelect = <Option, IsMulti extends boolean>(
     {
         value,
-        subValue,
         options,
         onChange,
-        error,
         ...props
-    }: PanelledSelectProps<Option>,
+    }: PanelledSelectProps<Option, IsMulti>,
     ref?: Ref<SelectInstance>,
 ) => {
+    const { error, isMulti } = props;
     const [isOpen, setOpen] = useState(false);
     const [focusedOption, setFocusedOption] = useState<NestedOption<Option> | undefined>(undefined);
     const [menuHeight, setMenuHeight] = useState(0);
@@ -80,9 +77,9 @@ const PanelledSelect = <Option,>(
         if (controlRef.current != null) {
             setControlHeight(controlRef.current.offsetHeight);
         }
-    }, [windowSize, isOpen]);
+    }, [windowSize, isOpen, value]);
 
-    const hasSubOptions = useCallback((option: NestedOption<Option> | undefined) =>
+    const hasSubOptions = useCallback((option: NestedOption<Option>) =>
         option != null && option.subOptions != null && option.subOptions.length > 0
     , []);
 
@@ -94,45 +91,65 @@ const PanelledSelect = <Option,>(
         return undefined;
     }, [hasSubOptions, focusedOption]);
 
-    const onValueChange = (newValue: NestedOption<Option>, actionMeta: ActionMeta<Option>) => {
-        if (!hasSubOptions(newValue)) {    
-            setOpen(false);
+    const onValueChange = (newValue: OnChangeValue<NestedOption<Option>, IsMulti>, actionMeta: ActionMeta<Option>) => {        
+        if (onChange == null) return;
+        
+        if (isMulti) {
+            const singleValues = (newValue as MultiValue<NestedOption<Option>>)
+                .filter(opt => !hasSubOptions(opt));
 
-            if (onChange != null) {
-                onChange(newValue, undefined, actionMeta);
-            }
+            onChange(singleValues as OnChangeValue<Option, IsMulti>, actionMeta);
+            return;
+        }
+
+
+        if (!hasSubOptions(newValue as NestedOption<Option>)) {
+            onChange(newValue, actionMeta);
         }
     }
 
-    const onSubValueChange = (newSubValue: Option, actionMeta: ActionMeta<Option>) => {
-        if (onChange != null) {
-            onChange(focusedOption, newSubValue, actionMeta);
+    const onSubValueChange = (newSubValue: OnChangeValue<Option, IsMulti>, actionMeta: ActionMeta<Option>) => {
+        if (onChange == null) return;
+
+        if (isMulti) {
+            const newSubValues = Array.isArray(newSubValue)
+                ? (newSubValue as MultiValue<NestedOption<Option>>)
+                : [newSubValue];
+
+            const oldValues = Array.isArray(value)
+                ? value.filter(v => !newSubValues.includes(v)) as MultiValue<NestedOption<Option>>
+                : [value];
+
+            onChange([...oldValues, ...newSubValues] as OnChangeValue<Option, IsMulti>, actionMeta);
+            return;
         }
+        
+        onChange(newSubValue, actionMeta);
         setOpen(false);
     }
 
-    const renderParentOption = (props) => (
+    const renderParentOption = useCallback((props) => (
         <ParentOption setFocusedOption={setFocusedOption} {...props} />
-    );
+    ), [setFocusedOption]);
 
-    const renderMenu = (props) => (
+    const renderMenu = useCallback((props) => (
         <div style={menuContainerStyles} ref={menuRef}>
             <components.Menu {...props} />
         </div>
-    );
+    ), []);
 
-    const renderControl = (props) => (
+    const renderControl = useCallback((props) => (
         <div ref={controlRef}>
             <components.Control {...props} />
         </div>
-    );
+    ), []);
 
     return (
         <div>
             <Row>
                 <Col>
                     <Select
-                        value={hasSubOptions(value) ? subValue : value}
+                        value={value}
                         options={options}
                         onMenuOpen={() => setOpen(true)}
                         onMenuClose={() => setOpen(false)}
@@ -144,7 +161,7 @@ const PanelledSelect = <Option,>(
                             Control: renderControl,
                         }}
                         onChange={(newValue, actionMeta) =>
-                            onValueChange(newValue as NestedOption<Option>, actionMeta as ActionMeta<Option>)
+                            onValueChange(newValue as OnChangeValue<NestedOption<Option>, IsMulti>, actionMeta as ActionMeta<Option>)
                         }
                         menuStyles={menuStyles}
                         {...props}
@@ -153,14 +170,14 @@ const PanelledSelect = <Option,>(
                 <Col>
                     {currentSubOptions != null &&
                         <Select
-                            value={subValue}
+                            value={value}
                             options={currentSubOptions}
                             menuIsOpen={isOpen}
                             components={{
                                 Control: () => null
                             }}
                             onChange={(newValue, actionMeta) =>
-                                onSubValueChange(newValue as Option, actionMeta as ActionMeta<Option>)
+                                onSubValueChange(newValue as OnChangeValue<Option, IsMulti>, actionMeta as ActionMeta<Option>)
                             }
                             menuStyles={{
                                 ...subMenuStyles, 
@@ -178,8 +195,8 @@ const PanelledSelect = <Option,>(
     );
 };
 
-const ForwardedPanelledSelect = forwardRef(PanelledSelect) as <Option,>(
-    props: PanelledSelectProps<Option> & { 
+const ForwardedPanelledSelect = forwardRef(PanelledSelect) as <Option, IsMulti extends boolean>(
+    props: PanelledSelectProps<Option, IsMulti> & { 
         ref?: Ref<SelectInstance>
     }
 ) => ReactElement;

@@ -101,7 +101,7 @@ import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
-import { GroupBase, MenuListProps } from 'react-select';
+import { GroupBase, MenuListProps, OnChangeValue, SingleValue } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
@@ -131,9 +131,9 @@ const optionsWithSubOptions = [
       value: 'value'+i,
       label: 'value'+i,
       subOptions: (i % 2 === 0) ? [
-        { value: 'sub1', label: 'value' + i + ' > sub1' },
-        { value: 'sub2', label: 'value' + i + ' > sub2' },
-        { value: 'sub3', label: 'value' + i + ' > sub3' },
+        { value: 'sub1' + i, label: 'value' + i + ' > sub1' },
+        { value: 'sub2' + i, label: 'value' + i + ' > sub2' },
+        { value: 'sub3' + i, label: 'value' + i + ' > sub3' },
       ] : undefined,
     }
   ))),
@@ -414,12 +414,12 @@ const App = () => {
     {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
   const [stepperValue, setStepperValue] = useState<string | number>(6);
-  const [panelledSelectValue, setPanelledSelectValue] = useState<typeof optionsWithSubOptions[0] | undefined>(optionsWithSubOptions[0]);
-  const [panelledSelectSubValue, setPanelledSelectSubValue] = useState<{
+  const [panelledSelectValue, setPanelledSelectValue] = useState(optionsWithSubOptions[0].subOptions![0]);
+  const [panelledSelectMultiValue, setPanelledSelectMultiValue] = useState<Array<{
     value: string,
     label: string,
-  } | undefined>(
-    optionsWithSubOptions[0].subOptions![0]
+  }>>(
+    [optionsWithSubOptions[0].subOptions![0]]
   );
 
   useEffect(() => {
@@ -1605,14 +1605,28 @@ const App = () => {
                     ))),
                   ]}/>
 
+
+                <br />
+              </ demo.InnerContainer>
+
+              <demo.InnerContainer title="Panelled Select" id="panel-select">
                 <PanelledSelect
                   value={panelledSelectValue}
-                  subValue={panelledSelectSubValue}
                   options={optionsWithSubOptions}
-                  onChange={(newValue, newSubValue) => {
-                    setPanelledSelectValue(newValue);
-                    setPanelledSelectSubValue(newSubValue);
+                  onChange={(newValue) => setPanelledSelectValue(newValue as { value: string, label: string })}
+                />
+
+                <PanelledSelect
+                  value={panelledSelectMultiValue}
+                  options={optionsWithSubOptions}
+                  onChange={(newValue, actionMeta) => {
+                    if (Array.isArray(newValue)) {
+                      setPanelledSelectMultiValue(newValue);
+                    } else {
+                      setPanelledSelectMultiValue([newValue as { value: string, label: string }]);
+                    }
                   }}
+                  isMulti
                 />
 
                 <br />
