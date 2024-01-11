@@ -27,6 +27,7 @@ import {
     SidePanel,
     Tabs,
     Select,
+    PanelledSelect,
     components as selectComponents,
     LabeledSelect,
     LabeledProgress,
@@ -123,6 +124,20 @@ const options = [
   { value: 'others 4', label: 'Others 4' },
   { value: 'others 5', label: 'Others 5' },
 ]
+
+const optionsWithSubOptions = [
+  ...(Array(100).fill(1).map((v, i) => (
+    {
+      value: 'value'+i,
+      label: 'value'+i,
+      subOptions: (i % 2 === 0) ? [
+        { value: 'sub1', label: 'value' + i + ' > sub1' },
+        { value: 'sub2', label: 'value' + i + ' > sub2' },
+        { value: 'sub3', label: 'value' + i + ' > sub3' },
+      ] : undefined,
+    }
+  ))),
+];
 
 const statuses = [
   {
@@ -399,6 +414,13 @@ const App = () => {
     {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
   const [stepperValue, setStepperValue] = useState<string | number>(6);
+  const [panelledSelectValue, setPanelledSelectValue] = useState<typeof optionsWithSubOptions[0] | undefined>(optionsWithSubOptions[0]);
+  const [panelledSelectSubValue, setPanelledSelectSubValue] = useState<{
+    value: string,
+    label: string,
+  } | undefined>(
+    optionsWithSubOptions[0].subOptions![0]
+  );
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -1576,18 +1598,27 @@ const App = () => {
                   isDisabled
                 />
 
-                <LabeledSelect value={{ value: 'value4', label: 'value4', }}
+                <LabeledSelect value={{ value: 'value5', label: 'value5', }}
                   options={[
                     ...(Array(100).fill(1).map((v, i) => (
                       {value: 'value'+i, label: 'value'+i}
                     ))),
                   ]}/>
 
+                <PanelledSelect
+                  value={panelledSelectValue}
+                  subValue={panelledSelectSubValue}
+                  options={optionsWithSubOptions}
+                  onChange={(newValue, newSubValue) => {
+                    setPanelledSelectValue(newValue);
+                    setPanelledSelectSubValue(newSubValue);
+                  }}
+                />
 
                 <br />
               </ demo.InnerContainer>
 
-              <demo.InnerContainer title="InputStepper " id="input-stepper">
+              <demo.InnerContainer title="InputStepper" id="input-stepper">
                       <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
                       <InputStepper initialValue={0} />
                       {DemoCodeBlock({code: `<InputStepper />`})}
