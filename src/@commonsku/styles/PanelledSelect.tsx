@@ -135,7 +135,7 @@ const PanelledSelect = <Option,>(
                         value={hasSubOptions(value) ? subValue : value}
                         options={options}
                         onMenuOpen={() => setOpen(true)}
-                        onMenuClose={() => setOpen(true)}
+                        onMenuClose={() => setOpen(false)}
                         menuIsOpen={isOpen}
                         ref={ref}
                         components={{
