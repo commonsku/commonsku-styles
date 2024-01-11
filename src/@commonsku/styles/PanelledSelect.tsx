@@ -11,11 +11,13 @@ const menuContainerStyles: CSSProperties = {
 
 const menuStyles: CSSProperties = {
     position: 'relative',
+    marginBottom: 0,
 }
 
 const subMenuStyles: CSSProperties = {
     borderTop: '1px solid',
     borderTopRightRadius: '5px',
+    marginTop: 0,
 }
 
 type NestedOption<Option> = Option & {
