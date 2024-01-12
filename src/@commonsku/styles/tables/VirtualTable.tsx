@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo, useCallback, useState } from 'react';
+import React, {useRef, useLayoutEffect, useMemo, useCallback, useState, useEffect} from 'react';
 import {
   useTable,
   useSortBy,
@@ -6,10 +6,10 @@ import {
   SortingRule,
   Column,
   Cell,
-  useExpanded,
+  useExpanded, UseSortByState,
 } from 'react-table';
 import { VariableSizeList, ListOnScrollProps, ListChildComponentProps } from 'react-window';
-import {BaseSortByHeaderGroup, SortByHeaderGroup, SortState, TypedTableInstance} from './types';
+import {BaseSortByHeaderGroup, SortByHeaderGroup, TypedTableInstance} from './types';
 import {
   Row,
   TableOptions,
@@ -62,7 +62,7 @@ export type VirtualTableProps<
   rowGroupStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   rowStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   gutterSize?: number;
-  sortState?: SortState;
+  onSortChange?: (sortState: UseSortByState<RowType>) => void;
 };
 
 const VirtualTable = <
@@ -96,7 +96,7 @@ const VirtualTable = <
     gutterSize = 0,
     customTableFooterProps = {},
     TableFooter,
-    sortState
+    onSortChange,
   } = props;
 
   const defaultColumn = useMemo(
@@ -142,6 +142,7 @@ const VirtualTable = <
   const footerRef = useRef<HTMLDivElement | null>(null);
   const rowsRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
   const listRef = useRef<VariableSizeList | null>(null);
+  const { sortBy } = tableData.state as UseSortByState<RowType>;
 
   function resetList(index: number = 0) {
     listRef.current && listRef.current.resetAfterIndex(index);
@@ -301,17 +302,9 @@ const VirtualTable = <
   }, [onScroll]);
 
   const renderTableHeader = useCallback(() => {
-    const sortIconDirection = (column: BaseSortByHeaderGroup<RowType>) => {
-      return !sortState
-          ? column.isSorted
-              ? sortDirection(column)
-              : "updown"
-          : sortState.isSorted && sortState.id === column.id
-              ? sortState.orderDirection === "desc"
-                  ? "down"
-                  : "up"
-              : "updown";
-    };
+    const sortIconDirection = (column: BaseSortByHeaderGroup<RowType>) => column.isSorted
+        ? sortDirection(column)
+        : "updown";
 
     return (
         <div
@@ -356,10 +349,13 @@ const VirtualTable = <
     handleSort,
     headerGroups,
     hideHeader,
-    sortState,
     tableHeaderProps,
     tableWidth,
   ]);
+
+  useEffect(() => {
+    onSortChange && onSortChange({ sortBy });
+  }, [sortBy]);
 
   return (
       <div {...getTableProps()} className={`table ${className || ''}`}>
