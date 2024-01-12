@@ -50,3 +50,12 @@ export interface TypedTableInstance<D extends object = {}>
     headerGroups: Array<SortByHeaderGroup<D>>,
     footerGroups: Array<SortByHeaderGroup<D>>,
 };
+
+export interface SortState {
+    orderByField: string;
+    orderDirection: 'asc' | 'desc';
+    isSorted: boolean;
+    id: string;
+}
+
+
