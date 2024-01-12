@@ -50,5 +50,3 @@ export interface TypedTableInstance<D extends object = {}>
     headerGroups: Array<SortByHeaderGroup<D>>,
     footerGroups: Array<SortByHeaderGroup<D>>,
 };
-
-
