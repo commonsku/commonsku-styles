@@ -57,7 +57,6 @@ export type VirtualTableProps<
   hideHeader?: boolean;
   NoRowsFound?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   renderRowSubComponent?: <P = unknown>(props: React.PropsWithChildren<P>) => React.ReactElement;
-  onSort?: (value: { column: BaseSortByHeaderGroup<RowType> }) => void;
   onResize?: VoidFunction;
   rowGroupStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   rowStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
@@ -89,7 +88,6 @@ const VirtualTable = <
     className = '',
     NoRowsFound,
     renderRowSubComponent,
-    onSort,
     onResize,
     rowGroupStyles,
     rowStyles,
@@ -159,8 +157,7 @@ const VirtualTable = <
   const handleSort = useCallback((column: BaseSortByHeaderGroup<RowType>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
     column.toggleSortBy?.();
-    onSort && onSort({ column });
-  }, [onSort]);
+  }, []);
 
   function onListScroll(e: Event) {
     if (headerRef.current && e && e.target) {

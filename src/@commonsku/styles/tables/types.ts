@@ -38,7 +38,7 @@ export interface SortByTableOptions<D extends object = {}> extends Omit<TableOpt
 
 export interface TypedTableInstance<D extends object = {}>
     extends Omit<TableInstance<D>, 'rows' | 'headerGroups' | 'footerGroups'>,
-    Omit<UseExpandedInstanceProps<D>, keyof TableInstance<D>>
+        Omit<UseExpandedInstanceProps<D>, keyof TableInstance<D>>
 {
     rows: Array<
         Row<D>
