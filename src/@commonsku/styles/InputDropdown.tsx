@@ -104,16 +104,6 @@ const ForwardedInputDropdown = <
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  useEffect(() => {
-    if (isOpen !== undefined) {
-      setShowDropdown(isOpen);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
     function handleClick(e: Event) {
       if (!e.target || rootRef.current?.contains(e.target as Node)) {
         return;
@@ -127,6 +117,22 @@ const ForwardedInputDropdown = <
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  useEffect(() => {
+    if (isOpen !== undefined) {
+      setShowDropdown(isOpen);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (options.length > 0) {
+      setShowDropdown(true);
+    }
+  }, [options]);
 
   return (
     <Wrapper ref={rootRef}>
