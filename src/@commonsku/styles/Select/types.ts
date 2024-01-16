@@ -86,9 +86,7 @@ export type ForwardedSKUSelectProps<
   Option = TBaseOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
-> = Omit<SKUSelectProps<Option, IsMulti, Group>, 'value' | 'isMulti'> & {
-  value?: Option,
-  isMulti?: IsMulti,
+> = SKUSelectProps<Option, IsMulti, Group> & {
   ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
 };
 
@@ -96,9 +94,7 @@ export type ForwardedSKUCreatableSelectProps<
   Option = TBaseOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
-> = Omit<SKUCreatableSelectProps<Option, IsMulti, Group>, 'value' | 'isMulti'> & {
-  value?: Option,
-  isMulti?: IsMulti,
+> = SKUCreatableSelectProps<Option, IsMulti, Group> & {
   ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
 };
 
@@ -106,9 +102,7 @@ export type ForwardedSKUAsyncSelectProps<
   Option = TBaseOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
-> = Omit<SKUAsyncSelectProps<Option, IsMulti, Group>, 'value' | 'isMulti'> & {
-  value?: Option,
-  isMulti?: IsMulti,
+> = SKUAsyncSelectProps<Option, IsMulti, Group> & {
   ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
 };
 
@@ -116,9 +110,7 @@ export type ForwardedLabeledSelectProps<
   Option = TBaseOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
-> = Omit<LabeledSelectProps<Option, IsMulti, Group>, 'value' | 'isMulti'> & {
-  value?: Option,
-  isMulti?: IsMulti,
+> = LabeledSelectProps<Option, IsMulti, Group> & {
   ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
 };
 
@@ -126,9 +118,7 @@ export type ForwardedLabeledAsyncSelectProps<
   Option = TBaseOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
-> = Omit<LabeledAsyncSelectProps<Option, IsMulti, Group>, 'value' | 'isMulti'> & {
-  value?: Option,
-  isMulti?: IsMulti,
+> = LabeledAsyncSelectProps<Option, IsMulti, Group> & {
   ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
 };
 
@@ -136,8 +126,6 @@ export type ForwardedLabeledCreatableSelectProps<
   Option = TBaseOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
-> = Omit<LabeledCreatableSelectProps<Option, IsMulti, Group>, 'value' | 'isMulti'> & {
-  value?: Option,
-  isMulti?: IsMulti,
+> = LabeledCreatableSelectProps<Option, IsMulti, Group> & {
   ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
 };

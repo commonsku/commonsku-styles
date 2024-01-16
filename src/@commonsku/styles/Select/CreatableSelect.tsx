@@ -1,5 +1,5 @@
 import React from 'react'
-import { GroupBase, } from 'react-select'
+import { GroupBase, SelectInstance, } from 'react-select'
 import BaseCreatableSelect, { CreatableProps } from 'react-select/creatable'
 import { Label } from '../Label';
 import { ForwardedSKUCreatableSelectProps, ForwardedLabeledCreatableSelectProps, TBaseOption } from './types';
@@ -9,16 +9,18 @@ function ForwardedSKUCreatableSelect<
   Option = TBaseOption,
   IsMulti extends boolean = boolean,
   Group extends GroupBase<Option> = GroupBase<Option>
->({
-  ref,
-  noMargin,
-  menuRelative,
-  inPopup,
-  error,
-  value,
-  isMulti,
-  ...props
-}: ForwardedSKUCreatableSelectProps<Option, IsMulti, Group>) {
+>(
+  {
+    noMargin,
+    menuRelative,
+    inPopup,
+    error,
+    value,
+    isMulti,
+    ...props
+  }: Omit<ForwardedSKUCreatableSelectProps<Option, IsMulti, Group>, 'ref'>,
+  ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
+) {
   const skuSelectTheme = skuSelectThemeByProps<'create', Option, IsMulti, Group>({
     value,
     isMulti,
@@ -51,22 +53,6 @@ function ForwardedSKUCreatableSelect<
   );
 }
 
-function ForwardedLabeledCreatableSelect<
-  Option = TBaseOption,
-  IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
->({
-  ref, parentStyle, labelStyle, ...props
-}: ForwardedLabeledCreatableSelectProps<Option, IsMulti, Group>) {
-  return (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
-      <SKUCreatableSelect {...props} ref={ref} />
-    </div>
-  );
-}
-
-
 export const SKUCreatableSelect = React.forwardRef(ForwardedSKUCreatableSelect) as <
   Option = TBaseOption,
   IsMulti extends boolean = false,
@@ -74,6 +60,23 @@ export const SKUCreatableSelect = React.forwardRef(ForwardedSKUCreatableSelect) 
 >(
   props: ForwardedSKUCreatableSelectProps<Option, IsMulti, Group>
 ) => ReturnType<typeof ForwardedSKUCreatableSelect>;
+
+
+function ForwardedLabeledCreatableSelect<
+  Option = TBaseOption,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(
+  { parentStyle, labelStyle, ...props }: Omit<ForwardedLabeledCreatableSelectProps<Option, IsMulti, Group>, 'ref'>,
+  ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
+) {
+  return (
+    <div style={parentStyle}>
+      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
+      <SKUCreatableSelect {...props} ref={ref} />
+    </div>
+  );
+}
 
 export const LabeledCreatableSelect = React.forwardRef(ForwardedLabeledCreatableSelect) as <
   Option = TBaseOption,

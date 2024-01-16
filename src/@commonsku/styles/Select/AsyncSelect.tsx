@@ -1,5 +1,5 @@
 import React from 'react'
-import { GroupBase, } from 'react-select'
+import { GroupBase, SelectInstance, } from 'react-select'
 import BaseAsyncSelect, { AsyncProps } from 'react-select/async'
 import { Label } from '../Label';
 import { ForwardedSKUAsyncSelectProps, ForwardedLabeledAsyncSelectProps, TBaseOption } from './types';
@@ -9,16 +9,18 @@ function ForwardedSKUAsyncSelect<
   Option = TBaseOption,
   IsMulti extends boolean = boolean,
   Group extends GroupBase<Option> = GroupBase<Option>
->({
-  ref,
-  noMargin,
-  menuRelative,
-  inPopup,
-  error,
-  value,
-  isMulti,
-  ...props
-}: ForwardedSKUAsyncSelectProps<Option, IsMulti, Group>) {
+>(
+  {
+    noMargin,
+    menuRelative,
+    inPopup,
+    error,
+    value,
+    isMulti,
+    ...props
+  }: Omit<ForwardedSKUAsyncSelectProps<Option, IsMulti, Group>, 'ref'>,
+  ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
+) {
   const skuSelectTheme = skuSelectThemeByProps<'async', Option, IsMulti, Group>({
     value,
     isMulti,
@@ -51,22 +53,6 @@ function ForwardedSKUAsyncSelect<
   );
 }
 
-function ForwardedLabeledAsyncSelect<
-  Option = TBaseOption,
-  IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
->({
-  ref, parentStyle, labelStyle, ...props
-}: ForwardedLabeledAsyncSelectProps<Option, IsMulti, Group>) {
-  return (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
-      <SKUAsyncSelect {...props} ref={ref} />
-    </div>
-  );
-}
-
-
 export const SKUAsyncSelect = React.forwardRef(ForwardedSKUAsyncSelect) as <
   Option = TBaseOption,
   IsMulti extends boolean = false,
@@ -74,6 +60,23 @@ export const SKUAsyncSelect = React.forwardRef(ForwardedSKUAsyncSelect) as <
 >(
   props: ForwardedSKUAsyncSelectProps<Option, IsMulti, Group>
 ) => ReturnType<typeof ForwardedSKUAsyncSelect>;
+
+
+function ForwardedLabeledAsyncSelect<
+  Option = TBaseOption,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(
+  { parentStyle, labelStyle, ...props }: Omit<ForwardedLabeledAsyncSelectProps<Option, IsMulti, Group>, 'ref'>,
+  ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
+) {
+  return (
+    <div style={parentStyle}>
+      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
+      <SKUAsyncSelect {...props} ref={ref} />
+    </div>
+  );
+}
 
 export const LabeledAsyncSelect = React.forwardRef(ForwardedLabeledAsyncSelect) as <
   Option = TBaseOption,

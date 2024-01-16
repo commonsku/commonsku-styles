@@ -1,5 +1,5 @@
 import React from 'react'
-import { GroupBase, } from 'react-select'
+import { GroupBase, SelectInstance, } from 'react-select'
 import BaseSelect, { Props } from 'react-select'
 import { ForwardedLabeledSelectProps, ForwardedSKUSelectProps, TBaseOption } from './types';
 import { popupStyles, skuSelectStyles, skuSelectThemeByProps } from './utils';
@@ -10,7 +10,6 @@ function ForwardedSKUSelect<
   IsMulti extends boolean = boolean,
   Group extends GroupBase<Option> = GroupBase<Option>
 >({
-  ref,
   noMargin,
   menuRelative,
   inPopup,
@@ -18,7 +17,7 @@ function ForwardedSKUSelect<
   value,
   isMulti,
   ...props
-}: ForwardedSKUSelectProps<Option, IsMulti, Group>) {
+}: Omit<ForwardedSKUSelectProps<Option, IsMulti, Group>, 'ref'>, ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>) {
   const skuSelectTheme = skuSelectThemeByProps<'base', Option, IsMulti, Group>({
     value,
     isMulti,
@@ -51,22 +50,6 @@ function ForwardedSKUSelect<
   );
 }
 
-function ForwardedLabeledSelect<
-  Option = TBaseOption,
-  IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
->({
-  ref, parentStyle, labelStyle, ...props
-}: ForwardedLabeledSelectProps<Option, IsMulti, Group>) {
-  return (
-    <div style={parentStyle}>
-      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
-      <SKUSelect {...props} ref={ref} />
-    </div>
-  );
-}
-
-
 export const SKUSelect = React.forwardRef(ForwardedSKUSelect) as <
   Option = TBaseOption,
   IsMulti extends boolean = false,
@@ -74,6 +57,23 @@ export const SKUSelect = React.forwardRef(ForwardedSKUSelect) as <
 >(
   props: ForwardedSKUSelectProps<Option, IsMulti, Group>
 ) => ReturnType<typeof ForwardedSKUSelect>;
+
+
+function ForwardedLabeledSelect<
+  Option = TBaseOption,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(
+  { parentStyle, labelStyle, ...props }: Omit<ForwardedLabeledSelectProps<Option, IsMulti, Group>, 'ref'>,
+  ref?: React.ForwardedRef<SelectInstance<Option, IsMulti, Group>>
+) {
+  return (
+    <div style={parentStyle}>
+      <Label htmlFor={props.name} style={labelStyle}>{props.label} {props.required && '*'}</Label>
+      <SKUSelect {...props} ref={ref} />
+    </div>
+  );
+}
 
 export const LabeledSelect = React.forwardRef(ForwardedLabeledSelect) as <
   Option = TBaseOption,
