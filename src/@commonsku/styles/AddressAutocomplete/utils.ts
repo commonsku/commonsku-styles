@@ -123,17 +123,14 @@ export const parseAddressComponents = (address_components: google.maps.GeocoderA
   const prov = address_components.find(v => v.types.includes('administrative_area_level_1'))?.short_name || '';
   const country = address_components.find(v => v.types.includes('country'))?.long_name || '';
   const postal = address_components.find(v => v.types.includes('postal_code'))?.long_name || '';
-  let address_line_2 = getAddressCityAndState({ city, state: prov });
-  if (address_line_2.endsWith(',')) {
-    address_line_2 = address_line_2.slice(0, address_line_2.length-1);
-  }
+  const subpremise = address_components.find(v => v.types.includes('subpremise'))?.long_name || '';
 
   return {
     street_number,
     route,
     address_line_1: `${street_number} ${route}`.trim(),
-    address_line_2: address_line_2,
-    address_line_3: getAddressPostalCodeAndCountry({ postal, country }),
+    address_line_2: subpremise.trim(),
+    address_line_3: '',
     address_city: city,
     address_country: country,
     address_state: prov,
