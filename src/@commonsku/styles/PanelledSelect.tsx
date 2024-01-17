@@ -1,8 +1,10 @@
 import React, { ReactElement, Ref, forwardRef, useState, useMemo, useCallback, useEffect, useLayoutEffect, useRef, CSSProperties, ComponentType } from 'react';
 import { SKUSelectProps, Select } from './Select';
-import { Row, Col, useWindowSize, getThemeColor, colors } from '@commonsku/styles';
+import { Row, Col } from './FlexboxGrid';
 import { ActionMeta, components as selectComponents, ControlProps, GroupBase, MenuProps, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
 import { toArray } from '@commonsku/utils';
+import { useWindowSize } from './hooks';
+import { colors, getThemeColor } from './Theme';
 
 const menuContainerStyles: CSSProperties = {
     position: 'absolute',
