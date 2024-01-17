@@ -2,6 +2,7 @@ import React, { ReactElement, Ref, forwardRef, useState, useMemo, useCallback, u
 import { SKUSelectProps, Select } from './Select';
 import { Row, Col, useWindowSize, getThemeColor, colors } from '@commonsku/styles';
 import { ActionMeta, components as selectComponents, ControlProps, GroupBase, MenuProps, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
+import { toArray } from '@commonsku/utils';
 
 const menuContainerStyles: CSSProperties = {
     position: 'absolute',
@@ -159,9 +160,7 @@ const BasePanelledSelect = <
         console.log(newSubValue, actionMeta);
 
         if (isMulti) {
-            const multiValue = Array.isArray(newSubValue)
-                ? newSubValue as MultiValue<Option>
-                : [newSubValue] as MultiValue<Option>;
+            const multiValue = toArray(newSubValue) as MultiValue<Option>;
 
             const oldValues = Array.isArray(value)
                 ? value.filter(v => !multiValue.includes(v))
