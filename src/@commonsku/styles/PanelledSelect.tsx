@@ -131,8 +131,8 @@ const BasePanelledSelect = <
     const onValueChange = (
         newValue: OnChangeValue<NestedOption<Option>, IsMulti>,
         actionMeta: ActionMeta<NestedOption<Option>>,
-    ) => {        
-        if (onChange == null || value == null) return;
+    ) => {
+        if (onChange == null) return;
         
         if (newValue == null) {
             onChange(newValue, actionMeta);
@@ -155,18 +155,21 @@ const BasePanelledSelect = <
         newSubValue: OnChangeValue<Option, IsMulti>,
         actionMeta: ActionMeta<Option>,
     ) => {
-        if (onChange == null || value == null) return;
+        if (onChange == null) return;
 
         console.log(newSubValue, actionMeta);
 
         if (isMulti) {
             const multiValue = toArray(newSubValue) as MultiValue<Option>;
+            let newValues;
 
-            const oldValues = Array.isArray(value)
-                ? value.filter(v => !multiValue.includes(v))
-                : [value];
-
-            const newValues = [...oldValues, ...multiValue] as OnChangeValue<Option, IsMulti>;
+            if (value != null && Array.isArray(value)) {
+                newValues = [...multiValue, ...value.filter(v => !multiValue.includes(v))];
+            } else if (value != null) {
+                newValues = [...multiValue, value];
+            } else {
+                newValues = [...multiValue];
+            }
 
             onChange(newValues, actionMeta);
             return;
