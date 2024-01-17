@@ -373,7 +373,7 @@ const SelectCustomOption = <IsMulti extends boolean = false>
         backgroundColor: teal[50],
         borderRadius: '50%',
         padding: "0px 4px",
-        marginRight: 8 
+        marginRight: 8,
       }}>
         {data.index}
       </span>
