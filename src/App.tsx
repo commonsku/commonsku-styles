@@ -305,11 +305,11 @@ const tableData = [
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ]
 
-function SelectMenuList<
+const SelectMenuList = <
   Option = unknown,
-  IsMulti extends boolean = boolean,
-  Group extends GroupBase<Option> = GroupBase<Option>
->(props: MenuListProps<Option, IsMulti, Group>) {
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>,
+>(props: MenuListProps<Option, IsMulti, Group>) => {
   return (
     <selectComponents.MenuList {...props}>
       {props.children}
@@ -414,7 +414,12 @@ const App = () => {
     {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
   const [stepperValue, setStepperValue] = useState<string | number>(6);
-  const [panelledSelectValue, setPanelledSelectValue] = useState(optionsWithSubOptions[0].subOptions![0]);
+  const [panelledSelectValue, setPanelledSelectValue] = useState<
+    {
+      value: string,
+      label: string,
+    } | null
+  >(optionsWithSubOptions[0].subOptions![0]);
   const [panelledSelectMultiValue, setPanelledSelectMultiValue] = useState<Array<{
     value: string,
     label: string,
@@ -1613,19 +1618,14 @@ const App = () => {
                 <PanelledSelect
                   value={panelledSelectValue}
                   options={optionsWithSubOptions}
-                  onChange={(newValue) => setPanelledSelectValue(newValue as { value: string, label: string })}
+                  onChange={setPanelledSelectValue}
                 />
 
                 <PanelledSelect
                   value={panelledSelectMultiValue}
                   options={optionsWithSubOptions}
-                  onChange={(newValue, actionMeta) => {
-                    if (Array.isArray(newValue)) {
-                      setPanelledSelectMultiValue(newValue);
-                    } else {
-                      setPanelledSelectMultiValue([newValue as { value: string, label: string }]);
-                    }
-                  }}
+                  onChange={(newValues) => setPanelledSelectMultiValue([...newValues])}
+                  components={{ MenuList: SelectMenuList }}
                   isMulti
                 />
 
