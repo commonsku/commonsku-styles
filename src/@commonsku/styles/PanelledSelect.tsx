@@ -132,7 +132,7 @@ const BasePanelledSelect = <
         newValue: OnChangeValue<NestedOption<Option>, IsMulti>,
         actionMeta: ActionMeta<NestedOption<Option>>,
     ) => {        
-        if (onChange == null) return;
+        if (onChange == null || value == null) return;
         
         if (newValue == null) {
             onChange(newValue, actionMeta);
@@ -155,7 +155,7 @@ const BasePanelledSelect = <
         newSubValue: OnChangeValue<Option, IsMulti>,
         actionMeta: ActionMeta<Option>,
     ) => {
-        if (onChange == null) return;
+        if (onChange == null || value == null) return;
 
         console.log(newSubValue, actionMeta);
 
