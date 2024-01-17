@@ -2,9 +2,9 @@ import React, { ReactElement, Ref, forwardRef, useState, useMemo, useCallback, u
 import { SKUSelectProps, Select } from './Select';
 import { Row, Col } from './FlexboxGrid';
 import { ActionMeta, components as selectComponents, ControlProps, GroupBase, MenuProps, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
-import { toArray } from '@commonsku/utils';
 import { useWindowSize } from './hooks';
 import { colors, getThemeColor } from './Theme';
+import { toArray } from '../utils';
 
 const menuContainerStyles: CSSProperties = {
     position: 'absolute',
@@ -172,7 +172,7 @@ const BasePanelledSelect = <
                 newValues = [...multiValue];
             }
 
-            onChange(newValues, actionMeta);
+            onChange(newValues as OnChangeValue<Option, IsMulti>, actionMeta);
             return;
         }
 
