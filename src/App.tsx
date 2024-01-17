@@ -364,10 +364,10 @@ const SelectCustomOption = <IsMulti extends boolean = false>
     <div ref={innerRef} {...innerProps} style={{
       padding: 12,
       cursor: 'pointer',
-      ...innerProps.style,
       backgroundColor: isSelected 
         ? teal[60] 
-        : isFocused ? '#E1F7FA' : 'initial',
+        : isFocused ? '#E1F7FA' : undefined,
+      ...innerProps.style,
     }}>
       <span style={{
         backgroundColor: teal[50],
