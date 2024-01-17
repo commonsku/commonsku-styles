@@ -158,8 +158,6 @@ const BasePanelledSelect = <
     ) => {
         if (onChange == null) return;
 
-        console.log(newSubValue, actionMeta);
-
         if (isMulti) {
             const multiValue = toArray(newSubValue) as MultiValue<Option>;
             let newValues;
@@ -239,6 +237,7 @@ const BasePanelledSelect = <
                         onChange={onValueChange}
                         menuStyles={menuStyles}
                         hideSelectedOptions={hideSelectedOptions}
+                        closeMenuOnSelect={props.closeMenuOnSelect ?? !isMulti}
                         {...props}
                     />
                 </Col>
@@ -262,6 +261,7 @@ const BasePanelledSelect = <
                                     : getThemeColor(props, 'select.active.border', colors.select.active.border),
                             }}
                             hideSelectedOptions={hideSelectedOptions}
+                            closeMenuOnSelect={props.closeMenuOnSelect ?? !isMulti}
                             isMulti={props.isMulti}
                             {...subMenuProps}
                         />
