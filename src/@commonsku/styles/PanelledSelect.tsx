@@ -93,6 +93,7 @@ const BasePanelledSelect = <
         onChange,
         subMenuProps,
         components,
+        hideSelectedOptions = false,
         ...props
     }: PanelledSelectProps<Option, IsMulti, Group>,
     ref?: Ref<SelectInstance<NestedOption<Option>, IsMulti, GroupBase<NestedOption<Option>>>>,
@@ -237,6 +238,7 @@ const BasePanelledSelect = <
                         }}
                         onChange={onValueChange}
                         menuStyles={menuStyles}
+                        hideSelectedOptions={hideSelectedOptions}
                         {...props}
                     />
                 </Col>
@@ -259,6 +261,7 @@ const BasePanelledSelect = <
                                     ? getThemeColor(props, 'select.error.border', colors.select.error.border)
                                     : getThemeColor(props, 'select.active.border', colors.select.active.border),
                             }}
+                            hideSelectedOptions={hideSelectedOptions}
                             isMulti={props.isMulti}
                             {...subMenuProps}
                         />
