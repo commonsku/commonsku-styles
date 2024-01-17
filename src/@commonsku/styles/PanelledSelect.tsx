@@ -4,7 +4,6 @@ import { Row, Col } from './FlexboxGrid';
 import { ActionMeta, components as selectComponents, ControlProps, GroupBase, MenuProps, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
 import { useWindowSize } from './hooks';
 import { colors, getThemeColor } from './Theme';
-import { toArray } from '../utils';
 
 const menuContainerStyles: CSSProperties = {
     position: 'absolute',
@@ -95,8 +94,8 @@ const BasePanelledSelect = <
         onChange,
         subMenuProps,
         components,
+        closeMenuOnSelect,
         hideSelectedOptions = false,
-        closeMenuOnSelect = false,
         ...props
     }: PanelledSelectProps<Option, IsMulti, Group>,
     ref?: Ref<SelectInstance<NestedOption<Option>, IsMulti, GroupBase<NestedOption<Option>>>>,
@@ -152,7 +151,10 @@ const BasePanelledSelect = <
 
         if (!hasSubOptions(newValue as NestedOption<Option>)) {
             onChange(newValue, actionMeta);
-            setOpen(false);
+
+            if (closeMenuOnSelect ?? !isMulti) {
+                setOpen(false);
+            }
         }
     }
 
@@ -164,7 +166,7 @@ const BasePanelledSelect = <
             onChange(newSubValue, actionMeta);
         }
 
-        if (!isMulti) {
+        if (closeMenuOnSelect ?? !isMulti) {
             setOpen(false);
         }
     }
@@ -228,7 +230,7 @@ const BasePanelledSelect = <
                         onChange={onValueChange}
                         menuStyles={menuStyles}
                         hideSelectedOptions={hideSelectedOptions}
-                        closeMenuOnSelect={closeMenuOnSelect}
+                        closeMenuOnSelect={false}
                         {...props}
                     />
                 </Col>
@@ -248,8 +250,8 @@ const BasePanelledSelect = <
                                     : getThemeColor(props, 'select.active.border', colors.select.active.border),
                             }}
                             hideSelectedOptions={hideSelectedOptions}
-                            closeMenuOnSelect={closeMenuOnSelect}
-                            isMulti={props.isMulti}
+                            closeMenuOnSelect={false}
+                            isMulti={isMulti}
                             {...subMenuProps}
                             components={{
                                 Control: () => null,
