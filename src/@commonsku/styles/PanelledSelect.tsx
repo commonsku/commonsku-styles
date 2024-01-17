@@ -96,6 +96,7 @@ const BasePanelledSelect = <
         subMenuProps,
         components,
         hideSelectedOptions = false,
+        closeMenuOnSelect = false,
         ...props
     }: PanelledSelectProps<Option, IsMulti, Group>,
     ref?: Ref<SelectInstance<NestedOption<Option>, IsMulti, GroupBase<NestedOption<Option>>>>,
@@ -151,6 +152,7 @@ const BasePanelledSelect = <
 
         if (!hasSubOptions(newValue as NestedOption<Option>)) {
             onChange(newValue, actionMeta);
+            setOpen(false);
         }
     }
 
@@ -158,26 +160,13 @@ const BasePanelledSelect = <
         newSubValue: OnChangeValue<Option, IsMulti>,
         actionMeta: ActionMeta<Option>,
     ) => {
-        if (onChange == null) return;
-
-        if (isMulti) {
-            const multiValue = toArray(newSubValue) as MultiValue<Option>;
-            let newValues;
-
-            if (value != null && Array.isArray(value)) {
-                newValues = [...multiValue, ...value.filter(v => !multiValue.includes(v))];
-            } else if (value != null) {
-                newValues = [...multiValue, value];
-            } else {
-                newValues = [...multiValue];
-            }
-
-            onChange(newValues as OnChangeValue<Option, IsMulti>, actionMeta);
-            return;
+        if (onChange != null) {
+            onChange(newSubValue, actionMeta);
         }
 
-        onChange(newSubValue, actionMeta);
-        setOpen(false);
+        if (!isMulti) {
+            setOpen(false);
+        }
     }
 
     const renderParentOption = useCallback((
@@ -239,7 +228,7 @@ const BasePanelledSelect = <
                         onChange={onValueChange}
                         menuStyles={menuStyles}
                         hideSelectedOptions={hideSelectedOptions}
-                        closeMenuOnSelect={props.closeMenuOnSelect ?? !isMulti}
+                        closeMenuOnSelect={closeMenuOnSelect}
                         {...props}
                     />
                 </Col>
@@ -259,7 +248,7 @@ const BasePanelledSelect = <
                                     : getThemeColor(props, 'select.active.border', colors.select.active.border),
                             }}
                             hideSelectedOptions={hideSelectedOptions}
-                            closeMenuOnSelect={props.closeMenuOnSelect ?? !isMulti}
+                            closeMenuOnSelect={closeMenuOnSelect}
                             isMulti={props.isMulti}
                             {...subMenuProps}
                             components={{

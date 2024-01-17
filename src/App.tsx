@@ -101,7 +101,7 @@ import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
-import { GroupBase, MenuListProps, OptionProps, components } from 'react-select';
+import { GroupBase, MenuListProps, MultiValueGenericProps, OptionProps, components } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, green, navy, neutrals, pink, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
@@ -115,42 +115,63 @@ const initialState = {
 };
 
 interface ExampleParentOption {
-  type: 'value'
+  type: 'parent'
   value: string
   label: string
   subOptions?: ExampleSubOption[]
 };
 
 interface ExampleSubOption {
-  type: 'index'
+  type: 'sub'
   index: number
   value: string
   label: string
+  Component?: (props: ExampleSubOption) => JSX.Element
 };
 
 type ExampleOption = ExampleParentOption | ExampleSubOption;
 
+const RenderSubOption = ({index, label}: ExampleSubOption) => (
+  <div>
+    <span style={{
+      backgroundColor: teal[50],
+      borderRadius: '50%',
+      padding: "0px 4px",
+      marginRight: 8,
+    }}>
+      {index}
+    </span>
+    {label}
+  </div>
+);
+
 const options: ExampleOption[] = [
-  { type: 'value', value: 'skucon', label: 'Skucon' },
-  { type: 'value', value: 'skucamp', label: 'Skucamp' },
-  { type: 'value', value: 'others', label: 'Others' },
-  { type: 'value', value: 'others 1', label: 'Others 1' },
-  { type: 'value', value: 'others 2', label: 'Others 2' },
-  { type: 'value', value: 'others 3', label: 'Others 3' },
-  { type: 'value', value: 'others 4', label: 'Others 4' },
-  { type: 'value', value: 'others 5', label: 'Others 5' },
+  { type: 'parent', value: 'skucon', label: 'Skucon' },
+  { type: 'parent', value: 'skucamp', label: 'Skucamp' },
+  { type: 'parent', value: 'others', label: 'Others' },
+  { type: 'parent', value: 'others 1', label: 'Others 1' },
+  { type: 'parent', value: 'others 2', label: 'Others 2' },
+  { type: 'parent', value: 'others 3', label: 'Others 3' },
+  { type: 'parent', value: 'others 4', label: 'Others 4' },
+  { type: 'parent', value: 'others 5', label: 'Others 5' },
 ];
 
 const optionsWithSubOptions: ExampleParentOption[] = [
-  ...(Array(100).fill(1).map((v, i) => (
+  ...(Array(100).fill(1).map((_, i) => (
     {
-      type: 'value' as const,
+      type: 'parent' as const,
       value: 'value'+i,
-      label: 'value'+i,
+      label: ((i % 2 === 0) ? 'category' : 'value') + ' ' + i,
       subOptions: (i % 2 === 0) ? [
-        { type: 'index' as const, index: 1, value: 'sub1' + i, label: 'value' + i + ' sub' + 1 },
-        { type: 'index' as const, index: 2, value: 'sub2' + i, label: 'value' + i + ' sub' + 2 },
-        { type: 'index' as const, index: 3, value: 'sub3' + i, label: 'value' + i + ' sub' + 3 },
+        ...(Array(5).fill(1).map((_, j) => (
+          {
+            type: 'sub' as const,
+            index: j,
+            value: i + 'sub' + j,
+            label: `[Category ${i}] value ${j}`,
+            Component: RenderSubOption,
+          }
+        ))),
       ] : undefined,
     }
   ))),
@@ -354,7 +375,7 @@ const SelectCustomOption = <IsMulti extends boolean = false>
 ) => {
   const { data, isFocused, isSelected, innerProps, innerRef } = props;
 
-  if (data.type !== 'index') {
+  if (data.type !== 'sub') {
     return (
       <components.Option {...props} />
     );
@@ -369,16 +390,27 @@ const SelectCustomOption = <IsMulti extends boolean = false>
         : isFocused ? '#E1F7FA' : undefined,
       ...innerProps.style,
     }}>
-      <span style={{
-        backgroundColor: teal[50],
-        borderRadius: '50%',
-        padding: "0px 4px",
-        marginRight: 8,
-      }}>
-        {data.index}
-      </span>
-      Custom Option for {data.label}
+      {data.Component != null
+        ? <data.Component {...data} />
+        : data.label
+      }
     </div>
+  );
+};
+
+const SelectCustomMultiValueLabel = (
+  props: MultiValueGenericProps<ExampleOption>
+) => {
+  const { data } = props;
+
+  if (data.type !== 'sub' || data.Component == null) {
+    return (
+      <components.MultiValueLabel {...props} />
+    );
+  }
+
+  return (
+    <data.Component {...data} />
   );
 };
 
@@ -1670,7 +1702,10 @@ const App = () => {
                   value={panelledSelectMultiValue}
                   options={optionsWithSubOptions}
                   onChange={(newValues) => setPanelledSelectMultiValue([...newValues])}
-                  components={{MenuList: SelectMenuList }}
+                  components={{
+                    MenuList: SelectMenuList,
+                    MultiValueLabel: SelectCustomMultiValueLabel,
+                  }}
                   subMenuProps={{
                     components: {
                       Option: SelectCustomOption,
