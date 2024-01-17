@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo, useCallback, useState } from 'react';
+import React, {useRef, useLayoutEffect, useMemo, useCallback, useState, useEffect} from 'react';
 import {
   useTable,
   useSortBy,
@@ -6,10 +6,10 @@ import {
   SortingRule,
   Column,
   Cell,
-  useExpanded,
+  useExpanded, UseSortByState,
 } from 'react-table';
 import { VariableSizeList, ListOnScrollProps, ListChildComponentProps } from 'react-window';
-import { BaseSortByHeaderGroup, SortByHeaderGroup, TypedTableInstance } from './types';
+import {BaseSortByHeaderGroup, SortByHeaderGroup, TypedTableInstance} from './types';
 import {
   Row,
   TableOptions,
@@ -57,11 +57,11 @@ export type VirtualTableProps<
   hideHeader?: boolean;
   NoRowsFound?: (props: React.PropsWithChildren<{ [key: string]: any }>) => React.ReactElement;
   renderRowSubComponent?: <P = unknown>(props: React.PropsWithChildren<P>) => React.ReactElement;
-  onSort?: (value: { column: BaseSortByHeaderGroup<RowType> }) => void;
   onResize?: VoidFunction;
   rowGroupStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   rowStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   gutterSize?: number;
+  onSortChange?: (sortState: UseSortByState<RowType>) => void;
 };
 
 const VirtualTable = <
@@ -88,13 +88,13 @@ const VirtualTable = <
     className = '',
     NoRowsFound,
     renderRowSubComponent,
-    onSort,
     onResize,
     rowGroupStyles,
     rowStyles,
     gutterSize = 0,
     customTableFooterProps = {},
     TableFooter,
+    onSortChange,
   } = props;
 
   const defaultColumn = useMemo(
@@ -140,6 +140,7 @@ const VirtualTable = <
   const footerRef = useRef<HTMLDivElement | null>(null);
   const rowsRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
   const listRef = useRef<VariableSizeList | null>(null);
+  const { sortBy } = tableData.state as UseSortByState<RowType>;
 
   function resetList(index: number = 0) {
     listRef.current && listRef.current.resetAfterIndex(index);
@@ -156,8 +157,7 @@ const VirtualTable = <
   const handleSort = useCallback((column: BaseSortByHeaderGroup<RowType>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
     column.toggleSortBy?.();
-    onSort && onSort({ column });
-  }, [onSort]);
+  }, []);
 
   function onListScroll(e: Event) {
     if (headerRef.current && e && e.target) {
@@ -197,7 +197,7 @@ const VirtualTable = <
           ...style,
           ...(rowGroupStyles ? rowGroupStyles({row, style}) : {}),
           minWidth: totalColumnsWidth,
-          width: '100%', 
+          width: '100%',
         }}
       >
           <div className="tr" style={rowStyles ? rowStyles({row, style}) : {}}>
@@ -298,81 +298,107 @@ const VirtualTable = <
     }
   }, [onScroll]);
 
-  return (
-    <div {...getTableProps()} className={`table ${className || ''}`}>
-      <div
-        {...tableHeaderProps}
-        className={`thead ${tableHeaderProps.className || ''}`}
-        style={{
-          ...(tableHeaderProps.style || {}),
-          ...(hideHeader ? { display: 'none' } : {}),
-        }}
-      >
-        {headerGroups.map((headerGroup) => (
-          <div {...getHeaderGroupProps(headerGroup, false)} ref={headerRef} style={{width: tableWidth,}}>
-            {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => (
+  const renderTableHeader = useCallback(() => {
+    const sortIconDirection = (column: BaseSortByHeaderGroup<RowType>) => column.isSorted
+        ? sortDirection(column)
+        : "updown";
+
+    return (
+        <div
+            {...tableHeaderProps}
+            className={`thead ${tableHeaderProps.className || ""}`}
+            style={{
+              ...(tableHeaderProps.style || {}),
+              ...(hideHeader ? { display: "none" } : {}),
+            }}
+        >
+          {headerGroups.map((headerGroup) => (
               <div
-                {...getHeaderProps(column, false)}
-                className="th"
-                onClick={() => handleSort(column)}
+                  {...getHeaderGroupProps(headerGroup, false)}
+                  ref={headerRef}
+                  style={{ width: tableWidth }}
               >
-                {column.render("Header")}
-                <span>
-                  {column.canSort &&
+                {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => (
+                    <div
+                        {...getHeaderProps(column, false)}
+                        className="th"
+                        onClick={() => handleSort(column)}
+                    >
+                      {column.render("Header")}
+                      <span>
+                {column.canSort && (
                     <FilledChevronIcon
-                      direction={column.isSorted ? sortDirection(column) : 'updown'}
-                      size="medium"
-                      style={{ verticalAlign: 'middle' }}
+                        direction={sortIconDirection(column)}
+                        size="medium"
+                        style={{ verticalAlign: "middle" }}
                     />
-                  }
-                </span>
+                )}
+              </span>
+                    </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+    );
+  }, [
+    getHeaderGroupProps,
+    getHeaderProps,
+    handleSort,
+    headerGroups,
+    hideHeader,
+    tableHeaderProps,
+    tableWidth,
+  ]);
 
-      <div className="tbody" {...getTableBodyProps()}>
-        {rows.length === 0 && NoRowsFound ? <NoRowsFound /> :
-          <div className="scroll-container">
-              {!scrolledToTop &&
-                <div className="scroll-decoration-top">
-                  <DoubleArrowIcon direction="up" />
-                </div>
-              }
-            <VariableSizeList
-              useIsScrolling
-              className="table-list-rows"
-              height={height}
-              itemCount={rows.length}
-              itemSize={i => {
-                if (itemSize) {
-                  return itemSize({ row: rows[i], index: i });
+  useEffect(() => {
+    onSortChange && onSortChange({ sortBy });
+  }, [sortBy]);
+
+  return (
+      <div {...getTableProps()} className={`table ${className || ''}`}>
+        {renderTableHeader()}
+
+        <div className="tbody" {...getTableBodyProps()}>
+          {rows.length === 0 && NoRowsFound ? <NoRowsFound/> :
+              <div className="scroll-container">
+                {!scrolledToTop &&
+                    <div className="scroll-decoration-top">
+                      <DoubleArrowIcon direction="up"/>
+                    </div>
                 }
-                return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
-              }}
-              width={tableWidth}
-              onScroll={handleScroll}
-              ref={listRef}
-              outerRef={rowsRef}
-            >
-              {RenderRow}
-            </VariableSizeList>
-            {!scrolledToBottom && 
-              <div className="scroll-decoration-bottom">
-                <DoubleArrowIcon direction="down" />
+                <VariableSizeList
+                    useIsScrolling
+                    className="table-list-rows"
+                    height={height}
+                    itemCount={rows.length}
+                    itemSize={i => {
+                      if (itemSize) {
+                        return itemSize({row: rows[i], index: i});
+                      }
+                      return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
+                    }}
+                    width={tableWidth}
+                    onScroll={handleScroll}
+                    ref={listRef}
+                    outerRef={rowsRef}
+                >
+                  {RenderRow}
+                </VariableSizeList>
+                {!scrolledToBottom &&
+                    <div className="scroll-decoration-bottom">
+                      <DoubleArrowIcon direction="down"/>
+                    </div>
+                }
               </div>
-            }
-          </div>
-        }
-      </div>
+          }
+        </div>
 
-      {!hideFooter ? <div {...tableFooterProps}
-        className={`table-footer-wrapper ${tableFooterProps.className || ''}`}
-      >
-        {footerGroups.map((footerGroup) => (
-          <div {...getHeaderGroupProps(footerGroup, true)} className="table-footer tr" ref={footerRef}>
-            {footerGroup.headers.map((column) => (
+        {!hideFooter ? <div {...tableFooterProps}
+                            className={`table-footer-wrapper ${tableFooterProps.className || ''}`}
+        >
+          {footerGroups.map((footerGroup) => (
+              <div {...getHeaderGroupProps(footerGroup, true)} className="table-footer tr" ref={footerRef}>
+                {footerGroup.headers.map((column) => (
               <div {...getHeaderProps(column, true)}>
                 {column.render("Footer")}
               </div>
