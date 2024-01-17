@@ -247,10 +247,6 @@ const BasePanelledSelect = <
                             value={value}
                             options={currentSubOptions}
                             menuIsOpen={isOpen}
-                            components={{
-                                Control: () => null,
-                                ...(subMenuProps?.components),
-                            }}
                             onChange={onSubValueChange}
                             menuStyles={{
                                 ...subMenuStyles, 
@@ -264,6 +260,10 @@ const BasePanelledSelect = <
                             closeMenuOnSelect={props.closeMenuOnSelect ?? !isMulti}
                             isMulti={props.isMulti}
                             {...subMenuProps}
+                            components={{
+                                Control: () => null,
+                                ...(subMenuProps?.components),
+                            }}
                         />
                     }
                 </Col>
