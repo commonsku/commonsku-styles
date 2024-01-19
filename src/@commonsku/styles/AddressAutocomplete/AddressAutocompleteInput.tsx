@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { uniqueId } from 'lodash';
 import { Wrapper } from "@googlemaps/react-wrapper";
+import React, { useEffect, useState } from 'react';
 import { getPlacesAutocomplete, geocodePlaceDetails, parseAddressComponents, ParsedAddress } from "./utils";
 import InputDropdown, { InputDropdownProps } from '../InputDropdown';
 
@@ -31,6 +32,7 @@ export default function AddressAutocompleteInput({
 }: Readonly<AddressAutocompleteInputProps>) {
   const [options, setOptions] = useState<TOption[]>([]);
   const [sessionToken, setSessionToken] = useState<google.maps.places.AutocompleteSessionToken | undefined>(undefined);
+  const [testId] = useState(uniqueId('autocomplete-search-input-'));
 
   useEffect(() => {
     if (typeof window === 'undefined') { return; }
@@ -91,6 +93,7 @@ export default function AddressAutocompleteInput({
           value={value}
           timeout={delayValue}
           isOpen={options.length > 0}
+          data-testId={testId}
           extraOptions={(
             <center>
               Powered by <img
