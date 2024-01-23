@@ -607,7 +607,7 @@ const App = () => {
               "but also the leap into electronic typesetting, ",
               "remaining essentially unchanged. ",
               "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,"
-            ]} 
+            ]}
             sizes={[
               "S",
               "M",
@@ -617,14 +617,14 @@ const App = () => {
               "3XL",
               "4XL",
               "5XL"
-            ]} 
+            ]}
             allColors={[
               "Red",
               "White",
               "Black",
               "Blue",
               "Green"
-            ]} 
+            ]}
             images={[
               {
                 "url": product_pic1,
@@ -636,12 +636,12 @@ const App = () => {
                 "width": 700,
                 "height": 700,
               },
-            ]} 
+            ]}
             mainImage={{
               url: product_pic1,
               width: 700,
               height: 700
-            }} 
+            }}
             prices={[
               {
                 "min_quantity": 36,
@@ -659,13 +659,13 @@ const App = () => {
                 "min_quantity": 244,
                 "price": "9.5940",
               }
-            ]} 
+            ]}
             costBased='Cost is based on M/Red'
             handleClickProductEvent={function (): void {
               throw new Error('Function not implemented.');
-            }} 
-            selected={false} 
-            showAddButton={true} 
+            }}
+            selected={false}
+            showAddButton={true}
             />
         </ChevronPopup>}
 
@@ -2917,13 +2917,24 @@ const App = () => {
 
                   <IconsShowcase Icons={[<icons.Loading width={24} />]} name="Loading" />
 
-                  <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80} /> ]} name="CircleProgressIcon" size="tiny" />
-                  <IconsShowcase Icons={[<icons.CircleProgressIcon text="SO"/>]} name="CircleProgressIcon" size="small"/>
-                  <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="medium"/>
-                  <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="large"/>
-                  <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>]} name="CircleProgressIcon" size="huge"/>
+                  <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={20}/>,
+                      <icons.CircleProgressIcon percentage={100} showCheckMarkOnComplete />]}
+                                 name="CircleProgressIcon" size="tiny"/>
+                    <IconsShowcase Icons={[<icons.CircleProgressIcon text="SO"/>,
+                        <icons.CircleProgressIcon percentage={100} showCheckMarkOnComplete/>]} name="CircleProgressIcon"
+                                   size="small"/>
+                    <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={40}/>,
+                        <icons.CircleProgressIcon percentage={100} showCheckMarkOnComplete/>]} name="CircleProgressIcon"
+                                   size="medium"/>
+                    <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={60}/>,
+                        <icons.CircleProgressIcon percentage={100} showCheckMarkOnComplete/>]} name="CircleProgressIcon"
+                                   size="large"/>
+                    <IconsShowcase Icons={[<icons.CircleProgressIcon percentage={80}/>,
+                        <icons.CircleProgressIcon percentage={100} showCheckMarkOnComplete/>]} name="CircleProgressIcon"
+                                   size="huge"/>
 
-                  <IconsShowcase Icons={[
+
+                    <IconsShowcase Icons={[
                     <icons.OpportunityCircleIcon variant="primary" pointer/>,
                     <icons.OpportunityCircleIcon variant="primary" selected pointer/>,
                     <icons.OpportunityCircleIcon variant="cta" pointer/>,
