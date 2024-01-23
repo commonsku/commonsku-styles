@@ -1,6 +1,5 @@
-import React from 'react'
-import { GroupBase, SelectInstance, } from 'react-select'
-import BaseSelect, { Props } from 'react-select'
+import React from 'react';
+import BaseSelect, { GroupBase, SelectInstance, Props } from 'react-select';
 import { ForwardedLabeledSelectProps, ForwardedSKUSelectProps, TBaseOption } from './types';
 import { popupStyles, skuSelectStyles, skuSelectThemeByProps } from './utils';
 import { Label } from '../Label';
@@ -81,4 +80,8 @@ export const LabeledSelect = React.forwardRef(ForwardedLabeledSelect) as <
   Group extends GroupBase<Option> = GroupBase<Option>
 >(
   props: ForwardedLabeledSelectProps<Option, IsMulti, Group>
+<<<<<<< HEAD
 ) => ReturnType<typeof ForwardedLabeledSelect>;
+=======
+) => ReturnType<typeof ForwardedLabeledSelect>;
+>>>>>>> 48f1ad6e814fee95e304035f93c43db95a8d519a

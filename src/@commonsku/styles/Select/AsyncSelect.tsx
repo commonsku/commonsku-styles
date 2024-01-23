@@ -1,6 +1,6 @@
-import React from 'react'
-import { GroupBase, SelectInstance, } from 'react-select'
-import BaseAsyncSelect, { AsyncProps } from 'react-select/async'
+import React from 'react';
+import { GroupBase, SelectInstance, } from 'react-select';
+import BaseAsyncSelect, { AsyncProps } from 'react-select/async';
 import { Label } from '../Label';
 import { ForwardedSKUAsyncSelectProps, ForwardedLabeledAsyncSelectProps, TBaseOption } from './types';
 import { popupStyles, skuSelectStyles, skuSelectThemeByProps } from './utils';
@@ -84,4 +84,8 @@ export const LabeledAsyncSelect = React.forwardRef(ForwardedLabeledAsyncSelect) 
   Group extends GroupBase<Option> = GroupBase<Option>
 >(
   props: ForwardedLabeledAsyncSelectProps<Option, IsMulti, Group>
+<<<<<<< HEAD
 ) => ReturnType<typeof ForwardedLabeledAsyncSelect>;
+=======
+) => ReturnType<typeof ForwardedLabeledAsyncSelect>;
+>>>>>>> 48f1ad6e814fee95e304035f93c43db95a8d519a

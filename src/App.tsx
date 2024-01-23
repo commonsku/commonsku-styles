@@ -100,7 +100,7 @@ import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
-import { MenuListProps } from 'react-select';
+import { GroupBase, MenuListProps } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
@@ -290,7 +290,11 @@ const tableData = [
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ]
 
-const SelectMenuList = (props: MenuListProps) => {
+function SelectMenuList<
+  Option = unknown,
+  IsMulti extends boolean = boolean,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(props: MenuListProps<Option, IsMulti, Group>) {
   return (
     <selectComponents.MenuList {...props}>
       {props.children}
