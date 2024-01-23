@@ -20,31 +20,43 @@ const iconSizes = {
     width: 32,
     height: 32,
     viewBox: "0 0 32 32",
+    fontSize: ".6em",
+    defaultStrokeWidth: 3,
   },
   small: {
     width: 40,
     height: 40,
     viewBox: "0 0 40 40",
+    fontSize: ".6em",
+    defaultStrokeWidth: 3,
   },
   medium: {
     width: 48,
     height: 48,
     viewBox: "0 0 48 48",
+    fontSize: ".8em",
+    defaultStrokeWidth: 5,
   },
   large: {
     width: 72,
     height: 72,
     viewBox: "0 0 72 72",
+    fontSize: "1em",
+    defaultStrokeWidth: 5,
   },
   huge: {
     width: 96,
     height: 96,
     viewBox: "0 0 96 96",
+    fontSize: "1em",
+    defaultStrokeWidth: 5,
   },
   default: {
     height: 48,
     width: 48,
     viewBox: "0 0 48 48",
+    fontSize: ".8em",
+    defaultStrokeWidth: 5,
   },
 };
 
@@ -60,8 +72,9 @@ export default function CircleProgressIcon({
   altText = "Progress level",
   ...props
 }: CircleProgressIconProps) {
-  const squareSize = iconSizes[size].width || 48;
-  strokeWidth = strokeWidth || (["tiny", "small"].includes(size) ? 3 : 5);
+  const { width, defaultStrokeWidth, fontSize, viewBox } = iconSizes[size];
+  strokeWidth = strokeWidth || defaultStrokeWidth;
+  const squareSize = width;
 
   const radius = (squareSize - strokeWidth) / 2;
   const dashArray = radius * Math.PI * 2;
@@ -77,11 +90,7 @@ export default function CircleProgressIcon({
         dy=".3em"
         textAnchor="middle"
         style={{
-          fontSize: ["tiny", "small"].includes(size)
-            ? ".6em"
-            : size === "medium"
-              ? ".8em"
-              : "1em",
+          fontSize,
           fontWeight: "bold",
           fill: textColor,
           ...textStyle,
@@ -90,7 +99,7 @@ export default function CircleProgressIcon({
         {text || `${percentage}%`}
       </text>
     ),
-    [text, percentage, size, textColor, textStyle],
+    [fontSize, textColor, textStyle, text, percentage],
   );
 
   const renderCheckMark = useCallback(() => {
