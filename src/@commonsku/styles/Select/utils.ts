@@ -9,7 +9,7 @@ export const popupStyles = {
   menuPlacement: 'auto',
   menuPosition: 'fixed',
   menuPortalTarget: document.body,
-}
+};
 
 export function skuSelectStyles<
   Type extends SelectType = 'base',
@@ -59,7 +59,6 @@ export function skuSelectStyles<
       display: 'none',
       ...props.indicatorSeparatorStyles,
     }),
-
     option: (provided, state) => {
       return {
         ...provided,
@@ -82,7 +81,6 @@ export function skuSelectStyles<
       const styles: React.CSSProperties = {
         marginBottom: (props.noMargin ? 0 : '1rem'),
       };
-
       if (state.menuIsOpen && state.isFocused) {
         styles['borderWidth'] = '1px';
         styles['borderStyle'] = 'solid';
@@ -95,7 +93,6 @@ export function skuSelectStyles<
           1px -1px 0px ${styles['borderColor']},
           -1px 1px 0px ${styles['borderColor']}
         `;
-
         if (state.selectProps.menuPlacement === 'bottom') {
           styles['borderBottomRightRadius'] = 0;
           styles['borderBottomLeftRadius'] = 0;
@@ -152,7 +149,6 @@ export function skuSelectStyles<
           -1px 1px 0px ${borderColor}
         `
       } as React.CSSProperties;
-
       if (state.selectProps.menuPlacement === 'top') {
         styles['borderBottomRightRadius'] = 0;
         styles['borderBottomLeftRadius'] = 0;
@@ -167,7 +163,6 @@ export function skuSelectStyles<
         styles['marginTop'] = '0px';
         styles['marginBottom'] = '0px';
       }
-
       return {
         ...provided,
         ...styles,
@@ -222,7 +217,7 @@ export function skuSelectThemeByProps<
       primary25: getThemeColor(props, 'primary0', colors.primary0),
       primary75: getThemeColor(props, 'primary0', colors.primary0),
       primary50: getThemeColor(props, 'primary10', colors.primary10),
-      primary: getThemeColor(props, 'primary', colors.primary),
+      primary:   getThemeColor(props, 'primary', colors.primary),
       neutral20: getThemeColor(props, 'select.border', colors.select.border),
       neutral30: getThemeColor(props, 'select.border', colors.select.border),
       neutral80: getThemeColor(props, 'textbody', colors.textbody),
