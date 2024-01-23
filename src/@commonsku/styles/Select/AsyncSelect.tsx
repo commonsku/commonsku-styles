@@ -84,8 +84,4 @@ export const LabeledAsyncSelect = React.forwardRef(ForwardedLabeledAsyncSelect) 
   Group extends GroupBase<Option> = GroupBase<Option>
 >(
   props: ForwardedLabeledAsyncSelectProps<Option, IsMulti, Group>
-<<<<<<< HEAD
 ) => ReturnType<typeof ForwardedLabeledAsyncSelect>;
-=======
-) => ReturnType<typeof ForwardedLabeledAsyncSelect>;
->>>>>>> 48f1ad6e814fee95e304035f93c43db95a8d519a
