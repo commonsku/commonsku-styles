@@ -1,14 +1,19 @@
-import React, { ReactElement, Ref, forwardRef, useState, useMemo, useCallback, useEffect, useLayoutEffect, useRef, CSSProperties, ComponentType } from 'react';
-import { SKUSelectProps, Select } from './Select';
-import { Row, Col } from './FlexboxGrid';
+import React, { Ref, forwardRef, useState, useMemo, useCallback, useEffect, useLayoutEffect, useRef, CSSProperties, ComponentType } from 'react';
+import { Select } from '.';
+import { Row } from '../FlexboxGrid';
 import { ActionMeta, components as selectComponents, ControlProps, GroupBase, MenuProps, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
-import { useWindowSize } from './hooks';
-import { colors, getThemeColor } from './Theme';
+import { useWindowSize } from '../hooks';
+import { colors, getThemeColor } from '../Theme';
+import { SKUSelectProps } from './types';
 
 const menuContainerStyles: CSSProperties = {
     position: 'absolute',
     width: '100%',
-    top: '100%',
+}
+
+const subMenuContainerStyles: CSSProperties = {
+    position: 'absolute',
+    width: 'max-content',
 }
 
 const menuStyles: CSSProperties = {
@@ -17,6 +22,7 @@ const menuStyles: CSSProperties = {
 }
 
 const subMenuStyles: CSSProperties = {
+    position: 'relative',
     borderTop: '1px solid',
     borderTopRightRadius: '5px',
     marginTop: 0,
@@ -192,8 +198,15 @@ const BasePanelledSelect = <
             GroupBase<NestedOption<Option>>
         >
     ) => (
-        <div style={menuContainerStyles} ref={menuRef}>
-            
+        <div style={{...menuContainerStyles, top: controlHeight }} ref={menuRef}>
+            <selectComponents.Menu {...props} />
+        </div>
+    ), [controlHeight]);
+
+    const renderSubMenu = useCallback((
+        props: MenuProps<Option, IsMulti, GroupBase<Option>>
+    ) => (
+        <div style={subMenuContainerStyles}>
             <selectComponents.Menu {...props} />
         </div>
     ), []);
@@ -213,53 +226,50 @@ const BasePanelledSelect = <
     return (
         <div>
             <Row>
-                <Col>
+                <Select
+                    value={value}
+                    options={options}
+                    onMenuOpen={() => setOpen(true)}
+                    onMenuClose={() => setOpen(false)}
+                    menuIsOpen={isOpen}
+                    ref={ref}
+                    components={{
+                        ...components,
+                        Option: renderParentOption,
+                        Menu: renderMenu,
+                        Control: renderControl,
+                    }}
+                    onChange={onValueChange}
+                    menuStyles={menuStyles}
+                    hideSelectedOptions={hideSelectedOptions}
+                    closeMenuOnSelect={false}
+                    {...props}
+                />
+                {currentSubOptions != null &&
                     <Select
                         value={value}
-                        options={options}
-                        onMenuOpen={() => setOpen(true)}
-                        onMenuClose={() => setOpen(false)}
+                        options={currentSubOptions}
                         menuIsOpen={isOpen}
-                        ref={ref}
-                        components={{
-                            ...components,
-                            Option: renderParentOption,
-                            Menu: renderMenu,
-                            Control: renderControl,
+                        onChange={onSubValueChange}
+                        menuStyles={{
+                            ...subMenuStyles, 
+                            height: menuHeight,
+                            top: controlHeight,
+                            borderTopColor: error
+                                ? getThemeColor(props, 'select.error.border', colors.select.error.border)
+                                : getThemeColor(props, 'select.active.border', colors.select.active.border),
                         }}
-                        onChange={onValueChange}
-                        menuStyles={menuStyles}
                         hideSelectedOptions={hideSelectedOptions}
                         closeMenuOnSelect={false}
-                        {...props}
+                        isMulti={isMulti}
+                        {...subMenuProps}
+                        components={{
+                            Control: () => null,
+                            ...(subMenuProps?.components),
+                            Menu: renderSubMenu,
+                        }}
                     />
-                </Col>
-                <Col>
-                    {currentSubOptions != null &&
-                        <Select
-                            value={value}
-                            options={currentSubOptions}
-                            menuIsOpen={isOpen}
-                            onChange={onSubValueChange}
-                            menuStyles={{
-                                ...subMenuStyles, 
-                                height: menuHeight,
-                                top: controlHeight,
-                                borderTopColor: error
-                                    ? getThemeColor(props, 'select.error.border', colors.select.error.border)
-                                    : getThemeColor(props, 'select.active.border', colors.select.active.border),
-                            }}
-                            hideSelectedOptions={hideSelectedOptions}
-                            closeMenuOnSelect={false}
-                            isMulti={isMulti}
-                            {...subMenuProps}
-                            components={{
-                                Control: () => null,
-                                ...(subMenuProps?.components),
-                            }}
-                        />
-                    }
-                </Col>
+                }
             </Row>
         </div>
     );
@@ -273,4 +283,4 @@ export const PanelledSelect = forwardRef(BasePanelledSelect) as <
     props: PanelledSelectProps<Option, IsMulti> & { 
         ref?: Ref<SelectInstance<Option, IsMulti, Group>>
     }
-) => ReactElement;
+) => ReturnType<typeof BasePanelledSelect>;

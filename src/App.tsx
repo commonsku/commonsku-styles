@@ -1696,6 +1696,7 @@ const App = () => {
                   value={panelledSelectValue}
                   options={optionsWithSubOptions}
                   onChange={setPanelledSelectValue}
+                  containerStyles={{ width: '50%' }}
                 />
 
                 <PanelledSelect<ExampleOption, true>
@@ -1711,6 +1712,7 @@ const App = () => {
                       Option: SelectCustomOption,
                     }
                   }}
+                  containerStyles={{ width: '50%' }}
                   isMulti
                 />
 
