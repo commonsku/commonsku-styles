@@ -18,7 +18,7 @@ const subMenuContainerStyles: CSSProperties = {
 
 const menuStyles: CSSProperties = {
     position: 'relative',
-    marginBottom: 0,
+    marginBottom: '0px !important',
 }
 
 const subMenuStyles: CSSProperties = {
