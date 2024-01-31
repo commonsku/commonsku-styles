@@ -200,6 +200,16 @@ export function skuSelectStyles<
         ...props.valueContainerStyles,
       };
     },
+    multiValue: (provided, state) => {
+      return {
+        ...provided,
+        backgroundColor: getThemeColor(props, 'primary10', colors.primary10),
+        color: getThemeColor(props, 'textbody', colors.textbody),
+        borderRadius: 20,
+        padding: '0.25rem',
+        ...props.multiValueStyles,
+      };
+    },
   };
 }
 
