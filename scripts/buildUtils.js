@@ -10,7 +10,6 @@ export const getComponentsFolders = (entry) => {
       '.DS_Store',
     ].includes(name))
   );
-  console.log(dirs);
   return dirsWithoutIndex
 };
 
