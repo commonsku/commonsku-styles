@@ -7,3 +7,7 @@ export const aeval = (obj:{[key: string]: any}, key: string, def: any) => {
 export function isClientSide() {
   return Boolean(typeof window !== 'undefined' && window.document);
 }
+
+export function toArray<T>(x: T | T[]): T[] {
+  return Array.isArray(x) ? x : [x];
+}
