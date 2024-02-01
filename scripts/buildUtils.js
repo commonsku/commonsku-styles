@@ -1,9 +1,17 @@
 import fs from 'node:fs';
 
 export const getComponentsFolders = (entry) => {
-   const dirs = fs.readdirSync(entry)
-   const dirsWithoutIndex = dirs.filter(name => name !== 'index.ts' && name !== 'utils')
-   return dirsWithoutIndex
+  const dirs = fs.readdirSync(entry);
+  const dirsWithoutIndex = dirs.filter(
+    name => fs.existsSync(`${entry}/${name}/index.ts`) && (![
+      'utils',
+      'types',
+      'img',
+      '.DS_Store',
+    ].includes(name))
+  );
+  console.log(dirs);
+  return dirsWithoutIndex
 };
 
 export const getFiles = (entry, extensions = [], excludeExtensions = []) => {

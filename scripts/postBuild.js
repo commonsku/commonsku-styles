@@ -35,7 +35,6 @@ function run() {
   try {
     createPackageFile();
     includeFileInBuild('./README.md');
-    // await includeFileInBuild('../../LICENSE');
   } catch (err) {
     console.error(err);
     process.exit(1);

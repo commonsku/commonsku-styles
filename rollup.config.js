@@ -11,15 +11,15 @@ import postcss from 'rollup-plugin-postcss';
 import url from '@rollup/plugin-url';
 import image from '@rollup/plugin-image';
 import svgr from '@svgr/rollup';
-// import typescript from '@rollup/plugin-typescript';
 import typescript from 'rollup-plugin-typescript2';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import generatePackageJson from 'rollup-plugin-generate-package-json';
-import { getFiles } from './scripts/buildUtils.js';
-
+import { getFiles, getComponentsFolders } from './scripts/buildUtils.js';
 import pkg from './package.json' assert { type: 'json' };
+
+const STYLES_BASE_PATH = 'src/@commonsku/styles';
 
 // see https://github.com/Hacker0x01/react-datepicker/issues/1606
 const dateFnsDirs = fs
@@ -66,7 +66,7 @@ const subfolderPlugins = (folderName) => [
   ...plugins,
   generatePackageJson({
     baseContents: {
-      name: `${pkg.name}/${folderName.toLowerCase()}`,
+      name: `${pkg.name}-${folderName.toLowerCase()}`,
       private: true,
       main: "./index.cjs",
       module: "./index.mjs",
@@ -78,41 +78,29 @@ const subfolderPlugins = (folderName) => [
   }),
 ];
 
-const folderBuilds = fs.readdirSync('./src/@commonsku/styles').map((folder) => {
-  if (!fs.existsSync(`src/@commonsku/styles/${folder}/index.ts`)) {
-    return null;
-  }
+const folderBuilds = getComponentsFolders(`./${STYLES_BASE_PATH}`).map((folder) => ({
+  input: `${STYLES_BASE_PATH}/${folder}/index.ts`,
+  output: [{
+    file: `dist/${folder}/index.mjs`,
+    format: 'es',
+    exports: 'named',
+  }, {
+    file: `dist/${folder}/index.cjs`,
+    format: 'cjs',
+    exports: 'named',
+  }],
+  plugins: subfolderPlugins(folder),
+  external: Object.keys(pkg.dependencies)
+    .concat(Object.keys(pkg.peerDependencies))
+    .concat(dateFnsDirs)
+    .concat([/node_modules/]),
+})).filter(v => v);
 
-  return {
-    input: `src/@commonsku/styles/${folder}/index.ts`,
-    output: [{
-      file: `dist/${folder}/index.mjs`,
-      format: 'es',
-      exports: 'named',
-    }, {
-      file: `dist/${folder}/index.cjs`,
-      format: 'cjs',
-      exports: 'named',
-    }],
-    plugins: subfolderPlugins(folder),
-    external: Object.keys(pkg.dependencies)
-      .concat(Object.keys(pkg.peerDependencies))
-      .concat(dateFnsDirs)
-      .concat([/node_modules/]),
-  };
-}).filter(v => v);
-
-const folderTypes = fs.readdirSync('./src/@commonsku/styles').map((folder) => {
-  if (!fs.existsSync(`src/@commonsku/styles/${folder}/index.ts`)) {
-    return null;
-  }
-
-  return {
-    input: `dist/styles/${folder}/index.d.ts`,
-    output: [{ file: `dist/${folder}/index.d.ts`, format: "es" }],
-    plugins: [dts()],
-  };
-}).filter(v => v);
+const folderTypes = getComponentsFolders(`./${STYLES_BASE_PATH}`).map((folder) => ({
+  input: `dist/styles/${folder}/index.d.ts`,
+  output: [{ file: `dist/${folder}/index.d.ts`, format: "es" }],
+  plugins: [dts()],
+})).filter(v => v);
 
 const config = [
   {
@@ -125,7 +113,7 @@ const config = [
     external: [/node_modules/],
   },
   {
-    input: 'src/@commonsku/styles/index.ts',
+    input: `${STYLES_BASE_PATH}/index.ts`,
     output: [{
       file: pkg.main,
       format: 'cjs',
