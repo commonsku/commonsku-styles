@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import Csku from './Csku';
 import DebouncedInput, { DebouncedInputProps } from './DebouncedInput';
 
@@ -70,6 +70,7 @@ const DropdownOption = ({
 type TBaseInputDropdownOption = {
   label: string;
   value: string;
+  style?: CSSProperties,
 };
 type TInputDropdownOption<T extends TBaseInputDropdownOption = TBaseInputDropdownOption> = T;
 export type InputDropdownProps<
@@ -80,6 +81,9 @@ export type InputDropdownProps<
   onSelectOption?: (v: TInputDropdownOption<T>) => void;
   extraOptions?: React.ReactNode;
   isOpen?: boolean;
+  wrapperStyle?: CSSProperties;
+  searchWrapperStyle?: CSSProperties;
+  optionsListStyle?: CSSProperties;
 };
 const ForwardedInputDropdown = <
   L extends boolean = false,
@@ -94,6 +98,9 @@ const ForwardedInputDropdown = <
     onChange,
     isOpen,
     value: initialValue = '',
+    wrapperStyle = {},
+    searchWrapperStyle = {},
+    optionsListStyle = {},
     ...rest
   }: Omit<InputDropdownProps<L, T>, 'ref'>,
   ref?: React.ForwardedRef<HTMLInputElement>
@@ -134,8 +141,8 @@ const ForwardedInputDropdown = <
   }, [options]);
 
   return (
-    <Wrapper ref={rootRef}>
-      <SearchWrapper>
+    <Wrapper ref={rootRef} style={wrapperStyle}>
+      <SearchWrapper style={searchWrapperStyle}>
         <DebouncedInput
           {...rest}
           ref={ref}
@@ -149,11 +156,12 @@ const ForwardedInputDropdown = <
           }}
         />
       </SearchWrapper>
-      {!showDropdown ? null : <OptionsList>
+      {!showDropdown ? null : <OptionsList style={optionsListStyle}>
         {options.map(op => (
           <DropdownOption
             label={op.label}
             value={op.value}
+            style={op.style}
             key={`option-${op.value}`}
             onClick={() => onSelectOption?.(op)}
           />
