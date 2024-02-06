@@ -106,6 +106,7 @@ const ForwardedInputDropdown = <
   ref?: React.ForwardedRef<HTMLInputElement>
 ) => {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [keyOptionIdx, setKeyOptionIdx] = useState(-1);
   const [showDropdown, setShowDropdown] = useState(isOpen || false);
   const [value, setValue] = useState(initialValue);
 
@@ -140,10 +141,34 @@ const ForwardedInputDropdown = <
     }
   }, [options]);
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (options.length === 0) {
+      return;
+    }
+
+    const key = e.key;
+    if (key === 'ArrowDown') {
+      setKeyOptionIdx(
+        s => s >= options.length-1 ? 0 : s+1
+      );
+    } else if (key === 'ArrowUp') {
+      setKeyOptionIdx(
+        s => s <= 0 ? options.length-1 : s-1
+      );
+    } else if (key === 'Enter'
+      && keyOptionIdx >= 0
+      && keyOptionIdx <= options.length
+    ) {
+      onSelectOption?.(options[keyOptionIdx]);
+      setKeyOptionIdx(-1);
+    }
+  }
+
   return (
     <Wrapper ref={rootRef} style={wrapperStyle}>
       <SearchWrapper style={searchWrapperStyle}>
         <DebouncedInput
+          autoComplete="off"
           {...rest}
           ref={ref}
           label={label}
@@ -151,23 +176,35 @@ const ForwardedInputDropdown = <
           value={value}
           wrapperProps={{ style: { width: '100%', } }}
           onChange={v => {
+            setKeyOptionIdx(-1);
             setValue(v);
             onChange?.(v);
           }}
+          readOnly
+          role={"presentation"}
+          onClick={(e) => { e.currentTarget.readOnly = false; }}
+          onFocus={(e) => { e.currentTarget.readOnly = false; }}
+          onKeyDown={onKeyDown}
         />
       </SearchWrapper>
-      {!showDropdown ? null : <OptionsList style={optionsListStyle}>
-        {options.map(op => (
+      {showDropdown ? <OptionsList style={optionsListStyle}>
+        {options.map((op, i) => (
           <DropdownOption
             label={op.label}
             value={op.value}
-            style={op.style}
+            style={{
+              ...(keyOptionIdx === i ? {
+                backgroundColor: '#efefef',
+              } : {}),
+              ...op.style
+            }}
             key={`option-${op.value}`}
             onClick={() => onSelectOption?.(op)}
+            onMouseOver={() => setKeyOptionIdx(i)}
           />
         ))}
         {extraOptions}
-      </OptionsList>}
+      </OptionsList> : null}
       {children}
     </Wrapper>
   );
