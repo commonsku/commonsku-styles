@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getPlacesAutocomplete, geocodePlaceDetails, parseAddressComponents, ParsedAddress } from "./utils";
 import InputDropdown, { InputDropdownProps } from '../InputDropdown';
 
@@ -17,6 +17,8 @@ type TSelectedOption = TOption & {
 type AddressAutocompleteInputProps = InputDropdownProps<true, TOption> & {
   apiKey: string;
   value?: string;
+  country?: string | string[];
+  currentLocBias?: boolean;
   delayValue?: number;
   onChange?: (v: TSelectedOption) => void;
   onInputChange?: (v: string) => void;
@@ -25,11 +27,14 @@ type AddressAutocompleteInputProps = InputDropdownProps<true, TOption> & {
 export default function AddressAutocompleteInput({
   apiKey,
   value,
+  country,
+  currentLocBias = false,
   delayValue = 800,
   onChange = () => {},
   onInputChange = () => {},
   ...props
 }: Readonly<AddressAutocompleteInputProps>) {
+  const [currentLocation, setCurrentLocation] = useState({ lat:0, lng: 0 });
   const [options, setOptions] = useState<TOption[]>([]);
   const [sessionToken, setSessionToken] = useState<google.maps.places.AutocompleteSessionToken | undefined>(undefined);
   const [testId] = useState(uniqueId('autocomplete-search-input-'));
@@ -42,6 +47,17 @@ export default function AddressAutocompleteInput({
       new places.AutocompleteSessionToken() || undefined
     );
   }, []);
+
+  useEffect(() => {
+    if (currentLocBias) {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const coords = position.coords;
+          setCurrentLocation({ lat: coords.latitude, lng: coords.longitude });
+        });
+      }
+    }
+  }, [currentLocBias]);
 
   const handleChange = (option: TOption) => {
     const value = option?.value || '';
@@ -62,11 +78,18 @@ export default function AddressAutocompleteInput({
 
   const loadOptions = async (value: string) => {
     let data: TOption[] = [];
+    const locationBias = (currentLocation.lat || currentLocation.lng)
+        ? new google.maps.Circle({
+          center: currentLocation,
+          radius: 1000
+        }) : undefined;
     try {
       const res = await getPlacesAutocomplete({
         input: value,
         language: 'en',
-        sessionToken
+        sessionToken,
+        componentRestrictions: country ? { country } : undefined,
+        locationBias: locationBias,
       }) || [];
       data = res.map(v => ({
         label: v.description,
@@ -79,7 +102,6 @@ export default function AddressAutocompleteInput({
 
     onInputChange?.(value);
     setOptions(data);
-    return data;
   };
 
   return (
@@ -93,7 +115,7 @@ export default function AddressAutocompleteInput({
           value={value}
           timeout={delayValue}
           isOpen={options.length > 0}
-          data-testId={testId}
+          data-testid={testId}
           extraOptions={(
             <center>
               Powered by <img
