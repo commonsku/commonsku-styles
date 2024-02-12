@@ -355,7 +355,6 @@ const VirtualTable = <
   }, [sortBy]);
 
   const scrollToTop = useCallback(() => {
-    console.log('scrollToTop');
     listRef.current && listRef.current.scrollTo(0);
   }, []);
 
