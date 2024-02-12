@@ -15,6 +15,7 @@ import svgr from '@svgr/rollup';
 import typescript from 'rollup-plugin-typescript2';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 
 import pkg from './package.json' assert { type: 'json' };
 
@@ -70,6 +71,7 @@ const config = [
         'process.env.NODE_ENV': JSON.stringify('production'),
         preventAssignment: true,
       }),
+      terser(),
     ],
     external: Object.keys(pkg.dependencies)
       .concat(Object.keys(pkg.peerDependencies))
