@@ -85,7 +85,7 @@ const VirtualTable = <
     tableFooterProps = {},
     hideFooter = true,
     hideHeader = false,
-    className = '',
+    className = "",
     NoRowsFound,
     renderRowSubComponent,
     onResize,
@@ -353,6 +353,14 @@ const VirtualTable = <
   useEffect(() => {
     onSortChange && onSortChange({ sortBy });
   }, [sortBy]);
+
+  const scrollToTop = useCallback(() => {
+    listRef.current && listRef.current.scrollTo(0);
+  }, []);
+
+  useEffect(() => {
+    scrollToTop();
+  }, [data, scrollToTop]);
 
   return (
       <div {...getTableProps()} className={`table ${className || ''}`}>
