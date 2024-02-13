@@ -114,7 +114,7 @@ const PopupContainer: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
 }
 
 export type PopupProps = React.PropsWithChildren<{
-  header?: React.Component,
+  header?: React.ReactNode,
   noHeader?: boolean,
   title?: string | React.Component,
   controls?: Array<React.ReactNode>,

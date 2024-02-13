@@ -27,6 +27,7 @@ import {
     SidePanel,
     Tabs,
     Select,
+    PanelledSelect,
     components as selectComponents,
     LabeledSelect,
     LabeledProgress,
@@ -100,9 +101,9 @@ import NavAndPage from './demo/nav/NavAndPage';
 import ColorsBlock from './demo/ColorsBlock';
 
 import { uniqueId } from 'lodash';
-import { MenuListProps } from 'react-select';
+import { GroupBase, MenuListProps, MultiValueGenericProps, OptionProps, components } from 'react-select';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { errors, green, navy, neutrals, pink, primary1, teal, white, yellow } from '@commonsku/styles/colors';
+import { errors, green, navy, neutrals, pink, teal, white, yellow } from '@commonsku/styles/colors';
 import { IconContainer, IconsShowcase } from '@commonsku/styles/IconShowcase';
 import { Grid, GridItem } from '@commonsku/styles/Grid';
 
@@ -113,16 +114,68 @@ const initialState = {
   focusedInput: false,
 };
 
-const options = [
-  { value: 'skucon', label: 'Skucon' },
-  { value: 'skucamp', label: 'Skucamp' },
-  { value: 'others', label: 'Others' },
-  { value: 'others 1', label: 'Others 1' },
-  { value: 'others 2', label: 'Others 2' },
-  { value: 'others 3', label: 'Others 3' },
-  { value: 'others 4', label: 'Others 4' },
-  { value: 'others 5', label: 'Others 5' },
-]
+interface ExampleParentOption {
+  type: 'parent'
+  value: string
+  label: string
+  subOptions?: ExampleSubOption[]
+};
+
+interface ExampleSubOption {
+  type: 'sub'
+  index: number
+  value: string
+  label: string
+  Component?: (props: ExampleSubOption) => JSX.Element
+};
+
+type ExampleOption = ExampleParentOption | ExampleSubOption;
+
+const RenderSubOption = ({index, label}: ExampleSubOption) => (
+  <div>
+    <span style={{
+      backgroundColor: teal[50],
+      borderRadius: '50%',
+      padding: "0px 4px",
+      marginRight: 8,
+    }}>
+      {index}
+    </span>
+    {label}
+  </div>
+);
+
+const options: ExampleOption[] = [
+  { type: 'parent', value: 'skucon', label: 'Skucon' },
+  { type: 'parent', value: 'skucamp', label: 'Skucamp' },
+  { type: 'parent', value: 'others', label: 'Others' },
+  { type: 'parent', value: 'others 1', label: 'Others 1' },
+  { type: 'parent', value: 'others 2', label: 'Others 2' },
+  { type: 'parent', value: 'others 3', label: 'Others 3' },
+  { type: 'parent', value: 'others 4', label: 'Others 4' },
+  { type: 'parent', value: 'others 5', label: 'Others 5' },
+];
+
+const optionsWithSubOptions: ExampleParentOption[] = [
+  ...(Array(100).fill(1).map((_, i) => (
+    {
+      type: 'parent' as const,
+      value: 'value'+i,
+      label: ((i % 2 === 0) ? 'category' : 'value') + ' ' + i,
+      subOptions: (i % 2 === 0) ? [
+        ...(Array(5).fill(1).map((_, j) => (
+          {
+            type: 'sub' as const,
+            index: j,
+            value: i + 'sub' + j,
+            label: `[Category ${i}] value ${j}`,
+            Component: RenderSubOption,
+          }
+        ))),
+      ] : undefined,
+    }
+  ))),
+];
 
 const statuses = [
   {
@@ -290,7 +343,11 @@ const tableData = [
   {"rowId":84,"firstName":"flesh","lastName":"bag","age":2,"state":states[1].content,"progress":85,"status": statuses[0].value}
 ]
 
-const SelectMenuList = (props: MenuListProps) => {
+const SelectMenuList = <
+  Option = unknown,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>,
+>(props: MenuListProps<Option, IsMulti, Group>) => {
   return (
     <selectComponents.MenuList {...props}>
       {props.children}
@@ -309,6 +366,51 @@ const SelectMenuList = (props: MenuListProps) => {
         }}
       >+ New Client</div>
     </selectComponents.MenuList>
+  );
+};
+
+const SelectCustomOption = <IsMulti extends boolean = false>
+(
+  props: OptionProps<ExampleOption, IsMulti, GroupBase<ExampleOption>>
+) => {
+  const { data, isFocused, isSelected, innerProps, innerRef } = props;
+
+  if (data.type !== 'sub') {
+    return (
+      <components.Option {...props} />
+    );
+  }
+
+  return (
+    <div ref={innerRef} {...innerProps} style={{
+      padding: 12,
+      cursor: 'pointer',
+      backgroundColor: isSelected 
+        ? teal[60] 
+        : isFocused ? '#E1F7FA' : undefined,
+      ...innerProps.style,
+    }}>
+      {data.Component != null
+        ? <data.Component {...data} />
+        : data.label
+      }
+    </div>
+  );
+};
+
+const SelectCustomMultiValueLabel = (
+  props: MultiValueGenericProps<ExampleOption>
+) => {
+  const { data } = props;
+
+  if (data.type !== 'sub' || data.Component == null) {
+    return (
+      <components.MultiValueLabel {...props} />
+    );
+  }
+
+  return (
+    <data.Component {...data} />
   );
 };
 
@@ -395,6 +497,12 @@ const App = () => {
     {id: uniqueId('footer-day-'), completed: false, date: tomorrow, title: 'Megacorm Other', description: 'Reach out to Jake Other', colorType: 'light-green'},
   ]);
   const [stepperValue, setStepperValue] = useState<string | number>(6);
+  const [panelledSelectValue, setPanelledSelectValue] = useState<ExampleOption | null>(
+    optionsWithSubOptions[0].subOptions![0]
+  );
+  const [panelledSelectMultiValue, setPanelledSelectMultiValue] = useState<ExampleOption[]>(
+    [optionsWithSubOptions[0].subOptions![0]]
+  );
 
   useEffect(() => {
     if(sidePanelRow) {
@@ -1572,7 +1680,7 @@ const App = () => {
                   isDisabled
                 />
 
-                <LabeledSelect value={{ value: 'value4', label: 'value4', }}
+                <LabeledSelect value={{ value: 'value5', label: 'value5', }}
                   options={[
                     ...(Array(100).fill(1).map((v, i) => (
                       {value: 'value'+i, label: 'value'+i}
@@ -1583,7 +1691,35 @@ const App = () => {
                 <br />
               </ demo.InnerContainer>
 
-              <demo.InnerContainer title="InputStepper " id="input-stepper">
+              <demo.InnerContainer title="Panelled Select" id="panel-select">
+                <PanelledSelect<ExampleOption>
+                  value={panelledSelectValue}
+                  options={optionsWithSubOptions}
+                  onChange={setPanelledSelectValue}
+                  containerStyles={{ width: '50%' }}
+                />
+
+                <PanelledSelect<ExampleOption, true>
+                  value={panelledSelectMultiValue}
+                  options={optionsWithSubOptions}
+                  onChange={(newValues) => setPanelledSelectMultiValue([...newValues])}
+                  components={{
+                    MenuList: SelectMenuList,
+                    MultiValueLabel: SelectCustomMultiValueLabel,
+                  }}
+                  subMenuProps={{
+                    components: {
+                      Option: SelectCustomOption,
+                    }
+                  }}
+                  containerStyles={{ width: '50%' }}
+                  isMulti
+                />
+
+                <br />
+              </ demo.InnerContainer>
+
+              <demo.InnerContainer title="InputStepper" id="input-stepper">
                       <demo.MediumLabel mb={32}>Default InputStepper has no label, initialNumber and min of 0 and infinite max</demo.MediumLabel>
                       <InputStepper initialValue={0} />
                       {DemoCodeBlock({code: `<InputStepper />`})}
