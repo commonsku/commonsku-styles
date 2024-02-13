@@ -20,6 +20,7 @@ export type AdditionalSKUSelectProps = {
   singleValueStyles?: React.CSSProperties,
   valueContainerStyles?: React.CSSProperties,
   containerStyles?: React.CSSProperties,
+  multiValueStyles?: React.CSSProperties,
 }
 
 export type TBaseOption = {
