@@ -164,6 +164,7 @@ const ForwardedInputDropdown = <
       setKeyOptionIdx(-1);
     } else if (key === 'Tab') {
       setShowDropdown(false);
+      setKeyOptionIdx(-1);
     }
   }
 
