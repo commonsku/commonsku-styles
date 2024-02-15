@@ -180,8 +180,6 @@ const ForwardedInputDropdown = <
             setValue(v);
             onChange?.(v);
           }}
-          readOnly
-          role={"presentation"}
           onClick={(e) => { e.currentTarget.readOnly = false; }}
           onFocus={(e) => { e.currentTarget.readOnly = false; }}
           onKeyDown={onKeyDown}
