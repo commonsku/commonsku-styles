@@ -5,7 +5,6 @@ import DebouncedInput, { DebouncedInputProps } from './DebouncedInput';
 
 const Wrapper = styled.div`
   position: relative;
-  padding-top: 20vh;
   width: 100%;
   margin: auto;
   display: flex;
