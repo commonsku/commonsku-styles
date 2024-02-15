@@ -155,11 +155,15 @@ const ForwardedInputDropdown = <
       setKeyOptionIdx(
         s => s <= 0 ? options.length-1 : s-1
       );
-    } else if (key === 'Enter'
-      && keyOptionIdx >= 0
-      && keyOptionIdx <= options.length
-    ) {
-      onSelectOption?.(options[keyOptionIdx]);
+    } else if (key === 'Enter') {
+      if (keyOptionIdx >= 0 && keyOptionIdx <= options.length) {
+        onSelectOption?.(options[keyOptionIdx]);
+      } else {
+        setShowDropdown(false);
+      }
+      setKeyOptionIdx(-1);
+    } else if (key === 'Tab') {
+      setShowDropdown(false);
       setKeyOptionIdx(-1);
     }
   }
