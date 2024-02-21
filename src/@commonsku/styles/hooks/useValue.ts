@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-type TAllowedValue = string | number | readonly string[] | undefined;
-const useValue = <T extends TAllowedValue = string>(
+const useValue = <T>(
   initialValue: T
 ): ([T, React.Dispatch<React.SetStateAction<T>>]) => {
   const [previousInitialValue, setPreviousInitialValue] = useState(initialValue);
