@@ -321,7 +321,6 @@ const VirtualTable = <
                 {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => (
                     <div
                         {...getHeaderProps(column, false)}
-                        className="th"
                         onClick={() => handleSort(column)}
                     >
                       {column.render("Header")}
