@@ -6,3 +6,4 @@ export {default as useWindowSize} from './useWindowSize';
 export { default as useLongPress } from './useLongPress';
 export { default as useClickOutside } from './useClickOutside';
 export { default as useFallbackRef } from './useFallbackRef';
+export { default as useValue } from './useValue';
