@@ -36,6 +36,7 @@ export default function AddressAutocompleteInput({
 }: Readonly<AddressAutocompleteInputProps>) {
   const [currentLocation, setCurrentLocation] = useState({ lat:0, lng: 0 });
   const [options, setOptions] = useState<TOption[]>([]);
+  const [showDropdown, setShowDropdown] = useState(options.length > 0);
   const [sessionToken, setSessionToken] = useState<google.maps.places.AutocompleteSessionToken | undefined>(undefined);
   const [testId] = useState(uniqueId('autocomplete-search-input-'));
 
@@ -73,6 +74,7 @@ export default function AddressAutocompleteInput({
         parsed_address: parseAddressComponents(res.address_components),
       });
       setOptions([]);
+      setShowDropdown(false);
     });
   };
 
@@ -102,6 +104,7 @@ export default function AddressAutocompleteInput({
 
     onInputChange?.(value);
     setOptions(data);
+    setShowDropdown(data.length > 0);
   };
 
   return (
@@ -114,7 +117,8 @@ export default function AddressAutocompleteInput({
           onSelectOption={handleChange}
           value={value}
           timeout={delayValue}
-          isOpen={options.length > 0}
+          showDropdown={showDropdown}
+          setShowDropdown={setShowDropdown}
           data-testid={testId}
           extraOptions={(
             <center>
