@@ -80,7 +80,8 @@ export type InputDropdownProps<
   options: T[];
   onSelectOption?: (v: TInputDropdownOption<T>) => void;
   extraOptions?: React.ReactNode;
-  isOpen?: boolean;
+  showDropdown?: boolean;
+  setShowDropdown: (v: boolean) => void,
   wrapperStyle?: CSSProperties;
   searchWrapperStyle?: CSSProperties;
   optionsListStyle?: CSSProperties;
@@ -96,8 +97,9 @@ const ForwardedInputDropdown = <
     extraOptions,
     onSelectOption,
     onChange,
-    isOpen,
-    value: initialValue = '',
+    showDropdown,
+    setShowDropdown,
+    value = '',
     wrapperStyle = {},
     searchWrapperStyle = {},
     optionsListStyle = {},
@@ -107,8 +109,6 @@ const ForwardedInputDropdown = <
 ) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const [keyOptionIdx, setKeyOptionIdx] = useState(-1);
-  const [showDropdown, setShowDropdown] = useState(isOpen || false);
-  const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
     function handleClick(e: Event) {
@@ -124,22 +124,6 @@ const ForwardedInputDropdown = <
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  useEffect(() => {
-    if (isOpen !== undefined) {
-      setShowDropdown(isOpen);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (options.length > 0) {
-      setShowDropdown(true);
-    }
-  }, [options]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (options.length === 0) {
@@ -181,7 +165,6 @@ const ForwardedInputDropdown = <
           wrapperProps={{ style: { width: '100%', } }}
           onChange={v => {
             setKeyOptionIdx(-1);
-            setValue(v);
             onChange?.(v);
           }}
           onClick={(e) => { e.currentTarget.readOnly = false; }}
