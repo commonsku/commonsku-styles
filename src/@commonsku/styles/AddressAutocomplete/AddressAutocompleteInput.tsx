@@ -84,7 +84,7 @@ export default function AddressAutocompleteInput({
       const res = await getPlacesAutocomplete({
         input: value,
         language: 'en',
-        sessionToken,
+        sessionToken: sessionToken.current,
         componentRestrictions: country ? { country } : undefined,
         locationBias: locationBias,
       }) || [];
