@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Children, useCallback, useRef, useState } from 'react';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { ActionMeta, SingleValue } from 'react-select';
 import { debounce } from 'lodash';
 import { getPlacesAutocomplete, geocodePlaceDetails, parseAddressComponents, ParsedAddress } from "./utils";
 import { AsyncSelect, components, } from '../Select';
+import { useDebounceCallback } from 'usehooks-ts';
 
 const MenuListFooter = () => (
   <center>
@@ -43,18 +44,12 @@ export default function AddressAutocomplete({
   containerStyles = {},
 }: AddressAutocompleteProps) {
   const [options, setOptions] = useState<TOption[]>([]);
-  const [sessionToken, setSessionToken] = useState<google.maps.places.AutocompleteSessionToken | undefined>(undefined);
+  const sessionToken = useRef<google.maps.places.AutocompleteSessionToken>();
+  if (!sessionToken.current && window?.google?.maps?.places) {
+    sessionToken.current = new window.google.maps.places.AutocompleteSessionToken();
+  }
 
-  useEffect(() => {
-    if (typeof window === 'undefined') { return; }
-    const places = window.google.maps.places;
-    if (!places) { return; }
-    setSessionToken(
-      new places.AutocompleteSessionToken() || undefined
-    );
-  }, []);
-
-  const handleChangeFn = (option: SingleValue<TOption>, actionMeta: ActionMeta<TOption>) => {
+  const handleChangeFn = useCallback((option: SingleValue<TOption>, actionMeta: ActionMeta<TOption>) => {
     const value = option?.value || '';
     geocodePlaceDetails(value).then(res => {
       if (!res || !option) {
@@ -68,9 +63,9 @@ export default function AddressAutocomplete({
         parsed_address: parseAddressComponents(res.address_components),
       });
     });
-  };
+  }, [onChange]);
 
-  const handleChange = debounce(handleChangeFn, delayValue);
+  const handleDebouncedChange = useDebounceCallback(handleChangeFn, delayValue);
 
   const loadOptions = debounce(async (value: string, callback: (options: readonly TOption[]) => void) => {
     let data: TOption[] = [];
@@ -78,7 +73,7 @@ export default function AddressAutocomplete({
       const res = await getPlacesAutocomplete({
         input: value,
         language: 'en',
-        sessionToken
+        sessionToken: sessionToken.current,
       }) || [];
       data = res.map(v => ({
         label: v.description,
@@ -100,18 +95,17 @@ export default function AddressAutocomplete({
       <div className="autocomplete-search">
         <AsyncSelect
           options={options}
-          onChange={handleChange}
+          onChange={handleDebouncedChange}
           value={value}
           loadOptions={loadOptions}
           containerStyles={containerStyles}
           placeholder="Search address..."
           components={{
             MenuList: ({ children, ...rest }) => {
-              const Children = !Array.isArray(children) ? [children] : children;
               return (
                 <components.MenuList {...rest}>
                   {children}
-                  {Children.length && options.length > 0 && <MenuListFooter />}
+                  {Children.count(children) > 0 && options.length > 0 && <MenuListFooter />}
                 </components.MenuList>
               );
             },

@@ -1,7 +1,7 @@
 import { uniqueId } from 'lodash';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import React, { useEffect, useRef, useState } from 'react';
-import { getPlacesAutocomplete, geocodePlaceDetails, parseAddressComponents, ParsedAddress } from "./utils";
+import { getPlacesAutocomplete, geocodePlaceDetails, parseAddressComponents, ParsedAddress, LatLng } from "./utils";
 import InputDropdown, { InputDropdownProps } from '../InputDropdown';
 
 type TOption = {
@@ -34,20 +34,15 @@ export default function AddressAutocompleteInput({
   onInputChange = () => {},
   ...props
 }: Readonly<AddressAutocompleteInputProps>) {
-  const [currentLocation, setCurrentLocation] = useState({ lat:0, lng: 0 });
+  const [currentLocation, setCurrentLocation] = useState<LatLng | null>(null);
   const [options, setOptions] = useState<TOption[]>([]);
   const [showDropdown, setShowDropdown] = useState(options.length > 0);
-  const [sessionToken, setSessionToken] = useState<google.maps.places.AutocompleteSessionToken | undefined>(undefined);
-  const [testId] = useState(uniqueId('autocomplete-search-input-'));
 
-  useEffect(() => {
-    if (typeof window === 'undefined') { return; }
-    const places = window.google.maps.places;
-    if (!places) { return; }
-    setSessionToken(
-      new places.AutocompleteSessionToken() || undefined
-    );
-  }, []);
+  const testId = useRef(uniqueId('autocomplete-search-input-'));
+  const sessionToken = useRef<google.maps.places.AutocompleteSessionToken>();
+  if (!sessionToken.current && window?.google?.maps?.places) {
+    sessionToken.current = new window.google.maps.places.AutocompleteSessionToken();
+  }
 
   useEffect(() => {
     if (currentLocBias) {
@@ -80,7 +75,7 @@ export default function AddressAutocompleteInput({
 
   const loadOptions = async (value: string) => {
     let data: TOption[] = [];
-    const locationBias = (currentLocation.lat || currentLocation.lng)
+    const locationBias = currentLocation
         ? new google.maps.Circle({
           center: currentLocation,
           radius: 1000
@@ -119,7 +114,7 @@ export default function AddressAutocompleteInput({
           timeout={delayValue}
           showDropdown={showDropdown}
           setShowDropdown={setShowDropdown}
-          data-testid={testId}
+          data-testid={testId.current}
           extraOptions={(
             <center>
               Powered by <img

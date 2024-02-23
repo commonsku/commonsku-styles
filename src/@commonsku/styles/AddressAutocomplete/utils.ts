@@ -53,7 +53,7 @@ export const getGeocode = (args: GeoArgs): GeoReturn => {
   });
 };
 
-type LatLng = { lat: number; lng: number };
+export type LatLng = { lat: number; lng: number };
 
 export const getLatLng = (result: GeocodeResult): LatLng => {
   const { lat, lng } = result.geometry.location;
