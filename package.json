@@ -38,6 +38,8 @@
     "styled-components": "^5.1.0"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
+    "@googlemaps/react-wrapper": "^1.1.35",
     "acorn": "^6.4.2",
     "date-fns": "^2.29.3",
     "namor": "^2.0.4",
@@ -60,12 +62,14 @@
     "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-replace": "^5.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.0",
     "@rollup/plugin-url": "^8.0.1",
     "@svgr/rollup": "^7.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/google.maps": "^3.54.10",
     "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.194",
     "@types/node": "^13.13.52",
