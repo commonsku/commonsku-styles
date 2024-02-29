@@ -8,7 +8,7 @@ import { Img } from './Img'
 import { SizerTypes } from './Sizer'
 
 const ProductCardWrapper = styled.div`
-  && {
+  &&& {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -30,7 +30,7 @@ const ProductCardWrapper = styled.div`
 }`;
 
 const ProductImg = styled(Img)`
-  && {
+  &&& {
     height: 208px;
     width: 208px;
     object-fit: cover;
@@ -38,7 +38,7 @@ const ProductImg = styled(Img)`
 }`;
 
 const ProductContent = styled.div`
-  && {
+  &&& {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -48,7 +48,7 @@ const ProductContent = styled.div`
 }`;
 
 const ProductTitle = styled.div`
-  && {
+  &&& {
     width: 208px;
     max-height: 53px;
 
@@ -84,7 +84,7 @@ const ProductTitle = styled.div`
 }`;
 
 const ProductSubTitle = styled.div`
-  && {
+  &&& {
     width: 135px;
     height: 24px;
 
