@@ -9,15 +9,17 @@ import TableHeader from './TableHeader';
 type TableProps<
   T extends BaseRowRecord = BaseRowRecord
 > = {
-  data: readonly T[];
-  children: React.ReactElement<TableBodyProps<T>>;
-  striped?: boolean;
-  headerSticky?: boolean | { top?: number; right?: number; left?: number; };
-  selection?: boolean;
-  noHeader?: boolean;
-  onToggleSelect?: (row: T, value: boolean) => void;
-  onToggleExpand?: (row: T, value: boolean) => void;
-  onToggleSelectAll?: (value: boolean) => void;
+  readonly data: T[];
+  readonly children: React.ReactElement<TableBodyProps<T>>;
+  readonly striped?: boolean;
+  readonly headerSticky?: boolean | { top?: number; right?: number; left?: number; };
+  readonly selection?: boolean;
+  readonly noHeader?: boolean;
+
+  readonly onSort?: (colKey: string, sortAsc?: boolean | undefined) => void;
+  readonly onToggleSelect?: (row: T, value: boolean) => void;
+  readonly onToggleExpand?: (row: T, value: boolean) => void;
+  readonly onToggleSelectAll?: (value: boolean) => void;
 };
 
 function Table<
@@ -25,6 +27,7 @@ function Table<
 >({
   data: initialData,
   children,
+  onSort,
   onToggleExpand,
   onToggleSelect,
   onToggleSelectAll,
@@ -43,7 +46,8 @@ function Table<
     handleToggleExpand,
     handleToggleSelect,
     handleToggleSelectAll,
-  } = useTable<T>({ data: initialData, onToggleExpand, onToggleSelect, onToggleSelectAll });
+    handleSort,
+  } = useTable<T>({ data: initialData, onToggleExpand, onToggleSelect, onToggleSelectAll, onSort, });
 
   const RowElem = useMemo(
     () => React.Children.only(children),
@@ -70,6 +74,7 @@ function Table<
           RowElem={RowElem}
           getColProperties={getColProperties}
           handleToggleSelectAll={handleToggleSelectAll}
+          handleSort={handleSort}
         />
       </thead>}
 
@@ -88,6 +93,9 @@ function Table<
             handleToggleExpand={handleToggleExpand}
           />
         ))}
+        {data.length === 0 && <tr>
+          <td style={{ gridColumn: `1 / span ${columns.length}`, }}>No records found</td>
+        </tr>}
 
         {hasFooter && <TableFooter data={data} RowElem={RowElem} />}
       </tbody>

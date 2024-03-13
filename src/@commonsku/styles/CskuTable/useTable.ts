@@ -3,11 +3,11 @@ import { useCallback, useMemo, useState } from "react";
 import { BaseRowRecord, ColProperty, RowProperty } from "./types";
 
 type useTableProps<T extends BaseRowRecord = BaseRowRecord> = {
-  data: readonly T[];
+  readonly data: T[];
   onToggleSelect?: (row: T, value: boolean) => void;
   onToggleExpand?: (row: T, value: boolean) => void;
   onToggleSelectAll?: (value: boolean) => void;
-  onSort?: (colKey: string, sortAsc: boolean) => void;
+  onSort?: (colKey: string, sortAsc?: boolean) => void;
   onUpdateTable?: (data: T[]) => void;
 };
 function useTable<T extends BaseRowRecord = BaseRowRecord>({
@@ -139,7 +139,10 @@ function useTable<T extends BaseRowRecord = BaseRowRecord>({
 
   const handleSort = useCallback(
     (colKey: string) => {
-      const value = !colsProperties[colKey]?.sortAsc;
+      const value = colsProperties[colKey]?.sortAsc === false
+        ? undefined
+        : !colsProperties[colKey]?.sortAsc;
+
       const result = {
         ...colsProperties,
         [colKey]: {
@@ -151,7 +154,6 @@ function useTable<T extends BaseRowRecord = BaseRowRecord>({
 
       setColsProperties(result);
       onSort?.(colKey, value);
-      return value;
     },
     [colsProperties, onSort]
   );
@@ -164,6 +166,10 @@ function useTable<T extends BaseRowRecord = BaseRowRecord>({
       const hasRowsProps = Object.keys(rowsProperties).length > 0;
       if (!hasColsProps && !hasRowsProps) return initialData;
 
+      const sortProps = colsPropsKeys.filter(
+        k => colsProperties[k].sortAsc !== undefined
+      );
+
       const mappedData = initialData.map(r => ({
         ...r,
         isSelected: Boolean(rowsProperties[r.id]?.isSelected),
@@ -171,8 +177,8 @@ function useTable<T extends BaseRowRecord = BaseRowRecord>({
       }));
       const orderedData = orderBy(
         mappedData,
-        colsPropsKeys.map(k => colsProperties[k].colKey),
-        colsPropsKeys.map(k => colsProperties[k].sortAsc ? 'asc' : 'desc')
+        sortProps.map(k => colsProperties[k].colKey),
+        sortProps.map(k => colsProperties[k].sortAsc ? 'asc' : 'desc')
       );
       return orderedData;
     },

@@ -1,13 +1,12 @@
 import React from 'react';
 import * as ReactIs from "react-is";
-import { styles } from './styles';
 import { BaseRowRecord, TableBodyProps } from './types';
 
 type TableFooterProps<
   T extends BaseRowRecord = BaseRowRecord
 > = {
-  data: readonly T[];
-  RowElem?: React.ReactElement<TableBodyProps<T>>;
+  readonly data: T[];
+  readonly RowElem?: React.ReactElement<TableBodyProps<T>>;
 };
 function TableFooter<
   T extends BaseRowRecord = BaseRowRecord
@@ -22,19 +21,19 @@ function TableFooter<
             typeof FooterCell === 'number' ||
             typeof FooterCell === 'boolean'
         ) {
-          return <th style={styles.th}>{FooterCell ?? ''}</th>;
+          return <th>{FooterCell ?? ''}</th>;
         }
 
         if (ReactIs.isElement(FooterCell)) {
           return (
-            <th {...FooterCell.props} style={{...styles.th, ...FooterCell.props.style}}>
+            <th {...FooterCell.props} style={FooterCell.props.style}>
               {React.cloneElement(FooterCell, { data })}
             </th>
           );
         }
 
         return (
-          <th {...FooterCell} style={styles.th}>
+          <th {...FooterCell}>
             <FooterCell data={data} />
           </th>
         );

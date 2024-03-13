@@ -1,21 +1,20 @@
 import React from 'react';
-import * as ReactIs from "react-is";
-import { ArrowIcon, DoubleArrowIcon } from '../icons';
+import { FilledChevronIcon } from '../icons';
 import { LabeledCheckbox } from '../Input';
-import { styles } from './styles';
 import { BaseRowRecord, ColProperty, TableBodyProps } from './types';
 
 type TableHeaderProps<
   T extends BaseRowRecord = BaseRowRecord
 > = {
-  selection?: boolean;
-  headerSticky?: boolean | { top?: number; right?: number; left?: number; };
-  isAllSelected?: boolean;
-  isSomeSelected?: boolean;
-  RowElem?: React.ReactElement<TableBodyProps<T>>;
+  readonly selection?: boolean;
+  readonly headerSticky?: boolean | { top?: number; right?: number; left?: number; };
+  readonly isAllSelected?: boolean;
+  readonly isSomeSelected?: boolean;
+  readonly RowElem?: React.ReactElement<TableBodyProps<T>>;
 
-  handleToggleSelectAll: () => boolean;
-  getColProperties: (colKey: string) => ColProperty;
+  readonly handleToggleSelectAll: () => boolean;
+  readonly getColProperties: (colKey: string) => ColProperty;
+  readonly handleSort: (colKey: string) => void;
 };
 function TableHeader<
   T extends BaseRowRecord = BaseRowRecord
@@ -28,10 +27,11 @@ function TableHeader<
 
   getColProperties,
   handleToggleSelectAll,
+  handleSort,
 }: TableHeaderProps<T>) {
   return (
     <tr>
-      {selection && <th className={headerSticky ? 'sticky' : ''} style={styles.th}>
+      {selection && <th className={headerSticky ? 'sticky' : ''}>
         <LabeledCheckbox
           label=""
           checked={isAllSelected}
@@ -43,11 +43,24 @@ function TableHeader<
         const colProps = getColProperties(child?.props.colKey || '');
         const SortIcon = (
           colProps?.sortAsc === undefined
-            ? <DoubleArrowIcon />
-            : <ArrowIcon direction={colProps?.sortAsc ? 'down' : 'up'} />
+            ? <FilledChevronIcon
+                direction={'updown'}
+                size="small"
+                style={{ verticalAlign: "middle" }}
+              />
+            : <FilledChevronIcon
+                direction={colProps?.sortAsc ? 'down' : 'up'}
+                size="small"
+                style={{ verticalAlign: "middle" }}
+              />
         );
         return (
-          <th className={headerSticky ? 'sticky' : ''} style={styles.th}>
+          <th
+            className={`${headerSticky ? 'sticky' : ''} ${child?.props.canSort ? 'clickable' : ''}`}
+            onClick={() => {
+              child?.props?.colKey && handleSort(child.props.colKey);
+            }}
+          >
             {child?.props?.label ?? ''}
             {' '}
             {child?.props.canSort ? SortIcon : null}

@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { LabeledCheckbox } from '../Input';
-import { styles } from './styles';
 import TDContainer from './TDContainer';
 import { BaseRowRecord, RowProperty, TableBodyProps } from './types';
 
@@ -52,7 +51,7 @@ function TableRow<
       ].filter(v => v).join(' ')}
       style={style}
     >
-      {selection && <td style={styles.td}>
+      {selection && <td>
         <LabeledCheckbox
           label=""
           checked={rowProps?.isSelected}

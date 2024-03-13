@@ -1,6 +1,5 @@
 import React from 'react';
 import * as ReactIs from "react-is";
-import { styles } from './styles';
 import { BaseColProps, BaseRowRecord, TableCellProps } from './types';
 
 type TDContainerProps<T extends BaseRowRecord = BaseRowRecord> =
@@ -20,18 +19,18 @@ const TDContainer = <T extends BaseRowRecord = BaseRowRecord>({
   ...props
 }: TDContainerProps<T>) => {
   if (typeof Cell === 'undefined' || Cell === null) {
-    return <td {...props}  style={{...styles.td, ...style}}>{value}</td>
+    return <td {...props}  style={style}>{value}</td>
   }
   if (typeof Cell === 'string'
     || typeof Cell === 'number'
     || typeof Cell === 'boolean'
   ) {
-    return <td {...props}  style={{...styles.td, ...style}}>{Cell}</td>
+    return <td {...props}  style={style}>{Cell}</td>
   }
 
   if (ReactIs.isElement(Cell)) {
     return (
-      <td {...props} style={{...styles.td, ...style}}>
+      <td {...props} style={style}>
         {React.cloneElement(Cell, {
           value: value,
           row,
@@ -46,7 +45,7 @@ const TDContainer = <T extends BaseRowRecord = BaseRowRecord>({
   }
 
   return (
-    <td {...props} style={{...styles.td, ...style}}>
+    <td {...props} style={style}>
       <Cell
         value={value}
         row={row}

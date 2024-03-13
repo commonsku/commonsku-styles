@@ -41,7 +41,6 @@ const GridTable = styled.table<GridTableProps>`
       }
     ).join(' ');
   }};
- }
 
  thead,
   tbody,
@@ -58,16 +57,21 @@ const GridTable = styled.table<GridTableProps>`
   }
 
   th {
-    background: var(--color-primary1-main);
+    background: var(--color-neutrals-20);
     text-align: left;
     font-weight: normal;
-    font-size: 1.1rem;
-    color: white;
+    font-family: var(--font-family-bold);
+    font-size: 16;
+    color: var(--color-neutrals-90);
   }
 
   th.sticky {
     position: sticky;
     top: 0;
+  }
+
+  th.clickable {
+    cursor: pointer;
   }
 
   th:last-child {
@@ -78,6 +82,9 @@ const GridTable = styled.table<GridTableProps>`
     padding-top: 10px;
     padding-bottom: 10px;
     color: var(--color-neutrals-90);
+    font-family: var(--font-family-regular);
+    font-size: 14;
+    font-weight: normal;
   }
 
   tr.selected td {
@@ -106,6 +113,7 @@ const GridTable = styled.table<GridTableProps>`
   tr.striped:nth-child(even):not(last-child) td {
     background: var(--color-primary1-10);
   }
+}
 `;
 
 export default GridTable;
