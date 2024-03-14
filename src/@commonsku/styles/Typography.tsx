@@ -9,6 +9,7 @@ type TypographyCommonProps = {
   bold?: boolean;
   underlined?: boolean;
   italic?: boolean;
+  clickable?: boolean;
   textTransform?: CSSObject['textTransform'],
   lineHeight?: CSSObject['lineHeight'],
   fontSize?: CSSObject['fontSize'];
@@ -22,6 +23,7 @@ const createStyles = (name: TypographyName) => {
     bold = false,
     underlined = false,
     italic = false,
+    clickable = false,
     textTransform = undefined,
     lineHeight = undefined,
     fontSize = undefined,
@@ -30,6 +32,7 @@ const createStyles = (name: TypographyName) => {
     const styles: CSSObject = {
       color: color,
       fontFamily: bold ? 'var(--skufont-bold)' : 'var(--skufont-regular)',
+      ...(clickable ? { cursor: 'pointer' } : {}),
       ...(noBottom ? { marginBottom: '0px' } : {}),
       ...(underlined ? {borderBottom: '1px solid #ccc'} : {}),
       ...(italic ? {fontStyle: 'italic'} : {}),
