@@ -115,3 +115,4 @@ export { default as ResizableIcon} from './ResizableIcon';
 export { default as CommentBubbleIcon} from './CommentBubbleIcon';
 
 export { default as WarnIcon} from './WarnIcon';
+export { default as LayersIcon } from './LayersIcon';
