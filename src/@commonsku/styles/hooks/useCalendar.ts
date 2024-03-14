@@ -68,7 +68,7 @@ const useCalendar = ({
             dt = value;
         }
         setCurrentMonth(dt);
-        const week = getWeek(dt);
+        const week = getWeek(dt, { weekStartsOn: 1 });
         setCurrentWeek(week);
         onChangeWeek && onChangeWeek({
             action,
@@ -81,7 +81,7 @@ const useCalendar = ({
 
     const changeDate = (value: Date) => {
         setCurrentMonth(value);
-        const week = getWeek(value);
+        const week = getWeek(value, { weekStartsOn: 1 });
         setCurrentWeek(week);
         onChangeWeek && onChangeWeek({
             action: 'change-date',

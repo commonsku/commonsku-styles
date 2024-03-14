@@ -48,7 +48,7 @@ const Calendar = ({ components = {}, extraProps, ...props }: CalendarProps) => {
     /* eslint-disable  @typescript-eslint/no-unused-vars */
     const [days, setDays] = useState(getDatesBetween(
         startOfWeek(currentMonth, { weekStartsOn: 1 }), lastDayOfWeek(currentMonth, { weekStartsOn: 1 })
-    ).map((day, i) => ({ __id__: `day-${getWeek(day)}-${i}`, day, })));
+    ).map((day, i) => ({ __id__: `day-${getWeek(day, { weekStartsOn: 1 })}-${i}`, day, })));
 
     const headerProps = {
         onNextWeek,
