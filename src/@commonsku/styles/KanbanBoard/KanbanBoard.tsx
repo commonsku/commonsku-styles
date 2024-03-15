@@ -4,16 +4,23 @@ import Column, { ColumnProps } from './Column';
 import { TCard, TColumn } from './types';
 import { useKanbanBoard, useKanbanBoardProps } from './useKanbanBoard';
 
-type KanbanBoardProps<T extends TCard = TCard> = React.HTMLAttributes<HTMLDivElement>
+type KanbanBoardProps<
+  T extends TCard = TCard,
+  C extends TColumn = TColumn
+> = React.HTMLAttributes<HTMLDivElement>
   & useKanbanBoardProps<T>
   & {
+    columns: C[];
     AddCard?: ColumnProps<T>['AddCard'];
     RemoveColumn?: (props: RemoveColumnProps) => JSX.Element;
   };
 
-function KanbanBoard<T extends TCard = TCard>({
+function KanbanBoard<
+  T extends TCard = TCard,
+  C extends TColumn = TColumn
+>({
   cards: initialCards,
-  columns: boardColumns,
+  columns,
 
   AddCard,
   RemoveColumn,
@@ -22,16 +29,14 @@ function KanbanBoard<T extends TCard = TCard>({
   onRemoveCard,
   updateCards,
   ...rest
-}: KanbanBoardProps<T>) {
+}: KanbanBoardProps<T, C>) {
   const {
     cards,
-    columns,
     setCards,
     handleAddCard,
     handleRemoveCard,
   } = useKanbanBoard({
     cards: initialCards,
-    columns: boardColumns,
     onAddCard,
     onRemoveCard,
     updateCards,

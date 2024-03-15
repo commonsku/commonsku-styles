@@ -1,29 +1,42 @@
-import React, { createContext, useContext } from 'react';
-import { TCard } from './types';
+import React, { createContext, useContext, useMemo } from 'react';
+import { TCard, TColumn } from './types';
 import { useKanbanBoard, useKanbanBoardProps } from './useKanbanBoard';
 
-type Props<T extends TCard = TCard> = useKanbanBoardProps<T>;
-type KanbanBoardProviderProps<T extends TCard = TCard> = React.PropsWithChildren<Props<T>>;
+type Props<
+  T extends TCard = TCard,
+  C extends TColumn = TColumn
+> = useKanbanBoardProps<T> & { columns: C[]; };
+type KanbanBoardProviderProps<
+  T extends TCard = TCard,
+  C extends TColumn = TColumn
+> = React.PropsWithChildren<Props<T, C>>;
 
 const kanbanBoardContext = createContext<Props>({
   cards: [],
+  columns: [],
 });
 
-function KanbanBoardProvider<T extends TCard = TCard>({
+function KanbanBoardProvider<
+  T extends TCard = TCard,
+  C extends TColumn = TColumn
+>({
   children,
   cards: initialCards,
-  columns: boardColumns,
+  columns,
   onAddCard,
   onRemoveCard,
   updateCards,
-}: KanbanBoardProviderProps<T>) {
-  const value = useKanbanBoard({
+}: KanbanBoardProviderProps<T, C>) {
+  const initialValue = useKanbanBoard({
     cards: initialCards,
-    columns: boardColumns,
     onAddCard,
     onRemoveCard,
     updateCards,
   });
+  const value = useMemo(
+    () => ({ ...initialValue, columns }),
+    [initialValue, columns]
+  );
 
   return (
     <kanbanBoardContext.Provider value={value}>

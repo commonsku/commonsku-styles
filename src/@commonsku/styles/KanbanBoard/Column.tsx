@@ -4,7 +4,7 @@ import Card from './Card';
 import DropIndicator from './DropIndicator';
 import { TCard } from './types';
 
-export type ColumnProps<T extends TCard = TCard> = React.HTMLAttributes<HTMLDivElement> & {
+export type ColumnProps<T extends TCard = TCard> = Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> & {
   title: React.ReactNode;
   headingColor?: string;
   column: string;
@@ -150,7 +150,8 @@ function Column<T extends TCard = TCard>({
           transitionDuration: '150ms',
           background: `var(--color-neutrals-${active ? '20' : '80'})`,
           overflowY: 'auto',
-        }}>
+        }}
+      >
         {filteredCards.map(
           c => <Card key={c.id} {...c} handleDragStart={handleDragStart} />
         )}

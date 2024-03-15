@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
-import { TCard, TColumn } from './types';
+import { useEffect, useState } from 'react';
+import { TCard } from './types';
 
 export type useKanbanBoardProps<T extends TCard = TCard> = {
   cards: T[];
-  columns?: TColumn[];
   onAddCard?: (c: Omit<T, 'id'>) => T | Promise<T>;
   onRemoveCard?: (id: string) => void | boolean | Promise<void | boolean>;
   updateCards?: (cards: T[]) => void;
@@ -11,7 +10,6 @@ export type useKanbanBoardProps<T extends TCard = TCard> = {
 
 export function useKanbanBoard<T extends TCard = TCard>({
   cards: initialCards,
-  columns: boardColumns,
   onAddCard,
   onRemoveCard,
   updateCards,
@@ -21,22 +19,6 @@ export function useKanbanBoard<T extends TCard = TCard>({
   useEffect(() => {
     updateCards?.(cards);
   }, [cards, updateCards]);
-
-  const columns = useMemo(
-    () => {
-      if (boardColumns) {
-        return boardColumns;
-      }
-      return Array.from(new Set(cards.map(c => c.column)).keys()).map(
-        c => ({
-          column: c,
-          title: c.slice(0, 1).toUpperCase() + c.slice(1),
-          color: 'var(--color-neutrals-10)'
-        })
-      );
-    },
-    [boardColumns, cards]
-  );
 
   const handleAddCard = (v: Omit<T, 'id'>) => {
     if (!onAddCard) return;
@@ -61,7 +43,6 @@ export function useKanbanBoard<T extends TCard = TCard>({
 
   return {
     cards,
-    columns,
     setCards,
     handleAddCard,
     handleRemoveCard,

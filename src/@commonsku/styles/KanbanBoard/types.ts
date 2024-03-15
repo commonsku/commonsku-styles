@@ -1,11 +1,13 @@
+import { ReactNode } from 'react';
+
 export type TColumn = {
   column: string;
-  title?: string;
+  title?: ReactNode;
   color?: string;
 };
 
 export type TCard = {
   id: string;
-  title: React.ReactNode;
+  title: ReactNode;
   column: string;
 };
