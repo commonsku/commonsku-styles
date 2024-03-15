@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import { Button } from './Button';
 import { Col } from './FlexboxGrid';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles'
@@ -130,7 +130,9 @@ export type PopupProps = React.PropsWithChildren<{
   popupClassName?: string;
   contentClassName?: string;
   PopupWindowComponent?: React.ComponentType<React.ComponentPropsWithRef<any>>,
-} & SharedStyleTypes> & React.HTMLAttributes<HTMLDivElement>;
+  popupContentStyle?: React.CSSProperties,
+  style?: CSSObject,
+} & SharedStyleTypes> & Omit<React.HTMLAttributes<HTMLDivElement>, 'style'>;
 
 export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
   {
@@ -147,7 +149,8 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
     popupClassName,
     contentClassName,
     PopupWindowComponent = PopupWindow,
-    style,
+    popupContentStyle = {},
+    style = {},
     ...props
   }: PopupProps,
   forwardedRef
@@ -196,7 +199,10 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
               </Col>
             </PopupHeader>
           )}
-        <div className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}>{children} </div>
+        <div
+          className={"popup-content" + (contentClassName ? ` ${contentClassName}` : '')}
+          style={popupContentStyle}
+        >{children} </div>
       </PopupWindowComponent>
     </Overlay>
   </PopupContainer>

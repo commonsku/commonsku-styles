@@ -51,7 +51,7 @@ const doc = typeof document !== 'undefined' ? document : {
       initEvent() {},
     };
   },
-  createElement() {
+  createElement(tagName?: string, options?: ElementCreationOptions) {
     return createElement();
   },
   createElementNS() {

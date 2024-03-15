@@ -20,7 +20,7 @@ const CalendarDaysHeader = ({
                     isSameDay(day, selectedDate) ? 'day-selected' : ''
                 );
                 return (
-                    <Col center key={`day-${getWeek(day)}-${i}`} className={className}>
+                    <Col center key={`day-${getWeek(day, { weekStartsOn: 1 })}-${i}`} className={className}>
                         <Text style={{ paddingRight: 10, }}>{format(day, "EEE")}</Text>
                         <StyledDayText selected={isToday}>
                             {format(day, 'd')}

@@ -23,10 +23,10 @@ export function convertTasksToDays({ currentMonth, currentWeek, tasks, }: { curr
             .map((t, j) => ({
                 ...t,
                 coordinates: [i, j],
-                __id__: `day-${i}-${getWeek(day)}-task-${j}`})
+                __id__: `day-${i}-${getWeek(day, { weekStartsOn: 1 })}-task-${j}`})
             );
         return {
-            __id__: `day-${i}-${getWeek(day)}`,
+            __id__: `day-${i}-${getWeek(day, { weekStartsOn: 1 })}`,
             day,
             tasks: _.orderBy(
                 newTasks,
