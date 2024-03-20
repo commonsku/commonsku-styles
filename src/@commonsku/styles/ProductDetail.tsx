@@ -402,15 +402,8 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
       <div style={{ overflowY: 'hidden', padding: 0, height: '100%' }}>
         {showAllImages
           ? <>
-            <Row style={{ marginTop: '15px', position: 'absolute', top: 85, zIndex: '100', gap: 16, alignItems: 'center' }}>
+            <Row style={{ marginTop: '15px', position: 'absolute', top: 5, zIndex: '100', gap: 16, alignItems: 'center' }}>
               <ArrowIcon direction='left' size='large' onClick={() => setShowAllImages(false)} style={{ cursor: 'pointer' }} />
-              <h2 style={{fontSize: 24,
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  lineHeight: '40px',
-                  margin: 0,}}>
-              Viewing Product Images
-              </h2>
             </Row>
             <Row>
               <Col sm={2} md={2} lg={2} style={{alignItems: 'flex-start'}}>
