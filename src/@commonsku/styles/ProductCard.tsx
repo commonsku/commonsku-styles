@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { SharedStyleTypes } from './SharedStyles'
-import { AddIcon, CheckmarkIcon } from './icons'
+import { AddIcon, CheckmarkIcon, SkubotSpinner } from './icons'
 import colors from './colors'
 import { ButtonVariant, IconButton, TButtonIcon } from './Button'
 import { Img } from './Img'
@@ -19,6 +19,9 @@ const ProductCardWrapper = styled.div`
     border-radius: 5px;
     cursor: pointer;
     &:hover {
+      background: ${colors.primary1['20']};
+    }
+    &.loading {
       background: ${colors.primary1['20']};
     }
     &.selected {
@@ -71,6 +74,10 @@ const ProductTitle = styled.div`
       color: ${colors.primary1['65']};
     }
 
+    ${ProductCardWrapper}.loading & {
+      color: ${colors.primary1['65']};
+    }
+
     ${ProductCardWrapper}.selected & {
       color: ${colors.primary1['10']};
     }
@@ -98,10 +105,29 @@ const ProductSubTitle = styled.div`
       color: ${colors.primary1['65']};
     }
 
+    ${ProductCardWrapper}.loading & {
+      color: ${colors.primary1['65']};
+    }
+
     ${ProductCardWrapper}.selected & {
       color: ${colors.primary1['10']};
     }
 }`;
+
+const ProductImageOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  border-radius: 5px;
+  width: 208px;
+  height: 208px;
+  border: 0px solid #000;
+  transition: .5s ease;
+  background: ${colors.teal['60']}99;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ProductButton = styled(IconButton)`
   &&& {
@@ -136,6 +162,7 @@ type ButtonState = {
 type ProductCardProps = React.PropsWithChildren<{
   handleClick?: () => void;
   selected: boolean;
+  loading?: boolean;
   imgUrl: string;
   title: string;
   sku?: string;
@@ -153,20 +180,38 @@ export const ProductCard = (props: ProductCardProps) => {
       return { icon: undefined, variant: 'error', name: 'Remove' };
     } else if (props.selected) {
       return { icon: CheckmarkIcon, variant: 'primary', name: 'Added' };
+    } else if (props.loading) {
+      return { icon: undefined, variant: 'primary', name: 'Adding' };
     }
     return { icon: AddIcon, variant: 'primary', name: 'Add' };
   };
 
   const button = buttonState();
+  const backgroundClass = () => {
+    if (props.selected) {
+      return 'selected';
+    }
+    if (props.loading) {
+      return 'loading';
+    }
+  };
   return (
-    <ProductCardWrapper onClick={props.handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className={props.selected ? 'selected' : ''} >
-      <ProductImg src={props.imgUrl}></ProductImg>
+    <ProductCardWrapper onClick={props.handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className={backgroundClass()} >
+      <div style={{ position: 'relative' }}>
+        <ProductImg src={props.imgUrl}></ProductImg>
+        {props.loading &&
+          <ProductImageOverlay>
+            <SkubotSpinner size="small" skubot={false} color={colors.white} />
+          </ProductImageOverlay>
+        }
+
+      </div>
       <ProductContent>
         <ProductTitle>{props.title}</ProductTitle>
         {props.sku && <ProductSubTitle>{props.sku}</ProductSubTitle>}
         <div style={{ display: 'flex', alignItems: 'center', height: 32, marginTop: '-4px' }}>
           <ProductSubTitle >{props.subTitle}</ProductSubTitle>
-          {props.showButton && (hover || props.selected) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={props.handleClickProductEvent}  >{button.name}</ProductButton>}
+          {props.showButton && (hover || props.selected || props.loading) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={props.handleClickProductEvent}  >{button.name}</ProductButton>}
         </div>
       </ProductContent>
     </ProductCardWrapper>
