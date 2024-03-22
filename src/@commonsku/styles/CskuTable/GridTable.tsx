@@ -61,7 +61,7 @@ const GridTable = styled.table<GridTableProps>`
     text-align: left;
     font-weight: normal;
     font-family: var(--font-family-bold);
-    font-size: 16;
+    font-size: 14px;
     color: var(--color-neutrals-90);
   }
 
@@ -83,13 +83,17 @@ const GridTable = styled.table<GridTableProps>`
     padding-bottom: 10px;
     color: var(--color-neutrals-90);
     font-family: var(--font-family-regular);
-    font-size: 14;
+    font-size: 14px;
     font-weight: normal;
   }
 
   tr.selected td {
     background: var(--color-teal-10);
     border: ${p => parseMeasurement(p.selectedBorderWidth ?? 1)} solid var(--color-teal-30);
+  }
+
+  tr:not(selected) td {
+    border-bottom: solid 1px #B2CDD1;
   }
 
   tr.selected:not(.selected-next) td {

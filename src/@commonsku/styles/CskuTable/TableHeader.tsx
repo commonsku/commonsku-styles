@@ -45,12 +45,12 @@ function TableHeader<
           colProps?.sortAsc === undefined
             ? <FilledChevronIcon
                 direction={'updown'}
-                size="small"
+                size="medium"
                 style={{ verticalAlign: "middle" }}
               />
             : <FilledChevronIcon
                 direction={colProps?.sortAsc ? 'down' : 'up'}
-                size="small"
+                size="medium"
                 style={{ verticalAlign: "middle" }}
               />
         );
