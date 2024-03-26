@@ -15,6 +15,7 @@ import {
 } from 'react-table';
 
 export interface BaseSortByHeaderGroup<D extends object = {}> extends HeaderGroup<D>, UseSortByColumnProps<D> {
+    accessorKey?: string;
     containerProps?: object;
     style?: React.CSSProperties;
     className?: string;

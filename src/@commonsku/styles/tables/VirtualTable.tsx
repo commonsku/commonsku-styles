@@ -62,6 +62,7 @@ export type VirtualTableProps<
   rowStyles?: (value: {row: Row<RowType>, style: React.CSSProperties }) => React.CSSProperties;
   gutterSize?: number;
   onSortChange?: (sortState: UseSortByState<RowType>) => void;
+  disableResizing?: boolean;
 };
 
 const VirtualTable = <
@@ -95,6 +96,7 @@ const VirtualTable = <
     customTableFooterProps = {},
     TableFooter,
     onSortChange,
+    disableResizing = true,
   } = props;
 
   const defaultColumn = useMemo(
@@ -117,6 +119,7 @@ const VirtualTable = <
     ...tableData
   } = useTable(
     {
+      disableResizing,
       columns,
       data,
       defaultColumn,
@@ -232,7 +235,7 @@ const VirtualTable = <
     ]
   );
 
-  const getHeaderProps = (column: BaseSortByHeaderGroup<RowType>, isFooter = false) => {
+  const getHeaderProps = useCallback((column: BaseSortByHeaderGroup<RowType>, isFooter = false) => {
     let headerProps = column.getHeaderProps({
       ...column.getSortByToggleProps(),
       ...(column.containerProps || {}),
@@ -258,9 +261,9 @@ const VirtualTable = <
       style: headerStyles,
       className: headerClassNames,
     };
-  };
+  }, []);
 
-  const getHeaderGroupProps = (headerGroup: SortByHeaderGroup<RowType>, isFooter = false) => {
+  const getHeaderGroupProps = useCallback((headerGroup: SortByHeaderGroup<RowType>, isFooter = false) => {
     let headerGroupProps = headerGroup.getHeaderGroupProps({
       ...(headerGroup.containerProps || {}),
     });
@@ -284,7 +287,7 @@ const VirtualTable = <
       style: headerStyles,
       className: headerClassNames,
     };
-  };
+  }, []);
 
   const handleScroll = useCallback((props: ListOnScrollProps) => {
     if (onScroll != null) {
@@ -318,23 +321,27 @@ const VirtualTable = <
                   ref={headerRef}
                   style={{ width: tableWidth }}
               >
-                {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => (
-                    <div
-                        {...getHeaderProps(column, false)}
+                {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => {
+                  const canSort = (
+                    column.accessorKey ? column[column.accessorKey]?.canSort : undefined
+                  ) ?? column?.canSort;
+                  return (
+                    <div {...getHeaderProps(column, false)}
                         onClick={() => handleSort(column)}
                     >
                       {column.render("Header")}
                       <span>
-                {column.canSort && (
-                    <FilledChevronIcon
-                        direction={sortIconDirection(column)}
-                        size="medium"
-                        style={{ verticalAlign: "middle" }}
-                    />
-                )}
-              </span>
+                        {canSort && (
+                            <FilledChevronIcon
+                                direction={sortIconDirection(column)}
+                                size="medium"
+                                style={{ verticalAlign: "middle" }}
+                            />
+                        )}
+                      </span>
                     </div>
-                ))}
+                  );
+                })}
               </div>
           ))}
         </div>
