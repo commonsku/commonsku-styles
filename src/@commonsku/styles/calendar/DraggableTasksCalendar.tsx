@@ -80,7 +80,7 @@ const DraggableTasksCalendar = ({
     ),
     footerTasks: footerTasks.filter(
       t => t.date
-        ? (getWeek(t.date) < currentWeek && getYear(t.date) === getYear(currentMonth))
+        ? (getWeek(t.date, { weekStartsOn: 1 }) < currentWeek && getYear(t.date) === getYear(currentMonth))
           || getYear(t.date) < getYear(currentMonth)
         : false
     ),
@@ -104,7 +104,7 @@ const DraggableTasksCalendar = ({
       ...s,
       footerTasks: footerTasks.filter(
         t => t.date
-          ? (getWeek(t.date) < currentWeek && getYear(t.date) === getYear(currentMonth))
+          ? (getWeek(t.date, { weekStartsOn: 1 }) < currentWeek && getYear(t.date) === getYear(currentMonth))
             || getYear(t.date) < getYear(currentMonth)
           : false
       ),
@@ -143,7 +143,7 @@ const DraggableTasksCalendar = ({
         }
         const [removed] = sourceTasks.splice(source.index, 1);
         const newTask = {...removed,
-          __id__: `day-${getWeek(destColumn.day)}-${destColumn.day.getDate()}-task-${destination.index}`,
+          __id__: `day-${getWeek(destColumn.day, { weekStartsOn: 1 })}-${destColumn.day.getDate()}-task-${destination.index}`,
           date: new Date(
             destColumn.day.getFullYear(),
             destColumn.day.getMonth(),

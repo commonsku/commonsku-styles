@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import Csku from './Csku';
 import DebouncedInput, { DebouncedInputProps } from './DebouncedInput';
 
@@ -70,6 +70,7 @@ const DropdownOption = ({
 type TBaseInputDropdownOption = {
   label: string;
   value: string;
+  style?: CSSProperties,
 };
 type TInputDropdownOption<T extends TBaseInputDropdownOption = TBaseInputDropdownOption> = T;
 export type InputDropdownProps<
@@ -79,7 +80,11 @@ export type InputDropdownProps<
   options: T[];
   onSelectOption?: (v: TInputDropdownOption<T>) => void;
   extraOptions?: React.ReactNode;
-  isOpen?: boolean;
+  showDropdown?: boolean;
+  setShowDropdown: (v: boolean) => void,
+  wrapperStyle?: CSSProperties;
+  searchWrapperStyle?: CSSProperties;
+  optionsListStyle?: CSSProperties;
 };
 const ForwardedInputDropdown = <
   L extends boolean = false,
@@ -92,15 +97,18 @@ const ForwardedInputDropdown = <
     extraOptions,
     onSelectOption,
     onChange,
-    isOpen,
-    value: initialValue = '',
+    showDropdown,
+    setShowDropdown,
+    value = '',
+    wrapperStyle = {},
+    searchWrapperStyle = {},
+    optionsListStyle = {},
     ...rest
   }: Omit<InputDropdownProps<L, T>, 'ref'>,
   ref?: React.ForwardedRef<HTMLInputElement>
 ) => {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [showDropdown, setShowDropdown] = useState(isOpen || false);
-  const [value, setValue] = useState(initialValue);
+  const [keyOptionIdx, setKeyOptionIdx] = useState(-1);
 
   useEffect(() => {
     function handleClick(e: Event) {
@@ -117,26 +125,38 @@ const ForwardedInputDropdown = <
     };
   }, []);
 
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  useEffect(() => {
-    if (isOpen !== undefined) {
-      setShowDropdown(isOpen);
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (options.length === 0) {
+      return;
     }
-  }, [isOpen]);
 
-  useEffect(() => {
-    if (options.length > 0) {
-      setShowDropdown(true);
+    const key = e.key;
+    if (key === 'ArrowDown') {
+      setKeyOptionIdx(
+        s => s >= options.length-1 ? 0 : s+1
+      );
+    } else if (key === 'ArrowUp') {
+      setKeyOptionIdx(
+        s => s <= 0 ? options.length-1 : s-1
+      );
+    } else if (key === 'Enter') {
+      if (keyOptionIdx >= 0 && keyOptionIdx <= options.length) {
+        onSelectOption?.(options[keyOptionIdx]);
+      } else {
+        setShowDropdown(false);
+      }
+      setKeyOptionIdx(-1);
+    } else if (key === 'Tab') {
+      setShowDropdown(false);
+      setKeyOptionIdx(-1);
     }
-  }, [options]);
+  }
 
   return (
-    <Wrapper ref={rootRef}>
-      <SearchWrapper>
+    <Wrapper ref={rootRef} style={wrapperStyle}>
+      <SearchWrapper style={searchWrapperStyle}>
         <DebouncedInput
+          autoComplete="off"
           {...rest}
           ref={ref}
           label={label}
@@ -144,22 +164,32 @@ const ForwardedInputDropdown = <
           value={value}
           wrapperProps={{ style: { width: '100%', } }}
           onChange={v => {
-            setValue(v);
+            setKeyOptionIdx(-1);
             onChange?.(v);
           }}
+          onClick={(e) => { e.currentTarget.readOnly = false; }}
+          onFocus={(e) => { e.currentTarget.readOnly = false; }}
+          onKeyDown={onKeyDown}
         />
       </SearchWrapper>
-      {!showDropdown ? null : <OptionsList>
-        {options.map(op => (
+      {showDropdown ? <OptionsList style={optionsListStyle}>
+        {options.map((op, i) => (
           <DropdownOption
             label={op.label}
             value={op.value}
+            style={{
+              ...(keyOptionIdx === i ? {
+                backgroundColor: '#efefef',
+              } : {}),
+              ...op.style
+            }}
             key={`option-${op.value}`}
             onClick={() => onSelectOption?.(op)}
+            onMouseOver={() => setKeyOptionIdx(i)}
           />
         ))}
         {extraOptions}
-      </OptionsList>}
+      </OptionsList> : null}
       {children}
     </Wrapper>
   );

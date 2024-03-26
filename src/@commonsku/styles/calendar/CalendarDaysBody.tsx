@@ -23,14 +23,14 @@ const CalendarDaysBody = ({ days=[], currentMonth, selectedDate, onClickDay, com
             <Row className="day-body-wrapper-row">
                 {days.map(({day, __id__}, i) => (
                     <CalendarDayBody
-                        key={`day-body-${getWeek(day)}-${i}`}
+                        key={`day-body-${getWeek(day, { weekStartsOn: 1 })}-${i}`}
                         day={day}
                         selectedDate={selectedDate}
                         onClick={() => {onClickDay && onClickDay(day);}}
                         weekend={weekend}
                         children={components?.DayBody
                             ? <components.DayBody
-                                key={`day-body-${getWeek(day)}-${i}`}
+                                key={`day-body-${getWeek(day, { weekStartsOn: 1 })}-${i}`}
                                 day={day}
                                 selectedDate={selectedDate}
                                 onClick={() => {onClickDay && onClickDay(day);}}

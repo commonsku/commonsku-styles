@@ -1,5 +1,5 @@
 import React, { Ref, forwardRef, useState, useMemo, useCallback, useEffect, useLayoutEffect, useRef, CSSProperties, ComponentType } from 'react';
-import { Select } from '.';
+import { SKUSelect as Select } from './Select';
 import { Row } from '../FlexboxGrid';
 import { ActionMeta, components as selectComponents, ControlProps, GroupBase, MenuProps, MultiValue, OnChangeValue, OptionProps, PropsValue, SelectInstance } from 'react-select'
 import { useWindowSize } from '../hooks';

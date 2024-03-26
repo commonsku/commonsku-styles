@@ -167,7 +167,7 @@ export const Input = styled.input<BaseInputProps>`
 
 
 type BaseLabelInputProps = InputProps & {
-  label: string,
+  label: React.ReactNode,
   name?: string,
   labelOnTop?: boolean,
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>,
