@@ -26,6 +26,7 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
+    "declarationDir": "dist",
     "declarationMap": true,
     "typeRoots": [
       "src/@commonsku/styles/types",
