@@ -7,13 +7,15 @@ import React, {
   useState,
 } from "react";
 import { Input, InputProps } from "./Input";
-import { CalendarIcon } from "./icons";
+import { CalendarIcon, XIcon } from "./icons";
 import { format } from "date-fns";
 import DateRangePicker, {
   DateRange,
   DateRangePickerProps,
   DateRangePreset,
 } from "./DateRangePicker";
+import colors from "./colors";
+import styled from "styled-components";
 
 const dropdownStyles: CSSProperties = {
   position: "absolute",
@@ -26,13 +28,18 @@ const dropdownStyles: CSSProperties = {
   zIndex: 1,
 };
 
-const inputStyles: CSSProperties = {
-  fontStyle: "normal",
-  cursor: "pointer",
-  position: "absolute",
-  top: "8px",
-  right: "4px",
-};
+const Indicator = styled.span<{ top?: number }>`
+  position: absolute;
+  top: ${({ top }) => (top ? `${top}px` : "8px")};
+  right: 4px;
+  cursor: pointer;
+  font-style: normal;
+
+  svg {
+    width: 1.9rem;
+    vertical-align: middle;
+  }
+`;
 
 const formatDateRange = (
   { startDate, endDate }: DateRange,
@@ -70,6 +77,7 @@ export interface DateRangeInputProps extends Omit<InputProps, "onChange"> {
   selected: DateRange;
   dateFormat: string;
   onInputSelect: () => void;
+  onClickClear?: () => void;
 }
 
 export const DateRangeInput = ({
@@ -81,6 +89,7 @@ export const DateRangeInput = ({
   selected,
   dateFormat,
   onInputSelect,
+  onClickClear,
   ...props
 }: DateRangeInputProps) => {
   return (
@@ -96,11 +105,16 @@ export const DateRangeInput = ({
         autoComplete="off"
         {...props}
       />
-      <span style={inputStyles} onClick={onClick}>
-        {!isClearable && (
-          <CalendarIcon style={{ width: "1.9rem", verticalAlign: "middle" }} />
-        )}
-      </span>
+
+      {!isClearable ? (
+        <Indicator onClick={onClick}>
+          <CalendarIcon />
+        </Indicator>
+      ) : (
+        <Indicator top={6} onClick={onClickClear}>
+          <XIcon color={colors.select.clearIcon.color} />
+        </Indicator>
+      )}
     </div>
   );
 };
@@ -144,15 +158,23 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
   }, []);
 
   const handleChange = useCallback(
-    (range: DateRange, event?: SyntheticEvent<any>) => {
+    (range: DateRange, event?: SyntheticEvent<any>, closeDropdown = false) => {
       if (onChange != null) {
         onChange(range, event);
       }
 
       setDefaultDateText(getDateInputText(range, dateFormat, presets));
+      closeDropdown && setOpen(false);
     },
     [dateFormat, onChange, presets],
   );
+
+  const handleClickClear = useCallback(() => {
+    if (onChange) {
+      onChange({ startDate: null, endDate: null, category: "" });
+    }
+    setDefaultDateText("");
+  }, [onChange]);
 
   return (
     <>
@@ -161,7 +183,9 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
         value={dateText != null ? dateText : defaultDateText}
         onInputSelect={() => setOpen(true)}
         error={error}
+        onClick={() => setOpen(true)}
         isClearable={isClearable}
+        onClickClear={handleClickClear}
         selected={range}
         dateFormat={dateFormat}
         placeholder={placeholder || placeholderText || `Select a date range...`}
