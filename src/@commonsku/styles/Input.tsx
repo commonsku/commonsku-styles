@@ -9,6 +9,7 @@ import { RadioIcon, CheckboxIcon } from './icons';
 import { neutrals, teal } from './colors';
 import { RadioIconProps } from './icons/RadioIcon';
 import { CheckboxIconProps } from './icons/CheckboxIcon';
+import { Row, Col } from './FlexboxGrid';
 import EyeIcon from './icons/EyeIcon'
 
 type CommonInputProp = {
@@ -507,7 +508,7 @@ export type LabeledRadioProps = RadioProps & {
   radioIconProps?: RadioIconProps;
 };
 
-export const LabeledRadio: React.FC<LabeledRadioProps> = ({
+export const LabeledRadio: React.FC<LabeledRadioProps> = ({ 
   label,
   name,
   checked,
@@ -520,7 +521,7 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
   children,
   labelProps={},
   radioIconProps={},
-  ...props
+  ...props 
 }) => {
   const [ isHovering, updateHover ] = useState(false);
   const radio = useRef<HTMLInputElement>(null);
@@ -537,14 +538,14 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
         radio.current?.click();
       }}
     >
-      <RadioIcon
+      <RadioIcon 
         {...radioIconProps}
-        selected={checked}
-        hover={isHovering}
-        disabled={disabled}
+        selected={checked} 
+        hover={isHovering} 
+        disabled={disabled} 
         color={radioColor}
         hoverColor={radioHoverColor}
-        mr={8}
+        mr={8} 
         style={{
           ...(radioIconProps.style || {}),
           ...(radioIconStyle ? radioIconStyle : {position: 'absolute', left: 0}),
@@ -555,7 +556,7 @@ export const LabeledRadio: React.FC<LabeledRadioProps> = ({
   );
 }
 
-export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: boolean} > = ({
+export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: boolean} > = ({ 
   label,
   name,
   checked,
@@ -566,10 +567,10 @@ export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: bool
   radioIconStyle,
   flexGrow,
   onChange,
-  ...props
+  ...props  
 }) => {
   return(
-    <LabeledRadio
+    <LabeledRadio 
       label={label}
       checked={checked}
       disabled={disabled}
@@ -582,7 +583,7 @@ export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: bool
         border: disabled ? `solid 3px ${neutrals['40']}` : checked ? `solid 3px ${teal.main}` : `solid 3px ${teal['20']}`,
         borderRadius: "200px",
         color: disabled ? neutrals['70'] : teal.main,
-        flexGrow: flexGrow ? 1 : undefined,
+        flexGrow: flexGrow ? 1 : undefined, 
         justifyContent: 'center',
         ...labelStyle,
       }}
@@ -593,24 +594,24 @@ export const LabeledRadioInButton: React.FC<LabeledRadioProps & {flexGrow?: bool
   )
 }
 
-export const LabeledRadioGroup: React.FC<LabeledRadioProps & {name: string, radios: [{label: string, value: any}]}> = ({
-  name, value, radios, onChange, ...props
+export const LabeledRadioGroup: React.FC<LabeledRadioProps & {name: string, radios: [{label: string, value: any}]}> = ({ 
+  name, value, radios, onChange, ...props 
 }) => {
   return <>
     {map(radios, (radioProps, i) => {
-      return <LabeledRadio key={i} name={name} checked={value === radioProps.value} onChange={onChange}
+      return <LabeledRadio key={i} name={name} checked={value === radioProps.value} onChange={onChange} 
         {...radioProps}
       />
     })}
   </>
 }
 
-export const LabeledRadioInButtonGroup: React.FC<LabeledRadioProps & {name: string, radios: [{label: string, value: any}]}> = ({
-  name, value, radios, onChange, ...props
+export const LabeledRadioInButtonGroup: React.FC<LabeledRadioProps & {name: string, radios: [{label: string, value: any}]}> = ({ 
+  name, value, radios, onChange, ...props 
 }) => {
   return <>
     {map(radios, (radioProps, i) => {
-      return <LabeledRadioInButton key={i} name={name} checked={value === radioProps.value} onChange={onChange}
+      return <LabeledRadioInButton key={i} name={name} checked={value === radioProps.value} onChange={onChange} 
         {...radioProps}
       />
     })}
@@ -669,13 +670,13 @@ export const LabeledCheckbox: React.ForwardRefExoticComponent<LabeledCheckboxPro
         {...labelProps}
         style={labelStyle}
       >
-        <CheckboxIcon
+        <CheckboxIcon 
           {...checkboxIconProps}
-          hover={isHovering}
-          selected={checked}
-          disabled={disabled}
-          color={checkboxColor}
-          hoverColor={checkboxHoverColor}
+          hover={isHovering} 
+          selected={checked} 
+          disabled={disabled} 
+          color={checkboxColor} 
+          hoverColor={checkboxHoverColor} 
           indeterminate={indeterminate}
           mr={8}
           style={{...checkboxStyle}}
