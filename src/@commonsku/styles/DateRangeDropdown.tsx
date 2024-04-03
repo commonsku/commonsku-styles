@@ -146,9 +146,10 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
   }, []);
 
   const handleChange = useCallback(
-    (range: DateRange, event?: SyntheticEvent<any>) => {
+    (range: DateRange, event?: SyntheticEvent<any>, closeDropdown = false) => {
       if (!onChange) { return; }
       onChange(range, event);
+      closeDropdown && setOpen(false);
     },
     [onChange],
   );
