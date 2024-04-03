@@ -53,14 +53,16 @@ export interface DateRangePreset {
     label: string
 }
 
-export type DateRangePickerProps = Omit<DatepickerProps, 'value' | 'onChange' | 'dateFormat'> & { 
+export type DateRangePickerProps = Omit<DatepickerProps, 'value' | 'onChange' | 'dateFormat'> & {
     range: DateRange
     dateFormat?: string
     onChange?: (
         range: DateRange,
         event?: SyntheticEvent<any>,
+        closeDropdown?: boolean
     ) => void
-    presets?: DateRangePreset[]
+    presets?: DateRangePreset[],
+    initialActiveTab?: 'custom' | 'preset'
 }
 
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>((
@@ -85,6 +87,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         nextYearButtonLabel="",
         previousMonthButtonLabel="",
         previousYearButtonLabel="",
+        initialActiveTab = 'preset' ,
         popperClassName,
         wrapperClassName,
         style,
@@ -93,8 +96,20 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     ref
 ) => {
     const { startDate, endDate } = range;
-    const [activeTab, setActiveTab] = useState<'custom' | 'preset'>('custom');
-    const [selectedPreset, setSelectedPreset] = useState<DateRangePreset>();
+    const [selectedPreset, setSelectedPreset] = useState<
+      DateRangePreset | undefined
+    >(
+      presets !== undefined && presets.length > 0
+        ? presets.find((p) => p.name === range.category)
+        : undefined,
+    );
+    const [activeTab, setActiveTab] = useState<"custom" | "preset">(
+      range.category === "custom"
+        ? "custom"
+        : !!selectedPreset
+          ? "preset"
+          : initialActiveTab,
+    );
 
     // Workaround for react-datepicker selection bug
     // https://github.com/Hacker0x01/react-datepicker/issues/3367
@@ -124,7 +139,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                     endDate: newEnd,
                 };
 
-                onChange(newDateRange, event);
+                onChange(newDateRange, event, newStart != null && newEnd != null);
             }
         },
         [endDateKey, onChange, startDateKey]
@@ -133,7 +148,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const handleSelectPreset = useCallback((preset: DateRangePreset) => {
         setSelectedPreset(preset);
         if (onChange != null) {
-            onChange({ category: preset.name });
+            onChange({ category: preset.name }, undefined, true);
         }
     }, [onChange, setSelectedPreset]);
 
@@ -237,21 +252,21 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
             {hasPresets &&
                 <Row style={{ gap: '2rem', marginBottom: '2rem' }}>
                     <Text
-                        style={activeTab === 'custom' ? activeTabStyles : tabStyles}
-                        onClick={() => setActiveTab('custom')}
-                    >
-                        Custom
-                    </Text>
-                    <Text
                         style={activeTab === 'preset' ? activeTabStyles : tabStyles}
                         onClick={() => setActiveTab('preset')}
                     >
                         Preset
                     </Text>
+                    <Text
+                        style={activeTab === 'custom' ? activeTabStyles : tabStyles}
+                        onClick={() => setActiveTab('custom')}
+                    >
+                        Custom
+                    </Text>
                 </Row>
             }
             {activeTab === 'custom' ? renderCustomTab() : renderPresetTab()}
-        </div>     
+        </div>
     );
 });
 
