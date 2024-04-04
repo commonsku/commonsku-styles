@@ -322,9 +322,12 @@ const VirtualTable = <
                   style={{ width: tableWidth }}
               >
                 {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => {
-                  const canSort = (
+                  const foundCanSort = (columns.find(
+                    v => v.accessor && v.accessor === column.accessorKey
+                  ) as Column<RowType> & { canSort?: boolean })?.canSort;
+                  const canSort = foundCanSort ?? column?.canSort ?? (
                     column.accessorKey ? column[column.accessorKey]?.canSort : undefined
-                  ) ?? column?.canSort;
+                  );
                   return (
                     <div {...getHeaderProps(column, false)}
                         onClick={() => handleSort(column)}

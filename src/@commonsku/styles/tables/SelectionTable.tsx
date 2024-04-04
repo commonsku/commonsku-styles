@@ -70,6 +70,12 @@ const SelectionTable = <
             checked={selectionState === 'all'}
             indeterminate={selectionState === 'some'}
             onChange={handleSelectHeader}
+            labelStyle={{
+                height: '100%',
+                width: '35px',
+                alignItems: 'center',
+                alignSelf: 'normal',
+            }}
         />
     ), [selectionState, handleSelectHeader]);
 
@@ -79,9 +85,15 @@ const SelectionTable = <
             accessor: 'selected',
             Cell: (cell: CellProps<RowType>) => (
                 <LabeledCheckbox
+                    className='row-select-input'
                     label=""
                     checked={selectedRows != null && selectedRows.includes(cell.row.original)}
                     onChange={() => handleSelectRows([cell.row.original])}
+                    labelStyle={{
+                        height: '100%',
+                        width: '35px',
+                        alignItems: 'center',
+                    }}
                 />
             ),
             width: 40,
