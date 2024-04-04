@@ -68,6 +68,7 @@ const GridTable = styled.table<GridTableProps>`
   th.sticky {
     position: sticky;
     top: 0;
+    z-index: 9;
   }
 
   th.clickable {
