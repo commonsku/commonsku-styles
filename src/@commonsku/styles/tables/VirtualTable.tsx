@@ -357,6 +357,7 @@ const VirtualTable = <
     hideHeader,
     tableHeaderProps,
     tableWidth,
+    columns,
   ]);
 
   useEffect(() => {

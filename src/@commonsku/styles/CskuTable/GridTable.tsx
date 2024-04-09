@@ -50,7 +50,7 @@ const GridTable = styled.table<GridTableProps>`
 
   th,
   td {
-    padding: 15px;
+    padding: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -88,31 +88,13 @@ const GridTable = styled.table<GridTableProps>`
     font-weight: normal;
   }
 
-  tr.selected td {
-    background: var(--color-teal-10);
-    border: ${p => parseMeasurement(p.selectedBorderWidth ?? 1)} solid var(--color-teal-30);
-  }
-
-  tr:not(selected) td {
+  tr td {
     border-bottom: solid 1px #B2CDD1;
   }
 
-  tr.selected:not(.selected-next) td {
-    border-bottom-width: ${p => parseMeasurement(p.selectedBorderWidth ?? 1)};
-  }
-  tr.selected.selected-next td {
-    border-bottom-width: 0px;
-  }
-
-  tr.selected td:nth-child(even) {
-    border-left-width: 0px;
-    border-right-width: 0px;
-  }
-  tr.selected td:last-child {
-    border-right-width: ${p => parseMeasurement(p.selectedBorderWidth ?? 1)};
-  }
-  tr.selected td:first-child {
-    border-left-width: ${p => parseMeasurement(p.selectedBorderWidth ?? 1)};
+  tr.selected td {
+    background: var(--color-teal-10);
+    border-color: var(--color-teal-30);
   }
 
   tr.striped:nth-child(even):not(last-child) td {
