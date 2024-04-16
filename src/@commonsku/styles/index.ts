@@ -84,4 +84,3 @@ export * from './Typography';
 export * from './AddressAutocomplete';
 export { default as DebouncedInput } from './DebouncedInput';
 export { default as InputDropdown } from './InputDropdown';
-export * from './CskuTable';
