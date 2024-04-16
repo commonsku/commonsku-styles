@@ -70,27 +70,42 @@ const SelectionTable = <
             checked={selectionState === 'all'}
             indeterminate={selectionState === 'some'}
             onChange={handleSelectHeader}
+            labelStyle={{
+                height: '100%',
+                width: '35px',
+                alignItems: 'center',
+                alignSelf: 'normal',
+            }}
         />
     ), [selectionState, handleSelectHeader]);
 
-    const selectionColumn = useMemo<Column<RowType>>(() => ({
-        Header: selectionHeader, 
-        accessor: 'selected',
-        Cell: (cell: CellProps<RowType>) => (
-            <LabeledCheckbox
-                label=""
-                checked={selectedRows != null && selectedRows.includes(cell.row.original)}
-                onChange={() => handleSelectRows([cell.row.original])}
-            />
-        ),
-        width: 40,
-        disableSortBy: true,
-    }), [selectedRows, selectionHeader, handleSelectRows]);
+    const selectionColumns = useMemo(() => ([
+        {
+            Header: selectionHeader, 
+            accessor: 'selected',
+            Cell: (cell: CellProps<RowType>) => (
+                <LabeledCheckbox
+                    className='row-select-input'
+                    label=""
+                    checked={selectedRows != null && selectedRows.includes(cell.row.original)}
+                    onChange={() => handleSelectRows([cell.row.original])}
+                    labelStyle={{
+                        height: '100%',
+                        width: '35px',
+                        alignItems: 'center',
+                    }}
+                />
+            ),
+            width: 40,
+            disableSortBy: true,
+        } as Column<RowType>,
+        ...columns
+    ]), [columns, selectedRows, selectionHeader, handleSelectRows]);
 
     return (
         <VirtualTable
             {...props}
-            columns={[selectionColumn, ...columns]}
+            columns={selectionColumns}
             data={data}
             minWidth={40}
         />

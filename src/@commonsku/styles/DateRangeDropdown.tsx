@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { Input, InputProps } from "./Input";
-import { CalendarIcon } from "./icons";
+import { CalendarIcon, XIcon } from "./icons";
 import { format } from "date-fns";
 import DateRangePicker, {
   DateRange,
@@ -70,6 +70,7 @@ export interface DateRangeInputProps extends Omit<InputProps, "onChange"> {
   selected: DateRange;
   dateFormat: string;
   onInputSelect: () => void;
+  onClear?: () => void;
 }
 
 export const DateRangeInput = ({
@@ -81,6 +82,7 @@ export const DateRangeInput = ({
   selected,
   dateFormat,
   onInputSelect,
+  onClear,
   ...props
 }: DateRangeInputProps) => {
   return (
@@ -96,11 +98,16 @@ export const DateRangeInput = ({
         autoComplete="off"
         {...props}
       />
-      <span style={inputStyles} onClick={onClick}>
-        {!isClearable && (
-          <CalendarIcon style={{ width: "1.9rem", verticalAlign: "middle" }} />
-        )}
-      </span>
+      {((value && isClearable) || !value) && <span style={inputStyles} onClick={() => {
+        if (value && isClearable) {
+          onClear?.();
+          return;
+        }
+        onInputSelect();
+      }}>
+        {(value && isClearable) ? <XIcon color="var(--color-errors-main)" style={{ width: "1.9rem", verticalAlign: "middle" }} /> : null}
+        {!value && <CalendarIcon color="var(--color-primary1-main)" style={{ width: "1.9rem", verticalAlign: "middle" }} />}
+      </span>}
     </div>
   );
 };
@@ -123,17 +130,12 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
     style = dropdownStyles,
   } = props;
   const [open, setOpen] = useState(false);
-  const [defaultDateText, setDefaultDateText] = useState<string>(
-    getDateInputText(range, dateFormat, presets),
-  );
   const datepickerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleExternalClick = (e: MouseEvent) => {
-      if (
-        datepickerRef.current != null &&
-        !datepickerRef.current.contains(e.target as Node)
-      ) {
+      const elem = datepickerRef.current;
+      if (elem && !elem.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -144,22 +146,25 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
   }, []);
 
   const handleChange = useCallback(
-    (range: DateRange, event?: SyntheticEvent<any>) => {
-      if (onChange != null) {
+    (range: DateRange, event?: SyntheticEvent<any>, closeDropdown = false) => {
+        if (!onChange) { return; }
         onChange(range, event);
-      }
-
-      setDefaultDateText(getDateInputText(range, dateFormat, presets));
+        closeDropdown && setOpen(false);
     },
-    [dateFormat, onChange, presets],
+    [onChange],
   );
+
+  const onClear = useCallback(() => {
+    handleChange({category: '', endDate: null, startDate: null});
+  }, [handleChange]);
 
   return (
     <>
       <DateRangeInput
         noMargin
-        value={dateText != null ? dateText : defaultDateText}
+        value={!dateText ? getDateInputText(range, dateFormat, presets) : dateText}
         onInputSelect={() => setOpen(true)}
+        onClear={onClear}
         error={error}
         isClearable={isClearable}
         selected={range}
