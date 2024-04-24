@@ -1344,6 +1344,7 @@ const App = () => {
     },
   ]);
   const [stepperValue, setStepperValue] = useState<string | number>(6);
+  const [page, setPage] = useState(0);
   const [panelledSelectValue, setPanelledSelectValue] =
     useState<ExampleOption | null>(optionsWithSubOptions[0].subOptions![0]);
   const [panelledSelectMultiValue, setPanelledSelectMultiValue] = useState<
@@ -4259,7 +4260,7 @@ const App = () => {
 
               <demo.OuterContainer title="Pagination" id="pagination">
                 <demo.InnerContainer noBottomLine>
-                  <Pagination currentPage={1} totalPages={4} onChange={(page:number) => 0}/>
+                  <Pagination currentPage={page} totalPages={5} onChange={setPage}/>
                 </demo.InnerContainer>
               </demo.OuterContainer>
 
