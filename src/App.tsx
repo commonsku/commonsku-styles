@@ -4260,7 +4260,11 @@ const App = () => {
 
               <demo.OuterContainer title="Pagination" id="pagination">
                 <demo.InnerContainer noBottomLine>
-                  <Pagination currentPage={page} totalPages={5} onChange={setPage}/>
+                  <Pagination
+                    currentPage={page}
+                    totalPages={5}
+                    onChange={setPage}
+                  />
                 </demo.InnerContainer>
               </demo.OuterContainer>
 
