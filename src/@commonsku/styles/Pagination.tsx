@@ -19,15 +19,16 @@ const DotsContainer = styled.div`
   gap: 10px;
 `;
 
-const Dot = styled.button<{ $bold?: boolean; $dotColor: string }>`
+const Dot = styled.button<{ $selected?: boolean }>`
   &&& {
-    width: ${(props) => (props.$bold ? "13px" : "8px")};
-    height: ${(props) => (props.$bold ? "13px" : "8px")};
+    width: ${(props) => (props.$selected ? "13px" : "8px")};
+    height: ${(props) => (props.$selected ? "13px" : "8px")};
     border-radius: 100%;
     padding: 0;
     border: none;
     cursor: pointer;
-    background-color: ${(props) => props.$dotColor};
+    background-color: ${(props) =>
+      props.$selected ? colors.primary1[65] : colors.neutrals[50]};
   }
 `;
 
@@ -41,28 +42,15 @@ const ArrowButton = styled(ChevronIcon)<{ $off?: boolean }>`
 
 interface DotButtonProps {
   currentPage: number;
-  id: number;
+  page: number;
   onChange: (page: number) => void;
 }
 
-const DotButton = ({ currentPage, id, onChange }: DotButtonProps) => {
-  if (currentPage === id) {
-    return (
-      <Dot
-        $dotColor={colors.primary1[65]}
-        $bold
-        key={id}
-        onClick={() => onChange(id)}
-      />
-    );
+const DotButton = ({ currentPage, page, onChange }: DotButtonProps) => {
+  if (currentPage === page) {
+    return <Dot $selected onClick={() => onChange(page)} />;
   }
-  return (
-    <Dot
-      $dotColor={colors.neutrals[50]}
-      key={id}
-      onClick={() => onChange(id)}
-    />
-  );
+  return <Dot onClick={() => onChange(page)} />;
 };
 
 interface PaginationProps {
@@ -86,7 +74,7 @@ export const Pagination = ({
 
       <DotsContainer>
         {Array.from({ length: totalPages }, (_, page) => (
-          <DotButton id={page} currentPage={currentPage} onChange={onChange} />
+          <DotButton page={page} currentPage={currentPage} onChange={onChange} key={page}/>
         ))}
       </DotsContainer>
 
