@@ -31,7 +31,7 @@ const Dot = styled.button<{ $bold?: boolean; $dotColor: string }>`
   }
 `;
 
-const ArrowButtons = styled(ChevronIcon)<{ $off?: boolean }>`
+const ArrowButton = styled(ChevronIcon)<{ $off?: boolean }>`
   height: 24px;
   width: 24px;
   filter: ${(props) => (props.$off ? "grayscale()" : "none")};
@@ -78,7 +78,7 @@ export const Pagination = ({
 }: PaginationProps) => {
   return (
     <ScrollControl>
-      <ArrowButtons
+      <ArrowButton
         direction="left"
         onClick={() => onChange(Math.max(0, currentPage - 1))}
         $off={currentPage === 0}
@@ -90,7 +90,7 @@ export const Pagination = ({
         ))}
       </DotsContainer>
 
-      <ArrowButtons
+      <ArrowButton
         direction="right"
         onClick={() => onChange(Math.min(totalPages - 1, currentPage + 1))}
         $off={currentPage === totalPages - 1}
