@@ -59,6 +59,7 @@ export const NavItems = [
         name: 'Components', 
         links: [
             {title: 'Calendar Tasks', to: '#calendar-tasks' },
+            {title: 'Pagination', to: '#pagination' },
             {title: 'Loading Bars', to: '#loading-bars' },
             {title: 'Skubot Spinner', to: '#skubot-spinner' },
             {title: 'Numbers Formatting', to: '#numbers-formatting' },
