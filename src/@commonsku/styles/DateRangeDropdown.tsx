@@ -131,6 +131,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
   } = props;
   const [open, setOpen] = useState(false);
   const datepickerRef = useRef<HTMLDivElement | null>(null);
+  const testId = props["data-testid"];
 
   useEffect(() => {
     const handleExternalClick = (e: MouseEvent) => {
@@ -170,6 +171,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
         selected={range}
         dateFormat={dateFormat}
         placeholder={placeholder || placeholderText || `Select a date range...`}
+        data-testid={testId}
       />
       {open && (
         <DateRangePicker
