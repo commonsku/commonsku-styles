@@ -6,7 +6,7 @@ import SkubotLogo from "./SkubotLogo";
 import { teal } from "../colors";
 
 export type SkubotSpinnerProps = {
-  size?: TIconSize;
+  size?: TIconSize | "icon";
   width?: string | number;
   height?: string | number;
   altText?: string;
@@ -110,7 +110,7 @@ export default function SkubotSpinner({
   color = teal.main,
   size = "default",
   altText = "loading",
-  skubot = containerSizes[size] !== "icon",
+  skubot = size !== "icon",
   ...props
 }: SkubotSpinnerProps) {
   return (

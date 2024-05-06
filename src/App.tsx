@@ -4301,6 +4301,8 @@ const App = () => {
                     <icons.SkubotSpinner mb={10} size="small" />
                     <demo.SmallLabel>Tiny</demo.SmallLabel>
                     <icons.SkubotSpinner mb={10} size="tiny" />
+                    <demo.SmallLabel>Icon</demo.SmallLabel>
+                    <icons.SkubotSpinner mb={10} size="icon" />
                   </div>
                 </demo.InnerContainer>
               </demo.OuterContainer>
