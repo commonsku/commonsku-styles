@@ -1,12 +1,11 @@
 import styled, { keyframes } from "styled-components";
 import { TIconSize } from "./SvgIcon";
 import { SharedStyleTypes } from "../SharedStyles";
-import React from "react";
 import SkubotLogo from "./SkubotLogo";
 import { teal } from "../colors";
 
 export type SkubotSpinnerProps = {
-  size?: TIconSize | "icon";
+  size?: TIconSize | "button";
   width?: string | number;
   height?: string | number;
   altText?: string;
@@ -34,7 +33,7 @@ const logoSizes = {
 };
 
 const containerSizes = {
-  icon: {
+  button: {
     width: 24,
   },
   tiny: {
@@ -110,7 +109,7 @@ export default function SkubotSpinner({
   color = teal.main,
   size = "default",
   altText = "loading",
-  skubot = size !== "icon",
+  skubot = size !== "button",
   ...props
 }: SkubotSpinnerProps) {
   return (
