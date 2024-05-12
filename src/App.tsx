@@ -4824,7 +4824,7 @@ const App = () => {
                     title="Invoices this month"
                     target={10}
                     value1={10}
-                    value1Label={(v) => `$ ${v}`}
+                    value1Label={(v) => `Current: $${v}`}
                   />
                 </demo.InnerContainer>
               </demo.OuterContainer>
