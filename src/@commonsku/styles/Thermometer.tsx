@@ -1,9 +1,9 @@
-import React, { forwardRef, LegacyRef, useCallback, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Text, Number } from './Text';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
 import { colors } from './Theme';
-
+import { useWindowSize } from './hooks';
 
 const ProgressWrapper = styled.div<SharedStyleTypes>`
     max-width: 100%;
@@ -14,7 +14,6 @@ const ProgressWrapper = styled.div<SharedStyleTypes>`
 
     ${SharedStyles}
 `
-
 
 const ProgressBar = styled.div<{
     target: number;
@@ -105,6 +104,7 @@ export default function Thermometer({
     const [containerWidth, setContainerWidth] = useState(0);
     const [targetWidth, setTargetWidth] = useState(0);
     const [value1Width, setValue1Width] = useState(0);
+    const [windowWidth] = useWindowSize();
 
     const calcTargetWidth = useCallback(() => {
         const result = 1 * containerWidth;
@@ -118,7 +118,7 @@ export default function Thermometer({
     const measureContainerRef = useCallback((node: HTMLDivElement) => {
         containerRef.current = node;
         setContainerWidth(node?.clientWidth || 0);
-    }, []);
+    }, [windowWidth]);
     const measureTargetRef = useCallback((node: HTMLDivElement) => {
         targetRef.current = node;
         setTargetWidth(node?.clientWidth || 0);
@@ -127,8 +127,6 @@ export default function Thermometer({
         val1Ref.current = node;
         setValue1Width(node?.clientWidth || 0);
     }, []);
-
-    console.log(targetWidth, value1Width, containerWidth);
 
     return (
         <div {...props}>

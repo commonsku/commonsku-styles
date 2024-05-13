@@ -4822,7 +4822,7 @@ const App = () => {
                 <demo.InnerContainer title="Thermometer" noBottomLine>
                   <Thermometer
                     title="Invoices this month"
-                    target={10}
+                    target={15}
                     value1={10}
                     value1Label={(v) => `Current: $${v}`}
                   />
