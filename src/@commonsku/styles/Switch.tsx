@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { getThemeColor, fontStyles } from './Theme';
-import { stripUnit } from '../utils';
+import { getThemeColor } from './Theme';
 import Csku, { BaseCskuProps } from './Csku';
 
 const toggleSizes = {
@@ -36,17 +35,13 @@ export type SwitchStatedProps = {
 } & Omit<CommonProps, 'selected'>
   & Omit<BaseCskuProps, 'style'>;
 
-const createAnimationLeftStyle = (p: CommonProps) => {
-  if (p.stretch) {
-    return `calc(100% * 1.5px)`;
-  }
-  return `${stripUnit(toggleSizes[p.size ?? 'medium'].width) + 3}px`;
-};
-
 const ContainerStyled = styled(Csku)<CommonProps>`
   &&& {
     position: relative;
-    background: ${p => getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')};
+    background: ${p => p.selected
+        ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
+        : getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')
+    };
     border-radius: 100px;
     cursor: pointer;
     transition: background .3s;
@@ -59,15 +54,15 @@ const ContainerStyled = styled(Csku)<CommonProps>`
     @keyframes switch-slide-to-right {
       from { left: 0; }
       to {
-        left: ${createAnimationLeftStyle};
+        left: 24px;
       }
     }
   
     @keyframes switch-slide-to-left {
       from {
-        left: ${createAnimationLeftStyle};
+        left: 24px;
       }
-      to { left: 1px; }
+      to { left: 0px; }
     }
   }`
 
