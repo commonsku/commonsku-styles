@@ -109,7 +109,9 @@ export const DateRangeInput = ({
             onInputSelect();
           }}
         >
-          {value && isClearable ? <ClearIcon /> : null}
+          {value && isClearable ? (
+            <ClearIcon style={{ verticalAlign: "middle" }} />
+          ) : null}
           {!value && (
             <CalendarIcon
               color="var(--color-primary1-main)"
