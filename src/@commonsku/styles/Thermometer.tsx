@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Text, Number } from './Text';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
@@ -44,7 +44,7 @@ interface ThermometerLabelProps {
     label?: React.ReactNode | ((v: number) => React.ReactNode);
 }
 
-const ThermometerLabel = forwardRef((
+const ThermometerLabel = forwardRef<HTMLSpanElement, ThermometerLabelProps>((
     { className, value, label }: ThermometerLabelProps, 
     ref?: React.Ref<HTMLSpanElement>
 ) => {
@@ -106,11 +106,11 @@ export default function Thermometer({
     const [value1Width, setValue1Width] = useState(0);
     const [windowWidth] = useWindowSize();
 
-    const calcTargetWidth = useCallback(() => {
+    const calcedTargetWidth = useMemo(() => {
         const result = 1 * containerWidth;
         return result > containerWidth ? containerWidth : result;
     }, [containerWidth]);
-    const calcVal1Width = useCallback(() => {
+    const calcedVal1Width = useMemo(() => {
         const result = (target <= value1 ? 1 : value1/target) * containerWidth;
         return result > containerWidth ? containerWidth : result;
     }, [containerWidth, target, value1]);
@@ -138,7 +138,7 @@ export default function Thermometer({
                     ref={measureTargetRef}
                     value={target}
                     label={targetLabel}
-                    calcedTargetWidth={calcTargetWidth()}
+                    calcedTargetWidth={calcedTargetWidth}
                     targetWidth={targetWidth}
                 />
                 <Value1Label
@@ -154,7 +154,7 @@ export default function Thermometer({
                         target={target}
                         value={value1}
                         color={barColor || colors.secondary3.main}
-                        offset={calcVal1Width()}
+                        offset={calcedVal1Width}
                         elementWidth={value1Width}
                     />
                 </ProgressWrapper>
