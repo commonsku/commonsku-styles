@@ -101,16 +101,13 @@ export default function AddressAutocompleteInput({
     setShowDropdown(data.length > 0);
   }, [country, currentLocation, onInputChange]);
 
-  const Input = useCallback((p: {
-    loadOptions: (value: string) => Promise<void>,
-    handleChange: (option: TOption) => void,
-  }) => (
+  const Input = useCallback(() => (
     <div className="autocomplete-search">
       <InputDropdown
         {...props}
         options={options}
-        onChange={p.loadOptions}
-        onSelectOption={p.handleChange}
+        onChange={loadOptions}
+        onSelectOption={handleChange}
         value={value}
         timeout={delayValue}
         showDropdown={showDropdown}
@@ -133,16 +130,16 @@ export default function AddressAutocompleteInput({
     value,
     delayValue,
     showDropdown,
+    testId,
     setShowDropdown,
-    testId
+    handleChange,
+    loadOptions,
   ]);
 
   return (
     <Wrapper apiKey={apiKey}
       libraries={['core', 'maps', 'places', 'geocoding']}
-      render={(status) => <Input handleChange={handleChange} loadOptions={loadOptions} />}
-    >
-      <Input handleChange={handleChange} loadOptions={loadOptions} />
-    </Wrapper>
+      render={Input}
+    />
   );
 }
