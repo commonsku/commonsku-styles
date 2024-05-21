@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { Input, InputProps } from "./Input";
-import { CalendarIcon, XIcon } from "./icons";
+import { CalendarIcon, ClearIcon } from "./icons";
 import { format } from "date-fns";
 import DateRangePicker, {
   DateRange,
@@ -98,16 +98,28 @@ export const DateRangeInput = ({
         autoComplete="off"
         {...props}
       />
-      {((value && isClearable) || !value) && <span style={inputStyles} onClick={() => {
-        if (value && isClearable) {
-          onClear?.();
-          return;
-        }
-        onInputSelect();
-      }}>
-        {(value && isClearable) ? <XIcon color="var(--color-errors-main)" style={{ width: "1.9rem", verticalAlign: "middle" }} /> : null}
-        {!value && <CalendarIcon color="var(--color-primary1-main)" style={{ width: "1.9rem", verticalAlign: "middle" }} />}
-      </span>}
+      {((value && isClearable) || !value) && (
+        <span
+          style={inputStyles}
+          onClick={() => {
+            if (value && isClearable) {
+              onClear?.();
+              return;
+            }
+            onInputSelect();
+          }}
+        >
+          {value && isClearable ? (
+            <ClearIcon style={{ verticalAlign: "middle", marginRight: 8 }} />
+          ) : null}
+          {!value && (
+            <CalendarIcon
+              color="var(--color-primary1-main)"
+              style={{ width: "1.9rem", verticalAlign: "middle" }}
+            />
+          )}
+        </span>
+      )}
     </div>
   );
 };
@@ -147,22 +159,26 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
 
   const handleChange = useCallback(
     (range: DateRange, event?: SyntheticEvent<any>, closeDropdown = false) => {
-        if (!onChange) { return; }
-        onChange(range, event);
-        closeDropdown && setOpen(false);
+      if (!onChange) {
+        return;
+      }
+      onChange(range, event);
+      closeDropdown && setOpen(false);
     },
     [onChange],
   );
 
   const onClear = useCallback(() => {
-    handleChange({category: '', endDate: null, startDate: null});
+    handleChange({ category: "", endDate: null, startDate: null });
   }, [handleChange]);
 
   return (
     <>
       <DateRangeInput
         noMargin
-        value={!dateText ? getDateInputText(range, dateFormat, presets) : dateText}
+        value={
+          !dateText ? getDateInputText(range, dateFormat, presets) : dateText
+        }
         onInputSelect={() => setOpen(true)}
         onClear={onClear}
         error={error}
