@@ -75,7 +75,7 @@ export type DateRangePickerProps = Omit<
   initialActiveTab?: "custom" | "preset";
 };
 
-export const checkDateYear = (date: Date | null | undefined): boolean => {
+const checkDateYear = (date: Date | null | undefined): boolean => {
   if (!date || !isValid(date)) {
     return false;
   }
