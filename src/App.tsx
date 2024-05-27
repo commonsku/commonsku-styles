@@ -5763,6 +5763,7 @@ const App = () => {
                       name="SubtractIcon"
                     />
                     <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon" />
+                    <IconsShowcase Icons={[<icons.ClearIcon />]} name="ClearIcon"  />
                     <IconsShowcase
                       Icons={[<icons.SearchIcon />]}
                       name="SearchIcon"
