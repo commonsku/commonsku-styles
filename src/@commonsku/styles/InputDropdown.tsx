@@ -157,6 +157,7 @@ const ForwardedInputDropdown = <
       <SearchWrapper style={searchWrapperStyle}>
         <DebouncedInput
           autoComplete="off"
+          autoFocus
           {...rest}
           ref={ref}
           label={label}
