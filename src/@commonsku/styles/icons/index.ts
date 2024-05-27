@@ -116,3 +116,4 @@ export { default as CommentBubbleIcon} from './CommentBubbleIcon';
 
 export { default as WarnIcon} from './WarnIcon';
 export { default as LayersIcon } from './LayersIcon';
+export { default as ClearIcon } from './ClearIcon';
