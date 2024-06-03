@@ -24,7 +24,7 @@ const ProgressBar = styled.div<{
     max-width: 100%;
     width: ${props => props.width}px;
     height: 48px;
-    background: ${props => props.color || "#00d374"};
+    background: ${props => props.color || colors.secondary3.main};
     border-radius: 50px;
     display: inline-block;
     position: absolute;
@@ -107,7 +107,7 @@ export default function Thermometer({
             setContainerWidth(containerRef.current.offsetWidth);
 
             const targetPadding = getComputedStyle(targetRef.current).paddingLeft;
-            const targetWidth = targetRef.current.offsetWidth - parseInt(targetPadding);
+            const targetWidth = targetRef.current.offsetWidth - parseInt(targetPadding, 10);
 
             setTargetWidth(targetWidth);
         };
@@ -117,6 +117,10 @@ export default function Thermometer({
     }, []);
 
     const getProgressWidth = () => {
+        if (target === 0) {
+            return 1;
+        }
+
         const progress = Math.min(1, value / target);
         return Math.floor(progress * containerWidth);
     };
@@ -141,7 +145,7 @@ export default function Thermometer({
                 />
             </div>
             <div ref={containerRef}>
-                <ProgressWrapper style={{ background: isSecondary ? '#FFF9C5' : '#C9FDE5' }}>
+                <ProgressWrapper style={{ background: isSecondary ? colors.secondary2[20] : colors.secondary3[20] }}>
                     <ProgressBar
                         target={target}
                         value={value}
