@@ -4822,9 +4822,9 @@ const App = () => {
                 <demo.InnerContainer title="Thermometer" noBottomLine>
                   <Thermometer
                     title="Invoices this month"
-                    target={10}
-                    value1={10}
-                    value1Label={(v) => `$ ${v}`}
+                    target={15}
+                    value={10}
+                    valueLabel={(v) => `Current: $${v}`}
                   />
                 </demo.InnerContainer>
               </demo.OuterContainer>
