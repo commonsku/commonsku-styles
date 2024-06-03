@@ -1,6 +1,5 @@
-import { uniqueId } from 'lodash';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { getPlacesAutocomplete, geocodePlaceDetails, parseAddressComponents, ParsedAddress, LatLng } from "./utils";
 import InputDropdown, { InputDropdownProps } from '../InputDropdown';
 
@@ -55,7 +54,7 @@ export default function AddressAutocompleteInput({
     }
   }, [currentLocBias]);
 
-  const handleChange = (option: TOption) => {
+  const handleChange = useCallback((option: TOption) => {
     const value = option?.value || '';
     geocodePlaceDetails(value).then(res => {
       if (!res || !option) {
@@ -71,9 +70,9 @@ export default function AddressAutocompleteInput({
       setOptions([]);
       setShowDropdown(false);
     });
-  };
+  }, [onChange]);
 
-  const loadOptions = async (value: string) => {
+  const loadOptions = useCallback(async (value: string) => {
     let data: TOption[] = [];
     const locationBias = currentLocation
         ? new google.maps.Circle({
@@ -100,31 +99,47 @@ export default function AddressAutocompleteInput({
     onInputChange?.(value);
     setOptions(data);
     setShowDropdown(data.length > 0);
-  };
+  }, [country, currentLocation, onInputChange]);
+
+  const Input = useCallback(() => (
+    <div className="autocomplete-search">
+      <InputDropdown
+        {...props}
+        options={options}
+        onChange={loadOptions}
+        onSelectOption={handleChange}
+        value={value}
+        timeout={delayValue}
+        showDropdown={showDropdown}
+        setShowDropdown={setShowDropdown}
+        data-testid={'autocomplete-search-input-' + testId}
+        extraOptions={(
+          <center>
+            Powered by <img
+              alt='Google'
+              src="https://developers.google.com/static/maps/documentation/images/google_on_white.png"
+              style={{ paddingLeft: 8, maxWidth: 60 }}
+            />
+          </center>
+        )}
+      />
+    </div>
+  ), [
+    props,
+    options,
+    value,
+    delayValue,
+    showDropdown,
+    testId,
+    setShowDropdown,
+    handleChange,
+    loadOptions,
+  ]);
 
   return (
-    <Wrapper apiKey={apiKey} libraries={['core', 'maps', 'places', 'geocoding']}>
-      <div className="autocomplete-search">
-        <InputDropdown
-          {...props}
-          options={options}
-          onChange={loadOptions}
-          onSelectOption={handleChange}
-          value={value}
-          timeout={delayValue}
-          showDropdown={showDropdown}
-          setShowDropdown={setShowDropdown}
-          data-testid={'autocomplete-search-input-' + testId}
-          extraOptions={(
-            <center>
-              Powered by <img
-                src="https://developers.google.com/static/maps/documentation/images/google_on_white.png"
-                style={{ paddingLeft: 8, maxWidth: 60 }}
-              />
-            </center>
-          )}
-        />
-      </div>
-    </Wrapper>
+    <Wrapper apiKey={apiKey}
+      libraries={['core', 'maps', 'places', 'geocoding']}
+      render={Input}
+    />
   );
 }
