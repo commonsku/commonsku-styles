@@ -143,7 +143,7 @@ class Tabs extends Component<TabsProps, TabsState> {
   }
 
   render () {
-    const { tabs, size, padded, variant, ...props } = this.props;
+    const { tabs, size, padded, variant, selectedTabIndex, ...props } = this.props;
     const selectedTab = this.getTab(tabs, this.state.selectedTabIndex);
     return <div {...props}>
       <TabBar padded={padded === true}>
