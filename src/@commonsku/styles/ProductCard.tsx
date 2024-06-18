@@ -85,7 +85,7 @@ const ProductTitle = styled.div`
 
 const ProductSubTitle = styled.div`
   &&& {
-    width: 135px;
+    width: 134px;
     height: 24px;
 
     font-style: normal;
