@@ -1,14 +1,20 @@
 import { assign, isEmpty, map, range, tail } from 'lodash';
 import React, { useRef, useState, useEffect } from 'react';
-
 import { wait } from '../utils';
 import { SkubotSpinner } from './icons';
 import colors from './colors';
+import styled from 'styled-components';
 
 const NOT_FOUND_IMG_SRC = '/images/404.png';
 const DEFAULT_MAX_ATTEMPTS = 3;
 const DEFAULT_ATTEMPT_INTERVAL = 1000;
 
+const LoadingSpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${colors.teal['60']}99;
+`;
 
 // fetch image src, and return intervals.length times on error. wait intervals[n] ms on nth retry
 const fetchImage = (src: string, intervals: number[], onRetry: OnErrorEventHandler): { promise: Promise<Event>, cancel: () => void } => {
@@ -37,14 +43,13 @@ const fetchImage = (src: string, intervals: number[], onRetry: OnErrorEventHandl
     }
   });
   return {
-    promise, 
+    promise,
     cancel: () => {
       // use this to cancel next fetch
       cancel();
     }
   }
 }
-
 type ImgProps = {
   src?: string,
   alt?: string,
@@ -52,21 +57,19 @@ type ImgProps = {
   attempt_interval?: number,
   onRetry?: OnErrorEventHandler
   onFailed?: OnErrorEventHandler
-} & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
-
-const Img = React.forwardRef<HTMLImageElement, ImgProps>(({ 
-  src, alt="", 
-  max_attempts=DEFAULT_MAX_ATTEMPTS, 
-  attempt_interval=DEFAULT_ATTEMPT_INTERVAL, 
-  onRetry=null,
-  onFailed=null,
+} & Omit<React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>, 'ref'>;
+const Img = React.forwardRef<HTMLImageElement, ImgProps>(({
+  src, alt = "",
+  max_attempts = DEFAULT_MAX_ATTEMPTS,
+  attempt_interval = DEFAULT_ATTEMPT_INTERVAL,
+  onRetry = null,
+  onFailed = null,
   ...props
 }, ref) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const effectRef = useRef<any>({});
   assign(effectRef.current, { onRetry, onFailed });
-
   useEffect(() => {
     const { onRetry, onFailed, cancel } = effectRef.current;
     // cancel previous fetch before start new fetch
@@ -86,15 +89,14 @@ const Img = React.forwardRef<HTMLImageElement, ImgProps>(({
       .finally(() => {
         setLoading(false);
       })
-    ;
+      ;
   }, [src, attempt_interval, max_attempts]);
 
   if (loading) {
-    return <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: `${colors.teal['60']}99`, ...props.style }} {...props} >
+    return <LoadingSpinnerContainer ref={ref} {...props}>
       <SkubotSpinner size="small" skubot={false} color={colors.white} />
-    </div>
+    </LoadingSpinnerContainer>
   }
-
   return <img
     ref={ref}
     alt={alt}
@@ -102,5 +104,4 @@ const Img = React.forwardRef<HTMLImageElement, ImgProps>(({
     {...props}
   />;
 });
-
-export {Img};
+export { Img };
