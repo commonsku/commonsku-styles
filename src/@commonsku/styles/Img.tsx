@@ -2,8 +2,9 @@ import { assign, isEmpty, map, range, tail } from 'lodash';
 import React, { useRef, useState, useEffect } from 'react';
 
 import { wait } from '../utils';
+import { SkubotSpinner } from './icons';
+import colors from './colors';
 
-const LOADING_IMG_SRC = '/images/gears.gif';
 const NOT_FOUND_IMG_SRC = '/images/404.png';
 const DEFAULT_MAX_ATTEMPTS = 3;
 const DEFAULT_ATTEMPT_INTERVAL = 1000;
@@ -88,10 +89,16 @@ const Img = React.forwardRef<HTMLImageElement, ImgProps>(({
     ;
   }, [src, attempt_interval, max_attempts]);
 
+  if (loading) {
+    return <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: `${colors.teal['60']}99`, ...props.style }} {...props} >
+      <SkubotSpinner size="small" skubot={false} color={colors.white} />
+    </div>
+  }
+
   return <img
     ref={ref}
     alt={alt}
-    src={loading ? LOADING_IMG_SRC : (error ? NOT_FOUND_IMG_SRC : src)}
+    src={error ? NOT_FOUND_IMG_SRC : src}
     {...props}
   />;
 });
