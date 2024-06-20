@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import styled, { CSSObject } from "styled-components";
 import colors from './colors';
 import { fontStyles } from "./Theme";
-import { InfoIcon, AlertIcon, CompletedCheckmarkIcon } from "./icons";
+import { InfoIcon, AlertIcon, CompletedCheckmarkIcon, WarnIcon } from "./icons";
 import LinkWithIcon from "./LinkWithIcon";
 import { SharedStyleTypes, SharedStyles } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
@@ -13,7 +13,7 @@ type NotificationExtraContentProps = {
   linkText?: string;
 };
 type NotificationIconProps = {
-  alertType?: "neutral" | "success" | "error",
+  alertType?: "neutral" | "success" | "error" | "warn",
 };
 type AlertNotificationProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
@@ -44,6 +44,8 @@ const NotificationIcon = memo((props: NotificationIconProps) => {
     return <CompletedCheckmarkIcon color={colors.green.dark} mr={8} style={{ flexShrink: 0 }} />
   } else if (alertType === "error") {
     return <AlertIcon color={colors.errors.dark} mr={8} style={{ flexShrink: 0 }} />
+  } else if (alertType === "warn") {
+    return <AlertIcon color={colors.yellow['90']} mr={8} style={{ flexShrink: 0 }} />
   }
   return <InfoIcon color={colors.navy.dark} mr={8} style={{ flexShrink: 0 }} />
 });
@@ -59,6 +61,11 @@ const notificationVariantStyles = (alertType: string): CSSObject => {
       return {
         backgroundColor: colors.green.lightest,
         color: colors.green.darkest,
+      };
+    case "warn":
+      return {
+        backgroundColor: colors.yellow['20'],
+        color: colors.yellow['90'],
       };
     case "error":
       return {
