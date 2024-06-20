@@ -84,6 +84,7 @@ type ToggleProps = React.PropsWithChildren<{
   stretch?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   size?: ToggleSize;
+  style?: React.CSSProperties;
 } & SharedStyleTypes>;
 
 const Toggle = ({ size='medium', ...props }: ToggleProps) => {
