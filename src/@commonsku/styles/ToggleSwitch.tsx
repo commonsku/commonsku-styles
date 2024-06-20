@@ -40,6 +40,7 @@ type CommonProps = {
 export type ToggleSwitchProps = {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   style?: React.CSSProperties;
+  dotStyles?: React.CSSProperties;
 } & CommonProps & Omit<Omit<Omit<BaseCskuProps, 'hidden'>, 'color'>, 'style'>;
 export type ToggleSwitchStatedProps = {
   initialSelected?: boolean;
@@ -57,7 +58,8 @@ const createAnimationLeftStyle = (p: CommonProps) => {
 
 const ContainerStyled = styled(Csku)<CommonProps>`
   &&& {
-    position: relative;
+    position: static;
+    margin-left: 0;
     background: ${p => p.selected
       ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
       : getThemeColor(p, 'teal.20', colors.teal['20'])};
@@ -105,6 +107,7 @@ const ToggleSwitchStyled = ({
   selected = false,
   stretch = false,
   style = {},
+  dotStyles={},
   ...props
 }: ToggleSwitchProps) => {
   return (
@@ -120,6 +123,7 @@ const ToggleSwitchStyled = ({
         selected={selected}
         stretch={stretch}
         size={size}
+        style={dotStyles}
       />
     </ContainerStyled>
   );

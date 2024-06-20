@@ -59,6 +59,10 @@ const Container = styled.div<{stretch?:boolean, size?: ToggleSize }&SharedStyleT
     display: flex;
     justify-content: space-between;
     width: ${props => props.stretch ? "100%" : "auto"};
+
+    &:has(> a[aria-disabled="true"]) {
+      background: var(--color-neutrals-40);
+    }
     ${SharedStyles}
   }`
 
@@ -75,8 +79,24 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean, size?: Toggle
     width: ${props => props.stretch? "50%" : "auto"};
     justify-content: center;
     cursor: pointer;
-    background-color: ${props => props.selected ? getThemeColor(props, 'teal.main', colors.teal.main) : getThemeColor(props, 'teal.20', colors.teal['20']) };
-    color: ${props => props.selected ? "white" : getThemeColor(props, 'teal.main', colors.teal.main) };
+    background-color: ${props => {
+      if (props.selected) {
+        return getThemeColor(props, 'teal.main', colors.teal.main);
+      }
+      if (props['aria-disabled']) {
+        return getThemeColor(props, 'neutrals.40', colors.neutrals['40']);
+      }
+      return getThemeColor(props, 'teal.20', colors.teal['20']);
+    }};
+    color: ${props => {
+      if (props.selected) {
+        return "white";
+      }
+      if (props['aria-disabled']) {
+        return getThemeColor(props, 'neutrals.70', colors.neutrals['70']);
+      }
+      return getThemeColor(props, 'teal.main', colors.teal.main);
+    }};
     ${SharedStyles}
   }`
 
@@ -84,6 +104,7 @@ type ToggleProps = React.PropsWithChildren<{
   stretch?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   size?: ToggleSize;
+  style?: React.CSSProperties;
 } & SharedStyleTypes>;
 
 const Toggle = ({ size='medium', ...props }: ToggleProps) => {

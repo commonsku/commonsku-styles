@@ -123,7 +123,7 @@ const ForwardedInputDropdown = <
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [setShowDropdown]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (options.length === 0) {
@@ -173,7 +173,10 @@ const ForwardedInputDropdown = <
           onKeyDown={onKeyDown}
         />
       </SearchWrapper>
-      {showDropdown ? <OptionsList style={optionsListStyle}>
+      {showDropdown ? <OptionsList style={{
+        marginTop: label ? '65px' : '40px',
+        ...optionsListStyle,
+      }}>
         {options.map((op, i) => (
           <DropdownOption
             label={op.label}
