@@ -119,7 +119,14 @@ export const geocodePlaceDetails = (placeId: string): Promise<GeocodeResult | nu
 export const parseAddressComponents = (address_components: google.maps.GeocoderAddressComponent[]): ParsedAddress => {
   const street_number = address_components.find(v => v.types.includes('street_number'))?.long_name || '';
   const route = address_components.find(v => v.types.includes('route'))?.long_name || '';
-  const city = address_components.find(v => (v.types.includes('political') && v.types.includes('locality')))?.long_name || '';
+
+  let cityComponent = address_components.find(
+    v => (v.types.includes('political') && v.types.includes('locality'))
+  );
+  if (!cityComponent) {
+    cityComponent = address_components.find(v => v.types.includes('postal_town'));
+  }
+  const city = cityComponent?.long_name || '';
   const prov = address_components.find(v => v.types.includes('administrative_area_level_1'))?.short_name || '';
   const country = address_components.find(v => v.types.includes('country'))?.long_name || '';
   const postal = address_components.find(v => v.types.includes('postal_code'))?.long_name || '';
