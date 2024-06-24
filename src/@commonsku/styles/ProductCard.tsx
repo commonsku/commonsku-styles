@@ -45,6 +45,7 @@ const ProductContent = styled.div`
     align-self: stretch;
     align-items: flex-start;
     flex-direction: column;
+    flex-grow: 1;
 }`;
 
 const ProductTitle = styled.div`
