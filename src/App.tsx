@@ -6192,6 +6192,14 @@ const App = () => {
                       ]}
                       name="PinIcon"
                     />
+                   <IconsShowcase
+                      Icons={[<icons.PhoneIcon />]}
+                      name="PhoneIcon"
+                    />
+                    <IconsShowcase
+                      Icons={[<icons.MeetingIcon />]}
+                      name="MeetingIcon"
+                    />
                     <IconsShowcase
                       Icons={[<icons.TableIcon />]}
                       name="TableIcon"
