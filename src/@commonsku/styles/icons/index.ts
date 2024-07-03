@@ -18,6 +18,8 @@ export { default as NavManagementIcon } from './NavManagementIcon';
 export { default as NavReportsIcon } from './NavReportsIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as PinIcon } from './PinIcon';
+export { default as PhoneIcon } from './PhoneIcon';
+export { default as MeetingIcon } from './MeetingIcon';
 export { default as TaskIcon } from './TaskIcon';
 export { default as AddTaskIcon } from './AddTaskIcon';
 export { default as NoteIcon } from './NoteIcon';
