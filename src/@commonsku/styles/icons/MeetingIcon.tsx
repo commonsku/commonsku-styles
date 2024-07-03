@@ -36,7 +36,7 @@ const iconSizes = {
 }
 
 type MeetingIconProps = SVGIconProps;
-export default function PhoneIcon({
+export default function MeetingIcon({
     color=teal.main,
     size="medium",
     altText="Meeting",
