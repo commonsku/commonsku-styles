@@ -5788,7 +5788,10 @@ const App = () => {
                       Icons={[<icons.ClipboardIcon />]}
                       name="ClipboardIcon"
                     />
-
+                    <IconsShowcase
+                      Icons={[<icons.CopyIcon />]}
+                      name="CopyIcon"
+                    />
                     <IconsShowcase
                       Icons={[
                         <icons.RadioIcon />,

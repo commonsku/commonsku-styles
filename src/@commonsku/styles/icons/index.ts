@@ -115,6 +115,7 @@ export { default as MergeIcon} from './MergeIcon';
 export { default as DesignIcon} from './DesignIcon';
 export { default as ResizableIcon} from './ResizableIcon';
 export { default as CommentBubbleIcon} from './CommentBubbleIcon';
+export { default as CopyIcon } from './CopyIcon';
 
 export { default as WarnIcon} from './WarnIcon';
 export { default as LayersIcon } from './LayersIcon';
