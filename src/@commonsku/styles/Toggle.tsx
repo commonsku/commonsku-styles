@@ -100,19 +100,25 @@ const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean, size?: Toggle
     ${SharedStyles}
   }`
 
-type ToggleProps = React.PropsWithChildren<{
+type ToggleProps = {
   stretch?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   size?: ToggleSize;
   style?: React.CSSProperties;
-} & SharedStyleTypes>;
+  children?: (string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[];
+} & SharedStyleTypes;
 
 const Toggle = ({ size='medium', ...props }: ToggleProps) => {
   return <Wrapper size={size} {...props}>
     <Container stretch={props.stretch} size={size} {...props}>
       {
-        React.Children.map(props.children, (child:any, index) => {
-          return React.cloneElement(child, { size: size });
+        React.Children.map(props.children, (child, index) => {
+          if (!child) return null;
+          if (typeof child === 'string' || typeof child === 'number' || typeof child === 'boolean') {
+            return child;
+          }
+          const selected = child.props?.selected;
+          return React.cloneElement(child, { size: size, 'aria-selected': selected, });
         })
       }
     </Container>
