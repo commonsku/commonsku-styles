@@ -12,11 +12,6 @@ type ChildProps<P = GenericObj> = {
   parseProps?: (props: P, elem: TConcreteChildElement<P>) => Partial<P>;
 };
 
-export function getComponentDisplayName(WrappedComponent: TConcreteChildElement) {
-  // @ts-ignore
-  return String(WrappedComponent?.displayName || WrappedComponent?.name || 'Component');
-}
-
 const RenderChild = React.forwardRef<HTMLElement, ChildProps>(({ children, parseProps, ...props }, ref) => {
   const ChildElement = React.Children.only(children);
   const elementProps = useMemo(
