@@ -113,6 +113,7 @@ const ToggleSwitchStyled = ({
   return (
     <ContainerStyled
       selected={selected}
+      aria-selected={selected}
       stretch={stretch}
       size={size}
       onClick={onClick}
@@ -121,6 +122,7 @@ const ToggleSwitchStyled = ({
     >
       <ToggleSwitchDotStyled
         selected={selected}
+        aria-selected={selected}
         stretch={stretch}
         size={size}
         style={dotStyles}

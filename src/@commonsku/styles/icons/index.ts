@@ -120,3 +120,4 @@ export { default as CopyIcon } from './CopyIcon';
 export { default as WarnIcon} from './WarnIcon';
 export { default as LayersIcon } from './LayersIcon';
 export { default as ClearIcon } from './ClearIcon';
+export { default as AnnounceIcon } from './AnnounceIcon';

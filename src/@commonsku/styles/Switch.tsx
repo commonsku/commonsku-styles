@@ -92,6 +92,7 @@ const SwitchStyled = ({
   return (
     <ContainerStyled
       selected={selected}
+      aria-selected={selected}
       stretch={stretch}
       size={size}
       onClick={onClick}
@@ -100,6 +101,7 @@ const SwitchStyled = ({
     >
       <SwitchDotStyled
         selected={selected}
+        aria-selected={selected}
         stretch={stretch}
         size={size}
       />

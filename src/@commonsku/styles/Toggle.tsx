@@ -3,6 +3,7 @@ import React from 'react';
 import { get } from 'lodash';
 import { getThemeColor, fontStyles, colors} from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
+import ReactIs from 'react-is';
 
 export const toggleSizes = {
   small: {
@@ -66,7 +67,15 @@ const Container = styled.div<{stretch?:boolean, size?: ToggleSize }&SharedStyleT
     ${SharedStyles}
   }`
 
-const ToggleLink = styled.a<{selected?: boolean, stretch?:boolean, size?: ToggleSize }&SharedStyleTypes>`
+type ToggleLinkProps = {
+  selected?: boolean,
+  stretch?:boolean,
+  size?: ToggleSize
+} & SharedStyleTypes;
+
+const ToggleLink = styled.a.attrs<ToggleLinkProps>(p => ({
+  'aria-selected': p.selected,
+}))<ToggleLinkProps>`
   &&& {
     font-family: 'skufont-medium', sans-serif;
     font-size: ${ props => getSizeStyle('font-size', '1rem')({size: props.size})};
@@ -107,14 +116,25 @@ type ToggleProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
 } & SharedStyleTypes>;
 
+const RenderChildren = <T extends object = {}>(
+  { children, ...props }: React.PropsWithChildren<T>
+) => (
+  <>{React.Children.map(children, (child, index) => {
+    if (!child) return null;
+    if (typeof child === 'string' || typeof child === 'number' || typeof child === 'boolean') {
+      return child;
+    }
+    if (ReactIs.isElement(child)) {
+      return React.cloneElement(child, props);
+    }
+    return <RenderChildren key={'child-' + index} {...props}>{child}</RenderChildren>;
+  })}</>
+);
+
 const Toggle = ({ size='medium', ...props }: ToggleProps) => {
   return <Wrapper size={size} {...props}>
     <Container stretch={props.stretch} size={size} {...props}>
-      {
-        React.Children.map(props.children, (child:any, index) => {
-          return React.cloneElement(child, { size: size });
-        })
-      }
+      <RenderChildren size={size}>{props.children}</RenderChildren>
     </Container>
   </Wrapper>
 }
