@@ -11,11 +11,3 @@ export function isClientSide() {
 export function toArray<T>(x: T | T[]): T[] {
   return Array.isArray(x) ? x : [x];
 }
-
-export function isIterable(input: any): input is Iterable<any> {
-  if (input === null || input === undefined) {
-    return false;
-  }
-
-  return typeof input[Symbol.iterator] === 'function';
-}
