@@ -284,7 +284,7 @@ const colors = {
   primaryBg: '#EAF2F6',
   special2Bg: '#E7FFE9',
   transparent: 'transparent',
-  error: '#B21154',
+  error: errors['main'],
 
   primary2: '#00A0B6',
   primary20: '#00788A',
