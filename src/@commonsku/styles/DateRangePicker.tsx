@@ -177,6 +177,11 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       [onChange, setSelectedPreset],
     );
 
+    const nextMonth = (): Date => {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth() + 1, 1);
+    };
+
     const renderCustomTab = () => (
       <Row style={{ flexFlow: "row", gap: "2rem" }}>
         <Col>
@@ -244,7 +249,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               key={endDateKey}
               inline
               locale={locale}
-              selected={endDate}
+              selected={endDate ?? nextMonth()}
               selectsEnd
               startDate={startDate ?? (endDate ? new Date(0) : null)}
               endDate={endDate ?? (startDate ? new Date(9999, 1, 1) : null)}
