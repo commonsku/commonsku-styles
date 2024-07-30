@@ -75,8 +75,8 @@ export type DateRangePickerProps = Omit<
   initialActiveTab?: "custom" | "preset";
 };
 
-const checkDateYear = (date: Date | null | undefined): boolean => {
-  if (!date || !isValid(date)) {
+const checkDateYear = (date: Date): boolean => {
+  if (!isValid(date)) {
     return false;
   }
   return date.getFullYear() > 1900 && date.getFullYear() < 3000;
@@ -182,6 +182,31 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       return new Date(now.getFullYear(), now.getMonth() + 1, 1);
     };
 
+    const handleDateChange = useCallback(
+      (
+        newDate: Date | null,
+        event?: SyntheticEvent<any, Event>,
+        start = false,
+      ) => {
+        if (!newDate) {
+          handleChange(
+            start ? "start" : "end",
+            start ? null : startDate,
+            start ? endDate : null,
+          );
+          return;
+        }
+        if (!checkDateYear(newDate)) return;
+        handleChange(
+          start ? "start" : "end",
+          start ? newDate : startDate,
+          start ? endDate : newDate,
+          event,
+        );
+      },
+      [endDate, handleChange, startDate],
+    );
+
     const renderCustomTab = () => (
       <Row style={{ flexFlow: "row", gap: "2rem" }}>
         <Col>
@@ -194,11 +219,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               locale={locale}
               selected={startDate}
               dateFormat={dateFormat}
-              isClearable={isClearable}
-              onChange={(newStart, event) => {
-                if (!checkDateYear(newStart)) return;
-                handleChange("start", newStart, endDate, event);
-              }}
+              isClearable
+              onChange={(newStart, event) =>
+                handleDateChange(newStart, event, true)
+              }
             />
             <Datepicker
               key={startDateKey}
@@ -210,7 +234,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               endDate={endDate ?? (startDate ? new Date(9999, 1, 1) : null)}
               todayButton={todayButton}
               dateFormat={dateFormat}
-              isClearable={isClearable}
+              isClearable
               showMonthDropdown={showMonthDropdown}
               showYearDropdown={showYearDropdown}
               nextMonthButtonLabel={nextMonthButtonLabel}
@@ -239,11 +263,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               locale={locale}
               selected={endDate}
               dateFormat={dateFormat}
-              isClearable={isClearable}
-              onChange={(newEnd, event) => {
-                if (!checkDateYear(newEnd)) return;
-                handleChange("end", startDate, newEnd, event);
-              }}
+              isClearable
+              onChange={(newEnd, event) => handleDateChange(newEnd, event)}
             />
             <Datepicker
               key={endDateKey}
@@ -255,7 +276,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               endDate={endDate ?? (startDate ? new Date(9999, 1, 1) : null)}
               todayButton={todayButton}
               dateFormat={dateFormat}
-              isClearable={isClearable}
+              isClearable
               showMonthDropdown={showMonthDropdown}
               showYearDropdown={showYearDropdown}
               nextMonthButtonLabel={nextMonthButtonLabel}
