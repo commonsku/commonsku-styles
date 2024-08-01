@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useCallback,
   useState,
+  ChangeEvent,
 } from "react";
 import Datepicker, { DatepickerProps } from "./Datepicker";
 import { LabeledRadioInButton } from "./Input";
@@ -80,6 +81,50 @@ const checkDateYear = (date: Date): boolean => {
     return false;
   }
   return date.getFullYear() > 1900 && date.getFullYear() < 3000;
+};
+
+const formatRegexMap: { [key: string]: string } = {
+  yyyy: "\\d{4}",
+  yy: "\\d{2}",
+  MM: "(0[1-9]|1[0-2])",
+  M: "(0?[1-9]|1[0-2])",
+  dd: "(0[1-9]|[12][0-9]|3[01])",
+  d: "(0?[1-9]|[12][0-9]|3[01])",
+  HH: "([01][0-9]|2[0-3])",
+  H: "([0-9]|1[0-9]|2[0-3])",
+  hh: "(0[1-9]|1[0-2])",
+  h: "(0?[1-9]|1[0-2])",
+  mm: "([0-5][0-9])",
+  m: "([0-9]|[1-5][0-9])",
+  ss: "([0-5][0-9])",
+  s: "([0-9]|[1-5][0-9])",
+  a: "(AM|PM|am|pm)",
+  E: "(Mon|Tue|Wed|Thu|Fri|Sat|Sun)",
+  EE: "(Mon|Tue|Wed|Thu|Fri|Sat|Sun)",
+  EEE: "(Mon|Tue|Wed|Thu|Fri|Sat|Sun)",
+  EEEE: "(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+  MMM: "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)",
+  MMMM: "(January|February|March|April|May|June|July|August|September|October|November|December)",
+  Z: "(\\+\\d{2}:\\d{2}|-\\d{2}:\\d{2})",
+  ZZ: "(\\+\\d{4}|-\\d{4})",
+  X: "(\\d+)",
+};
+
+const generateDateFormatRegex = (format: string): RegExp => {
+  let tempFormat = format;
+
+  Object.keys(formatRegexMap).forEach((key, index) => {
+    tempFormat = tempFormat.replace(new RegExp(key, "g"), `__${index}__`);
+  });
+
+  Object.keys(formatRegexMap).forEach((key, index) => {
+    tempFormat = tempFormat.replace(
+      new RegExp(`__${index}__`, "g"),
+      formatRegexMap[key],
+    );
+  });
+
+  return new RegExp(`^${tempFormat}$`);
 };
 
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
@@ -182,12 +227,18 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       return new Date(now.getFullYear(), now.getMonth() + 1, 1);
     };
 
-    const handleDateChange = useCallback(
+    const handleInputChange = useCallback(
       (
         newDate: Date | null,
         event?: SyntheticEvent<any, Event>,
         start = false,
       ) => {
+        const value = (event as ChangeEvent<HTMLInputElement>).target.value;
+        const regex = generateDateFormatRegex(dateFormat);
+        if (value && !regex.test(value)) {
+          return;
+        }
+
         if (!newDate) {
           handleChange(
             start ? "start" : "end",
@@ -196,7 +247,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
           );
           return;
         }
+
         if (!checkDateYear(newDate)) return;
+
         handleChange(
           start ? "start" : "end",
           start ? newDate : startDate,
@@ -204,7 +257,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
           event,
         );
       },
-      [endDate, handleChange, startDate],
+      [startDate, endDate, handleChange, dateFormat],
     );
 
     const renderCustomTab = () => (
@@ -221,7 +274,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               dateFormat={dateFormat}
               isClearable
               onChange={(newStart, event) =>
-                handleDateChange(newStart, event, true)
+                handleInputChange(newStart, event, true)
               }
             />
             <Datepicker
@@ -264,7 +317,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               selected={endDate}
               dateFormat={dateFormat}
               isClearable
-              onChange={(newEnd, event) => handleDateChange(newEnd, event)}
+              onChange={(newEnd, event) => handleInputChange(newEnd, event)}
             />
             <Datepicker
               key={endDateKey}
