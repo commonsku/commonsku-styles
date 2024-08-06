@@ -16,7 +16,9 @@ type BoxProps = React.PropsWithChildren<{
   borderless?: boolean,
   padded?: boolean,
   title?: string | React.ReactNode,
-  controls?: React.ReactNode
+  controls?: React.ReactNode,
+  style?: React.CSSProperties,
+  onClick?: React.MouseEventHandler<HTMLDivElement>
 } & SharedStyleTypes>;
 const Box = ({
   title,
