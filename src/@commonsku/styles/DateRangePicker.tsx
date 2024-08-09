@@ -189,9 +189,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         newEnd?: Date | null,
         event?: SyntheticEvent<any>,
       ) => {
-        console.log(event);
-        console.log("handleChange", selected, newStart, newEnd);
-
         if (newStart != null && newEnd != null && newStart > newEnd) {
           if (selected === "start") {
             newEnd = newStart;
