@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useState,
   ChangeEvent,
+  useMemo,
 } from "react";
 import Datepicker, { DatepickerProps } from "./Datepicker";
 import { LabeledRadioInButton } from "./Input";
@@ -188,6 +189,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         newEnd?: Date | null,
         event?: SyntheticEvent<any>,
       ) => {
+        console.log(event);
+        console.log("handleChange", selected, newStart, newEnd);
+
         if (newStart != null && newEnd != null && newStart > newEnd) {
           if (selected === "start") {
             newEnd = newStart;
@@ -222,10 +226,13 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       [onChange, setSelectedPreset],
     );
 
-    const nextMonth = (): Date => {
+    const endDateOpenTo = useMemo(() => {
+      if (endDate) {
+        return endDate;
+      }
       const now = new Date();
       return new Date(now.getFullYear(), now.getMonth() + 1, 1);
-    };
+    }, [endDate]);
 
     const handleInputChange = useCallback(
       (
@@ -323,7 +330,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               key={endDateKey}
               inline
               locale={locale}
-              selected={endDate ?? nextMonth()}
+              selected={endDate}
+              openToDate={endDateOpenTo}
               selectsEnd
               startDate={startDate ?? (endDate ? new Date(0) : null)}
               endDate={endDate ?? (startDate ? new Date(9999, 1, 1) : null)}
