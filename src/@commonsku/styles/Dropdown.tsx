@@ -195,7 +195,7 @@ export const Dropdown = ({
                         ref={buttonRef}
                         {...buttonProps}
                     >
-                        {text ? text : "Actions"} <ChevronIcon direction="up"  {...iconProps} />
+                        {text ? text : "Actions"} <ChevronIcon direction="up" size={size} {...iconProps} />
                     </Button>
                 }
                 {showMenu && <DropDownContent style={contentStyle} underlined={underlined} primary={primary} width={width} bordered={bordered}>
