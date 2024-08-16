@@ -118,8 +118,8 @@ export default function SkubotSpinner({
   return (
     <Container size={containerSizes[size] ? containerSizes[size].width : 200} style={style}>
       <Spinner
-        width="200px"
-        height="200px"
+        width={containerSizes[size] ? containerSizes[size].width : 200}
+        height={containerSizes[size] ? containerSizes[size].width : 200}
         viewBox="0 0 66 66"
         xmlns="http://www.w3.org/2000/svg"
       >
