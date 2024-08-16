@@ -7,6 +7,7 @@ import { teal } from "../colors";
 
 export type SkubotSpinnerProps = {
   size?: TIconSize | "button";
+  spinnerSize?: TIconSize | number;
   width?: string | number;
   height?: string | number;
   altText?: string;
@@ -113,13 +114,14 @@ export default function SkubotSpinner({
   altText = "loading",
   skubot = size !== "button",
   style={},
+  spinnerSize,
   ...props
 }: SkubotSpinnerProps) {
   return (
     <Container size={containerSizes[size] ? containerSizes[size].width : 200} style={style}>
       <Spinner
-        width={containerSizes[size] ? containerSizes[size].width : 200}
-        height={containerSizes[size] ? containerSizes[size].width : 200}
+        width={spinnerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)}
+        height={spinnerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)}
         viewBox="0 0 66 66"
         xmlns="http://www.w3.org/2000/svg"
       >
