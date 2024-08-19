@@ -223,6 +223,7 @@ const BasePanelledSelect = <
             <Row>
                 <Select
                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                    value={value}
                     options={options}
                     onMenuOpen={() => setOpen(true)}
                     onMenuClose={() => setOpen(false)}
