@@ -110,7 +110,6 @@ const BasePanelledSelect = <
     const [isOpen, setOpen] = useState(false);
     const [focusedOption, setFocusedOption] = useState<NestedOption<Option> | undefined>(undefined);
     const [menuHeight, setMenuHeight] = useState(0);
-    const [controlHeight, setControlHeight] = useState(0);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const controlRef = useRef<HTMLDivElement | null>(null);
     const windowSize = useWindowSize();
@@ -118,10 +117,6 @@ const BasePanelledSelect = <
     useLayoutEffect(() => {
         if (menuRef.current != null) {
             setMenuHeight(menuRef.current.offsetHeight);
-        }
-
-        if (controlRef.current != null) {
-            setControlHeight(controlRef.current.offsetHeight);
         }
     }, [windowSize, isOpen, value]);
 
@@ -198,10 +193,10 @@ const BasePanelledSelect = <
             GroupBase<NestedOption<Option>>
         >
     ) => (
-        <div style={{...menuContainerStyles, top: controlHeight }} ref={menuRef}>
+        <div style={{...menuContainerStyles }} ref={menuRef}>
             <selectComponents.Menu {...props} />
         </div>
-    ), [controlHeight]);
+    ), []);
 
     const renderSubMenu = useCallback((
         props: MenuProps<Option, IsMulti, GroupBase<Option>>
@@ -227,6 +222,7 @@ const BasePanelledSelect = <
         <div>
             <Row>
                 <Select
+                    menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                     value={value}
                     options={options}
                     onMenuOpen={() => setOpen(true)}
@@ -247,6 +243,7 @@ const BasePanelledSelect = <
                 />
                 {currentSubOptions != null &&
                     <Select
+                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                         value={value}
                         options={currentSubOptions}
                         menuIsOpen={isOpen}
@@ -254,7 +251,6 @@ const BasePanelledSelect = <
                         menuStyles={{
                             ...subMenuStyles, 
                             height: menuHeight,
-                            top: controlHeight,
                             borderTopColor: error
                                 ? getThemeColor(props, 'select.error.border', colors.select.error.border)
                                 : getThemeColor(props, 'select.active.border', colors.select.active.border),
