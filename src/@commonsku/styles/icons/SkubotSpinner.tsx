@@ -7,11 +7,13 @@ import { teal } from "../colors";
 
 export type SkubotSpinnerProps = {
   size?: TIconSize | "button";
+  spinnerSize?: TIconSize | number;
   width?: string | number;
   height?: string | number;
   altText?: string;
   color?: string | undefined;
   skubot?: boolean;
+  style?: React.CSSProperties;
 } & SharedStyleTypes;
 
 const logoSizes = {
@@ -111,13 +113,15 @@ export default function SkubotSpinner({
   size = "default",
   altText = "loading",
   skubot = size !== "button",
+  style={},
+  spinnerSize,
   ...props
 }: SkubotSpinnerProps) {
   return (
-    <Container size={containerSizes[size] ? containerSizes[size].width : 200}>
+    <Container size={containerSizes[size] ? containerSizes[size].width : 200} style={style}>
       <Spinner
-        width="200px"
-        height="200px"
+        width={spinnerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)}
+        height={spinnerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)}
         viewBox="0 0 66 66"
         xmlns="http://www.w3.org/2000/svg"
       >

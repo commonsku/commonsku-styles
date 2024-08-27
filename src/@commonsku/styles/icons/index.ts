@@ -121,3 +121,5 @@ export { default as WarnIcon} from './WarnIcon';
 export { default as LayersIcon } from './LayersIcon';
 export { default as ClearIcon } from './ClearIcon';
 export { default as AnnounceIcon } from './AnnounceIcon';
+export { default as CellphoneIcon } from './CellphoneIcon';
+export { default as MonitorIcon } from './MonitorIcon';
