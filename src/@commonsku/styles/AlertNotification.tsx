@@ -11,6 +11,7 @@ type NotificationExtraContentProps = {
   learnMore?: boolean;
   href?: string;
   linkText?: string;
+  target?: string;
 };
 type NotificationIconProps = {
   alertType?: "neutral" | "success" | "error" | "warn",
@@ -24,15 +25,15 @@ type AlertNotificationProps = React.PropsWithChildren<{
   & SizerTypes;
 
 const NotificationExtraContent = memo((props: NotificationExtraContentProps) => {
-  const { learnMore, linkText, href, } = props;
+  const { learnMore, linkText, href, target } = props;
   if (learnMore) {
     return (
-      <LinkWithIcon href={href} style={{ marginLeft: "auto" }} pl={24} flexShrink={true}>Learn More</LinkWithIcon>
+      <LinkWithIcon href={href} style={{ marginLeft: "auto" }} pl={24} flexShrink={true} target={target}>Learn More</LinkWithIcon>
     );
   }
   if (linkText) {
     return (
-      <LinkWithIcon href={href} style={{ marginLeft: "auto" }} pl={24} flexShrink={true}>{linkText}</LinkWithIcon>
+      <LinkWithIcon href={href} style={{ marginLeft: "auto" }} pl={24} flexShrink={true} target={target}>{linkText}</LinkWithIcon>
     );
   }
   return null;
@@ -99,12 +100,13 @@ const AlertNotification = ({
   alertType = "neutral",
   learnMore = false,
   style = {},
+  target = undefined,
   ...props
 }: AlertNotificationProps) => (
   <StyledNotification alertType={alertType} style={style} {...props}>
     <NotificationIcon alertType={alertType} />
     {children}
-    <NotificationExtraContent href={href} learnMore={learnMore} linkText={linkText} />
+    <NotificationExtraContent href={href} learnMore={learnMore} linkText={linkText} target={target} />
   </StyledNotification>
 );
 

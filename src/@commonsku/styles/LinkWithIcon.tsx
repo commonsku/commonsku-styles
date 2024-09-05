@@ -34,6 +34,7 @@ export type LinkWithIconProps = React.PropsWithChildren<{
   flexShrink?: boolean;
   iconProps?: {[key: string]: any};
   style?: React.CSSProperties;
+  target?: string;
 } & SharedStyleTypes & SizerTypes>;
 
 export default function LinkWithIcon({
@@ -45,6 +46,7 @@ export default function LinkWithIcon({
     flexShrink=false,
     iconProps,
     style={},
+    target=undefined,
     ...props
 }: LinkWithIconProps){
 
@@ -76,6 +78,7 @@ export default function LinkWithIcon({
             onMouseEnter={() => setHover(true)} 
             onMouseLeave={() => setHover(false)} 
             style={style}
+            target={target}
             {...props}
         >
             {RenderIcon}
