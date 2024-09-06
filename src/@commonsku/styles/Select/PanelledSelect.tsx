@@ -13,7 +13,6 @@ const menuContainerStyles: CSSProperties = {
 
 const subMenuContainerStyles: CSSProperties = {
     position: 'absolute',
-    width: 'max-content',
 }
 
 const menuStyles: CSSProperties = {
@@ -22,7 +21,8 @@ const menuStyles: CSSProperties = {
 }
 
 const subMenuStyles: CSSProperties = {
-    position: 'relative',
+    width: 'max-content',
+    minWidth: '100%',
     borderTop: '1px solid',
     borderTopRightRadius: '5px',
     marginTop: 0,
@@ -110,6 +110,7 @@ const BasePanelledSelect = <
     const [isOpen, setOpen] = useState(false);
     const [focusedOption, setFocusedOption] = useState<NestedOption<Option> | undefined>(undefined);
     const [menuHeight, setMenuHeight] = useState(0);
+    const [controlHeight, setControlHeight] = useState(0);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const controlRef = useRef<HTMLDivElement | null>(null);
     const windowSize = useWindowSize();
@@ -118,7 +119,11 @@ const BasePanelledSelect = <
         if (menuRef.current != null) {
             setMenuHeight(menuRef.current.offsetHeight);
         }
-    }, [windowSize, isOpen, value]);
+
+        if (controlRef.current != null) {
+            setControlHeight(controlRef.current.offsetHeight);
+        }
+    }, [windowSize, value]);
 
     const hasSubOptions = useCallback((option: NestedOption<Option>) =>
         option != null && option.subOptions != null && option.subOptions.length > 0
@@ -218,6 +223,18 @@ const BasePanelledSelect = <
         </div>
     ), []);
 
+    const handleMenuOpen = (open: boolean) => {
+        setOpen(open);
+
+        // react-select's onMenuOpen triggers before the menu mounts to the DOM,
+        // so we can't synchronously check for the rendered menu's height.
+        // This workaround ensures the menu height will update when the menu is opened.
+        // https://github.com/JedWatson/react-select/issues/4243
+        setTimeout(() => {
+            menuRef.current != null && setMenuHeight(menuRef.current.offsetHeight);
+        }, 1);
+    }
+
     return (
         <div>
             <Row>
@@ -225,8 +242,8 @@ const BasePanelledSelect = <
                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                     value={value}
                     options={options}
-                    onMenuOpen={() => setOpen(true)}
-                    onMenuClose={() => setOpen(false)}
+                    onMenuOpen={() => handleMenuOpen(true)}
+                    onMenuClose={() => handleMenuOpen(false)}
                     menuIsOpen={isOpen}
                     ref={ref}
                     components={{
@@ -243,7 +260,6 @@ const BasePanelledSelect = <
                 />
                 {currentSubOptions != null &&
                     <Select
-                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                         value={value}
                         options={currentSubOptions}
                         menuIsOpen={isOpen}
@@ -251,6 +267,7 @@ const BasePanelledSelect = <
                         menuStyles={{
                             ...subMenuStyles, 
                             height: menuHeight,
+                            top: controlHeight,
                             borderTopColor: error
                                 ? getThemeColor(props, 'select.error.border', colors.select.error.border)
                                 : getThemeColor(props, 'select.active.border', colors.select.active.border),
