@@ -228,7 +228,7 @@ const BasePanelledSelect = <
 
         // react-select's onMenuOpen triggers before the menu mounts to the DOM,
         // so we can't synchronously check for the rendered menu's height.
-        // This workaround ensures the menu height will updatewhen the menu is opened.
+        // This workaround ensures the menu height will update when the menu is opened.
         // https://github.com/JedWatson/react-select/issues/4243
         setTimeout(() => {
             menuRef.current != null && setMenuHeight(menuRef.current.offsetHeight);
