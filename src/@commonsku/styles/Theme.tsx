@@ -5,10 +5,7 @@ import _ from 'lodash'
 import colors from "./colors";
 import { sizeMedia, sizeMediaWidth } from "../utils";
 
-export {colors}; 
-
-
-export const fontFamilies =  {
+const fontFamilies =  {
   skuFontRegular: "'skufont-regular'",
   skuFontDemibold: "'skufont-demibold'",
   skuFontBold: "'skufont-demibold'",
@@ -31,9 +28,9 @@ fontFamilies.demibold = [fontFamilies.skuFontDemibold, ...fontFamilies.fallbacks
 fontFamilies.bold = [fontFamilies.skuFontBold, ...fontFamilies.fallbacks].join(',');
 fontFamilies.medium = [fontFamilies.skuFontMedium, ...fontFamilies.fallbacks].join(',');
 
-export const fonts = [fontFamilies.skuFontDemibold, ...fontFamilies.fallbacks];
+const fonts = [fontFamilies.skuFontDemibold, ...fontFamilies.fallbacks];
 
-export const fontStyles = {
+const fontStyles = {
   h1: {
     fontSize: '2rem',
     lineHeight: '3rem',
@@ -105,7 +102,7 @@ export const fontStyles = {
   }
 };
 
-export const themeOptions = {
+const themeOptions = {
   colors,
   fonts,
   fontFamily: `${fonts.join(",")}`,
@@ -130,33 +127,33 @@ export const themeOptions = {
   },
 }
 
-export function getColor(color?: string, def?: string): string {
+function getColor(color?: string, def?: string): string {
   if (!color) { return ''; }
   return _.get(colors, color, _.get(colors, def || '', def)) ?? '';
 }
 
-export function getFontStyle(value?: string, def?: string): string {
+function getFontStyle(value?: string, def?: string): string {
   if (!value) { return ''; }
   return _.get(fontStyles, value, _.get(fontStyles, def || '', def)) ?? '';
 }
 
-export function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
+function getThemeColor(props: {[key: string]: any}, color: string, fallbackColor?: string): string {
   return getThemeProperty(props, 'colors', color, fallbackColor);
 }
 
-export function getThemeFontStyle(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
+function getThemeFontStyle(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
   return getThemeProperty(props, 'fontStyles', value, fallbackValue);
 }
 
-export function getThemeFontSize(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
+function getThemeFontSize(props: {[key: string]: any}, value: string, fallbackValue?: string): string {
   return getThemeFontStyle(props, `${value}.fontSize`, fallbackValue);
 }
 
-export function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = ""): string {
+function getThemeFontFamily(props: {[key: string]: any}, fallbackValue = ""): string {
   return getThemeProperty(props, 'fontFamily', fallbackValue);
 }
 
-export function getThemeProperty(props: {[key: string]: any}, prop: string, value?: string, fallbackValue?: string): string {
+function getThemeProperty(props: {[key: string]: any}, prop: string, value?: string, fallbackValue?: string): string {
   if (_.get(props, `theme.${prop}`, null)) {
     if (_.isObject(props.theme[prop]) && _.get(props.theme, `${prop}.${value}`, null)) {
       return _.get(props.theme, `${prop}.${value}`, null);
@@ -198,6 +195,23 @@ const Theme = ({ theme={}, globalStyles=false, additionalGlobalStyles, children 
       {children}
     </ThemeProvider>
   );
+};
+
+export {
+  colors,
+  fonts,
+  fontStyles,
+  fontFamilies,
+  themeOptions,
+  GlobalStyle,
+
+  getColor,
+  getFontStyle,
+  getThemeColor,
+  getThemeFontSize,
+  getThemeFontFamily,
+  getThemeFontStyle,
+  getThemeProperty,
 };
 
 export default Theme;
