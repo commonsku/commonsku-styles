@@ -20,12 +20,14 @@ const ProductCardWrapper = styled.div`
     cursor: pointer;
     &:hover {
       background: ${colors.primary1['20']};
+      box-shadow: 0px 4px 18.5px 0px rgba(207, 226, 229, 1);
     }
     &.loading {
       background: ${colors.primary1['20']};
     }
     &.selected {
       background: ${colors.primary1['60']};
+      box-shadow: none;
     }
 }`;
 
