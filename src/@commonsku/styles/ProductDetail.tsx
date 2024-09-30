@@ -266,7 +266,6 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
     <ThumbnailContainer ref={thumbnailDiv} style={{ overflow: 'hidden' }}>
       <Row>
         {image && map(slicedThumbnails, (thumbnail, i) => {
-          console.log('slicedThumbnails mapping', slicedThumbnails);
           const selected = thumbnail.url === image.url ? { border: `3px solid ${colors.teal['70']}`, borderRadius: 5 } : {};
           return <SelectableThumbnail key={i} style={selected}>
             <InnerFrameThumbnail>
