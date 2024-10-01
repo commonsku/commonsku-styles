@@ -192,7 +192,8 @@ type HeadlessTableProps = React.PropsWithChildren<{
   sortDirectionDivRef?: any, 
   currentColumnsDivRef?: any,
   minHeight?: any,
-  pagination?: boolean
+  pagination?: boolean,
+  options?: any
 } & SharedStyleTypes>;
 
 const StickyListContext = createContext({});
@@ -339,7 +340,7 @@ const StickyList = ({
 export function HeadlessTable({ 
   columns, data, rowIdField, defaultSort, defaultPageSize=200, defaultPageIndex=0, defaultScrollOffset=0, defaultHorizontalOffset=0,
   pageIndexDivRef, onChangeSelected, onChangeSortOrColumns, scrollOffsetDivRef, horizontalOffsetDivRef, selectedRowId,
-  sortDirectionDivRef, currentColumnsDivRef, minHeight, pagination=true
+  sortDirectionDivRef, currentColumnsDivRef, minHeight, pagination = true, options = {}
 }: HeadlessTableProps) {
   //@ts-ignore
   const initialState: any = { 
@@ -355,6 +356,7 @@ export function HeadlessTable({
       columns,
       data,
       initialState,
+      ...options,
     },
     useSortBy,
     usePagination,
