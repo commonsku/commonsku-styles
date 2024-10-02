@@ -18,8 +18,8 @@ import { document } from '../utils';
 
 const PADDING_SIZE = 60
 
-const Styles = styled.div<{minHeight?: number, pagination?: boolean}>`
-  overflow-x: ${props => props.pagination ? 'scroll' : 'hidden'};
+const Styles = styled.div<{ minHeight?: number, pagination?: boolean }>`
+  overflow-x: scroll;
   min-height: ${props => props.minHeight ? props.minHeight : "600"}px;
   /* -ms-overflow-style: none;
   ::-webkit-scrollbar {
@@ -555,15 +555,6 @@ export function HeadlessTable({
   return (
     <Styles minHeight={minHeight}>
       <>
-        {pagination ?
-          <div ref={topScrollRef} style={{ 
-            position:'fixed', height: '20px', 
-            width: '100%', bottom: 0, zIndex: 100,
-            overflowX: 'scroll', overflowY: 'hidden' 
-          }}>
-            <div style={{ height: '20px', width: scrollbarWidth }}></div>
-          </div>
-        : null}
         {horizontalOffsetDivRef && <div ref={horizontalOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {scrollOffsetDivRef && <div ref={scrollOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
