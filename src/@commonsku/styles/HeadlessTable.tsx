@@ -464,38 +464,38 @@ export function HeadlessTable({
   }, [listContainerRef, horizontalOffset, rows])
 
   //Extra horizontal scrollbar on the bottom of the page
-  const topScrollRef = useRef(null)
+  // const topScrollRef = useRef(null)
 
   //Method for syncing horizontal scrollbar movements when we need one at the bottom of the page
-  const handleHorizontalScroll = useCallback(
-    placement => {
-      let scrollNode = listContainerRef.current
-      if (pagination) {
-        scrollNode = tableRef.current?.parentNode
-      }
+  // const handleHorizontalScroll = useCallback(
+  //   placement => {
+  //     let scrollNode = listContainerRef.current
+  //     if (pagination) {
+  //       scrollNode = tableRef.current?.parentNode
+  //     }
 
-      if(placement === 'top') {
-        scrollNode.scrollLeft = topScrollRef.current.scrollLeft
-        return
-      }
+  //     if (placement === 'top') {
+  //       scrollNode.scrollLeft = topScrollRef.current.scrollLeft
+  //       return
+  //     }
 
-      if(placement === 'bottom' && topScrollRef.current) {
-        topScrollRef.current.scrollLeft = scrollNode.scrollLeft
-        return
-      }
-    },
-    [listContainerRef, tableRef, pagination]
-  );
+  //     if (placement === 'bottom' && topScrollRef.current) {
+  //       topScrollRef.current.scrollLeft = scrollNode.scrollLeft
+  //       return
+  //     }
+  //   },
+  //   [listContainerRef, tableRef, pagination]
+  // );
 
-  useEffect(() => {
-    const ref = topScrollRef.current;
-    const handleHorizontalScrollTop = partial(handleHorizontalScroll, 'top');
-    if(ref) {
-      ref.addEventListener('scroll', handleHorizontalScrollTop);
+  // useEffect(() => {
+  //   const ref = topScrollRef.current;
+  //   const handleHorizontalScrollTop = partial(handleHorizontalScroll, 'top');
+  //   if (ref) {
+  //     ref.addEventListener('scroll', handleHorizontalScrollTop);
     
-      return () => ref.removeEventListener('scroll', handleHorizontalScrollTop);
-    }
-  }, [topScrollRef, handleHorizontalScroll])
+  //     return () => ref.removeEventListener('scroll', handleHorizontalScrollTop);
+  //   }
+  // }, [topScrollRef, handleHorizontalScroll])
 
   useEffect(() => {
     const ref = tableRef.current;
@@ -522,15 +522,15 @@ export function HeadlessTable({
     }
   }, [columns, pagination])
 
-  useLayoutEffect(() => {
-    const ref = tableRef.current;
-    const handleHorizontalScrollBottom = partial(handleHorizontalScroll, 'bottom');
-    if(ref) {
-      ref.parentNode.addEventListener('scroll', handleHorizontalScrollBottom);
+  // useLayoutEffect(() => {
+  //   const ref = tableRef.current;
+  //   const handleHorizontalScrollBottom = partial(handleHorizontalScroll, 'bottom');
+  //   if (ref) {
+  //     ref.parentNode.addEventListener('scroll', handleHorizontalScrollBottom);
     
-      return () => ref.parentNode.removeEventListener('scroll', handleHorizontalScrollBottom)
-    }
-  }, [tableRef, handleHorizontalScroll])
+  //     return () => ref.parentNode.removeEventListener('scroll', handleHorizontalScrollBottom)
+  //   }
+  // }, [tableRef, handleHorizontalScroll])
 
   useEffect(() => {
     const listScroll = (e) => { 
@@ -555,6 +555,15 @@ export function HeadlessTable({
   return (
     <Styles minHeight={minHeight}>
       <>
+        {/* {pagination ?
+          <div ref={topScrollRef} style={{
+            position: 'fixed', height: '20px',
+            width: '100%', bottom: 0, zIndex: 100,
+            overflowX: 'scroll', overflowY: 'hidden'
+          }}>
+            <div style={{ height: '20px', width: scrollbarWidth }}></div>
+          </div>
+          : null} */}
         {horizontalOffsetDivRef && <div ref={horizontalOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {scrollOffsetDivRef && <div ref={scrollOffsetDivRef} style={{ display: 'none' }}>0</div>}
         {pageIndexDivRef && <div ref={pageIndexDivRef} style={{ display: 'none' }}>{pageIndex}</div>}
