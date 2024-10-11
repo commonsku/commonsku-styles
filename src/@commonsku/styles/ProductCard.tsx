@@ -202,14 +202,14 @@ export const ProductCard = (props: ProductCardProps) => {
     }
   };
 
-  const handleSubTitleClick = (e) => {
+  const handleSubTitleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     if (props.handleSubTitleClick) {
       props.handleSubTitleClick();
     }
   };
 
-  const handleClickProductEvent = (e) => {
+  const handleClickProductEvent = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     if (props.handleClickProductEvent) {
       props.handleClickProductEvent();
