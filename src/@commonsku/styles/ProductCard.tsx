@@ -86,7 +86,7 @@ const ProductTitle = styled.div`
     }
 }`;
 
-const ProductSubTitle = styled.div`
+const ProductSubTitle = styled.div<{ isClickable?: boolean }>`
   &&& {
     width: 134px;
     height: 24px;
@@ -96,7 +96,7 @@ const ProductSubTitle = styled.div`
     font-size: 14px;
     line-height: 24px;
     
-    color: ${colors.neutrals['90']};
+    color: ${props => props.isClickable ? colors.primary1['65'] : colors.neutrals['90']};
 
     flex: none;
     flex-grow: 0;
@@ -106,6 +106,7 @@ const ProductSubTitle = styled.div`
 
     ${ProductCardWrapper}:hover & {
       color: ${colors.primary1['65']};
+      ${props => props.isClickable && 'text-decoration: underline;'}
     }
 
     ${ProductCardWrapper}.loading & {
@@ -170,6 +171,7 @@ type ProductCardProps = React.PropsWithChildren<{
   title: string;
   sku?: string;
   subTitle: string;
+  handleSubTitleClick?: () => void;
   showButton: boolean;
   handleClickProductEvent?: () => void;
 } & SharedStyleTypes & SizerTypes>;
@@ -198,6 +200,13 @@ export const ProductCard = (props: ProductCardProps) => {
       return 'loading';
     }
   };
+
+  const handleSubTitleClick = (e) => {
+    e.stopPropagation();
+    if (props.handleSubTitleClick) {
+      props.handleSubTitleClick();
+    }
+  };
   return (
     <ProductCardWrapper onClick={props.handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className={backgroundClass()} >
       <div style={{ position: 'relative' }}>
@@ -213,8 +222,8 @@ export const ProductCard = (props: ProductCardProps) => {
         <ProductTitle>{props.title}</ProductTitle>
         {props.sku && <ProductSubTitle>{props.sku}</ProductSubTitle>}
         <div style={{ display: 'flex', alignItems: 'center', height: 32, marginTop: '-4px' }}>
-          <ProductSubTitle >{props.subTitle}</ProductSubTitle>
-          {props.showButton && (hover || props.selected || props.loading) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={props.handleClickProductEvent}  >{button.name}</ProductButton>}
+          <ProductSubTitle isClickable={props.handleClick ? true : false} onClick={handleSubTitleClick}>{props.subTitle}</ProductSubTitle>
+          {props.showButton && (hover || props.selected || props.loading) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={handleClickProductEvent}  >{button.name}</ProductButton>}
         </div>
       </ProductContent>
     </ProductCardWrapper>
