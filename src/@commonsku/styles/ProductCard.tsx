@@ -170,6 +170,7 @@ type ProductCardProps = React.PropsWithChildren<{
   imgUrl: string;
   title: string;
   sku?: string;
+  description?: string;
   subTitle: string;
   handleSubTitleClick?: () => void;
   showButton: boolean;
@@ -207,6 +208,13 @@ export const ProductCard = (props: ProductCardProps) => {
       props.handleSubTitleClick();
     }
   };
+
+  const handleClickProductEvent = (e) => {
+    e.stopPropagation();
+    if (props.handleClickProductEvent) {
+      props.handleClickProductEvent();
+    }
+  };
   return (
     <ProductCardWrapper onClick={props.handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className={backgroundClass()} >
       <div style={{ position: 'relative' }}>
@@ -221,6 +229,7 @@ export const ProductCard = (props: ProductCardProps) => {
       <ProductContent>
         <ProductTitle>{props.title}</ProductTitle>
         {props.sku && <ProductSubTitle>{props.sku}</ProductSubTitle>}
+        {props.description && <ProductSubTitle>{props.description}</ProductSubTitle>}
         <div style={{ display: 'flex', alignItems: 'center', height: 32, marginTop: '-4px' }}>
           <ProductSubTitle isClickable={props.handleClick ? true : false} onClick={handleSubTitleClick}>{props.subTitle}</ProductSubTitle>
           {props.showButton && (hover || props.selected || props.loading) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={handleClickProductEvent}  >{button.name}</ProductButton>}
