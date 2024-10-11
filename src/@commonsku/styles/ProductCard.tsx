@@ -106,7 +106,7 @@ const ProductSubTitle = styled.div<{ isClickable?: boolean }>`
 
     ${ProductCardWrapper}:hover & {
       color: ${colors.primary1['65']};
-      ${props => props.isClickable && 'text-decoration: underline;'}
+      ${props => props.isClickable ? 'text-decoration: underline;' : ''}
     }
 
     ${ProductCardWrapper}.loading & {
