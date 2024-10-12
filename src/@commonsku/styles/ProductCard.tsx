@@ -231,7 +231,7 @@ export const ProductCard = (props: ProductCardProps) => {
         {props.sku && <ProductSubTitle>{props.sku}</ProductSubTitle>}
         {props.description && <ProductSubTitle>{props.description}</ProductSubTitle>}
         <div style={{ display: 'flex', alignItems: 'center', height: 32, marginTop: '-4px' }}>
-          <ProductSubTitle isClickable={props.handleClick ? true : false} onClick={handleSubTitleClick}>{props.subTitle}</ProductSubTitle>
+          <ProductSubTitle isClickable={props.handleSubTitleClick ? true : false} onClick={handleSubTitleClick}>{props.subTitle}</ProductSubTitle>
           {props.showButton && (hover || props.selected || props.loading) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={handleClickProductEvent}  >{button.name}</ProductButton>}
         </div>
       </ProductContent>
