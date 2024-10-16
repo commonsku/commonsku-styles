@@ -68,10 +68,22 @@ const Sku = styled.div`
     font-weight: 400;
     font-size: 18px;
     line-height: 28px;
-    margin-bottom: 0.5rem;
     color: ${colors.neutrals['90']};
 
 }`;
+
+const DivisionName = styled.a`
+  &&& {
+    font-family: var(--font-family-regular);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    width: fit-content;
+    text-decoration: none;
+    color: ${colors.primary1['65']};
+  }
+`;
 
 const SelectableThumbnail = styled.div`
   &&& {
@@ -135,6 +147,8 @@ type PriceProps = {
 type ProductDetailProps = {
   name: string;
   sku: string;
+  divisionName?: string;
+  divisionHref?: string;
   descriptions: string[] | string;
   sizes: string[];
   allColors: string[];
@@ -303,7 +317,7 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
   </div>;
 }
 
-export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#', addToTarget = 'Project' }: ProductDetailProps) => {
+export const ProductDetail = ({ name, sku, divisionName, divisionHref, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#', addToTarget = 'Project' }: ProductDetailProps) => {
 
   const [isTextOverflowed, setIsTextOverflowed] = useState(false);
   const [image, setImage] = useState(mainImage);
@@ -455,7 +469,10 @@ export const ProductDetail = ({ name, sku, descriptions, sizes, allColors, image
                 : null
               }
               </Row>
-              <Sku>{sku}</Sku>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <Sku>{sku}</Sku>
+                {divisionName ? <DivisionName href={divisionHref} target='_blank' >{divisionName}</DivisionName> : null}
+              </div>
               {prices &&
                 <section>
                   <div ref={tableRef} style={{ overflowX: 'hidden', display: 'flex', scrollBehavior: 'smooth' }}>
