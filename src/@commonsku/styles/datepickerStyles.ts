@@ -94,18 +94,43 @@ const datepickerStyles = `
   }
 
   .react-datepicker__header,
+  .react-datepicker__input-time-container,
   .react-datepicker__today-button {
     background: var(--color-neutrals-20);
     padding-top: 8px;
     padding-bottom: 8px;
   }
 
-  .react-datepicker__header {
+  .react-datepicker__header, 
+  .react-datepicker__input-time-container {
     border-bottom: none;
   }
 
   .react-datepicker__today-button {
     border-top: none;
+  }
+
+  .react-datepicker__input-time-container {
+    margin: 0;
+    text-align: center;
+  }
+  
+  .react-datepicker-time__caption {
+    color: var(--color-neutrals-dark);
+    font-size: 0.944rem;
+    font-weight: bold;
+  }
+
+  .react-datepicker-time__input {
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-neutrals-darkest);
+    border: 0;
+    input {
+      border: 2px solid var(--color-neutrals-60);
+    }
   }
 
   .react-datepicker__day
