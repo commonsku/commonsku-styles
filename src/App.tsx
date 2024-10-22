@@ -3735,6 +3735,10 @@ const App = () => {
                   <Row>
                     <Col xs={3} mr={16}>
                       <DateRangeDropdown
+                        showYearDropdown
+                        showMonthDropdown
+                        showTimeInput
+
                         range={{
                           category: "custom",
                           startDate: state.startDate,
