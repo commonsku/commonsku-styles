@@ -15,7 +15,6 @@ import {
   TableOptions,
 } from './table-types';
 import { DoubleArrowIcon, FilledChevronIcon } from '../icons';
-import { useWindowSize } from '../hooks';
 
 export type VirtualTableProps<
   RowType extends Record<string, unknown>,
@@ -135,7 +134,6 @@ const VirtualTable = <
   ) as TypedTableInstance<RowType>;
 
   const rows = useMemo(() => tableData.rows, [tableData.rows]);
-  const windowSize = useWindowSize();
   const [scrolledToTop, setScrolledToTop] = useState(false);
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
 
@@ -148,14 +146,6 @@ const VirtualTable = <
   function resetList(index: number = 0) {
     listRef.current && listRef.current.resetAfterIndex(index);
   }
-
-  const tableWidth = useMemo(() => {
-    if (rowsRef.current) {
-      const rect = rowsRef.current.getBoundingClientRect();
-      return windowSize[0]-30-rect.left;
-    }
-    return '100%';
-  }, [windowSize, rowsRef]);
 
   const handleSort = useCallback((column: BaseSortByHeaderGroup<RowType>) => {
     listRef.current && listRef.current.resetAfterIndex(0);
@@ -319,7 +309,7 @@ const VirtualTable = <
               <div
                   {...getHeaderGroupProps(headerGroup, false)}
                   ref={headerRef}
-                  style={{ width: tableWidth }}
+                  style={{ width: "auto" }}
               >
                 {headerGroup.headers.map((column: BaseSortByHeaderGroup<RowType>) => {
                   const foundCanSort = (columns.find(
@@ -356,7 +346,6 @@ const VirtualTable = <
     headerGroups,
     hideHeader,
     tableHeaderProps,
-    tableWidth,
     columns,
   ]);
 
@@ -395,7 +384,8 @@ const VirtualTable = <
                       }
                       return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
                     }}
-                    width={tableWidth}
+                    width="auto"
+                    style={{ overflowY: "hidden" }}
                     onScroll={handleScroll}
                     ref={listRef}
                     outerRef={rowsRef}
