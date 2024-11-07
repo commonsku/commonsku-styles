@@ -51,6 +51,10 @@ const ContainerStyled = styled(Csku)<CommonProps>`
     height: 24px;
     padding: 2px;
 
+    [aria-disabled="true"] {
+      background: ${p => getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')}
+    }
+
     @keyframes switch-slide-to-right {
       from { left: 0; }
       to {
@@ -77,6 +81,10 @@ const SwitchDotStyled = styled(Csku)<CommonProps>`
   animation: ${p => p.selected
     ? 'switch-slide-to-right .3s forwards 1'
     : 'switch-slide-to-left .3s forwards 1'};
+
+  [aria-disabled="true"] {
+    background: ${p => getThemeColor(p, 'neutrals.40', 'var(--color-neutrals-40)')}
+  }
  }
 `;
 
@@ -104,6 +112,7 @@ const SwitchStyled = ({
         aria-selected={selected}
         stretch={stretch}
         size={size}
+        aria-disabled={props['aria-disabled']}
       />
     </ContainerStyled>
   );
