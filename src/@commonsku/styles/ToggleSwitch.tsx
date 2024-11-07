@@ -71,6 +71,10 @@ const ContainerStyled = styled(Csku)<CommonProps>`
     cursor: pointer;
     transition: background .3s;
 
+    [aria-disabled="true"] {
+      background: ${p => getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')}
+    }
+
     @keyframes switch-slide-to-right {
       from { left: 0; }
       to {
@@ -97,6 +101,10 @@ const ToggleSwitchDotStyled = styled(Csku)<CommonProps>`
   animation: ${p => p.selected
     ? 'switch-slide-to-right .3s forwards 1'
     : 'switch-slide-to-left .3s forwards 1'};
+
+  [aria-disabled="true"] {
+    background: ${p => getThemeColor(p, 'neutrals.40', 'var(--color-neutrals-40)')}
+  }
  }
 `;
 
@@ -126,6 +134,7 @@ const ToggleSwitchStyled = ({
         stretch={stretch}
         size={size}
         style={dotStyles}
+        aria-disabled={props['aria-disabled']}
       />
     </ContainerStyled>
   );
