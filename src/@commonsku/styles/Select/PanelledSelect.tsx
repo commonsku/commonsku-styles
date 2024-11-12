@@ -26,6 +26,7 @@ const subMenuStyles: CSSProperties = {
     borderTop: '1px solid',
     borderTopRightRadius: '5px',
     marginTop: 0,
+    zIndex: 10000,
 }
 
 export type NestedOption<Option> = Option & {
