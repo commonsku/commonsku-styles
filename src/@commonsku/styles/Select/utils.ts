@@ -142,6 +142,8 @@ export function skuSelectStyles<
         position: props.menuRelative ? 'relative' : provided.position,
         borderRadius: '5px',
         border: `1px solid ${borderColor}`,
+        width: "max-content",
+        minWidth: "100%",
         boxShadow: `
           1px 1px 0px ${borderColor},
           -1px -1px 0px ${borderColor},
