@@ -48,6 +48,7 @@ const Datepicker = (
     placeholderText,
     dateFormat='yyyy-MM-dd',
     isClearable=false,
+    shouldCloseOnSelect=false,
     peekNextMonth=true,
     showTimeInput=false,
     showMonthDropdown=false,
@@ -71,6 +72,7 @@ const Datepicker = (
     dateFormat={dateFormat}
     placeholderText={placeholder || placeholderText || dateFormat}
     isClearable={isClearable}
+    shouldCloseOnSelect={shouldCloseOnSelect}
     timeInputLabel="Time:"
     timeFormat="HH:mm"
     showTimeInput={showTimeInput}

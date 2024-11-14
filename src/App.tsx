@@ -3673,6 +3673,8 @@ const App = () => {
                         onChange={(date: any) =>
                           dispatch({ type: "dateChange", payload: { date } })
                         }
+                        shouldCloseOnSelect={false}
+                        showTimeInput
                       />
                     </Col>
                     <Col xs={3} mr={16}>

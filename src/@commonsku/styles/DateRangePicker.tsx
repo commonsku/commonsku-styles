@@ -142,6 +142,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       placeholderText,
       dateFormat = "yyyy-MM-dd",
       isClearable = true,
+      shouldCloseOnSelect=false,
       peekNextMonth = true,
       showTimeInput =  false,
       showMonthDropdown = false,
@@ -293,6 +294,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               todayButton={todayButton}
               dateFormat={dateFormat}
               isClearable
+              shouldCloseOnSelect={shouldCloseOnSelect}
               showTimeInput={showTimeInput}
               showMonthDropdown={showMonthDropdown}
               showYearDropdown={showYearDropdown}
@@ -337,6 +339,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               todayButton={todayButton}
               dateFormat={dateFormat}
               isClearable
+              shouldCloseOnSelect={shouldCloseOnSelect}
               showTimeInput={showTimeInput}
               showMonthDropdown={showMonthDropdown}
               showYearDropdown={showYearDropdown}
