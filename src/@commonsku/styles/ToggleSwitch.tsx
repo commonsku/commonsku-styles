@@ -56,35 +56,6 @@ const createAnimationLeftStyle = (p: CommonProps) => {
   return `${stripUnit(toggleSizes[p.size || 'medium'].height) * 1.5}px`;
 };
 
-const ContainerStyled = styled(Csku)<CommonProps>`
-  &&& {
-    position: static;
-    margin-left: 0;
-    background: ${p => p.selected
-      ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
-      : getThemeColor(p, 'teal.20', colors.teal['20'])};
-    width: ${p => p.stretch
-        ? '100%'
-        : `${stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5}px`};
-    padding: 0.35rem;
-    border-radius: 1.8rem;
-    cursor: pointer;
-    transition: background .3s;
-
-    @keyframes switch-slide-to-right {
-      from { left: 0; }
-      to {
-        left: ${createAnimationLeftStyle};
-      }
-    }
-  
-    @keyframes switch-slide-to-left {
-      from {
-        left: ${createAnimationLeftStyle};
-      }
-      to { left: 0; }
-    }
-  }`
 
 const ToggleSwitchDotStyled = styled(Csku)<CommonProps>`
  &&& {
@@ -99,6 +70,44 @@ const ToggleSwitchDotStyled = styled(Csku)<CommonProps>`
     : 'switch-slide-to-left .3s forwards 1'};
  }
 `;
+
+const ContainerStyled = styled(Csku)<CommonProps>`
+&&& {
+  position: static;
+  margin-left: 0;
+  background: ${p => p.selected
+    ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
+    : getThemeColor(p, 'teal.20', colors.teal['20'])};
+  width: ${p => p.stretch
+      ? '100%'
+      : `${stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5}px`};
+  padding: 0.35rem;
+  border-radius: 1.8rem;
+  cursor: pointer;
+  transition: background .3s;
+
+  @keyframes switch-slide-to-right {
+    from { left: 0; }
+    to {
+      left: ${createAnimationLeftStyle};
+    }
+  }
+
+  @keyframes switch-slide-to-left {
+    from {
+      left: ${createAnimationLeftStyle};
+    }
+    to { left: 0; }
+  }
+
+  [aria-disabled="true"] {
+    background: ${p => getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')};
+  }
+
+  ${ToggleSwitchDotStyled}[aria-disabled="true"] {
+    background: ${p => getThemeColor(p, 'neutrals.40', 'var(--color-neutrals-40)')};
+  }  
+}`
 
 
 const ToggleSwitchStyled = ({
@@ -126,6 +135,7 @@ const ToggleSwitchStyled = ({
         stretch={stretch}
         size={size}
         style={dotStyles}
+        aria-disabled={props['aria-disabled']}
       />
     </ContainerStyled>
   );
