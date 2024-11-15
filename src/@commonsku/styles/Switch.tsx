@@ -35,42 +35,7 @@ export type SwitchStatedProps = {
 } & Omit<CommonProps, 'selected'>
   & Omit<BaseCskuProps, 'style'>;
 
-const ContainerStyled = styled(Csku)<CommonProps>`
-  &&& {
-    position: relative;
-    background: ${p => p.selected
-        ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
-        : getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')
-    };
-    border-radius: 100px;
-    cursor: pointer;
-    transition: background .3s;
-    ${p => toggleSizes[p.size ?? 'medium']}
-
-    width: 48px;
-    height: 24px;
-    padding: 2px;
-
-    [aria-disabled="true"] {
-      background: ${p => getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')}
-    }
-
-    @keyframes switch-slide-to-right {
-      from { left: 0; }
-      to {
-        left: 24px;
-      }
-    }
-  
-    @keyframes switch-slide-to-left {
-      from {
-        left: 24px;
-      }
-      to { left: 0px; }
-    }
-  }`
-
-const SwitchDotStyled = styled(Csku)<CommonProps>`
+const SwitchDotStyled = styled.div<CommonProps>`
  &&& {
   position: relative;
   background: #FFFFFF;
@@ -81,12 +46,46 @@ const SwitchDotStyled = styled(Csku)<CommonProps>`
   animation: ${p => p.selected
     ? 'switch-slide-to-right .3s forwards 1'
     : 'switch-slide-to-left .3s forwards 1'};
-
-  [aria-disabled="true"] {
-    background: ${p => getThemeColor(p, 'neutrals.40', 'var(--color-neutrals-40)')}
-  }
  }
 `;
+
+const ContainerStyled = styled.div<CommonProps>`
+&&& {
+  position: relative;
+  background: ${p => p.selected
+      ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
+      : getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')
+  };
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background .3s;
+  ${p => toggleSizes[p.size ?? 'medium']}
+  width: 48px;
+  height: 24px;
+  padding: 2px;
+
+  @keyframes switch-slide-to-right {
+    from { left: 0; }
+    to {
+      left: 24px;
+    }
+  }
+
+  @keyframes switch-slide-to-left {
+    from {
+      left: 24px;
+    }
+    to { left: 0px; }
+  }
+
+  [aria-disabled="true"] {
+    background: ${p => getThemeColor(p, 'neutrals.60', 'var(--color-neutrals-60)')};
+  }
+
+  ${SwitchDotStyled}[aria-disabled="true"] {
+    background: ${p => getThemeColor(p, 'neutrals.40', 'var(--color-neutrals-40)')};
+  }
+}`
 
 
 const SwitchStyled = ({
