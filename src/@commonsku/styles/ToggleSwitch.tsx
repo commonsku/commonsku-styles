@@ -62,7 +62,7 @@ const ContainerStyled = styled(Csku)<CommonProps>`
     margin-left: 0;
     background: ${p => p.selected
       ? getThemeColor(p, 'teal.main', 'var(--color-primary1-main)')
-      : getThemeColor(p, 'teal.20', colors.teal['20'])};
+      : getThemeColor(p, 'neutrals.60', colors.neutrals['60'])};
     width: ${p => p.stretch
         ? '100%'
         : `${stripUnit(toggleSizes[p.size || 'medium'].height) * 2.5}px`};
@@ -70,6 +70,7 @@ const ContainerStyled = styled(Csku)<CommonProps>`
     border-radius: 1.8rem;
     cursor: pointer;
     transition: background .3s;
+    box-sizing: content-box;
 
     @keyframes switch-slide-to-right {
       from { left: 0; }
