@@ -164,6 +164,16 @@ export const Popup = React.forwardRef<HTMLDivElement, PopupProps>((
     onCleanup: onClose,
   });
 
+  useEffect(
+    () => {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "";
+      };
+    },
+    []
+  );
+
   useEffect(() => {
     const handleKeyDown = (e: Event) => {
       // @ts-ignore
