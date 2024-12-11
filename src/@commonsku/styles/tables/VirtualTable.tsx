@@ -385,7 +385,6 @@ const VirtualTable = <
                       return (rows[i] && rows[i].isExpanded ? 300 : 50) + gutterSize;
                     }}
                     width="auto"
-                    style={{ overflowY: "hidden" }}
                     onScroll={handleScroll}
                     ref={listRef}
                     outerRef={rowsRef}
