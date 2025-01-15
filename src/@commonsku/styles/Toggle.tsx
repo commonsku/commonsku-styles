@@ -50,7 +50,6 @@ const Wrapper = styled.div<{size?: ToggleSize}>`
     display: inline-flex;
     max-width: 600px;
     justify-content: flex-start;
-    width: 100%; 
   }`
 
 const Container = styled.div<{stretch?:boolean, size?: ToggleSize }&SharedStyleTypes>`
