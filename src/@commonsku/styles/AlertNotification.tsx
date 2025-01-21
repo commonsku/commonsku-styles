@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import styled, { CSSObject } from "styled-components";
 import colors from './colors';
 import { fontStyles } from "./Theme";
-import { InfoIcon, AlertIcon, CompletedCheckmarkIcon, WarnIcon } from "./icons";
+import { InfoIcon, AlertIcon, CompletedCheckmarkIcon, SkubotSpinner } from "./icons";
 import LinkWithIcon from "./LinkWithIcon";
 import { SharedStyleTypes, SharedStyles } from './SharedStyles';
 import { SizerCss, SizerTypes } from './Sizer';
@@ -14,7 +14,7 @@ type NotificationExtraContentProps = {
   target?: string;
 };
 type NotificationIconProps = {
-  alertType?: "neutral" | "success" | "error" | "warn",
+  alertType?: "neutral" | "success" | "error" | "warn" | "loading",
 };
 type AlertNotificationProps = React.PropsWithChildren<{
   style?: React.CSSProperties;
@@ -41,19 +41,24 @@ const NotificationExtraContent = memo((props: NotificationExtraContentProps) => 
 
 const NotificationIcon = memo((props: NotificationIconProps) => {
   const { alertType } = props;
-  if (alertType === "success") {
-    return <CompletedCheckmarkIcon color={colors.green.dark} mr={8} style={{ flexShrink: 0 }} />
-  } else if (alertType === "error") {
-    return <AlertIcon color={colors.errors.dark} mr={8} style={{ flexShrink: 0 }} />
-  } else if (alertType === "warn") {
-    return <AlertIcon color={colors.yellow['90']} mr={8} style={{ flexShrink: 0 }} />
+  switch (alertType) {
+    case "success":
+      return <CompletedCheckmarkIcon color={colors.green.dark} mr={8} style={{ flexShrink: 0 }} />
+    case "error":
+      return <AlertIcon color={colors.errors.dark} mr={8} style={{ flexShrink: 0 }} />
+    case "warn":
+      return <AlertIcon color={colors.yellow['90']} mr={8} style={{ flexShrink: 0 }} />
+    case "loading":
+      return <SkubotSpinner size="tiny" skubot={false} style={{ flexShrink: 0, marginRight: 10 }} />
+    default:
+      return <InfoIcon color={colors.navy.dark} mr={8} style={{ flexShrink: 0 }} />
   }
-  return <InfoIcon color={colors.navy.dark} mr={8} style={{ flexShrink: 0 }} />
 });
 
 const notificationVariantStyles = (alertType: string): CSSObject => {
   switch (alertType) {
     case "neutral":
+    case "loading":
       return {
         backgroundColor: colors.navy.lightest,
         color: colors.navy.dark,
