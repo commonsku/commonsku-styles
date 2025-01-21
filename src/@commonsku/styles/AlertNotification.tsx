@@ -49,7 +49,7 @@ const NotificationIcon = memo((props: NotificationIconProps) => {
     case "warn":
       return <AlertIcon color={colors.yellow['90']} mr={8} style={{ flexShrink: 0 }} />
     case "loading":
-      return <SkubotSpinner size="tiny" skubot={false} style={{ flexShrink: 0, marginRight: 10 }} />
+      return <SkubotSpinner size="button" skubot={false} style={{ flexShrink: 0, marginRight: 10 }} />
     default:
       return <InfoIcon color={colors.navy.dark} mr={8} style={{ flexShrink: 0 }} />
   }
