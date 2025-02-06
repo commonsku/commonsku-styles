@@ -123,3 +123,4 @@ export { default as ClearIcon } from './ClearIcon';
 export { default as AnnounceIcon } from './AnnounceIcon';
 export { default as CellphoneIcon } from './CellphoneIcon';
 export { default as MonitorIcon } from './MonitorIcon';
+export { default as UnsplashIcon } from './UnsplashIcon';

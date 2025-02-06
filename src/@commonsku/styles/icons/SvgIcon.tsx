@@ -60,6 +60,30 @@ type BaseSVGIconProps = {
 
 export type SVGIconProps = React.SVGAttributes<SVGElement> & BaseSVGIconProps;
 
+export const getSvgSizeStyles = (p: {
+    size?: TIconSize;
+    width?: string | number;
+    height?: string | number;
+    pointer?: boolean;
+    iconSizes?: TIconSizeObj;
+    viewBox?: string;
+}) => {
+    const iconSizes = p.iconSizes || iconSize;
+    const defaultSize = iconSizes['default'];
+    const _iconSize = p.size ? iconSizes[p.size] : null;
+    const size = !_iconSize ? defaultSize : _iconSize;
+    const style: CSSObject = {
+        height: p.height !== undefined && p.height !== '' ? p.height : size.height,
+        width: p.width !== undefined && p.width !== '' ? p.width : size.width,
+        cursor: p.pointer ? 'pointer' : undefined,
+    };
+
+    return {
+        style,
+        viewBox: _iconSize ? size.viewBox : p.viewBox || defaultSize.viewBox,
+    };
+};
+
 const SVG = styled.svg.attrs<BaseSVGIconProps>(p => {
     const iconSizes = p.iconSizes || iconSize;
     const size = p.size ? iconSizes[p.size] : null;
