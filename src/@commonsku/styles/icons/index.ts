@@ -30,7 +30,7 @@ export { default as DownloadIcon} from "./DownloadIcon"
 export { default as UploadIcon} from "./UploadIcon"
 export { default as MarketingStatusIcon } from './MarketingStatusIcon';
 export { default as GearIcon } from './GearIcon';
-export { default as CircleProgressIcon } from './CircleProgressIcon';
+export { default as CircleProgressIcon, CircleProgressLoadingIcon } from './CircleProgressIcon';
 export { default as Loading } from './Loading';
 export {default as SkubotSpinner} from './SkubotSpinner';
 export {default as CommonskuMainLogo} from './CommonskuMainLogo'

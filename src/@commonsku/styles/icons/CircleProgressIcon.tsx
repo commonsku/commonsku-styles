@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useId } from "react";
 import SVG, { SVGIconProps } from "./SvgIcon";
 import { teal } from "../colors";
 import { colors } from "../Theme";
+import styled from "styled-components";
 
 type CircleProgressIconProps = SVGIconProps & {
   strokeWidth?: number;
@@ -163,3 +164,30 @@ export default function CircleProgressIcon({
     </SVG>
   );
 }
+
+const CircleProgressLoadingContainer = styled.div<{ iconId: string; animationSpeed?: string; }>`
+#iconId .circle-progress {
+    transform-origin: center;
+    animation: circle-loader-spin ${p => p.animationSpeed ?? '1s'} infinite linear;
+}
+@keyframes circle-loader-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+`;
+
+export const CircleProgressLoadingIcon = ({
+  size='large',
+  percentage=25,
+  text=' ',
+  animationSpeed='1s',
+  ...props
+}: CircleProgressIconProps & { animationSpeed?: string; }) => {
+  const iconId = useId();
+  return (
+    <CircleProgressLoadingContainer animationSpeed={animationSpeed} iconId={iconId}>
+      <CircleProgressIcon id={iconId} {...props} size={size} percentage={percentage} text={text} />
+    </CircleProgressLoadingContainer>
+  );
+};
+
