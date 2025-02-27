@@ -83,6 +83,7 @@ export const NavItems = [
             {title: 'Production Report Icons', to: '#production-report-icons' },
             {title: 'Input Icons', to: '#input-icons' },
             {title: 'Settings Icons', to: '#settings-icons' },
+            {title: 'Shop Icons', to: '#shop-icons' },
             {title: 'Status Icons', to: '#status-icons' },
             {title: 'Action Icons', to: '#action-icons' },
         ],

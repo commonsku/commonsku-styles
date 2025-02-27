@@ -5942,6 +5942,23 @@ const App = () => {
                   </IconContainer>
                 </demo.InnerContainer>
 
+                <demo.InnerContainer title="Shop Icons" id="shop-icons">
+                  <IconContainer>
+                    <IconsShowcase
+                      Icons={[<icons.PopupShopIcon />]}
+                      name="PopupShopIcon"
+                    />
+                    <IconsShowcase
+                      Icons={[<icons.CompanyShopIcon />]}
+                      name="CompanyShopIcon"
+                    />
+                    <IconsShowcase
+                      Icons={[<icons.MarketingShopIcon size="huge"/>]}
+                      name="MarketingShopIcon"
+                    />
+                  </IconContainer>
+                </demo.InnerContainer>
+
                 <demo.InnerContainer title="Supplier Icons" id="supplier-icons">
                   <IconContainer>
                     <IconsShowcase
