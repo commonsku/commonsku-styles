@@ -44,6 +44,7 @@ const presetLabelStyles: CSSProperties = {
   flexBasis: "200px",
   justifyContent: "left",
   padding: "13px",
+  whiteSpace: "nowrap",
 };
 
 const dateRangeLabelStyles: CSSProperties = {
