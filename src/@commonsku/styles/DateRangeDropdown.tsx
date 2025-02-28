@@ -140,6 +140,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
     placeholder,
     placeholderText,
     style = dropdownStyles,
+    className,
   } = props;
   const [open, setOpen] = useState(false);
   const datepickerRef = useRef<HTMLDivElement | null>(null);
@@ -173,7 +174,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
   }, [handleChange]);
 
   return (
-    <>
+    <div className={className}>
       <DateRangeInput
         noMargin
         value={
@@ -195,7 +196,7 @@ export const DateRangeDropdown = (props: DateRangeDropdownProps) => {
           onChange={handleChange}
         />
       )}
-    </>
+    </div>
   );
 };
 
