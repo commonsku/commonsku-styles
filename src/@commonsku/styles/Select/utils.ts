@@ -144,6 +144,7 @@ export function skuSelectStyles<
         border: `1px solid ${borderColor}`,
         width: "max-content",
         minWidth: "100%",
+        maxWidth: "320px",
         boxShadow: `
           1px 1px 0px ${borderColor},
           -1px -1px 0px ${borderColor},
