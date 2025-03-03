@@ -40,11 +40,10 @@ const presetListStyles: CSSProperties = {
 
 const presetLabelStyles: CSSProperties = {
   margin: "0",
-  flexGrow: "1",
-  flexBasis: "200px",
+  flex: "1 0 200px",
+  minWidth: "fit-content",
   justifyContent: "left",
   padding: "13px",
-  whiteSpace: "nowrap",
 };
 
 const dateRangeLabelStyles: CSSProperties = {
