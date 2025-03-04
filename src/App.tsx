@@ -5956,6 +5956,10 @@ const App = () => {
                       Icons={[<icons.MarketingShopIcon size="huge"/>]}
                       name="MarketingShopIcon"
                     />
+                    <IconsShowcase
+                      Icons={[<icons.ShopifyShopIcon size="huge"/>]}
+                      name="ShopifyShopIcon"
+                    />
                   </IconContainer>
                 </demo.InnerContainer>
 
