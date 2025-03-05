@@ -25,6 +25,7 @@ const DropdownItem = styled.div<DropdownContentProps>`
     background-color: ${p => p.color ? p.color : "#F4F7FF"};
     border-radius: ${p => p.rounded ? "100px" : 0};
     opacity: ${p => p.active ? 0.85 : 1};
+    white-space: nowrap;
     &:hover {
         opacity: .85;
         cursor: pointer;
@@ -41,6 +42,7 @@ const DropDownContent = styled.div<DropdownContentProps>`
     border-radius: 10px;
     text-align: left;
     overflow: hidden;
+    white-space: nowrap;
 `;
 
 export const StatusDropdown = ({ items, text, value, row, setMenuIsOpen, disabled=false, ...props }: {
