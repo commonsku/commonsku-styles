@@ -1,4 +1,4 @@
-import React, { ReactEventHandler } from 'react'
+import React, { ReactEventHandler, useId } from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
 import {Img} from './Img'
@@ -6,6 +6,7 @@ import {Input, InputProps} from './Input'
 import {IconDoc, DownloadIcon} from './icons'
 import { getThemeColor, getThemeFontSize, colors } from './Theme';
 import { SharedStyles, SharedStyleTypes } from './SharedStyles';
+import { Tooltip } from 'react-tooltip';
 
 
 const ArtworkName = styled.div`
@@ -77,6 +78,17 @@ const ArtworkPicture = styled.div<{cssHeight:number} >`
     opacity: 1;
   }
 `
+
+const ArtworkTooltip = styled(Tooltip)`
+  &&& {
+    width: 100%;
+    border-radius: 5px;
+    background: #123952E5;
+    color: white;
+    padding: 16px;
+  }
+`
+
 function truncate(filename:string, max:number) {
   var extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
   var base_name = filename.replace('.' + extension, '');
@@ -95,6 +107,7 @@ export type ArtworkProps = {
   date?:string,
   edit?:boolean,
   noTruncate?:boolean,
+  showTooltip?: boolean,
   onClick?:React.MouseEventHandler<HTMLDivElement>,
   onEdit?:Function|VoidFunction,
   onDelete?:Function|VoidFunction,
@@ -110,6 +123,7 @@ export const Artwork = ({
     onError,
     ...props
   }: ArtworkProps & SharedStyleTypes) => {
+    const tooltipId = useId()
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
     {props.picture?
@@ -138,8 +152,13 @@ export const Artwork = ({
             />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
        </div> : props.name ?
-       <ArtworkName>{props.noTruncate ? props.name : truncate(props.name, 20)}</ArtworkName> : null}
-       {!props.edit && props.date ?
+       <ArtworkName data-tooltip-id={tooltipId}>{props.noTruncate ? props.name : truncate(props.name, 20)}</ArtworkName> : null}
+      {props.showTooltip &&
+        (<ArtworkTooltip id={tooltipId} place='top'>
+            {props.name}
+        </ArtworkTooltip>
+      )}
+      {!props.edit && props.date ?
        <UpdateDate>Updated {props.date}</UpdateDate> : null}
     </ArtworkInfo>
   </ArtworkWrapper>

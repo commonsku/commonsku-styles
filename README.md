@@ -25,7 +25,7 @@ You can also check out the src/App.tsx to see how to import in your projects
 
 ### Testing locally with main repo
 
-You can add this into the `~/.bashrc` or `~/.profile`
+You can add this into the `~/.zshrc`
 
 Below code adds commnand `cskustyled` to build and install commonsku styles into your local project
 
@@ -35,6 +35,9 @@ CSKU_STYLES_DIR="$HOME/projects/commonsku-styles"
 function fn_cskustyled() {
   CSKUS_PKG_VERSION=$(cat $CSKU_STYLES_DIR/package.json 2>&1 | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
   touch $CSKU_STYLES_DIR/dist && rm -r $CSKU_STYLES_DIR/dist \
+    && cd $CSKU_DEV_DIR \
+        && rm -rf node_modules/ \
+        && npm cache clean --force \
     && touch $CSKU_STYLES_DIR/commonsku-styles-$CSKUS_PKG_VERSION.tgz && rm $CSKU_STYLES_DIR/commonsku-styles-$CSKUS_PKG_VERSION.tgz \
     && touch $CSKU_DEV_DIR/commonsku-styles-$CSKUS_PKG_VERSION.tgz && rm $CSKU_DEV_DIR/commonsku-styles-$CSKUS_PKG_VERSION.tgz \
     && cd $CSKU_STYLES_DIR \
