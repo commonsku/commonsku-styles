@@ -4992,7 +4992,8 @@ const App = () => {
                     </Col>
                     <Col padded xs={3}>
                       <Artwork
-                        noTruncate
+                        noTruncate={false}
+                        showTooltip={true}
                         date="Jan 3 2020"
                         name="long name very long name really e very long name really e such a very very long namelong name such a very very long name squirrel.png"
                         picture={product_narrow}
