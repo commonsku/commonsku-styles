@@ -1,4 +1,4 @@
-import React, { ReactEventHandler } from 'react'
+import React, { ReactEventHandler, useId } from 'react'
 import styled from 'styled-components'
 import {Button} from './Button'
 import {Img} from './Img'
@@ -123,6 +123,7 @@ export const Artwork = ({
     onError,
     ...props
   }: ArtworkProps & SharedStyleTypes) => {
+    const tooltipId = useId()
   /* TODO: 20 is arbitrary; ideally a component should know its width, and that should be used to compute the max length */
   return <ArtworkWrapper cssHeight={props.cssHeight ? props.cssHeight : props.picture ? 17 : 0} onClick={!props.picture && props.onClick ? props.onClick : undefined}>
     {props.picture?
@@ -151,9 +152,9 @@ export const Artwork = ({
             />}
          <Button size="small" style={{height:"100%", marginLeft: 10, paddingRight: 4, paddingLeft: 4}} onClick={() => props.onSave!()}>Save</Button>
        </div> : props.name ?
-       <ArtworkName data-tooltip-id={`artwork-tooltip-${props.name}`}>{props.noTruncate ? props.name : truncate(props.name, 20)}</ArtworkName> : null}
+       <ArtworkName data-tooltip-id={tooltipId}>{props.noTruncate ? props.name : truncate(props.name, 20)}</ArtworkName> : null}
       {props.showTooltip &&
-        (<ArtworkTooltip id={`artwork-tooltip-${props.name}`} place='top'>
+        (<ArtworkTooltip id={tooltipId} place='top'>
             {props.name}
         </ArtworkTooltip>
       )}
