@@ -18,8 +18,10 @@ const parseColorVars = (colors: ColorObj, prefix: string = ''): string => {
   }).join('\n');
 };
 
-export type AdditionalStyles = CSSObject | string
+type AdditionalStyle = CSSObject | string
   | ((p: ThemeProps<DefaultTheme>) => CSSObject | string | undefined | null);
+
+export type AdditionalStyles = AdditionalStyle | AdditionalStyle[];
 
 function createFontStyles(p: ThemedStyledProps<{additionalStyles?: AdditionalStyles;}, DefaultTheme>) {
   const fontFamilies = _.get(p, ['theme', 'fontFamilies'], {});
@@ -38,23 +40,35 @@ function createFontStyles(p: ThemedStyledProps<{additionalStyles?: AdditionalSty
   ).join('');
 }
 
+const parseAdditionalStyles = (
+  p: ThemedStyledProps<{additionalStyles?: AdditionalStyles;}, DefaultTheme>
+) => {
+  if (!p.additionalStyles) { return null; }
+
+  if (Array.isArray(p.additionalStyles)) {
+    return p.additionalStyles.map(
+      v => parseAdditionalStyles({
+        ...p, additionalStyles: v,
+      })
+    )
+  }
+
+  switch (typeof p.additionalStyles) {
+    case 'function':
+      return p.additionalStyles(p);
+    case 'object':
+    case 'string':
+      return p.additionalStyles;
+    default:
+      return null;
+  }
+};
+
 const GlobalStyle = createGlobalStyle<{ additionalStyles?: AdditionalStyles }>`
 :root {
   ${p => createFontStyles(p)}
   ${p => parseColorVars(_.get(p, ['theme', 'colors'], {}), '')}
-  ${p => {
-    if (!p.additionalStyles) { return null; }
-
-    switch (typeof p.additionalStyles) {
-      case 'function':
-        return p.additionalStyles(p);
-      case 'object':
-      case 'string':
-        return p.additionalStyles;
-      default:
-        return null;
-    }
-  }}
+  ${parseAdditionalStyles}
 }
 &&& {
   .commonsku-styles-select__input {
