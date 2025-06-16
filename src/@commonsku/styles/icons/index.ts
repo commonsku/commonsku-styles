@@ -106,6 +106,7 @@ export { default as StarDarkIcon} from './StarDarkIcon';
 export { default as MagicIcon} from './MagicIcon';
 export { default as MagicEraserIcon} from './MagicEraserIcon';
 export { default as TrendIcon} from './TrendIcon';
+export { default as FlagIcon} from './FlagIcon';
 export { default as SlideInIcon} from './SlideInIcon';
 
 export { default as EmptyStateArrow} from './EmptyStateArrow';
