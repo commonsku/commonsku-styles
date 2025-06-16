@@ -5931,6 +5931,14 @@ const App = () => {
                       Icons={[<icons.TrendIcon direction="flat" />]}
                       name="TrendIcon"
                     />
+                    <IconsShowcase
+                      Icons={[<icons.FlagIcon filled={false} />]}
+                      name="FlagIcon"
+                    />
+                    <IconsShowcase
+                      Icons={[<icons.FlagIcon filled={true} />]}
+                      name="FlagIcon"
+                    />
                   </IconContainer>
                 </demo.InnerContainer>
 
