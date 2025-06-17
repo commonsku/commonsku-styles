@@ -499,7 +499,7 @@ CheckMark.defaultProps = {
 }
 
 export type LabeledRadioProps = RadioProps & {
-  label: string;
+  label: React.ReactNode;
   labelStyle?: React.CSSProperties;
   radioIconStyle?: React.CSSProperties;
   radioColor?: string;
