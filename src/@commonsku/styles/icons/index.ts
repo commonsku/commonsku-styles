@@ -125,7 +125,8 @@ export { default as AnnounceIcon } from './AnnounceIcon';
 export { default as CellphoneIcon } from './CellphoneIcon';
 export { default as MonitorIcon } from './MonitorIcon';
 export { default as UnsplashIcon } from './UnsplashIcon';
-export {default as PopupShopIcon} from './PopupShopIcon'
-export {default as CompanyShopIcon} from './CompanyShopIcon'
-export {default as MarketingShopIcon} from './MarketingShopIcon'
-export {default as ShopifyShopIcon} from './ShopifyShopIcon'
+export { default as PopupShopIcon } from './PopupShopIcon'
+export { default as CompanyShopIcon } from './CompanyShopIcon'
+export { default as MarketingShopIcon } from './MarketingShopIcon'
+export { default as ShopifyShopIcon } from './ShopifyShopIcon'
+export { default as SyncIcon } from './SyncIcon'

@@ -5939,6 +5939,10 @@ const App = () => {
                       Icons={[<icons.FlagIcon filled={true} />]}
                       name="FlagIcon"
                     />
+                    <IconsShowcase
+                      Icons={[<icons.SyncIcon />]}
+                      name="SyncIcon"
+                    />
                   </IconContainer>
                 </demo.InnerContainer>
 
