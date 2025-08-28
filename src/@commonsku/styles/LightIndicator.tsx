@@ -7,12 +7,15 @@ import { SizerCss, SizerTypes } from './Sizer';
 import colors from './colors';
 import SVG, { SVGIconProps } from './icons/SvgIcon';
 
-type LightIndicatorLightProps = SVGIconProps & { lit?: boolean; large?: boolean; };
+type LightStatus = 'on' | 'off' | 'error';
+
+type LightIndicatorLightProps = SVGIconProps & { lit?: boolean; large?: boolean; isError?: boolean; };
 export default function LightIndicatorLight({
     width = 10,
     height = 10,
     lit = false,
     large = false,
+    isError = false,
     ...props
 }: LightIndicatorLightProps) {
 
@@ -23,11 +26,31 @@ export default function LightIndicatorLight({
     const lightID = uniqueId("LightIndicatorLight");
 
     const fillOpacity =
-        lit ? 1 : 0.6;
+        lit || isError ? 1 : 0.6;
 
-    const litOrNot =
-        lit ? <><stop stopColor="#01D374" stopOpacity={0.39} /><stop offset={1} stopColor="#01D374" /></>
-            : <><stop stopColor="#E4E4E4" stopOpacity={0.39} /><stop offset={1} stopColor="#9D9D9D" /></>;
+    let stoplight;
+    if (isError) {
+        stoplight = (
+            <>
+                <stop stopColor={colors.errors[50]} stopOpacity={0.39} />
+                <stop offset={1} stopColor={colors.errors[50]}/>
+            </>
+        );
+    } else if (lit) {
+        stoplight = (
+            <>
+                <stop stopColor="#01D374" stopOpacity={0.39} />
+                <stop offset={1} stopColor="#01D374" />
+            </>
+        );
+    } else {
+        stoplight = (
+            <>
+                <stop stopColor="#E4E4E4" stopOpacity={0.39} />
+                <stop offset={1} stopColor="#9D9D9D" />
+            </>
+        );
+    }
 
     return <SVG width={size} height={size} {...props} >
         <circle cx={circleSize} cy={circleSize} r={circleSize} fill={`url(#${lightID})`} fillOpacity={fillOpacity} />
@@ -40,14 +63,14 @@ export default function LightIndicatorLight({
                 gradientUnits="userSpaceOnUse"
                 gradientTransform={gradientTransform}
             >
-                {litOrNot}
+                {stoplight}
             </radialGradient>
         </defs>
     </SVG>
 }
 
 type LightIndicatorTextType = {
-    LightIndicatorTextColor: boolean;
+    LightIndicatorTextColor: LightStatus;
     large?: boolean;
 }
 const LightIndicatorText = styled.p<LightIndicatorTextType>`
@@ -55,7 +78,10 @@ const LightIndicatorText = styled.p<LightIndicatorTextType>`
         font-size: ${props => props.large ? themeOptions.fontStyles.p.medium.fontSize : themeOptions.fontStyles.p.small.fontSize};
         font-family: ${themeOptions.fontStyles.p.small.fontFamily};
         line-height: ${themeOptions.fontStyles.p.small.lineHeight};
-        color: ${props => props.LightIndicatorTextColor ? colors.neutrals.bodyText : colors.neutrals[70]};
+        color: ${props => {
+            if (props.LightIndicatorTextColor === 'on' || props.LightIndicatorTextColor === 'error') return colors.neutrals.bodyText;
+            if (props.LightIndicatorTextColor === 'off') return colors.neutrals[70]
+        }};
         margin-top:0;
         margin-bottom:0;
     };
@@ -77,6 +103,7 @@ const LightIndicatorContainer = styled.div<SharedStyleTypes & SizerTypes>`
 type LightIndicatorProps = {
     name: string;
     on?: boolean;
+    status?: LightStatus
     large?: boolean;
     textProps?: React.HTMLAttributes<HTMLParagraphElement>;
 }
@@ -84,14 +111,16 @@ type LightIndicatorProps = {
 export function LightIndicator({
     name = "Name this Indicator",
     on = false,
+    status = 'off',
     large = false,
     textProps = {},
     ...props
 }: LightIndicatorProps) {
+    const lit = status === 'on' || on === true;
     return (
         <LightIndicatorContainer {...props}>
-            <LightIndicatorLight large={large} lit={on} mr={8} mt={8} />
-            <LightIndicatorText {...textProps} large={large} LightIndicatorTextColor={on} >{name}</LightIndicatorText>
+            <LightIndicatorLight large={large} lit={lit} mr={8} mt={8} isError={status === 'error'} />
+            <LightIndicatorText {...textProps} large={large} LightIndicatorTextColor={status} >{name}</LightIndicatorText>
         </LightIndicatorContainer>
     );
 }
