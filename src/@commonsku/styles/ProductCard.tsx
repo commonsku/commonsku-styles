@@ -48,6 +48,7 @@ const ProductContent = styled.div`
     align-items: flex-start;
     flex-direction: column;
     flex-grow: 1;
+    position: relative;
 }`;
 
 const ProductTitle = styled.div`
@@ -148,6 +149,9 @@ const ProductButton = styled(IconButton)`
     align-items: center;
     text-align: center;
     justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
     /* Primary 2 / White */
 
@@ -189,7 +193,7 @@ export const ProductCard = (props: ProductCardProps) => {
     } else if (props.loading) {
       return { icon: undefined, variant: 'primary', name: 'Adding' };
     }
-    return { icon: AddIcon, variant: 'primary', name: 'Add' };
+    return { icon: AddIcon, variant: 'secondary', name: 'Add' };
   };
 
   const button = buttonState();
@@ -232,7 +236,7 @@ export const ProductCard = (props: ProductCardProps) => {
         {props.description && <ProductSubTitle>{props.description}</ProductSubTitle>}
         <div style={{ display: 'flex', alignItems: 'center', height: 32, marginTop: '-4px' }}>
           <ProductSubTitle isClickable={props.handleSubTitleClick ? true : false} onClick={handleSubTitleClick}>{props.subTitle}</ProductSubTitle>
-          {props.showButton && (hover || props.selected || props.loading) && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={handleClickProductEvent}  >{button.name}</ProductButton>}
+          {props.showButton && <ProductButton variant={button.variant} Icon={button.icon} iconPosition='left' style={{ padding: 8 }} onClick={handleClickProductEvent}  >{button.name}</ProductButton>}
         </div>
       </ProductContent>
     </ProductCardWrapper>
