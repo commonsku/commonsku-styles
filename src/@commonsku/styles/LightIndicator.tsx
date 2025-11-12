@@ -34,18 +34,19 @@ export default function LightIndicatorLight({
             <stop offset={1} stopColor="#9D9D9D" />
         </>
     );
+    if (lit) { // lit has to come before isError because lit is true for error state as well
+        stoplight = (
+            <>
+                <stop stopColor="#01D374" stopOpacity={0.39} />
+                <stop offset={1} stopColor="#01D374" />
+            </>
+        );
+    }
     if (isError) {
         stoplight = (
             <>
                 <stop stopColor={colors.errors[50]} stopOpacity={0.39} />
                 <stop offset={1} stopColor={colors.errors[50]} />
-            </>
-        );
-    } else if (lit) {
-        stoplight = (
-            <>
-                <stop stopColor="#01D374" stopOpacity={0.39} />
-                <stop offset={1} stopColor="#01D374" />
             </>
         );
     }
