@@ -78,8 +78,10 @@ const LightIndicatorText = styled.p<LightIndicatorTextType>`
         font-family: ${themeOptions.fontStyles.p.small.fontFamily};
         line-height: ${themeOptions.fontStyles.p.small.lineHeight};
         color: ${props => {
-        if (props.LightIndicatorTextColor === true) return colors.neutrals.bodyText;
-        else return colors.neutrals[70]
+        if (props.LightIndicatorTextColor === true) {
+            return colors.neutrals.bodyText;
+        }
+        return colors.neutrals[70];
     }};
         margin-top:0;
         margin-bottom:0;
