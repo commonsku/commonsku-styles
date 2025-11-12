@@ -195,16 +195,16 @@ const optionsWithSubOptions: ExampleParentOption[] = [
       subOptions:
         i % 2 === 0
           ? [
-              ...Array(5)
-                .fill(1)
-                .map((_, j) => ({
-                  type: "sub" as const,
-                  index: j,
-                  value: i + "sub" + j,
-                  label: `[Category ${i}] value ${j}`,
-                  Component: RenderSubOption,
-                })),
-            ]
+            ...Array(5)
+              .fill(1)
+              .map((_, j) => ({
+                type: "sub" as const,
+                index: j,
+                value: i + "sub" + j,
+                label: `[Category ${i}] value ${j}`,
+                Component: RenderSubOption,
+              })),
+          ]
           : undefined,
     })),
 ];
@@ -1097,8 +1097,8 @@ const SelectCustomOption = <IsMulti extends boolean = false>(
         backgroundColor: isSelected
           ? teal[60]
           : isFocused
-          ? "#E1F7FA"
-          : undefined,
+            ? "#E1F7FA"
+            : undefined,
         ...innerProps.style,
       }}
     >
@@ -1586,8 +1586,8 @@ const App = () => {
               <ChevronPopup
                 hidePreviousButton={false}
                 hideNextButton={false}
-                onPreviousButtonClick={() => {}}
-                onNextButtonClick={() => {}}
+                onPreviousButtonClick={() => { }}
+                onNextButtonClick={() => { }}
                 controls={[
                   <span
                     style={{
@@ -3990,17 +3990,22 @@ const App = () => {
                       />
                       <LightIndicator
                         name="Accounting integration: QuickBooks online"
-                        on
+                        status="on"
                       />
                       <LightIndicator name="SAGE not configured" />
                       <LightIndicator name="Avalara not configured" />
 
+                      <LightIndicator name="Split Ship Error" status="error" />
+
+
+
                       {DemoCodeBlock({
                         code: `<LightIndicator name="Marketing integration: Mailchimp " on />
 <LightIndicator name="Credit card integration: Stripe" on />
-<LightIndicator name="Accounting integration: QuickBooks online" on/>
+<LightIndicator name="Accounting integration: QuickBooks online" status="on"/>
 <LightIndicator name="SAGE not configured" />
-<LightIndicator name="Avalara not configured" />`,
+<LightIndicator name="Avalara not configured" />
+<LightIndicator name="Split Ship Error" status="error" />`,
                       })}
                     </div>
 
@@ -4018,17 +4023,19 @@ const App = () => {
                       />
                       <LightIndicator
                         name="Accounting integration: QuickBooks online"
-                        on
+                        status="on"
                         large
                       />
                       <LightIndicator name="SAGE not configured" large />
                       <LightIndicator name="Avalara not configured" large />
+                      <LightIndicator name="Split Ship Error" status="error" large />
                       {DemoCodeBlock({
                         code: `<LightIndicator name="Marketing integration: Mailchimp " on large />
 <LightIndicator name="Credit card integration: Stripe" on large/>
-<LightIndicator name="Accounting integration: QuickBooks online" on large/>
+<LightIndicator name="Accounting integration: QuickBooks online" status="on" large/>
 <LightIndicator name="SAGE not configured" large/>
-<LightIndicator name="Avalara not configured" large/>`,
+<LightIndicator name="Avalara not configured" large/>
+<LightIndicator name="Split Ship Error" status="error" large/>`,
                       })}
                     </div>
                   </div>
@@ -4257,7 +4264,7 @@ const App = () => {
                       { type: "PROJECT", title: "Projects", selected: false },
                       { type: "PO", title: "Pos", selected: false },
                     ]}
-                    onClickView={() => {}}
+                    onClickView={() => { }}
                   />
                 </demo.InnerContainer>
               </demo.OuterContainer>
@@ -5768,7 +5775,7 @@ const App = () => {
                       name="SubtractIcon"
                     />
                     <IconsShowcase Icons={[<icons.XIcon />]} name="XIcon" />
-                    <IconsShowcase Icons={[<icons.ClearIcon />]} name="ClearIcon"  />
+                    <IconsShowcase Icons={[<icons.ClearIcon />]} name="ClearIcon" />
                     <IconsShowcase
                       Icons={[<icons.SearchIcon />]}
                       name="SearchIcon"
@@ -5966,11 +5973,11 @@ const App = () => {
                       name="CompanyShopIcon"
                     />
                     <IconsShowcase
-                      Icons={[<icons.MarketingShopIcon size="huge"/>]}
+                      Icons={[<icons.MarketingShopIcon size="huge" />]}
                       name="MarketingShopIcon"
                     />
                     <IconsShowcase
-                      Icons={[<icons.ShopifyShopIcon size="huge"/>]}
+                      Icons={[<icons.ShopifyShopIcon size="huge" />]}
                       name="ShopifyShopIcon"
                     />
                   </IconContainer>
@@ -6233,7 +6240,7 @@ const App = () => {
                       ]}
                       name="PinIcon"
                     />
-                   <IconsShowcase
+                    <IconsShowcase
                       Icons={[<icons.PhoneIcon />]}
                       name="PhoneIcon"
                     />

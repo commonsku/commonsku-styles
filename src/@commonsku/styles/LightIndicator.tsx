@@ -28,12 +28,17 @@ export default function LightIndicatorLight({
     const fillOpacity =
         lit || isError ? 1 : 0.6;
 
-    let stoplight;
+    let stoplight = (
+        <>
+            <stop stopColor="#E4E4E4" stopOpacity={0.39} />
+            <stop offset={1} stopColor="#9D9D9D" />
+        </>
+    );
     if (isError) {
         stoplight = (
             <>
                 <stop stopColor={colors.errors[50]} stopOpacity={0.39} />
-                <stop offset={1} stopColor={colors.errors[50]}/>
+                <stop offset={1} stopColor={colors.errors[50]} />
             </>
         );
     } else if (lit) {
@@ -41,13 +46,6 @@ export default function LightIndicatorLight({
             <>
                 <stop stopColor="#01D374" stopOpacity={0.39} />
                 <stop offset={1} stopColor="#01D374" />
-            </>
-        );
-    } else {
-        stoplight = (
-            <>
-                <stop stopColor="#E4E4E4" stopOpacity={0.39} />
-                <stop offset={1} stopColor="#9D9D9D" />
             </>
         );
     }
@@ -70,7 +68,7 @@ export default function LightIndicatorLight({
 }
 
 type LightIndicatorTextType = {
-    LightIndicatorTextColor: LightStatus;
+    LightIndicatorTextColor: boolean;
     large?: boolean;
 }
 const LightIndicatorText = styled.p<LightIndicatorTextType>`
@@ -79,9 +77,9 @@ const LightIndicatorText = styled.p<LightIndicatorTextType>`
         font-family: ${themeOptions.fontStyles.p.small.fontFamily};
         line-height: ${themeOptions.fontStyles.p.small.lineHeight};
         color: ${props => {
-            if (props.LightIndicatorTextColor === 'on' || props.LightIndicatorTextColor === 'error') return colors.neutrals.bodyText;
-            if (props.LightIndicatorTextColor === 'off') return colors.neutrals[70]
-        }};
+        if (props.LightIndicatorTextColor === true) return colors.neutrals.bodyText;
+        else return colors.neutrals[70]
+    }};
         margin-top:0;
         margin-bottom:0;
     };
@@ -116,11 +114,11 @@ export function LightIndicator({
     textProps = {},
     ...props
 }: LightIndicatorProps) {
-    const lit = status === 'on' || on === true;
+    const lit = status === 'on' || status === 'error' || on === true;
     return (
         <LightIndicatorContainer {...props}>
             <LightIndicatorLight large={large} lit={lit} mr={8} mt={8} isError={status === 'error'} />
-            <LightIndicatorText {...textProps} large={large} LightIndicatorTextColor={status} >{name}</LightIndicatorText>
+            <LightIndicatorText {...textProps} large={large} LightIndicatorTextColor={lit} >{name}</LightIndicatorText>
         </LightIndicatorContainer>
     );
 }
