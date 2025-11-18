@@ -6034,6 +6034,11 @@ const App = () => {
                     />
 
                     <IconsShowcase
+                      Icons={[<icons.WarningIcon />, <icons.WarningIcon filled />]}
+                      name="WarningIcon"
+                    />
+
+                    <IconsShowcase
                       Icons={[
                         <icons.SalesArrowIcon />,
                         <icons.SalesArrowIcon direction="down" />,
