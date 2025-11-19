@@ -1,3 +1,4 @@
+import React from 'react';
 import SVG, { SVGIconProps } from './SvgIcon';
 import { yellow } from '../colors';
 
@@ -22,4 +23,3 @@ export default function WarningIcon({
         />
     </SVG>
 }
-
