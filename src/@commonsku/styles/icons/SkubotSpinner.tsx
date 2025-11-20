@@ -8,11 +8,13 @@ import { teal } from "../colors";
 export type SkubotSpinnerProps = {
   size?: TIconSize | "button";
   spinnerSize?: TIconSize | number;
+  containerSize?: TIconSize | number;
   width?: string | number;
   height?: string | number;
   altText?: string;
   color?: string | undefined;
   skubot?: boolean;
+  spinnerWeight?: number;
   style?: React.CSSProperties;
 } & SharedStyleTypes;
 
@@ -97,9 +99,9 @@ const Spinner = styled.svg`
   animation: ${rotator} 1.4s linear infinite;
 `;
 
-const Path = styled.circle<{ color: string }>`
+const Path = styled.circle<{ color: string; strokeWidth?: number }>`
   fill: none;
-  stroke-width: 2.5;
+  stroke-width: ${(props) => props.strokeWidth || 2.5};
   stroke-linecap: round;
   stroke-dasharray: 187;
   stroke-dashoffset: 0;
@@ -115,17 +117,19 @@ export default function SkubotSpinner({
   skubot = size !== "button",
   style={},
   spinnerSize,
+  containerSize,
+  spinnerWeight = 2.5,
   ...props
 }: SkubotSpinnerProps) {
   return (
-    <Container size={containerSizes[size] ? containerSizes[size].width : 200} style={style}>
+    <Container size={containerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)} style={style}>
       <Spinner
         width={spinnerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)}
         height={spinnerSize ?? (containerSizes[size] ? containerSizes[size].width : 200)}
         viewBox="0 0 66 66"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <Path cx="33" cy="33" r="30" color={color} />
+        <Path cx="33" cy="33" r="30" color={color} strokeWidth={spinnerWeight} />
       </Spinner>
       {skubot ? (
         <SkubotLogo
