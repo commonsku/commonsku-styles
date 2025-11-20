@@ -2459,11 +2459,11 @@ const App = () => {
                   </div>
 
                   {DemoCodeBlock({
-                    code: `<Button>Default</Button>   
+                    code: `<Button>Default</Button>
 <Button variant="primary">Primary</Button>
 <Button variant="primary-light">Primary-light</Button>
 <Button variant="secondary">Secondary</Button>
-<Button variant="cta">CTA</Button>   
+<Button variant="cta">CTA</Button>
 <Button variant="text">Text</Button>
 <Button variant="error">Error</Button>
 <Button variant="disabled">Disabled</Button>`,
@@ -2511,10 +2511,10 @@ const App = () => {
                   </div>
 
                   {DemoCodeBlock({
-                    code: `<IconButton>Default</IconButton>   
+                    code: `<IconButton>Default</IconButton>
 <IconButton variant="primary">Primary</IconButton>
 <IconButton variant="secondary">Secondary</IconButton>
-<IconButton variant="cta">CTA</IconButton>   
+<IconButton variant="cta">CTA</IconButton>
 <IconButton variant="text">Text</IconButton>
 <IconButton variant="error">Error</IconButton>
 <IconButton variant="disabled">Disabled</IconButton>`,
@@ -3068,7 +3068,7 @@ const App = () => {
                   </ButtonsGroup>
                   {DemoCodeBlock({
                     style: { marginBottom: "40px" },
-                    code: `<LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)} 
+                    code: `<LabeledRadio label="Active" checked={activeRadio === 1} onChange={(e) => setRadio(1)}
   />
   <LabeledRadio label="Inactive" checked={activeRadio === 0} onChange={(e) => setRadio(0)} />
   <LabeledRadio label="All" radioColor={pink.main} radioHoverColor={pink.light} checked={activeRadio === -1} onChange={(e) => setRadio(-1)} />
@@ -3108,7 +3108,7 @@ const App = () => {
                   </ButtonsGroup>
                   {DemoCodeBlock({
                     style: { marginBottom: "40px" },
-                    code: `<LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)} 
+                    code: `<LabeledRadioInButton label="Active" checked={activeRadioInButton === 1} onChange={(e) => setRadioInButton(1)}
   />
   <LabeledRadioInButton label="Inactive" checked={activeRadioInButton === 0} onChange={(e) => setRadioInButton(0)} />
   <LabeledRadioInButton label="All" checked={activeRadioInButton === -1} onChange={(e) => setRadioInButton(-1)} />
@@ -3165,7 +3165,7 @@ const App = () => {
                   </ButtonsGroup>
                   {DemoCodeBlock({
                     code: `<div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width:"80vw", backgroundColor: teal.darkest, padding:"24px"}}>
-  <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)} 
+  <LabeledRadioInButton label="Active" flexGrow checked={activeRadioInButtonFlex === 1} onChange={(e) => setRadioInButtonFlex(1)}
   />
   <LabeledRadioInButton label="Inactive" flexGrow checked={activeRadioInButtonFlex === 0} onChange={(e) => setRadioInButtonFlex(0)} />
   <LabeledRadioInButton label="All" flexGrow checked={activeRadioInButtonFlex === -1} onChange={(e) => setRadioInButtonFlex(-1)} />
@@ -3994,10 +3994,10 @@ const App = () => {
                       />
                       <LightIndicator name="SAGE not configured" />
                       <LightIndicator name="Avalara not configured" />
-
                       <LightIndicator name="Split Ship Error" status="error" />
-
-
+                      <LightIndicator name="Split Ship Warning" status="warning" />
+                      <LightIndicator name="Custom Color" on stoplightGradient={{outerColor: colors.special2, outerOpacity: 1, innerColor: colors.errors[40], innerOpacity: 0.9}} lightStyles={{ flex: '0 0 auto' }} />
+                      <LightIndicator name="Loading" on status="loading" />
 
                       {DemoCodeBlock({
                         code: `<LightIndicator name="Marketing integration: Mailchimp " on />
@@ -4005,7 +4005,10 @@ const App = () => {
 <LightIndicator name="Accounting integration: QuickBooks online" status="on"/>
 <LightIndicator name="SAGE not configured" />
 <LightIndicator name="Avalara not configured" />
-<LightIndicator name="Split Ship Error" status="error" />`,
+<LightIndicator name="Split Ship Error" status="error" />
+<LightIndicator name="Split Ship Warning" status="warning" />
+<LightIndicator name="Custom Color" on stoplightGradient={{outerColor: colors.special2, outerOpacity: 1, innerColor: colors.errors[40], innerOpacity: 0.9}} lightStyles={{ flex: '0 0 auto' }} />
+<LightIndicator name="Loading" on status="loading" />`,
                       })}
                     </div>
 
@@ -4029,13 +4032,19 @@ const App = () => {
                       <LightIndicator name="SAGE not configured" large />
                       <LightIndicator name="Avalara not configured" large />
                       <LightIndicator name="Split Ship Error" status="error" large />
+                      <LightIndicator name="Split Ship Warning" status="warning" large />
+                      <LightIndicator name="Custom Color" large on stoplightGradient={{outerColor: colors.special2, outerOpacity: 1, innerColor: colors.errors[40], innerOpacity: 0.9}} lightStyles={{ flex: '0 0 auto' }} />
+                      <LightIndicator name="Loading" status="loading" large on />
                       {DemoCodeBlock({
                         code: `<LightIndicator name="Marketing integration: Mailchimp " on large />
 <LightIndicator name="Credit card integration: Stripe" on large/>
 <LightIndicator name="Accounting integration: QuickBooks online" status="on" large/>
 <LightIndicator name="SAGE not configured" large/>
 <LightIndicator name="Avalara not configured" large/>
-<LightIndicator name="Split Ship Error" status="error" large/>`,
+<LightIndicator name="Split Ship Error" status="error" large/>
+<LightIndicator name="Split Ship Warning" status="warning" large />
+<LightIndicator name="Custom Color" large on stoplightGradient={{outerColor: colors.special2, outerOpacity: 1, innerColor: colors.errors[40], innerOpacity: 0.9}} lightStyles={{ flex: '0 0 auto' }} />
+<LightIndicator name="Loading" status="loading" large on />`,
                       })}
                     </div>
                   </div>
@@ -4314,6 +4323,8 @@ const App = () => {
                     <icons.SkubotSpinner mb={10} size="tiny" />
                     <demo.SmallLabel>Button</demo.SmallLabel>
                     <icons.SkubotSpinner mb={10} size="button" />
+                    <demo.SmallLabel>Custom</demo.SmallLabel>
+                    <icons.SkubotSpinner mb={10} size="small" containerSize={150} spinnerWeight={6} />
                   </div>
                 </demo.InnerContainer>
               </demo.OuterContainer>
