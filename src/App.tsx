@@ -6331,6 +6331,11 @@ const App = () => {
                       Icons={[<icons.FolderIcon />]}
                       name="FolderIcon"
                     />
+                    <IconsShowcase
+                      Icons={[<icons.CatalogIcon />]}
+                      name="CatalogIcon"
+                      size="default"
+                    />
                   </IconContainer>
                 </demo.InnerContainer>
 
