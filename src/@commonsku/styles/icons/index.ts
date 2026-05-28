@@ -87,6 +87,7 @@ export { default as HistoryIcon} from './HistoryIcon';
 export { default as HandleIcon} from './HandleIcon';
 export { default as ShoppingCartIcon } from './ShoppingCartIcon';
 export { default as AddShoppingCartIcon } from './AddShoppingCartIcon';
+export { default as CatalogIcon } from "./CatalogIcon";
 
 export { default as CommunityIcon} from './CommunityIcon';
 export { default as ConnectedIcon} from './ConnectedIcon';
