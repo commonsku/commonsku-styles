@@ -1,59 +1,27 @@
-import React from "react";
-import SVG, { SVGIconProps } from "./SvgIcon";
-import { teal } from "../colors";
+import React from 'react';
+import SVG, { SVGIconProps, iconSize } from './SvgIcon';
+import { teal } from '../colors';
 
-const iconSizes = {
-  tiny: {
-    width: 20,
-    height: 20,
-    viewBox: "0 0 24 24",
-  },
-  small: {
-    width: 40,
-    height: 40,
-    viewBox: "0 0 24 24",
-  },
-  medium: {
-    width: 80,
-    height: 80,
-    viewBox: "0 0 24 24",
-  },
-  large: {
-    width: 120,
-    height: 120,
-    viewBox: "0 0 24 24",
-  },
-  huge: {
-    width: 160,
-    height: 160,
-    viewBox: "0 0 24 24",
-  },
-  default: {
-    width: 24,
-    height: 24,
-    viewBox: "0 0 24 24",
-  },
+const symbolIconSizes = {
+    tiny:    { ...iconSize.tiny,    viewBox: "0 -960 960 960" },
+    small:   { ...iconSize.small,   viewBox: "0 -960 960 960" },
+    medium:  { ...iconSize.medium,  viewBox: "0 -960 960 960" },
+    large:   { ...iconSize.large,   viewBox: "0 -960 960 960" },
+    huge:    { ...iconSize.huge,    viewBox: "0 -960 960 960" },
+    default: { ...iconSize.default, viewBox: "0 -960 960 960" },
 };
 
 type CheckmarkCircleIconProps = SVGIconProps;
 export default function CheckmarkCircleIcon({
-  color = teal.main,
-  size = "default",
-  altText = "Catalog Icon",
-  ...props
+    color=teal.main,
+    size="medium",
+    ...props
 }: CheckmarkCircleIconProps) {
-  return (
-    <SVG
-      size={size}
-      aria-labelledby="CheckmarkCircleIcon"
-      iconSizes={iconSizes}
-      altText={altText}
-      {...props}
-    >
-      <path
-        d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18ZM14.59 5.58L8 12.17L5.41 9.59L4 11L8 15L16 7L14.59 5.58Z"
-        fill={color}
-      />
+    return <SVG size={size} iconSizes={symbolIconSizes} {...props}>
+        <path fill="none" d="M0-960h960v960H0z" />
+        <path
+            d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+            fill={color}
+        />
     </SVG>
-  );
 }
