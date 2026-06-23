@@ -5961,6 +5961,11 @@ const App = () => {
                       Icons={[<icons.SyncIcon />]}
                       name="SyncIcon"
                     />
+                    <IconsShowcase
+                      Icons={[<icons.CheckmarkCircleIcon />]}
+                      name="CheckmarkCircleIcon"
+                      size="default"
+                    />
                   </IconContainer>
                 </demo.InnerContainer>
 
