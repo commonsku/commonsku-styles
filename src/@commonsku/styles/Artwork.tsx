@@ -116,6 +116,7 @@ export type ArtworkProps = {
   onDownload?:Function|VoidFunction,
   inputProps?: InputProps,
   inputEl?:React.ReactNode,
+  renderExtraControls?: () => React.ReactNode,
 };
 
 export const Artwork = ({
@@ -138,6 +139,7 @@ export const Artwork = ({
       {props.onEdit ? <Button size="small" onClick={() => props.onEdit!()}>Edit</Button> : null}
       {props.onDelete ? <Button size="small" onClick={() => props.onDelete!()} style={{marginLeft: 10}}>Delete</Button> : null}
       {props.onDownload ? <Button size="small" onClick={() => props.onDownload!()} style={{marginLeft: 10, padding: 4}}><DownloadIcon style={{height: "20px"}}/></Button> : null}
+      {props.renderExtraControls?.() || null}
     </ArtworkControls>
     : null}
     <ArtworkInfo withPicture={props.picture?true:false} >
