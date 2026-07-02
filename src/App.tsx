@@ -6341,6 +6341,11 @@ const App = () => {
                       name="CatalogIcon"
                       size="default"
                     />
+                    <IconsShowcase
+                      Icons={[<icons.PaymentsIntegrationIcon />]}
+                      name="PaymentsIntegrationIcon"
+                      size="default"
+                    />
                   </IconContainer>
                 </demo.InnerContainer>
 
