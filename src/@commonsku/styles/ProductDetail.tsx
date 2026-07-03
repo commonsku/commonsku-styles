@@ -140,7 +140,7 @@ type ImageProps = {
 }
 
 type PriceProps = {
-  min_quantity: number;
+  min_quantity: number | string;
   price: string;
 }
 
@@ -161,6 +161,7 @@ type ProductDetailProps = {
   costBased?: string;
   productHref?: string;
   addToTarget?: string;
+  priceTableLabel?: string;
 }
 
 type MainImageProps = {
@@ -222,7 +223,7 @@ const ReadMore = (props: { text: string }) => {
   tempDiv.innerHTML = props.text;
   const innerText = tempDiv.innerText.substring(0, readMore ? truncateLength : props.text.length);
 
-  return <Col style={{flex: '0 1 0%', marginBottom: 27}}>
+  return <Col style={{ flex: '0 1 0%', marginBottom: 27 }}>
     <div style={{ position: 'relative', display: 'inline-block', whiteSpace: 'pre-wrap', fontFamily: 'var(--font-family-regular)' }}>
       {innerText}
       {props.text.length > truncateLength &&
@@ -252,7 +253,7 @@ type ImageGalleryProps = {
   handleMoreImagesBtnClick: () => void
 }
 
-const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: ImageGalleryProps) => {
+const ImageGallery = ({ image, setImage, filtered, handleMoreImagesBtnClick }: ImageGalleryProps) => {
   const thumbnailDiv = useRef<HTMLDivElement>(null);
   const [slicedThumbnails, setSlicedThumbnails] = useState(() => filtered.slice(0, INITIAL_THUMBNAILS_COUNT));
   useEffect(() => {
@@ -286,7 +287,7 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
               <AutoHideImage
                 key={i}
                 src={thumbnail.url}
-                onClick={() => { setImage(thumbnail); } }
+                onClick={() => { setImage(thumbnail); }}
                 style={{
                   display: 'inline-block',
                   objectFit: 'contain',
@@ -317,7 +318,7 @@ const ImageGallery = ({image, setImage, filtered, handleMoreImagesBtnClick}: Ima
   </div>;
 }
 
-export const ProductDetail = ({ name, sku, divisionName, divisionHref, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#', addToTarget = 'Project' }: ProductDetailProps) => {
+export const ProductDetail = ({ name, sku, divisionName, divisionHref, descriptions, sizes, allColors, images, mainImage, prices, handleClickProductEvent, selected, showAddButton, costBased, productHref = '#', addToTarget = 'Project', priceTableLabel = 'Qty' }: ProductDetailProps) => {
 
   const [isTextOverflowed, setIsTextOverflowed] = useState(false);
   const [image, setImage] = useState(mainImage);
@@ -419,7 +420,7 @@ export const ProductDetail = ({ name, sku, divisionName, divisionHref, descripti
               <ArrowIcon direction='left' size='large' onClick={() => setShowAllImages(false)} style={{ cursor: 'pointer' }} />
             </Row>
             <Row>
-              <Col sm={2} md={2} lg={2} style={{alignItems: 'flex-start'}}>
+              <Col sm={2} md={2} lg={2} style={{ alignItems: 'flex-start' }}>
                 <ThumbnailVerticalContainer>
                   {image && map(filtered, (thumbnail, i) => {
                     const selected = thumbnail.url === image.url ? { border: `3px solid ${colors.teal['70']}`, borderRadius: 5 } : {};
@@ -447,27 +448,31 @@ export const ProductDetail = ({ name, sku, divisionName, divisionHref, descripti
               </Col>
             </Row>
           </>
-          : <Row style={{alignItems: 'flex-start', height: '100%'}} >
+          : <Row style={{ alignItems: 'flex-start', height: '100%' }} >
             <Col md={6} sm={12} lg={6} style={{ paddingRight: '15px' }}>
               <ImageGallery image={image} setImage={setImage} filtered={filtered} handleMoreImagesBtnClick={handleMoreImagesBtnClick} />
             </Col>
-            <Col md={6} sm={12} lg={6} style={{ height: '100%', overflow: 'auto', display: 'flex',
+            <Col md={6} sm={12} lg={6} style={{
+              height: '100%', overflow: 'auto', display: 'flex',
               flexDirection: 'column',
-              gap: 16, }}>
+              gap: 16,
+            }}>
               <Row>
-              <h1 ref={textRef} data-tooltip-id='title' data-tooltip-content={name} style={{ maxHeight: '96px', overflow: 'hidden', fontSize: 32,
-                fontStyle: 'normal',
-                fontWeight: 600,
-                lineHeight: '48px',
-                margin: 0,
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                display: '-webkit-box'}}>{name}</h1>
+                <h1 ref={textRef} data-tooltip-id='title' data-tooltip-content={name} style={{
+                  maxHeight: '96px', overflow: 'hidden', fontSize: 32,
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: '48px',
+                  margin: 0,
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  display: '-webkit-box'
+                }}>{name}</h1>
 
-              {isTextOverflowed
-                ? <StyledTooltip id='title'  place="left" />
-                : null
-              }
+                {isTextOverflowed
+                  ? <StyledTooltip id='title' place="left" />
+                  : null
+                }
               </Row>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <Sku>{sku}</Sku>
@@ -479,14 +484,14 @@ export const ProductDetail = ({ name, sku, divisionName, divisionHref, descripti
                     <Table style={{ marginBottom: '8px', pointerEvents: 'none', borderTop: `1px solid ${colors.neutrals['70']}`, borderBottom: `1px solid ${colors.neutrals['70']}` }} >
                       <TBody style={{ border: 'none' }} >
                         <TR>
-                          <TD style={{fontFamily: 'var(--font-family-demibold)'}}>Qty</TD>
+                          <TD style={{ fontFamily: 'var(--font-family-demibold)' }}>{priceTableLabel}</TD>
                           {map(prices, ({ min_quantity }, i) => {
                             return <TD style={{ textAlign: 'right' }} key={i}>{min_quantity}</TD>
                           })
                           }
                         </TR>
                         <TR>
-                          <TD style={{fontFamily: 'var(--font-family-demibold)'}}>Price</TD>
+                          <TD style={{ fontFamily: 'var(--font-family-demibold)' }}>Price</TD>
                           { // call checkCredential ?
                             map(prices, ({ price }, i) => {
                               return <TD style={{ textAlign: 'right' }} key={i}>${round(toNumber(price), 2)}</TD>
@@ -527,9 +532,11 @@ export const ProductDetail = ({ name, sku, divisionName, divisionHref, descripti
                   </Col>
                 </Row>
               }
-              <Row>
-                <a href={productHref} target='_blank' style={{ width: '100%', textDecoration: 'none' }}><div style={{width: '100%', textAlign: 'center', color: colors.teal['70'], fontSize: 16, fontFamily: 'var(--font-family-regular)', fontWeight: '400', lineHeight: '24px', wordWrap: 'break-word'}}>View Product Page</div></a>
-              </Row>
+              {productHref &&
+                <Row>
+                  <a href={productHref} target='_blank' style={{ width: '100%', textDecoration: 'none' }}><div style={{ width: '100%', textAlign: 'center', color: colors.teal['70'], fontSize: 16, fontFamily: 'var(--font-family-regular)', fontWeight: '400', lineHeight: '24px', wordWrap: 'break-word' }}>View Product Page</div></a>
+                </Row>
+              }
               {Array.isArray(descriptions)
                 ? <ReadMore text={descriptions.join('\n')} />
                 : <ReadMore text={descriptions} />
@@ -538,7 +545,7 @@ export const ProductDetail = ({ name, sku, divisionName, divisionHref, descripti
                 <Col md={2} lg={2} sm={12}>
                   <Label style={{ lineHeight: '30px' }}>Sizes: </Label>
                 </Col>
-                <Col md={10} lg={10} sm={12} style={{display: 'flex', gap: 8, flexWrap: 'wrap'}}>
+                <Col md={10} lg={10} sm={12} style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {map(sizes, (s, i) => {
                     return <SizeTag
                       key={s + i}
@@ -548,9 +555,9 @@ export const ProductDetail = ({ name, sku, divisionName, divisionHref, descripti
               </Row>
               <Row style={{ pointerEvents: 'none' }}>
                 <Col md={2} lg={2} sm={12}>
-                  <Label style={{ pointerEvents: 'none',lineHeight: '30px' }}>Colors: </Label>
+                  <Label style={{ pointerEvents: 'none', lineHeight: '30px' }}>Colors: </Label>
                 </Col>
-                <Col md={10} lg={10} sm={12} style={{display: 'flex', gap: 8, flexWrap: 'wrap'}}>
+                <Col md={10} lg={10} sm={12} style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {map(allColors, (c, i) => {
                     return <SizeTag
                       key={c + i}
