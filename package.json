@@ -31,7 +31,7 @@
     "React"
   ],
   "peerDependencies": {
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "react": "^16.12.0 || ^17.0.0 || ^18.0.0",
     "react-animations": "^1.0.0",
     "react-dom": "^16.12.0 || ^17.0.0 || ^18.0.0",
@@ -44,7 +44,7 @@
     "date-fns": "^2.29.3",
     "namor": "^2.0.4",
     "react-beautiful-dnd": "^13.1.1",
-    "react-code-blocks": "0.0.9-0",
+    "react-code-blocks": "^0.1.6",
     "react-datepicker": "^4.11.0",
     "react-dropzone": "^10.2.2",
     "react-is": "^18.2.0",
@@ -81,14 +81,14 @@
     "@types/react-table": "^7.7.14",
     "@types/react-window": "^1.8.5",
     "@types/styled-components": "^5.1.26",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "react": "^18.3.1",
     "react-animations": "^1.0.0",
     "react-docgen-typescript": "^1.22.0",
     "react-dom": "^18.3.1",
     "react-error-overlay": "^6.0.11",
     "react-scripts": "^5.0.1",
-    "react-styleguidist": "^13.1.1",
+    "react-styleguidist": "^13.1.4",
     "rollup": "^3.21.0",
     "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-filesize": "^10.0.0",
@@ -99,6 +99,11 @@
     "styled-components": "^5.3.10",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5"
+  },
+  "overrides": {
+    "refractor": {
+      "prismjs": "1.30.0"
+    }
   },
   "resolutions": {
     "//": "See https://github.com/facebook/create-react-app/issues/11773",

@@ -84,7 +84,7 @@ export function DemoComponentCode(props) {
             language={props.language ? props.language : "tsx"}
             showLineNumbers={props.showLineNumbers ? props.showLineNumbers : true}
             theme={props.theme ? props.theme : nord}
-            wrapLines 
+            wrapLongLines 
         />
         </>
     );
