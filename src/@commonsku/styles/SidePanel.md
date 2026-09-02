@@ -2,9 +2,11 @@ SidePanel example:
 
 ```js
 import React, { useState, useReducer } from 'react';
-import { SidePanel, Button } from './SidePanel';
+import { Button } from './Button';
+import { SidePanel }  from './SidePanel';
 const [showPanel, setShowPanel] = useState(false);
 
+<>
 <SidePanel
     title="SidePanel Title"
     controls={<Button onClick={() => setShowPanel(false)}>Close Panel</Button>}
@@ -16,4 +18,6 @@ const [showPanel, setShowPanel] = useState(false);
 >
     <h1>Body of the panel</h1>
 </SidePanel>
+<Button onClick={() => setShowPanel(true)}>Show Panel</Button>
+</>
 ```
