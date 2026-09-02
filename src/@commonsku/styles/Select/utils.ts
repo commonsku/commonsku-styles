@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import React from 'react';
-import { GroupBase, StylesConfig, Theme } from 'react-select';
+import { CSSObjectWithLabel, GroupBase, StylesConfig, Theme } from 'react-select';
 import { getThemeColor, colors } from '../Theme';
 import { document } from '../../utils';
 import { SelectType, TBaseOption, TSelectProps } from './types';
@@ -22,7 +22,7 @@ export function skuSelectStyles<
       return {
         ...provided,
         ...props.containerStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     clearIndicator: (provided, state) => {
       return {
@@ -32,7 +32,7 @@ export function skuSelectStyles<
           color: getThemeColor(props, 'select.clearIcon.color', colors.select.clearIcon.color),
         },
         ...props.clearIndicatorStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     dropdownIndicator: (provided, state) => {
       const styles = {
@@ -52,13 +52,13 @@ export function skuSelectStyles<
         ...provided,
         ...styles,
         ...props.dropdownIndicatorStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     indicatorSeparator: (provided, state) => ({
       ...provided,
       display: 'none',
       ...props.indicatorSeparatorStyles,
-    }),
+    } as CSSObjectWithLabel),
     option: (provided, state) => {
       return {
         ...provided,
@@ -66,7 +66,7 @@ export function skuSelectStyles<
         borderBottom: 'none',
         padding: 10,
         ...props.optionStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     input: (provided, state) => {
       return {
@@ -76,7 +76,7 @@ export function skuSelectStyles<
         ? getThemeColor(props, 'select.error.border', colors.select.error.border)
         : getThemeColor(props, 'select.border', colors.select.border),
       ...props.inputStyles,
-    }},
+    } as CSSObjectWithLabel},
     control: (provided, state) => {
       const styles: React.CSSProperties = {
         marginBottom: (props.noMargin ? 0 : '1rem'),
@@ -131,7 +131,7 @@ export function skuSelectStyles<
             : getThemeColor(props, 'select.active.border', colors.select.active.border),
         },
         ...props.controlStyles,
-      });
+      } as CSSObjectWithLabel);
     },
     menu: (provided, state) => {
       const borderColor = props.error
@@ -170,21 +170,21 @@ export function skuSelectStyles<
         ...provided,
         ...styles,
         ...props.menuStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     menuList: (provided, state) => {
       return {
         ...provided,
         paddingBottom: 0,
         ...props.menuListStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     menuPortal: (provided, state) => {
       return {
         ...provided,
         zIndex: 9999,
         ...props.menuPortalStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
@@ -194,14 +194,14 @@ export function skuSelectStyles<
         opacity,
         transition,
         ...props.singleValueStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     valueContainer: (provided, state) => {
       return {
         ...provided,
         padding: '2px 8px',
         ...props.valueContainerStyles,
-      };
+      } as CSSObjectWithLabel;
     },
     multiValue: (provided, state) => {
       return {
@@ -211,7 +211,7 @@ export function skuSelectStyles<
         borderRadius: 20,
         padding: '0.25rem',
         ...props.multiValueStyles,
-      };
+      } as CSSObjectWithLabel;
     },
   };
 }
