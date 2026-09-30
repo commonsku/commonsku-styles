@@ -79,6 +79,7 @@ export default function AddressAutocompleteInput({
           center: currentLocation,
           radius: 1000
         }) : undefined;
+    onInputChange?.(value);
     try {
       const res = await getPlacesAutocomplete({
         input: value,
@@ -96,7 +97,6 @@ export default function AddressAutocompleteInput({
       console.log(error);
     }
 
-    onInputChange?.(value);
     setOptions(data);
     setShowDropdown(data.length > 0);
   }, [country, currentLocation, onInputChange]);
